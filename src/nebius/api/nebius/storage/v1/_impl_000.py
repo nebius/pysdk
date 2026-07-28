@@ -58,9 +58,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class StorageClass(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.StorageClass'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.StorageClass')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STORAGE_CLASS_UNSPECIFIED = 0
     STANDARD = 1
     ENHANCED_THROUGHPUT = 2
@@ -71,9 +75,13 @@ _NebiusType_nebius_storage_v1_StorageClass_82dfdd55 = StorageClass
 
 class VersioningPolicy(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.VersioningPolicy'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.VersioningPolicy')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     VERSIONING_POLICY_UNSPECIFIED = 0
     DISABLED = 1
     ENABLED = 2
@@ -82,9 +90,13 @@ _NebiusType_nebius_storage_v1_VersioningPolicy_b7e41f31 = VersioningPolicy
 
 class BucketSpec__ObjectAuditLogging(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketSpec.ObjectAuditLogging'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.BucketSpec.ObjectAuditLogging')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     OBJECT_AUDIT_LOGGING_UNSPECIFIED = 0
     NONE = 1
     'Logging is disabled.'
@@ -96,9 +108,13 @@ _NebiusType_nebius_storage_v1_BucketSpec_ObjectAuditLogging_fb581040 = BucketSpe
 
 class BucketStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.BucketStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     CREATING = 1
     'Bucket is under creation and cannot be used yet.'
@@ -112,9 +128,13 @@ _NebiusType_nebius_storage_v1_BucketStatus_State_b9f3bc80 = BucketStatus__State
 
 class BucketStatus__SuspensionState(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketStatus.SuspensionState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.BucketStatus.SuspensionState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     SUSPENSION_STATE_UNSPECIFIED = 0
     NOT_SUSPENDED = 1
     SUSPENDED = 2
@@ -122,9 +142,13 @@ _NebiusType_nebius_storage_v1_BucketStatus_SuspensionState_2e6f21ad = BucketStat
 
 class LifecycleAccessFilter__Condition__Method(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleAccessFilter.Condition.Method'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.LifecycleAccessFilter.Condition.Method')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     METHOD_UNSPECIFIED = 0
     GET_OBJECT = 1
     HEAD_OBJECT = 2
@@ -137,9 +161,13 @@ _NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_Method_f445d372 = 
 
 class LifecycleAccessFilter__Condition__Type(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleAccessFilter.Condition.Type'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.LifecycleAccessFilter.Condition.Type')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     TYPE_UNSPECIFIED = 0
     INCLUDE = 1
     'If an include type condition is the first condition that the request match, the request will be included in\n``days_since_last_access`` calculation.'
@@ -149,9 +177,13 @@ _NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_Type_6f021696 = Li
 
 class LifecycleRule__Status(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleRule.Status'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.LifecycleRule.Status')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATUS_UNSPECIFIED = 0
     ENABLED = 1
     DISABLED = 2
@@ -159,9 +191,13 @@ _NebiusType_nebius_storage_v1_LifecycleRule_Status_c506af7f = LifecycleRule__Sta
 
 class TransferError__Origin(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferError.Origin'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.TransferError.Origin')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     ORIGIN_UNSPECIFIED = 0
     SOURCE = 1
     'Error originated from the source.'
@@ -172,9 +208,13 @@ _NebiusType_nebius_storage_v1_TransferError_Origin_3b126870 = TransferError__Ori
 class TransferIteration__State(Enum):
     'Iteration state.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferIteration.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.TransferIteration.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     IN_PROGRESS = 1
     COMPLETED = 2
@@ -184,9 +224,13 @@ _NebiusType_nebius_storage_v1_TransferIteration_State_f4130f10 = TransferIterati
 
 class TransferSpec__OverwriteStrategy(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSpec.OverwriteStrategy'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.TransferSpec.OverwriteStrategy')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     OVERWRITE_STRATEGY_UNSPECIFIED = 0
     NEVER = 1
     'Never overwrite objects that exist in the destination.\nIf object exists in destination bucket, skip it.\nSafest option to prevent any data loss.'
@@ -197,9 +241,13 @@ _NebiusType_nebius_storage_v1_TransferSpec_OverwriteStrategy_2ef69d31 = Transfer
 class TransferStatus__State(Enum):
     'Transfer state.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.TransferStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     ACTIVE = 1
     STOPPING = 2
@@ -212,9 +260,13 @@ _NebiusType_nebius_storage_v1_TransferStatus_State_d7939f29 = TransferStatus__St
 class TransferStatus__SuspensionState(Enum):
     'Transfer suspension state.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferStatus.SuspensionState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.TransferStatus.SuspensionState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     SUSPENSION_STATE_UNSPECIFIED = 0
     NOT_SUSPENDED = 1
     SUSPENDED = 2
@@ -223,10 +275,15 @@ _NebiusType_nebius_storage_v1_TransferStatus_SuspensionState_56e3b344 = Transfer
 # @@nebius-section:messages@@
 class Bucket(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.Bucket'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.Bucket')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -236,6 +293,7 @@ class Bucket(Message):
         spec: _NebiusType_nebius_storage_v1_BucketSpec_c5f371f6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_storage_v1_BucketStatus_df07dd31 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -252,6 +310,7 @@ class Bucket(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKET_METADATA, value)
 
     @_NebiusProperty
@@ -261,6 +320,7 @@ class Bucket(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_storage_v1_BucketSpec_c5f371f6 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKET_SPEC, value)
 
     @_NebiusProperty
@@ -270,18 +330,25 @@ class Bucket(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_storage_v1_BucketStatus_df07dd31 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKET_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_Bucket_c5ed3d11 = Bucket
 
 
 class BucketSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.BucketSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     ObjectAuditLogging: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_BucketSpec_ObjectAuditLogging_fb581040
 
     def __init__(
@@ -297,6 +364,7 @@ class BucketSpec(Message):
         object_audit_logging: _NebiusType_nebius_storage_v1_BucketSpec_ObjectAuditLogging_fb581040 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         bucket_policy: _NebiusType_nebius_storage_v1_BucketPolicy_f3ef4f99 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if versioning_policy is not _NEBIUS_UNSET:
             values['versioning_policy'] = versioning_policy
@@ -324,6 +392,7 @@ class BucketSpec(Message):
 
     @versioning_policy.setter
     def versioning_policy(self, value: _NebiusType_nebius_storage_v1_VersioningPolicy_b7e41f31 | None) -> None:
+        """Set or clear the generated ``versioning_policy`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_VERSIONING_POLICY, value)
 
     @_NebiusProperty
@@ -334,6 +403,7 @@ class BucketSpec(Message):
 
     @max_size_bytes.setter
     def max_size_bytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``max_size_bytes`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_MAX_SIZE_BYTES, value)
 
     @_NebiusProperty
@@ -343,6 +413,7 @@ class BucketSpec(Message):
 
     @lifecycle_configuration.setter
     def lifecycle_configuration(self, value: _NebiusType_nebius_storage_v1_LifecycleConfiguration_195d8d0e | None) -> None:
+        """Set or clear the generated ``lifecycle_configuration`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_LIFECYCLE_CONFIGURATION, value)
 
     @_NebiusProperty
@@ -353,6 +424,7 @@ class BucketSpec(Message):
 
     @cors.setter
     def cors(self, value: _NebiusType_nebius_storage_v1_CORSConfiguration_871bd486 | None) -> None:
+        """Set or clear the generated ``cors`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_CORS, value)
 
     @_NebiusProperty
@@ -363,6 +435,7 @@ class BucketSpec(Message):
 
     @default_storage_class.setter
     def default_storage_class(self, value: _NebiusType_nebius_storage_v1_StorageClass_82dfdd55 | None) -> None:
+        """Set or clear the generated ``default_storage_class`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_DEFAULT_STORAGE_CLASS, value)
 
     @_NebiusProperty
@@ -373,6 +446,7 @@ class BucketSpec(Message):
 
     @force_storage_class.setter
     def force_storage_class(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``force_storage_class`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_FORCE_STORAGE_CLASS, value)
 
     @_NebiusProperty
@@ -383,6 +457,7 @@ class BucketSpec(Message):
 
     @object_audit_logging.setter
     def object_audit_logging(self, value: _NebiusType_nebius_storage_v1_BucketSpec_ObjectAuditLogging_fb581040 | None) -> None:
+        """Set or clear the generated ``object_audit_logging`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_OBJECT_AUDIT_LOGGING, value)
 
     @_NebiusProperty
@@ -393,18 +468,25 @@ class BucketSpec(Message):
 
     @bucket_policy.setter
     def bucket_policy(self, value: _NebiusType_nebius_storage_v1_BucketPolicy_f3ef4f99 | None) -> None:
+        """Set or clear the generated ``bucket_policy`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSPEC_BUCKET_POLICY, value)
 
     __PY_TO_PB2__ = {'versioning_policy': 'versioning_policy', 'max_size_bytes': 'max_size_bytes', 'lifecycle_configuration': 'lifecycle_configuration', 'cors': 'cors', 'default_storage_class': 'default_storage_class', 'force_storage_class': 'force_storage_class', 'object_audit_logging': 'object_audit_logging', 'bucket_policy': 'bucket_policy', 'ObjectAuditLogging': 'ObjectAuditLogging'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_BucketSpec_c5f371f6 = BucketSpec
 
 
 class BucketStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.BucketStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_BucketStatus_State_b9f3bc80
     SuspensionState: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_BucketStatus_SuspensionState_2e6f21ad
 
@@ -421,6 +503,7 @@ class BucketStatus(Message):
         region: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         anonymous_access_enabled: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if counters is not _NEBIUS_UNSET:
             values['counters'] = counters
@@ -447,6 +530,7 @@ class BucketStatus(Message):
 
     @counters.setter
     def counters(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_BucketCounters_7db6df8e] | None) -> None:
+        """Set or clear the generated ``counters`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_COUNTERS, value)
 
     @_NebiusProperty
@@ -456,6 +540,7 @@ class BucketStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_storage_v1_BucketStatus_State_b9f3bc80 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -465,6 +550,7 @@ class BucketStatus(Message):
 
     @suspension_state.setter
     def suspension_state(self, value: _NebiusType_nebius_storage_v1_BucketStatus_SuspensionState_2e6f21ad | None) -> None:
+        """Set or clear the generated ``suspension_state`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_SUSPENSION_STATE, value)
 
     @_NebiusProperty
@@ -475,6 +561,7 @@ class BucketStatus(Message):
 
     @deleted_at.setter
     def deleted_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``deleted_at`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_DELETED_AT, value)
 
     @_NebiusProperty
@@ -485,6 +572,7 @@ class BucketStatus(Message):
 
     @purge_at.setter
     def purge_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``purge_at`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_PURGE_AT, value)
 
     @_NebiusProperty
@@ -495,6 +583,7 @@ class BucketStatus(Message):
 
     @domain_name.setter
     def domain_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``domain_name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_DOMAIN_NAME, value)
 
     @_NebiusProperty
@@ -505,6 +594,7 @@ class BucketStatus(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_REGION, value)
 
     @_NebiusProperty
@@ -515,17 +605,24 @@ class BucketStatus(Message):
 
     @anonymous_access_enabled.setter
     def anonymous_access_enabled(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``anonymous_access_enabled`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_ANONYMOUS_ACCESS_ENABLED, value)
 
     __PY_TO_PB2__ = {'counters': 'counters', 'state': 'state', 'suspension_state': 'suspension_state', 'deleted_at': 'deleted_at', 'purge_at': 'purge_at', 'domain_name': 'domain_name', 'region': 'region', 'anonymous_access_enabled': 'anonymous_access_enabled', 'State': 'State', 'SuspensionState': 'SuspensionState'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_BucketStatus_df07dd31 = BucketStatus
 
 class BucketCounters(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketCounters'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.BucketCounters')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -535,6 +632,7 @@ class BucketCounters(Message):
         counters: _NebiusType_nebius_storage_v1_CurrentBucketCounters_59720a7b | None | _NebiusUnsetType = _NEBIUS_UNSET,
         non_current_counters: _NebiusType_nebius_storage_v1_NonCurrentBucketCounters_c694403d | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if storage_class is not _NEBIUS_UNSET:
             values['storage_class'] = storage_class
@@ -551,6 +649,7 @@ class BucketCounters(Message):
 
     @storage_class.setter
     def storage_class(self, value: _NebiusType_nebius_storage_v1_StorageClass_82dfdd55 | None) -> None:
+        """Set or clear the generated ``storage_class`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETCOUNTERS_STORAGE_CLASS, value)
 
     @_NebiusProperty
@@ -560,6 +659,7 @@ class BucketCounters(Message):
 
     @counters.setter
     def counters(self, value: _NebiusType_nebius_storage_v1_CurrentBucketCounters_59720a7b | None) -> None:
+        """Set or clear the generated ``counters`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETCOUNTERS_COUNTERS, value)
 
     @_NebiusProperty
@@ -569,18 +669,25 @@ class BucketCounters(Message):
 
     @non_current_counters.setter
     def non_current_counters(self, value: _NebiusType_nebius_storage_v1_NonCurrentBucketCounters_c694403d | None) -> None:
+        """Set or clear the generated ``non_current_counters`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETCOUNTERS_NON_CURRENT_COUNTERS, value)
 
     __PY_TO_PB2__ = {'storage_class': 'storage_class', 'counters': 'counters', 'non_current_counters': 'non_current_counters'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_BucketCounters_7db6df8e = BucketCounters
 
 
 class CurrentBucketCounters(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.CurrentBucketCounters'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.CurrentBucketCounters')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -594,6 +701,7 @@ class CurrentBucketCounters(Message):
         inflight_parts_quantity: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         inflight_parts_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if simple_objects_quantity is not _NEBIUS_UNSET:
             values['simple_objects_quantity'] = simple_objects_quantity
@@ -618,6 +726,7 @@ class CurrentBucketCounters(Message):
 
     @simple_objects_quantity.setter
     def simple_objects_quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``simple_objects_quantity`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CURRENTBUCKETCOUNTERS_SIMPLE_OBJECTS_QUANTITY, value)
 
     @_NebiusProperty
@@ -627,6 +736,7 @@ class CurrentBucketCounters(Message):
 
     @simple_objects_size.setter
     def simple_objects_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``simple_objects_size`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CURRENTBUCKETCOUNTERS_SIMPLE_OBJECTS_SIZE, value)
 
     @_NebiusProperty
@@ -636,6 +746,7 @@ class CurrentBucketCounters(Message):
 
     @multipart_objects_quantity.setter
     def multipart_objects_quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``multipart_objects_quantity`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CURRENTBUCKETCOUNTERS_MULTIPART_OBJECTS_QUANTITY, value)
 
     @_NebiusProperty
@@ -645,6 +756,7 @@ class CurrentBucketCounters(Message):
 
     @multipart_objects_size.setter
     def multipart_objects_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``multipart_objects_size`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CURRENTBUCKETCOUNTERS_MULTIPART_OBJECTS_SIZE, value)
 
     @_NebiusProperty
@@ -654,6 +766,7 @@ class CurrentBucketCounters(Message):
 
     @multipart_uploads_quantity.setter
     def multipart_uploads_quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``multipart_uploads_quantity`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CURRENTBUCKETCOUNTERS_MULTIPART_UPLOADS_QUANTITY, value)
 
     @_NebiusProperty
@@ -663,6 +776,7 @@ class CurrentBucketCounters(Message):
 
     @inflight_parts_quantity.setter
     def inflight_parts_quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``inflight_parts_quantity`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CURRENTBUCKETCOUNTERS_INFLIGHT_PARTS_QUANTITY, value)
 
     @_NebiusProperty
@@ -672,19 +786,26 @@ class CurrentBucketCounters(Message):
 
     @inflight_parts_size.setter
     def inflight_parts_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``inflight_parts_size`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CURRENTBUCKETCOUNTERS_INFLIGHT_PARTS_SIZE, value)
 
     __PY_TO_PB2__ = {'simple_objects_quantity': 'simple_objects_quantity', 'simple_objects_size': 'simple_objects_size', 'multipart_objects_quantity': 'multipart_objects_quantity', 'multipart_objects_size': 'multipart_objects_size', 'multipart_uploads_quantity': 'multipart_uploads_quantity', 'inflight_parts_quantity': 'inflight_parts_quantity', 'inflight_parts_size': 'inflight_parts_size'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_CurrentBucketCounters_59720a7b = CurrentBucketCounters
 
 
 class NonCurrentBucketCounters(Message):
     'Counters for non-current object versions (for versioning buckets).'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.NonCurrentBucketCounters'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.NonCurrentBucketCounters')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -695,6 +816,7 @@ class NonCurrentBucketCounters(Message):
         multipart_objects_quantity: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         multipart_objects_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if simple_objects_quantity is not _NEBIUS_UNSET:
             values['simple_objects_quantity'] = simple_objects_quantity
@@ -713,6 +835,7 @@ class NonCurrentBucketCounters(Message):
 
     @simple_objects_quantity.setter
     def simple_objects_quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``simple_objects_quantity`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_NONCURRENTBUCKETCOUNTERS_SIMPLE_OBJECTS_QUANTITY, value)
 
     @_NebiusProperty
@@ -722,6 +845,7 @@ class NonCurrentBucketCounters(Message):
 
     @simple_objects_size.setter
     def simple_objects_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``simple_objects_size`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_NONCURRENTBUCKETCOUNTERS_SIMPLE_OBJECTS_SIZE, value)
 
     @_NebiusProperty
@@ -731,6 +855,7 @@ class NonCurrentBucketCounters(Message):
 
     @multipart_objects_quantity.setter
     def multipart_objects_quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``multipart_objects_quantity`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_NONCURRENTBUCKETCOUNTERS_MULTIPART_OBJECTS_QUANTITY, value)
 
     @_NebiusProperty
@@ -740,36 +865,50 @@ class NonCurrentBucketCounters(Message):
 
     @multipart_objects_size.setter
     def multipart_objects_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``multipart_objects_size`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_NONCURRENTBUCKETCOUNTERS_MULTIPART_OBJECTS_SIZE, value)
 
     __PY_TO_PB2__ = {'simple_objects_quantity': 'simple_objects_quantity', 'simple_objects_size': 'simple_objects_size', 'multipart_objects_quantity': 'multipart_objects_quantity', 'multipart_objects_size': 'multipart_objects_size'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_NonCurrentBucketCounters_c694403d = NonCurrentBucketCounters
 
 class BucketPolicy__Rule__AnonymousAccess(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketPolicy.Rule.AnonymousAccess'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.BucketPolicy.Rule.AnonymousAccess')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_BucketPolicy_Rule_AnonymousAccess_f5136f17 = BucketPolicy__Rule__AnonymousAccess
 
 
 class BucketPolicy__Rule(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketPolicy.Rule'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.BucketPolicy.Rule')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     AnonymousAccess: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_BucketPolicy_Rule_AnonymousAccess_f5136f17
 
     class __OneOfClass_subject__(_NebiusOneOf):
@@ -811,6 +950,7 @@ class BucketPolicy__Rule(Message):
         group_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         anonymous: _NebiusType_nebius_storage_v1_BucketPolicy_Rule_AnonymousAccess_f5136f17 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if paths is not _NEBIUS_UNSET:
             values['paths'] = paths
@@ -830,6 +970,7 @@ class BucketPolicy__Rule(Message):
 
     @paths.setter
     def paths(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``paths`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETPOLICY_RULE_PATHS, value)
 
     @_NebiusProperty
@@ -840,6 +981,7 @@ class BucketPolicy__Rule(Message):
 
     @roles.setter
     def roles(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``roles`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETPOLICY_RULE_ROLES, value)
 
     @_NebiusProperty
@@ -850,6 +992,7 @@ class BucketPolicy__Rule(Message):
 
     @group_id.setter
     def group_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``group_id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETPOLICY_RULE_GROUP_ID, value)
 
     @_NebiusProperty
@@ -860,19 +1003,26 @@ class BucketPolicy__Rule(Message):
 
     @anonymous.setter
     def anonymous(self, value: _NebiusType_nebius_storage_v1_BucketPolicy_Rule_AnonymousAccess_f5136f17 | None) -> None:
+        """Set or clear the generated ``anonymous`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETPOLICY_RULE_ANONYMOUS, value)
 
     __PY_TO_PB2__ = {'paths': 'paths', 'roles': 'roles', 'group_id': 'group_id', 'anonymous': 'anonymous', 'subject': 'subject', 'AnonymousAccess': 'AnonymousAccess'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_BucketPolicy_Rule_60fe7ca8 = BucketPolicy__Rule
 
 
 class BucketPolicy(Message):
     'Bucket policy specifies granular permissions for a bucket.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.BucketPolicy'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.BucketPolicy')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Rule: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_BucketPolicy_Rule_60fe7ca8
 
     def __init__(
@@ -881,6 +1031,7 @@ class BucketPolicy(Message):
         *,
         rules: _NebiusIterable[_NebiusType_nebius_storage_v1_BucketPolicy_Rule_60fe7ca8] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if rules is not _NEBIUS_UNSET:
             values['rules'] = rules
@@ -894,17 +1045,24 @@ class BucketPolicy(Message):
 
     @rules.setter
     def rules(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_BucketPolicy_Rule_60fe7ca8] | None) -> None:
+        """Set or clear the generated ``rules`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETPOLICY_RULES, value)
 
     __PY_TO_PB2__ = {'rules': 'rules', 'Rule': 'Rule'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_BucketPolicy_f3ef4f99 = BucketPolicy
 
 class CreateBucketRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.CreateBucketRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.CreateBucketRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -913,6 +1071,7 @@ class CreateBucketRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_storage_v1_BucketSpec_c5f371f6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -927,6 +1086,7 @@ class CreateBucketRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CREATEBUCKETREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -936,18 +1096,25 @@ class CreateBucketRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_storage_v1_BucketSpec_c5f371f6 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CREATEBUCKETREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_CreateBucketRequest_f66532aa = CreateBucketRequest
 
 
 class DeleteBucketRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.DeleteBucketRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.DeleteBucketRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_purge__(_NebiusOneOf):
         name: str = 'purge'
@@ -987,6 +1154,7 @@ class DeleteBucketRequest(Message):
         purge_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         ttl: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1003,6 +1171,7 @@ class DeleteBucketRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_DELETEBUCKETREQUEST_ID, value)
 
     @_NebiusProperty
@@ -1013,6 +1182,7 @@ class DeleteBucketRequest(Message):
 
     @purge_at.setter
     def purge_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``purge_at`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_DELETEBUCKETREQUEST_PURGE_AT, value)
 
     @_NebiusProperty
@@ -1023,18 +1193,25 @@ class DeleteBucketRequest(Message):
 
     @ttl.setter
     def ttl(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``ttl`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_DELETEBUCKETREQUEST_TTL, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'purge_at': 'purge_at', 'ttl': 'ttl', 'purge': 'purge'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_DeleteBucketRequest_8848d9ae = DeleteBucketRequest
 
 
 class GetBucketByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.GetBucketByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.GetBucketByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1043,6 +1220,7 @@ class GetBucketByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1057,6 +1235,7 @@ class GetBucketByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_GETBUCKETBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1066,18 +1245,25 @@ class GetBucketByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_GETBUCKETBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_GetBucketByNameRequest_1aa749ef = GetBucketByNameRequest
 
 
 class GetBucketRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.GetBucketRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.GetBucketRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1085,6 +1271,7 @@ class GetBucketRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1097,18 +1284,25 @@ class GetBucketRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_GETBUCKETREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_GetBucketRequest_d3b9b9cb = GetBucketRequest
 
 
 class ListBucketsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.ListBucketsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.ListBucketsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1119,6 +1313,7 @@ class ListBucketsRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1138,6 +1333,7 @@ class ListBucketsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LISTBUCKETSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1148,6 +1344,7 @@ class ListBucketsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LISTBUCKETSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1158,6 +1355,7 @@ class ListBucketsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LISTBUCKETSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -1168,18 +1366,25 @@ class ListBucketsRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LISTBUCKETSREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_ListBucketsRequest_7af955f9 = ListBucketsRequest
 
 
 class ListBucketsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.ListBucketsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.ListBucketsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1188,6 +1393,7 @@ class ListBucketsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_storage_v1_Bucket_c5ed3d11] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1203,6 +1409,7 @@ class ListBucketsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_Bucket_c5ed3d11] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LISTBUCKETSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1213,18 +1420,25 @@ class ListBucketsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LISTBUCKETSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_ListBucketsResponse_5649c879 = ListBucketsResponse
 
 
 class PurgeBucketRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.PurgeBucketRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.PurgeBucketRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1232,6 +1446,7 @@ class PurgeBucketRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1244,18 +1459,25 @@ class PurgeBucketRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_PURGEBUCKETREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_PurgeBucketRequest_d8f34cac = PurgeBucketRequest
 
 
 class UndeleteBucketRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.UndeleteBucketRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.UndeleteBucketRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1263,6 +1485,7 @@ class UndeleteBucketRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1275,18 +1498,25 @@ class UndeleteBucketRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_UNDELETEBUCKETREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_UndeleteBucketRequest_2a3ae5c4 = UndeleteBucketRequest
 
 
 class UpdateBucketRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.UpdateBucketRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.UpdateBucketRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1295,6 +1525,7 @@ class UpdateBucketRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_storage_v1_BucketSpec_c5f371f6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1309,6 +1540,7 @@ class UpdateBucketRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_UPDATEBUCKETREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1318,18 +1550,25 @@ class UpdateBucketRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_storage_v1_BucketSpec_c5f371f6 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_UPDATEBUCKETREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_UpdateBucketRequest_e10e3df5 = UpdateBucketRequest
 
 class CORSConfiguration(Message):
     'Cross-origin resource sharing (CORS) configuration.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.CORSConfiguration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.CORSConfiguration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1337,6 +1576,7 @@ class CORSConfiguration(Message):
         *,
         rules: _NebiusIterable[_NebiusType_nebius_storage_v1_CORSRule_262cd997] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if rules is not _NEBIUS_UNSET:
             values['rules'] = rules
@@ -1350,18 +1590,25 @@ class CORSConfiguration(Message):
 
     @rules.setter
     def rules(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_CORSRule_262cd997] | None) -> None:
+        """Set or clear the generated ``rules`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CORSCONFIGURATION_RULES, value)
 
     __PY_TO_PB2__ = {'rules': 'rules'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_CORSConfiguration_871bd486 = CORSConfiguration
 
 
 class CORSRule(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.CORSRule'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.CORSRule')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__id__(_NebiusOneOf):
         name: str = '_id'
@@ -1416,6 +1663,7 @@ class CORSRule(Message):
         expose_headers: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         max_age_seconds: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1439,6 +1687,7 @@ class CORSRule(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CORSRULE_ID, value)
 
     @_NebiusProperty
@@ -1449,6 +1698,7 @@ class CORSRule(Message):
 
     @allowed_headers.setter
     def allowed_headers(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``allowed_headers`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CORSRULE_ALLOWED_HEADERS, value)
 
     @_NebiusProperty
@@ -1459,6 +1709,7 @@ class CORSRule(Message):
 
     @allowed_origins.setter
     def allowed_origins(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``allowed_origins`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CORSRULE_ALLOWED_ORIGINS, value)
 
     @_NebiusProperty
@@ -1469,6 +1720,7 @@ class CORSRule(Message):
 
     @allowed_methods.setter
     def allowed_methods(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``allowed_methods`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CORSRULE_ALLOWED_METHODS, value)
 
     @_NebiusProperty
@@ -1479,6 +1731,7 @@ class CORSRule(Message):
 
     @expose_headers.setter
     def expose_headers(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``expose_headers`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CORSRULE_EXPOSE_HEADERS, value)
 
     @_NebiusProperty
@@ -1489,17 +1742,24 @@ class CORSRule(Message):
 
     @max_age_seconds.setter
     def max_age_seconds(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``max_age_seconds`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_CORSRULE_MAX_AGE_SECONDS, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'allowed_headers': 'allowed_headers', 'allowed_origins': 'allowed_origins', 'allowed_methods': 'allowed_methods', 'expose_headers': 'expose_headers', 'max_age_seconds': 'max_age_seconds', '_id': '_id', '_max_age_seconds': '_max_age_seconds'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_CORSRule_262cd997 = CORSRule
 
 class LifecycleAccessFilter__Condition(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleAccessFilter.Condition'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleAccessFilter.Condition')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Type: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_Type_6f021696
     Method: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_Method_f445d372
 
@@ -1511,6 +1771,7 @@ class LifecycleAccessFilter__Condition(Message):
         methods: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_Method_f445d372] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         user_agents: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if type is not _NEBIUS_UNSET:
             values['type'] = type
@@ -1527,6 +1788,7 @@ class LifecycleAccessFilter__Condition(Message):
 
     @type.setter
     def type(self, value: _NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_Type_6f021696 | None) -> None:
+        """Set or clear the generated ``type`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEACCESSFILTER_CONDITION_TYPE, value)
 
     @_NebiusProperty
@@ -1537,6 +1799,7 @@ class LifecycleAccessFilter__Condition(Message):
 
     @methods.setter
     def methods(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_Method_f445d372] | None) -> None:
+        """Set or clear the generated ``methods`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEACCESSFILTER_CONDITION_METHODS, value)
 
     @_NebiusProperty
@@ -1547,18 +1810,25 @@ class LifecycleAccessFilter__Condition(Message):
 
     @user_agents.setter
     def user_agents(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``user_agents`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEACCESSFILTER_CONDITION_USER_AGENTS, value)
 
     __PY_TO_PB2__ = {'type': 'type', 'methods': 'methods', 'user_agents': 'user_agents', 'Type': 'Type', 'Method': 'Method'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_b709b23b = LifecycleAccessFilter__Condition
 
 
 class LifecycleFilter__Tag(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleFilter.Tag'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleFilter.Tag')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1567,6 +1837,7 @@ class LifecycleFilter__Tag(Message):
         key: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         value: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key is not _NEBIUS_UNSET:
             values['key'] = key
@@ -1581,6 +1852,7 @@ class LifecycleFilter__Tag(Message):
 
     @key.setter
     def key(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEFILTER_TAG_KEY, value)
 
     @_NebiusProperty
@@ -1590,18 +1862,25 @@ class LifecycleFilter__Tag(Message):
 
     @value.setter
     def value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``value`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEFILTER_TAG_VALUE, value)
 
     __PY_TO_PB2__ = {'key': 'key', 'value': 'value'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleFilter_Tag_45c3e211 = LifecycleFilter__Tag
 
 
 class LifecycleAbortIncompleteMultipartUpload(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleAbortIncompleteMultipartUpload'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleAbortIncompleteMultipartUpload')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1609,6 +1888,7 @@ class LifecycleAbortIncompleteMultipartUpload(Message):
         *,
         days_after_initiation: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if days_after_initiation is not _NEBIUS_UNSET:
             values['days_after_initiation'] = days_after_initiation
@@ -1622,19 +1902,26 @@ class LifecycleAbortIncompleteMultipartUpload(Message):
 
     @days_after_initiation.setter
     def days_after_initiation(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``days_after_initiation`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEABORTINCOMPLETEMULTIPARTUPLOAD_DAYS_AFTER_INITIATION, value)
 
     __PY_TO_PB2__ = {'days_after_initiation': 'days_after_initiation'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleAbortIncompleteMultipartUpload_892e3b56 = LifecycleAbortIncompleteMultipartUpload
 
 
 class LifecycleAccessFilter(Message):
     'Specifies which requests are included in ``days_since_last_access`` calculations.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleAccessFilter'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleAccessFilter')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Condition: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_b709b23b
 
     def __init__(
@@ -1643,6 +1930,7 @@ class LifecycleAccessFilter(Message):
         *,
         conditions: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_b709b23b] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if conditions is not _NEBIUS_UNSET:
             values['conditions'] = conditions
@@ -1656,19 +1944,26 @@ class LifecycleAccessFilter(Message):
 
     @conditions.setter
     def conditions(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleAccessFilter_Condition_b709b23b] | None) -> None:
+        """Set or clear the generated ``conditions`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEACCESSFILTER_CONDITIONS, value)
 
     __PY_TO_PB2__ = {'conditions': 'conditions', 'Condition': 'Condition'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleAccessFilter_eea17171 = LifecycleAccessFilter
 
 
 class LifecycleConfiguration(Message):
     'The lifecycle configuration consists of one or more rules.\nAn Lifecycle configuration can have up to 1,000 rules.\nEach rule consists of the following:\n\n\n* A filter identifying a subset of objects to which the rule applies.\n  The filter can be based on a key name prefix, object size, or any combination of these.\n* A status indicating whether the rule is currently active.\n* One or more lifecycle expiration actions that you want to be performed on the objects\n  identified by the filter. If the state of your bucket is versioning-enabled or versioning-suspended\n  (bucket.spec.versioning_policy equals to ENABLED or SUSPENDED) you can have many versions of the same\n  object (one current version and zero or more noncurrent versions). The system provides predefined actions\n  that you can specify for current and noncurrent object versions.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleConfiguration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleConfiguration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1677,6 +1972,7 @@ class LifecycleConfiguration(Message):
         rules: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleRule_627004f1] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         last_access_filter: _NebiusType_nebius_storage_v1_LifecycleAccessFilter_eea17171 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if rules is not _NEBIUS_UNSET:
             values['rules'] = rules
@@ -1691,6 +1987,7 @@ class LifecycleConfiguration(Message):
 
     @rules.setter
     def rules(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleRule_627004f1] | None) -> None:
+        """Set or clear the generated ``rules`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLECONFIGURATION_RULES, value)
 
     @_NebiusProperty
@@ -1701,18 +1998,25 @@ class LifecycleConfiguration(Message):
 
     @last_access_filter.setter
     def last_access_filter(self, value: _NebiusType_nebius_storage_v1_LifecycleAccessFilter_eea17171 | None) -> None:
+        """Set or clear the generated ``last_access_filter`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLECONFIGURATION_LAST_ACCESS_FILTER, value)
 
     __PY_TO_PB2__ = {'rules': 'rules', 'last_access_filter': 'last_access_filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleConfiguration_195d8d0e = LifecycleConfiguration
 
 
 class LifecycleExpiration(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleExpiration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleExpiration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_expired_with__(_NebiusOneOf):
         name: str = 'expired_with'
@@ -1752,6 +2056,7 @@ class LifecycleExpiration(Message):
         days: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         expired_object_delete_marker: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if date is not _NEBIUS_UNSET:
             values['date'] = date
@@ -1769,6 +2074,7 @@ class LifecycleExpiration(Message):
 
     @date.setter
     def date(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``date`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEEXPIRATION_DATE, value)
 
     @_NebiusProperty
@@ -1779,6 +2085,7 @@ class LifecycleExpiration(Message):
 
     @days.setter
     def days(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``days`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEEXPIRATION_DAYS, value)
 
     @_NebiusProperty
@@ -1789,18 +2096,25 @@ class LifecycleExpiration(Message):
 
     @expired_object_delete_marker.setter
     def expired_object_delete_marker(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``expired_object_delete_marker`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEEXPIRATION_EXPIRED_OBJECT_DELETE_MARKER, value)
 
     __PY_TO_PB2__ = {'date': 'date', 'days': 'days', 'expired_object_delete_marker': 'expired_object_delete_marker', 'expired_with': 'expired_with'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleExpiration_5756abac = LifecycleExpiration
 
 
 class LifecycleFilter(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleFilter'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleFilter')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Tag: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_LifecycleFilter_Tag_45c3e211
 
     def __init__(
@@ -1812,6 +2126,7 @@ class LifecycleFilter(Message):
         object_size_less_than_bytes: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         tags: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleFilter_Tag_45c3e211] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if prefix is not _NEBIUS_UNSET:
             values['prefix'] = prefix
@@ -1831,6 +2146,7 @@ class LifecycleFilter(Message):
 
     @prefix.setter
     def prefix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``prefix`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEFILTER_PREFIX, value)
 
     @_NebiusProperty
@@ -1841,6 +2157,7 @@ class LifecycleFilter(Message):
 
     @object_size_greater_than_bytes.setter
     def object_size_greater_than_bytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``object_size_greater_than_bytes`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEFILTER_OBJECT_SIZE_GREATER_THAN_BYTES, value)
 
     @_NebiusProperty
@@ -1851,6 +2168,7 @@ class LifecycleFilter(Message):
 
     @object_size_less_than_bytes.setter
     def object_size_less_than_bytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``object_size_less_than_bytes`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEFILTER_OBJECT_SIZE_LESS_THAN_BYTES, value)
 
     @_NebiusProperty
@@ -1861,18 +2179,25 @@ class LifecycleFilter(Message):
 
     @tags.setter
     def tags(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_LifecycleFilter_Tag_45c3e211] | None) -> None:
+        """Set or clear the generated ``tags`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLEFILTER_TAGS, value)
 
     __PY_TO_PB2__ = {'prefix': 'prefix', 'object_size_greater_than_bytes': 'object_size_greater_than_bytes', 'object_size_less_than_bytes': 'object_size_less_than_bytes', 'tags': 'tags', 'Tag': 'Tag'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleFilter_3cc30bea = LifecycleFilter
 
 
 class LifecycleNoncurrentVersionExpiration(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleNoncurrentVersionExpiration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleNoncurrentVersionExpiration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__newer_noncurrent_versions__(_NebiusOneOf):
         name: str = '_newer_noncurrent_versions'
@@ -1902,6 +2227,7 @@ class LifecycleNoncurrentVersionExpiration(Message):
         newer_noncurrent_versions: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         noncurrent_days: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if newer_noncurrent_versions is not _NEBIUS_UNSET:
             values['newer_noncurrent_versions'] = newer_noncurrent_versions
@@ -1917,6 +2243,7 @@ class LifecycleNoncurrentVersionExpiration(Message):
 
     @newer_noncurrent_versions.setter
     def newer_noncurrent_versions(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``newer_noncurrent_versions`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLENONCURRENTVERSIONEXPIRATION_NEWER_NONCURRENT_VERSIONS, value)
 
     @_NebiusProperty
@@ -1927,18 +2254,25 @@ class LifecycleNoncurrentVersionExpiration(Message):
 
     @noncurrent_days.setter
     def noncurrent_days(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``noncurrent_days`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLENONCURRENTVERSIONEXPIRATION_NONCURRENT_DAYS, value)
 
     __PY_TO_PB2__ = {'newer_noncurrent_versions': 'newer_noncurrent_versions', 'noncurrent_days': 'noncurrent_days', '_newer_noncurrent_versions': '_newer_noncurrent_versions'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleNoncurrentVersionExpiration_44c40885 = LifecycleNoncurrentVersionExpiration
 
 
 class LifecycleNoncurrentVersionTransition(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleNoncurrentVersionTransition'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleNoncurrentVersionTransition')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__newer_noncurrent_versions__(_NebiusOneOf):
         name: str = '_newer_noncurrent_versions'
@@ -1969,6 +2303,7 @@ class LifecycleNoncurrentVersionTransition(Message):
         noncurrent_days: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         storage_class: _NebiusType_nebius_storage_v1_StorageClass_82dfdd55 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if newer_noncurrent_versions is not _NEBIUS_UNSET:
             values['newer_noncurrent_versions'] = newer_noncurrent_versions
@@ -1986,6 +2321,7 @@ class LifecycleNoncurrentVersionTransition(Message):
 
     @newer_noncurrent_versions.setter
     def newer_noncurrent_versions(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``newer_noncurrent_versions`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLENONCURRENTVERSIONTRANSITION_NEWER_NONCURRENT_VERSIONS, value)
 
     @_NebiusProperty
@@ -1996,6 +2332,7 @@ class LifecycleNoncurrentVersionTransition(Message):
 
     @noncurrent_days.setter
     def noncurrent_days(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``noncurrent_days`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLENONCURRENTVERSIONTRANSITION_NONCURRENT_DAYS, value)
 
     @_NebiusProperty
@@ -2006,18 +2343,25 @@ class LifecycleNoncurrentVersionTransition(Message):
 
     @storage_class.setter
     def storage_class(self, value: _NebiusType_nebius_storage_v1_StorageClass_82dfdd55 | None) -> None:
+        """Set or clear the generated ``storage_class`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLENONCURRENTVERSIONTRANSITION_STORAGE_CLASS, value)
 
     __PY_TO_PB2__ = {'newer_noncurrent_versions': 'newer_noncurrent_versions', 'noncurrent_days': 'noncurrent_days', 'storage_class': 'storage_class', '_newer_noncurrent_versions': '_newer_noncurrent_versions'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleNoncurrentVersionTransition_756bb1e6 = LifecycleNoncurrentVersionTransition
 
 
 class LifecycleRule(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleRule'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleRule')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Status: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_LifecycleRule_Status_c506af7f
 
     def __init__(
@@ -2033,6 +2377,7 @@ class LifecycleRule(Message):
         transition: _NebiusType_nebius_storage_v1_LifecycleTransition_d1cd3c3c | None | _NebiusUnsetType = _NEBIUS_UNSET,
         noncurrent_version_transition: _NebiusType_nebius_storage_v1_LifecycleNoncurrentVersionTransition_756bb1e6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -2060,6 +2405,7 @@ class LifecycleRule(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_ID, value)
 
     @_NebiusProperty
@@ -2069,6 +2415,7 @@ class LifecycleRule(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_storage_v1_LifecycleRule_Status_c506af7f | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_STATUS, value)
 
     @_NebiusProperty
@@ -2079,6 +2426,7 @@ class LifecycleRule(Message):
 
     @filter.setter
     def filter(self, value: _NebiusType_nebius_storage_v1_LifecycleFilter_3cc30bea | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_FILTER, value)
 
     @_NebiusProperty
@@ -2089,6 +2437,7 @@ class LifecycleRule(Message):
 
     @expiration.setter
     def expiration(self, value: _NebiusType_nebius_storage_v1_LifecycleExpiration_5756abac | None) -> None:
+        """Set or clear the generated ``expiration`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_EXPIRATION, value)
 
     @_NebiusProperty
@@ -2099,6 +2448,7 @@ class LifecycleRule(Message):
 
     @noncurrent_version_expiration.setter
     def noncurrent_version_expiration(self, value: _NebiusType_nebius_storage_v1_LifecycleNoncurrentVersionExpiration_44c40885 | None) -> None:
+        """Set or clear the generated ``noncurrent_version_expiration`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_NONCURRENT_VERSION_EXPIRATION, value)
 
     @_NebiusProperty
@@ -2109,6 +2459,7 @@ class LifecycleRule(Message):
 
     @abort_incomplete_multipart_upload.setter
     def abort_incomplete_multipart_upload(self, value: _NebiusType_nebius_storage_v1_LifecycleAbortIncompleteMultipartUpload_892e3b56 | None) -> None:
+        """Set or clear the generated ``abort_incomplete_multipart_upload`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_ABORT_INCOMPLETE_MULTIPART_UPLOAD, value)
 
     @_NebiusProperty
@@ -2119,6 +2470,7 @@ class LifecycleRule(Message):
 
     @transition.setter
     def transition(self, value: _NebiusType_nebius_storage_v1_LifecycleTransition_d1cd3c3c | None) -> None:
+        """Set or clear the generated ``transition`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_TRANSITION, value)
 
     @_NebiusProperty
@@ -2129,18 +2481,25 @@ class LifecycleRule(Message):
 
     @noncurrent_version_transition.setter
     def noncurrent_version_transition(self, value: _NebiusType_nebius_storage_v1_LifecycleNoncurrentVersionTransition_756bb1e6 | None) -> None:
+        """Set or clear the generated ``noncurrent_version_transition`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLERULE_NONCURRENT_VERSION_TRANSITION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'status': 'status', 'filter': 'filter', 'expiration': 'expiration', 'noncurrent_version_expiration': 'noncurrent_version_expiration', 'abort_incomplete_multipart_upload': 'abort_incomplete_multipart_upload', 'transition': 'transition', 'noncurrent_version_transition': 'noncurrent_version_transition', 'Status': 'Status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleRule_627004f1 = LifecycleRule
 
 
 class LifecycleTransition(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleTransition'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.LifecycleTransition')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_transited_with__(_NebiusOneOf):
         name: str = 'transited_with'
@@ -2190,6 +2549,7 @@ class LifecycleTransition(Message):
         days_since_last_access: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         storage_class: _NebiusType_nebius_storage_v1_StorageClass_82dfdd55 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if date is not _NEBIUS_UNSET:
             values['date'] = date
@@ -2209,6 +2569,7 @@ class LifecycleTransition(Message):
 
     @date.setter
     def date(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``date`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLETRANSITION_DATE, value)
 
     @_NebiusProperty
@@ -2219,6 +2580,7 @@ class LifecycleTransition(Message):
 
     @days.setter
     def days(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``days`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLETRANSITION_DAYS, value)
 
     @_NebiusProperty
@@ -2229,6 +2591,7 @@ class LifecycleTransition(Message):
 
     @days_since_last_access.setter
     def days_since_last_access(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``days_since_last_access`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLETRANSITION_DAYS_SINCE_LAST_ACCESS, value)
 
     @_NebiusProperty
@@ -2239,17 +2602,24 @@ class LifecycleTransition(Message):
 
     @storage_class.setter
     def storage_class(self, value: _NebiusType_nebius_storage_v1_StorageClass_82dfdd55 | None) -> None:
+        """Set or clear the generated ``storage_class`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_LIFECYCLETRANSITION_STORAGE_CLASS, value)
 
     __PY_TO_PB2__ = {'date': 'date', 'days': 'days', 'days_since_last_access': 'days_since_last_access', 'storage_class': 'storage_class', 'transited_with': 'transited_with'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_LifecycleTransition_d1cd3c3c = LifecycleTransition
 
 class TransferDestination__NebiusProvider(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferDestination.NebiusProvider'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferDestination.NebiusProvider')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_credentials__(_NebiusOneOf):
         name: str = 'credentials'
@@ -2280,6 +2650,7 @@ class TransferDestination__NebiusProvider(Message):
         bucket_name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         access_key: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if region is not _NEBIUS_UNSET:
             values['region'] = region
@@ -2297,6 +2668,7 @@ class TransferDestination__NebiusProvider(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_NEBIUSPROVIDER_REGION, value)
 
     @_NebiusProperty
@@ -2307,6 +2679,7 @@ class TransferDestination__NebiusProvider(Message):
 
     @bucket_name.setter
     def bucket_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``bucket_name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_NEBIUSPROVIDER_BUCKET_NAME, value)
 
     @_NebiusProperty
@@ -2316,18 +2689,25 @@ class TransferDestination__NebiusProvider(Message):
 
     @access_key.setter
     def access_key(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None) -> None:
+        """Set or clear the generated ``access_key`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_NEBIUSPROVIDER_ACCESS_KEY, value)
 
     __PY_TO_PB2__ = {'region': 'region', 'bucket_name': 'bucket_name', 'access_key': 'access_key', 'credentials': 'credentials'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferDestination_NebiusProvider_9dbc289b = TransferDestination__NebiusProvider
 
 
 class TransferDestination__S3CompatibleProvider(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferDestination.S3CompatibleProvider'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferDestination.S3CompatibleProvider')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_credentials__(_NebiusOneOf):
         name: str = 'credentials'
@@ -2369,6 +2749,7 @@ class TransferDestination__S3CompatibleProvider(Message):
         anonymous: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         access_key: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if endpoint is not _NEBIUS_UNSET:
             values['endpoint'] = endpoint
@@ -2390,6 +2771,7 @@ class TransferDestination__S3CompatibleProvider(Message):
 
     @endpoint.setter
     def endpoint(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``endpoint`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_S3COMPATIBLEPROVIDER_ENDPOINT, value)
 
     @_NebiusProperty
@@ -2400,6 +2782,7 @@ class TransferDestination__S3CompatibleProvider(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_S3COMPATIBLEPROVIDER_REGION, value)
 
     @_NebiusProperty
@@ -2410,6 +2793,7 @@ class TransferDestination__S3CompatibleProvider(Message):
 
     @bucket_name.setter
     def bucket_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``bucket_name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_S3COMPATIBLEPROVIDER_BUCKET_NAME, value)
 
     @_NebiusProperty
@@ -2419,6 +2803,7 @@ class TransferDestination__S3CompatibleProvider(Message):
 
     @anonymous.setter
     def anonymous(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None) -> None:
+        """Set or clear the generated ``anonymous`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_S3COMPATIBLEPROVIDER_ANONYMOUS, value)
 
     @_NebiusProperty
@@ -2428,18 +2813,25 @@ class TransferDestination__S3CompatibleProvider(Message):
 
     @access_key.setter
     def access_key(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None) -> None:
+        """Set or clear the generated ``access_key`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_S3COMPATIBLEPROVIDER_ACCESS_KEY, value)
 
     __PY_TO_PB2__ = {'endpoint': 'endpoint', 'region': 'region', 'bucket_name': 'bucket_name', 'anonymous': 'anonymous', 'access_key': 'access_key', 'credentials': 'credentials'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferDestination_S3CompatibleProvider_1377c78b = TransferDestination__S3CompatibleProvider
 
 
 class TransferSource__AzureBlobStorageProvider(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSource.AzureBlobStorageProvider'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSource.AzureBlobStorageProvider')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_credentials__(_NebiusOneOf):
         name: str = 'credentials'
@@ -2480,6 +2872,7 @@ class TransferSource__AzureBlobStorageProvider(Message):
         anonymous: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         azure_storage_account: _NebiusType_nebius_storage_v1_TransferCredentialsAzureStorageAccount_26400290 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if endpoint is not _NEBIUS_UNSET:
             values['endpoint'] = endpoint
@@ -2499,6 +2892,7 @@ class TransferSource__AzureBlobStorageProvider(Message):
 
     @endpoint.setter
     def endpoint(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``endpoint`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_AZUREBLOBSTORAGEPROVIDER_ENDPOINT, value)
 
     @_NebiusProperty
@@ -2509,6 +2903,7 @@ class TransferSource__AzureBlobStorageProvider(Message):
 
     @container_name.setter
     def container_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``container_name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_AZUREBLOBSTORAGEPROVIDER_CONTAINER_NAME, value)
 
     @_NebiusProperty
@@ -2518,6 +2913,7 @@ class TransferSource__AzureBlobStorageProvider(Message):
 
     @anonymous.setter
     def anonymous(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None) -> None:
+        """Set or clear the generated ``anonymous`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_AZUREBLOBSTORAGEPROVIDER_ANONYMOUS, value)
 
     @_NebiusProperty
@@ -2527,18 +2923,25 @@ class TransferSource__AzureBlobStorageProvider(Message):
 
     @azure_storage_account.setter
     def azure_storage_account(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAzureStorageAccount_26400290 | None) -> None:
+        """Set or clear the generated ``azure_storage_account`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_AZUREBLOBSTORAGEPROVIDER_AZURE_STORAGE_ACCOUNT, value)
 
     __PY_TO_PB2__ = {'endpoint': 'endpoint', 'container_name': 'container_name', 'anonymous': 'anonymous', 'azure_storage_account': 'azure_storage_account', 'credentials': 'credentials'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSource_AzureBlobStorageProvider_adc9088d = TransferSource__AzureBlobStorageProvider
 
 
 class TransferSource__NebiusProvider(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSource.NebiusProvider'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSource.NebiusProvider')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_credentials__(_NebiusOneOf):
         name: str = 'credentials'
@@ -2579,6 +2982,7 @@ class TransferSource__NebiusProvider(Message):
         anonymous: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         access_key: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if region is not _NEBIUS_UNSET:
             values['region'] = region
@@ -2598,6 +3002,7 @@ class TransferSource__NebiusProvider(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_NEBIUSPROVIDER_REGION, value)
 
     @_NebiusProperty
@@ -2608,6 +3013,7 @@ class TransferSource__NebiusProvider(Message):
 
     @bucket_name.setter
     def bucket_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``bucket_name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_NEBIUSPROVIDER_BUCKET_NAME, value)
 
     @_NebiusProperty
@@ -2617,6 +3023,7 @@ class TransferSource__NebiusProvider(Message):
 
     @anonymous.setter
     def anonymous(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None) -> None:
+        """Set or clear the generated ``anonymous`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_NEBIUSPROVIDER_ANONYMOUS, value)
 
     @_NebiusProperty
@@ -2626,18 +3033,25 @@ class TransferSource__NebiusProvider(Message):
 
     @access_key.setter
     def access_key(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None) -> None:
+        """Set or clear the generated ``access_key`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_NEBIUSPROVIDER_ACCESS_KEY, value)
 
     __PY_TO_PB2__ = {'region': 'region', 'bucket_name': 'bucket_name', 'anonymous': 'anonymous', 'access_key': 'access_key', 'credentials': 'credentials'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSource_NebiusProvider_f502dd51 = TransferSource__NebiusProvider
 
 
 class TransferSource__S3CompatibleProvider(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSource.S3CompatibleProvider'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSource.S3CompatibleProvider')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_credentials__(_NebiusOneOf):
         name: str = 'credentials'
@@ -2679,6 +3093,7 @@ class TransferSource__S3CompatibleProvider(Message):
         anonymous: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         access_key: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if endpoint is not _NEBIUS_UNSET:
             values['endpoint'] = endpoint
@@ -2700,6 +3115,7 @@ class TransferSource__S3CompatibleProvider(Message):
 
     @endpoint.setter
     def endpoint(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``endpoint`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_S3COMPATIBLEPROVIDER_ENDPOINT, value)
 
     @_NebiusProperty
@@ -2710,6 +3126,7 @@ class TransferSource__S3CompatibleProvider(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_S3COMPATIBLEPROVIDER_REGION, value)
 
     @_NebiusProperty
@@ -2720,6 +3137,7 @@ class TransferSource__S3CompatibleProvider(Message):
 
     @bucket_name.setter
     def bucket_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``bucket_name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_S3COMPATIBLEPROVIDER_BUCKET_NAME, value)
 
     @_NebiusProperty
@@ -2729,6 +3147,7 @@ class TransferSource__S3CompatibleProvider(Message):
 
     @anonymous.setter
     def anonymous(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 | None) -> None:
+        """Set or clear the generated ``anonymous`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_S3COMPATIBLEPROVIDER_ANONYMOUS, value)
 
     @_NebiusProperty
@@ -2738,18 +3157,25 @@ class TransferSource__S3CompatibleProvider(Message):
 
     @access_key.setter
     def access_key(self, value: _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 | None) -> None:
+        """Set or clear the generated ``access_key`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_S3COMPATIBLEPROVIDER_ACCESS_KEY, value)
 
     __PY_TO_PB2__ = {'endpoint': 'endpoint', 'region': 'region', 'bucket_name': 'bucket_name', 'anonymous': 'anonymous', 'access_key': 'access_key', 'credentials': 'credentials'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSource_S3CompatibleProvider_0e960f55 = TransferSource__S3CompatibleProvider
 
 
 class TransferSpec__Limiters(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSpec.Limiters'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSpec.Limiters')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2758,6 +3184,7 @@ class TransferSpec__Limiters(Message):
         bandwidth_bytes_per_second: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         requests_per_second: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if bandwidth_bytes_per_second is not _NEBIUS_UNSET:
             values['bandwidth_bytes_per_second'] = bandwidth_bytes_per_second
@@ -2773,6 +3200,7 @@ class TransferSpec__Limiters(Message):
 
     @bandwidth_bytes_per_second.setter
     def bandwidth_bytes_per_second(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``bandwidth_bytes_per_second`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_LIMITERS_BANDWIDTH_BYTES_PER_SECOND, value)
 
     @_NebiusProperty
@@ -2783,18 +3211,25 @@ class TransferSpec__Limiters(Message):
 
     @requests_per_second.setter
     def requests_per_second(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``requests_per_second`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_LIMITERS_REQUESTS_PER_SECOND, value)
 
     __PY_TO_PB2__ = {'bandwidth_bytes_per_second': 'bandwidth_bytes_per_second', 'requests_per_second': 'requests_per_second'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSpec_Limiters_d633b13e = TransferSpec__Limiters
 
 
 class TransferSpec__StopConditionAfterNEmptyIterations(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSpec.StopConditionAfterNEmptyIterations'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSpec.StopConditionAfterNEmptyIterations')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2802,6 +3237,7 @@ class TransferSpec__StopConditionAfterNEmptyIterations(Message):
         *,
         empty_iterations_threshold: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if empty_iterations_threshold is not _NEBIUS_UNSET:
             values['empty_iterations_threshold'] = empty_iterations_threshold
@@ -2815,57 +3251,78 @@ class TransferSpec__StopConditionAfterNEmptyIterations(Message):
 
     @empty_iterations_threshold.setter
     def empty_iterations_threshold(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``empty_iterations_threshold`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_STOPCONDITIONAFTERNEMPTYITERATIONS_EMPTY_ITERATIONS_THRESHOLD, value)
 
     __PY_TO_PB2__ = {'empty_iterations_threshold': 'empty_iterations_threshold'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSpec_StopConditionAfterNEmptyIterations_d0982306 = TransferSpec__StopConditionAfterNEmptyIterations
 
 
 class TransferSpec__StopConditionAfterOneIteration(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSpec.StopConditionAfterOneIteration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSpec.StopConditionAfterOneIteration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSpec_StopConditionAfterOneIteration_c6b6b6f5 = TransferSpec__StopConditionAfterOneIteration
 
 
 class TransferSpec__StopConditionInfinite(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSpec.StopConditionInfinite'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSpec.StopConditionInfinite')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSpec_StopConditionInfinite_35648023 = TransferSpec__StopConditionInfinite
 
 
 class Transfer(Message):
     'Transfer that migrates data from other providers or across different regions of Nebius Object Storage.\nTransfer consists of consecutive iterations where the service lists objects in the source bucket and\nmoves those that need to be transferred according to the specified overwrite strategy and touch unmanaged flag value.\nIf the enable deletes in destination flag is set, the service also lists destination bucket and deletes\nobjects which do not exist in the source bucket according to the touch unmanaged flag value.\nAfter an iteration completes, the transfer will stop if its stop condition is met. Otherwise,\nit will wait for the defined inter-iteration interval before starting the next iteration.'
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.Transfer'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.Transfer')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2875,6 +3332,7 @@ class Transfer(Message):
         spec: _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_storage_v1_TransferStatus_9e032907 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2891,6 +3349,7 @@ class Transfer(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFER_METADATA, value)
 
     @_NebiusProperty
@@ -2900,6 +3359,7 @@ class Transfer(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFER_SPEC, value)
 
     @_NebiusProperty
@@ -2909,18 +3369,25 @@ class Transfer(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_storage_v1_TransferStatus_9e032907 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFER_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_Transfer_b768fc5b = Transfer
 
 
 class TransferCredentialsAccessKey(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferCredentialsAccessKey'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferCredentialsAccessKey')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2929,6 +3396,7 @@ class TransferCredentialsAccessKey(Message):
         access_key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         secret_access_key: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if access_key_id is not _NEBIUS_UNSET:
             values['access_key_id'] = access_key_id
@@ -2944,6 +3412,7 @@ class TransferCredentialsAccessKey(Message):
 
     @access_key_id.setter
     def access_key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``access_key_id`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERCREDENTIALSACCESSKEY_ACCESS_KEY_ID, value)
 
     @_NebiusProperty
@@ -2954,37 +3423,51 @@ class TransferCredentialsAccessKey(Message):
 
     @secret_access_key.setter
     def secret_access_key(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``secret_access_key`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERCREDENTIALSACCESSKEY_SECRET_ACCESS_KEY, value)
 
     __PY_TO_PB2__ = {'access_key_id': 'access_key_id', 'secret_access_key': 'secret_access_key'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferCredentialsAccessKey_d2777a57 = TransferCredentialsAccessKey
 
 
 class TransferCredentialsAnonymous(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferCredentialsAnonymous'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferCredentialsAnonymous')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferCredentialsAnonymous_d8afac58 = TransferCredentialsAnonymous
 
 
 class TransferCredentialsAzureStorageAccount(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferCredentialsAzureStorageAccount'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferCredentialsAzureStorageAccount')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2993,6 +3476,7 @@ class TransferCredentialsAzureStorageAccount(Message):
         account_name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         access_key: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if account_name is not _NEBIUS_UNSET:
             values['account_name'] = account_name
@@ -3008,6 +3492,7 @@ class TransferCredentialsAzureStorageAccount(Message):
 
     @account_name.setter
     def account_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``account_name`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERCREDENTIALSAZURESTORAGEACCOUNT_ACCOUNT_NAME, value)
 
     @_NebiusProperty
@@ -3018,18 +3503,25 @@ class TransferCredentialsAzureStorageAccount(Message):
 
     @access_key.setter
     def access_key(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``access_key`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERCREDENTIALSAZURESTORAGEACCOUNT_ACCESS_KEY, value)
 
     __PY_TO_PB2__ = {'account_name': 'account_name', 'access_key': 'access_key'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferCredentialsAzureStorageAccount_26400290 = TransferCredentialsAzureStorageAccount
 
 
 class TransferDestination(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferDestination'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferDestination')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     NebiusProvider: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferDestination_NebiusProvider_9dbc289b
     S3CompatibleProvider: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferDestination_S3CompatibleProvider_1377c78b
 
@@ -3071,6 +3563,7 @@ class TransferDestination(Message):
         s3_compatible: _NebiusType_nebius_storage_v1_TransferDestination_S3CompatibleProvider_1377c78b | None | _NebiusUnsetType = _NEBIUS_UNSET,
         prefix: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if nebius is not _NEBIUS_UNSET:
             values['nebius'] = nebius
@@ -3087,6 +3580,7 @@ class TransferDestination(Message):
 
     @nebius.setter
     def nebius(self, value: _NebiusType_nebius_storage_v1_TransferDestination_NebiusProvider_9dbc289b | None) -> None:
+        """Set or clear the generated ``nebius`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_NEBIUS, value)
 
     @_NebiusProperty
@@ -3096,6 +3590,7 @@ class TransferDestination(Message):
 
     @s3_compatible.setter
     def s3_compatible(self, value: _NebiusType_nebius_storage_v1_TransferDestination_S3CompatibleProvider_1377c78b | None) -> None:
+        """Set or clear the generated ``s3_compatible`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_S3_COMPATIBLE, value)
 
     @_NebiusProperty
@@ -3106,18 +3601,25 @@ class TransferDestination(Message):
 
     @prefix.setter
     def prefix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``prefix`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERDESTINATION_PREFIX, value)
 
     __PY_TO_PB2__ = {'nebius': 'nebius', 's3_compatible': 's3_compatible', 'prefix': 'prefix', 'provider': 'provider', 'NebiusProvider': 'NebiusProvider', 'S3CompatibleProvider': 'S3CompatibleProvider'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferDestination_178288f8 = TransferDestination
 
 
 class TransferError(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferError'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferError')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Origin: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferError_Origin_3b126870
 
     def __init__(
@@ -3128,6 +3630,7 @@ class TransferError(Message):
         code: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if origin is not _NEBIUS_UNSET:
             values['origin'] = origin
@@ -3145,6 +3648,7 @@ class TransferError(Message):
 
     @origin.setter
     def origin(self, value: _NebiusType_nebius_storage_v1_TransferError_Origin_3b126870 | None) -> None:
+        """Set or clear the generated ``origin`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERERROR_ORIGIN, value)
 
     @_NebiusProperty
@@ -3155,6 +3659,7 @@ class TransferError(Message):
 
     @code.setter
     def code(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``code`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERERROR_CODE, value)
 
     @_NebiusProperty
@@ -3165,18 +3670,25 @@ class TransferError(Message):
 
     @message.setter
     def message(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``message`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERERROR_MESSAGE, value)
 
     __PY_TO_PB2__ = {'origin': 'origin', 'code': 'code', 'message': 'message', 'Origin': 'Origin'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferError_a8ead905 = TransferError
 
 
 class TransferIteration(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferIteration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferIteration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferIteration_State_f4130f10
 
     def __init__(
@@ -3193,6 +3705,7 @@ class TransferIteration(Message):
         objects_transferred_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         average_throughput_bytes: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if sequence_number is not _NEBIUS_UNSET:
             values['sequence_number'] = sequence_number
@@ -3222,6 +3735,7 @@ class TransferIteration(Message):
 
     @sequence_number.setter
     def sequence_number(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``sequence_number`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_SEQUENCE_NUMBER, value)
 
     @_NebiusProperty
@@ -3232,6 +3746,7 @@ class TransferIteration(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_storage_v1_TransferIteration_State_f4130f10 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_STATE, value)
 
     @_NebiusProperty
@@ -3242,6 +3757,7 @@ class TransferIteration(Message):
 
     @error.setter
     def error(self, value: _NebiusType_nebius_storage_v1_TransferError_a8ead905 | None) -> None:
+        """Set or clear the generated ``error`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_ERROR, value)
 
     @_NebiusProperty
@@ -3252,6 +3768,7 @@ class TransferIteration(Message):
 
     @start_time.setter
     def start_time(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``start_time`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_START_TIME, value)
 
     @_NebiusProperty
@@ -3262,6 +3779,7 @@ class TransferIteration(Message):
 
     @end_time.setter
     def end_time(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``end_time`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_END_TIME, value)
 
     @_NebiusProperty
@@ -3272,6 +3790,7 @@ class TransferIteration(Message):
 
     @objects_transferred_count.setter
     def objects_transferred_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``objects_transferred_count`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_OBJECTS_TRANSFERRED_COUNT, value)
 
     @_NebiusProperty
@@ -3282,6 +3801,7 @@ class TransferIteration(Message):
 
     @objects_deleted_count.setter
     def objects_deleted_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``objects_deleted_count`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_OBJECTS_DELETED_COUNT, value)
 
     @_NebiusProperty
@@ -3292,6 +3812,7 @@ class TransferIteration(Message):
 
     @objects_transferred_size.setter
     def objects_transferred_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``objects_transferred_size`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_OBJECTS_TRANSFERRED_SIZE, value)
 
     @_NebiusProperty
@@ -3302,18 +3823,25 @@ class TransferIteration(Message):
 
     @average_throughput_bytes.setter
     def average_throughput_bytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``average_throughput_bytes`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERITERATION_AVERAGE_THROUGHPUT_BYTES, value)
 
     __PY_TO_PB2__ = {'sequence_number': 'sequence_number', 'state': 'state', 'error': 'error', 'start_time': 'start_time', 'end_time': 'end_time', 'objects_transferred_count': 'objects_transferred_count', 'objects_deleted_count': 'objects_deleted_count', 'objects_transferred_size': 'objects_transferred_size', 'average_throughput_bytes': 'average_throughput_bytes', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferIteration_86eab738 = TransferIteration
 
 
 class TransferSource(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSource'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSource')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     NebiusProvider: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferSource_NebiusProvider_f502dd51
     S3CompatibleProvider: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferSource_S3CompatibleProvider_0e960f55
     AzureBlobStorageProvider: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferSource_AzureBlobStorageProvider_adc9088d
@@ -3366,6 +3894,7 @@ class TransferSource(Message):
         azure_blob_storage: _NebiusType_nebius_storage_v1_TransferSource_AzureBlobStorageProvider_adc9088d | None | _NebiusUnsetType = _NEBIUS_UNSET,
         prefix: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if nebius is not _NEBIUS_UNSET:
             values['nebius'] = nebius
@@ -3384,6 +3913,7 @@ class TransferSource(Message):
 
     @nebius.setter
     def nebius(self, value: _NebiusType_nebius_storage_v1_TransferSource_NebiusProvider_f502dd51 | None) -> None:
+        """Set or clear the generated ``nebius`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_NEBIUS, value)
 
     @_NebiusProperty
@@ -3393,6 +3923,7 @@ class TransferSource(Message):
 
     @s3_compatible.setter
     def s3_compatible(self, value: _NebiusType_nebius_storage_v1_TransferSource_S3CompatibleProvider_0e960f55 | None) -> None:
+        """Set or clear the generated ``s3_compatible`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_S3_COMPATIBLE, value)
 
     @_NebiusProperty
@@ -3402,6 +3933,7 @@ class TransferSource(Message):
 
     @azure_blob_storage.setter
     def azure_blob_storage(self, value: _NebiusType_nebius_storage_v1_TransferSource_AzureBlobStorageProvider_adc9088d | None) -> None:
+        """Set or clear the generated ``azure_blob_storage`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_AZURE_BLOB_STORAGE, value)
 
     @_NebiusProperty
@@ -3412,18 +3944,25 @@ class TransferSource(Message):
 
     @prefix.setter
     def prefix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``prefix`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSOURCE_PREFIX, value)
 
     __PY_TO_PB2__ = {'nebius': 'nebius', 's3_compatible': 's3_compatible', 'azure_blob_storage': 'azure_blob_storage', 'prefix': 'prefix', 'provider': 'provider', 'NebiusProvider': 'NebiusProvider', 'S3CompatibleProvider': 'S3CompatibleProvider', 'AzureBlobStorageProvider': 'AzureBlobStorageProvider'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSource_f15dbb62 = TransferSource
 
 
 class TransferSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Limiters: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferSpec_Limiters_d633b13e
     StopConditionAfterOneIteration: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferSpec_StopConditionAfterOneIteration_c6b6b6f5
     StopConditionAfterNEmptyIterations: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferSpec_StopConditionAfterNEmptyIterations_d0982306
@@ -3484,6 +4023,7 @@ class TransferSpec(Message):
         enable_deletes_in_destination: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         touch_unmanaged: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if source is not _NEBIUS_UNSET:
             values['source'] = source
@@ -3515,6 +4055,7 @@ class TransferSpec(Message):
 
     @source.setter
     def source(self, value: _NebiusType_nebius_storage_v1_TransferSource_f15dbb62 | None) -> None:
+        """Set or clear the generated ``source`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_SOURCE, value)
 
     @_NebiusProperty
@@ -3525,6 +4066,7 @@ class TransferSpec(Message):
 
     @destination.setter
     def destination(self, value: _NebiusType_nebius_storage_v1_TransferDestination_178288f8 | None) -> None:
+        """Set or clear the generated ``destination`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_DESTINATION, value)
 
     @_NebiusProperty
@@ -3535,6 +4077,7 @@ class TransferSpec(Message):
 
     @limiters.setter
     def limiters(self, value: _NebiusType_nebius_storage_v1_TransferSpec_Limiters_d633b13e | None) -> None:
+        """Set or clear the generated ``limiters`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_LIMITERS, value)
 
     @_NebiusProperty
@@ -3544,6 +4087,7 @@ class TransferSpec(Message):
 
     @after_one_iteration.setter
     def after_one_iteration(self, value: _NebiusType_nebius_storage_v1_TransferSpec_StopConditionAfterOneIteration_c6b6b6f5 | None) -> None:
+        """Set or clear the generated ``after_one_iteration`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_AFTER_ONE_ITERATION, value)
 
     @_NebiusProperty
@@ -3553,6 +4097,7 @@ class TransferSpec(Message):
 
     @after_n_empty_iterations.setter
     def after_n_empty_iterations(self, value: _NebiusType_nebius_storage_v1_TransferSpec_StopConditionAfterNEmptyIterations_d0982306 | None) -> None:
+        """Set or clear the generated ``after_n_empty_iterations`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_AFTER_N_EMPTY_ITERATIONS, value)
 
     @_NebiusProperty
@@ -3563,6 +4108,7 @@ class TransferSpec(Message):
 
     @infinite.setter
     def infinite(self, value: _NebiusType_nebius_storage_v1_TransferSpec_StopConditionInfinite_35648023 | None) -> None:
+        """Set or clear the generated ``infinite`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_INFINITE, value)
 
     @_NebiusProperty
@@ -3573,6 +4119,7 @@ class TransferSpec(Message):
 
     @inter_iteration_interval.setter
     def inter_iteration_interval(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``inter_iteration_interval`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_INTER_ITERATION_INTERVAL, value)
 
     @_NebiusProperty
@@ -3583,6 +4130,7 @@ class TransferSpec(Message):
 
     @overwrite_strategy.setter
     def overwrite_strategy(self, value: _NebiusType_nebius_storage_v1_TransferSpec_OverwriteStrategy_2ef69d31 | None) -> None:
+        """Set or clear the generated ``overwrite_strategy`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_OVERWRITE_STRATEGY, value)
 
     @_NebiusProperty
@@ -3593,6 +4141,7 @@ class TransferSpec(Message):
 
     @enable_deletes_in_destination.setter
     def enable_deletes_in_destination(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``enable_deletes_in_destination`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_ENABLE_DELETES_IN_DESTINATION, value)
 
     @_NebiusProperty
@@ -3603,18 +4152,25 @@ class TransferSpec(Message):
 
     @touch_unmanaged.setter
     def touch_unmanaged(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``touch_unmanaged`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSPEC_TOUCH_UNMANAGED, value)
 
     __PY_TO_PB2__ = {'source': 'source', 'destination': 'destination', 'limiters': 'limiters', 'after_one_iteration': 'after_one_iteration', 'after_n_empty_iterations': 'after_n_empty_iterations', 'infinite': 'infinite', 'inter_iteration_interval': 'inter_iteration_interval', 'overwrite_strategy': 'overwrite_strategy', 'enable_deletes_in_destination': 'enable_deletes_in_destination', 'touch_unmanaged': 'touch_unmanaged', 'stop_condition': 'stop_condition', 'Limiters': 'Limiters', 'StopConditionAfterOneIteration': 'StopConditionAfterOneIteration', 'StopConditionAfterNEmptyIterations': 'StopConditionAfterNEmptyIterations', 'StopConditionInfinite': 'StopConditionInfinite', 'OverwriteStrategy': 'OverwriteStrategy'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f = TransferSpec
 
 
 class TransferStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.TransferStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.TransferStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferStatus_State_d7939f29
     SuspensionState: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_TransferStatus_SuspensionState_56e3b344
 
@@ -3627,6 +4183,7 @@ class TransferStatus(Message):
         suspension_state: _NebiusType_nebius_storage_v1_TransferStatus_SuspensionState_56e3b344 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         last_iteration: _NebiusType_nebius_storage_v1_TransferIteration_86eab738 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -3646,6 +4203,7 @@ class TransferStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_storage_v1_TransferStatus_State_d7939f29 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -3656,6 +4214,7 @@ class TransferStatus(Message):
 
     @error.setter
     def error(self, value: _NebiusType_nebius_storage_v1_TransferError_a8ead905 | None) -> None:
+        """Set or clear the generated ``error`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSTATUS_ERROR, value)
 
     @_NebiusProperty
@@ -3666,6 +4225,7 @@ class TransferStatus(Message):
 
     @suspension_state.setter
     def suspension_state(self, value: _NebiusType_nebius_storage_v1_TransferStatus_SuspensionState_56e3b344 | None) -> None:
+        """Set or clear the generated ``suspension_state`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSTATUS_SUSPENSION_STATE, value)
 
     @_NebiusProperty
@@ -3676,438 +4236,12 @@ class TransferStatus(Message):
 
     @last_iteration.setter
     def last_iteration(self, value: _NebiusType_nebius_storage_v1_TransferIteration_86eab738 | None) -> None:
+        """Set or clear the generated ``last_iteration`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_TRANSFERSTATUS_LAST_ITERATION, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'error': 'error', 'suspension_state': 'suspension_state', 'last_iteration': 'last_iteration', 'State': 'State', 'SuspensionState': 'SuspensionState'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_TransferStatus_9e032907 = TransferStatus
-
-class CreateTransferRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.CreateTransferRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.CreateTransferRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        value = self._get_field(_NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f:
-        value = self._get_field(_NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_storage_v1_TransferSpec_ec9e164f', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_SPEC, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
-_NebiusType_nebius_storage_v1_CreateTransferRequest_ed01c20c = CreateTransferRequest
-
-
-class DeleteTransferRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.DeleteTransferRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.DeleteTransferRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        resource_version: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        if resource_version is not _NEBIUS_UNSET:
-            values['resource_version'] = resource_version
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_ID, value)
-
-    @_NebiusProperty
-    def resource_version(self) -> _NebiusInt:
-        'Optional: expected transfer version (``metadata.resource_version``)\n\n\n* If specified, ensures that only the requested version is deleted (and a ``FAILED_PRECONDITION`` error is returned on version mismatch)\n* If not specified or set to ``0``, the latest version will be deleted'
-        value = self._get_field(_NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_RESOURCE_VERSION, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @resource_version.setter
-    def resource_version(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_RESOURCE_VERSION, value)
-
-    __PY_TO_PB2__ = {'id': 'id', 'resource_version': 'resource_version'}
-_NebiusType_nebius_storage_v1_DeleteTransferRequest_3ad6faed = DeleteTransferRequest
-
-
-class GetIterationHistoryRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.GetIterationHistoryRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.GetIterationHistoryRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        transfer_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if transfer_id is not _NEBIUS_UNSET:
-            values['transfer_id'] = transfer_id
-        if page_size is not _NEBIUS_UNSET:
-            values['page_size'] = page_size
-        if page_token is not _NEBIUS_UNSET:
-            values['page_token'] = page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def transfer_id(self) -> _NebiusStr:
-        'ID of the transfer whose iteration history to return.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_TRANSFER_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @transfer_id.setter
-    def transfer_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_TRANSFER_ID, value)
-
-    @_NebiusProperty
-    def page_size(self) -> _NebiusInt:
-        'Specifies the maximum number of items to return in the response.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_SIZE, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @page_size.setter
-    def page_size(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_SIZE, value)
-
-    @_NebiusProperty
-    def page_token(self) -> _NebiusStr:
-        'Token for pagination, allowing the retrieval of the next set of results.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @page_token.setter
-    def page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'transfer_id': 'transfer_id', 'page_size': 'page_size', 'page_token': 'page_token'}
-_NebiusType_nebius_storage_v1_GetIterationHistoryRequest_f61d178c = GetIterationHistoryRequest
-
-
-class GetIterationHistoryResponse(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.GetIterationHistoryResponse'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.GetIterationHistoryResponse')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        iterations: _NebiusIterable[_NebiusType_nebius_storage_v1_TransferIteration_86eab738] | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if iterations is not _NEBIUS_UNSET:
-            values['iterations'] = iterations
-        if next_page_token is not _NEBIUS_UNSET:
-            values['next_page_token'] = next_page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def iterations(self) -> _NebiusMutableSequence[_NebiusType_nebius_storage_v1_TransferIteration_86eab738]:
-        'List of transfer iterations sorted from newest to oldest.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_ITERATIONS, absent_is_none=False)
-        return _nebius_cast('_NebiusMutableSequence[_NebiusType_nebius_storage_v1_TransferIteration_86eab738]', value)
-
-    @iterations.setter
-    def iterations(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_TransferIteration_86eab738] | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_ITERATIONS, value)
-
-    @_NebiusProperty
-    def next_page_token(self) -> _NebiusStr:
-        'Token for pagination, indicating the next set of results can be retrieved using this token.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_NEXT_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @next_page_token.setter
-    def next_page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_NEXT_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'iterations': 'iterations', 'next_page_token': 'next_page_token'}
-_NebiusType_nebius_storage_v1_GetIterationHistoryResponse_1421ba01 = GetIterationHistoryResponse
-
-
-class GetTransferRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.GetTransferRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.GetTransferRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_STORAGE_V1_GETTRANSFERREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_GETTRANSFERREQUEST_ID, value)
-
-    __PY_TO_PB2__ = {'id': 'id'}
-_NebiusType_nebius_storage_v1_GetTransferRequest_5d8edfe0 = GetTransferRequest
-
-
-class ListTransfersRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.ListTransfersRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.ListTransfersRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if parent_id is not _NEBIUS_UNSET:
-            values['parent_id'] = parent_id
-        if page_size is not _NEBIUS_UNSET:
-            values['page_size'] = page_size
-        if page_token is not _NEBIUS_UNSET:
-            values['page_token'] = page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def parent_id(self) -> _NebiusStr:
-        'Represents the container ID.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PARENT_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @parent_id.setter
-    def parent_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PARENT_ID, value)
-
-    @_NebiusProperty
-    def page_size(self) -> _NebiusInt:
-        'Specifies the maximum number of items to return in the response. Default: 10.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_SIZE, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @page_size.setter
-    def page_size(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_SIZE, value)
-
-    @_NebiusProperty
-    def page_token(self) -> _NebiusStr:
-        'Token for pagination, allowing the retrieval of the next set of results.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @page_token.setter
-    def page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
-_NebiusType_nebius_storage_v1_ListTransfersRequest_6aa42265 = ListTransfersRequest
-
-
-class ListTransfersResponse(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.ListTransfersResponse'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.ListTransfersResponse')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        items: _NebiusIterable[_NebiusType_nebius_storage_v1_Transfer_b768fc5b] | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if items is not _NEBIUS_UNSET:
-            values['items'] = items
-        if next_page_token is not _NEBIUS_UNSET:
-            values['next_page_token'] = next_page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def items(self) -> _NebiusMutableSequence[_NebiusType_nebius_storage_v1_Transfer_b768fc5b]:
-        'List of transfers returned in the response.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_ITEMS, absent_is_none=False)
-        return _nebius_cast('_NebiusMutableSequence[_NebiusType_nebius_storage_v1_Transfer_b768fc5b]', value)
-
-    @items.setter
-    def items(self, value: _NebiusIterable[_NebiusType_nebius_storage_v1_Transfer_b768fc5b] | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_ITEMS, value)
-
-    @_NebiusProperty
-    def next_page_token(self) -> _NebiusStr:
-        'Token for pagination, indicating the next set of results can be retrieved using this token.'
-        value = self._get_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_NEXT_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @next_page_token.setter
-    def next_page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_NEXT_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
-_NebiusType_nebius_storage_v1_ListTransfersResponse_9bc8d730 = ListTransfersResponse
-
-
-class ResumeTransferRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.ResumeTransferRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.ResumeTransferRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_STORAGE_V1_RESUMETRANSFERREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_RESUMETRANSFERREQUEST_ID, value)
-
-    __PY_TO_PB2__ = {'id': 'id'}
-_NebiusType_nebius_storage_v1_ResumeTransferRequest_740aa644 = ResumeTransferRequest
-
-
-class StopTransferRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.StopTransferRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.StopTransferRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_STORAGE_V1_STOPTRANSFERREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_STOPTRANSFERREQUEST_ID, value)
-
-    __PY_TO_PB2__ = {'id': 'id'}
-_NebiusType_nebius_storage_v1_StopTransferRequest_92b9fdc5 = StopTransferRequest
-
-
-class UpdateTransferRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.storage.v1.UpdateTransferRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.UpdateTransferRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        value = self._get_field(_NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f:
-        value = self._get_field(_NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_storage_v1_TransferSpec_ec9e164f', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_storage_v1_TransferSpec_ec9e164f | None) -> None:
-        self._set_field(_NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_SPEC, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
-_NebiusType_nebius_storage_v1_UpdateTransferRequest_fe70638b = UpdateTransferRequest
 
 # @@nebius-section:fields@@
 _NEBIUS_STORAGE_V1_BUCKET_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
@@ -4370,45 +4504,6 @@ _NEBIUS_STORAGE_V1_TRANSFERSTATUS_SUSPENSION_STATE = Field('suspension_state', '
 _NEBIUS_STORAGE_V1_TRANSFERSTATUS_LAST_ITERATION = Field('last_iteration', 'last_iteration', 4, message_codec(lambda: REGISTRY.message_class('nebius.storage.v1.TransferIteration')), json_name='lastIteration')
 TransferStatus.__FIELDS__ = (_NEBIUS_STORAGE_V1_TRANSFERSTATUS_STATE, _NEBIUS_STORAGE_V1_TRANSFERSTATUS_ERROR, _NEBIUS_STORAGE_V1_TRANSFERSTATUS_SUSPENSION_STATE, _NEBIUS_STORAGE_V1_TRANSFERSTATUS_LAST_ITERATION)
 
-_NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.storage.v1.TransferSpec')), json_name='spec')
-CreateTransferRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_METADATA, _NEBIUS_STORAGE_V1_CREATETRANSFERREQUEST_SPEC)
-
-_NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-_NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_RESOURCE_VERSION = Field('resource_version', 'resource_version', 2, INT64, json_name='resourceVersion')
-DeleteTransferRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_ID, _NEBIUS_STORAGE_V1_DELETETRANSFERREQUEST_RESOURCE_VERSION)
-
-_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_TRANSFER_ID = Field('transfer_id', 'transfer_id', 1, STRING, json_name='transferId')
-_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
-_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_TOKEN = Field('page_token', 'page_token', 3, STRING, json_name='pageToken')
-GetIterationHistoryRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_TRANSFER_ID, _NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_SIZE, _NEBIUS_STORAGE_V1_GETITERATIONHISTORYREQUEST_PAGE_TOKEN)
-
-_NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_ITERATIONS = Field('iterations', 'iterations', 1, message_codec(lambda: REGISTRY.message_class('nebius.storage.v1.TransferIteration')), repeated=True, json_name='iterations')
-_NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_NEXT_PAGE_TOKEN = Field('next_page_token', 'next_page_token', 2, STRING, json_name='nextPageToken')
-GetIterationHistoryResponse.__FIELDS__ = (_NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_ITERATIONS, _NEBIUS_STORAGE_V1_GETITERATIONHISTORYRESPONSE_NEXT_PAGE_TOKEN)
-
-_NEBIUS_STORAGE_V1_GETTRANSFERREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-GetTransferRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_GETTRANSFERREQUEST_ID,)
-
-_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PARENT_ID = Field('parent_id', 'parent_id', 1, STRING, json_name='parentId')
-_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
-_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_TOKEN = Field('page_token', 'page_token', 3, STRING, json_name='pageToken')
-ListTransfersRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PARENT_ID, _NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_SIZE, _NEBIUS_STORAGE_V1_LISTTRANSFERSREQUEST_PAGE_TOKEN)
-
-_NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_ITEMS = Field('items', 'items', 1, message_codec(lambda: REGISTRY.message_class('nebius.storage.v1.Transfer')), repeated=True, json_name='items')
-_NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_NEXT_PAGE_TOKEN = Field('next_page_token', 'next_page_token', 2, STRING, json_name='nextPageToken')
-ListTransfersResponse.__FIELDS__ = (_NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_ITEMS, _NEBIUS_STORAGE_V1_LISTTRANSFERSRESPONSE_NEXT_PAGE_TOKEN)
-
-_NEBIUS_STORAGE_V1_RESUMETRANSFERREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-ResumeTransferRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_RESUMETRANSFERREQUEST_ID,)
-
-_NEBIUS_STORAGE_V1_STOPTRANSFERREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-StopTransferRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_STOPTRANSFERREQUEST_ID,)
-
-_NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.storage.v1.TransferSpec')), json_name='spec')
-UpdateTransferRequest.__FIELDS__ = (_NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_METADATA, _NEBIUS_STORAGE_V1_UPDATETRANSFERREQUEST_SPEC)
-
 # @@nebius-section:attachments@@
 BucketSpec__ObjectAuditLogging.__name__ = 'ObjectAuditLogging'
 BucketSpec__ObjectAuditLogging.__qualname__ = 'BucketSpec.ObjectAuditLogging'
@@ -4467,17 +4562,25 @@ TransferSpec__StopConditionInfinite.__qualname__ = 'TransferSpec.StopConditionIn
 class BucketServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.storage.v1.BucketService`` service.'
     __service_name__ = 'nebius.storage.v1.BucketService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.storage'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.storage.v1.BucketService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.storage.v1.BucketService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -4591,145 +4694,5 @@ class BucketServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b
             **kwargs,
         )
 
-class TransferServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
-    'TransferService provides functionality for creating and managing transfers\nthat migrate data from other providers or across different regions of Nebius Object Storage.\n\nThis class provides client methods for the ``nebius.storage.v1.TransferService`` service.'
-    __service_name__ = 'nebius.storage.v1.TransferService'
-    __api_service_name__ = 'transfer.storage'
-    __registry__ = REGISTRY
-
-    @classmethod
-    def get_descriptor(cls) -> _NebiusObject:
-        return REGISTRY.service_descriptor('nebius.storage.v1.TransferService')
-
-    __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.storage.v1.TransferService')
-    __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
-    __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
-    __operation_source_method__ = 'Create'
-
-    def get(
-        self,
-        request: _NebiusType_nebius_storage_v1_GetTransferRequest_5d8edfe0,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_GetTransferRequest_5d8edfe0, _NebiusType_nebius_storage_v1_Transfer_b768fc5b]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='Get',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.storage.v1.Transfer'),
-            **kwargs,
-        )
-
-    def get_by_name(
-        self,
-        request: _type_nebius_common_v1_e3b886bd.GetByNameRequest,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_type_nebius_common_v1_e3b886bd.GetByNameRequest, _NebiusType_nebius_storage_v1_Transfer_b768fc5b]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='GetByName',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.storage.v1.Transfer'),
-            **kwargs,
-        )
-
-    def list(
-        self,
-        request: _NebiusType_nebius_storage_v1_ListTransfersRequest_6aa42265,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_ListTransfersRequest_6aa42265, _NebiusType_nebius_storage_v1_ListTransfersResponse_9bc8d730]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='List',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.storage.v1.ListTransfersResponse'),
-            **kwargs,
-        )
-
-    def create(
-        self,
-        request: _NebiusType_nebius_storage_v1_CreateTransferRequest_ed01c20c,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_CreateTransferRequest_ed01c20c, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='Create',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def update(
-        self,
-        request: _NebiusType_nebius_storage_v1_UpdateTransferRequest_fe70638b,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_UpdateTransferRequest_fe70638b, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'The request object is returned without starting the RPC.'
-        kwargs['metadata'] = ensure_reset_mask_in_metadata(
-            request, kwargs.get('metadata'),
-        )
-        return super().request(
-            method='Update',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def stop(
-        self,
-        request: _NebiusType_nebius_storage_v1_StopTransferRequest_92b9fdc5,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_StopTransferRequest_92b9fdc5, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Stop active transfer. If the transfer is currently moving data,\nit will be transitioned to the Stopping state and will move to the Stopped state once all processes have been stopped.\nIf the transfer is waiting between iterations, it will stop immediately.\nOnly transfers in Active state can be stopped.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Stop',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def resume(
-        self,
-        request: _NebiusType_nebius_storage_v1_ResumeTransferRequest_740aa644,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_ResumeTransferRequest_740aa644, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Resume stopped or failed transfer.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Resume',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def delete(
-        self,
-        request: _NebiusType_nebius_storage_v1_DeleteTransferRequest_3ad6faed,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_DeleteTransferRequest_3ad6faed, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Fully delete a transfer along with its history. If the transfer is active, it will be stopped and then deleted.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Delete',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def get_iteration_history(
-        self,
-        request: _NebiusType_nebius_storage_v1_GetIterationHistoryRequest_f61d178c,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_storage_v1_GetIterationHistoryRequest_f61d178c, _NebiusType_nebius_storage_v1_GetIterationHistoryResponse_1421ba01]:
-        'Get transfer iteration history.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='GetIterationHistory',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.storage.v1.GetIterationHistoryResponse'),
-            **kwargs,
-        )
-
 # @@nebius-section:exports@@
-__all__ = ['Bucket', 'BucketCounters', 'BucketPolicy', 'BucketServiceClient', 'BucketSpec', 'BucketStatus', 'CORSConfiguration', 'CORSRule', 'CreateBucketRequest', 'CreateTransferRequest', 'CurrentBucketCounters', 'DeleteBucketRequest', 'DeleteTransferRequest', 'GetBucketByNameRequest', 'GetBucketRequest', 'GetIterationHistoryRequest', 'GetIterationHistoryResponse', 'GetTransferRequest', 'LifecycleAbortIncompleteMultipartUpload', 'LifecycleAccessFilter', 'LifecycleConfiguration', 'LifecycleExpiration', 'LifecycleFilter', 'LifecycleNoncurrentVersionExpiration', 'LifecycleNoncurrentVersionTransition', 'LifecycleRule', 'LifecycleTransition', 'ListBucketsRequest', 'ListBucketsResponse', 'ListTransfersRequest', 'ListTransfersResponse', 'NonCurrentBucketCounters', 'PurgeBucketRequest', 'ResumeTransferRequest', 'StopTransferRequest', 'StorageClass', 'Transfer', 'TransferCredentialsAccessKey', 'TransferCredentialsAnonymous', 'TransferCredentialsAzureStorageAccount', 'TransferDestination', 'TransferError', 'TransferIteration', 'TransferServiceClient', 'TransferSource', 'TransferSpec', 'TransferStatus', 'UndeleteBucketRequest', 'UpdateBucketRequest', 'UpdateTransferRequest', 'VersioningPolicy']
+__all__ = ['Bucket', 'BucketCounters', 'BucketPolicy', 'BucketServiceClient', 'BucketSpec', 'BucketStatus', 'CORSConfiguration', 'CORSRule', 'CreateBucketRequest', 'CurrentBucketCounters', 'DeleteBucketRequest', 'GetBucketByNameRequest', 'GetBucketRequest', 'LifecycleAbortIncompleteMultipartUpload', 'LifecycleAccessFilter', 'LifecycleConfiguration', 'LifecycleExpiration', 'LifecycleFilter', 'LifecycleNoncurrentVersionExpiration', 'LifecycleNoncurrentVersionTransition', 'LifecycleRule', 'LifecycleTransition', 'ListBucketsRequest', 'ListBucketsResponse', 'NonCurrentBucketCounters', 'PurgeBucketRequest', 'StorageClass', 'Transfer', 'TransferCredentialsAccessKey', 'TransferCredentialsAnonymous', 'TransferCredentialsAzureStorageAccount', 'TransferDestination', 'TransferError', 'TransferIteration', 'TransferSource', 'TransferSpec', 'TransferStatus', 'UndeleteBucketRequest', 'UpdateBucketRequest', 'VersioningPolicy']

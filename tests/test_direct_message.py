@@ -36,6 +36,39 @@ from nebius.base.protos.extensions import Extension, ExtensionRegistry
 from nebius.base.protos.wire import BinaryWriter
 
 
+def test_framework_owned_message_api_is_documented() -> None:
+    methods = (
+        "__init__",
+        "ByteSize",
+        "Clear",
+        "ClearField",
+        "CopyFrom",
+        "FindInitializationErrors",
+        "FromString",
+        "HasField",
+        "IsInitialized",
+        "MergeFrom",
+        "MergeFromString",
+        "ParseFromString",
+        "SerializeToString",
+        "WhichOneof",
+        "clear_extension",
+        "from_json",
+        "get_extension",
+        "get_mask",
+        "has_extension",
+        "is_credentials",
+        "is_sensitive",
+        "set_extension",
+        "set_mask",
+        "to_json",
+    )
+
+    assert all(getattr(Message, name).__doc__ for name in methods)
+    assert Message.Extensions.fget is not None
+    assert Message.Extensions.fget.__doc__
+
+
 def _reference_types():
     file_proto = descriptor_pb2.FileDescriptorProto(
         name="direct_test.proto",

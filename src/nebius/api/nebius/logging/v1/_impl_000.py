@@ -59,9 +59,13 @@ if _NEBIUS_TYPE_CHECKING:
 class LogsExportFormat(Enum):
     'Output file format for exported log data, chosen via ``--log-format``.'
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.LogsExportFormat'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.logging.v1.LogsExportFormat')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     EXPORT_FORMAT_UNSUPPORTED = 0
     JSON_GZIP = 1
     'JSON lines (one JSON object per line) compressed with gzip. Written as ``.json.gz``.'
@@ -72,9 +76,13 @@ _NebiusType_nebius_logging_v1_LogsExportFormat_96cb5188 = LogsExportFormat
 class OrderBy(Enum):
     'Sort order for ``list`` output, applied to export operations by creation time.'
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.OrderBy'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.logging.v1.OrderBy')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     ORDER_BY_UNSPECIFIED = 0
     ORDER_BY_ASC = 1
     ORDER_BY_DESC = 2
@@ -83,10 +91,15 @@ _NebiusType_nebius_logging_v1_OrderBy_0422fb69 = OrderBy
 # @@nebius-section:messages@@
 class ExportFilter(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.ExportFilter'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.ExportFilter')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -96,6 +109,7 @@ class ExportFilter(Message):
         to: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         match_expression: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if from_ is not _NEBIUS_UNSET:
             values['from_'] = from_
@@ -113,6 +127,7 @@ class ExportFilter(Message):
 
     @from_.setter
     def from_(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``from_`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTFILTER_FROM, value)
 
     @_NebiusProperty
@@ -123,6 +138,7 @@ class ExportFilter(Message):
 
     @to.setter
     def to(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``to`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTFILTER_TO, value)
 
     @_NebiusProperty
@@ -133,18 +149,25 @@ class ExportFilter(Message):
 
     @match_expression.setter
     def match_expression(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``match_expression`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTFILTER_MATCH_EXPRESSION, value)
 
     __PY_TO_PB2__ = {'from_': 'from', 'to': 'to', 'match_expression': 'match_expression'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_ExportFilter_73a879c5 = ExportFilter
 
 
 class ExportParams(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.ExportParams'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.ExportParams')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_export_mode__(_NebiusOneOf):
         name: str = 'export_mode'
@@ -195,6 +218,7 @@ class ExportParams(Message):
         log: _NebiusType_nebius_logging_v1_LogsExport_9b08048d | None | _NebiusUnsetType = _NEBIUS_UNSET,
         nebius_object_storage: _NebiusType_nebius_logging_v1_NebiusObjectStorageDestination_a64710cc | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if log is not _NEBIUS_UNSET:
             values['log'] = log
@@ -210,6 +234,7 @@ class ExportParams(Message):
 
     @log.setter
     def log(self, value: _NebiusType_nebius_logging_v1_LogsExport_9b08048d | None) -> None:
+        """Set or clear the generated ``log`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTPARAMS_LOG, value)
 
     @_NebiusProperty
@@ -220,18 +245,25 @@ class ExportParams(Message):
 
     @nebius_object_storage.setter
     def nebius_object_storage(self, value: _NebiusType_nebius_logging_v1_NebiusObjectStorageDestination_a64710cc | None) -> None:
+        """Set or clear the generated ``nebius_object_storage`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTPARAMS_NEBIUS_OBJECT_STORAGE, value)
 
     __PY_TO_PB2__ = {'log': 'log', 'nebius_object_storage': 'nebius_object_storage', 'export_mode': 'export_mode', 'export_destination': 'export_destination'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_ExportParams_f0a496ac = ExportParams
 
 
 class ExportStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.ExportStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.ExportStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -240,6 +272,7 @@ class ExportStatus(Message):
         operation: _type_nebius_common_v1_e3b886bd.Operation | None | _NebiusUnsetType = _NEBIUS_UNSET,
         result_path: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if operation is not _NEBIUS_UNSET:
             values['operation'] = operation
@@ -255,6 +288,7 @@ class ExportStatus(Message):
 
     @operation.setter
     def operation(self, value: _type_nebius_common_v1_e3b886bd.Operation | None) -> None:
+        """Set or clear the generated ``operation`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTSTATUS_OPERATION, value)
 
     @_NebiusProperty
@@ -265,18 +299,25 @@ class ExportStatus(Message):
 
     @result_path.setter
     def result_path(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``result_path`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTSTATUS_RESULT_PATH, value)
 
     __PY_TO_PB2__ = {'operation': 'operation', 'result_path': 'result_path'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_ExportStatus_4112f13f = ExportStatus
 
 
 class LogsExport(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.LogsExport'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.LogsExport')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -286,6 +327,7 @@ class LogsExport(Message):
         export_labels: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         format: _NebiusType_nebius_logging_v1_LogsExportFormat_96cb5188 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if filter is not _NEBIUS_UNSET:
             values['filter'] = filter
@@ -303,6 +345,7 @@ class LogsExport(Message):
 
     @filter.setter
     def filter(self, value: _NebiusType_nebius_logging_v1_ExportFilter_73a879c5 | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LOGSEXPORT_FILTER, value)
 
     @_NebiusProperty
@@ -313,6 +356,7 @@ class LogsExport(Message):
 
     @export_labels.setter
     def export_labels(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``export_labels`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LOGSEXPORT_EXPORT_LABELS, value)
 
     @_NebiusProperty
@@ -323,18 +367,25 @@ class LogsExport(Message):
 
     @format.setter
     def format(self, value: _NebiusType_nebius_logging_v1_LogsExportFormat_96cb5188 | None) -> None:
+        """Set or clear the generated ``format`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LOGSEXPORT_FORMAT, value)
 
     __PY_TO_PB2__ = {'filter': 'filter', 'export_labels': 'export_labels', 'format': 'format'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_LogsExport_9b08048d = LogsExport
 
 
 class NebiusObjectStorageBucketByName(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.NebiusObjectStorageBucketByName'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.NebiusObjectStorageBucketByName')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -343,6 +394,7 @@ class NebiusObjectStorageBucketByName(Message):
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -358,6 +410,7 @@ class NebiusObjectStorageBucketByName(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_NEBIUSOBJECTSTORAGEBUCKETBYNAME_NAME, value)
 
     @_NebiusProperty
@@ -368,18 +421,25 @@ class NebiusObjectStorageBucketByName(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_NEBIUSOBJECTSTORAGEBUCKETBYNAME_PARENT_ID, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'parent_id': 'parent_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_NebiusObjectStorageBucketByName_c24b6682 = NebiusObjectStorageBucketByName
 
 
 class NebiusObjectStorageDestination(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.NebiusObjectStorageDestination'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.NebiusObjectStorageDestination')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_bucket__(_NebiusOneOf):
         name: str = 'bucket'
@@ -419,6 +479,7 @@ class NebiusObjectStorageDestination(Message):
         by_name: _NebiusType_nebius_logging_v1_NebiusObjectStorageBucketByName_c24b6682 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         object_prefix: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -436,6 +497,7 @@ class NebiusObjectStorageDestination(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_NEBIUSOBJECTSTORAGEDESTINATION_ID, value)
 
     @_NebiusProperty
@@ -446,6 +508,7 @@ class NebiusObjectStorageDestination(Message):
 
     @by_name.setter
     def by_name(self, value: _NebiusType_nebius_logging_v1_NebiusObjectStorageBucketByName_c24b6682 | None) -> None:
+        """Set or clear the generated ``by_name`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_NEBIUSOBJECTSTORAGEDESTINATION_BY_NAME, value)
 
     @_NebiusProperty
@@ -456,17 +519,24 @@ class NebiusObjectStorageDestination(Message):
 
     @object_prefix.setter
     def object_prefix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``object_prefix`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_NEBIUSOBJECTSTORAGEDESTINATION_OBJECT_PREFIX, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'by_name': 'by_name', 'object_prefix': 'object_prefix', 'bucket': 'bucket'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_NebiusObjectStorageDestination_a64710cc = NebiusObjectStorageDestination
 
 class CancelExportLogsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.CancelExportLogsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.CancelExportLogsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -474,6 +544,7 @@ class CancelExportLogsRequest(Message):
         *,
         export_operation_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if export_operation_id is not _NEBIUS_UNSET:
             values['export_operation_id'] = export_operation_id
@@ -487,18 +558,25 @@ class CancelExportLogsRequest(Message):
 
     @export_operation_id.setter
     def export_operation_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``export_operation_id`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_CANCELEXPORTLOGSREQUEST_EXPORT_OPERATION_ID, value)
 
     __PY_TO_PB2__ = {'export_operation_id': 'export_operation_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_CancelExportLogsRequest_bba2244e = CancelExportLogsRequest
 
 
 class ExportLogsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.ExportLogsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.ExportLogsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -507,6 +585,7 @@ class ExportLogsRequest(Message):
         params: _NebiusType_nebius_logging_v1_ExportParams_f0a496ac | None | _NebiusUnsetType = _NEBIUS_UNSET,
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if params is not _NEBIUS_UNSET:
             values['params'] = params
@@ -522,6 +601,7 @@ class ExportLogsRequest(Message):
 
     @params.setter
     def params(self, value: _NebiusType_nebius_logging_v1_ExportParams_f0a496ac | None) -> None:
+        """Set or clear the generated ``params`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTLOGSREQUEST_PARAMS, value)
 
     @_NebiusProperty
@@ -532,18 +612,25 @@ class ExportLogsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_EXPORTLOGSREQUEST_PARENT_ID, value)
 
     __PY_TO_PB2__ = {'params': 'params', 'parent_id': 'parent_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_ExportLogsRequest_76d5fc7d = ExportLogsRequest
 
 
 class GetExportInfoRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.GetExportInfoRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.GetExportInfoRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -551,6 +638,7 @@ class GetExportInfoRequest(Message):
         *,
         export_operation_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if export_operation_id is not _NEBIUS_UNSET:
             values['export_operation_id'] = export_operation_id
@@ -564,18 +652,25 @@ class GetExportInfoRequest(Message):
 
     @export_operation_id.setter
     def export_operation_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``export_operation_id`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_GETEXPORTINFOREQUEST_EXPORT_OPERATION_ID, value)
 
     __PY_TO_PB2__ = {'export_operation_id': 'export_operation_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_GetExportInfoRequest_c4f6a2a5 = GetExportInfoRequest
 
 
 class ListExportsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.ListExportsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.ListExportsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -586,6 +681,7 @@ class ListExportsRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         order_by: _NebiusType_nebius_logging_v1_OrderBy_0422fb69 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -605,6 +701,7 @@ class ListExportsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LISTEXPORTSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -615,6 +712,7 @@ class ListExportsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LISTEXPORTSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -625,6 +723,7 @@ class ListExportsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LISTEXPORTSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -635,18 +734,25 @@ class ListExportsRequest(Message):
 
     @order_by.setter
     def order_by(self, value: _NebiusType_nebius_logging_v1_OrderBy_0422fb69 | None) -> None:
+        """Set or clear the generated ``order_by`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LISTEXPORTSREQUEST_ORDER_BY, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_token': 'page_token', 'page_size': 'page_size', 'order_by': 'order_by'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_ListExportsRequest_951deb11 = ListExportsRequest
 
 
 class ListExportsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.logging.v1.ListExportsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.v1.ListExportsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -655,6 +761,7 @@ class ListExportsResponse(Message):
         exports: _NebiusIterable[_NebiusType_nebius_logging_v1_ExportStatus_4112f13f] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if exports is not _NEBIUS_UNSET:
             values['exports'] = exports
@@ -670,6 +777,7 @@ class ListExportsResponse(Message):
 
     @exports.setter
     def exports(self, value: _NebiusIterable[_NebiusType_nebius_logging_v1_ExportStatus_4112f13f] | None) -> None:
+        """Set or clear the generated ``exports`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LISTEXPORTSRESPONSE_EXPORTS, value)
 
     @_NebiusProperty
@@ -680,9 +788,11 @@ class ListExportsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_LOGGING_V1_LISTEXPORTSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'exports': 'exports', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_v1_ListExportsResponse_b03b7aa1 = ListExportsResponse
 
 # @@nebius-section:fields@@
@@ -739,17 +849,25 @@ ListExportsResponse.__FIELDS__ = (_NEBIUS_LOGGING_V1_LISTEXPORTSRESPONSE_EXPORTS
 class LogExportServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Export logs to a specified destination.\n\nThis class provides client methods for the ``nebius.logging.v1.LogExportService`` service.'
     __service_name__ = 'nebius.logging.v1.LogExportService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.teplo'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.logging.v1.LogExportService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.logging.v1.LogExportService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'ExportLogs'
+    """RPC method that supplies the operation route."""
 
     def export_logs(
         self,

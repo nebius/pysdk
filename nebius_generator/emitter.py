@@ -583,11 +583,16 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
     lines.extend(
         [
             f"    __PROTO_FULL_NAME__ = {message.full_name!r}",
+            '    """Fully qualified protobuf message name."""',
             "    __REGISTRY__ = REGISTRY",
+            '    """Registry for this message and its descriptor."""',
             "    __EXTENSION_REGISTRY__ = EXTENSIONS",
+            '    """Registry that decodes extensions for this message."""',
             "    __PROTO_DESCRIPTOR__ = "
             f"REGISTRY.message_descriptor({message.full_name!r})",
+            '    """Protobuf message descriptor from the registry."""',
             "    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__",
+            '    """Alias for code that expects a protobuf message descriptor."""',
         ]
     )
     if not message.proto.field:
@@ -702,6 +707,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
     signature.extend(
         [
             "    ) -> None:",
+            '        """Create a message from a source message and field values."""',
             f"        {values_name}: _NebiusDict[_NebiusStr, _NebiusObject] = {{}}",
         ]
     )
@@ -815,6 +821,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 "",
                 f"    @{name}.setter",
                 f"    def {name}(self, value: {setter_type}) -> None:",
+                f'        """Set or clear the generated ``{name}`` field."""',
             ]
         )
         if field_deprecation is not None:
@@ -882,7 +889,13 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             for nested in message.proto.enum_type
         }
     )
-    lines.extend(["", f"    __PY_TO_PB2__ = {mappings!r}"])
+    lines.extend(
+        [
+            "",
+            f"    __PY_TO_PB2__ = {mappings!r}",
+            '    """Mapping from Python member names to protobuf names."""',
+        ]
+    )
     return lines
 
 
@@ -1048,10 +1061,14 @@ def _package_source(
         lines.extend(
             [
                 f"    __PROTO_FULL_NAME__ = {enum.full_name!r}",
+                '    """Fully qualified protobuf enum name."""',
                 "    __REGISTRY__ = REGISTRY",
+                '    """Registry for this enum and its descriptor."""',
                 "    __PROTO_DESCRIPTOR__ = "
                 f"REGISTRY.enum_descriptor({enum.full_name!r})",
+                '    """Protobuf enum descriptor from the registry."""',
                 "    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__",
+                '    """Alias for code that expects a protobuf enum descriptor."""',
             ]
         )
         for index, value in enumerate(enum.proto.value):
@@ -1181,19 +1198,30 @@ def _package_source(
         lines.extend(
             [
                 f"    __service_name__ = {service.full_name!r}",
+                '    """Fully qualified protobuf service name for RPC routes."""',
                 f"    __api_service_name__ = {endpoint_name!r}",
+                '    """API gateway name for service routes."""',
                 "    __registry__ = REGISTRY",
+                '    """Descriptor registry for request metadata."""',
                 "",
                 "    @classmethod",
                 "    def get_descriptor(cls) -> _NebiusObject:",
+                '        """Return the protobuf service descriptor '
+                'from the registry."""',
                 f"        return REGISTRY.service_descriptor({service.full_name!r})",
                 "",
                 "    __PB2_DESCRIPTOR__ = "
                 f"REGISTRY.service_descriptor({service.full_name!r})",
+                '    """Alias for code that expects a protobuf service descriptor."""',
             ]
         )
         if service_deprecation is not None:
-            lines.append(f"    __service_deprecation_details__ = {service_summary!r}")
+            lines.extend(
+                [
+                    f"    __service_deprecation_details__ = {service_summary!r}",
+                    '    """Deprecation details emitted when the client is created."""',
+                ]
+            )
         if operation_method is not None:
             operation_name = operation_method.output_type.lstrip(".")
             operation_service = _service_type(
@@ -1203,8 +1231,11 @@ def _package_source(
                 [
                     "    __operation_type__ = "
                     f"{_named_type(operation_name, package, graph)}",
+                    '    """Message type representing a long-running operation."""',
                     f"    __operation_service_class__ = {operation_service}",
+                    '    """Client class that manages long-running operations."""',
                     f"    __operation_source_method__ = {operation_method.name!r}",
+                    '    """RPC method that supplies the operation route."""',
                 ]
             )
         for method_index, method in enumerate(service.proto.method):

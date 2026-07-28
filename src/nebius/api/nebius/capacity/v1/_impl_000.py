@@ -58,9 +58,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class CapacityAllowanceStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityAllowanceStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.CapacityAllowanceStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     STATE_PROVISIONING = 1
     'Capacity Allowance is being allocated; the process can take up to several minutes.'
@@ -72,9 +76,13 @@ _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_State_05cc358b = Capacity
 
 class CapacityAllowanceStatus__UsageState(Enum):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityAllowanceStatus.UsageState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.CapacityAllowanceStatus.UsageState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     USAGE_STATE_UNSPECIFIED = 0
     USAGE_STATE_USED = 1
     'Capacity allowance is actively in use.'
@@ -87,9 +95,13 @@ _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_UsageState_d8485bb8 = Cap
 class CapacityBlockGroupStatus__State(Enum):
     'Shows the state of a Capacity Block Group with respect to its quota.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityBlockGroupStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.CapacityBlockGroupStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     "Shouldn't happen."
     STATE_ALLOCATING = 1
@@ -105,9 +117,13 @@ _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_State_4a979499 = Capacit
 class CapacityBlockGroupStatus__UsageState(Enum):
     'Shows the usage state if a Capacity Block Group quota.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityBlockGroupStatus.UsageState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.CapacityBlockGroupStatus.UsageState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     USAGE_STATE_UNSPECIFIED = 0
     "Shouldn't happen."
     USAGE_STATE_USED = 1
@@ -121,9 +137,13 @@ _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_UsageState_9c6df058 = Ca
 class CurrentContinuousInterval__State(Enum):
     'Shows a state of a Continuous Interval.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CurrentContinuousInterval.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.CurrentContinuousInterval.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     "Shouldn't happen."
     STATE_SCHEDULED = 1
@@ -136,9 +156,13 @@ _NebiusType_nebius_capacity_v1_CurrentContinuousInterval_State_45eab40a = Curren
 
 class CapacityIntervalStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityIntervalStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.CapacityIntervalStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     "Shouldn't happen."
     STATE_SCHEDULED = 1
@@ -152,9 +176,13 @@ _NebiusType_nebius_capacity_v1_CapacityIntervalStatus_State_72d352b1 = CapacityI
 class ResourceAdviceStatus__Availability__AvailabilityLevel(Enum):
     'Indicates the likelihood of a successful allocation.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAdviceStatus.Availability.AvailabilityLevel'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.ResourceAdviceStatus.Availability.AvailabilityLevel')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     AVAILABILITY_LEVEL_UNSPECIFIED = 0
     "Shouldn't ever happen."
     AVAILABILITY_LEVEL_HIGH = 1
@@ -172,9 +200,13 @@ _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_AvailabilityLev
 class ResourceAdviceStatus__Availability__DataState(Enum):
     'Shows if data could be trusted.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAdviceStatus.Availability.DataState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.capacity.v1.ResourceAdviceStatus.Availability.DataState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     DATA_STATE_UNSPECIFIED = 0
     "Shouldn't ever happen."
     DATA_STATE_FRESH = 1
@@ -189,10 +221,15 @@ _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_DataState_93f6a
 class CapacityAllowance(Message):
     'Resource that restricts Capacity Block Group quota by project.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityAllowance'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityAllowance')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -202,6 +239,7 @@ class CapacityAllowance(Message):
         spec: _NebiusType_nebius_capacity_v1_CapacityAllowanceSpec_aa66e201 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_24d38ac0 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -219,6 +257,7 @@ class CapacityAllowance(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCE_METADATA, value)
 
     @_NebiusProperty
@@ -229,6 +268,7 @@ class CapacityAllowance(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_capacity_v1_CapacityAllowanceSpec_aa66e201 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCE_SPEC, value)
 
     @_NebiusProperty
@@ -239,19 +279,26 @@ class CapacityAllowance(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_24d38ac0 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityAllowance_0cf98971 = CapacityAllowance
 
 
 class CapacityAllowanceSpec(Message):
     'Capacity Allowance specification.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityAllowanceSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityAllowanceSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__limit__(_NebiusOneOf):
         name: str = '_limit'
@@ -281,6 +328,7 @@ class CapacityAllowanceSpec(Message):
         capacity_block_group_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         limit: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if capacity_block_group_id is not _NEBIUS_UNSET:
             values['capacity_block_group_id'] = capacity_block_group_id
@@ -296,6 +344,7 @@ class CapacityAllowanceSpec(Message):
 
     @capacity_block_group_id.setter
     def capacity_block_group_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``capacity_block_group_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESPEC_CAPACITY_BLOCK_GROUP_ID, value)
 
     @_NebiusProperty
@@ -306,19 +355,26 @@ class CapacityAllowanceSpec(Message):
 
     @limit.setter
     def limit(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``limit`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESPEC_LIMIT, value)
 
     __PY_TO_PB2__ = {'capacity_block_group_id': 'capacity_block_group_id', 'limit': 'limit', '_limit': '_limit'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityAllowanceSpec_aa66e201 = CapacityAllowanceSpec
 
 
 class CapacityAllowanceStatus(Message):
     'Capacity Allowance status.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityAllowanceStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityAllowanceStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_State_05cc358b
     UsageState: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_UsageState_d8485bb8
 
@@ -333,6 +389,7 @@ class CapacityAllowanceStatus(Message):
         unit: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         reconciling: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -356,6 +413,7 @@ class CapacityAllowanceStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_State_05cc358b | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESTATUS_STATE, value)
 
     @_NebiusProperty
@@ -366,6 +424,7 @@ class CapacityAllowanceStatus(Message):
 
     @usage.setter
     def usage(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``usage`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESTATUS_USAGE, value)
 
     @_NebiusProperty
@@ -376,6 +435,7 @@ class CapacityAllowanceStatus(Message):
 
     @usage_percentage.setter
     def usage_percentage(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``usage_percentage`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESTATUS_USAGE_PERCENTAGE, value)
 
     @_NebiusProperty
@@ -386,6 +446,7 @@ class CapacityAllowanceStatus(Message):
 
     @usage_state.setter
     def usage_state(self, value: _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_UsageState_d8485bb8 | None) -> None:
+        """Set or clear the generated ``usage_state`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESTATUS_USAGE_STATE, value)
 
     @_NebiusProperty
@@ -396,6 +457,7 @@ class CapacityAllowanceStatus(Message):
 
     @unit.setter
     def unit(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``unit`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESTATUS_UNIT, value)
 
     @_NebiusProperty
@@ -406,17 +468,24 @@ class CapacityAllowanceStatus(Message):
 
     @reconciling.setter
     def reconciling(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``reconciling`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYALLOWANCESTATUS_RECONCILING, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'usage': 'usage', 'usage_percentage': 'usage_percentage', 'usage_state': 'usage_state', 'unit': 'unit', 'reconciling': 'reconciling', 'State': 'State', 'UsageState': 'UsageState'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityAllowanceStatus_24d38ac0 = CapacityAllowanceStatus
 
 class CreateCapacityAllowanceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CreateCapacityAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CreateCapacityAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -425,6 +494,7 @@ class CreateCapacityAllowanceRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_capacity_v1_CapacityAllowanceSpec_aa66e201 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -439,6 +509,7 @@ class CreateCapacityAllowanceRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CREATECAPACITYALLOWANCEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -448,18 +519,25 @@ class CreateCapacityAllowanceRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_capacity_v1_CapacityAllowanceSpec_aa66e201 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CREATECAPACITYALLOWANCEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CreateCapacityAllowanceRequest_3c718890 = CreateCapacityAllowanceRequest
 
 
 class DeleteCapacityAllowanceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.DeleteCapacityAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.DeleteCapacityAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -467,6 +545,7 @@ class DeleteCapacityAllowanceRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -480,18 +559,25 @@ class DeleteCapacityAllowanceRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_DELETECAPACITYALLOWANCEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_DeleteCapacityAllowanceRequest_838e64ab = DeleteCapacityAllowanceRequest
 
 
 class GetCapacityAllowanceByParentAndCapacityBlockGroupRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.GetCapacityAllowanceByParentAndCapacityBlockGroupRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.GetCapacityAllowanceByParentAndCapacityBlockGroupRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -500,6 +586,7 @@ class GetCapacityAllowanceByParentAndCapacityBlockGroupRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         capacity_block_group_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -515,6 +602,7 @@ class GetCapacityAllowanceByParentAndCapacityBlockGroupRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYALLOWANCEBYPARENTANDCAPACITYBLOCKGROUPREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -525,18 +613,25 @@ class GetCapacityAllowanceByParentAndCapacityBlockGroupRequest(Message):
 
     @capacity_block_group_id.setter
     def capacity_block_group_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``capacity_block_group_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYALLOWANCEBYPARENTANDCAPACITYBLOCKGROUPREQUEST_CAPACITY_BLOCK_GROUP_ID, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'capacity_block_group_id': 'capacity_block_group_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_GetCapacityAllowanceByParentAndCapacityBlockGroupRequest_fd16628d = GetCapacityAllowanceByParentAndCapacityBlockGroupRequest
 
 
 class GetCapacityAllowanceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.GetCapacityAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.GetCapacityAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -544,6 +639,7 @@ class GetCapacityAllowanceRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -557,18 +653,25 @@ class GetCapacityAllowanceRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYALLOWANCEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_GetCapacityAllowanceRequest_e0751974 = GetCapacityAllowanceRequest
 
 
 class ListCapacityAllowancesByCapacityBlockGroupRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityAllowancesByCapacityBlockGroupRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityAllowancesByCapacityBlockGroupRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -578,6 +681,7 @@ class ListCapacityAllowancesByCapacityBlockGroupRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if capacity_block_group_id is not _NEBIUS_UNSET:
             values['capacity_block_group_id'] = capacity_block_group_id
@@ -595,6 +699,7 @@ class ListCapacityAllowancesByCapacityBlockGroupRequest(Message):
 
     @capacity_block_group_id.setter
     def capacity_block_group_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``capacity_block_group_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESBYCAPACITYBLOCKGROUPREQUEST_CAPACITY_BLOCK_GROUP_ID, value)
 
     @_NebiusProperty
@@ -605,6 +710,7 @@ class ListCapacityAllowancesByCapacityBlockGroupRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESBYCAPACITYBLOCKGROUPREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -615,18 +721,25 @@ class ListCapacityAllowancesByCapacityBlockGroupRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESBYCAPACITYBLOCKGROUPREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'capacity_block_group_id': 'capacity_block_group_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityAllowancesByCapacityBlockGroupRequest_2d765921 = ListCapacityAllowancesByCapacityBlockGroupRequest
 
 
 class ListCapacityAllowancesRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityAllowancesRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityAllowancesRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -636,6 +749,7 @@ class ListCapacityAllowancesRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -653,6 +767,7 @@ class ListCapacityAllowancesRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -663,6 +778,7 @@ class ListCapacityAllowancesRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -673,18 +789,25 @@ class ListCapacityAllowancesRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityAllowancesRequest_7719d309 = ListCapacityAllowancesRequest
 
 
 class ListCapacityAllowancesResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityAllowancesResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityAllowancesResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -693,6 +816,7 @@ class ListCapacityAllowancesResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_capacity_v1_CapacityAllowance_0cf98971] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -708,6 +832,7 @@ class ListCapacityAllowancesResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_capacity_v1_CapacityAllowance_0cf98971] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -718,18 +843,25 @@ class ListCapacityAllowancesResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYALLOWANCESRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityAllowancesResponse_ad6a4be5 = ListCapacityAllowancesResponse
 
 
 class UpdateCapacityAllowanceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.UpdateCapacityAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.UpdateCapacityAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -738,6 +870,7 @@ class UpdateCapacityAllowanceRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_capacity_v1_CapacityAllowanceSpec_aa66e201 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -752,6 +885,7 @@ class UpdateCapacityAllowanceRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_UPDATECAPACITYALLOWANCEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -761,18 +895,25 @@ class UpdateCapacityAllowanceRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_capacity_v1_CapacityAllowanceSpec_aa66e201 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_UPDATECAPACITYALLOWANCEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_UpdateCapacityAllowanceRequest_253ef0cf = UpdateCapacityAllowanceRequest
 
 class CapacityBlockGroup(Message):
     'Capacity Block Group is a parent resource for Capacity Intervals.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityBlockGroup'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityBlockGroup')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -782,6 +923,7 @@ class CapacityBlockGroup(Message):
         spec: _NebiusType_nebius_capacity_v1_CapacityBlockGroupSpec_a83bf5b6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_abf373c5 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -798,6 +940,7 @@ class CapacityBlockGroup(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUP_METADATA, value)
 
     @_NebiusProperty
@@ -807,6 +950,7 @@ class CapacityBlockGroup(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_capacity_v1_CapacityBlockGroupSpec_a83bf5b6 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUP_SPEC, value)
 
     @_NebiusProperty
@@ -816,39 +960,53 @@ class CapacityBlockGroup(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_abf373c5 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUP_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityBlockGroup_bcbe71ed = CapacityBlockGroup
 
 
 class CapacityBlockGroupSpec(Message):
     'Capacity Block Group specification.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityBlockGroupSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityBlockGroupSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityBlockGroupSpec_a83bf5b6 = CapacityBlockGroupSpec
 
 
 class CapacityBlockGroupStatus(Message):
     'Capacity Block Group status.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityBlockGroupStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityBlockGroupStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_State_4a979499
     UsageState: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_UsageState_9c6df058
 
@@ -890,6 +1048,7 @@ class CapacityBlockGroupStatus(Message):
         usage_state: _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_UsageState_9c6df058 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         reconciling: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if region is not _NEBIUS_UNSET:
             values['region'] = region
@@ -925,6 +1084,7 @@ class CapacityBlockGroupStatus(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_REGION, value)
 
     @_NebiusProperty
@@ -935,6 +1095,7 @@ class CapacityBlockGroupStatus(Message):
 
     @resource_affinity.setter
     def resource_affinity(self, value: _NebiusType_nebius_capacity_v1_ResourceAffinity_c12954fd | None) -> None:
+        """Set or clear the generated ``resource_affinity`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_RESOURCE_AFFINITY, value)
 
     @_NebiusProperty
@@ -945,6 +1106,7 @@ class CapacityBlockGroupStatus(Message):
 
     @service.setter
     def service(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``service`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_SERVICE, value)
 
     @_NebiusProperty
@@ -955,6 +1117,7 @@ class CapacityBlockGroupStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_State_4a979499 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -965,6 +1128,7 @@ class CapacityBlockGroupStatus(Message):
 
     @current_limit.setter
     def current_limit(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``current_limit`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_CURRENT_LIMIT, value)
 
     @_NebiusProperty
@@ -975,6 +1139,7 @@ class CapacityBlockGroupStatus(Message):
 
     @usage.setter
     def usage(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``usage`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_USAGE, value)
 
     @_NebiusProperty
@@ -985,6 +1150,7 @@ class CapacityBlockGroupStatus(Message):
 
     @usage_percentage.setter
     def usage_percentage(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``usage_percentage`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_USAGE_PERCENTAGE, value)
 
     @_NebiusProperty
@@ -995,6 +1161,7 @@ class CapacityBlockGroupStatus(Message):
 
     @next_change_at.setter
     def next_change_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``next_change_at`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_NEXT_CHANGE_AT, value)
 
     @_NebiusProperty
@@ -1005,6 +1172,7 @@ class CapacityBlockGroupStatus(Message):
 
     @next_change_to.setter
     def next_change_to(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``next_change_to`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_NEXT_CHANGE_TO, value)
 
     @_NebiusProperty
@@ -1015,6 +1183,7 @@ class CapacityBlockGroupStatus(Message):
 
     @current_continuous_interval.setter
     def current_continuous_interval(self, value: _NebiusType_nebius_capacity_v1_CurrentContinuousInterval_496e6878 | None) -> None:
+        """Set or clear the generated ``current_continuous_interval`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_CURRENT_CONTINUOUS_INTERVAL, value)
 
     @_NebiusProperty
@@ -1025,6 +1194,7 @@ class CapacityBlockGroupStatus(Message):
 
     @usage_state.setter
     def usage_state(self, value: _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_UsageState_9c6df058 | None) -> None:
+        """Set or clear the generated ``usage_state`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_USAGE_STATE, value)
 
     @_NebiusProperty
@@ -1035,19 +1205,26 @@ class CapacityBlockGroupStatus(Message):
 
     @reconciling.setter
     def reconciling(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``reconciling`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYBLOCKGROUPSTATUS_RECONCILING, value)
 
     __PY_TO_PB2__ = {'region': 'region', 'resource_affinity': 'resource_affinity', 'service': 'service', 'state': 'state', 'current_limit': 'current_limit', 'usage': 'usage', 'usage_percentage': 'usage_percentage', 'next_change_at': 'next_change_at', 'next_change_to': 'next_change_to', 'current_continuous_interval': 'current_continuous_interval', 'usage_state': 'usage_state', 'reconciling': 'reconciling', '_next_change_to': '_next_change_to', 'State': 'State', 'UsageState': 'UsageState'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityBlockGroupStatus_abf373c5 = CapacityBlockGroupStatus
 
 
 class CurrentContinuousInterval(Message):
     'Current, last or future concatenation of Capacity Intervals in a Capacity Block Group.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CurrentContinuousInterval'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CurrentContinuousInterval')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_CurrentContinuousInterval_State_45eab40a
 
     def __init__(
@@ -1059,6 +1236,7 @@ class CurrentContinuousInterval(Message):
         quantity: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         state: _NebiusType_nebius_capacity_v1_CurrentContinuousInterval_State_45eab40a | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if start_time is not _NEBIUS_UNSET:
             values['start_time'] = start_time
@@ -1078,6 +1256,7 @@ class CurrentContinuousInterval(Message):
 
     @start_time.setter
     def start_time(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``start_time`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CURRENTCONTINUOUSINTERVAL_START_TIME, value)
 
     @_NebiusProperty
@@ -1088,6 +1267,7 @@ class CurrentContinuousInterval(Message):
 
     @end_time.setter
     def end_time(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``end_time`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CURRENTCONTINUOUSINTERVAL_END_TIME, value)
 
     @_NebiusProperty
@@ -1098,6 +1278,7 @@ class CurrentContinuousInterval(Message):
 
     @quantity.setter
     def quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``quantity`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CURRENTCONTINUOUSINTERVAL_QUANTITY, value)
 
     @_NebiusProperty
@@ -1108,18 +1289,25 @@ class CurrentContinuousInterval(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_capacity_v1_CurrentContinuousInterval_State_45eab40a | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CURRENTCONTINUOUSINTERVAL_STATE, value)
 
     __PY_TO_PB2__ = {'start_time': 'start_time', 'end_time': 'end_time', 'quantity': 'quantity', 'state': 'state', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CurrentContinuousInterval_496e6878 = CurrentContinuousInterval
 
 class GetCapacityBlockGroupByResourceAffinityRequest(Message):
     'Get a Capacity Block Group in a Tenant by its Resource Affinity.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.GetCapacityBlockGroupByResourceAffinityRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.GetCapacityBlockGroupByResourceAffinityRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1129,6 +1317,7 @@ class GetCapacityBlockGroupByResourceAffinityRequest(Message):
         region: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         resource_affinity: _NebiusType_nebius_capacity_v1_ResourceAffinity_c12954fd | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1146,6 +1335,7 @@ class GetCapacityBlockGroupByResourceAffinityRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYBLOCKGROUPBYRESOURCEAFFINITYREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1156,6 +1346,7 @@ class GetCapacityBlockGroupByResourceAffinityRequest(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYBLOCKGROUPBYRESOURCEAFFINITYREQUEST_REGION, value)
 
     @_NebiusProperty
@@ -1166,19 +1357,26 @@ class GetCapacityBlockGroupByResourceAffinityRequest(Message):
 
     @resource_affinity.setter
     def resource_affinity(self, value: _NebiusType_nebius_capacity_v1_ResourceAffinity_c12954fd | None) -> None:
+        """Set or clear the generated ``resource_affinity`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYBLOCKGROUPBYRESOURCEAFFINITYREQUEST_RESOURCE_AFFINITY, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'region': 'region', 'resource_affinity': 'resource_affinity'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_GetCapacityBlockGroupByResourceAffinityRequest_d82a6577 = GetCapacityBlockGroupByResourceAffinityRequest
 
 
 class GetCapacityBlockGroupRequest(Message):
     'Get a Capacity Block Group by its ID.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.GetCapacityBlockGroupRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.GetCapacityBlockGroupRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1186,6 +1384,7 @@ class GetCapacityBlockGroupRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1199,19 +1398,26 @@ class GetCapacityBlockGroupRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYBLOCKGROUPREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_GetCapacityBlockGroupRequest_a7a2bfab = GetCapacityBlockGroupRequest
 
 
 class ListCapacityBlockGroupResourcesRequest(Message):
     'List reservations instances in a Capacity Block Group by its ID.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityBlockGroupResourcesRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityBlockGroupResourcesRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1219,6 +1425,7 @@ class ListCapacityBlockGroupResourcesRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1232,19 +1439,26 @@ class ListCapacityBlockGroupResourcesRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYBLOCKGROUPRESOURCESREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityBlockGroupResourcesRequest_f9678b20 = ListCapacityBlockGroupResourcesRequest
 
 
 class ListCapacityBlockGroupResourcesResponse(Message):
     "All VM instances' IDs that occupy the Capacity Block Group."
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityBlockGroupResourcesResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityBlockGroupResourcesResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1252,6 +1466,7 @@ class ListCapacityBlockGroupResourcesResponse(Message):
         *,
         resource_ids: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_ids is not _NEBIUS_UNSET:
             values['resource_ids'] = resource_ids
@@ -1265,19 +1480,26 @@ class ListCapacityBlockGroupResourcesResponse(Message):
 
     @resource_ids.setter
     def resource_ids(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``resource_ids`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYBLOCKGROUPRESOURCESRESPONSE_RESOURCE_IDS, value)
 
     __PY_TO_PB2__ = {'resource_ids': 'resource_ids'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityBlockGroupResourcesResponse_c1eef828 = ListCapacityBlockGroupResourcesResponse
 
 
 class ListCapacityBlockGroupsRequest(Message):
     'List Capacity Block Groups by a Tenant ID.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityBlockGroupsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityBlockGroupsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1287,6 +1509,7 @@ class ListCapacityBlockGroupsRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1304,6 +1527,7 @@ class ListCapacityBlockGroupsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYBLOCKGROUPSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1314,6 +1538,7 @@ class ListCapacityBlockGroupsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYBLOCKGROUPSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1324,19 +1549,26 @@ class ListCapacityBlockGroupsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYBLOCKGROUPSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityBlockGroupsRequest_b2695850 = ListCapacityBlockGroupsRequest
 
 
 class ListCapacityBlockGroupsResponse(Message):
     'All existing Capacity Block Groups in a Tenant.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityBlockGroupsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityBlockGroupsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1345,6 +1577,7 @@ class ListCapacityBlockGroupsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_capacity_v1_CapacityBlockGroup_bcbe71ed] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1360,6 +1593,7 @@ class ListCapacityBlockGroupsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_capacity_v1_CapacityBlockGroup_bcbe71ed] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYBLOCKGROUPSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1370,18 +1604,25 @@ class ListCapacityBlockGroupsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYBLOCKGROUPSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityBlockGroupsResponse_da44467f = ListCapacityBlockGroupsResponse
 
 class CapacityInterval(Message):
     'Capacity Intervals represents a timeframe during which the specified resources can be used.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityInterval'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityInterval')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1391,6 +1632,7 @@ class CapacityInterval(Message):
         spec: _NebiusType_nebius_capacity_v1_CapacityIntervalSpec_25039522 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_capacity_v1_CapacityIntervalStatus_026c34a5 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1407,6 +1649,7 @@ class CapacityInterval(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVAL_METADATA, value)
 
     @_NebiusProperty
@@ -1416,6 +1659,7 @@ class CapacityInterval(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_capacity_v1_CapacityIntervalSpec_25039522 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVAL_SPEC, value)
 
     @_NebiusProperty
@@ -1425,39 +1669,53 @@ class CapacityInterval(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_capacity_v1_CapacityIntervalStatus_026c34a5 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVAL_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityInterval_8491b1f9 = CapacityInterval
 
 
 class CapacityIntervalSpec(Message):
     'Capacity Interval specification.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityIntervalSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityIntervalSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityIntervalSpec_25039522 = CapacityIntervalSpec
 
 
 class CapacityIntervalStatus(Message):
     'Capacity Interval status data.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.CapacityIntervalStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.CapacityIntervalStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_CapacityIntervalStatus_State_72d352b1
 
     def __init__(
@@ -1474,6 +1732,7 @@ class CapacityIntervalStatus(Message):
         state: _NebiusType_nebius_capacity_v1_CapacityIntervalStatus_State_72d352b1 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         reconciling: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if container_id is not _NEBIUS_UNSET:
             values['container_id'] = container_id
@@ -1503,6 +1762,7 @@ class CapacityIntervalStatus(Message):
 
     @container_id.setter
     def container_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``container_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_CONTAINER_ID, value)
 
     @_NebiusProperty
@@ -1513,6 +1773,7 @@ class CapacityIntervalStatus(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_REGION, value)
 
     @_NebiusProperty
@@ -1523,6 +1784,7 @@ class CapacityIntervalStatus(Message):
 
     @resource_affinity.setter
     def resource_affinity(self, value: _NebiusType_nebius_capacity_v1_ResourceAffinity_c12954fd | None) -> None:
+        """Set or clear the generated ``resource_affinity`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_RESOURCE_AFFINITY, value)
 
     @_NebiusProperty
@@ -1533,6 +1795,7 @@ class CapacityIntervalStatus(Message):
 
     @service.setter
     def service(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``service`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_SERVICE, value)
 
     @_NebiusProperty
@@ -1543,6 +1806,7 @@ class CapacityIntervalStatus(Message):
 
     @quantity.setter
     def quantity(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``quantity`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_QUANTITY, value)
 
     @_NebiusProperty
@@ -1553,6 +1817,7 @@ class CapacityIntervalStatus(Message):
 
     @start_time.setter
     def start_time(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``start_time`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_START_TIME, value)
 
     @_NebiusProperty
@@ -1563,6 +1828,7 @@ class CapacityIntervalStatus(Message):
 
     @end_time.setter
     def end_time(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``end_time`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_END_TIME, value)
 
     @_NebiusProperty
@@ -1573,6 +1839,7 @@ class CapacityIntervalStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_capacity_v1_CapacityIntervalStatus_State_72d352b1 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -1583,18 +1850,25 @@ class CapacityIntervalStatus(Message):
 
     @reconciling.setter
     def reconciling(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``reconciling`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_CAPACITYINTERVALSTATUS_RECONCILING, value)
 
     __PY_TO_PB2__ = {'container_id': 'container_id', 'region': 'region', 'resource_affinity': 'resource_affinity', 'service': 'service', 'quantity': 'quantity', 'start_time': 'start_time', 'end_time': 'end_time', 'state': 'state', 'reconciling': 'reconciling', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_CapacityIntervalStatus_026c34a5 = CapacityIntervalStatus
 
 class GetCapacityIntervalRequest(Message):
     'Getting Capacity Interval by its ID.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.GetCapacityIntervalRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.GetCapacityIntervalRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1602,6 +1876,7 @@ class GetCapacityIntervalRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1614,19 +1889,26 @@ class GetCapacityIntervalRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_GETCAPACITYINTERVALREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_GetCapacityIntervalRequest_28d59efa = GetCapacityIntervalRequest
 
 
 class ListCapacityIntervalsRequest(Message):
     'Listing all existing Capacity Intervals in a Capacity Block Group.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityIntervalsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityIntervalsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1636,6 +1918,7 @@ class ListCapacityIntervalsRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1653,6 +1936,7 @@ class ListCapacityIntervalsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYINTERVALSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1663,6 +1947,7 @@ class ListCapacityIntervalsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYINTERVALSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1673,19 +1958,26 @@ class ListCapacityIntervalsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYINTERVALSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityIntervalsRequest_7b900ea3 = ListCapacityIntervalsRequest
 
 
 class ListCapacityIntervalsResponse(Message):
     'All existing Capacity Intervals in a Capacity Block Group.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListCapacityIntervalsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListCapacityIntervalsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1694,6 +1986,7 @@ class ListCapacityIntervalsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_capacity_v1_CapacityInterval_8491b1f9] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1709,6 +2002,7 @@ class ListCapacityIntervalsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_capacity_v1_CapacityInterval_8491b1f9] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYINTERVALSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1719,18 +2013,25 @@ class ListCapacityIntervalsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTCAPACITYINTERVALSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListCapacityIntervalsResponse_0ba003c9 = ListCapacityIntervalsResponse
 
 class ComputeInstanceDetails__Preset__Resources(Message):
     'All resources existing in a preset.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ComputeInstanceDetails.Preset.Resources'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ComputeInstanceDetails.Preset.Resources')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1740,6 +2041,7 @@ class ComputeInstanceDetails__Preset__Resources(Message):
         memory_gibibytes: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         gpu_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if vcpu_count is not _NEBIUS_UNSET:
             values['vcpu_count'] = vcpu_count
@@ -1757,6 +2059,7 @@ class ComputeInstanceDetails__Preset__Resources(Message):
 
     @vcpu_count.setter
     def vcpu_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``vcpu_count`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_PRESET_RESOURCES_VCPU_COUNT, value)
 
     @_NebiusProperty
@@ -1767,6 +2070,7 @@ class ComputeInstanceDetails__Preset__Resources(Message):
 
     @memory_gibibytes.setter
     def memory_gibibytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``memory_gibibytes`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_PRESET_RESOURCES_MEMORY_GIBIBYTES, value)
 
     @_NebiusProperty
@@ -1777,19 +2081,26 @@ class ComputeInstanceDetails__Preset__Resources(Message):
 
     @gpu_count.setter
     def gpu_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``gpu_count`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_PRESET_RESOURCES_GPU_COUNT, value)
 
     __PY_TO_PB2__ = {'vcpu_count': 'vcpu_count', 'memory_gibibytes': 'memory_gibibytes', 'gpu_count': 'gpu_count'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_Resources_0c9b3d66 = ComputeInstanceDetails__Preset__Resources
 
 
 class ComputeInstanceDetails__Preset(Message):
     'Preset details.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ComputeInstanceDetails.Preset'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ComputeInstanceDetails.Preset')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Resources: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_Resources_0c9b3d66
 
     def __init__(
@@ -1799,6 +2110,7 @@ class ComputeInstanceDetails__Preset(Message):
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         resources: _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_Resources_0c9b3d66 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -1814,6 +2126,7 @@ class ComputeInstanceDetails__Preset(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_PRESET_NAME, value)
 
     @_NebiusProperty
@@ -1824,19 +2137,26 @@ class ComputeInstanceDetails__Preset(Message):
 
     @resources.setter
     def resources(self, value: _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_Resources_0c9b3d66 | None) -> None:
+        """Set or clear the generated ``resources`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_PRESET_RESOURCES, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'resources': 'resources', 'Resources': 'Resources'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_66a2bfd0 = ComputeInstanceDetails__Preset
 
 
 class ResourceAdviceStatus__Availability(Message):
     'Shows the available resources.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAdviceStatus.Availability'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ResourceAdviceStatus.Availability')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     DataState: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_DataState_93f6a5e5
     AvailabilityLevel: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_AvailabilityLevel_020e784c
 
@@ -1850,6 +2170,7 @@ class ResourceAdviceStatus__Availability(Message):
         availability_level: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_AvailabilityLevel_020e784c | None | _NebiusUnsetType = _NEBIUS_UNSET,
         effective_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if data_state is not _NEBIUS_UNSET:
             values['data_state'] = data_state
@@ -1871,6 +2192,7 @@ class ResourceAdviceStatus__Availability(Message):
 
     @data_state.setter
     def data_state(self, value: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_DataState_93f6a5e5 | None) -> None:
+        """Set or clear the generated ``data_state`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_AVAILABILITY_DATA_STATE, value)
 
     @_NebiusProperty
@@ -1881,6 +2203,7 @@ class ResourceAdviceStatus__Availability(Message):
 
     @available.setter
     def available(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``available`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_AVAILABILITY_AVAILABLE, value)
 
     @_NebiusProperty
@@ -1891,6 +2214,7 @@ class ResourceAdviceStatus__Availability(Message):
 
     @limit.setter
     def limit(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``limit`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_AVAILABILITY_LIMIT, value)
 
     @_NebiusProperty
@@ -1901,6 +2225,7 @@ class ResourceAdviceStatus__Availability(Message):
 
     @availability_level.setter
     def availability_level(self, value: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_AvailabilityLevel_020e784c | None) -> None:
+        """Set or clear the generated ``availability_level`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_AVAILABILITY_AVAILABILITY_LEVEL, value)
 
     @_NebiusProperty
@@ -1911,19 +2236,26 @@ class ResourceAdviceStatus__Availability(Message):
 
     @effective_at.setter
     def effective_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``effective_at`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_AVAILABILITY_EFFECTIVE_AT, value)
 
     __PY_TO_PB2__ = {'data_state': 'data_state', 'available': 'available', 'limit': 'limit', 'availability_level': 'availability_level', 'effective_at': 'effective_at', 'DataState': 'DataState', 'AvailabilityLevel': 'AvailabilityLevel'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_173b7c8b = ResourceAdviceStatus__Availability
 
 
 class ComputeInstanceDetails(Message):
     'Details for Compute/GPU capacity.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ComputeInstanceDetails'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ComputeInstanceDetails')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Preset: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_66a2bfd0
 
     def __init__(
@@ -1934,6 +2266,7 @@ class ComputeInstanceDetails(Message):
         preset: _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_66a2bfd0 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         gpu_memory_gigabytes: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if platform is not _NEBIUS_UNSET:
             values['platform'] = platform
@@ -1951,6 +2284,7 @@ class ComputeInstanceDetails(Message):
 
     @platform.setter
     def platform(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``platform`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_PLATFORM, value)
 
     @_NebiusProperty
@@ -1961,6 +2295,7 @@ class ComputeInstanceDetails(Message):
 
     @preset.setter
     def preset(self, value: _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_Preset_66a2bfd0 | None) -> None:
+        """Set or clear the generated ``preset`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_PRESET, value)
 
     @_NebiusProperty
@@ -1971,19 +2306,26 @@ class ComputeInstanceDetails(Message):
 
     @gpu_memory_gigabytes.setter
     def gpu_memory_gigabytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``gpu_memory_gigabytes`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_COMPUTEINSTANCEDETAILS_GPU_MEMORY_GIGABYTES, value)
 
     __PY_TO_PB2__ = {'platform': 'platform', 'preset': 'preset', 'gpu_memory_gigabytes': 'gpu_memory_gigabytes', 'Preset': 'Preset'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_2256a3a7 = ComputeInstanceDetails
 
 
 class ResourceAdvice(Message):
     'ResourceAdvice is a virtual resource representing the availability\nof a specific technical configuration in a specific scope.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAdvice'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ResourceAdvice')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1993,6 +2335,7 @@ class ResourceAdvice(Message):
         spec: _NebiusType_nebius_capacity_v1_ResourceAdviceSpec_e93e15d0 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_f2dd9708 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2010,6 +2353,7 @@ class ResourceAdvice(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICE_METADATA, value)
 
     @_NebiusProperty
@@ -2020,6 +2364,7 @@ class ResourceAdvice(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_capacity_v1_ResourceAdviceSpec_e93e15d0 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICE_SPEC, value)
 
     @_NebiusProperty
@@ -2030,19 +2375,26 @@ class ResourceAdvice(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_f2dd9708 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ResourceAdvice_7e30dbd9 = ResourceAdvice
 
 
 class ResourceAdviceSpec(Message):
     'Resource Advice specification.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAdviceSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ResourceAdviceSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_resource_details__(_NebiusOneOf):
         name: str = 'resource_details'
@@ -2073,6 +2425,7 @@ class ResourceAdviceSpec(Message):
         fabric: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         compute_instance: _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_2256a3a7 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if region is not _NEBIUS_UNSET:
             values['region'] = region
@@ -2090,6 +2443,7 @@ class ResourceAdviceSpec(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESPEC_REGION, value)
 
     @_NebiusProperty
@@ -2100,6 +2454,7 @@ class ResourceAdviceSpec(Message):
 
     @fabric.setter
     def fabric(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``fabric`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESPEC_FABRIC, value)
 
     @_NebiusProperty
@@ -2109,19 +2464,26 @@ class ResourceAdviceSpec(Message):
 
     @compute_instance.setter
     def compute_instance(self, value: _NebiusType_nebius_capacity_v1_ComputeInstanceDetails_2256a3a7 | None) -> None:
+        """Set or clear the generated ``compute_instance`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESPEC_COMPUTE_INSTANCE, value)
 
     __PY_TO_PB2__ = {'region': 'region', 'fabric': 'fabric', 'compute_instance': 'compute_instance', 'resource_details': 'resource_details'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ResourceAdviceSpec_e93e15d0 = ResourceAdviceSpec
 
 
 class ResourceAdviceStatus(Message):
     'Resource Advice status.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAdviceStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ResourceAdviceStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Availability: _NebiusTypeAlias = _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_173b7c8b
 
     def __init__(
@@ -2132,6 +2494,7 @@ class ResourceAdviceStatus(Message):
         on_demand: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_173b7c8b | None | _NebiusUnsetType = _NEBIUS_UNSET,
         preemptible: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_173b7c8b | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if reserved is not _NEBIUS_UNSET:
             values['reserved'] = reserved
@@ -2149,6 +2512,7 @@ class ResourceAdviceStatus(Message):
 
     @reserved.setter
     def reserved(self, value: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_173b7c8b | None) -> None:
+        """Set or clear the generated ``reserved`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_RESERVED, value)
 
     @_NebiusProperty
@@ -2159,6 +2523,7 @@ class ResourceAdviceStatus(Message):
 
     @on_demand.setter
     def on_demand(self, value: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_173b7c8b | None) -> None:
+        """Set or clear the generated ``on_demand`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_ON_DEMAND, value)
 
     @_NebiusProperty
@@ -2169,17 +2534,24 @@ class ResourceAdviceStatus(Message):
 
     @preemptible.setter
     def preemptible(self, value: _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_Availability_173b7c8b | None) -> None:
+        """Set or clear the generated ``preemptible`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEADVICESTATUS_PREEMPTIBLE, value)
 
     __PY_TO_PB2__ = {'reserved': 'reserved', 'on_demand': 'on_demand', 'preemptible': 'preemptible', 'Availability': 'Availability'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ResourceAdviceStatus_f2dd9708 = ResourceAdviceStatus
 
 class ListResourceAdviceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListResourceAdviceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListResourceAdviceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2189,6 +2561,7 @@ class ListResourceAdviceRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -2206,6 +2579,7 @@ class ListResourceAdviceRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTRESOURCEADVICEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -2216,6 +2590,7 @@ class ListResourceAdviceRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTRESOURCEADVICEREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -2226,18 +2601,25 @@ class ListResourceAdviceRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTRESOURCEADVICEREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListResourceAdviceRequest_33d1155d = ListResourceAdviceRequest
 
 
 class ListResourceAdviceResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ListResourceAdviceResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ListResourceAdviceResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2246,6 +2628,7 @@ class ListResourceAdviceResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_capacity_v1_ResourceAdvice_7e30dbd9] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -2261,6 +2644,7 @@ class ListResourceAdviceResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_capacity_v1_ResourceAdvice_7e30dbd9] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTRESOURCEADVICERESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -2271,18 +2655,25 @@ class ListResourceAdviceResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_LISTRESOURCEADVICERESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ListResourceAdviceResponse_f5ab5e7d = ListResourceAdviceResponse
 
 class ResourceAffinity(Message):
     'Specification of the Capacity Block Group.'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAffinity'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ResourceAffinity')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_versions__(_NebiusOneOf):
         name: str = 'versions'
@@ -2311,6 +2702,7 @@ class ResourceAffinity(Message):
         *,
         compute_v1: _NebiusType_nebius_capacity_v1_ResourceAffinityComputeV1_ae126ae1 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if compute_v1 is not _NEBIUS_UNSET:
             values['compute_v1'] = compute_v1
@@ -2324,19 +2716,26 @@ class ResourceAffinity(Message):
 
     @compute_v1.setter
     def compute_v1(self, value: _NebiusType_nebius_capacity_v1_ResourceAffinityComputeV1_ae126ae1 | None) -> None:
+        """Set or clear the generated ``compute_v1`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEAFFINITY_COMPUTE_V1, value)
 
     __PY_TO_PB2__ = {'compute_v1': 'compute_v1', 'versions': 'versions'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ResourceAffinity_c12954fd = ResourceAffinity
 
 
 class ResourceAffinityComputeV1(Message):
     'First version of Compute service resource affinity'
     __PROTO_FULL_NAME__ = 'nebius.capacity.v1.ResourceAffinityComputeV1'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.capacity.v1.ResourceAffinityComputeV1')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2345,6 +2744,7 @@ class ResourceAffinityComputeV1(Message):
         fabric: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         platform: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if fabric is not _NEBIUS_UNSET:
             values['fabric'] = fabric
@@ -2360,6 +2760,7 @@ class ResourceAffinityComputeV1(Message):
 
     @fabric.setter
     def fabric(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``fabric`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEAFFINITYCOMPUTEV1_FABRIC, value)
 
     @_NebiusProperty
@@ -2370,9 +2771,11 @@ class ResourceAffinityComputeV1(Message):
 
     @platform.setter
     def platform(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``platform`` field."""
         self._set_field(_NEBIUS_CAPACITY_V1_RESOURCEAFFINITYCOMPUTEV1_PLATFORM, value)
 
     __PY_TO_PB2__ = {'fabric': 'fabric', 'platform': 'platform'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_capacity_v1_ResourceAffinityComputeV1_ae126ae1 = ResourceAffinityComputeV1
 
 # @@nebius-section:fields@@
@@ -2589,17 +2992,25 @@ ResourceAdviceStatus__Availability.__qualname__ = 'ResourceAdviceStatus.Availabi
 class CapacityAllowanceServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Capacity Allowance service manages project limits for Capacity Block Groups.\n\nThis class provides client methods for the ``nebius.capacity.v1.CapacityAllowanceService`` service.'
     __service_name__ = 'nebius.capacity.v1.CapacityAllowanceService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'capacity-blocks.billing-cpl'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.capacity.v1.CapacityAllowanceService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.capacity.v1.CapacityAllowanceService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def list(
         self,
@@ -2701,14 +3112,19 @@ class CapacityAllowanceServiceClient(_NebiusClientWithOperations[_type_nebius_co
 class CapacityBlockGroupServiceClient(_NebiusClient):
     'Capacity Block Group service provides read access to Capacity Block Groups resources.\n\nThis class provides client methods for the ``nebius.capacity.v1.CapacityBlockGroupService`` service.'
     __service_name__ = 'nebius.capacity.v1.CapacityBlockGroupService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'capacity-blocks.billing-cpl'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.capacity.v1.CapacityBlockGroupService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.capacity.v1.CapacityBlockGroupService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def get(
         self,
@@ -2765,14 +3181,19 @@ class CapacityBlockGroupServiceClient(_NebiusClient):
 class CapacityIntervalServiceClient(_NebiusClient):
     'Capacity Interval service provides read access to Capacity Intervals resources.\n\nThis class provides client methods for the ``nebius.capacity.v1.CapacityIntervalService`` service.'
     __service_name__ = 'nebius.capacity.v1.CapacityIntervalService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'capacity-blocks.billing-cpl'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.capacity.v1.CapacityIntervalService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.capacity.v1.CapacityIntervalService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def get(
         self,
@@ -2803,14 +3224,19 @@ class CapacityIntervalServiceClient(_NebiusClient):
 class ResourceAdviceServiceClient(_NebiusClient):
     'ResourceAdvisorService provides insights into capacity availability for various resources.\nIt helps users understand where they can launch instances or allocate storage based on their\nquotas and the current physical capacity in the data centers.\n\nThis class provides client methods for the ``nebius.capacity.v1.ResourceAdviceService`` service.'
     __service_name__ = 'nebius.capacity.v1.ResourceAdviceService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'capacity-advisor.billing-cpl'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.capacity.v1.ResourceAdviceService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.capacity.v1.ResourceAdviceService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def list(
         self,

@@ -408,6 +408,38 @@ def _materialize(root: Path, namespace: str, partition: str = "all") -> None:
         path.write_text(output.content)
 
 
+def test_generator_documents_framework_owned_members() -> None:
+    response = generate(_request("documented_framework"))
+
+    assert not response.error
+    widget_source = _implementation_source(response, "documented_framework/acme/widget")
+    common_source = _implementation_source(response, "documented_framework/acme/common")
+
+    for documentation in (
+        '"""Fully qualified protobuf message name."""',
+        '"""Registry for this message and its descriptor."""',
+        '"""Protobuf message descriptor from the registry."""',
+        '"""Alias for code that expects a protobuf message descriptor."""',
+        '"""Create a message from a source message and field values."""',
+        '"""Set or clear the generated ``id`` field."""',
+        '"""Mapping from Python member names to protobuf names."""',
+        '"""Fully qualified protobuf service name for RPC routes."""',
+        '"""API gateway name for service routes."""',
+        '"""Descriptor registry for request metadata."""',
+        '"""Return the protobuf service descriptor from the registry."""',
+        '"""Alias for code that expects a protobuf service descriptor."""',
+    ):
+        assert documentation in widget_source
+
+    for documentation in (
+        '"""Fully qualified protobuf enum name."""',
+        '"""Registry for this enum and its descriptor."""',
+        '"""Protobuf enum descriptor from the registry."""',
+        '"""Alias for code that expects a protobuf enum descriptor."""',
+    ):
+        assert documentation in common_source
+
+
 def _operation_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:
     request = _request(namespace)
     operation_file = descriptor_pb2.FileDescriptorProto(

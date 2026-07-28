@@ -56,9 +56,13 @@ from ...common import v1 as _type_nebius_common_v1_e3b886bd
 # @@nebius-section:enums@@
 class QuotaAllowanceStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.QuotaAllowanceStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.quotas.v1.QuotaAllowanceStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     STATE_PROVISIONING = 1
     'Quota is being allocated; the process can take up to several minutes.'
@@ -72,9 +76,13 @@ _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_State_d3a49a92 = QuotaAllowanc
 
 class QuotaAllowanceStatus__UsageState(Enum):
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.QuotaAllowanceStatus.UsageState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.quotas.v1.QuotaAllowanceStatus.UsageState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     USAGE_STATE_UNSPECIFIED = 0
     USAGE_STATE_USED = 1
     'Quota is actively in use.'
@@ -89,10 +97,15 @@ _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_UsageState_7388260d = QuotaAll
 # @@nebius-section:messages@@
 class QuotaAllowance(Message):
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.QuotaAllowance'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.QuotaAllowance')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -102,6 +115,7 @@ class QuotaAllowance(Message):
         spec: _NebiusType_nebius_quotas_v1_QuotaAllowanceSpec_ce4fcdb4 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_be8d3416 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -118,6 +132,7 @@ class QuotaAllowance(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCE_METADATA, value)
 
     @_NebiusProperty
@@ -127,6 +142,7 @@ class QuotaAllowance(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_quotas_v1_QuotaAllowanceSpec_ce4fcdb4 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCE_SPEC, value)
 
     @_NebiusProperty
@@ -136,18 +152,25 @@ class QuotaAllowance(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_be8d3416 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_QuotaAllowance_aa3ca3e4 = QuotaAllowance
 
 
 class QuotaAllowanceSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.QuotaAllowanceSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.QuotaAllowanceSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__limit__(_NebiusOneOf):
         name: str = '_limit'
@@ -177,6 +200,7 @@ class QuotaAllowanceSpec(Message):
         limit: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         region: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if limit is not _NEBIUS_UNSET:
             values['limit'] = limit
@@ -192,6 +216,7 @@ class QuotaAllowanceSpec(Message):
 
     @limit.setter
     def limit(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``limit`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESPEC_LIMIT, value)
 
     @_NebiusProperty
@@ -202,18 +227,25 @@ class QuotaAllowanceSpec(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESPEC_REGION, value)
 
     __PY_TO_PB2__ = {'limit': 'limit', 'region': 'region', '_limit': '_limit'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_QuotaAllowanceSpec_ce4fcdb4 = QuotaAllowanceSpec
 
 
 class QuotaAllowanceStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.QuotaAllowanceStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.QuotaAllowanceStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_State_d3a49a92
     UsageState: _NebiusTypeAlias = _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_UsageState_7388260d
 
@@ -230,6 +262,7 @@ class QuotaAllowanceStatus(Message):
         usage_percentage: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         usage_state: _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_UsageState_7388260d | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -257,6 +290,7 @@ class QuotaAllowanceStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_State_d3a49a92 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_STATE, value)
 
     @_NebiusProperty
@@ -267,6 +301,7 @@ class QuotaAllowanceStatus(Message):
 
     @usage.setter
     def usage(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``usage`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_USAGE, value)
 
     @_NebiusProperty
@@ -277,6 +312,7 @@ class QuotaAllowanceStatus(Message):
 
     @service.setter
     def service(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``service`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_SERVICE, value)
 
     @_NebiusProperty
@@ -287,6 +323,7 @@ class QuotaAllowanceStatus(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -297,6 +334,7 @@ class QuotaAllowanceStatus(Message):
 
     @service_description.setter
     def service_description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``service_description`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_SERVICE_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -307,6 +345,7 @@ class QuotaAllowanceStatus(Message):
 
     @unit.setter
     def unit(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``unit`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_UNIT, value)
 
     @_NebiusProperty
@@ -317,6 +356,7 @@ class QuotaAllowanceStatus(Message):
 
     @usage_percentage.setter
     def usage_percentage(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``usage_percentage`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_USAGE_PERCENTAGE, value)
 
     @_NebiusProperty
@@ -327,18 +367,25 @@ class QuotaAllowanceStatus(Message):
 
     @usage_state.setter
     def usage_state(self, value: _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_UsageState_7388260d | None) -> None:
+        """Set or clear the generated ``usage_state`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_QUOTAALLOWANCESTATUS_USAGE_STATE, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'usage': 'usage', 'service': 'service', 'description': 'description', 'service_description': 'service_description', 'unit': 'unit', 'usage_percentage': 'usage_percentage', 'usage_state': 'usage_state', 'State': 'State', 'UsageState': 'UsageState'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_QuotaAllowanceStatus_be8d3416 = QuotaAllowanceStatus
 
 class CreateQuotaAllowanceRequest(Message):
     'Request to create a quota allowance with the specified spec and metadata.'
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.CreateQuotaAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.CreateQuotaAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -347,6 +394,7 @@ class CreateQuotaAllowanceRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_quotas_v1_QuotaAllowanceSpec_ce4fcdb4 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -361,6 +409,7 @@ class CreateQuotaAllowanceRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_CREATEQUOTAALLOWANCEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -370,19 +419,26 @@ class CreateQuotaAllowanceRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_quotas_v1_QuotaAllowanceSpec_ce4fcdb4 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_CREATEQUOTAALLOWANCEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_CreateQuotaAllowanceRequest_46f00858 = CreateQuotaAllowanceRequest
 
 
 class DeleteQuotaAllowanceRequest(Message):
     'Request to delete a quota allowance by its identifier.'
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.DeleteQuotaAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.DeleteQuotaAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -390,6 +446,7 @@ class DeleteQuotaAllowanceRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -403,19 +460,26 @@ class DeleteQuotaAllowanceRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_DELETEQUOTAALLOWANCEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_DeleteQuotaAllowanceRequest_c9c14941 = DeleteQuotaAllowanceRequest
 
 
 class GetByNameRequest(Message):
     'Request to get a quota allowance by container, name, and region.'
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.GetByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.GetByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -425,6 +489,7 @@ class GetByNameRequest(Message):
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         region: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -442,6 +507,7 @@ class GetByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_GETBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -452,6 +518,7 @@ class GetByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_GETBYNAMEREQUEST_NAME, value)
 
     @_NebiusProperty
@@ -462,19 +529,26 @@ class GetByNameRequest(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_GETBYNAMEREQUEST_REGION, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name', 'region': 'region'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_GetByNameRequest_b5b7f8bf = GetByNameRequest
 
 
 class GetQuotaAllowanceRequest(Message):
     'Request to get a quota allowance by its identifier.'
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.GetQuotaAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.GetQuotaAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -482,6 +556,7 @@ class GetQuotaAllowanceRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -495,19 +570,26 @@ class GetQuotaAllowanceRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_GETQUOTAALLOWANCEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_GetQuotaAllowanceRequest_9bfa88ef = GetQuotaAllowanceRequest
 
 
 class ListQuotaAllowancesRequest(Message):
     'Request to list quota allowances under a container with pagination support.'
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.ListQuotaAllowancesRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.ListQuotaAllowancesRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -517,6 +599,7 @@ class ListQuotaAllowancesRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -534,6 +617,7 @@ class ListQuotaAllowancesRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_LISTQUOTAALLOWANCESREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -544,6 +628,7 @@ class ListQuotaAllowancesRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_LISTQUOTAALLOWANCESREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -554,19 +639,26 @@ class ListQuotaAllowancesRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_LISTQUOTAALLOWANCESREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_ListQuotaAllowancesRequest_2aa3e020 = ListQuotaAllowancesRequest
 
 
 class ListQuotaAllowancesResponse(Message):
     'Response containing quota allowances and pagination token.'
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.ListQuotaAllowancesResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.ListQuotaAllowancesResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -575,6 +667,7 @@ class ListQuotaAllowancesResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_quotas_v1_QuotaAllowance_aa3ca3e4] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -590,6 +683,7 @@ class ListQuotaAllowancesResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_quotas_v1_QuotaAllowance_aa3ca3e4] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_LISTQUOTAALLOWANCESRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -600,19 +694,26 @@ class ListQuotaAllowancesResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_LISTQUOTAALLOWANCESRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_ListQuotaAllowancesResponse_2073f7ff = ListQuotaAllowancesResponse
 
 
 class UpdateQuotaAllowanceRequest(Message):
     'Request to update an existing quota allowance using its metadata and the new spec.'
     __PROTO_FULL_NAME__ = 'nebius.quotas.v1.UpdateQuotaAllowanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.quotas.v1.UpdateQuotaAllowanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -621,6 +722,7 @@ class UpdateQuotaAllowanceRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_quotas_v1_QuotaAllowanceSpec_ce4fcdb4 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -635,6 +737,7 @@ class UpdateQuotaAllowanceRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_UPDATEQUOTAALLOWANCEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -644,9 +747,11 @@ class UpdateQuotaAllowanceRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_quotas_v1_QuotaAllowanceSpec_ce4fcdb4 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_QUOTAS_V1_UPDATEQUOTAALLOWANCEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_quotas_v1_UpdateQuotaAllowanceRequest_d928841c = UpdateQuotaAllowanceRequest
 
 # @@nebius-section:fields@@
@@ -708,17 +813,25 @@ QuotaAllowanceStatus__UsageState.__qualname__ = 'QuotaAllowanceStatus.UsageState
 class QuotaAllowanceServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Manages quota allowances for tenants and projects, including listing, retrieval, and lifecycle operations.\n\nThis class provides client methods for the ``nebius.quotas.v1.QuotaAllowanceService`` service.'
     __service_name__ = 'nebius.quotas.v1.QuotaAllowanceService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'quota-dispatcher.billing-cpl'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.quotas.v1.QuotaAllowanceService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.quotas.v1.QuotaAllowanceService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def list(
         self,

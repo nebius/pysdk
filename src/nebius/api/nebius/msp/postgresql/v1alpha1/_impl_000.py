@@ -62,9 +62,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class ConnectionPoolerConfig__PoolingMode(Enum):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig.PoolingMode'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig.PoolingMode')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     POOLING_MODE_UNSPECIFIED = 0
     SESSION = 1
     'Session pooling mode.'
@@ -75,10 +79,15 @@ _NebiusType_nebius_msp_postgresql_v1alpha1_ConnectionPoolerConfig_PoolingMode_9f
 # @@nebius-section:messages@@
 class Backup(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.Backup'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.Backup')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -93,6 +102,7 @@ class Backup(Message):
         on_demand: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         size_bytes: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -120,6 +130,7 @@ class Backup(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_ID, value)
 
     @_NebiusProperty
@@ -130,6 +141,7 @@ class Backup(Message):
 
     @source_cluster_id.setter
     def source_cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``source_cluster_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_SOURCE_CLUSTER_ID, value)
 
     @_NebiusProperty
@@ -140,6 +152,7 @@ class Backup(Message):
 
     @creation_start.setter
     def creation_start(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``creation_start`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_CREATION_START, value)
 
     @_NebiusProperty
@@ -150,6 +163,7 @@ class Backup(Message):
 
     @creation_finish.setter
     def creation_finish(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``creation_finish`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_CREATION_FINISH, value)
 
     @_NebiusProperty
@@ -160,6 +174,7 @@ class Backup(Message):
 
     @source_cluster_name.setter
     def source_cluster_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``source_cluster_name`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_SOURCE_CLUSTER_NAME, value)
 
     @_NebiusProperty
@@ -170,6 +185,7 @@ class Backup(Message):
 
     @source_cluster_visible.setter
     def source_cluster_visible(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``source_cluster_visible`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_SOURCE_CLUSTER_VISIBLE, value)
 
     @_NebiusProperty
@@ -180,6 +196,7 @@ class Backup(Message):
 
     @on_demand.setter
     def on_demand(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``on_demand`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_ON_DEMAND, value)
 
     @_NebiusProperty
@@ -190,17 +207,24 @@ class Backup(Message):
 
     @size_bytes.setter
     def size_bytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``size_bytes`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUP_SIZE_BYTES, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'source_cluster_id': 'source_cluster_id', 'creation_start': 'creation_start', 'creation_finish': 'creation_finish', 'source_cluster_name': 'source_cluster_name', 'source_cluster_visible': 'source_cluster_visible', 'on_demand': 'on_demand', 'size_bytes': 'size_bytes'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_Backup_fe455370 = Backup
 
 class CreateBackupRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.CreateBackupRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.CreateBackupRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -208,6 +232,7 @@ class CreateBackupRequest(Message):
         *,
         cluster_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cluster_id is not _NEBIUS_UNSET:
             values['cluster_id'] = cluster_id
@@ -221,18 +246,25 @@ class CreateBackupRequest(Message):
 
     @cluster_id.setter
     def cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cluster_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CREATEBACKUPREQUEST_CLUSTER_ID, value)
 
     __PY_TO_PB2__ = {'cluster_id': 'cluster_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_CreateBackupRequest_ff2b821e = CreateBackupRequest
 
 
 class DeleteBackupRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.DeleteBackupRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.DeleteBackupRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -241,6 +273,7 @@ class DeleteBackupRequest(Message):
         cluster_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         backup_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cluster_id is not _NEBIUS_UNSET:
             values['cluster_id'] = cluster_id
@@ -256,6 +289,7 @@ class DeleteBackupRequest(Message):
 
     @cluster_id.setter
     def cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cluster_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_DELETEBACKUPREQUEST_CLUSTER_ID, value)
 
     @_NebiusProperty
@@ -266,18 +300,25 @@ class DeleteBackupRequest(Message):
 
     @backup_id.setter
     def backup_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``backup_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_DELETEBACKUPREQUEST_BACKUP_ID, value)
 
     __PY_TO_PB2__ = {'cluster_id': 'cluster_id', 'backup_id': 'backup_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_DeleteBackupRequest_3ef6cddc = DeleteBackupRequest
 
 
 class GetBackupRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.GetBackupRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.GetBackupRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -286,6 +327,7 @@ class GetBackupRequest(Message):
         cluster_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         backup_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cluster_id is not _NEBIUS_UNSET:
             values['cluster_id'] = cluster_id
@@ -301,6 +343,7 @@ class GetBackupRequest(Message):
 
     @cluster_id.setter
     def cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cluster_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_GETBACKUPREQUEST_CLUSTER_ID, value)
 
     @_NebiusProperty
@@ -311,18 +354,25 @@ class GetBackupRequest(Message):
 
     @backup_id.setter
     def backup_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``backup_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_GETBACKUPREQUEST_BACKUP_ID, value)
 
     __PY_TO_PB2__ = {'cluster_id': 'cluster_id', 'backup_id': 'backup_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_GetBackupRequest_4e5b0ec2 = GetBackupRequest
 
 
 class ListBackupsByClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -330,6 +380,7 @@ class ListBackupsByClusterRequest(Message):
         *,
         cluster_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cluster_id is not _NEBIUS_UNSET:
             values['cluster_id'] = cluster_id
@@ -343,18 +394,25 @@ class ListBackupsByClusterRequest(Message):
 
     @cluster_id.setter
     def cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cluster_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTBACKUPSBYCLUSTERREQUEST_CLUSTER_ID, value)
 
     __PY_TO_PB2__ = {'cluster_id': 'cluster_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ListBackupsByClusterRequest_2a869de4 = ListBackupsByClusterRequest
 
 
 class ListBackupsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ListBackupsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ListBackupsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -362,6 +420,7 @@ class ListBackupsRequest(Message):
         *,
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -375,18 +434,25 @@ class ListBackupsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTBACKUPSREQUEST_PARENT_ID, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ListBackupsRequest_2c3b39ea = ListBackupsRequest
 
 
 class ListBackupsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ListBackupsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ListBackupsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -394,6 +460,7 @@ class ListBackupsResponse(Message):
         *,
         backups: _NebiusIterable[_NebiusType_nebius_msp_postgresql_v1alpha1_Backup_fe455370] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if backups is not _NEBIUS_UNSET:
             values['backups'] = backups
@@ -407,17 +474,24 @@ class ListBackupsResponse(Message):
 
     @backups.setter
     def backups(self, value: _NebiusIterable[_NebiusType_nebius_msp_postgresql_v1alpha1_Backup_fe455370] | None) -> None:
+        """Set or clear the generated ``backups`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTBACKUPSRESPONSE_BACKUPS, value)
 
     __PY_TO_PB2__ = {'backups': 'backups'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ListBackupsResponse_6118e251 = ListBackupsResponse
 
 class BackupSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.BackupSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.BackupSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -426,6 +500,7 @@ class BackupSpec(Message):
         backup_window_start: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         retention_policy: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if backup_window_start is not _NEBIUS_UNSET:
             values['backup_window_start'] = backup_window_start
@@ -441,6 +516,7 @@ class BackupSpec(Message):
 
     @backup_window_start.setter
     def backup_window_start(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``backup_window_start`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUPSPEC_BACKUP_WINDOW_START, value)
 
     @_NebiusProperty
@@ -451,18 +527,25 @@ class BackupSpec(Message):
 
     @retention_policy.setter
     def retention_policy(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``retention_policy`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BACKUPSPEC_RETENTION_POLICY, value)
 
     __PY_TO_PB2__ = {'backup_window_start': 'backup_window_start', 'retention_policy': 'retention_policy'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_BackupSpec_7e321eef = BackupSpec
 
 
 class BootstrapSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.BootstrapSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.BootstrapSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -472,6 +555,7 @@ class BootstrapSpec(Message):
         user_password: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         db_name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if user_name is not _NEBIUS_UNSET:
             values['user_name'] = user_name
@@ -489,6 +573,7 @@ class BootstrapSpec(Message):
 
     @user_name.setter
     def user_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``user_name`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BOOTSTRAPSPEC_USER_NAME, value)
 
     @_NebiusProperty
@@ -499,6 +584,7 @@ class BootstrapSpec(Message):
 
     @user_password.setter
     def user_password(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``user_password`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BOOTSTRAPSPEC_USER_PASSWORD, value)
 
     @_NebiusProperty
@@ -509,18 +595,25 @@ class BootstrapSpec(Message):
 
     @db_name.setter
     def db_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``db_name`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_BOOTSTRAPSPEC_DB_NAME, value)
 
     __PY_TO_PB2__ = {'user_name': 'user_name', 'user_password': 'user_password', 'db_name': 'db_name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_BootstrapSpec_c76b0b36 = BootstrapSpec
 
 
 class Cluster(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.Cluster'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.Cluster')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -530,6 +623,7 @@ class Cluster(Message):
         spec: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterStatus_7aa57b40 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -546,6 +640,7 @@ class Cluster(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTER_METADATA, value)
 
     @_NebiusProperty
@@ -555,6 +650,7 @@ class Cluster(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTER_SPEC, value)
 
     @_NebiusProperty
@@ -564,18 +660,25 @@ class Cluster(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterStatus_7aa57b40 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTER_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_Cluster_aad333f2 = Cluster
 
 
 class ClusterSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ClusterSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ClusterSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -587,6 +690,7 @@ class ClusterSpec(Message):
         bootstrap: _NebiusType_nebius_msp_postgresql_v1alpha1_BootstrapSpec_c76b0b36 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         backup: _NebiusType_nebius_msp_postgresql_v1alpha1_BackupSpec_7e321eef | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -608,6 +712,7 @@ class ClusterSpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -618,6 +723,7 @@ class ClusterSpec(Message):
 
     @network_id.setter
     def network_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``network_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSPEC_NETWORK_ID, value)
 
     @_NebiusProperty
@@ -627,6 +733,7 @@ class ClusterSpec(Message):
 
     @config.setter
     def config(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ConfigSpec_bc2eef7b | None) -> None:
+        """Set or clear the generated ``config`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSPEC_CONFIG, value)
 
     @_NebiusProperty
@@ -636,6 +743,7 @@ class ClusterSpec(Message):
 
     @bootstrap.setter
     def bootstrap(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_BootstrapSpec_c76b0b36 | None) -> None:
+        """Set or clear the generated ``bootstrap`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSPEC_BOOTSTRAP, value)
 
     @_NebiusProperty
@@ -645,18 +753,25 @@ class ClusterSpec(Message):
 
     @backup.setter
     def backup(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_BackupSpec_7e321eef | None) -> None:
+        """Set or clear the generated ``backup`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSPEC_BACKUP, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'network_id': 'network_id', 'config': 'config', 'bootstrap': 'bootstrap', 'backup': 'backup'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 = ClusterSpec
 
 
 class ClusterStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ClusterStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ClusterStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -667,6 +782,7 @@ class ClusterStatus(Message):
         preset_details: _type_nebius_msp_v1alpha1_resource_b90a0fa0.PresetDetails | None | _NebiusUnsetType = _NEBIUS_UNSET,
         connection_endpoints: _NebiusType_nebius_msp_postgresql_v1alpha1_Endpoints_41572455 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if phase is not _NEBIUS_UNSET:
             if phase == _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.Phase.PHASE_DELETED:
@@ -688,6 +804,7 @@ class ClusterStatus(Message):
 
     @phase.setter
     def phase(self, value: _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.Phase | None) -> None:
+        """Set or clear the generated ``phase`` field."""
         if value == _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.Phase.PHASE_DELETED:
             _nebius_get_logger('deprecation').warning('Setting deprecated enum value nebius.msp.v1alpha1.ClusterStatus.Phase.PHASE_DELETED for field nebius.msp.postgresql.v1alpha1.ClusterStatus.phase is deprecated. Deprecated.', stack_info=True, stacklevel=2)
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSTATUS_PHASE, value)
@@ -700,6 +817,7 @@ class ClusterStatus(Message):
 
     @state.setter
     def state(self, value: _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.State | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -710,6 +828,7 @@ class ClusterStatus(Message):
 
     @preset_details.setter
     def preset_details(self, value: _type_nebius_msp_v1alpha1_resource_b90a0fa0.PresetDetails | None) -> None:
+        """Set or clear the generated ``preset_details`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSTATUS_PRESET_DETAILS, value)
 
     @_NebiusProperty
@@ -720,18 +839,25 @@ class ClusterStatus(Message):
 
     @connection_endpoints.setter
     def connection_endpoints(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_Endpoints_41572455 | None) -> None:
+        """Set or clear the generated ``connection_endpoints`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CLUSTERSTATUS_CONNECTION_ENDPOINTS, value)
 
     __PY_TO_PB2__ = {'phase': 'phase', 'state': 'state', 'preset_details': 'preset_details', 'connection_endpoints': 'connection_endpoints'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterStatus_7aa57b40 = ClusterStatus
 
 
 class ConfigSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ConfigSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ConfigSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_config__(_NebiusOneOf):
         name: str = 'config'
@@ -764,6 +890,7 @@ class ConfigSpec(Message):
         public_access: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         template: _NebiusType_nebius_msp_postgresql_v1alpha1_TemplateSpec_6f2fbaac | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if version is not _NEBIUS_UNSET:
             values['version'] = version
@@ -785,6 +912,7 @@ class ConfigSpec(Message):
 
     @version.setter
     def version(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``version`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIGSPEC_VERSION, value)
 
     @_NebiusProperty
@@ -795,6 +923,7 @@ class ConfigSpec(Message):
 
     @pooler_config.setter
     def pooler_config(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ConnectionPoolerConfig_c3ab902d | None) -> None:
+        """Set or clear the generated ``pooler_config`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIGSPEC_POOLER_CONFIG, value)
 
     @_NebiusProperty
@@ -805,6 +934,7 @@ class ConfigSpec(Message):
 
     @postgresql_config_16.setter
     def postgresql_config_16(self, value: _type_nebius_msp_postgresql_v1alpha1_config_24af6714.PostgresqlConfig16 | None) -> None:
+        """Set or clear the generated ``postgresql_config_16`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIGSPEC_POSTGRESQL_CONFIG_16, value)
 
     @_NebiusProperty
@@ -815,6 +945,7 @@ class ConfigSpec(Message):
 
     @public_access.setter
     def public_access(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``public_access`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIGSPEC_PUBLIC_ACCESS, value)
 
     @_NebiusProperty
@@ -825,18 +956,25 @@ class ConfigSpec(Message):
 
     @template.setter
     def template(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_TemplateSpec_6f2fbaac | None) -> None:
+        """Set or clear the generated ``template`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIGSPEC_TEMPLATE, value)
 
     __PY_TO_PB2__ = {'version': 'version', 'pooler_config': 'pooler_config', 'postgresql_config_16': 'postgresql_config_16', 'public_access': 'public_access', 'template': 'template', 'config': 'config'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ConfigSpec_bc2eef7b = ConfigSpec
 
 
 class ConnectionPoolerConfig(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     PoolingMode: _NebiusTypeAlias = _NebiusType_nebius_msp_postgresql_v1alpha1_ConnectionPoolerConfig_PoolingMode_9fe8ada1
 
     class __OneOfClass__max_pool_size__(_NebiusOneOf):
@@ -867,6 +1005,7 @@ class ConnectionPoolerConfig(Message):
         pooling_mode: _NebiusType_nebius_msp_postgresql_v1alpha1_ConnectionPoolerConfig_PoolingMode_9fe8ada1 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         max_pool_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if pooling_mode is not _NEBIUS_UNSET:
             values['pooling_mode'] = pooling_mode
@@ -882,6 +1021,7 @@ class ConnectionPoolerConfig(Message):
 
     @pooling_mode.setter
     def pooling_mode(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ConnectionPoolerConfig_PoolingMode_9fe8ada1 | None) -> None:
+        """Set or clear the generated ``pooling_mode`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONNECTIONPOOLERCONFIG_POOLING_MODE, value)
 
     @_NebiusProperty
@@ -892,18 +1032,25 @@ class ConnectionPoolerConfig(Message):
 
     @max_pool_size.setter
     def max_pool_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``max_pool_size`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONNECTIONPOOLERCONFIG_MAX_POOL_SIZE, value)
 
     __PY_TO_PB2__ = {'pooling_mode': 'pooling_mode', 'max_pool_size': 'max_pool_size', '_max_pool_size': '_max_pool_size', 'PoolingMode': 'PoolingMode'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ConnectionPoolerConfig_c3ab902d = ConnectionPoolerConfig
 
 
 class Endpoints(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.Endpoints'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.Endpoints')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -914,6 +1061,7 @@ class Endpoints(Message):
         public_read_write: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         public_read_only: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if private_read_write is not _NEBIUS_UNSET:
             values['private_read_write'] = private_read_write
@@ -933,6 +1081,7 @@ class Endpoints(Message):
 
     @private_read_write.setter
     def private_read_write(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``private_read_write`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_ENDPOINTS_PRIVATE_READ_WRITE, value)
 
     @_NebiusProperty
@@ -943,6 +1092,7 @@ class Endpoints(Message):
 
     @private_read_only.setter
     def private_read_only(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``private_read_only`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_ENDPOINTS_PRIVATE_READ_ONLY, value)
 
     @_NebiusProperty
@@ -953,6 +1103,7 @@ class Endpoints(Message):
 
     @public_read_write.setter
     def public_read_write(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``public_read_write`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_ENDPOINTS_PUBLIC_READ_WRITE, value)
 
     @_NebiusProperty
@@ -963,17 +1114,24 @@ class Endpoints(Message):
 
     @public_read_only.setter
     def public_read_only(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``public_read_only`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_ENDPOINTS_PUBLIC_READ_ONLY, value)
 
     __PY_TO_PB2__ = {'private_read_write': 'private_read_write', 'private_read_only': 'private_read_only', 'public_read_write': 'public_read_write', 'public_read_only': 'public_read_only'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_Endpoints_41572455 = Endpoints
 
 class CreateClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.CreateClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.CreateClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -982,6 +1140,7 @@ class CreateClusterRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -997,6 +1156,7 @@ class CreateClusterRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CREATECLUSTERREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1007,18 +1167,25 @@ class CreateClusterRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CREATECLUSTERREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_CreateClusterRequest_fae51ba4 = CreateClusterRequest
 
 
 class DeleteClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.DeleteClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.DeleteClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1026,6 +1193,7 @@ class DeleteClusterRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1039,18 +1207,25 @@ class DeleteClusterRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_DELETECLUSTERREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_DeleteClusterRequest_f58fbd03 = DeleteClusterRequest
 
 
 class GetClusterForBackupRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.GetClusterForBackupRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.GetClusterForBackupRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1059,6 +1234,7 @@ class GetClusterForBackupRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         backup_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1074,6 +1250,7 @@ class GetClusterForBackupRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_GETCLUSTERFORBACKUPREQUEST_ID, value)
 
     @_NebiusProperty
@@ -1084,18 +1261,25 @@ class GetClusterForBackupRequest(Message):
 
     @backup_id.setter
     def backup_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``backup_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_GETCLUSTERFORBACKUPREQUEST_BACKUP_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'backup_id': 'backup_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_GetClusterForBackupRequest_1dbe0bfd = GetClusterForBackupRequest
 
 
 class GetClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.GetClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.GetClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1103,6 +1287,7 @@ class GetClusterRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1116,18 +1301,25 @@ class GetClusterRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_GETCLUSTERREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_GetClusterRequest_ac5054f0 = GetClusterRequest
 
 
 class ListClustersRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ListClustersRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ListClustersRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1137,6 +1329,7 @@ class ListClustersRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1154,6 +1347,7 @@ class ListClustersRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTCLUSTERSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1164,6 +1358,7 @@ class ListClustersRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTCLUSTERSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1174,18 +1369,25 @@ class ListClustersRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTCLUSTERSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ListClustersRequest_08778ac3 = ListClustersRequest
 
 
 class ListClustersResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.ListClustersResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.ListClustersResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1194,6 +1396,7 @@ class ListClustersResponse(Message):
         clusters: _NebiusIterable[_NebiusType_nebius_msp_postgresql_v1alpha1_Cluster_aad333f2] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if clusters is not _NEBIUS_UNSET:
             values['clusters'] = clusters
@@ -1209,6 +1412,7 @@ class ListClustersResponse(Message):
 
     @clusters.setter
     def clusters(self, value: _NebiusIterable[_NebiusType_nebius_msp_postgresql_v1alpha1_Cluster_aad333f2] | None) -> None:
+        """Set or clear the generated ``clusters`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTCLUSTERSRESPONSE_CLUSTERS, value)
 
     @_NebiusProperty
@@ -1219,18 +1423,25 @@ class ListClustersResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_LISTCLUSTERSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'clusters': 'clusters', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_ListClustersResponse_353378ec = ListClustersResponse
 
 
 class RestoreClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.RestoreClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.RestoreClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1242,6 +1453,7 @@ class RestoreClusterRequest(Message):
         source_cluster_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         recovery_time: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1263,6 +1475,7 @@ class RestoreClusterRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_RESTORECLUSTERREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1273,6 +1486,7 @@ class RestoreClusterRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_RESTORECLUSTERREQUEST_SPEC, value)
 
     @_NebiusProperty
@@ -1283,6 +1497,7 @@ class RestoreClusterRequest(Message):
 
     @backup_id.setter
     def backup_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``backup_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_RESTORECLUSTERREQUEST_BACKUP_ID, value)
 
     @_NebiusProperty
@@ -1293,6 +1508,7 @@ class RestoreClusterRequest(Message):
 
     @source_cluster_id.setter
     def source_cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``source_cluster_id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_RESTORECLUSTERREQUEST_SOURCE_CLUSTER_ID, value)
 
     @_NebiusProperty
@@ -1303,18 +1519,25 @@ class RestoreClusterRequest(Message):
 
     @recovery_time.setter
     def recovery_time(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``recovery_time`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_RESTORECLUSTERREQUEST_RECOVERY_TIME, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'backup_id': 'backup_id', 'source_cluster_id': 'source_cluster_id', 'recovery_time': 'recovery_time'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_RestoreClusterRequest_28335e80 = RestoreClusterRequest
 
 
 class StartClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.StartClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.StartClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1322,6 +1545,7 @@ class StartClusterRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1335,18 +1559,25 @@ class StartClusterRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_STARTCLUSTERREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_StartClusterRequest_4d345ba7 = StartClusterRequest
 
 
 class StopClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.StopClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.StopClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1354,6 +1585,7 @@ class StopClusterRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1367,18 +1599,25 @@ class StopClusterRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_STOPCLUSTERREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_StopClusterRequest_4f84e5e2 = StopClusterRequest
 
 
 class UpdateClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.UpdateClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.UpdateClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1387,6 +1626,7 @@ class UpdateClusterRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1402,6 +1642,7 @@ class UpdateClusterRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_UPDATECLUSTERREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1412,17 +1653,24 @@ class UpdateClusterRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_msp_postgresql_v1alpha1_ClusterSpec_a6ed0217 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_UPDATECLUSTERREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_UpdateClusterRequest_0ad66e3f = UpdateClusterRequest
 
 class TemplateSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.TemplateSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.TemplateSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1432,6 +1680,7 @@ class TemplateSpec(Message):
         hosts: _type_nebius_msp_v1alpha1_resource_b90a0fa0.HostSpec | None | _NebiusUnsetType = _NEBIUS_UNSET,
         disk: _type_nebius_msp_v1alpha1_resource_b90a0fa0.DiskSpec | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resources is not _NEBIUS_UNSET:
             values['resources'] = resources
@@ -1449,6 +1698,7 @@ class TemplateSpec(Message):
 
     @resources.setter
     def resources(self, value: _type_nebius_msp_v1alpha1_resource_b90a0fa0.ResourcesSpec | None) -> None:
+        """Set or clear the generated ``resources`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_TEMPLATESPEC_RESOURCES, value)
 
     @_NebiusProperty
@@ -1458,6 +1708,7 @@ class TemplateSpec(Message):
 
     @hosts.setter
     def hosts(self, value: _type_nebius_msp_v1alpha1_resource_b90a0fa0.HostSpec | None) -> None:
+        """Set or clear the generated ``hosts`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_TEMPLATESPEC_HOSTS, value)
 
     @_NebiusProperty
@@ -1467,9 +1718,11 @@ class TemplateSpec(Message):
 
     @disk.setter
     def disk(self, value: _type_nebius_msp_v1alpha1_resource_b90a0fa0.DiskSpec | None) -> None:
+        """Set or clear the generated ``disk`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_TEMPLATESPEC_DISK, value)
 
     __PY_TO_PB2__ = {'resources': 'resources', 'hosts': 'hosts', 'disk': 'disk'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_TemplateSpec_6f2fbaac = TemplateSpec
 
 # @@nebius-section:fields@@
@@ -1601,17 +1854,25 @@ ConnectionPoolerConfig__PoolingMode.__qualname__ = 'ConnectionPoolerConfig.Pooli
 class BackupServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1alpha1_bd389d5d.Operation, _type_nebius_common_v1alpha1_bd389d5d.OperationServiceClient]):
     'A set of methods for managing PostgreSQL Cluster backups.\n\nThis class provides client methods for the ``nebius.msp.postgresql.v1alpha1.BackupService`` service.'
     __service_name__ = 'nebius.msp.postgresql.v1alpha1.BackupService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'postgresql.msp'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.msp.postgresql.v1alpha1.BackupService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.msp.postgresql.v1alpha1.BackupService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1alpha1_bd389d5d.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1alpha1_bd389d5d.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -1683,17 +1944,25 @@ class BackupServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1alph
 class ClusterServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1alpha1_bd389d5d.Operation, _type_nebius_common_v1alpha1_bd389d5d.OperationServiceClient]):
     'A set of methods for managing PostgreSQL Cluster resources.\n\nThis class provides client methods for the ``nebius.msp.postgresql.v1alpha1.ClusterService`` service.'
     __service_name__ = 'nebius.msp.postgresql.v1alpha1.ClusterService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'postgresql.msp'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.msp.postgresql.v1alpha1.ClusterService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.msp.postgresql.v1alpha1.ClusterService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1alpha1_bd389d5d.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1alpha1_bd389d5d.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,

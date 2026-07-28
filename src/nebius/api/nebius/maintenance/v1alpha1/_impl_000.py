@@ -58,9 +58,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.maintenance.v1alpha1.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     STATE_SCHEDULED = 1
     'Maintenance operation is scheduled to be run in the future.'
@@ -78,10 +82,15 @@ _NebiusType_nebius_maintenance_v1alpha1_State_578fa0ab = State
 class Maintenance(Message):
     'Maintenance operations are initiated by Nebius Cloud infrastructure.\nThey are used to perform scheduled or urgent operations on Nebius Cloud resources,\nsuch as Managed Services or Standalone Applications, that are necessary for\nmaintaining the service in an operable state. These operations run automatically,\nwithout user intervention.'
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.Maintenance'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.Maintenance')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -91,6 +100,7 @@ class Maintenance(Message):
         spec: _NebiusType_nebius_maintenance_v1alpha1_MaintenanceSpec_a5463ce7 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_maintenance_v1alpha1_MaintenanceStatus_f60ceac2 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -108,6 +118,7 @@ class Maintenance(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCE_METADATA, value)
 
     @_NebiusProperty
@@ -118,6 +129,7 @@ class Maintenance(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_maintenance_v1alpha1_MaintenanceSpec_a5463ce7 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCE_SPEC, value)
 
     @_NebiusProperty
@@ -128,18 +140,25 @@ class Maintenance(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_maintenance_v1alpha1_MaintenanceStatus_f60ceac2 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_Maintenance_b45edfce = Maintenance
 
 
 class MaintenanceSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.MaintenanceSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.MaintenanceSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -147,6 +166,7 @@ class MaintenanceSpec(Message):
         *,
         scheduled_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if scheduled_at is not _NEBIUS_UNSET:
             values['scheduled_at'] = scheduled_at
@@ -160,18 +180,25 @@ class MaintenanceSpec(Message):
 
     @scheduled_at.setter
     def scheduled_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``scheduled_at`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCESPEC_SCHEDULED_AT, value)
 
     __PY_TO_PB2__ = {'scheduled_at': 'scheduled_at'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_MaintenanceSpec_a5463ce7 = MaintenanceSpec
 
 
 class MaintenanceStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.MaintenanceStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.MaintenanceStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -183,6 +210,7 @@ class MaintenanceStatus(Message):
         state: _NebiusType_nebius_maintenance_v1alpha1_State_578fa0ab | None | _NebiusUnsetType = _NEBIUS_UNSET,
         reschedulable: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if affected_resources is not _NEBIUS_UNSET:
             values['affected_resources'] = affected_resources
@@ -204,6 +232,7 @@ class MaintenanceStatus(Message):
 
     @affected_resources.setter
     def affected_resources(self, value: _NebiusIterable[_NebiusType_nebius_maintenance_v1alpha1_Resource_0ac74162] | None) -> None:
+        """Set or clear the generated ``affected_resources`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCESTATUS_AFFECTED_RESOURCES, value)
 
     @_NebiusProperty
@@ -214,6 +243,7 @@ class MaintenanceStatus(Message):
 
     @started_at.setter
     def started_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``started_at`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCESTATUS_STARTED_AT, value)
 
     @_NebiusProperty
@@ -224,6 +254,7 @@ class MaintenanceStatus(Message):
 
     @finished_at.setter
     def finished_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``finished_at`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCESTATUS_FINISHED_AT, value)
 
     @_NebiusProperty
@@ -234,6 +265,7 @@ class MaintenanceStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_maintenance_v1alpha1_State_578fa0ab | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCESTATUS_STATE, value)
 
     @_NebiusProperty
@@ -244,18 +276,25 @@ class MaintenanceStatus(Message):
 
     @reschedulable.setter
     def reschedulable(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``reschedulable`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_MAINTENANCESTATUS_RESCHEDULABLE, value)
 
     __PY_TO_PB2__ = {'affected_resources': 'affected_resources', 'started_at': 'started_at', 'finished_at': 'finished_at', 'state': 'state', 'reschedulable': 'reschedulable'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_MaintenanceStatus_f60ceac2 = MaintenanceStatus
 
 
 class Resource(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.Resource'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.Resource')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -264,6 +303,7 @@ class Resource(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -279,6 +319,7 @@ class Resource(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_RESOURCE_ID, value)
 
     @_NebiusProperty
@@ -289,17 +330,24 @@ class Resource(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_RESOURCE_PARENT_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'parent_id': 'parent_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_Resource_0ac74162 = Resource
 
 class GetMaintenanceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.GetMaintenanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.GetMaintenanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -307,6 +355,7 @@ class GetMaintenanceRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -320,18 +369,25 @@ class GetMaintenanceRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_GETMAINTENANCEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_GetMaintenanceRequest_5260040a = GetMaintenanceRequest
 
 
 class ListMaintenancesRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.ListMaintenancesRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.ListMaintenancesRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -339,6 +395,7 @@ class ListMaintenancesRequest(Message):
         *,
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -352,18 +409,25 @@ class ListMaintenancesRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_LISTMAINTENANCESREQUEST_PARENT_ID, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_ListMaintenancesRequest_7b6d7083 = ListMaintenancesRequest
 
 
 class ListMaintenancesResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.ListMaintenancesResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.ListMaintenancesResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -371,6 +435,7 @@ class ListMaintenancesResponse(Message):
         *,
         items: _NebiusIterable[_NebiusType_nebius_maintenance_v1alpha1_Maintenance_b45edfce] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -384,18 +449,25 @@ class ListMaintenancesResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_maintenance_v1alpha1_Maintenance_b45edfce] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_LISTMAINTENANCESRESPONSE_ITEMS, value)
 
     __PY_TO_PB2__ = {'items': 'items'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_ListMaintenancesResponse_c5915e2a = ListMaintenancesResponse
 
 
 class UpdateMaintenanceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.UpdateMaintenanceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.UpdateMaintenanceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -404,6 +476,7 @@ class UpdateMaintenanceRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_maintenance_v1alpha1_MaintenanceSpec_a5463ce7 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -419,6 +492,7 @@ class UpdateMaintenanceRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_UPDATEMAINTENANCEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -429,18 +503,25 @@ class UpdateMaintenanceRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_maintenance_v1alpha1_MaintenanceSpec_a5463ce7 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_UPDATEMAINTENANCEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_UpdateMaintenanceRequest_271172f0 = UpdateMaintenanceRequest
 
 
 class UpdateMaintenanceResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.maintenance.v1alpha1.UpdateMaintenanceResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.maintenance.v1alpha1.UpdateMaintenanceResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -448,6 +529,7 @@ class UpdateMaintenanceResponse(Message):
         *,
         maintenance: _NebiusType_nebius_maintenance_v1alpha1_Maintenance_b45edfce | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if maintenance is not _NEBIUS_UNSET:
             values['maintenance'] = maintenance
@@ -461,9 +543,11 @@ class UpdateMaintenanceResponse(Message):
 
     @maintenance.setter
     def maintenance(self, value: _NebiusType_nebius_maintenance_v1alpha1_Maintenance_b45edfce | None) -> None:
+        """Set or clear the generated ``maintenance`` field."""
         self._set_field(_NEBIUS_MAINTENANCE_V1ALPHA1_UPDATEMAINTENANCERESPONSE_MAINTENANCE, value)
 
     __PY_TO_PB2__ = {'maintenance': 'maintenance'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_maintenance_v1alpha1_UpdateMaintenanceResponse_27a07ec5 = UpdateMaintenanceResponse
 
 # @@nebius-section:fields@@
@@ -508,14 +592,19 @@ UpdateMaintenanceResponse.__FIELDS__ = (_NEBIUS_MAINTENANCE_V1ALPHA1_UPDATEMAINT
 class MaintenanceServiceClient(_NebiusClient):
     'A set of methods for managing maintenance operations.\n\nThis class provides client methods for the ``nebius.maintenance.v1alpha1.MaintenanceService`` service.'
     __service_name__ = 'nebius.maintenance.v1alpha1.MaintenanceService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'maintenance.msp'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.maintenance.v1alpha1.MaintenanceService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.maintenance.v1alpha1.MaintenanceService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def get(
         self,

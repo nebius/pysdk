@@ -57,9 +57,13 @@ from ...common import v1 as _type_nebius_common_v1_e3b886bd
 class TunnelStatus__State(Enum):
     'State represents the lifecycle state of the tunnel.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.TunnelStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.tunnel.v1.TunnelStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     UNSPECIFIED = 0
     'Default unspecified state.'
     CREATED = 1
@@ -72,10 +76,15 @@ _NebiusType_nebius_tunnel_v1_TunnelStatus_State_1638d3e3 = TunnelStatus__State
 class Tunnel(Message):
     'Tunnel represents a secure tunnel connection for applications.\nIt enables connectivity between applications and external services within a parent.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.Tunnel'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.Tunnel')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -85,6 +94,7 @@ class Tunnel(Message):
         spec: _NebiusType_nebius_tunnel_v1_TunnelSpec_8925fe5e | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_tunnel_v1_TunnelStatus_86443580 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -102,6 +112,7 @@ class Tunnel(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_TUNNEL_METADATA, value)
 
     @_NebiusProperty
@@ -112,6 +123,7 @@ class Tunnel(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_tunnel_v1_TunnelSpec_8925fe5e | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_TUNNEL_SPEC, value)
 
     @_NebiusProperty
@@ -122,19 +134,26 @@ class Tunnel(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_tunnel_v1_TunnelStatus_86443580 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_TUNNEL_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_Tunnel_516b4300 = Tunnel
 
 
 class TunnelSpec(Message):
     'TunnelSpec defines the configuration for the tunnel.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.TunnelSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.TunnelSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -143,6 +162,7 @@ class TunnelSpec(Message):
         title: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         description: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if title is not _NEBIUS_UNSET:
             values['title'] = title
@@ -158,6 +178,7 @@ class TunnelSpec(Message):
 
     @title.setter
     def title(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``title`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_TUNNELSPEC_TITLE, value)
 
     @_NebiusProperty
@@ -168,19 +189,26 @@ class TunnelSpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_TUNNELSPEC_DESCRIPTION, value)
 
     __PY_TO_PB2__ = {'title': 'title', 'description': 'description'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_TunnelSpec_8925fe5e = TunnelSpec
 
 
 class TunnelStatus(Message):
     'TunnelStatus represents the current state of the tunnel.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.TunnelStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.TunnelStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_tunnel_v1_TunnelStatus_State_1638d3e3
 
     def __init__(
@@ -189,6 +217,7 @@ class TunnelStatus(Message):
         *,
         state: _NebiusType_nebius_tunnel_v1_TunnelStatus_State_1638d3e3 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -202,18 +231,25 @@ class TunnelStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_tunnel_v1_TunnelStatus_State_1638d3e3 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_TUNNELSTATUS_STATE, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_TunnelStatus_86443580 = TunnelStatus
 
 class CreateTunnelRequest(Message):
     'Request to create a new tunnel.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.CreateTunnelRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.CreateTunnelRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -222,6 +258,7 @@ class CreateTunnelRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_tunnel_v1_TunnelSpec_8925fe5e | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -237,6 +274,7 @@ class CreateTunnelRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_CREATETUNNELREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -247,19 +285,26 @@ class CreateTunnelRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_tunnel_v1_TunnelSpec_8925fe5e | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_CREATETUNNELREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_CreateTunnelRequest_78d5f95a = CreateTunnelRequest
 
 
 class DeleteTunnelRequest(Message):
     'Request to delete a tunnel.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.DeleteTunnelRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.DeleteTunnelRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -267,6 +312,7 @@ class DeleteTunnelRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -280,19 +326,26 @@ class DeleteTunnelRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_DELETETUNNELREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_DeleteTunnelRequest_165139b0 = DeleteTunnelRequest
 
 
 class GetTunnelRequest(Message):
     'Request to get a tunnel by its identifier.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.GetTunnelRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.GetTunnelRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -300,6 +353,7 @@ class GetTunnelRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -313,19 +367,26 @@ class GetTunnelRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_GETTUNNELREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_GetTunnelRequest_508645d2 = GetTunnelRequest
 
 
 class ListTunnelRequest(Message):
     'Request to list tunnels within a parent resource.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.ListTunnelRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.ListTunnelRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -336,6 +397,7 @@ class ListTunnelRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -355,6 +417,7 @@ class ListTunnelRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_LISTTUNNELREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -365,6 +428,7 @@ class ListTunnelRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_LISTTUNNELREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -375,6 +439,7 @@ class ListTunnelRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_LISTTUNNELREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -385,19 +450,26 @@ class ListTunnelRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_LISTTUNNELREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_ListTunnelRequest_7e0afd2b = ListTunnelRequest
 
 
 class ListTunnelsResponse(Message):
     'Response containing a list of tunnels.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.ListTunnelsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.ListTunnelsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -406,6 +478,7 @@ class ListTunnelsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_tunnel_v1_Tunnel_516b4300] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -421,6 +494,7 @@ class ListTunnelsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_tunnel_v1_Tunnel_516b4300] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_LISTTUNNELSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -431,19 +505,26 @@ class ListTunnelsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_LISTTUNNELSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_ListTunnelsResponse_06dd53b4 = ListTunnelsResponse
 
 
 class UpdateTunnelRequest(Message):
     'Request to update an existing tunnel.'
     __PROTO_FULL_NAME__ = 'nebius.tunnel.v1.UpdateTunnelRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.tunnel.v1.UpdateTunnelRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -452,6 +533,7 @@ class UpdateTunnelRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_tunnel_v1_TunnelSpec_8925fe5e | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -467,6 +549,7 @@ class UpdateTunnelRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_UPDATETUNNELREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -477,9 +560,11 @@ class UpdateTunnelRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_tunnel_v1_TunnelSpec_8925fe5e | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_TUNNEL_V1_UPDATETUNNELREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_tunnel_v1_UpdateTunnelRequest_48f520a1 = UpdateTunnelRequest
 
 # @@nebius-section:fields@@
@@ -528,17 +613,25 @@ TunnelStatus__State.__qualname__ = 'TunnelStatus.State'
 class TunnelServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'TunnelService provides methods for managing tunnels.\nIt supports CRUD operations for creating secure tunnel connections for applications.\n\nThis class provides client methods for the ``nebius.tunnel.v1.TunnelService`` service.'
     __service_name__ = 'nebius.tunnel.v1.TunnelService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'applicationtunnel.mkt'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.tunnel.v1.TunnelService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.tunnel.v1.TunnelService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,

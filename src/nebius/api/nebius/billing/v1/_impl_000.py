@@ -59,9 +59,13 @@ if _NEBIUS_TYPE_CHECKING:
 class AggregationUnit__UnitType(Enum):
     "Aggregation unit type\nIf unit type is one of minute, hour, day, week, month, then it's time-based\nOtherwise it's usage-based"
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.AggregationUnit.UnitType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.billing.v1.AggregationUnit.UnitType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     UNIT_TYPE_UNSPECIFIED = 0
     UNIT_TYPE_TIME_BASED = 1
     UNIT_TYPE_USAGE_BASED = 2
@@ -70,9 +74,13 @@ _NebiusType_nebius_billing_v1_AggregationUnit_UnitType_e0b2a114 = AggregationUni
 class FilterAggregationUnit__FilterAggregationUnitValue(Enum):
     "List of time aggregation unit values to filter by.\nOnly costs for these time units will be included in the response, but it doesn't filter not time-based units."
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.FilterAggregationUnit.FilterAggregationUnitValue'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.billing.v1.FilterAggregationUnit.FilterAggregationUnitValue')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     FILTER_AGGREGATION_UNIT_UNSPECIFIED = 0
     FILTER_AGGREGATION_UNIT_MINUTE = 1
     FILTER_AGGREGATION_UNIT_HOUR = 2
@@ -84,9 +92,13 @@ _NebiusType_nebius_billing_v1_FilterAggregationUnit_FilterAggregationUnitValue_b
 class OfferType(Enum):
     'OfferType is a enum that specifies the type of offer.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.OfferType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.billing.v1.OfferType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     OFFER_TYPE_UNSPECIFIED = 0
     OFFER_TYPE_CONTRACT_PRICE = 1
     'Contract price is a special price for SKU.'
@@ -95,10 +107,15 @@ _NebiusType_nebius_billing_v1_OfferType_13852ec2 = OfferType
 # @@nebius-section:messages@@
 class AggregationUnit(Message):
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.AggregationUnit'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.AggregationUnit')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     UnitType: _NebiusTypeAlias = _NebiusType_nebius_billing_v1_AggregationUnit_UnitType_e0b2a114
 
     def __init__(
@@ -108,6 +125,7 @@ class AggregationUnit(Message):
         unit: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         unit_type: _NebiusType_nebius_billing_v1_AggregationUnit_UnitType_e0b2a114 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if unit is not _NEBIUS_UNSET:
             values['unit'] = unit
@@ -123,6 +141,7 @@ class AggregationUnit(Message):
 
     @unit.setter
     def unit(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``unit`` field."""
         self._set_field(_NEBIUS_BILLING_V1_AGGREGATIONUNIT_UNIT, value)
 
     @_NebiusProperty
@@ -133,19 +152,26 @@ class AggregationUnit(Message):
 
     @unit_type.setter
     def unit_type(self, value: _NebiusType_nebius_billing_v1_AggregationUnit_UnitType_e0b2a114 | None) -> None:
+        """Set or clear the generated ``unit_type`` field."""
         self._set_field(_NEBIUS_BILLING_V1_AGGREGATIONUNIT_UNIT_TYPE, value)
 
     __PY_TO_PB2__ = {'unit': 'unit', 'unit_type': 'unit_type', 'UnitType': 'UnitType'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_AggregationUnit_5e877f9c = AggregationUnit
 
 
 class AutoscaleResourceCost(Message):
     'Autoscale resource cost.\nUsed for resources that can automatically scale.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.AutoscaleResourceCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.AutoscaleResourceCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -157,6 +183,7 @@ class AutoscaleResourceCost(Message):
         min_instances: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         max_instances: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if min_cost is not _NEBIUS_UNSET:
             values['min_cost'] = min_cost
@@ -178,6 +205,7 @@ class AutoscaleResourceCost(Message):
 
     @min_cost.setter
     def min_cost(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``min_cost`` field."""
         self._set_field(_NEBIUS_BILLING_V1_AUTOSCALERESOURCECOST_MIN_COST, value)
 
     @_NebiusProperty
@@ -188,6 +216,7 @@ class AutoscaleResourceCost(Message):
 
     @max_cost.setter
     def max_cost(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``max_cost`` field."""
         self._set_field(_NEBIUS_BILLING_V1_AUTOSCALERESOURCECOST_MAX_COST, value)
 
     @_NebiusProperty
@@ -198,6 +227,7 @@ class AutoscaleResourceCost(Message):
 
     @per_instance.setter
     def per_instance(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``per_instance`` field."""
         self._set_field(_NEBIUS_BILLING_V1_AUTOSCALERESOURCECOST_PER_INSTANCE, value)
 
     @_NebiusProperty
@@ -208,6 +238,7 @@ class AutoscaleResourceCost(Message):
 
     @min_instances.setter
     def min_instances(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``min_instances`` field."""
         self._set_field(_NEBIUS_BILLING_V1_AUTOSCALERESOURCECOST_MIN_INSTANCES, value)
 
     @_NebiusProperty
@@ -218,19 +249,26 @@ class AutoscaleResourceCost(Message):
 
     @max_instances.setter
     def max_instances(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``max_instances`` field."""
         self._set_field(_NEBIUS_BILLING_V1_AUTOSCALERESOURCECOST_MAX_INSTANCES, value)
 
     __PY_TO_PB2__ = {'min_cost': 'min_cost', 'max_cost': 'max_cost', 'per_instance': 'per_instance', 'min_instances': 'min_instances', 'max_instances': 'max_instances'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_AutoscaleResourceCost_44fea819 = AutoscaleResourceCost
 
 
 class CostBreakdown(Message):
     'Detailed cost breakdown showing individual SKU costs and totals.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.CostBreakdown'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.CostBreakdown')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -240,6 +278,7 @@ class CostBreakdown(Message):
         cost: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         cost_rounded: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if sku_costs is not _NEBIUS_UNSET:
             values['sku_costs'] = sku_costs
@@ -257,6 +296,7 @@ class CostBreakdown(Message):
 
     @sku_costs.setter
     def sku_costs(self, value: _NebiusIterable[_NebiusType_nebius_billing_v1_SkuCost_03854e7d] | None) -> None:
+        """Set or clear the generated ``sku_costs`` field."""
         self._set_field(_NEBIUS_BILLING_V1_COSTBREAKDOWN_SKU_COSTS, value)
 
     @_NebiusProperty
@@ -267,6 +307,7 @@ class CostBreakdown(Message):
 
     @cost.setter
     def cost(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cost`` field."""
         self._set_field(_NEBIUS_BILLING_V1_COSTBREAKDOWN_COST, value)
 
     @_NebiusProperty
@@ -277,19 +318,26 @@ class CostBreakdown(Message):
 
     @cost_rounded.setter
     def cost_rounded(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cost_rounded`` field."""
         self._set_field(_NEBIUS_BILLING_V1_COSTBREAKDOWN_COST_ROUNDED, value)
 
     __PY_TO_PB2__ = {'sku_costs': 'sku_costs', 'cost': 'cost', 'cost_rounded': 'cost_rounded'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe = CostBreakdown
 
 
 class FilterAggregationUnit(Message):
     'Filters only time-based aggregation units, e.g. hour, day, month, etc.\nIf response contains other aggregation units like request, token, etc., it will always be presented in response.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.FilterAggregationUnit'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.FilterAggregationUnit')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     FilterAggregationUnitValue: _NebiusTypeAlias = _NebiusType_nebius_billing_v1_FilterAggregationUnit_FilterAggregationUnitValue_b7fa25c3
 
     def __init__(
@@ -298,6 +346,7 @@ class FilterAggregationUnit(Message):
         *,
         filter_aggregation_unit_values: _NebiusIterable[_NebiusType_nebius_billing_v1_FilterAggregationUnit_FilterAggregationUnitValue_b7fa25c3] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if filter_aggregation_unit_values is not _NEBIUS_UNSET:
             values['filter_aggregation_unit_values'] = filter_aggregation_unit_values
@@ -311,19 +360,26 @@ class FilterAggregationUnit(Message):
 
     @filter_aggregation_unit_values.setter
     def filter_aggregation_unit_values(self, value: _NebiusIterable[_NebiusType_nebius_billing_v1_FilterAggregationUnit_FilterAggregationUnitValue_b7fa25c3] | None) -> None:
+        """Set or clear the generated ``filter_aggregation_unit_values`` field."""
         self._set_field(_NEBIUS_BILLING_V1_FILTERAGGREGATIONUNIT_FILTER_AGGREGATION_UNIT_VALUES, value)
 
     __PY_TO_PB2__ = {'filter_aggregation_unit_values': 'filter_aggregation_unit_values', 'FilterAggregationUnitValue': 'FilterAggregationUnitValue'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_FilterAggregationUnit_bd0735fa = FilterAggregationUnit
 
 
 class FixedInstanceResourceCost(Message):
     'Fixed instance resource cost.\nUsed for resources that have a fixed number of instances.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.FixedInstanceResourceCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.FixedInstanceResourceCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -333,6 +389,7 @@ class FixedInstanceResourceCost(Message):
         per_instance: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None | _NebiusUnsetType = _NEBIUS_UNSET,
         instance_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if total is not _NEBIUS_UNSET:
             values['total'] = total
@@ -350,6 +407,7 @@ class FixedInstanceResourceCost(Message):
 
     @total.setter
     def total(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``total`` field."""
         self._set_field(_NEBIUS_BILLING_V1_FIXEDINSTANCERESOURCECOST_TOTAL, value)
 
     @_NebiusProperty
@@ -360,6 +418,7 @@ class FixedInstanceResourceCost(Message):
 
     @per_instance.setter
     def per_instance(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``per_instance`` field."""
         self._set_field(_NEBIUS_BILLING_V1_FIXEDINSTANCERESOURCECOST_PER_INSTANCE, value)
 
     @_NebiusProperty
@@ -370,19 +429,26 @@ class FixedInstanceResourceCost(Message):
 
     @instance_count.setter
     def instance_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``instance_count`` field."""
         self._set_field(_NEBIUS_BILLING_V1_FIXEDINSTANCERESOURCECOST_INSTANCE_COUNT, value)
 
     __PY_TO_PB2__ = {'total': 'total', 'per_instance': 'per_instance', 'instance_count': 'instance_count'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_FixedInstanceResourceCost_432b02fc = FixedInstanceResourceCost
 
 
 class GeneralResourceCost(Message):
     'General resource cost for single-unit resources.\nUsed for resources like compute instances or disks where the unit count is not variable.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.GeneralResourceCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.GeneralResourceCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -390,6 +456,7 @@ class GeneralResourceCost(Message):
         *,
         total: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if total is not _NEBIUS_UNSET:
             values['total'] = total
@@ -403,19 +470,26 @@ class GeneralResourceCost(Message):
 
     @total.setter
     def total(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``total`` field."""
         self._set_field(_NEBIUS_BILLING_V1_GENERALRESOURCECOST_TOTAL, value)
 
     __PY_TO_PB2__ = {'total': 'total'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_GeneralResourceCost_eeccefa9 = GeneralResourceCost
 
 
 class GeneralTotalCost(Message):
     'General total cost with a single fixed amount.\nUsed for resources with predictable, non-variable pricing.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.GeneralTotalCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.GeneralTotalCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -423,6 +497,7 @@ class GeneralTotalCost(Message):
         *,
         total: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if total is not _NEBIUS_UNSET:
             values['total'] = total
@@ -436,19 +511,26 @@ class GeneralTotalCost(Message):
 
     @total.setter
     def total(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``total`` field."""
         self._set_field(_NEBIUS_BILLING_V1_GENERALTOTALCOST_TOTAL, value)
 
     __PY_TO_PB2__ = {'total': 'total'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_GeneralTotalCost_c4c98160 = GeneralTotalCost
 
 
 class RangeTotalCost(Message):
     'Range-based total cost with minimum and maximum bounds.\nUsed for resources with variable pricing based on usage or scaling.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.RangeTotalCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.RangeTotalCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -457,6 +539,7 @@ class RangeTotalCost(Message):
         min: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None | _NebiusUnsetType = _NEBIUS_UNSET,
         max: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if min is not _NEBIUS_UNSET:
             values['min'] = min
@@ -472,6 +555,7 @@ class RangeTotalCost(Message):
 
     @min.setter
     def min(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``min`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RANGETOTALCOST_MIN, value)
 
     @_NebiusProperty
@@ -482,19 +566,26 @@ class RangeTotalCost(Message):
 
     @max.setter
     def max(self, value: _NebiusType_nebius_billing_v1_CostBreakdown_45c7aafe | None) -> None:
+        """Set or clear the generated ``max`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RANGETOTALCOST_MAX, value)
 
     __PY_TO_PB2__ = {'min': 'min', 'max': 'max'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_RangeTotalCost_7a991f76 = RangeTotalCost
 
 
 class ResourceCost(Message):
     'Cost information for a single resource.\nContains metadata about the resource and its cost.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.ResourceCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.ResourceCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_cost_type__(_NebiusOneOf):
         name: str = 'cost_type'
@@ -546,6 +637,7 @@ class ResourceCost(Message):
         fixed_instance: _NebiusType_nebius_billing_v1_FixedInstanceResourceCost_432b02fc | None | _NebiusUnsetType = _NEBIUS_UNSET,
         autoscale: _NebiusType_nebius_billing_v1_AutoscaleResourceCost_44fea819 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -569,6 +661,7 @@ class ResourceCost(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RESOURCECOST_METADATA, value)
 
     @_NebiusProperty
@@ -579,6 +672,7 @@ class ResourceCost(Message):
 
     @override_metadata.setter
     def override_metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``override_metadata`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RESOURCECOST_OVERRIDE_METADATA, value)
 
     @_NebiusProperty
@@ -589,6 +683,7 @@ class ResourceCost(Message):
 
     @aggregation_unit.setter
     def aggregation_unit(self, value: _NebiusType_nebius_billing_v1_AggregationUnit_5e877f9c | None) -> None:
+        """Set or clear the generated ``aggregation_unit`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RESOURCECOST_AGGREGATION_UNIT, value)
 
     @_NebiusProperty
@@ -599,6 +694,7 @@ class ResourceCost(Message):
 
     @general.setter
     def general(self, value: _NebiusType_nebius_billing_v1_GeneralResourceCost_eeccefa9 | None) -> None:
+        """Set or clear the generated ``general`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RESOURCECOST_GENERAL, value)
 
     @_NebiusProperty
@@ -609,6 +705,7 @@ class ResourceCost(Message):
 
     @fixed_instance.setter
     def fixed_instance(self, value: _NebiusType_nebius_billing_v1_FixedInstanceResourceCost_432b02fc | None) -> None:
+        """Set or clear the generated ``fixed_instance`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RESOURCECOST_FIXED_INSTANCE, value)
 
     @_NebiusProperty
@@ -619,19 +716,26 @@ class ResourceCost(Message):
 
     @autoscale.setter
     def autoscale(self, value: _NebiusType_nebius_billing_v1_AutoscaleResourceCost_44fea819 | None) -> None:
+        """Set or clear the generated ``autoscale`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RESOURCECOST_AUTOSCALE, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'override_metadata': 'override_metadata', 'aggregation_unit': 'aggregation_unit', 'general': 'general', 'fixed_instance': 'fixed_instance', 'autoscale': 'autoscale', 'cost_type': 'cost_type'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_ResourceCost_7e97bc98 = ResourceCost
 
 
 class ResourceSpec(Message):
     'Resource specification for cost estimation.\nContains the specifications for creating and updating different types of resources.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.ResourceSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.ResourceSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -639,6 +743,7 @@ class ResourceSpec(Message):
         *,
         spec: _type_google_protobuf_dfd76a75.Any | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if spec is not _NEBIUS_UNSET:
             values['spec'] = spec
@@ -652,19 +757,26 @@ class ResourceSpec(Message):
 
     @spec.setter
     def spec(self, value: _type_google_protobuf_dfd76a75.Any | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_BILLING_V1_RESOURCESPEC_SPEC, value)
 
     __PY_TO_PB2__ = {'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_ResourceSpec_466cf0e2 = ResourceSpec
 
 
 class SkuCost(Message):
     'Cost information for a specific SKU (Stock Keeping Unit).\nRepresents a single billable component within a resource.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.SkuCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.SkuCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -676,6 +788,7 @@ class SkuCost(Message):
         cost: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         cost_rounded: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if sku_id is not _NEBIUS_UNSET:
             values['sku_id'] = sku_id
@@ -697,6 +810,7 @@ class SkuCost(Message):
 
     @sku_id.setter
     def sku_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``sku_id`` field."""
         self._set_field(_NEBIUS_BILLING_V1_SKUCOST_SKU_ID, value)
 
     @_NebiusProperty
@@ -707,6 +821,7 @@ class SkuCost(Message):
 
     @quantity.setter
     def quantity(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``quantity`` field."""
         self._set_field(_NEBIUS_BILLING_V1_SKUCOST_QUANTITY, value)
 
     @_NebiusProperty
@@ -717,6 +832,7 @@ class SkuCost(Message):
 
     @quantity_rounded.setter
     def quantity_rounded(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``quantity_rounded`` field."""
         self._set_field(_NEBIUS_BILLING_V1_SKUCOST_QUANTITY_ROUNDED, value)
 
     @_NebiusProperty
@@ -727,6 +843,7 @@ class SkuCost(Message):
 
     @cost.setter
     def cost(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cost`` field."""
         self._set_field(_NEBIUS_BILLING_V1_SKUCOST_COST, value)
 
     @_NebiusProperty
@@ -737,19 +854,26 @@ class SkuCost(Message):
 
     @cost_rounded.setter
     def cost_rounded(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cost_rounded`` field."""
         self._set_field(_NEBIUS_BILLING_V1_SKUCOST_COST_ROUNDED, value)
 
     __PY_TO_PB2__ = {'sku_id': 'sku_id', 'quantity': 'quantity', 'quantity_rounded': 'quantity_rounded', 'cost': 'cost', 'cost_rounded': 'cost_rounded'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_SkuCost_03854e7d = SkuCost
 
 
 class TotalCost(Message):
     'Total cost for a single resource unit.'
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.TotalCost'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.TotalCost')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_cost_type__(_NebiusOneOf):
         name: str = 'cost_type'
@@ -789,6 +913,7 @@ class TotalCost(Message):
         general: _NebiusType_nebius_billing_v1_GeneralResourceCost_eeccefa9 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         range: _NebiusType_nebius_billing_v1_RangeTotalCost_7a991f76 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if aggregation_unit is not _NEBIUS_UNSET:
             values['aggregation_unit'] = aggregation_unit
@@ -806,6 +931,7 @@ class TotalCost(Message):
 
     @aggregation_unit.setter
     def aggregation_unit(self, value: _NebiusType_nebius_billing_v1_AggregationUnit_5e877f9c | None) -> None:
+        """Set or clear the generated ``aggregation_unit`` field."""
         self._set_field(_NEBIUS_BILLING_V1_TOTALCOST_AGGREGATION_UNIT, value)
 
     @_NebiusProperty
@@ -816,6 +942,7 @@ class TotalCost(Message):
 
     @general.setter
     def general(self, value: _NebiusType_nebius_billing_v1_GeneralResourceCost_eeccefa9 | None) -> None:
+        """Set or clear the generated ``general`` field."""
         self._set_field(_NEBIUS_BILLING_V1_TOTALCOST_GENERAL, value)
 
     @_NebiusProperty
@@ -826,17 +953,24 @@ class TotalCost(Message):
 
     @range.setter
     def range(self, value: _NebiusType_nebius_billing_v1_RangeTotalCost_7a991f76 | None) -> None:
+        """Set or clear the generated ``range`` field."""
         self._set_field(_NEBIUS_BILLING_V1_TOTALCOST_RANGE, value)
 
     __PY_TO_PB2__ = {'aggregation_unit': 'aggregation_unit', 'general': 'general', 'range': 'range', 'cost_type': 'cost_type'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_TotalCost_bcbd0bdf = TotalCost
 
 class EstimateBatchRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.EstimateBatchRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.EstimateBatchRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -847,6 +981,7 @@ class EstimateBatchRequest(Message):
         currency: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter_aggregation_unit: _NebiusType_nebius_billing_v1_FilterAggregationUnit_bd0735fa | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_specs is not _NEBIUS_UNSET:
             values['resource_specs'] = resource_specs
@@ -866,6 +1001,7 @@ class EstimateBatchRequest(Message):
 
     @resource_specs.setter
     def resource_specs(self, value: _NebiusIterable[_NebiusType_nebius_billing_v1_ResourceSpec_466cf0e2] | None) -> None:
+        """Set or clear the generated ``resource_specs`` field."""
         self._set_field(_NEBIUS_BILLING_V1_ESTIMATEBATCHREQUEST_RESOURCE_SPECS, value)
 
     @_NebiusProperty
@@ -876,6 +1012,7 @@ class EstimateBatchRequest(Message):
 
     @offer_types.setter
     def offer_types(self, value: _NebiusIterable[_NebiusType_nebius_billing_v1_OfferType_13852ec2] | None) -> None:
+        """Set or clear the generated ``offer_types`` field."""
         self._set_field(_NEBIUS_BILLING_V1_ESTIMATEBATCHREQUEST_OFFER_TYPES, value)
 
     @_NebiusProperty
@@ -886,6 +1023,7 @@ class EstimateBatchRequest(Message):
 
     @currency.setter
     def currency(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``currency`` field."""
         self._set_field(_NEBIUS_BILLING_V1_ESTIMATEBATCHREQUEST_CURRENCY, value)
 
     @_NebiusProperty
@@ -896,18 +1034,25 @@ class EstimateBatchRequest(Message):
 
     @filter_aggregation_unit.setter
     def filter_aggregation_unit(self, value: _NebiusType_nebius_billing_v1_FilterAggregationUnit_bd0735fa | None) -> None:
+        """Set or clear the generated ``filter_aggregation_unit`` field."""
         self._set_field(_NEBIUS_BILLING_V1_ESTIMATEBATCHREQUEST_FILTER_AGGREGATION_UNIT, value)
 
     __PY_TO_PB2__ = {'resource_specs': 'resource_specs', 'offer_types': 'offer_types', 'currency': 'currency', 'filter_aggregation_unit': 'filter_aggregation_unit'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_EstimateBatchRequest_ab2ec2ec = EstimateBatchRequest
 
 
 class EstimateBatchResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.billing.v1.EstimateBatchResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.billing.v1.EstimateBatchResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -917,6 +1062,7 @@ class EstimateBatchResponse(Message):
         total_costs: _NebiusIterable[_NebiusType_nebius_billing_v1_TotalCost_bcbd0bdf] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         currency: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_costs is not _NEBIUS_UNSET:
             values['resource_costs'] = resource_costs
@@ -933,6 +1079,7 @@ class EstimateBatchResponse(Message):
 
     @resource_costs.setter
     def resource_costs(self, value: _NebiusIterable[_NebiusType_nebius_billing_v1_ResourceCost_7e97bc98] | None) -> None:
+        """Set or clear the generated ``resource_costs`` field."""
         self._set_field(_NEBIUS_BILLING_V1_ESTIMATEBATCHRESPONSE_RESOURCE_COSTS, value)
 
     @_NebiusProperty
@@ -943,6 +1090,7 @@ class EstimateBatchResponse(Message):
 
     @total_costs.setter
     def total_costs(self, value: _NebiusIterable[_NebiusType_nebius_billing_v1_TotalCost_bcbd0bdf] | None) -> None:
+        """Set or clear the generated ``total_costs`` field."""
         self._set_field(_NEBIUS_BILLING_V1_ESTIMATEBATCHRESPONSE_TOTAL_COSTS, value)
 
     @_NebiusProperty
@@ -953,9 +1101,11 @@ class EstimateBatchResponse(Message):
 
     @currency.setter
     def currency(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``currency`` field."""
         self._set_field(_NEBIUS_BILLING_V1_ESTIMATEBATCHRESPONSE_CURRENCY, value)
 
     __PY_TO_PB2__ = {'resource_costs': 'resource_costs', 'total_costs': 'total_costs', 'currency': 'currency'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_billing_v1_EstimateBatchResponse_d3f6ce47 = EstimateBatchResponse
 
 # @@nebius-section:fields@@
@@ -1038,14 +1188,19 @@ FilterAggregationUnit__FilterAggregationUnitValue.__qualname__ = 'FilterAggregat
 class CalculatorServiceClient(_NebiusClient):
     'Calculator service for estimating resource costs.\n\nThis class provides client methods for the ``nebius.billing.v1.CalculatorService`` service.'
     __service_name__ = 'nebius.billing.v1.CalculatorService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'api.calculator.billing-data-plane'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.billing.v1.CalculatorService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.billing.v1.CalculatorService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def estimate_batch(
         self,

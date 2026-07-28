@@ -60,10 +60,15 @@ if _NEBIUS_TYPE_CHECKING:
 class Operation__request_header(Message):
     'Request header is a container for all the values of a particular header of a request\nas there is no such thing as map<string, repeated string>'
     __PROTO_FULL_NAME__ = 'nebius.common.v1alpha1.Operation.request_header'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.v1alpha1.Operation.request_header')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -71,6 +76,7 @@ class Operation__request_header(Message):
         *,
         values: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values_: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if values is not _NEBIUS_UNSET:
             values_['values'] = values
@@ -84,19 +90,26 @@ class Operation__request_header(Message):
 
     @values.setter
     def values(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``values`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_REQUEST_HEADER_VALUES, value)
 
     __PY_TO_PB2__ = {'values': 'values'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_v1alpha1_Operation_request_header_480bad7c = Operation__request_header
 
 
 class Operation(Message):
     'Migrate to common/v1.'
     __PROTO_FULL_NAME__ = 'nebius.common.v1alpha1.Operation'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.v1alpha1.Operation')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     request_header: _NebiusTypeAlias = _NebiusType_nebius_common_v1alpha1_Operation_request_header_480bad7c
 
     def __init__(
@@ -115,6 +128,7 @@ class Operation(Message):
         progress_data: _type_google_protobuf_dfd76a75.Any | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusRequestStatus | _type_google_rpc_4160d858.Status | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         _nebius_get_logger('deprecation').warning('Message nebius.common.v1alpha1.Operation is deprecated. Migrate to common/v1.', stack_info=True, stacklevel=2)
         if id is not _NEBIUS_UNSET:
@@ -149,6 +163,7 @@ class Operation(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_ID, value)
 
     @_NebiusProperty
@@ -159,6 +174,7 @@ class Operation(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -169,6 +185,7 @@ class Operation(Message):
 
     @created_at.setter
     def created_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``created_at`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_CREATED_AT, value)
 
     @_NebiusProperty
@@ -179,6 +196,7 @@ class Operation(Message):
 
     @created_by.setter
     def created_by(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``created_by`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_CREATED_BY, value)
 
     @_NebiusProperty
@@ -189,6 +207,7 @@ class Operation(Message):
 
     @finished_at.setter
     def finished_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``finished_at`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_FINISHED_AT, value)
 
     @_NebiusProperty
@@ -199,6 +218,7 @@ class Operation(Message):
 
     @request.setter
     def request(self, value: _type_google_protobuf_dfd76a75.Any | None) -> None:
+        """Set or clear the generated ``request`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_REQUEST, value)
 
     @_NebiusProperty
@@ -209,6 +229,7 @@ class Operation(Message):
 
     @request_headers.setter
     def request_headers(self, value: _NebiusMapping[_NebiusStr, _NebiusType_nebius_common_v1alpha1_Operation_request_header_480bad7c] | None) -> None:
+        """Set or clear the generated ``request_headers`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_REQUEST_HEADERS, value)
 
     @_NebiusProperty
@@ -219,6 +240,7 @@ class Operation(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_RESOURCE_ID, value)
 
     @_NebiusProperty
@@ -229,6 +251,7 @@ class Operation(Message):
 
     @resource.setter
     def resource(self, value: _type_google_protobuf_dfd76a75.Any | None) -> None:
+        """Set or clear the generated ``resource`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_RESOURCE, value)
 
     @_NebiusProperty
@@ -239,6 +262,7 @@ class Operation(Message):
 
     @progress_data.setter
     def progress_data(self, value: _type_google_protobuf_dfd76a75.Any | None) -> None:
+        """Set or clear the generated ``progress_data`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_PROGRESS_DATA, value)
 
     @_NebiusProperty
@@ -249,18 +273,25 @@ class Operation(Message):
 
     @status.setter
     def status(self, value: _NebiusRequestStatus | _type_google_rpc_4160d858.Status | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_OPERATION_STATUS, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'description': 'description', 'created_at': 'created_at', 'created_by': 'created_by', 'finished_at': 'finished_at', 'request': 'request', 'request_headers': 'request_headers', 'resource_id': 'resource_id', 'resource': 'resource', 'progress_data': 'progress_data', 'status': 'status', 'request_header': 'request_header', 'RequestHeadersEntry': 'RequestHeadersEntry'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_v1alpha1_Operation_dc4ba02a = Operation
 
 class GetOperationRequest(Message):
     'Migrate to common/v1.'
     __PROTO_FULL_NAME__ = 'nebius.common.v1alpha1.GetOperationRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.v1alpha1.GetOperationRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -268,6 +299,7 @@ class GetOperationRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         _nebius_get_logger('deprecation').warning('Message nebius.common.v1alpha1.GetOperationRequest is deprecated. Migrate to common/v1.', stack_info=True, stacklevel=2)
         if id is not _NEBIUS_UNSET:
@@ -282,19 +314,26 @@ class GetOperationRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_GETOPERATIONREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_v1alpha1_GetOperationRequest_9c68fb8c = GetOperationRequest
 
 
 class ListOperationsByParentRequest(Message):
     'Migrate to common/v1.'
     __PROTO_FULL_NAME__ = 'nebius.common.v1alpha1.ListOperationsByParentRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.v1alpha1.ListOperationsByParentRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -305,6 +344,7 @@ class ListOperationsByParentRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         _nebius_get_logger('deprecation').warning('Message nebius.common.v1alpha1.ListOperationsByParentRequest is deprecated. Migrate to common/v1.', stack_info=True, stacklevel=2)
         if parent_id is not _NEBIUS_UNSET:
@@ -325,6 +365,7 @@ class ListOperationsByParentRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSBYPARENTREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -335,6 +376,7 @@ class ListOperationsByParentRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSBYPARENTREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -345,6 +387,7 @@ class ListOperationsByParentRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSBYPARENTREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -355,19 +398,26 @@ class ListOperationsByParentRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSBYPARENTREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_v1alpha1_ListOperationsByParentRequest_fdb22ae8 = ListOperationsByParentRequest
 
 
 class ListOperationsRequest(Message):
     'Migrate to common/v1.'
     __PROTO_FULL_NAME__ = 'nebius.common.v1alpha1.ListOperationsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.v1alpha1.ListOperationsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -378,6 +428,7 @@ class ListOperationsRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         _nebius_get_logger('deprecation').warning('Message nebius.common.v1alpha1.ListOperationsRequest is deprecated. Migrate to common/v1.', stack_info=True, stacklevel=2)
         if resource_id is not _NEBIUS_UNSET:
@@ -398,6 +449,7 @@ class ListOperationsRequest(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSREQUEST_RESOURCE_ID, value)
 
     @_NebiusProperty
@@ -408,6 +460,7 @@ class ListOperationsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -418,6 +471,7 @@ class ListOperationsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -428,19 +482,26 @@ class ListOperationsRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'resource_id': 'resource_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_v1alpha1_ListOperationsRequest_6e009b1f = ListOperationsRequest
 
 
 class ListOperationsResponse(Message):
     'Migrate to common/v1.'
     __PROTO_FULL_NAME__ = 'nebius.common.v1alpha1.ListOperationsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.v1alpha1.ListOperationsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -449,6 +510,7 @@ class ListOperationsResponse(Message):
         operations: _NebiusIterable[_NebiusType_nebius_common_v1alpha1_Operation_dc4ba02a] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         _nebius_get_logger('deprecation').warning('Message nebius.common.v1alpha1.ListOperationsResponse is deprecated. Migrate to common/v1.', stack_info=True, stacklevel=2)
         if operations is not _NEBIUS_UNSET:
@@ -465,6 +527,7 @@ class ListOperationsResponse(Message):
 
     @operations.setter
     def operations(self, value: _NebiusIterable[_NebiusType_nebius_common_v1alpha1_Operation_dc4ba02a] | None) -> None:
+        """Set or clear the generated ``operations`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSRESPONSE_OPERATIONS, value)
 
     @_NebiusProperty
@@ -475,9 +538,11 @@ class ListOperationsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_COMMON_V1ALPHA1_LISTOPERATIONSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'operations': 'operations', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_v1alpha1_ListOperationsResponse_3b746b8a = ListOperationsResponse
 
 # @@nebius-section:fields@@
@@ -525,15 +590,21 @@ Operation__request_header.__qualname__ = 'Operation.request_header'
 class OperationServiceClient(_NebiusClient):
     'Service for reading operations.\n\nMigrate to common/v1.\n\nThis class provides client methods for the ``nebius.common.v1alpha1.OperationService`` service.'
     __service_name__ = 'nebius.common.v1alpha1.OperationService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = ''
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.common.v1alpha1.OperationService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.common.v1alpha1.OperationService')
+    """Alias for code that expects a protobuf service descriptor."""
     __service_deprecation_details__ = 'Migrate to common/v1.'
+    """Deprecation details emitted when the client is created."""
 
     def get(
         self,

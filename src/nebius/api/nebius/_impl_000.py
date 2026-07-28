@@ -54,9 +54,13 @@ from .._registry import EXTENSION_HANDLES, EXTENSIONS, REGISTRY
 # @@nebius-section:enums@@
 class FieldBehavior(Enum):
     __PROTO_FULL_NAME__ = 'nebius.FieldBehavior'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.FieldBehavior')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     FIELD_BEHAVIOR_UNSPECIFIED = 0
     IMMUTABLE = 2
     "This indicates that the field can't be changed during a resource update.\nChanging the field value will cause an ``INVALID_ARGUMENT`` error.\nFor message fields, this applies to the field itself. Nested immutable\nfields do not make a mutable parent message immutable, and such a parent\nmessage may still be cleared.\nResource recreate requires a change of the field value."
@@ -75,9 +79,13 @@ _NebiusType_nebius_FieldBehavior_176dc0e9 = FieldBehavior
 class MethodBehavior(Enum):
     'MethodBehavior describes special behaviors of a method that affect\ncode generation and tooling.'
     __PROTO_FULL_NAME__ = 'nebius.MethodBehavior'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.MethodBehavior')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     METHOD_BEHAVIOR_UNSPECIFIED = 0
     'Indicates that the method behavior is default and is not specified.\nFor instance, an Update method will lose its update semantics if this value\nis set.\nDoes not mean anything if set along with other values.'
     METHOD_UPDATER = 2
@@ -90,9 +98,13 @@ _NebiusType_nebius_MethodBehavior_957d5422 = MethodBehavior
 
 class ResourceBehavior(Enum):
     __PROTO_FULL_NAME__ = 'nebius.ResourceBehavior'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.ResourceBehavior')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     RESOURCE_BEHAVIOR_UNSPECIFIED = 0
     'The behavior of the resource is unspecified.\nAvoid using this default value.'
     MOVABLE = 1
@@ -106,10 +118,15 @@ _NebiusType_nebius_ResourceBehavior_58c411f4 = ResourceBehavior
 # @@nebius-section:messages@@
 class DeprecationDetails(Message):
     __PROTO_FULL_NAME__ = 'nebius.DeprecationDetails'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.DeprecationDetails')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -119,6 +136,7 @@ class DeprecationDetails(Message):
         description: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         description_cli: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if effective_at is not _NEBIUS_UNSET:
             values['effective_at'] = effective_at
@@ -136,6 +154,7 @@ class DeprecationDetails(Message):
 
     @effective_at.setter
     def effective_at(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``effective_at`` field."""
         self._set_field(_NEBIUS_DEPRECATIONDETAILS_EFFECTIVE_AT, value)
 
     @_NebiusProperty
@@ -146,6 +165,7 @@ class DeprecationDetails(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_DEPRECATIONDETAILS_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -156,18 +176,25 @@ class DeprecationDetails(Message):
 
     @description_cli.setter
     def description_cli(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description_cli`` field."""
         self._set_field(_NEBIUS_DEPRECATIONDETAILS_DESCRIPTION_CLI, value)
 
     __PY_TO_PB2__ = {'effective_at': 'effective_at', 'description': 'description', 'description_cli': 'description_cli'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_DeprecationDetails_6124f58a = DeprecationDetails
 
 
 class EnumPySDKSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.EnumPySDKSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.EnumPySDKSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -175,6 +202,7 @@ class EnumPySDKSettings(Message):
         *,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -187,18 +215,25 @@ class EnumPySDKSettings(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_ENUMPYSDKSETTINGS_NAME, value)
 
     __PY_TO_PB2__ = {'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_EnumPySDKSettings_a58de9ae = EnumPySDKSettings
 
 
 class EnumValuePySDKSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.EnumValuePySDKSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.EnumValuePySDKSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -206,6 +241,7 @@ class EnumValuePySDKSettings(Message):
         *,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -218,18 +254,25 @@ class EnumValuePySDKSettings(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_ENUMVALUEPYSDKSETTINGS_NAME, value)
 
     __PY_TO_PB2__ = {'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_EnumValuePySDKSettings_81d1743d = EnumValuePySDKSettings
 
 
 class FieldPySDKSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.FieldPySDKSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.FieldPySDKSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -237,6 +280,7 @@ class FieldPySDKSettings(Message):
         *,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -249,18 +293,25 @@ class FieldPySDKSettings(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_FIELDPYSDKSETTINGS_NAME, value)
 
     __PY_TO_PB2__ = {'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_FieldPySDKSettings_e7417fd5 = FieldPySDKSettings
 
 
 class MessagePySDKSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.MessagePySDKSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.MessagePySDKSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -268,6 +319,7 @@ class MessagePySDKSettings(Message):
         *,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -280,18 +332,25 @@ class MessagePySDKSettings(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_MESSAGEPYSDKSETTINGS_NAME, value)
 
     __PY_TO_PB2__ = {'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_MessagePySDKSettings_28077e64 = MessagePySDKSettings
 
 
 class MethodPySDKSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.MethodPySDKSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.MethodPySDKSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -299,6 +358,7 @@ class MethodPySDKSettings(Message):
         *,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -311,18 +371,25 @@ class MethodPySDKSettings(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_METHODPYSDKSETTINGS_NAME, value)
 
     __PY_TO_PB2__ = {'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_MethodPySDKSettings_17b2ab1d = MethodPySDKSettings
 
 
 class NIDFieldSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.NIDFieldSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.NIDFieldSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -331,6 +398,7 @@ class NIDFieldSettings(Message):
         resource: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         parent_resource: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource is not _NEBIUS_UNSET:
             values['resource'] = resource
@@ -346,6 +414,7 @@ class NIDFieldSettings(Message):
 
     @resource.setter
     def resource(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``resource`` field."""
         self._set_field(_NEBIUS_NIDFIELDSETTINGS_RESOURCE, value)
 
     @_NebiusProperty
@@ -356,18 +425,25 @@ class NIDFieldSettings(Message):
 
     @parent_resource.setter
     def parent_resource(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``parent_resource`` field."""
         self._set_field(_NEBIUS_NIDFIELDSETTINGS_PARENT_RESOURCE, value)
 
     __PY_TO_PB2__ = {'resource': 'resource', 'parent_resource': 'parent_resource'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_NIDFieldSettings_39b6497f = NIDFieldSettings
 
 
 class OneofPySDKSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.OneofPySDKSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.OneofPySDKSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -375,6 +451,7 @@ class OneofPySDKSettings(Message):
         *,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -387,18 +464,25 @@ class OneofPySDKSettings(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_ONEOFPYSDKSETTINGS_NAME, value)
 
     __PY_TO_PB2__ = {'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_OneofPySDKSettings_b9908135 = OneofPySDKSettings
 
 
 class ServicePySDKSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.ServicePySDKSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.ServicePySDKSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -406,6 +490,7 @@ class ServicePySDKSettings(Message):
         *,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -418,19 +503,26 @@ class ServicePySDKSettings(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_SERVICEPYSDKSETTINGS_NAME, value)
 
     __PY_TO_PB2__ = {'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_ServicePySDKSettings_7fc32011 = ServicePySDKSettings
 
 
 class SubfieldSettings(Message):
     'SubfieldSettings describes overrides for some settings for subfields of a\nfield. Overrides are applied to fields in order of appearance, so the first\nmatching override is applied, and the rest are ignored.\n\nExample:\n\n.. code-block:: protobuf\n\n   message MyMessage {\n     string field1 = 1;\n   }\n   message MyMessage2 {\n     MyMessage field2 = 1 [(subfield_settings) = { field_path: "field1", is_required: true }];\n   }\n\nIn this example, ``field1`` in ``MyMessage2`` is required, even if it is not\nrequired in ``MyMessage``.\nThe following example will override the setting again:\n\n.. code-block:: protobuf\n\n   service MyService {\n     rpc MyMethod(MyMessage2) returns (MyMessage2) {\n       option (method_behavior) = METHOD_UPDATER;\n       option (request_fields) = { field_path: "field2.field1", is_required: false };\n     }\n   }\n\nIn this example, ``field1`` in ``MyMessage2`` is not required for the ``MyMethod``,\neven if it is required in ``MyMessage2``.'
     __PROTO_FULL_NAME__ = 'nebius.SubfieldSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.SubfieldSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__is_required__(_NebiusOneOf):
         name: str = '_is_required'
@@ -461,6 +553,7 @@ class SubfieldSettings(Message):
         nid: _NebiusType_nebius_NIDFieldSettings_39b6497f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         is_required: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if field_path is not _NEBIUS_UNSET:
             values['field_path'] = field_path
@@ -478,6 +571,7 @@ class SubfieldSettings(Message):
 
     @field_path.setter
     def field_path(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``field_path`` field."""
         self._set_field(_NEBIUS_SUBFIELDSETTINGS_FIELD_PATH, value)
 
     @_NebiusProperty
@@ -488,6 +582,7 @@ class SubfieldSettings(Message):
 
     @nid.setter
     def nid(self, value: _NebiusType_nebius_NIDFieldSettings_39b6497f | None) -> None:
+        """Set or clear the generated ``nid`` field."""
         self._set_field(_NEBIUS_SUBFIELDSETTINGS_NID, value)
 
     @_NebiusProperty
@@ -498,9 +593,11 @@ class SubfieldSettings(Message):
 
     @is_required.setter
     def is_required(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``is_required`` field."""
         self._set_field(_NEBIUS_SUBFIELDSETTINGS_IS_REQUIRED, value)
 
     __PY_TO_PB2__ = {'field_path': 'field_path', 'nid': 'nid', 'is_required': 'is_required', '_is_required': '_is_required'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_SubfieldSettings_d1a093aa = SubfieldSettings
 
 # @@nebius-section:fields@@

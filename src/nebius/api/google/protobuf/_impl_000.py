@@ -54,9 +54,13 @@ from ..._registry import EXTENSION_HANDLES, EXTENSIONS, REGISTRY
 # @@nebius-section:enums@@
 class Edition(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.Edition'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.Edition')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     EDITION_UNKNOWN = 0
     EDITION_LEGACY = 900
     EDITION_PROTO2 = 998
@@ -74,18 +78,26 @@ _NebiusType_google_protobuf_Edition_2db1ccb6 = Edition
 
 class ExtensionRangeOptions__VerificationState(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.ExtensionRangeOptions.VerificationState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.ExtensionRangeOptions.VerificationState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     DECLARATION = 0
     UNVERIFIED = 1
 _NebiusType_google_protobuf_ExtensionRangeOptions_VerificationState_fb008b47 = ExtensionRangeOptions__VerificationState
 
 class FeatureSet__EnforceNamingStyle(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.EnforceNamingStyle'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.EnforceNamingStyle')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     ENFORCE_NAMING_STYLE_UNKNOWN = 0
     STYLE2024 = 1
     STYLE_LEGACY = 2
@@ -93,9 +105,13 @@ _NebiusType_google_protobuf_FeatureSet_EnforceNamingStyle_cfa0b1dd = FeatureSet_
 
 class FeatureSet__EnumType(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.EnumType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.EnumType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     ENUM_TYPE_UNKNOWN = 0
     OPEN = 1
     CLOSED = 2
@@ -103,9 +119,13 @@ _NebiusType_google_protobuf_FeatureSet_EnumType_0dd9246f = FeatureSet__EnumType
 
 class FeatureSet__FieldPresence(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.FieldPresence'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.FieldPresence')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     FIELD_PRESENCE_UNKNOWN = 0
     EXPLICIT = 1
     IMPLICIT = 2
@@ -114,9 +134,13 @@ _NebiusType_google_protobuf_FeatureSet_FieldPresence_303c4d66 = FeatureSet__Fiel
 
 class FeatureSet__JsonFormat(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.JsonFormat'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.JsonFormat')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     JSON_FORMAT_UNKNOWN = 0
     ALLOW = 1
     LEGACY_BEST_EFFORT = 2
@@ -124,9 +148,13 @@ _NebiusType_google_protobuf_FeatureSet_JsonFormat_72eb1235 = FeatureSet__JsonFor
 
 class FeatureSet__MessageEncoding(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.MessageEncoding'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.MessageEncoding')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     MESSAGE_ENCODING_UNKNOWN = 0
     LENGTH_PREFIXED = 1
     DELIMITED = 2
@@ -134,9 +162,13 @@ _NebiusType_google_protobuf_FeatureSet_MessageEncoding_36472ae0 = FeatureSet__Me
 
 class FeatureSet__RepeatedFieldEncoding(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.RepeatedFieldEncoding'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.RepeatedFieldEncoding')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     REPEATED_FIELD_ENCODING_UNKNOWN = 0
     PACKED = 1
     EXPANDED = 2
@@ -144,9 +176,13 @@ _NebiusType_google_protobuf_FeatureSet_RepeatedFieldEncoding_9eefa603 = FeatureS
 
 class FeatureSet__Utf8Validation(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.Utf8Validation'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.Utf8Validation')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     UTF8_VALIDATION_UNKNOWN = 0
     VERIFY = 2
     NONE = 3
@@ -154,9 +190,13 @@ _NebiusType_google_protobuf_FeatureSet_Utf8Validation_01d2bab7 = FeatureSet__Utf
 
 class FeatureSet__VisibilityFeature__DefaultSymbolVisibility(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.VisibilityFeature.DefaultSymbolVisibility'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FeatureSet.VisibilityFeature.DefaultSymbolVisibility')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     DEFAULT_SYMBOL_VISIBILITY_UNKNOWN = 0
     EXPORT_ALL = 1
     EXPORT_TOP_LEVEL = 2
@@ -166,9 +206,13 @@ _NebiusType_google_protobuf_FeatureSet_VisibilityFeature_DefaultSymbolVisibility
 
 class FieldDescriptorProto__Label(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldDescriptorProto.Label'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FieldDescriptorProto.Label')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     LABEL_OPTIONAL = 1
     LABEL_REPEATED = 3
     LABEL_REQUIRED = 2
@@ -176,9 +220,13 @@ _NebiusType_google_protobuf_FieldDescriptorProto_Label_d81297cf = FieldDescripto
 
 class FieldDescriptorProto__Type(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldDescriptorProto.Type'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FieldDescriptorProto.Type')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     TYPE_DOUBLE = 1
     TYPE_FLOAT = 2
     TYPE_INT64 = 3
@@ -201,9 +249,13 @@ _NebiusType_google_protobuf_FieldDescriptorProto_Type_cd64e0af = FieldDescriptor
 
 class FieldOptions__CType(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldOptions.CType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FieldOptions.CType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STRING = 0
     CORD = 1
     STRING_PIECE = 2
@@ -211,9 +263,13 @@ _NebiusType_google_protobuf_FieldOptions_CType_ecf58607 = FieldOptions__CType
 
 class FieldOptions__JSType(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldOptions.JSType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FieldOptions.JSType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     JS_NORMAL = 0
     JS_STRING = 1
     JS_NUMBER = 2
@@ -221,9 +277,13 @@ _NebiusType_google_protobuf_FieldOptions_JSType_c9563164 = FieldOptions__JSType
 
 class FieldOptions__OptionRetention(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldOptions.OptionRetention'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FieldOptions.OptionRetention')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     RETENTION_UNKNOWN = 0
     RETENTION_RUNTIME = 1
     RETENTION_SOURCE = 2
@@ -231,9 +291,13 @@ _NebiusType_google_protobuf_FieldOptions_OptionRetention_f4524dd0 = FieldOptions
 
 class FieldOptions__OptionTargetType(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldOptions.OptionTargetType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FieldOptions.OptionTargetType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     TARGET_TYPE_UNKNOWN = 0
     TARGET_TYPE_FILE = 1
     TARGET_TYPE_EXTENSION_RANGE = 2
@@ -248,9 +312,13 @@ _NebiusType_google_protobuf_FieldOptions_OptionTargetType_984999ea = FieldOption
 
 class FileOptions__OptimizeMode(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.FileOptions.OptimizeMode'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.FileOptions.OptimizeMode')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     SPEED = 1
     CODE_SIZE = 2
     LITE_RUNTIME = 3
@@ -258,9 +326,13 @@ _NebiusType_google_protobuf_FileOptions_OptimizeMode_33dc1adc = FileOptions__Opt
 
 class GeneratedCodeInfo__Annotation__Semantic(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.GeneratedCodeInfo.Annotation.Semantic'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.GeneratedCodeInfo.Annotation.Semantic')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     NONE = 0
     SET = 1
     ALIAS = 2
@@ -268,9 +340,13 @@ _NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_Semantic_4744b998 = Gen
 
 class MethodOptions__IdempotencyLevel(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.MethodOptions.IdempotencyLevel'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.MethodOptions.IdempotencyLevel')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     IDEMPOTENCY_UNKNOWN = 0
     NO_SIDE_EFFECTS = 1
     IDEMPOTENT = 2
@@ -278,9 +354,13 @@ _NebiusType_google_protobuf_MethodOptions_IdempotencyLevel_56c7a675 = MethodOpti
 
 class SymbolVisibility(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.SymbolVisibility'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.SymbolVisibility')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     VISIBILITY_UNSET = 0
     VISIBILITY_LOCAL = 1
     VISIBILITY_EXPORT = 2
@@ -288,19 +368,28 @@ _NebiusType_google_protobuf_SymbolVisibility_f48d6c1b = SymbolVisibility
 
 class NullValue(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.NullValue'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.NullValue')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     NULL_VALUE = 0
 _NebiusType_google_protobuf_NullValue_8b80095d = NullValue
 
 # @@nebius-section:messages@@
 class Any(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.Any'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.Any')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -309,6 +398,7 @@ class Any(Message):
         type_url: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         value: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if type_url is not _NEBIUS_UNSET:
             values['type_url'] = type_url
@@ -323,6 +413,7 @@ class Any(Message):
 
     @type_url.setter
     def type_url(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``type_url`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ANY_TYPE_URL, value)
 
     @_NebiusProperty
@@ -332,17 +423,24 @@ class Any(Message):
 
     @value.setter
     def value(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ANY_VALUE, value)
 
     __PY_TO_PB2__ = {'type_url': 'type_url', 'value': 'value'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_Any_e20315e5 = Any
 
 class DescriptorProto__ExtensionRange(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.DescriptorProto.ExtensionRange'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.DescriptorProto.ExtensionRange')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -352,6 +450,7 @@ class DescriptorProto__ExtensionRange(Message):
         end: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         options: _NebiusType_google_protobuf_ExtensionRangeOptions_05fb26e1 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if start is not _NEBIUS_UNSET:
             values['start'] = start
@@ -368,6 +467,7 @@ class DescriptorProto__ExtensionRange(Message):
 
     @start.setter
     def start(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``start`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_EXTENSIONRANGE_START, value)
 
     @_NebiusProperty
@@ -377,6 +477,7 @@ class DescriptorProto__ExtensionRange(Message):
 
     @end.setter
     def end(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``end`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_EXTENSIONRANGE_END, value)
 
     @_NebiusProperty
@@ -386,18 +487,25 @@ class DescriptorProto__ExtensionRange(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_ExtensionRangeOptions_05fb26e1 | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_EXTENSIONRANGE_OPTIONS, value)
 
     __PY_TO_PB2__ = {'start': 'start', 'end': 'end', 'options': 'options'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_DescriptorProto_ExtensionRange_a28810f3 = DescriptorProto__ExtensionRange
 
 
 class DescriptorProto__ReservedRange(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.DescriptorProto.ReservedRange'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.DescriptorProto.ReservedRange')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -406,6 +514,7 @@ class DescriptorProto__ReservedRange(Message):
         start: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         end: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if start is not _NEBIUS_UNSET:
             values['start'] = start
@@ -420,6 +529,7 @@ class DescriptorProto__ReservedRange(Message):
 
     @start.setter
     def start(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``start`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_RESERVEDRANGE_START, value)
 
     @_NebiusProperty
@@ -429,18 +539,25 @@ class DescriptorProto__ReservedRange(Message):
 
     @end.setter
     def end(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``end`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_RESERVEDRANGE_END, value)
 
     __PY_TO_PB2__ = {'start': 'start', 'end': 'end'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_DescriptorProto_ReservedRange_9aa453b8 = DescriptorProto__ReservedRange
 
 
 class EnumDescriptorProto__EnumReservedRange(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.EnumDescriptorProto.EnumReservedRange'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.EnumDescriptorProto.EnumReservedRange')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -449,6 +566,7 @@ class EnumDescriptorProto__EnumReservedRange(Message):
         start: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         end: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if start is not _NEBIUS_UNSET:
             values['start'] = start
@@ -463,6 +581,7 @@ class EnumDescriptorProto__EnumReservedRange(Message):
 
     @start.setter
     def start(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``start`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_ENUMRESERVEDRANGE_START, value)
 
     @_NebiusProperty
@@ -472,18 +591,25 @@ class EnumDescriptorProto__EnumReservedRange(Message):
 
     @end.setter
     def end(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``end`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_ENUMRESERVEDRANGE_END, value)
 
     __PY_TO_PB2__ = {'start': 'start', 'end': 'end'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_EnumDescriptorProto_EnumReservedRange_47683767 = EnumDescriptorProto__EnumReservedRange
 
 
 class ExtensionRangeOptions__Declaration(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.ExtensionRangeOptions.Declaration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.ExtensionRangeOptions.Declaration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -495,6 +621,7 @@ class ExtensionRangeOptions__Declaration(Message):
         reserved: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         repeated: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if number is not _NEBIUS_UNSET:
             values['number'] = number
@@ -515,6 +642,7 @@ class ExtensionRangeOptions__Declaration(Message):
 
     @number.setter
     def number(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``number`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_DECLARATION_NUMBER, value)
 
     @_NebiusProperty
@@ -524,6 +652,7 @@ class ExtensionRangeOptions__Declaration(Message):
 
     @full_name.setter
     def full_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``full_name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_DECLARATION_FULL_NAME, value)
 
     @_NebiusProperty
@@ -533,6 +662,7 @@ class ExtensionRangeOptions__Declaration(Message):
 
     @type.setter
     def type(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_DECLARATION_TYPE, value)
 
     @_NebiusProperty
@@ -542,6 +672,7 @@ class ExtensionRangeOptions__Declaration(Message):
 
     @reserved.setter
     def reserved(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``reserved`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_DECLARATION_RESERVED, value)
 
     @_NebiusProperty
@@ -551,18 +682,25 @@ class ExtensionRangeOptions__Declaration(Message):
 
     @repeated.setter
     def repeated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``repeated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_DECLARATION_REPEATED, value)
 
     __PY_TO_PB2__ = {'number': 'number', 'full_name': 'full_name', 'type': 'type', 'reserved': 'reserved', 'repeated': 'repeated'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_ExtensionRangeOptions_Declaration_6ec4e2a0 = ExtensionRangeOptions__Declaration
 
 
 class FeatureSet__VisibilityFeature(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet.VisibilityFeature'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FeatureSet.VisibilityFeature')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
     DefaultSymbolVisibility: _NebiusTypeAlias = _NebiusType_google_protobuf_FeatureSet_VisibilityFeature_DefaultSymbolVisibility_7e7a0379
 
@@ -570,19 +708,26 @@ class FeatureSet__VisibilityFeature(Message):
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {'DefaultSymbolVisibility': 'DefaultSymbolVisibility'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FeatureSet_VisibilityFeature_3b79c2c4 = FeatureSet__VisibilityFeature
 
 
 class FeatureSetDefaults__FeatureSetEditionDefault(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -592,6 +737,7 @@ class FeatureSetDefaults__FeatureSetEditionDefault(Message):
         overridable_features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         fixed_features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if edition is not _NEBIUS_UNSET:
             values['edition'] = edition
@@ -608,6 +754,7 @@ class FeatureSetDefaults__FeatureSetEditionDefault(Message):
 
     @edition.setter
     def edition(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``edition`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESETDEFAULTS_FEATURESETEDITIONDEFAULT_EDITION, value)
 
     @_NebiusProperty
@@ -617,6 +764,7 @@ class FeatureSetDefaults__FeatureSetEditionDefault(Message):
 
     @overridable_features.setter
     def overridable_features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``overridable_features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESETDEFAULTS_FEATURESETEDITIONDEFAULT_OVERRIDABLE_FEATURES, value)
 
     @_NebiusProperty
@@ -626,18 +774,25 @@ class FeatureSetDefaults__FeatureSetEditionDefault(Message):
 
     @fixed_features.setter
     def fixed_features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``fixed_features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESETDEFAULTS_FEATURESETEDITIONDEFAULT_FIXED_FEATURES, value)
 
     __PY_TO_PB2__ = {'edition': 'edition', 'overridable_features': 'overridable_features', 'fixed_features': 'fixed_features'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FeatureSetDefaults_FeatureSetEditionDefault_d3f38d1d = FeatureSetDefaults__FeatureSetEditionDefault
 
 
 class FieldOptions__EditionDefault(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldOptions.EditionDefault'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FieldOptions.EditionDefault')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -646,6 +801,7 @@ class FieldOptions__EditionDefault(Message):
         edition: _NebiusType_google_protobuf_Edition_2db1ccb6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         value: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if edition is not _NEBIUS_UNSET:
             values['edition'] = edition
@@ -660,6 +816,7 @@ class FieldOptions__EditionDefault(Message):
 
     @edition.setter
     def edition(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``edition`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_EDITIONDEFAULT_EDITION, value)
 
     @_NebiusProperty
@@ -669,18 +826,25 @@ class FieldOptions__EditionDefault(Message):
 
     @value.setter
     def value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_EDITIONDEFAULT_VALUE, value)
 
     __PY_TO_PB2__ = {'edition': 'edition', 'value': 'value'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FieldOptions_EditionDefault_e11a72da = FieldOptions__EditionDefault
 
 
 class FieldOptions__FeatureSupport(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldOptions.FeatureSupport'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FieldOptions.FeatureSupport')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -691,6 +855,7 @@ class FieldOptions__FeatureSupport(Message):
         deprecation_warning: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         edition_removed: _NebiusType_google_protobuf_Edition_2db1ccb6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if edition_introduced is not _NEBIUS_UNSET:
             values['edition_introduced'] = edition_introduced
@@ -709,6 +874,7 @@ class FieldOptions__FeatureSupport(Message):
 
     @edition_introduced.setter
     def edition_introduced(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``edition_introduced`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_FEATURESUPPORT_EDITION_INTRODUCED, value)
 
     @_NebiusProperty
@@ -718,6 +884,7 @@ class FieldOptions__FeatureSupport(Message):
 
     @edition_deprecated.setter
     def edition_deprecated(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``edition_deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_FEATURESUPPORT_EDITION_DEPRECATED, value)
 
     @_NebiusProperty
@@ -727,6 +894,7 @@ class FieldOptions__FeatureSupport(Message):
 
     @deprecation_warning.setter
     def deprecation_warning(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``deprecation_warning`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_FEATURESUPPORT_DEPRECATION_WARNING, value)
 
     @_NebiusProperty
@@ -736,18 +904,25 @@ class FieldOptions__FeatureSupport(Message):
 
     @edition_removed.setter
     def edition_removed(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``edition_removed`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_FEATURESUPPORT_EDITION_REMOVED, value)
 
     __PY_TO_PB2__ = {'edition_introduced': 'edition_introduced', 'edition_deprecated': 'edition_deprecated', 'deprecation_warning': 'deprecation_warning', 'edition_removed': 'edition_removed'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FieldOptions_FeatureSupport_1fab9cdc = FieldOptions__FeatureSupport
 
 
 class GeneratedCodeInfo__Annotation(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.GeneratedCodeInfo.Annotation'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.GeneratedCodeInfo.Annotation')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Semantic: _NebiusTypeAlias = _NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_Semantic_4744b998
 
     def __init__(
@@ -760,6 +935,7 @@ class GeneratedCodeInfo__Annotation(Message):
         end: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         semantic: _NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_Semantic_4744b998 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if path is not _NEBIUS_UNSET:
             values['path'] = path
@@ -780,6 +956,7 @@ class GeneratedCodeInfo__Annotation(Message):
 
     @path.setter
     def path(self, value: _NebiusIterable[_NebiusInt] | None) -> None:
+        """Set or clear the generated ``path`` field."""
         self._set_field(_GOOGLE_PROTOBUF_GENERATEDCODEINFO_ANNOTATION_PATH, value)
 
     @_NebiusProperty
@@ -789,6 +966,7 @@ class GeneratedCodeInfo__Annotation(Message):
 
     @source_file.setter
     def source_file(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``source_file`` field."""
         self._set_field(_GOOGLE_PROTOBUF_GENERATEDCODEINFO_ANNOTATION_SOURCE_FILE, value)
 
     @_NebiusProperty
@@ -798,6 +976,7 @@ class GeneratedCodeInfo__Annotation(Message):
 
     @begin.setter
     def begin(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``begin`` field."""
         self._set_field(_GOOGLE_PROTOBUF_GENERATEDCODEINFO_ANNOTATION_BEGIN, value)
 
     @_NebiusProperty
@@ -807,6 +986,7 @@ class GeneratedCodeInfo__Annotation(Message):
 
     @end.setter
     def end(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``end`` field."""
         self._set_field(_GOOGLE_PROTOBUF_GENERATEDCODEINFO_ANNOTATION_END, value)
 
     @_NebiusProperty
@@ -816,18 +996,25 @@ class GeneratedCodeInfo__Annotation(Message):
 
     @semantic.setter
     def semantic(self, value: _NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_Semantic_4744b998 | None) -> None:
+        """Set or clear the generated ``semantic`` field."""
         self._set_field(_GOOGLE_PROTOBUF_GENERATEDCODEINFO_ANNOTATION_SEMANTIC, value)
 
     __PY_TO_PB2__ = {'path': 'path', 'source_file': 'source_file', 'begin': 'begin', 'end': 'end', 'semantic': 'semantic', 'Semantic': 'Semantic'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_9520f3d8 = GeneratedCodeInfo__Annotation
 
 
 class SourceCodeInfo__Location(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.SourceCodeInfo.Location'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.SourceCodeInfo.Location')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -839,6 +1026,7 @@ class SourceCodeInfo__Location(Message):
         trailing_comments: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         leading_detached_comments: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if path is not _NEBIUS_UNSET:
             values['path'] = path
@@ -859,6 +1047,7 @@ class SourceCodeInfo__Location(Message):
 
     @path.setter
     def path(self, value: _NebiusIterable[_NebiusInt] | None) -> None:
+        """Set or clear the generated ``path`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SOURCECODEINFO_LOCATION_PATH, value)
 
     @_NebiusProperty
@@ -868,6 +1057,7 @@ class SourceCodeInfo__Location(Message):
 
     @span.setter
     def span(self, value: _NebiusIterable[_NebiusInt] | None) -> None:
+        """Set or clear the generated ``span`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SOURCECODEINFO_LOCATION_SPAN, value)
 
     @_NebiusProperty
@@ -877,6 +1067,7 @@ class SourceCodeInfo__Location(Message):
 
     @leading_comments.setter
     def leading_comments(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``leading_comments`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SOURCECODEINFO_LOCATION_LEADING_COMMENTS, value)
 
     @_NebiusProperty
@@ -886,6 +1077,7 @@ class SourceCodeInfo__Location(Message):
 
     @trailing_comments.setter
     def trailing_comments(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``trailing_comments`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SOURCECODEINFO_LOCATION_TRAILING_COMMENTS, value)
 
     @_NebiusProperty
@@ -895,18 +1087,25 @@ class SourceCodeInfo__Location(Message):
 
     @leading_detached_comments.setter
     def leading_detached_comments(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``leading_detached_comments`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SOURCECODEINFO_LOCATION_LEADING_DETACHED_COMMENTS, value)
 
     __PY_TO_PB2__ = {'path': 'path', 'span': 'span', 'leading_comments': 'leading_comments', 'trailing_comments': 'trailing_comments', 'leading_detached_comments': 'leading_detached_comments'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_SourceCodeInfo_Location_288d39fc = SourceCodeInfo__Location
 
 
 class UninterpretedOption__NamePart(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.UninterpretedOption.NamePart'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.UninterpretedOption.NamePart')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -915,6 +1114,7 @@ class UninterpretedOption__NamePart(Message):
         name_part: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         is_extension: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name_part is not _NEBIUS_UNSET:
             values['name_part'] = name_part
@@ -929,6 +1129,7 @@ class UninterpretedOption__NamePart(Message):
 
     @name_part.setter
     def name_part(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name_part`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_NAMEPART_NAME_PART, value)
 
     @_NebiusProperty
@@ -938,18 +1139,25 @@ class UninterpretedOption__NamePart(Message):
 
     @is_extension.setter
     def is_extension(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``is_extension`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_NAMEPART_IS_EXTENSION, value)
 
     __PY_TO_PB2__ = {'name_part': 'name_part', 'is_extension': 'is_extension'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_UninterpretedOption_NamePart_3555fc7f = UninterpretedOption__NamePart
 
 
 class DescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.DescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.DescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     ExtensionRange: _NebiusTypeAlias = _NebiusType_google_protobuf_DescriptorProto_ExtensionRange_a28810f3
     ReservedRange: _NebiusTypeAlias = _NebiusType_google_protobuf_DescriptorProto_ReservedRange_9aa453b8
 
@@ -969,6 +1177,7 @@ class DescriptorProto(Message):
         reserved_name: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         visibility: _NebiusType_google_protobuf_SymbolVisibility_f48d6c1b | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -1001,6 +1210,7 @@ class DescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -1010,6 +1220,7 @@ class DescriptorProto(Message):
 
     @field.setter
     def field(self, value: _NebiusIterable[_NebiusType_google_protobuf_FieldDescriptorProto_ea160611] | None) -> None:
+        """Set or clear the generated ``field`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_FIELD, value)
 
     @_NebiusProperty
@@ -1019,6 +1230,7 @@ class DescriptorProto(Message):
 
     @extension.setter
     def extension(self, value: _NebiusIterable[_NebiusType_google_protobuf_FieldDescriptorProto_ea160611] | None) -> None:
+        """Set or clear the generated ``extension`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_EXTENSION, value)
 
     @_NebiusProperty
@@ -1028,6 +1240,7 @@ class DescriptorProto(Message):
 
     @nested_type.setter
     def nested_type(self, value: _NebiusIterable[_NebiusType_google_protobuf_DescriptorProto_89a07ad1] | None) -> None:
+        """Set or clear the generated ``nested_type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_NESTED_TYPE, value)
 
     @_NebiusProperty
@@ -1037,6 +1250,7 @@ class DescriptorProto(Message):
 
     @enum_type.setter
     def enum_type(self, value: _NebiusIterable[_NebiusType_google_protobuf_EnumDescriptorProto_5c5f6afa] | None) -> None:
+        """Set or clear the generated ``enum_type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_ENUM_TYPE, value)
 
     @_NebiusProperty
@@ -1046,6 +1260,7 @@ class DescriptorProto(Message):
 
     @extension_range.setter
     def extension_range(self, value: _NebiusIterable[_NebiusType_google_protobuf_DescriptorProto_ExtensionRange_a28810f3] | None) -> None:
+        """Set or clear the generated ``extension_range`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_EXTENSION_RANGE, value)
 
     @_NebiusProperty
@@ -1055,6 +1270,7 @@ class DescriptorProto(Message):
 
     @oneof_decl.setter
     def oneof_decl(self, value: _NebiusIterable[_NebiusType_google_protobuf_OneofDescriptorProto_2a3b0862] | None) -> None:
+        """Set or clear the generated ``oneof_decl`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_ONEOF_DECL, value)
 
     @_NebiusProperty
@@ -1064,6 +1280,7 @@ class DescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_MessageOptions_110cf8cc | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_OPTIONS, value)
 
     @_NebiusProperty
@@ -1073,6 +1290,7 @@ class DescriptorProto(Message):
 
     @reserved_range.setter
     def reserved_range(self, value: _NebiusIterable[_NebiusType_google_protobuf_DescriptorProto_ReservedRange_9aa453b8] | None) -> None:
+        """Set or clear the generated ``reserved_range`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_RESERVED_RANGE, value)
 
     @_NebiusProperty
@@ -1082,6 +1300,7 @@ class DescriptorProto(Message):
 
     @reserved_name.setter
     def reserved_name(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``reserved_name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_RESERVED_NAME, value)
 
     @_NebiusProperty
@@ -1091,18 +1310,25 @@ class DescriptorProto(Message):
 
     @visibility.setter
     def visibility(self, value: _NebiusType_google_protobuf_SymbolVisibility_f48d6c1b | None) -> None:
+        """Set or clear the generated ``visibility`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DESCRIPTORPROTO_VISIBILITY, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'field': 'field', 'extension': 'extension', 'nested_type': 'nested_type', 'enum_type': 'enum_type', 'extension_range': 'extension_range', 'oneof_decl': 'oneof_decl', 'options': 'options', 'reserved_range': 'reserved_range', 'reserved_name': 'reserved_name', 'visibility': 'visibility', 'ExtensionRange': 'ExtensionRange', 'ReservedRange': 'ReservedRange'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_DescriptorProto_89a07ad1 = DescriptorProto
 
 
 class EnumDescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.EnumDescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.EnumDescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     EnumReservedRange: _NebiusTypeAlias = _NebiusType_google_protobuf_EnumDescriptorProto_EnumReservedRange_47683767
 
     def __init__(
@@ -1116,6 +1342,7 @@ class EnumDescriptorProto(Message):
         reserved_name: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         visibility: _NebiusType_google_protobuf_SymbolVisibility_f48d6c1b | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -1138,6 +1365,7 @@ class EnumDescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -1147,6 +1375,7 @@ class EnumDescriptorProto(Message):
 
     @value.setter
     def value(self, value: _NebiusIterable[_NebiusType_google_protobuf_EnumValueDescriptorProto_058a3913] | None) -> None:
+        """Set or clear the generated ``value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_VALUE, value)
 
     @_NebiusProperty
@@ -1156,6 +1385,7 @@ class EnumDescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_EnumOptions_03e3979d | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_OPTIONS, value)
 
     @_NebiusProperty
@@ -1165,6 +1395,7 @@ class EnumDescriptorProto(Message):
 
     @reserved_range.setter
     def reserved_range(self, value: _NebiusIterable[_NebiusType_google_protobuf_EnumDescriptorProto_EnumReservedRange_47683767] | None) -> None:
+        """Set or clear the generated ``reserved_range`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_RESERVED_RANGE, value)
 
     @_NebiusProperty
@@ -1174,6 +1405,7 @@ class EnumDescriptorProto(Message):
 
     @reserved_name.setter
     def reserved_name(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``reserved_name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_RESERVED_NAME, value)
 
     @_NebiusProperty
@@ -1183,18 +1415,25 @@ class EnumDescriptorProto(Message):
 
     @visibility.setter
     def visibility(self, value: _NebiusType_google_protobuf_SymbolVisibility_f48d6c1b | None) -> None:
+        """Set or clear the generated ``visibility`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMDESCRIPTORPROTO_VISIBILITY, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'value': 'value', 'options': 'options', 'reserved_range': 'reserved_range', 'reserved_name': 'reserved_name', 'visibility': 'visibility', 'EnumReservedRange': 'EnumReservedRange'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_EnumDescriptorProto_5c5f6afa = EnumDescriptorProto
 
 
 class EnumOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.EnumOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.EnumOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1206,6 +1445,7 @@ class EnumOptions(Message):
         features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if allow_alias is not _NEBIUS_UNSET:
             values['allow_alias'] = allow_alias
@@ -1227,6 +1467,7 @@ class EnumOptions(Message):
 
     @allow_alias.setter
     def allow_alias(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``allow_alias`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMOPTIONS_ALLOW_ALIAS, value)
 
     @_NebiusProperty
@@ -1236,6 +1477,7 @@ class EnumOptions(Message):
 
     @deprecated.setter
     def deprecated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMOPTIONS_DEPRECATED, value)
 
     @_NebiusProperty
@@ -1247,6 +1489,7 @@ class EnumOptions(Message):
 
     @deprecated_legacy_json_field_conflicts.setter
     def deprecated_legacy_json_field_conflicts(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated_legacy_json_field_conflicts`` field."""
         _nebius_get_logger('deprecation').warning('Field google.protobuf.EnumOptions.deprecated_legacy_json_field_conflicts is deprecated. Deprecated.', stack_info=True, stacklevel=2)
         self._set_field(_GOOGLE_PROTOBUF_ENUMOPTIONS_DEPRECATED_LEGACY_JSON_FIELD_CONFLICTS, value)
 
@@ -1257,6 +1500,7 @@ class EnumOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -1266,18 +1510,25 @@ class EnumOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'allow_alias': 'allow_alias', 'deprecated': 'deprecated', 'deprecated_legacy_json_field_conflicts': 'deprecated_legacy_json_field_conflicts', 'features': 'features', 'uninterpreted_option': 'uninterpreted_option'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_EnumOptions_03e3979d = EnumOptions
 
 
 class EnumValueDescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.EnumValueDescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.EnumValueDescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1287,6 +1538,7 @@ class EnumValueDescriptorProto(Message):
         number: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         options: _NebiusType_google_protobuf_EnumValueOptions_8d1adb90 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -1303,6 +1555,7 @@ class EnumValueDescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEDESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -1312,6 +1565,7 @@ class EnumValueDescriptorProto(Message):
 
     @number.setter
     def number(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``number`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEDESCRIPTORPROTO_NUMBER, value)
 
     @_NebiusProperty
@@ -1321,18 +1575,25 @@ class EnumValueDescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_EnumValueOptions_8d1adb90 | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEDESCRIPTORPROTO_OPTIONS, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'number': 'number', 'options': 'options'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_EnumValueDescriptorProto_058a3913 = EnumValueDescriptorProto
 
 
 class EnumValueOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.EnumValueOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.EnumValueOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1344,6 +1605,7 @@ class EnumValueOptions(Message):
         feature_support: _NebiusType_google_protobuf_FieldOptions_FeatureSupport_1fab9cdc | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if deprecated is not _NEBIUS_UNSET:
             values['deprecated'] = deprecated
@@ -1364,6 +1626,7 @@ class EnumValueOptions(Message):
 
     @deprecated.setter
     def deprecated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEOPTIONS_DEPRECATED, value)
 
     @_NebiusProperty
@@ -1373,6 +1636,7 @@ class EnumValueOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -1382,6 +1646,7 @@ class EnumValueOptions(Message):
 
     @debug_redact.setter
     def debug_redact(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``debug_redact`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEOPTIONS_DEBUG_REDACT, value)
 
     @_NebiusProperty
@@ -1391,6 +1656,7 @@ class EnumValueOptions(Message):
 
     @feature_support.setter
     def feature_support(self, value: _NebiusType_google_protobuf_FieldOptions_FeatureSupport_1fab9cdc | None) -> None:
+        """Set or clear the generated ``feature_support`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEOPTIONS_FEATURE_SUPPORT, value)
 
     @_NebiusProperty
@@ -1400,18 +1666,25 @@ class EnumValueOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ENUMVALUEOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'deprecated': 'deprecated', 'features': 'features', 'debug_redact': 'debug_redact', 'feature_support': 'feature_support', 'uninterpreted_option': 'uninterpreted_option'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_EnumValueOptions_8d1adb90 = EnumValueOptions
 
 
 class ExtensionRangeOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.ExtensionRangeOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.ExtensionRangeOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Declaration: _NebiusTypeAlias = _NebiusType_google_protobuf_ExtensionRangeOptions_Declaration_6ec4e2a0
     VerificationState: _NebiusTypeAlias = _NebiusType_google_protobuf_ExtensionRangeOptions_VerificationState_fb008b47
 
@@ -1424,6 +1697,7 @@ class ExtensionRangeOptions(Message):
         features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         verification: _NebiusType_google_protobuf_ExtensionRangeOptions_VerificationState_fb008b47 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if uninterpreted_option is not _NEBIUS_UNSET:
             values['uninterpreted_option'] = uninterpreted_option
@@ -1442,6 +1716,7 @@ class ExtensionRangeOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_UNINTERPRETED_OPTION, value)
 
     @_NebiusProperty
@@ -1451,6 +1726,7 @@ class ExtensionRangeOptions(Message):
 
     @declaration.setter
     def declaration(self, value: _NebiusIterable[_NebiusType_google_protobuf_ExtensionRangeOptions_Declaration_6ec4e2a0] | None) -> None:
+        """Set or clear the generated ``declaration`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_DECLARATION, value)
 
     @_NebiusProperty
@@ -1460,6 +1736,7 @@ class ExtensionRangeOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -1469,18 +1746,25 @@ class ExtensionRangeOptions(Message):
 
     @verification.setter
     def verification(self, value: _NebiusType_google_protobuf_ExtensionRangeOptions_VerificationState_fb008b47 | None) -> None:
+        """Set or clear the generated ``verification`` field."""
         self._set_field(_GOOGLE_PROTOBUF_EXTENSIONRANGEOPTIONS_VERIFICATION, value)
 
     __PY_TO_PB2__ = {'uninterpreted_option': 'uninterpreted_option', 'declaration': 'declaration', 'features': 'features', 'verification': 'verification', 'Declaration': 'Declaration', 'VerificationState': 'VerificationState'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_ExtensionRangeOptions_05fb26e1 = ExtensionRangeOptions
 
 
 class FeatureSet(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSet'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FeatureSet')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     VisibilityFeature: _NebiusTypeAlias = _NebiusType_google_protobuf_FeatureSet_VisibilityFeature_3b79c2c4
     FieldPresence: _NebiusTypeAlias = _NebiusType_google_protobuf_FeatureSet_FieldPresence_303c4d66
     EnumType: _NebiusTypeAlias = _NebiusType_google_protobuf_FeatureSet_EnumType_0dd9246f
@@ -1503,6 +1787,7 @@ class FeatureSet(Message):
         enforce_naming_style: _NebiusType_google_protobuf_FeatureSet_EnforceNamingStyle_cfa0b1dd | None | _NebiusUnsetType = _NEBIUS_UNSET,
         default_symbol_visibility: _NebiusType_google_protobuf_FeatureSet_VisibilityFeature_DefaultSymbolVisibility_7e7a0379 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if field_presence is not _NEBIUS_UNSET:
             values['field_presence'] = field_presence
@@ -1529,6 +1814,7 @@ class FeatureSet(Message):
 
     @field_presence.setter
     def field_presence(self, value: _NebiusType_google_protobuf_FeatureSet_FieldPresence_303c4d66 | None) -> None:
+        """Set or clear the generated ``field_presence`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_FIELD_PRESENCE, value)
 
     @_NebiusProperty
@@ -1538,6 +1824,7 @@ class FeatureSet(Message):
 
     @enum_type.setter
     def enum_type(self, value: _NebiusType_google_protobuf_FeatureSet_EnumType_0dd9246f | None) -> None:
+        """Set or clear the generated ``enum_type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_ENUM_TYPE, value)
 
     @_NebiusProperty
@@ -1547,6 +1834,7 @@ class FeatureSet(Message):
 
     @repeated_field_encoding.setter
     def repeated_field_encoding(self, value: _NebiusType_google_protobuf_FeatureSet_RepeatedFieldEncoding_9eefa603 | None) -> None:
+        """Set or clear the generated ``repeated_field_encoding`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_REPEATED_FIELD_ENCODING, value)
 
     @_NebiusProperty
@@ -1556,6 +1844,7 @@ class FeatureSet(Message):
 
     @utf8_validation.setter
     def utf8_validation(self, value: _NebiusType_google_protobuf_FeatureSet_Utf8Validation_01d2bab7 | None) -> None:
+        """Set or clear the generated ``utf8_validation`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_UTF8_VALIDATION, value)
 
     @_NebiusProperty
@@ -1565,6 +1854,7 @@ class FeatureSet(Message):
 
     @message_encoding.setter
     def message_encoding(self, value: _NebiusType_google_protobuf_FeatureSet_MessageEncoding_36472ae0 | None) -> None:
+        """Set or clear the generated ``message_encoding`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_MESSAGE_ENCODING, value)
 
     @_NebiusProperty
@@ -1574,6 +1864,7 @@ class FeatureSet(Message):
 
     @json_format.setter
     def json_format(self, value: _NebiusType_google_protobuf_FeatureSet_JsonFormat_72eb1235 | None) -> None:
+        """Set or clear the generated ``json_format`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_JSON_FORMAT, value)
 
     @_NebiusProperty
@@ -1583,6 +1874,7 @@ class FeatureSet(Message):
 
     @enforce_naming_style.setter
     def enforce_naming_style(self, value: _NebiusType_google_protobuf_FeatureSet_EnforceNamingStyle_cfa0b1dd | None) -> None:
+        """Set or clear the generated ``enforce_naming_style`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_ENFORCE_NAMING_STYLE, value)
 
     @_NebiusProperty
@@ -1592,18 +1884,25 @@ class FeatureSet(Message):
 
     @default_symbol_visibility.setter
     def default_symbol_visibility(self, value: _NebiusType_google_protobuf_FeatureSet_VisibilityFeature_DefaultSymbolVisibility_7e7a0379 | None) -> None:
+        """Set or clear the generated ``default_symbol_visibility`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESET_DEFAULT_SYMBOL_VISIBILITY, value)
 
     __PY_TO_PB2__ = {'field_presence': 'field_presence', 'enum_type': 'enum_type', 'repeated_field_encoding': 'repeated_field_encoding', 'utf8_validation': 'utf8_validation', 'message_encoding': 'message_encoding', 'json_format': 'json_format', 'enforce_naming_style': 'enforce_naming_style', 'default_symbol_visibility': 'default_symbol_visibility', 'VisibilityFeature': 'VisibilityFeature', 'FieldPresence': 'FieldPresence', 'EnumType': 'EnumType', 'RepeatedFieldEncoding': 'RepeatedFieldEncoding', 'Utf8Validation': 'Utf8Validation', 'MessageEncoding': 'MessageEncoding', 'JsonFormat': 'JsonFormat', 'EnforceNamingStyle': 'EnforceNamingStyle'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FeatureSet_4e45ff7f = FeatureSet
 
 
 class FeatureSetDefaults(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FeatureSetDefaults'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FeatureSetDefaults')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     FeatureSetEditionDefault: _NebiusTypeAlias = _NebiusType_google_protobuf_FeatureSetDefaults_FeatureSetEditionDefault_d3f38d1d
 
     def __init__(
@@ -1614,6 +1913,7 @@ class FeatureSetDefaults(Message):
         minimum_edition: _NebiusType_google_protobuf_Edition_2db1ccb6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         maximum_edition: _NebiusType_google_protobuf_Edition_2db1ccb6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if defaults is not _NEBIUS_UNSET:
             values['defaults'] = defaults
@@ -1630,6 +1930,7 @@ class FeatureSetDefaults(Message):
 
     @defaults.setter
     def defaults(self, value: _NebiusIterable[_NebiusType_google_protobuf_FeatureSetDefaults_FeatureSetEditionDefault_d3f38d1d] | None) -> None:
+        """Set or clear the generated ``defaults`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESETDEFAULTS_DEFAULTS, value)
 
     @_NebiusProperty
@@ -1639,6 +1940,7 @@ class FeatureSetDefaults(Message):
 
     @minimum_edition.setter
     def minimum_edition(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``minimum_edition`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESETDEFAULTS_MINIMUM_EDITION, value)
 
     @_NebiusProperty
@@ -1648,18 +1950,25 @@ class FeatureSetDefaults(Message):
 
     @maximum_edition.setter
     def maximum_edition(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``maximum_edition`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FEATURESETDEFAULTS_MAXIMUM_EDITION, value)
 
     __PY_TO_PB2__ = {'defaults': 'defaults', 'minimum_edition': 'minimum_edition', 'maximum_edition': 'maximum_edition', 'FeatureSetEditionDefault': 'FeatureSetEditionDefault'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FeatureSetDefaults_cfab7df3 = FeatureSetDefaults
 
 
 class FieldDescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldDescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FieldDescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Type: _NebiusTypeAlias = _NebiusType_google_protobuf_FieldDescriptorProto_Type_cd64e0af
     Label: _NebiusTypeAlias = _NebiusType_google_protobuf_FieldDescriptorProto_Label_d81297cf
 
@@ -1679,6 +1988,7 @@ class FieldDescriptorProto(Message):
         options: _NebiusType_google_protobuf_FieldOptions_53d49228 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         proto3_optional: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -1711,6 +2021,7 @@ class FieldDescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -1720,6 +2031,7 @@ class FieldDescriptorProto(Message):
 
     @number.setter
     def number(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``number`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_NUMBER, value)
 
     @_NebiusProperty
@@ -1729,6 +2041,7 @@ class FieldDescriptorProto(Message):
 
     @label.setter
     def label(self, value: _NebiusType_google_protobuf_FieldDescriptorProto_Label_d81297cf | None) -> None:
+        """Set or clear the generated ``label`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_LABEL, value)
 
     @_NebiusProperty
@@ -1738,6 +2051,7 @@ class FieldDescriptorProto(Message):
 
     @type.setter
     def type(self, value: _NebiusType_google_protobuf_FieldDescriptorProto_Type_cd64e0af | None) -> None:
+        """Set or clear the generated ``type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_TYPE, value)
 
     @_NebiusProperty
@@ -1747,6 +2061,7 @@ class FieldDescriptorProto(Message):
 
     @type_name.setter
     def type_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``type_name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_TYPE_NAME, value)
 
     @_NebiusProperty
@@ -1756,6 +2071,7 @@ class FieldDescriptorProto(Message):
 
     @extendee.setter
     def extendee(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``extendee`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_EXTENDEE, value)
 
     @_NebiusProperty
@@ -1765,6 +2081,7 @@ class FieldDescriptorProto(Message):
 
     @default_value.setter
     def default_value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``default_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_DEFAULT_VALUE, value)
 
     @_NebiusProperty
@@ -1774,6 +2091,7 @@ class FieldDescriptorProto(Message):
 
     @oneof_index.setter
     def oneof_index(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``oneof_index`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_ONEOF_INDEX, value)
 
     @_NebiusProperty
@@ -1783,6 +2101,7 @@ class FieldDescriptorProto(Message):
 
     @json_name.setter
     def json_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``json_name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_JSON_NAME, value)
 
     @_NebiusProperty
@@ -1792,6 +2111,7 @@ class FieldDescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_FieldOptions_53d49228 | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_OPTIONS, value)
 
     @_NebiusProperty
@@ -1801,18 +2121,25 @@ class FieldDescriptorProto(Message):
 
     @proto3_optional.setter
     def proto3_optional(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``proto3_optional`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDDESCRIPTORPROTO_PROTO3_OPTIONAL, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'number': 'number', 'label': 'label', 'type': 'type', 'type_name': 'type_name', 'extendee': 'extendee', 'default_value': 'default_value', 'oneof_index': 'oneof_index', 'json_name': 'json_name', 'options': 'options', 'proto3_optional': 'proto3_optional', 'Type': 'Type', 'Label': 'Label'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FieldDescriptorProto_ea160611 = FieldDescriptorProto
 
 
 class FieldOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FieldOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FieldOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     EditionDefault: _NebiusTypeAlias = _NebiusType_google_protobuf_FieldOptions_EditionDefault_e11a72da
     FeatureSupport: _NebiusTypeAlias = _NebiusType_google_protobuf_FieldOptions_FeatureSupport_1fab9cdc
     CType: _NebiusTypeAlias = _NebiusType_google_protobuf_FieldOptions_CType_ecf58607
@@ -1839,6 +2166,7 @@ class FieldOptions(Message):
         feature_support: _NebiusType_google_protobuf_FieldOptions_FeatureSupport_1fab9cdc | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if ctype is not _NEBIUS_UNSET:
             values['ctype'] = ctype
@@ -1878,6 +2206,7 @@ class FieldOptions(Message):
 
     @ctype.setter
     def ctype(self, value: _NebiusType_google_protobuf_FieldOptions_CType_ecf58607 | None) -> None:
+        """Set or clear the generated ``ctype`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_CTYPE, value)
 
     @_NebiusProperty
@@ -1887,6 +2216,7 @@ class FieldOptions(Message):
 
     @packed.setter
     def packed(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``packed`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_PACKED, value)
 
     @_NebiusProperty
@@ -1896,6 +2226,7 @@ class FieldOptions(Message):
 
     @jstype.setter
     def jstype(self, value: _NebiusType_google_protobuf_FieldOptions_JSType_c9563164 | None) -> None:
+        """Set or clear the generated ``jstype`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_JSTYPE, value)
 
     @_NebiusProperty
@@ -1905,6 +2236,7 @@ class FieldOptions(Message):
 
     @lazy.setter
     def lazy(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``lazy`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_LAZY, value)
 
     @_NebiusProperty
@@ -1914,6 +2246,7 @@ class FieldOptions(Message):
 
     @unverified_lazy.setter
     def unverified_lazy(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``unverified_lazy`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_UNVERIFIED_LAZY, value)
 
     @_NebiusProperty
@@ -1923,6 +2256,7 @@ class FieldOptions(Message):
 
     @deprecated.setter
     def deprecated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_DEPRECATED, value)
 
     @_NebiusProperty
@@ -1934,6 +2268,7 @@ class FieldOptions(Message):
 
     @weak.setter
     def weak(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``weak`` field."""
         _nebius_get_logger('deprecation').warning('Field google.protobuf.FieldOptions.weak is deprecated. Deprecated.', stack_info=True, stacklevel=2)
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_WEAK, value)
 
@@ -1944,6 +2279,7 @@ class FieldOptions(Message):
 
     @debug_redact.setter
     def debug_redact(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``debug_redact`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_DEBUG_REDACT, value)
 
     @_NebiusProperty
@@ -1953,6 +2289,7 @@ class FieldOptions(Message):
 
     @retention.setter
     def retention(self, value: _NebiusType_google_protobuf_FieldOptions_OptionRetention_f4524dd0 | None) -> None:
+        """Set or clear the generated ``retention`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_RETENTION, value)
 
     @_NebiusProperty
@@ -1962,6 +2299,7 @@ class FieldOptions(Message):
 
     @targets.setter
     def targets(self, value: _NebiusIterable[_NebiusType_google_protobuf_FieldOptions_OptionTargetType_984999ea] | None) -> None:
+        """Set or clear the generated ``targets`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_TARGETS, value)
 
     @_NebiusProperty
@@ -1971,6 +2309,7 @@ class FieldOptions(Message):
 
     @edition_defaults.setter
     def edition_defaults(self, value: _NebiusIterable[_NebiusType_google_protobuf_FieldOptions_EditionDefault_e11a72da] | None) -> None:
+        """Set or clear the generated ``edition_defaults`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_EDITION_DEFAULTS, value)
 
     @_NebiusProperty
@@ -1980,6 +2319,7 @@ class FieldOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -1989,6 +2329,7 @@ class FieldOptions(Message):
 
     @feature_support.setter
     def feature_support(self, value: _NebiusType_google_protobuf_FieldOptions_FeatureSupport_1fab9cdc | None) -> None:
+        """Set or clear the generated ``feature_support`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_FEATURE_SUPPORT, value)
 
     @_NebiusProperty
@@ -1998,18 +2339,25 @@ class FieldOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FIELDOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'ctype': 'ctype', 'packed': 'packed', 'jstype': 'jstype', 'lazy': 'lazy', 'unverified_lazy': 'unverified_lazy', 'deprecated': 'deprecated', 'weak': 'weak', 'debug_redact': 'debug_redact', 'retention': 'retention', 'targets': 'targets', 'edition_defaults': 'edition_defaults', 'features': 'features', 'feature_support': 'feature_support', 'uninterpreted_option': 'uninterpreted_option', 'EditionDefault': 'EditionDefault', 'FeatureSupport': 'FeatureSupport', 'CType': 'CType', 'JSType': 'JSType', 'OptionRetention': 'OptionRetention', 'OptionTargetType': 'OptionTargetType'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FieldOptions_53d49228 = FieldOptions
 
 
 class FileDescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FileDescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FileDescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2030,6 +2378,7 @@ class FileDescriptorProto(Message):
         syntax: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         edition: _NebiusType_google_protobuf_Edition_2db1ccb6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -2068,6 +2417,7 @@ class FileDescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -2077,6 +2427,7 @@ class FileDescriptorProto(Message):
 
     @package.setter
     def package(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``package`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_PACKAGE, value)
 
     @_NebiusProperty
@@ -2086,6 +2437,7 @@ class FileDescriptorProto(Message):
 
     @dependency.setter
     def dependency(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``dependency`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_DEPENDENCY, value)
 
     @_NebiusProperty
@@ -2095,6 +2447,7 @@ class FileDescriptorProto(Message):
 
     @public_dependency.setter
     def public_dependency(self, value: _NebiusIterable[_NebiusInt] | None) -> None:
+        """Set or clear the generated ``public_dependency`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_PUBLIC_DEPENDENCY, value)
 
     @_NebiusProperty
@@ -2104,6 +2457,7 @@ class FileDescriptorProto(Message):
 
     @weak_dependency.setter
     def weak_dependency(self, value: _NebiusIterable[_NebiusInt] | None) -> None:
+        """Set or clear the generated ``weak_dependency`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_WEAK_DEPENDENCY, value)
 
     @_NebiusProperty
@@ -2113,6 +2467,7 @@ class FileDescriptorProto(Message):
 
     @option_dependency.setter
     def option_dependency(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``option_dependency`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_OPTION_DEPENDENCY, value)
 
     @_NebiusProperty
@@ -2122,6 +2477,7 @@ class FileDescriptorProto(Message):
 
     @message_type.setter
     def message_type(self, value: _NebiusIterable[_NebiusType_google_protobuf_DescriptorProto_89a07ad1] | None) -> None:
+        """Set or clear the generated ``message_type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_MESSAGE_TYPE, value)
 
     @_NebiusProperty
@@ -2131,6 +2487,7 @@ class FileDescriptorProto(Message):
 
     @enum_type.setter
     def enum_type(self, value: _NebiusIterable[_NebiusType_google_protobuf_EnumDescriptorProto_5c5f6afa] | None) -> None:
+        """Set or clear the generated ``enum_type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_ENUM_TYPE, value)
 
     @_NebiusProperty
@@ -2140,6 +2497,7 @@ class FileDescriptorProto(Message):
 
     @service.setter
     def service(self, value: _NebiusIterable[_NebiusType_google_protobuf_ServiceDescriptorProto_b4fde324] | None) -> None:
+        """Set or clear the generated ``service`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_SERVICE, value)
 
     @_NebiusProperty
@@ -2149,6 +2507,7 @@ class FileDescriptorProto(Message):
 
     @extension.setter
     def extension(self, value: _NebiusIterable[_NebiusType_google_protobuf_FieldDescriptorProto_ea160611] | None) -> None:
+        """Set or clear the generated ``extension`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_EXTENSION, value)
 
     @_NebiusProperty
@@ -2158,6 +2517,7 @@ class FileDescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_FileOptions_24930ded | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_OPTIONS, value)
 
     @_NebiusProperty
@@ -2167,6 +2527,7 @@ class FileDescriptorProto(Message):
 
     @source_code_info.setter
     def source_code_info(self, value: _NebiusType_google_protobuf_SourceCodeInfo_4ae916ce | None) -> None:
+        """Set or clear the generated ``source_code_info`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_SOURCE_CODE_INFO, value)
 
     @_NebiusProperty
@@ -2176,6 +2537,7 @@ class FileDescriptorProto(Message):
 
     @syntax.setter
     def syntax(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``syntax`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_SYNTAX, value)
 
     @_NebiusProperty
@@ -2185,18 +2547,25 @@ class FileDescriptorProto(Message):
 
     @edition.setter
     def edition(self, value: _NebiusType_google_protobuf_Edition_2db1ccb6 | None) -> None:
+        """Set or clear the generated ``edition`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORPROTO_EDITION, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'package': 'package', 'dependency': 'dependency', 'public_dependency': 'public_dependency', 'weak_dependency': 'weak_dependency', 'option_dependency': 'option_dependency', 'message_type': 'message_type', 'enum_type': 'enum_type', 'service': 'service', 'extension': 'extension', 'options': 'options', 'source_code_info': 'source_code_info', 'syntax': 'syntax', 'edition': 'edition'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FileDescriptorProto_bbde7aa4 = FileDescriptorProto
 
 
 class FileDescriptorSet(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FileDescriptorSet'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FileDescriptorSet')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2204,6 +2573,7 @@ class FileDescriptorSet(Message):
         *,
         file: _NebiusIterable[_NebiusType_google_protobuf_FileDescriptorProto_bbde7aa4] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if file is not _NEBIUS_UNSET:
             values['file'] = file
@@ -2216,18 +2586,25 @@ class FileDescriptorSet(Message):
 
     @file.setter
     def file(self, value: _NebiusIterable[_NebiusType_google_protobuf_FileDescriptorProto_bbde7aa4] | None) -> None:
+        """Set or clear the generated ``file`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEDESCRIPTORSET_FILE, value)
 
     __PY_TO_PB2__ = {'file': 'file'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FileDescriptorSet_6cc23119 = FileDescriptorSet
 
 
 class FileOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.FileOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.FileOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     OptimizeMode: _NebiusTypeAlias = _NebiusType_google_protobuf_FileOptions_OptimizeMode_33dc1adc
 
     def __init__(
@@ -2256,6 +2633,7 @@ class FileOptions(Message):
         features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if java_package is not _NEBIUS_UNSET:
             values['java_package'] = java_package
@@ -2309,6 +2687,7 @@ class FileOptions(Message):
 
     @java_package.setter
     def java_package(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``java_package`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_JAVA_PACKAGE, value)
 
     @_NebiusProperty
@@ -2318,6 +2697,7 @@ class FileOptions(Message):
 
     @java_outer_classname.setter
     def java_outer_classname(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``java_outer_classname`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_JAVA_OUTER_CLASSNAME, value)
 
     @_NebiusProperty
@@ -2327,6 +2707,7 @@ class FileOptions(Message):
 
     @java_multiple_files.setter
     def java_multiple_files(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``java_multiple_files`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_JAVA_MULTIPLE_FILES, value)
 
     @_NebiusProperty
@@ -2338,6 +2719,7 @@ class FileOptions(Message):
 
     @java_generate_equals_and_hash.setter
     def java_generate_equals_and_hash(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``java_generate_equals_and_hash`` field."""
         _nebius_get_logger('deprecation').warning('Field google.protobuf.FileOptions.java_generate_equals_and_hash is deprecated. Deprecated.', stack_info=True, stacklevel=2)
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_JAVA_GENERATE_EQUALS_AND_HASH, value)
 
@@ -2348,6 +2730,7 @@ class FileOptions(Message):
 
     @java_string_check_utf8.setter
     def java_string_check_utf8(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``java_string_check_utf8`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_JAVA_STRING_CHECK_UTF8, value)
 
     @_NebiusProperty
@@ -2357,6 +2740,7 @@ class FileOptions(Message):
 
     @optimize_for.setter
     def optimize_for(self, value: _NebiusType_google_protobuf_FileOptions_OptimizeMode_33dc1adc | None) -> None:
+        """Set or clear the generated ``optimize_for`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_OPTIMIZE_FOR, value)
 
     @_NebiusProperty
@@ -2366,6 +2750,7 @@ class FileOptions(Message):
 
     @go_package.setter
     def go_package(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``go_package`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_GO_PACKAGE, value)
 
     @_NebiusProperty
@@ -2375,6 +2760,7 @@ class FileOptions(Message):
 
     @cc_generic_services.setter
     def cc_generic_services(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``cc_generic_services`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_CC_GENERIC_SERVICES, value)
 
     @_NebiusProperty
@@ -2384,6 +2770,7 @@ class FileOptions(Message):
 
     @java_generic_services.setter
     def java_generic_services(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``java_generic_services`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_JAVA_GENERIC_SERVICES, value)
 
     @_NebiusProperty
@@ -2393,6 +2780,7 @@ class FileOptions(Message):
 
     @py_generic_services.setter
     def py_generic_services(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``py_generic_services`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_PY_GENERIC_SERVICES, value)
 
     @_NebiusProperty
@@ -2402,6 +2790,7 @@ class FileOptions(Message):
 
     @deprecated.setter
     def deprecated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_DEPRECATED, value)
 
     @_NebiusProperty
@@ -2411,6 +2800,7 @@ class FileOptions(Message):
 
     @cc_enable_arenas.setter
     def cc_enable_arenas(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``cc_enable_arenas`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_CC_ENABLE_ARENAS, value)
 
     @_NebiusProperty
@@ -2420,6 +2810,7 @@ class FileOptions(Message):
 
     @objc_class_prefix.setter
     def objc_class_prefix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``objc_class_prefix`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_OBJC_CLASS_PREFIX, value)
 
     @_NebiusProperty
@@ -2429,6 +2820,7 @@ class FileOptions(Message):
 
     @csharp_namespace.setter
     def csharp_namespace(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``csharp_namespace`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_CSHARP_NAMESPACE, value)
 
     @_NebiusProperty
@@ -2438,6 +2830,7 @@ class FileOptions(Message):
 
     @swift_prefix.setter
     def swift_prefix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``swift_prefix`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_SWIFT_PREFIX, value)
 
     @_NebiusProperty
@@ -2447,6 +2840,7 @@ class FileOptions(Message):
 
     @php_class_prefix.setter
     def php_class_prefix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``php_class_prefix`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_PHP_CLASS_PREFIX, value)
 
     @_NebiusProperty
@@ -2456,6 +2850,7 @@ class FileOptions(Message):
 
     @php_namespace.setter
     def php_namespace(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``php_namespace`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_PHP_NAMESPACE, value)
 
     @_NebiusProperty
@@ -2465,6 +2860,7 @@ class FileOptions(Message):
 
     @php_metadata_namespace.setter
     def php_metadata_namespace(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``php_metadata_namespace`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_PHP_METADATA_NAMESPACE, value)
 
     @_NebiusProperty
@@ -2474,6 +2870,7 @@ class FileOptions(Message):
 
     @ruby_package.setter
     def ruby_package(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``ruby_package`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_RUBY_PACKAGE, value)
 
     @_NebiusProperty
@@ -2483,6 +2880,7 @@ class FileOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -2492,18 +2890,25 @@ class FileOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_FILEOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'java_package': 'java_package', 'java_outer_classname': 'java_outer_classname', 'java_multiple_files': 'java_multiple_files', 'java_generate_equals_and_hash': 'java_generate_equals_and_hash', 'java_string_check_utf8': 'java_string_check_utf8', 'optimize_for': 'optimize_for', 'go_package': 'go_package', 'cc_generic_services': 'cc_generic_services', 'java_generic_services': 'java_generic_services', 'py_generic_services': 'py_generic_services', 'deprecated': 'deprecated', 'cc_enable_arenas': 'cc_enable_arenas', 'objc_class_prefix': 'objc_class_prefix', 'csharp_namespace': 'csharp_namespace', 'swift_prefix': 'swift_prefix', 'php_class_prefix': 'php_class_prefix', 'php_namespace': 'php_namespace', 'php_metadata_namespace': 'php_metadata_namespace', 'ruby_package': 'ruby_package', 'features': 'features', 'uninterpreted_option': 'uninterpreted_option', 'OptimizeMode': 'OptimizeMode'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_FileOptions_24930ded = FileOptions
 
 
 class GeneratedCodeInfo(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.GeneratedCodeInfo'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.GeneratedCodeInfo')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Annotation: _NebiusTypeAlias = _NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_9520f3d8
 
     def __init__(
@@ -2512,6 +2917,7 @@ class GeneratedCodeInfo(Message):
         *,
         annotation: _NebiusIterable[_NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_9520f3d8] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if annotation is not _NEBIUS_UNSET:
             values['annotation'] = annotation
@@ -2524,18 +2930,25 @@ class GeneratedCodeInfo(Message):
 
     @annotation.setter
     def annotation(self, value: _NebiusIterable[_NebiusType_google_protobuf_GeneratedCodeInfo_Annotation_9520f3d8] | None) -> None:
+        """Set or clear the generated ``annotation`` field."""
         self._set_field(_GOOGLE_PROTOBUF_GENERATEDCODEINFO_ANNOTATION, value)
 
     __PY_TO_PB2__ = {'annotation': 'annotation', 'Annotation': 'Annotation'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_GeneratedCodeInfo_38f0e4b1 = GeneratedCodeInfo
 
 
 class MessageOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.MessageOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.MessageOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2549,6 +2962,7 @@ class MessageOptions(Message):
         features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if message_set_wire_format is not _NEBIUS_UNSET:
             values['message_set_wire_format'] = message_set_wire_format
@@ -2574,6 +2988,7 @@ class MessageOptions(Message):
 
     @message_set_wire_format.setter
     def message_set_wire_format(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``message_set_wire_format`` field."""
         self._set_field(_GOOGLE_PROTOBUF_MESSAGEOPTIONS_MESSAGE_SET_WIRE_FORMAT, value)
 
     @_NebiusProperty
@@ -2583,6 +2998,7 @@ class MessageOptions(Message):
 
     @no_standard_descriptor_accessor.setter
     def no_standard_descriptor_accessor(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``no_standard_descriptor_accessor`` field."""
         self._set_field(_GOOGLE_PROTOBUF_MESSAGEOPTIONS_NO_STANDARD_DESCRIPTOR_ACCESSOR, value)
 
     @_NebiusProperty
@@ -2592,6 +3008,7 @@ class MessageOptions(Message):
 
     @deprecated.setter
     def deprecated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_MESSAGEOPTIONS_DEPRECATED, value)
 
     @_NebiusProperty
@@ -2601,6 +3018,7 @@ class MessageOptions(Message):
 
     @map_entry.setter
     def map_entry(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``map_entry`` field."""
         self._set_field(_GOOGLE_PROTOBUF_MESSAGEOPTIONS_MAP_ENTRY, value)
 
     @_NebiusProperty
@@ -2612,6 +3030,7 @@ class MessageOptions(Message):
 
     @deprecated_legacy_json_field_conflicts.setter
     def deprecated_legacy_json_field_conflicts(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated_legacy_json_field_conflicts`` field."""
         _nebius_get_logger('deprecation').warning('Field google.protobuf.MessageOptions.deprecated_legacy_json_field_conflicts is deprecated. Deprecated.', stack_info=True, stacklevel=2)
         self._set_field(_GOOGLE_PROTOBUF_MESSAGEOPTIONS_DEPRECATED_LEGACY_JSON_FIELD_CONFLICTS, value)
 
@@ -2622,6 +3041,7 @@ class MessageOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_MESSAGEOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -2631,18 +3051,25 @@ class MessageOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_MESSAGEOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'message_set_wire_format': 'message_set_wire_format', 'no_standard_descriptor_accessor': 'no_standard_descriptor_accessor', 'deprecated': 'deprecated', 'map_entry': 'map_entry', 'deprecated_legacy_json_field_conflicts': 'deprecated_legacy_json_field_conflicts', 'features': 'features', 'uninterpreted_option': 'uninterpreted_option'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_MessageOptions_110cf8cc = MessageOptions
 
 
 class MethodDescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.MethodDescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.MethodDescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2655,6 +3082,7 @@ class MethodDescriptorProto(Message):
         client_streaming: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         server_streaming: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -2677,6 +3105,7 @@ class MethodDescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODDESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -2686,6 +3115,7 @@ class MethodDescriptorProto(Message):
 
     @input_type.setter
     def input_type(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``input_type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODDESCRIPTORPROTO_INPUT_TYPE, value)
 
     @_NebiusProperty
@@ -2695,6 +3125,7 @@ class MethodDescriptorProto(Message):
 
     @output_type.setter
     def output_type(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``output_type`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODDESCRIPTORPROTO_OUTPUT_TYPE, value)
 
     @_NebiusProperty
@@ -2704,6 +3135,7 @@ class MethodDescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_MethodOptions_41125704 | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODDESCRIPTORPROTO_OPTIONS, value)
 
     @_NebiusProperty
@@ -2713,6 +3145,7 @@ class MethodDescriptorProto(Message):
 
     @client_streaming.setter
     def client_streaming(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``client_streaming`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODDESCRIPTORPROTO_CLIENT_STREAMING, value)
 
     @_NebiusProperty
@@ -2722,18 +3155,25 @@ class MethodDescriptorProto(Message):
 
     @server_streaming.setter
     def server_streaming(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``server_streaming`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODDESCRIPTORPROTO_SERVER_STREAMING, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'input_type': 'input_type', 'output_type': 'output_type', 'options': 'options', 'client_streaming': 'client_streaming', 'server_streaming': 'server_streaming'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_MethodDescriptorProto_8d4bea55 = MethodDescriptorProto
 
 
 class MethodOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.MethodOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.MethodOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     IdempotencyLevel: _NebiusTypeAlias = _NebiusType_google_protobuf_MethodOptions_IdempotencyLevel_56c7a675
 
     def __init__(
@@ -2745,6 +3185,7 @@ class MethodOptions(Message):
         features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if deprecated is not _NEBIUS_UNSET:
             values['deprecated'] = deprecated
@@ -2763,6 +3204,7 @@ class MethodOptions(Message):
 
     @deprecated.setter
     def deprecated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODOPTIONS_DEPRECATED, value)
 
     @_NebiusProperty
@@ -2772,6 +3214,7 @@ class MethodOptions(Message):
 
     @idempotency_level.setter
     def idempotency_level(self, value: _NebiusType_google_protobuf_MethodOptions_IdempotencyLevel_56c7a675 | None) -> None:
+        """Set or clear the generated ``idempotency_level`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODOPTIONS_IDEMPOTENCY_LEVEL, value)
 
     @_NebiusProperty
@@ -2781,6 +3224,7 @@ class MethodOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -2790,18 +3234,25 @@ class MethodOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_METHODOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'deprecated': 'deprecated', 'idempotency_level': 'idempotency_level', 'features': 'features', 'uninterpreted_option': 'uninterpreted_option', 'IdempotencyLevel': 'IdempotencyLevel'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_MethodOptions_41125704 = MethodOptions
 
 
 class OneofDescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.OneofDescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.OneofDescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2810,6 +3261,7 @@ class OneofDescriptorProto(Message):
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         options: _NebiusType_google_protobuf_OneofOptions_272a24db | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -2824,6 +3276,7 @@ class OneofDescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ONEOFDESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -2833,18 +3286,25 @@ class OneofDescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_OneofOptions_272a24db | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ONEOFDESCRIPTORPROTO_OPTIONS, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'options': 'options'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_OneofDescriptorProto_2a3b0862 = OneofDescriptorProto
 
 
 class OneofOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.OneofOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.OneofOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2853,6 +3313,7 @@ class OneofOptions(Message):
         features: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if features is not _NEBIUS_UNSET:
             values['features'] = features
@@ -2867,6 +3328,7 @@ class OneofOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ONEOFOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -2876,18 +3338,25 @@ class OneofOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_ONEOFOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'features': 'features', 'uninterpreted_option': 'uninterpreted_option'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_OneofOptions_272a24db = OneofOptions
 
 
 class ServiceDescriptorProto(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.ServiceDescriptorProto'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.ServiceDescriptorProto')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2897,6 +3366,7 @@ class ServiceDescriptorProto(Message):
         method: _NebiusIterable[_NebiusType_google_protobuf_MethodDescriptorProto_8d4bea55] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         options: _NebiusType_google_protobuf_ServiceOptions_eb4485e6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -2913,6 +3383,7 @@ class ServiceDescriptorProto(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SERVICEDESCRIPTORPROTO_NAME, value)
 
     @_NebiusProperty
@@ -2922,6 +3393,7 @@ class ServiceDescriptorProto(Message):
 
     @method.setter
     def method(self, value: _NebiusIterable[_NebiusType_google_protobuf_MethodDescriptorProto_8d4bea55] | None) -> None:
+        """Set or clear the generated ``method`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SERVICEDESCRIPTORPROTO_METHOD, value)
 
     @_NebiusProperty
@@ -2931,18 +3403,25 @@ class ServiceDescriptorProto(Message):
 
     @options.setter
     def options(self, value: _NebiusType_google_protobuf_ServiceOptions_eb4485e6 | None) -> None:
+        """Set or clear the generated ``options`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SERVICEDESCRIPTORPROTO_OPTIONS, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'method': 'method', 'options': 'options'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_ServiceDescriptorProto_b4fde324 = ServiceDescriptorProto
 
 
 class ServiceOptions(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.ServiceOptions'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.ServiceOptions')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2952,6 +3431,7 @@ class ServiceOptions(Message):
         deprecated: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         uninterpreted_option: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if features is not _NEBIUS_UNSET:
             values['features'] = features
@@ -2968,6 +3448,7 @@ class ServiceOptions(Message):
 
     @features.setter
     def features(self, value: _NebiusType_google_protobuf_FeatureSet_4e45ff7f | None) -> None:
+        """Set or clear the generated ``features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SERVICEOPTIONS_FEATURES, value)
 
     @_NebiusProperty
@@ -2977,6 +3458,7 @@ class ServiceOptions(Message):
 
     @deprecated.setter
     def deprecated(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deprecated`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SERVICEOPTIONS_DEPRECATED, value)
 
     @_NebiusProperty
@@ -2986,18 +3468,25 @@ class ServiceOptions(Message):
 
     @uninterpreted_option.setter
     def uninterpreted_option(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_086ba8bd] | None) -> None:
+        """Set or clear the generated ``uninterpreted_option`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SERVICEOPTIONS_UNINTERPRETED_OPTION, value)
 
     __PY_TO_PB2__ = {'features': 'features', 'deprecated': 'deprecated', 'uninterpreted_option': 'uninterpreted_option'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_ServiceOptions_eb4485e6 = ServiceOptions
 
 
 class SourceCodeInfo(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.SourceCodeInfo'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.SourceCodeInfo')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Location: _NebiusTypeAlias = _NebiusType_google_protobuf_SourceCodeInfo_Location_288d39fc
 
     def __init__(
@@ -3006,6 +3495,7 @@ class SourceCodeInfo(Message):
         *,
         location: _NebiusIterable[_NebiusType_google_protobuf_SourceCodeInfo_Location_288d39fc] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if location is not _NEBIUS_UNSET:
             values['location'] = location
@@ -3018,18 +3508,25 @@ class SourceCodeInfo(Message):
 
     @location.setter
     def location(self, value: _NebiusIterable[_NebiusType_google_protobuf_SourceCodeInfo_Location_288d39fc] | None) -> None:
+        """Set or clear the generated ``location`` field."""
         self._set_field(_GOOGLE_PROTOBUF_SOURCECODEINFO_LOCATION, value)
 
     __PY_TO_PB2__ = {'location': 'location', 'Location': 'Location'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_SourceCodeInfo_4ae916ce = SourceCodeInfo
 
 
 class UninterpretedOption(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.UninterpretedOption'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.UninterpretedOption')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     NamePart: _NebiusTypeAlias = _NebiusType_google_protobuf_UninterpretedOption_NamePart_3555fc7f
 
     def __init__(
@@ -3044,6 +3541,7 @@ class UninterpretedOption(Message):
         string_value: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
         aggregate_value: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -3068,6 +3566,7 @@ class UninterpretedOption(Message):
 
     @name.setter
     def name(self, value: _NebiusIterable[_NebiusType_google_protobuf_UninterpretedOption_NamePart_3555fc7f] | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_NAME, value)
 
     @_NebiusProperty
@@ -3077,6 +3576,7 @@ class UninterpretedOption(Message):
 
     @identifier_value.setter
     def identifier_value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``identifier_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_IDENTIFIER_VALUE, value)
 
     @_NebiusProperty
@@ -3086,6 +3586,7 @@ class UninterpretedOption(Message):
 
     @positive_int_value.setter
     def positive_int_value(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``positive_int_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_POSITIVE_INT_VALUE, value)
 
     @_NebiusProperty
@@ -3095,6 +3596,7 @@ class UninterpretedOption(Message):
 
     @negative_int_value.setter
     def negative_int_value(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``negative_int_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_NEGATIVE_INT_VALUE, value)
 
     @_NebiusProperty
@@ -3104,6 +3606,7 @@ class UninterpretedOption(Message):
 
     @double_value.setter
     def double_value(self, value: _NebiusFloat | None) -> None:
+        """Set or clear the generated ``double_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_DOUBLE_VALUE, value)
 
     @_NebiusProperty
@@ -3113,6 +3616,7 @@ class UninterpretedOption(Message):
 
     @string_value.setter
     def string_value(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``string_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_STRING_VALUE, value)
 
     @_NebiusProperty
@@ -3122,17 +3626,24 @@ class UninterpretedOption(Message):
 
     @aggregate_value.setter
     def aggregate_value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``aggregate_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_UNINTERPRETEDOPTION_AGGREGATE_VALUE, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'identifier_value': 'identifier_value', 'positive_int_value': 'positive_int_value', 'negative_int_value': 'negative_int_value', 'double_value': 'double_value', 'string_value': 'string_value', 'aggregate_value': 'aggregate_value', 'NamePart': 'NamePart'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_UninterpretedOption_086ba8bd = UninterpretedOption
 
 class Duration(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.Duration'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.Duration')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3141,6 +3652,7 @@ class Duration(Message):
         seconds: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         nanos: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if seconds is not _NEBIUS_UNSET:
             values['seconds'] = seconds
@@ -3155,6 +3667,7 @@ class Duration(Message):
 
     @seconds.setter
     def seconds(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``seconds`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DURATION_SECONDS, value)
 
     @_NebiusProperty
@@ -3164,35 +3677,49 @@ class Duration(Message):
 
     @nanos.setter
     def nanos(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``nanos`` field."""
         self._set_field(_GOOGLE_PROTOBUF_DURATION_NANOS, value)
 
     __PY_TO_PB2__ = {'seconds': 'seconds', 'nanos': 'nanos'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_Duration_4aadaad0 = Duration
 
 class Empty(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.Empty'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.Empty')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_Empty_94a3b77d = Empty
 
 class ListValue(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.ListValue'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.ListValue')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3200,6 +3727,7 @@ class ListValue(Message):
         *,
         values: _NebiusIterable[_NebiusType_google_protobuf_Value_e7b8ba8b] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values_: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if values is not _NEBIUS_UNSET:
             values_['values'] = values
@@ -3212,18 +3740,25 @@ class ListValue(Message):
 
     @values.setter
     def values(self, value: _NebiusIterable[_NebiusType_google_protobuf_Value_e7b8ba8b] | None) -> None:
+        """Set or clear the generated ``values`` field."""
         self._set_field(_GOOGLE_PROTOBUF_LISTVALUE_VALUES, value)
 
     __PY_TO_PB2__ = {'values': 'values'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_ListValue_ad68881e = ListValue
 
 
 class Struct(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.Struct'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.Struct')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3231,6 +3766,7 @@ class Struct(Message):
         *,
         fields: _NebiusMapping[_NebiusStr, _NebiusType_google_protobuf_Value_e7b8ba8b] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if fields is not _NEBIUS_UNSET:
             values['fields'] = fields
@@ -3243,18 +3779,25 @@ class Struct(Message):
 
     @fields.setter
     def fields(self, value: _NebiusMapping[_NebiusStr, _NebiusType_google_protobuf_Value_e7b8ba8b] | None) -> None:
+        """Set or clear the generated ``fields`` field."""
         self._set_field(_GOOGLE_PROTOBUF_STRUCT_FIELDS, value)
 
     __PY_TO_PB2__ = {'fields': 'fields', 'FieldsEntry': 'FieldsEntry'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_Struct_f2ab61a8 = Struct
 
 
 class Value(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.Value'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.Value')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_kind__(_NebiusOneOf):
         name: str = 'kind'
@@ -3333,6 +3876,7 @@ class Value(Message):
         struct_value: _NebiusType_google_protobuf_Struct_f2ab61a8 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         list_value: _NebiusType_google_protobuf_ListValue_ad68881e | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if null_value is not _NEBIUS_UNSET:
             values['null_value'] = null_value
@@ -3355,6 +3899,7 @@ class Value(Message):
 
     @null_value.setter
     def null_value(self, value: _NebiusType_google_protobuf_NullValue_8b80095d | None) -> None:
+        """Set or clear the generated ``null_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_VALUE_NULL_VALUE, value)
 
     @_NebiusProperty
@@ -3364,6 +3909,7 @@ class Value(Message):
 
     @number_value.setter
     def number_value(self, value: _NebiusFloat | None) -> None:
+        """Set or clear the generated ``number_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_VALUE_NUMBER_VALUE, value)
 
     @_NebiusProperty
@@ -3373,6 +3919,7 @@ class Value(Message):
 
     @string_value.setter
     def string_value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``string_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_VALUE_STRING_VALUE, value)
 
     @_NebiusProperty
@@ -3382,6 +3929,7 @@ class Value(Message):
 
     @bool_value.setter
     def bool_value(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``bool_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_VALUE_BOOL_VALUE, value)
 
     @_NebiusProperty
@@ -3391,6 +3939,7 @@ class Value(Message):
 
     @struct_value.setter
     def struct_value(self, value: _NebiusType_google_protobuf_Struct_f2ab61a8 | None) -> None:
+        """Set or clear the generated ``struct_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_VALUE_STRUCT_VALUE, value)
 
     @_NebiusProperty
@@ -3400,17 +3949,24 @@ class Value(Message):
 
     @list_value.setter
     def list_value(self, value: _NebiusType_google_protobuf_ListValue_ad68881e | None) -> None:
+        """Set or clear the generated ``list_value`` field."""
         self._set_field(_GOOGLE_PROTOBUF_VALUE_LIST_VALUE, value)
 
     __PY_TO_PB2__ = {'null_value': 'null_value', 'number_value': 'number_value', 'string_value': 'string_value', 'bool_value': 'bool_value', 'struct_value': 'struct_value', 'list_value': 'list_value', 'kind': 'kind'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_Value_e7b8ba8b = Value
 
 class Timestamp(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.Timestamp'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.Timestamp')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3419,6 +3975,7 @@ class Timestamp(Message):
         seconds: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         nanos: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if seconds is not _NEBIUS_UNSET:
             values['seconds'] = seconds
@@ -3433,6 +3990,7 @@ class Timestamp(Message):
 
     @seconds.setter
     def seconds(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``seconds`` field."""
         self._set_field(_GOOGLE_PROTOBUF_TIMESTAMP_SECONDS, value)
 
     @_NebiusProperty
@@ -3442,9 +4000,11 @@ class Timestamp(Message):
 
     @nanos.setter
     def nanos(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``nanos`` field."""
         self._set_field(_GOOGLE_PROTOBUF_TIMESTAMP_NANOS, value)
 
     __PY_TO_PB2__ = {'seconds': 'seconds', 'nanos': 'nanos'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_Timestamp_89f48b88 = Timestamp
 
 # @@nebius-section:fields@@

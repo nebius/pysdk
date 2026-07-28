@@ -247,7 +247,18 @@ class Field:
 
 
 class Message:
-    """Base class for generated messages that own their Python state."""
+    """Base class for generated messages. Each message owns its Python state.
+
+    :cvar __MAX_NESTING_DEPTH__: Maximum protobuf nesting depth for
+        serialization, parsing, and initialization checks.
+    :cvar __FIELDS__: Runtime field data that the generator creates.
+    :cvar __PROTO_FULL_NAME__: Fully qualified protobuf message name.
+    :cvar __EXTENSION_REGISTRY__: Registry that decodes protobuf extensions.
+    :cvar __REGISTRY__: Registry for the message and its descriptor.
+    :cvar __PROTO_DESCRIPTOR__: Message descriptor from the registry.
+    :cvar __PB2_DESCRIPTOR__: Alias for code that expects a protobuf descriptor.
+    :cvar __PY_TO_PB2__: Mapping from Python names to protobuf names.
+    """
 
     __MAX_NESTING_DEPTH__: ClassVar[int] = 100
     __FIELDS__: ClassVar[tuple[Field, ...]] = ()
@@ -262,6 +273,12 @@ class Message:
         return min(self.__MAX_NESTING_DEPTH__, _MESSAGE_HARD_MAX_DEPTH)
 
     def __init__(self, initial_message: object | None = None, **values: object) -> None:
+        """Create a message from a source message and field values.
+
+        :param initial_message: Generated or protobuf message to copy.
+        :param values: Python field names and their initial values.
+        :raises TypeError: If the initial message or a field name is incompatible.
+        """
         self._values: dict[Field, Any] = {}
         self._present: set[Field] = set()
         self._oneofs: dict[str, Field] = {}
@@ -304,7 +321,7 @@ class Message:
 
     @classmethod
     def get_descriptor(cls) -> Any:
-        """Return this class's registry-owned descriptor facade."""
+        """Return the message descriptor from the registry."""
         descriptor = cls.__PROTO_DESCRIPTOR__ or cls.__PB2_DESCRIPTOR__
         if descriptor is not None:
             return descriptor() if callable(descriptor) else descriptor
@@ -489,18 +506,33 @@ class Message:
             self._oneofs.pop(field.oneof, None)
 
     def get_mask(self) -> Mask:
+        """Return the reset mask for field changes."""
         return self._reset_mask
 
     def set_mask(self, mask: Mask) -> None:
+        """Set the reset mask for this message.
+
+        :param mask: Mask that stores subsequent field changes.
+        """
         self._reset_mask = mask
 
     @classmethod
     def is_sensitive(cls, field_name: str) -> bool:
+        """Return ``True`` if a Python field has the sensitive annotation.
+
+        :param field_name: Generated Python field name.
+        """
         field = cls._public_fields_by_python_name().get(field_name)
         return field.sensitive if field is not None else False
 
     @classmethod
     def is_credentials(cls, field_name: str) -> bool:
+        """Return ``True`` if a Python field contains credentials.
+
+        Text output hides or sanitizes credential fields.
+
+        :param field_name: Generated Python field name.
+        """
         field = cls._public_fields_by_python_name().get(field_name)
         return field.credentials if field is not None else False
 
@@ -516,7 +548,7 @@ class Message:
         return sorted(names)
 
     def is_default(self, pythonic_name: str) -> bool:
-        """Return whether a generated field currently has its default value."""
+        """Return ``True`` if a generated field has its default value."""
         try:
             field = self.__class__._public_fields_by_python_name()[pythonic_name]
         except KeyError as error:
@@ -532,7 +564,7 @@ class Message:
         return self.HasField(field.proto_name)
 
     def which_field_in_oneof(self, name: str) -> str | None:
-        """Return the generated Python name selected in a protobuf oneof."""
+        """Return the selected Python field name for a protobuf oneof."""
         selected = self.WhichOneof(name)
         if selected is None:
             return None
@@ -573,7 +605,7 @@ class Message:
         return "\n".join(lines)
 
     def get_full_update_reset_mask(self) -> Mask:
-        """Build a reset mask from the message's authoritative protobuf state."""
+        """Create a reset mask from the current protobuf state."""
         result = Mask()
         pending: list[tuple[Message, Mask, int]] = [(self, result, 0)]
         while pending:
@@ -637,6 +669,11 @@ class Message:
         return value is None or value == field.default()
 
     def HasField(self, name: str) -> bool:
+        """Return ``True`` if a protobuf field or oneof has explicit presence.
+
+        :param name: Protobuf field name, or generated Python/protobuf oneof name.
+        :raises ValueError: If the name is unknown or the field has no presence.
+        """
         oneof_name = self.__class__._oneof_python_name(name)
         oneof_fields = [
             field
@@ -655,6 +692,12 @@ class Message:
         return field in self._present
 
     def WhichOneof(self, name: str) -> str | None:
+        """Return the selected protobuf field name for a oneof.
+
+        :param name: Generated Python or protobuf oneof name.
+        :returns: Selected protobuf field name, or ``None`` when none is selected.
+        :raises ValueError: If the oneof name is unknown.
+        """
         oneof_name = self.__class__._oneof_python_name(name)
         if oneof_name is None:
             raise ValueError(f"unknown oneof {name!r}")
@@ -680,6 +723,11 @@ class Message:
         )
 
     def ClearField(self, name: str) -> None:
+        """Clear a protobuf field or oneof and record it in the reset mask.
+
+        :param name: Protobuf field name, or generated Python/protobuf oneof name.
+        :raises ValueError: If the field name is unknown.
+        """
         oneof_name = self.__class__._oneof_python_name(name)
         oneof_fields = [
             field
@@ -702,6 +750,7 @@ class Message:
         self._notify()
 
     def Clear(self) -> None:
+        """Clear all fields, extensions, unknown fields, and the reset mask."""
         with self._suspend_mutation():
             for field in tuple(self._values):
                 self._clear_state(field)
@@ -725,6 +774,11 @@ class Message:
         field.codec.write_value(writer, value, deterministic=deterministic)
 
     def SerializeToString(self, *, deterministic: bool = False) -> bytes:
+        """Serialize the message using protobuf wire format.
+
+        :param deterministic: Sort map keys for stable serialization.
+        :raises EncodeError: If required fields are missing or nesting is too deep.
+        """
         state = _MESSAGE_ENCODE_DEPTH.get()
         depth, limit = (0, self._nesting_limit()) if state is None else state
         if depth >= limit:
@@ -788,6 +842,11 @@ class Message:
 
     @classmethod
     def FromString(cls: type[M], payload: bytes) -> M:
+        """Create a message by parsing protobuf wire-format bytes.
+
+        :param payload: Serialized protobuf message.
+        :raises DecodeError: If the payload is invalid or nesting is too deep.
+        """
         message = cls()
         message.ParseFromString(payload)
         return message
@@ -801,10 +860,20 @@ class Message:
         return message
 
     def ParseFromString(self, payload: bytes) -> int:
+        """Parse protobuf wire-format bytes and replace this message.
+
+        :returns: Number of bytes consumed.
+        :raises DecodeError: If the payload is invalid or nesting is too deep.
+        """
         self.Clear()
         return self.MergeFromString(payload)
 
     def MergeFromString(self, payload: bytes) -> int:
+        """Merge protobuf wire-format bytes into this message.
+
+        :returns: Number of bytes consumed.
+        :raises DecodeError: If the payload is invalid or nesting is too deep.
+        """
         state = _MESSAGE_DECODE_DEPTH.get()
         depth, limit = (0, self._nesting_limit()) if state is None else state
         if depth >= limit:
@@ -968,6 +1037,11 @@ class Message:
         return True
 
     def CopyFrom(self, other: Message) -> None:
+        """Replace this message with an independent copy of another message.
+
+        :param other: Message of the same generated type.
+        :raises TypeError: If ``other`` has a different generated type.
+        """
         if other is self:
             return
         self._check_same_type(other)
@@ -975,6 +1049,11 @@ class Message:
         self.MergeFrom(other)
 
     def MergeFrom(self, other: Message) -> None:
+        """Merge fields from another message of the same generated type.
+
+        :param other: Message that supplies the fields.
+        :raises TypeError: If ``other`` has a different generated type.
+        """
         self._check_same_type(other)
         with self._suspend_mutation():
             for field in self.__FIELDS__:
@@ -1025,9 +1104,14 @@ class Message:
             )
 
     def ByteSize(self) -> int:
+        """Return the serialized protobuf wire size in bytes."""
         return len(self.SerializeToString())
 
     def FindInitializationErrors(self) -> list[str]:
+        """Return paths of missing required fields.
+
+        :raises EncodeError: If recursive message nesting is too deep.
+        """
         state = _MESSAGE_INITIALIZATION_DEPTH.get()
         depth, limit, active = (
             (0, self._nesting_limit(), frozenset()) if state is None else state
@@ -1076,28 +1160,51 @@ class Message:
         return f"[{key}]"
 
     def IsInitialized(self) -> bool:
+        """Return ``True`` if every required field is initialized."""
         return not self.FindInitializationErrors()
 
     def get_extension(self, extension: Extension[V]) -> V:
+        """Return an extension value.
+
+        :param extension: Generated extension handle for this message.
+        :raises ValueError: If this message has no extension registry.
+        """
         if self._extensions is None:
             raise ValueError("message has no extension registry")
         return self._extensions.get(extension)
 
     @property
     def Extensions(self) -> MutableMapping[Extension[Any], Any]:
+        """Provide protobuf-compatible mapping access to extension values."""
         return _ExtensionMapping(self)
 
     def set_extension(self, extension: Extension[V], value: V) -> None:
+        """Set an extension value.
+
+        :param extension: Generated extension handle for this message.
+        :param value: Value compatible with the extension.
+        :raises ValueError: If this message has no extension registry.
+        """
         if self._extensions is None:
             raise ValueError("message has no extension registry")
         self._extensions.set(extension, value)
 
     def has_extension(self, extension: Extension[Any]) -> bool:
+        """Return ``True`` if an extension has explicit presence.
+
+        :param extension: Generated extension handle for this message.
+        :raises ValueError: If this message has no extension registry.
+        """
         if self._extensions is None:
             raise ValueError("message has no extension registry")
         return self._extensions.has(extension)
 
     def clear_extension(self, extension: Extension[Any]) -> None:
+        """Clear an extension value.
+
+        :param extension: Generated extension handle for this message.
+        :raises ValueError: If this message has no extension registry.
+        """
         if self._extensions is None:
             raise ValueError("message has no extension registry")
         self._extensions.clear(extension)
@@ -1108,6 +1215,13 @@ class Message:
         preserving_proto_field_name: bool = False,
         always_print_fields_with_no_presence: bool = False,
     ) -> str:
+        """Serialize this message using protobuf JSON mapping.
+
+        :param preserving_proto_field_name: Use protobuf field names instead of
+            lower-camel-case JSON names.
+        :param always_print_fields_with_no_presence: Include default-valued fields
+            that do not support presence.
+        """
         from .json_format import message_to_json
 
         return message_to_json(
@@ -1123,6 +1237,12 @@ class Message:
         *,
         ignore_unknown_fields: bool = False,
     ) -> M:
+        """Create a message from protobuf JSON mapping.
+
+        :param payload: JSON text or UTF-8 encoded JSON data.
+        :param ignore_unknown_fields: Ignore JSON fields unknown to this message.
+        :raises JsonError: If the JSON representation is invalid.
+        """
         from .json_format import message_from_json
 
         return message_from_json(

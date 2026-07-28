@@ -64,9 +64,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class AccessKeyStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AccessKeyStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.iam.v1.AccessKeyStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     ACTIVE = 1
     INACTIVE = 2
@@ -77,9 +81,13 @@ _NebiusType_nebius_iam_v1_AccessKeyStatus_State_ef0d8806 = AccessKeyStatus__Stat
 
 class AuthPublicKeyStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AuthPublicKeyStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.iam.v1.AuthPublicKeyStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     ACTIVE = 1
     INACTIVE = 2
@@ -90,9 +98,13 @@ _NebiusType_nebius_iam_v1_AuthPublicKeyStatus_State_2e6c0bbe = AuthPublicKeyStat
 
 class FederationStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederationStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.iam.v1.FederationStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     UNSPECIFIED = 0
     ACTIVE = 1
     INACTIVE = 2
@@ -100,49 +112,56 @@ _NebiusType_nebius_iam_v1_FederationStatus_State_a4912724 = FederationStatus__St
 
 class FederationCertificateStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederationCertificateStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.iam.v1.FederationCertificateStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     ACTIVE = 1
     EXPIRED = 2
 _NebiusType_nebius_iam_v1_FederationCertificateStatus_State_003aab67 = FederationCertificateStatus__State
 
-class GroupStatus__State(Enum):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.GroupStatus.State'
-    __REGISTRY__ = REGISTRY
-    __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.iam.v1.GroupStatus.State')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-    UNSPECIFIED = 0
-    ACTIVE = 1
-_NebiusType_nebius_iam_v1_GroupStatus_State_665d890b = GroupStatus__State
-
 # @@nebius-section:messages@@
 class Account__AnonymousAccount(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.Account.AnonymousAccount'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.Account.AnonymousAccount')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_Account_AnonymousAccount_f621d022 = Account__AnonymousAccount
 
 
 class Account__ServiceAccount(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.Account.ServiceAccount'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.Account.ServiceAccount')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -150,6 +169,7 @@ class Account__ServiceAccount(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -162,18 +182,25 @@ class Account__ServiceAccount(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCOUNT_SERVICEACCOUNT_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_Account_ServiceAccount_09f6328b = Account__ServiceAccount
 
 
 class Account__UserAccount(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.Account.UserAccount'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.Account.UserAccount')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -181,6 +208,7 @@ class Account__UserAccount(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -193,18 +221,25 @@ class Account__UserAccount(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCOUNT_USERACCOUNT_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_Account_UserAccount_7bfc53d2 = Account__UserAccount
 
 
 class Account(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.Account'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.Account')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     UserAccount: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_Account_UserAccount_7bfc53d2
     ServiceAccount: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_Account_ServiceAccount_09f6328b
     AnonymousAccount: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_Account_AnonymousAccount_f621d022
@@ -256,6 +291,7 @@ class Account(Message):
         service_account: _NebiusType_nebius_iam_v1_Account_ServiceAccount_09f6328b | None | _NebiusUnsetType = _NEBIUS_UNSET,
         anonymous_account: _NebiusType_nebius_iam_v1_Account_AnonymousAccount_f621d022 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if user_account is not _NEBIUS_UNSET:
             values['user_account'] = user_account
@@ -272,6 +308,7 @@ class Account(Message):
 
     @user_account.setter
     def user_account(self, value: _NebiusType_nebius_iam_v1_Account_UserAccount_7bfc53d2 | None) -> None:
+        """Set or clear the generated ``user_account`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCOUNT_USER_ACCOUNT, value)
 
     @_NebiusProperty
@@ -281,6 +318,7 @@ class Account(Message):
 
     @service_account.setter
     def service_account(self, value: _NebiusType_nebius_iam_v1_Account_ServiceAccount_09f6328b | None) -> None:
+        """Set or clear the generated ``service_account`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCOUNT_SERVICE_ACCOUNT, value)
 
     @_NebiusProperty
@@ -290,17 +328,24 @@ class Account(Message):
 
     @anonymous_account.setter
     def anonymous_account(self, value: _NebiusType_nebius_iam_v1_Account_AnonymousAccount_f621d022 | None) -> None:
+        """Set or clear the generated ``anonymous_account`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCOUNT_ANONYMOUS_ACCOUNT, value)
 
     __PY_TO_PB2__ = {'user_account': 'user_account', 'service_account': 'service_account', 'anonymous_account': 'anonymous_account', 'type': 'type', 'UserAccount': 'UserAccount', 'ServiceAccount': 'ServiceAccount', 'AnonymousAccount': 'AnonymousAccount'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_Account_d00ae35f = Account
 
 class AccessKey(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AccessKey'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AccessKey')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -310,6 +355,7 @@ class AccessKey(Message):
         spec: _NebiusType_nebius_iam_v1_AccessKeySpec_a97a9367 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_iam_v1_AccessKeyStatus_b8106bd8 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -326,6 +372,7 @@ class AccessKey(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEY_METADATA, value)
 
     @_NebiusProperty
@@ -335,6 +382,7 @@ class AccessKey(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AccessKeySpec_a97a9367 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEY_SPEC, value)
 
     @_NebiusProperty
@@ -344,18 +392,25 @@ class AccessKey(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_iam_v1_AccessKeyStatus_b8106bd8 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEY_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AccessKey_4bfe889c = AccessKey
 
 
 class AccessKeySpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AccessKeySpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AccessKeySpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -365,6 +420,7 @@ class AccessKeySpec(Message):
         expires_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         description: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if account is not _NEBIUS_UNSET:
             values['account'] = account
@@ -381,6 +437,7 @@ class AccessKeySpec(Message):
 
     @account.setter
     def account(self, value: _NebiusType_nebius_iam_v1_Account_d00ae35f | None) -> None:
+        """Set or clear the generated ``account`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSPEC_ACCOUNT, value)
 
     @_NebiusProperty
@@ -390,6 +447,7 @@ class AccessKeySpec(Message):
 
     @expires_at.setter
     def expires_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``expires_at`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSPEC_EXPIRES_AT, value)
 
     @_NebiusProperty
@@ -399,18 +457,25 @@ class AccessKeySpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSPEC_DESCRIPTION, value)
 
     __PY_TO_PB2__ = {'account': 'account', 'expires_at': 'expires_at', 'description': 'description'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AccessKeySpec_a97a9367 = AccessKeySpec
 
 
 class AccessKeyStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AccessKeyStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AccessKeyStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_AccessKeyStatus_State_ef0d8806
 
     def __init__(
@@ -424,6 +489,7 @@ class AccessKeyStatus(Message):
         aws_access_key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         secret: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -446,6 +512,7 @@ class AccessKeyStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_iam_v1_AccessKeyStatus_State_ef0d8806 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -455,6 +522,7 @@ class AccessKeyStatus(Message):
 
     @fingerprint.setter
     def fingerprint(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``fingerprint`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSTATUS_FINGERPRINT, value)
 
     @_NebiusProperty
@@ -464,6 +532,7 @@ class AccessKeyStatus(Message):
 
     @algorithm.setter
     def algorithm(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``algorithm`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSTATUS_ALGORITHM, value)
 
     @_NebiusProperty
@@ -473,6 +542,7 @@ class AccessKeyStatus(Message):
 
     @key_size.setter
     def key_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``key_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSTATUS_KEY_SIZE, value)
 
     @_NebiusProperty
@@ -482,6 +552,7 @@ class AccessKeyStatus(Message):
 
     @aws_access_key_id.setter
     def aws_access_key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``aws_access_key_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSTATUS_AWS_ACCESS_KEY_ID, value)
 
     @_NebiusProperty
@@ -491,17 +562,24 @@ class AccessKeyStatus(Message):
 
     @secret.setter
     def secret(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``secret`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSKEYSTATUS_SECRET, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'fingerprint': 'fingerprint', 'algorithm': 'algorithm', 'key_size': 'key_size', 'aws_access_key_id': 'aws_access_key_id', 'secret': 'secret', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AccessKeyStatus_b8106bd8 = AccessKeyStatus
 
 class ActivateAccessKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ActivateAccessKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ActivateAccessKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -509,6 +587,7 @@ class ActivateAccessKeyRequest(Message):
         *,
         id: _NebiusType_nebius_iam_v1_KeyIdentity_5c2ac05f | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -521,18 +600,25 @@ class ActivateAccessKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusType_nebius_iam_v1_KeyIdentity_5c2ac05f | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACTIVATEACCESSKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ActivateAccessKeyRequest_840dc99b = ActivateAccessKeyRequest
 
 
 class CreateAccessKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.CreateAccessKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.CreateAccessKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -541,6 +627,7 @@ class CreateAccessKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_AccessKeySpec_a97a9367 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -555,6 +642,7 @@ class CreateAccessKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEACCESSKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -564,18 +652,25 @@ class CreateAccessKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AccessKeySpec_a97a9367 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEACCESSKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_CreateAccessKeyRequest_28a11b4b = CreateAccessKeyRequest
 
 
 class DeactivateAccessKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeactivateAccessKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeactivateAccessKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -583,6 +678,7 @@ class DeactivateAccessKeyRequest(Message):
         *,
         id: _NebiusType_nebius_iam_v1_KeyIdentity_5c2ac05f | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -595,18 +691,25 @@ class DeactivateAccessKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusType_nebius_iam_v1_KeyIdentity_5c2ac05f | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_DEACTIVATEACCESSKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_DeactivateAccessKeyRequest_0e979fae = DeactivateAccessKeyRequest
 
 
 class DeleteAccessKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeleteAccessKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeleteAccessKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -614,6 +717,7 @@ class DeleteAccessKeyRequest(Message):
         *,
         id: _NebiusType_nebius_iam_v1_KeyIdentity_5c2ac05f | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -626,18 +730,25 @@ class DeleteAccessKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusType_nebius_iam_v1_KeyIdentity_5c2ac05f | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_DELETEACCESSKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_DeleteAccessKeyRequest_bdd220ab = DeleteAccessKeyRequest
 
 
 class GetAccessKeyByAwsIdRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetAccessKeyByAwsIdRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetAccessKeyByAwsIdRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -645,6 +756,7 @@ class GetAccessKeyByAwsIdRequest(Message):
         *,
         aws_access_key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if aws_access_key_id is not _NEBIUS_UNSET:
             values['aws_access_key_id'] = aws_access_key_id
@@ -657,18 +769,25 @@ class GetAccessKeyByAwsIdRequest(Message):
 
     @aws_access_key_id.setter
     def aws_access_key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``aws_access_key_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETACCESSKEYBYAWSIDREQUEST_AWS_ACCESS_KEY_ID, value)
 
     __PY_TO_PB2__ = {'aws_access_key_id': 'aws_access_key_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetAccessKeyByAwsIdRequest_009b82eb = GetAccessKeyByAwsIdRequest
 
 
 class GetAccessKeyByIdRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetAccessKeyByIdRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetAccessKeyByIdRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -676,6 +795,7 @@ class GetAccessKeyByIdRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -688,18 +808,25 @@ class GetAccessKeyByIdRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETACCESSKEYBYIDREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetAccessKeyByIdRequest_c84f3769 = GetAccessKeyByIdRequest
 
 
 class GetAccessKeySecretOnceRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetAccessKeySecretOnceRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetAccessKeySecretOnceRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -707,6 +834,7 @@ class GetAccessKeySecretOnceRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -719,18 +847,25 @@ class GetAccessKeySecretOnceRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETACCESSKEYSECRETONCEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetAccessKeySecretOnceRequest_ae386d08 = GetAccessKeySecretOnceRequest
 
 
 class GetAccessKeySecretOnceResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetAccessKeySecretOnceResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetAccessKeySecretOnceResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -738,6 +873,7 @@ class GetAccessKeySecretOnceResponse(Message):
         *,
         secret: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if secret is not _NEBIUS_UNSET:
             values['secret'] = secret
@@ -750,18 +886,25 @@ class GetAccessKeySecretOnceResponse(Message):
 
     @secret.setter
     def secret(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``secret`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETACCESSKEYSECRETONCERESPONSE_SECRET, value)
 
     __PY_TO_PB2__ = {'secret': 'secret'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetAccessKeySecretOnceResponse_5c37767e = GetAccessKeySecretOnceResponse
 
 
 class KeyIdentity(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.KeyIdentity'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.KeyIdentity')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_identity__(_NebiusOneOf):
         name: str = 'identity'
@@ -800,6 +943,7 @@ class KeyIdentity(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         aws_access_key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -814,6 +958,7 @@ class KeyIdentity(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_KEYIDENTITY_ID, value)
 
     @_NebiusProperty
@@ -823,18 +968,25 @@ class KeyIdentity(Message):
 
     @aws_access_key_id.setter
     def aws_access_key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``aws_access_key_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_KEYIDENTITY_AWS_ACCESS_KEY_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'aws_access_key_id': 'aws_access_key_id', 'identity': 'identity'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_KeyIdentity_5c2ac05f = KeyIdentity
 
 
 class ListAccessKeysByAccountRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAccessKeysByAccountRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAccessKeysByAccountRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -845,6 +997,7 @@ class ListAccessKeysByAccountRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if account is not _NEBIUS_UNSET:
             values['account'] = account
@@ -864,6 +1017,7 @@ class ListAccessKeysByAccountRequest(Message):
 
     @account.setter
     def account(self, value: _NebiusType_nebius_iam_v1_Account_d00ae35f | None) -> None:
+        """Set or clear the generated ``account`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSBYACCOUNTREQUEST_ACCOUNT, value)
 
     @_NebiusProperty
@@ -874,6 +1028,7 @@ class ListAccessKeysByAccountRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSBYACCOUNTREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -884,6 +1039,7 @@ class ListAccessKeysByAccountRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSBYACCOUNTREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -894,18 +1050,25 @@ class ListAccessKeysByAccountRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSBYACCOUNTREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'account': 'account', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAccessKeysByAccountRequest_a43241ec = ListAccessKeysByAccountRequest
 
 
 class ListAccessKeysRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAccessKeysRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAccessKeysRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -916,6 +1079,7 @@ class ListAccessKeysRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -935,6 +1099,7 @@ class ListAccessKeysRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -945,6 +1110,7 @@ class ListAccessKeysRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -955,6 +1121,7 @@ class ListAccessKeysRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -965,18 +1132,25 @@ class ListAccessKeysRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAccessKeysRequest_b9896d8d = ListAccessKeysRequest
 
 
 class ListAccessKeysResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAccessKeysResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAccessKeysResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -985,6 +1159,7 @@ class ListAccessKeysResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_iam_v1_AccessKey_4bfe889c] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1000,6 +1175,7 @@ class ListAccessKeysResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_iam_v1_AccessKey_4bfe889c] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1010,18 +1186,25 @@ class ListAccessKeysResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSKEYSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAccessKeysResponse_9eeef869 = ListAccessKeysResponse
 
 
 class UpdateAccessKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.UpdateAccessKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.UpdateAccessKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1030,6 +1213,7 @@ class UpdateAccessKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_AccessKeySpec_a97a9367 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1044,6 +1228,7 @@ class UpdateAccessKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEACCESSKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1053,17 +1238,24 @@ class UpdateAccessKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AccessKeySpec_a97a9367 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEACCESSKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_UpdateAccessKeyRequest_009b89ad = UpdateAccessKeyRequest
 
 class AccessPermit(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AccessPermit'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AccessPermit')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1073,6 +1265,7 @@ class AccessPermit(Message):
         spec: _NebiusType_nebius_iam_v1_AccessPermitSpec_9a10a850 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_iam_v1_AccessPermitStatus_fc508464 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1089,6 +1282,7 @@ class AccessPermit(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSPERMIT_METADATA, value)
 
     @_NebiusProperty
@@ -1098,6 +1292,7 @@ class AccessPermit(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AccessPermitSpec_9a10a850 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSPERMIT_SPEC, value)
 
     @_NebiusProperty
@@ -1107,18 +1302,25 @@ class AccessPermit(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_iam_v1_AccessPermitStatus_fc508464 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSPERMIT_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AccessPermit_395cfa42 = AccessPermit
 
 
 class AccessPermitSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AccessPermitSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AccessPermitSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1127,6 +1329,7 @@ class AccessPermitSpec(Message):
         resource_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         role: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_id is not _NEBIUS_UNSET:
             values['resource_id'] = resource_id
@@ -1142,6 +1345,7 @@ class AccessPermitSpec(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSPERMITSPEC_RESOURCE_ID, value)
 
     @_NebiusProperty
@@ -1152,36 +1356,50 @@ class AccessPermitSpec(Message):
 
     @role.setter
     def role(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``role`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACCESSPERMITSPEC_ROLE, value)
 
     __PY_TO_PB2__ = {'resource_id': 'resource_id', 'role': 'role'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AccessPermitSpec_9a10a850 = AccessPermitSpec
 
 
 class AccessPermitStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AccessPermitStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AccessPermitStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AccessPermitStatus_fc508464 = AccessPermitStatus
 
 class CreateAccessPermitRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.CreateAccessPermitRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.CreateAccessPermitRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1190,6 +1408,7 @@ class CreateAccessPermitRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_AccessPermitSpec_9a10a850 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1204,6 +1423,7 @@ class CreateAccessPermitRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEACCESSPERMITREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1213,18 +1433,25 @@ class CreateAccessPermitRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AccessPermitSpec_9a10a850 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEACCESSPERMITREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_CreateAccessPermitRequest_2a58c45d = CreateAccessPermitRequest
 
 
 class DeleteAccessPermitRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeleteAccessPermitRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeleteAccessPermitRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1232,6 +1459,7 @@ class DeleteAccessPermitRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1244,18 +1472,25 @@ class DeleteAccessPermitRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_DELETEACCESSPERMITREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_DeleteAccessPermitRequest_1cc9ff84 = DeleteAccessPermitRequest
 
 
 class GetAccessPermitRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetAccessPermitRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetAccessPermitRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1263,6 +1498,7 @@ class GetAccessPermitRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1275,18 +1511,25 @@ class GetAccessPermitRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETACCESSPERMITREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetAccessPermitRequest_d6f68022 = GetAccessPermitRequest
 
 
 class ListAccessPermitRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAccessPermitRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAccessPermitRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1297,6 +1540,7 @@ class ListAccessPermitRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1316,6 +1560,7 @@ class ListAccessPermitRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSPERMITREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1326,6 +1571,7 @@ class ListAccessPermitRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSPERMITREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1336,6 +1582,7 @@ class ListAccessPermitRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSPERMITREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -1346,18 +1593,25 @@ class ListAccessPermitRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSPERMITREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAccessPermitRequest_37a5300a = ListAccessPermitRequest
 
 
 class ListAccessPermitResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAccessPermitResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAccessPermitResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1366,6 +1620,7 @@ class ListAccessPermitResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_iam_v1_AccessPermit_395cfa42] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1381,6 +1636,7 @@ class ListAccessPermitResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_iam_v1_AccessPermit_395cfa42] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSPERMITRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1391,17 +1647,24 @@ class ListAccessPermitResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTACCESSPERMITRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAccessPermitResponse_80adec3a = ListAccessPermitResponse
 
 class AuthPublicKey(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AuthPublicKey'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AuthPublicKey')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1411,6 +1674,7 @@ class AuthPublicKey(Message):
         spec: _NebiusType_nebius_iam_v1_AuthPublicKeySpec_03b1f894 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_iam_v1_AuthPublicKeyStatus_cf7110cd | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1427,6 +1691,7 @@ class AuthPublicKey(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEY_METADATA, value)
 
     @_NebiusProperty
@@ -1436,6 +1701,7 @@ class AuthPublicKey(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AuthPublicKeySpec_03b1f894 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEY_SPEC, value)
 
     @_NebiusProperty
@@ -1445,18 +1711,25 @@ class AuthPublicKey(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_iam_v1_AuthPublicKeyStatus_cf7110cd | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEY_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AuthPublicKey_e2131cb9 = AuthPublicKey
 
 
 class AuthPublicKeySpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AuthPublicKeySpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AuthPublicKeySpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1467,6 +1740,7 @@ class AuthPublicKeySpec(Message):
         description: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         data: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if account is not _NEBIUS_UNSET:
             values['account'] = account
@@ -1485,6 +1759,7 @@ class AuthPublicKeySpec(Message):
 
     @account.setter
     def account(self, value: _NebiusType_nebius_iam_v1_Account_d00ae35f | None) -> None:
+        """Set or clear the generated ``account`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSPEC_ACCOUNT, value)
 
     @_NebiusProperty
@@ -1494,6 +1769,7 @@ class AuthPublicKeySpec(Message):
 
     @expires_at.setter
     def expires_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``expires_at`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSPEC_EXPIRES_AT, value)
 
     @_NebiusProperty
@@ -1503,6 +1779,7 @@ class AuthPublicKeySpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -1512,18 +1789,25 @@ class AuthPublicKeySpec(Message):
 
     @data.setter
     def data(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``data`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSPEC_DATA, value)
 
     __PY_TO_PB2__ = {'account': 'account', 'expires_at': 'expires_at', 'description': 'description', 'data': 'data'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AuthPublicKeySpec_03b1f894 = AuthPublicKeySpec
 
 
 class AuthPublicKeyStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.AuthPublicKeyStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.AuthPublicKeyStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_AuthPublicKeyStatus_State_2e6c0bbe
 
     def __init__(
@@ -1535,6 +1819,7 @@ class AuthPublicKeyStatus(Message):
         algorithm: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         key_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -1553,6 +1838,7 @@ class AuthPublicKeyStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_iam_v1_AuthPublicKeyStatus_State_2e6c0bbe | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -1562,6 +1848,7 @@ class AuthPublicKeyStatus(Message):
 
     @fingerprint.setter
     def fingerprint(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``fingerprint`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSTATUS_FINGERPRINT, value)
 
     @_NebiusProperty
@@ -1571,6 +1858,7 @@ class AuthPublicKeyStatus(Message):
 
     @algorithm.setter
     def algorithm(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``algorithm`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSTATUS_ALGORITHM, value)
 
     @_NebiusProperty
@@ -1580,17 +1868,24 @@ class AuthPublicKeyStatus(Message):
 
     @key_size.setter
     def key_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``key_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_AUTHPUBLICKEYSTATUS_KEY_SIZE, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'fingerprint': 'fingerprint', 'algorithm': 'algorithm', 'key_size': 'key_size', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_AuthPublicKeyStatus_cf7110cd = AuthPublicKeyStatus
 
 class ActivateAuthPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ActivateAuthPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ActivateAuthPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1598,6 +1893,7 @@ class ActivateAuthPublicKeyRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1610,18 +1906,25 @@ class ActivateAuthPublicKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_ACTIVATEAUTHPUBLICKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ActivateAuthPublicKeyRequest_0850396a = ActivateAuthPublicKeyRequest
 
 
 class CreateAuthPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.CreateAuthPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.CreateAuthPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1630,6 +1933,7 @@ class CreateAuthPublicKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_AuthPublicKeySpec_03b1f894 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1644,6 +1948,7 @@ class CreateAuthPublicKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEAUTHPUBLICKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1653,18 +1958,25 @@ class CreateAuthPublicKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AuthPublicKeySpec_03b1f894 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEAUTHPUBLICKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_CreateAuthPublicKeyRequest_e331400b = CreateAuthPublicKeyRequest
 
 
 class DeactivateAuthPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeactivateAuthPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeactivateAuthPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1672,6 +1984,7 @@ class DeactivateAuthPublicKeyRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1684,18 +1997,25 @@ class DeactivateAuthPublicKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_DEACTIVATEAUTHPUBLICKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_DeactivateAuthPublicKeyRequest_5d7687da = DeactivateAuthPublicKeyRequest
 
 
 class DeleteAuthPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeleteAuthPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeleteAuthPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1703,6 +2023,7 @@ class DeleteAuthPublicKeyRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1715,18 +2036,25 @@ class DeleteAuthPublicKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_DELETEAUTHPUBLICKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_DeleteAuthPublicKeyRequest_a74bd934 = DeleteAuthPublicKeyRequest
 
 
 class GetAuthPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetAuthPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetAuthPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1734,6 +2062,7 @@ class GetAuthPublicKeyRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1746,18 +2075,25 @@ class GetAuthPublicKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETAUTHPUBLICKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetAuthPublicKeyRequest_b30a35e4 = GetAuthPublicKeyRequest
 
 
 class ListAuthPublicKeyByAccountRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAuthPublicKeyByAccountRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAuthPublicKeyByAccountRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1768,6 +2104,7 @@ class ListAuthPublicKeyByAccountRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if account is not _NEBIUS_UNSET:
             values['account'] = account
@@ -1787,6 +2124,7 @@ class ListAuthPublicKeyByAccountRequest(Message):
 
     @account.setter
     def account(self, value: _NebiusType_nebius_iam_v1_Account_d00ae35f | None) -> None:
+        """Set or clear the generated ``account`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYBYACCOUNTREQUEST_ACCOUNT, value)
 
     @_NebiusProperty
@@ -1797,6 +2135,7 @@ class ListAuthPublicKeyByAccountRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYBYACCOUNTREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1807,6 +2146,7 @@ class ListAuthPublicKeyByAccountRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYBYACCOUNTREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -1817,18 +2157,25 @@ class ListAuthPublicKeyByAccountRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYBYACCOUNTREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'account': 'account', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAuthPublicKeyByAccountRequest_21e57000 = ListAuthPublicKeyByAccountRequest
 
 
 class ListAuthPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAuthPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAuthPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1839,6 +2186,7 @@ class ListAuthPublicKeyRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1858,6 +2206,7 @@ class ListAuthPublicKeyRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1868,6 +2217,7 @@ class ListAuthPublicKeyRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1878,6 +2228,7 @@ class ListAuthPublicKeyRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -1888,18 +2239,25 @@ class ListAuthPublicKeyRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAuthPublicKeyRequest_3075096c = ListAuthPublicKeyRequest
 
 
 class ListAuthPublicKeyResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListAuthPublicKeyResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListAuthPublicKeyResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1908,6 +2266,7 @@ class ListAuthPublicKeyResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_iam_v1_AuthPublicKey_e2131cb9] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1923,6 +2282,7 @@ class ListAuthPublicKeyResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_iam_v1_AuthPublicKey_e2131cb9] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1933,18 +2293,25 @@ class ListAuthPublicKeyResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTAUTHPUBLICKEYRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListAuthPublicKeyResponse_77023248 = ListAuthPublicKeyResponse
 
 
 class UpdateAuthPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.UpdateAuthPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.UpdateAuthPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1953,6 +2320,7 @@ class UpdateAuthPublicKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_AuthPublicKeySpec_03b1f894 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1967,6 +2335,7 @@ class UpdateAuthPublicKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEAUTHPUBLICKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1976,17 +2345,24 @@ class UpdateAuthPublicKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_AuthPublicKeySpec_03b1f894 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEAUTHPUBLICKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_UpdateAuthPublicKeyRequest_fed076de = UpdateAuthPublicKeyRequest
 
 class Container(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.Container'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.Container')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1996,6 +2372,7 @@ class Container(Message):
         spec: _NebiusType_nebius_iam_v1_ContainerSpec_d812864b | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_iam_v1_ContainerStatus_fc4605e4 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2012,6 +2389,7 @@ class Container(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_CONTAINER_METADATA, value)
 
     @_NebiusProperty
@@ -2021,6 +2399,7 @@ class Container(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_ContainerSpec_d812864b | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_CONTAINER_SPEC, value)
 
     @_NebiusProperty
@@ -2030,18 +2409,25 @@ class Container(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_iam_v1_ContainerStatus_fc4605e4 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_IAM_V1_CONTAINER_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_Container_e9853e81 = Container
 
 
 class ContainerSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ContainerSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ContainerSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2049,6 +2435,7 @@ class ContainerSpec(Message):
         *,
         region: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if region is not _NEBIUS_UNSET:
             values['region'] = region
@@ -2061,18 +2448,25 @@ class ContainerSpec(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_IAM_V1_CONTAINERSPEC_REGION, value)
 
     __PY_TO_PB2__ = {'region': 'region'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ContainerSpec_d812864b = ContainerSpec
 
 
 class ContainerStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ContainerStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ContainerStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2082,6 +2476,7 @@ class ContainerStatus(Message):
         container_state: _NebiusType_nebius_iam_v1_State_6b780981 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         region: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if suspension_state is not _NEBIUS_UNSET:
             values['suspension_state'] = suspension_state
@@ -2098,6 +2493,7 @@ class ContainerStatus(Message):
 
     @suspension_state.setter
     def suspension_state(self, value: _NebiusType_nebius_iam_v1_SuspensionState_92f2ef05 | None) -> None:
+        """Set or clear the generated ``suspension_state`` field."""
         self._set_field(_NEBIUS_IAM_V1_CONTAINERSTATUS_SUSPENSION_STATE, value)
 
     @_NebiusProperty
@@ -2107,6 +2503,7 @@ class ContainerStatus(Message):
 
     @container_state.setter
     def container_state(self, value: _NebiusType_nebius_iam_v1_State_6b780981 | None) -> None:
+        """Set or clear the generated ``container_state`` field."""
         self._set_field(_NEBIUS_IAM_V1_CONTAINERSTATUS_CONTAINER_STATE, value)
 
     @_NebiusProperty
@@ -2116,17 +2513,24 @@ class ContainerStatus(Message):
 
     @region.setter
     def region(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``region`` field."""
         self._set_field(_NEBIUS_IAM_V1_CONTAINERSTATUS_REGION, value)
 
     __PY_TO_PB2__ = {'suspension_state': 'suspension_state', 'container_state': 'container_state', 'region': 'region'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ContainerStatus_fc4605e4 = ContainerStatus
 
 class FederatedCredentials(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederatedCredentials'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederatedCredentials')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2136,6 +2540,7 @@ class FederatedCredentials(Message):
         spec: _NebiusType_nebius_iam_v1_FederatedCredentialsSpec_70de5846 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_iam_v1_FederatedCredentialsStatus_9bc9078a | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2153,6 +2558,7 @@ class FederatedCredentials(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATEDCREDENTIALS_METADATA, value)
 
     @_NebiusProperty
@@ -2163,6 +2569,7 @@ class FederatedCredentials(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_FederatedCredentialsSpec_70de5846 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATEDCREDENTIALS_SPEC, value)
 
     @_NebiusProperty
@@ -2173,18 +2580,25 @@ class FederatedCredentials(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_iam_v1_FederatedCredentialsStatus_9bc9078a | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATEDCREDENTIALS_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederatedCredentials_06590ee0 = FederatedCredentials
 
 
 class FederatedCredentialsSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederatedCredentialsSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederatedCredentialsSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_credentials_provider__(_NebiusOneOf):
         name: str = 'credentials_provider'
@@ -2215,6 +2629,7 @@ class FederatedCredentialsSpec(Message):
         federated_subject_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         subject_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if oidc_provider is not _NEBIUS_UNSET:
             values['oidc_provider'] = oidc_provider
@@ -2231,6 +2646,7 @@ class FederatedCredentialsSpec(Message):
 
     @oidc_provider.setter
     def oidc_provider(self, value: _NebiusType_nebius_iam_v1_OidcCredentialsProvider_fbbf67d6 | None) -> None:
+        """Set or clear the generated ``oidc_provider`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATEDCREDENTIALSSPEC_OIDC_PROVIDER, value)
 
     @_NebiusProperty
@@ -2241,6 +2657,7 @@ class FederatedCredentialsSpec(Message):
 
     @federated_subject_id.setter
     def federated_subject_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``federated_subject_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATEDCREDENTIALSSPEC_FEDERATED_SUBJECT_ID, value)
 
     @_NebiusProperty
@@ -2251,38 +2668,52 @@ class FederatedCredentialsSpec(Message):
 
     @subject_id.setter
     def subject_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``subject_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATEDCREDENTIALSSPEC_SUBJECT_ID, value)
 
     __PY_TO_PB2__ = {'oidc_provider': 'oidc_provider', 'federated_subject_id': 'federated_subject_id', 'subject_id': 'subject_id', 'credentials_provider': 'credentials_provider'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederatedCredentialsSpec_70de5846 = FederatedCredentialsSpec
 
 
 class FederatedCredentialsStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederatedCredentialsStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederatedCredentialsStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederatedCredentialsStatus_9bc9078a = FederatedCredentialsStatus
 
 
 class OidcCredentialsProvider(Message):
     'The OIDC provider does not have to be a full OIDC provider, but it must expose\nOIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.\nThe discovery metadata must contain "jwks_uri", which points to the JSON Web\nKey Set (JWKS). The JWKS contains public keys used to verify JSON\nWeb Tokens (JWTs) issued by the identity provider.'
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.OidcCredentialsProvider'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.OidcCredentialsProvider')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2291,6 +2722,7 @@ class OidcCredentialsProvider(Message):
         issuer_url: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         jwk_set_json: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if issuer_url is not _NEBIUS_UNSET:
             values['issuer_url'] = issuer_url
@@ -2306,6 +2738,7 @@ class OidcCredentialsProvider(Message):
 
     @issuer_url.setter
     def issuer_url(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``issuer_url`` field."""
         self._set_field(_NEBIUS_IAM_V1_OIDCCREDENTIALSPROVIDER_ISSUER_URL, value)
 
     @_NebiusProperty
@@ -2316,17 +2749,24 @@ class OidcCredentialsProvider(Message):
 
     @jwk_set_json.setter
     def jwk_set_json(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``jwk_set_json`` field."""
         self._set_field(_NEBIUS_IAM_V1_OIDCCREDENTIALSPROVIDER_JWK_SET_JSON, value)
 
     __PY_TO_PB2__ = {'issuer_url': 'issuer_url', 'jwk_set_json': 'jwk_set_json'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_OidcCredentialsProvider_fbbf67d6 = OidcCredentialsProvider
 
 class CreateFederatedCredentialsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.CreateFederatedCredentialsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.CreateFederatedCredentialsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2335,6 +2775,7 @@ class CreateFederatedCredentialsRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_FederatedCredentialsSpec_70de5846 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2350,6 +2791,7 @@ class CreateFederatedCredentialsRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEFEDERATEDCREDENTIALSREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -2360,18 +2802,25 @@ class CreateFederatedCredentialsRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_FederatedCredentialsSpec_70de5846 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEFEDERATEDCREDENTIALSREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_CreateFederatedCredentialsRequest_cd20fa59 = CreateFederatedCredentialsRequest
 
 
 class DeleteFederatedCredentialsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeleteFederatedCredentialsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeleteFederatedCredentialsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2379,6 +2828,7 @@ class DeleteFederatedCredentialsRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -2392,18 +2842,25 @@ class DeleteFederatedCredentialsRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_DELETEFEDERATEDCREDENTIALSREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_DeleteFederatedCredentialsRequest_b14dc35b = DeleteFederatedCredentialsRequest
 
 
 class GetByNameFederatedCredentialsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetByNameFederatedCredentialsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetByNameFederatedCredentialsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2412,6 +2869,7 @@ class GetByNameFederatedCredentialsRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -2427,6 +2885,7 @@ class GetByNameFederatedCredentialsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETBYNAMEFEDERATEDCREDENTIALSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -2437,18 +2896,25 @@ class GetByNameFederatedCredentialsRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETBYNAMEFEDERATEDCREDENTIALSREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetByNameFederatedCredentialsRequest_657a2917 = GetByNameFederatedCredentialsRequest
 
 
 class GetFederatedCredentialsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetFederatedCredentialsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetFederatedCredentialsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2456,6 +2922,7 @@ class GetFederatedCredentialsRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -2469,18 +2936,25 @@ class GetFederatedCredentialsRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETFEDERATEDCREDENTIALSREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetFederatedCredentialsRequest_66ede38e = GetFederatedCredentialsRequest
 
 
 class ListFederatedCredentialsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListFederatedCredentialsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListFederatedCredentialsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2491,6 +2965,7 @@ class ListFederatedCredentialsRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -2510,6 +2985,7 @@ class ListFederatedCredentialsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATEDCREDENTIALSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -2520,6 +2996,7 @@ class ListFederatedCredentialsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATEDCREDENTIALSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -2530,6 +3007,7 @@ class ListFederatedCredentialsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATEDCREDENTIALSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -2540,18 +3018,25 @@ class ListFederatedCredentialsRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATEDCREDENTIALSREQUEST_FILTER, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListFederatedCredentialsRequest_6f29d713 = ListFederatedCredentialsRequest
 
 
 class ListFederatedCredentialsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListFederatedCredentialsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListFederatedCredentialsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2560,6 +3045,7 @@ class ListFederatedCredentialsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_iam_v1_FederatedCredentials_06590ee0] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -2575,6 +3061,7 @@ class ListFederatedCredentialsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_iam_v1_FederatedCredentials_06590ee0] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATEDCREDENTIALSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -2585,18 +3072,25 @@ class ListFederatedCredentialsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATEDCREDENTIALSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListFederatedCredentialsResponse_e319b53e = ListFederatedCredentialsResponse
 
 
 class UpdateFederatedCredentialsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.UpdateFederatedCredentialsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.UpdateFederatedCredentialsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2605,6 +3099,7 @@ class UpdateFederatedCredentialsRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_FederatedCredentialsSpec_70de5846 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2620,6 +3115,7 @@ class UpdateFederatedCredentialsRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEFEDERATEDCREDENTIALSREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -2630,17 +3126,24 @@ class UpdateFederatedCredentialsRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_FederatedCredentialsSpec_70de5846 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEFEDERATEDCREDENTIALSREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_UpdateFederatedCredentialsRequest_3f52c76c = UpdateFederatedCredentialsRequest
 
 class Federation(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.Federation'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.Federation')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2650,6 +3153,7 @@ class Federation(Message):
         spec: _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_iam_v1_FederationStatus_146b1463 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2667,6 +3171,7 @@ class Federation(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATION_METADATA, value)
 
     @_NebiusProperty
@@ -2677,6 +3182,7 @@ class Federation(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATION_SPEC, value)
 
     @_NebiusProperty
@@ -2687,18 +3193,25 @@ class Federation(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_iam_v1_FederationStatus_146b1463 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATION_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_Federation_6acd8081 = Federation
 
 
 class FederationSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederationSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederationSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_settings__(_NebiusOneOf):
         name: str = 'settings'
@@ -2729,6 +3242,7 @@ class FederationSpec(Message):
         active: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         saml_settings: _NebiusType_nebius_iam_v1_SamlSettings_2c9ca5d6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if user_account_auto_creation is not _NEBIUS_UNSET:
             values['user_account_auto_creation'] = user_account_auto_creation
@@ -2747,6 +3261,7 @@ class FederationSpec(Message):
 
     @user_account_auto_creation.setter
     def user_account_auto_creation(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``user_account_auto_creation`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONSPEC_USER_ACCOUNT_AUTO_CREATION, value)
 
     @_NebiusProperty
@@ -2758,6 +3273,7 @@ class FederationSpec(Message):
 
     @active.setter
     def active(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``active`` field."""
         _nebius_get_logger('deprecation').warning("Field nebius.iam.v1.FederationSpec.active is deprecated. 'active' field ignored. Use 'Activate/Deactivate' methods to manage federation state. A newly created federation is always active by default.", stack_info=True, stacklevel=2)
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONSPEC_ACTIVE, value)
 
@@ -2769,18 +3285,25 @@ class FederationSpec(Message):
 
     @saml_settings.setter
     def saml_settings(self, value: _NebiusType_nebius_iam_v1_SamlSettings_2c9ca5d6 | None) -> None:
+        """Set or clear the generated ``saml_settings`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONSPEC_SAML_SETTINGS, value)
 
     __PY_TO_PB2__ = {'user_account_auto_creation': 'user_account_auto_creation', 'active': 'active', 'saml_settings': 'saml_settings', 'settings': 'settings'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f = FederationSpec
 
 
 class FederationStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederationStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederationStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_FederationStatus_State_a4912724
 
     def __init__(
@@ -2791,6 +3314,7 @@ class FederationStatus(Message):
         users_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         certificates_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -2808,6 +3332,7 @@ class FederationStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_iam_v1_FederationStatus_State_a4912724 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -2818,6 +3343,7 @@ class FederationStatus(Message):
 
     @users_count.setter
     def users_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``users_count`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONSTATUS_USERS_COUNT, value)
 
     @_NebiusProperty
@@ -2828,18 +3354,25 @@ class FederationStatus(Message):
 
     @certificates_count.setter
     def certificates_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``certificates_count`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONSTATUS_CERTIFICATES_COUNT, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'users_count': 'users_count', 'certificates_count': 'certificates_count', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederationStatus_146b1463 = FederationStatus
 
 
 class SamlSettings(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.SamlSettings'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.SamlSettings')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2849,6 +3382,7 @@ class SamlSettings(Message):
         sso_url: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         force_authn: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if idp_issuer is not _NEBIUS_UNSET:
             values['idp_issuer'] = idp_issuer
@@ -2866,6 +3400,7 @@ class SamlSettings(Message):
 
     @idp_issuer.setter
     def idp_issuer(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``idp_issuer`` field."""
         self._set_field(_NEBIUS_IAM_V1_SAMLSETTINGS_IDP_ISSUER, value)
 
     @_NebiusProperty
@@ -2876,6 +3411,7 @@ class SamlSettings(Message):
 
     @sso_url.setter
     def sso_url(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``sso_url`` field."""
         self._set_field(_NEBIUS_IAM_V1_SAMLSETTINGS_SSO_URL, value)
 
     @_NebiusProperty
@@ -2886,17 +3422,24 @@ class SamlSettings(Message):
 
     @force_authn.setter
     def force_authn(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``force_authn`` field."""
         self._set_field(_NEBIUS_IAM_V1_SAMLSETTINGS_FORCE_AUTHN, value)
 
     __PY_TO_PB2__ = {'idp_issuer': 'idp_issuer', 'sso_url': 'sso_url', 'force_authn': 'force_authn'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_SamlSettings_2c9ca5d6 = SamlSettings
 
 class FederationCertificate(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederationCertificate'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederationCertificate')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2906,6 +3449,7 @@ class FederationCertificate(Message):
         spec: _NebiusType_nebius_iam_v1_FederationCertificateSpec_868e28ca | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_iam_v1_FederationCertificateStatus_468b2f34 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2922,6 +3466,7 @@ class FederationCertificate(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATE_METADATA, value)
 
     @_NebiusProperty
@@ -2931,6 +3476,7 @@ class FederationCertificate(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_FederationCertificateSpec_868e28ca | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATE_SPEC, value)
 
     @_NebiusProperty
@@ -2940,18 +3486,25 @@ class FederationCertificate(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_iam_v1_FederationCertificateStatus_468b2f34 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederationCertificate_fc38967f = FederationCertificate
 
 
 class FederationCertificateSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederationCertificateSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederationCertificateSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2960,6 +3513,7 @@ class FederationCertificateSpec(Message):
         description: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         data: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -2974,6 +3528,7 @@ class FederationCertificateSpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -2983,18 +3538,25 @@ class FederationCertificateSpec(Message):
 
     @data.setter
     def data(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``data`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESPEC_DATA, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'data': 'data'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederationCertificateSpec_868e28ca = FederationCertificateSpec
 
 
 class FederationCertificateStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.FederationCertificateStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.FederationCertificateStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_FederationCertificateStatus_State_003aab67
 
     def __init__(
@@ -3008,6 +3570,7 @@ class FederationCertificateStatus(Message):
         not_before: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         not_after: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -3030,6 +3593,7 @@ class FederationCertificateStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_iam_v1_FederationCertificateStatus_State_003aab67 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESTATUS_STATE, value)
 
     @_NebiusProperty
@@ -3039,6 +3603,7 @@ class FederationCertificateStatus(Message):
 
     @fingerprint.setter
     def fingerprint(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``fingerprint`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESTATUS_FINGERPRINT, value)
 
     @_NebiusProperty
@@ -3048,6 +3613,7 @@ class FederationCertificateStatus(Message):
 
     @algorithm.setter
     def algorithm(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``algorithm`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESTATUS_ALGORITHM, value)
 
     @_NebiusProperty
@@ -3057,6 +3623,7 @@ class FederationCertificateStatus(Message):
 
     @key_size.setter
     def key_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``key_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESTATUS_KEY_SIZE, value)
 
     @_NebiusProperty
@@ -3066,6 +3633,7 @@ class FederationCertificateStatus(Message):
 
     @not_before.setter
     def not_before(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``not_before`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESTATUS_NOT_BEFORE, value)
 
     @_NebiusProperty
@@ -3075,17 +3643,24 @@ class FederationCertificateStatus(Message):
 
     @not_after.setter
     def not_after(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``not_after`` field."""
         self._set_field(_NEBIUS_IAM_V1_FEDERATIONCERTIFICATESTATUS_NOT_AFTER, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'fingerprint': 'fingerprint', 'algorithm': 'algorithm', 'key_size': 'key_size', 'not_before': 'not_before', 'not_after': 'not_after', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_FederationCertificateStatus_468b2f34 = FederationCertificateStatus
 
 class CreateFederationCertificateRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.CreateFederationCertificateRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.CreateFederationCertificateRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3094,6 +3669,7 @@ class CreateFederationCertificateRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_FederationCertificateSpec_868e28ca | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -3108,6 +3684,7 @@ class CreateFederationCertificateRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEFEDERATIONCERTIFICATEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -3117,18 +3694,25 @@ class CreateFederationCertificateRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_FederationCertificateSpec_868e28ca | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_CREATEFEDERATIONCERTIFICATEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_CreateFederationCertificateRequest_f71608a9 = CreateFederationCertificateRequest
 
 
 class DeleteFederationCertificateRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeleteFederationCertificateRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeleteFederationCertificateRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3136,6 +3720,7 @@ class DeleteFederationCertificateRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -3148,18 +3733,25 @@ class DeleteFederationCertificateRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_DELETEFEDERATIONCERTIFICATEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_DeleteFederationCertificateRequest_08d352ac = DeleteFederationCertificateRequest
 
 
 class GetFederationCertificateRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetFederationCertificateRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetFederationCertificateRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3167,6 +3759,7 @@ class GetFederationCertificateRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -3179,18 +3772,25 @@ class GetFederationCertificateRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_IAM_V1_GETFEDERATIONCERTIFICATEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_GetFederationCertificateRequest_f65b2b2f = GetFederationCertificateRequest
 
 
 class ListFederationCertificateByFederationRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListFederationCertificateByFederationRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListFederationCertificateByFederationRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3200,6 +3800,7 @@ class ListFederationCertificateByFederationRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if federation_id is not _NEBIUS_UNSET:
             values['federation_id'] = federation_id
@@ -3217,6 +3818,7 @@ class ListFederationCertificateByFederationRequest(Message):
 
     @federation_id.setter
     def federation_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``federation_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONCERTIFICATEBYFEDERATIONREQUEST_FEDERATION_ID, value)
 
     @_NebiusProperty
@@ -3227,6 +3829,7 @@ class ListFederationCertificateByFederationRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONCERTIFICATEBYFEDERATIONREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -3237,18 +3840,25 @@ class ListFederationCertificateByFederationRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONCERTIFICATEBYFEDERATIONREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'federation_id': 'federation_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListFederationCertificateByFederationRequest_e89f359e = ListFederationCertificateByFederationRequest
 
 
 class ListFederationCertificateResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListFederationCertificateResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListFederationCertificateResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3257,6 +3867,7 @@ class ListFederationCertificateResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_iam_v1_FederationCertificate_fc38967f] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -3272,6 +3883,7 @@ class ListFederationCertificateResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_iam_v1_FederationCertificate_fc38967f] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONCERTIFICATERESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -3282,18 +3894,25 @@ class ListFederationCertificateResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONCERTIFICATERESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_ListFederationCertificateResponse_edaab48c = ListFederationCertificateResponse
 
 
 class UpdateBulkFederationCertificateRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.UpdateBulkFederationCertificateRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.UpdateBulkFederationCertificateRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3302,6 +3921,7 @@ class UpdateBulkFederationCertificateRequest(Message):
         federation_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         updates: _NebiusIterable[_NebiusType_nebius_iam_v1_UpdateFederationCertificateRequest_4861e868] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if federation_id is not _NEBIUS_UNSET:
             values['federation_id'] = federation_id
@@ -3317,6 +3937,7 @@ class UpdateBulkFederationCertificateRequest(Message):
 
     @federation_id.setter
     def federation_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``federation_id`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEBULKFEDERATIONCERTIFICATEREQUEST_FEDERATION_ID, value)
 
     @_NebiusProperty
@@ -3327,18 +3948,25 @@ class UpdateBulkFederationCertificateRequest(Message):
 
     @updates.setter
     def updates(self, value: _NebiusIterable[_NebiusType_nebius_iam_v1_UpdateFederationCertificateRequest_4861e868] | None) -> None:
+        """Set or clear the generated ``updates`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEBULKFEDERATIONCERTIFICATEREQUEST_UPDATES, value)
 
     __PY_TO_PB2__ = {'federation_id': 'federation_id', 'updates': 'updates'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_UpdateBulkFederationCertificateRequest_d4a2d9e0 = UpdateBulkFederationCertificateRequest
 
 
 class UpdateFederationCertificateRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.iam.v1.UpdateFederationCertificateRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.UpdateFederationCertificateRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3347,6 +3975,7 @@ class UpdateFederationCertificateRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_iam_v1_FederationCertificateSpec_868e28ca | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -3361,6 +3990,7 @@ class UpdateFederationCertificateRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONCERTIFICATEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -3370,500 +4000,12 @@ class UpdateFederationCertificateRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_iam_v1_FederationCertificateSpec_868e28ca | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONCERTIFICATEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_iam_v1_UpdateFederationCertificateRequest_4861e868 = UpdateFederationCertificateRequest
-
-class ActivateFederationRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.ActivateFederationRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ActivateFederationRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        federation_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if federation_id is not _NEBIUS_UNSET:
-            values['federation_id'] = federation_id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def federation_id(self) -> _NebiusStr:
-        'Target federation ID.'
-        value = self._get_field(_NEBIUS_IAM_V1_ACTIVATEFEDERATIONREQUEST_FEDERATION_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @federation_id.setter
-    def federation_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_ACTIVATEFEDERATIONREQUEST_FEDERATION_ID, value)
-
-    __PY_TO_PB2__ = {'federation_id': 'federation_id'}
-_NebiusType_nebius_iam_v1_ActivateFederationRequest_d1f0d7e4 = ActivateFederationRequest
-
-
-class CreateFederationRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.CreateFederationRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.CreateFederationRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        'Federation resource metadata.'
-        value = self._get_field(_NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f:
-        'Federation resource specification.'
-        value = self._get_field(_NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_iam_v1_FederationSpec_f3fe265f', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_SPEC, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
-_NebiusType_nebius_iam_v1_CreateFederationRequest_b9eda79e = CreateFederationRequest
-
-
-class DeactivateFederationRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeactivateFederationRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeactivateFederationRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        federation_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if federation_id is not _NEBIUS_UNSET:
-            values['federation_id'] = federation_id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def federation_id(self) -> _NebiusStr:
-        'Target federation ID.'
-        value = self._get_field(_NEBIUS_IAM_V1_DEACTIVATEFEDERATIONREQUEST_FEDERATION_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @federation_id.setter
-    def federation_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_DEACTIVATEFEDERATIONREQUEST_FEDERATION_ID, value)
-
-    __PY_TO_PB2__ = {'federation_id': 'federation_id'}
-_NebiusType_nebius_iam_v1_DeactivateFederationRequest_f73f67f9 = DeactivateFederationRequest
-
-
-class DeleteFederationRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.DeleteFederationRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.DeleteFederationRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        'Target federation ID.'
-        value = self._get_field(_NEBIUS_IAM_V1_DELETEFEDERATIONREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_DELETEFEDERATIONREQUEST_ID, value)
-
-    __PY_TO_PB2__ = {'id': 'id'}
-_NebiusType_nebius_iam_v1_DeleteFederationRequest_b827d715 = DeleteFederationRequest
-
-
-class GetFederationRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.GetFederationRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GetFederationRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        'Target federation ID.'
-        value = self._get_field(_NEBIUS_IAM_V1_GETFEDERATIONREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GETFEDERATIONREQUEST_ID, value)
-
-    __PY_TO_PB2__ = {'id': 'id'}
-_NebiusType_nebius_iam_v1_GetFederationRequest_f1b4a8cb = GetFederationRequest
-
-
-class ListFederationsRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListFederationsRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListFederationsRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if parent_id is not _NEBIUS_UNSET:
-            values['parent_id'] = parent_id
-        if page_size is not _NEBIUS_UNSET:
-            values['page_size'] = page_size
-        if page_token is not _NEBIUS_UNSET:
-            values['page_token'] = page_token
-        if filter is not _NEBIUS_UNSET:
-            values['filter'] = filter
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def parent_id(self) -> _NebiusStr:
-        'Parent container ID for the federations.'
-        value = self._get_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PARENT_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @parent_id.setter
-    def parent_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PARENT_ID, value)
-
-    @_NebiusProperty
-    def page_size(self) -> _NebiusInt:
-        'Maximum number of items to return in the response. Default value: 10.'
-        value = self._get_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_SIZE, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @page_size.setter
-    def page_size(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_SIZE, value)
-
-    @_NebiusProperty
-    def page_token(self) -> _NebiusStr:
-        'Token for pagination, allowing the retrieval of the next set of results.'
-        value = self._get_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @page_token.setter
-    def page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_TOKEN, value)
-
-    @_NebiusProperty
-    def filter(self) -> _NebiusStr:
-        'Filter expression for narrowing down the results.'
-        value = self._get_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_FILTER, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @filter.setter
-    def filter(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_FILTER, value)
-
-    __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter'}
-_NebiusType_nebius_iam_v1_ListFederationsRequest_75f09bc1 = ListFederationsRequest
-
-
-class ListFederationsResponse(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.ListFederationsResponse'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.ListFederationsResponse')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        items: _NebiusIterable[_NebiusType_nebius_iam_v1_Federation_6acd8081] | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if items is not _NEBIUS_UNSET:
-            values['items'] = items
-        if next_page_token is not _NEBIUS_UNSET:
-            values['next_page_token'] = next_page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def items(self) -> _NebiusMutableSequence[_NebiusType_nebius_iam_v1_Federation_6acd8081]:
-        'List of federations returned in the response.'
-        value = self._get_field(_NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_ITEMS, absent_is_none=False)
-        return _nebius_cast('_NebiusMutableSequence[_NebiusType_nebius_iam_v1_Federation_6acd8081]', value)
-
-    @items.setter
-    def items(self, value: _NebiusIterable[_NebiusType_nebius_iam_v1_Federation_6acd8081] | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_ITEMS, value)
-
-    @_NebiusProperty
-    def next_page_token(self) -> _NebiusStr:
-        'Token for pagination, allowing the retrieval of the next set of results.'
-        value = self._get_field(_NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_NEXT_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @next_page_token.setter
-    def next_page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_NEXT_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
-_NebiusType_nebius_iam_v1_ListFederationsResponse_47214761 = ListFederationsResponse
-
-
-class UpdateFederationRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.UpdateFederationRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.UpdateFederationRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        status: _NebiusType_nebius_iam_v1_FederationStatus_146b1463 | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        if status is not _NEBIUS_UNSET:
-            _nebius_get_logger('deprecation').warning("Field nebius.iam.v1.UpdateFederationRequest.status is deprecated. 'status' is ignored for update requests.", stack_info=True, stacklevel=2)
-            values['status'] = status
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        'Federation resource metadata.'
-        value = self._get_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f:
-        'Federation resource specification.'
-        value = self._get_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_iam_v1_FederationSpec_f3fe265f', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_iam_v1_FederationSpec_f3fe265f | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_SPEC, value)
-
-    @_NebiusProperty
-    def status(self) -> _NebiusType_nebius_iam_v1_FederationStatus_146b1463:
-        "'status' is ignored for update requests."
-        _nebius_get_logger('deprecation').warning("Field nebius.iam.v1.UpdateFederationRequest.status is deprecated. 'status' is ignored for update requests.", stack_info=True, stacklevel=2)
-        value = self._get_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_STATUS, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_iam_v1_FederationStatus_146b1463', value)
-
-    @status.setter
-    def status(self, value: _NebiusType_nebius_iam_v1_FederationStatus_146b1463 | None) -> None:
-        _nebius_get_logger('deprecation').warning("Field nebius.iam.v1.UpdateFederationRequest.status is deprecated. 'status' is ignored for update requests.", stack_info=True, stacklevel=2)
-        self._set_field(_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_STATUS, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
-_NebiusType_nebius_iam_v1_UpdateFederationRequest_0e6c335b = UpdateFederationRequest
-
-class Group(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.Group'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.Group')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_iam_v1_GroupSpec_bb097d6e | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        status: _NebiusType_nebius_iam_v1_GroupStatus_77e7d65b | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        if status is not _NEBIUS_UNSET:
-            values['status'] = status
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        value = self._get_field(_NEBIUS_IAM_V1_GROUP_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GROUP_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_iam_v1_GroupSpec_bb097d6e:
-        value = self._get_field(_NEBIUS_IAM_V1_GROUP_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_iam_v1_GroupSpec_bb097d6e', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_iam_v1_GroupSpec_bb097d6e | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GROUP_SPEC, value)
-
-    @_NebiusProperty
-    def status(self) -> _NebiusType_nebius_iam_v1_GroupStatus_77e7d65b:
-        value = self._get_field(_NEBIUS_IAM_V1_GROUP_STATUS, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_iam_v1_GroupStatus_77e7d65b', value)
-
-    @status.setter
-    def status(self, value: _NebiusType_nebius_iam_v1_GroupStatus_77e7d65b | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GROUP_STATUS, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
-_NebiusType_nebius_iam_v1_Group_2c578b86 = Group
-
-
-class GroupSpec(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.GroupSpec'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GroupSpec')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-    pass
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        super().__init__(initial_message, **values)
-
-    __PY_TO_PB2__ = {}
-_NebiusType_nebius_iam_v1_GroupSpec_bb097d6e = GroupSpec
-
-
-class GroupStatus(Message):
-    __PROTO_FULL_NAME__ = 'nebius.iam.v1.GroupStatus'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.iam.v1.GroupStatus')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-    State: _NebiusTypeAlias = _NebiusType_nebius_iam_v1_GroupStatus_State_665d890b
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        state: _NebiusType_nebius_iam_v1_GroupStatus_State_665d890b | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        members_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        service_accounts_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        tenant_user_accounts_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if state is not _NEBIUS_UNSET:
-            values['state'] = state
-        if members_count is not _NEBIUS_UNSET:
-            values['members_count'] = members_count
-        if service_accounts_count is not _NEBIUS_UNSET:
-            values['service_accounts_count'] = service_accounts_count
-        if tenant_user_accounts_count is not _NEBIUS_UNSET:
-            values['tenant_user_accounts_count'] = tenant_user_accounts_count
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def state(self) -> _NebiusType_nebius_iam_v1_GroupStatus_State_665d890b:
-        value = self._get_field(_NEBIUS_IAM_V1_GROUPSTATUS_STATE, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_iam_v1_GroupStatus_State_665d890b', None if value is None else REGISTRY.enum_class('nebius.iam.v1.GroupStatus.State')(value))
-
-    @state.setter
-    def state(self, value: _NebiusType_nebius_iam_v1_GroupStatus_State_665d890b | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GROUPSTATUS_STATE, value)
-
-    @_NebiusProperty
-    def members_count(self) -> _NebiusInt:
-        value = self._get_field(_NEBIUS_IAM_V1_GROUPSTATUS_MEMBERS_COUNT, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @members_count.setter
-    def members_count(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GROUPSTATUS_MEMBERS_COUNT, value)
-
-    @_NebiusProperty
-    def service_accounts_count(self) -> _NebiusInt:
-        value = self._get_field(_NEBIUS_IAM_V1_GROUPSTATUS_SERVICE_ACCOUNTS_COUNT, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @service_accounts_count.setter
-    def service_accounts_count(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GROUPSTATUS_SERVICE_ACCOUNTS_COUNT, value)
-
-    @_NebiusProperty
-    def tenant_user_accounts_count(self) -> _NebiusInt:
-        value = self._get_field(_NEBIUS_IAM_V1_GROUPSTATUS_TENANT_USER_ACCOUNTS_COUNT, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @tenant_user_accounts_count.setter
-    def tenant_user_accounts_count(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_IAM_V1_GROUPSTATUS_TENANT_USER_ACCOUNTS_COUNT, value)
-
-    __PY_TO_PB2__ = {'state': 'state', 'members_count': 'members_count', 'service_accounts_count': 'service_accounts_count', 'tenant_user_accounts_count': 'tenant_user_accounts_count', 'State': 'State'}
-_NebiusType_nebius_iam_v1_GroupStatus_77e7d65b = GroupStatus
 
 # @@nebius-section:fields@@
 Account__AnonymousAccount.__FIELDS__ = ()
@@ -4151,50 +4293,6 @@ _NEBIUS_IAM_V1_UPDATEFEDERATIONCERTIFICATEREQUEST_METADATA = Field('metadata', '
 _NEBIUS_IAM_V1_UPDATEFEDERATIONCERTIFICATEREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.iam.v1.FederationCertificateSpec')), json_name='spec')
 UpdateFederationCertificateRequest.__FIELDS__ = (_NEBIUS_IAM_V1_UPDATEFEDERATIONCERTIFICATEREQUEST_METADATA, _NEBIUS_IAM_V1_UPDATEFEDERATIONCERTIFICATEREQUEST_SPEC)
 
-_NEBIUS_IAM_V1_ACTIVATEFEDERATIONREQUEST_FEDERATION_ID = Field('federation_id', 'federation_id', 1, STRING, json_name='federationId')
-ActivateFederationRequest.__FIELDS__ = (_NEBIUS_IAM_V1_ACTIVATEFEDERATIONREQUEST_FEDERATION_ID,)
-
-_NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.iam.v1.FederationSpec')), json_name='spec')
-CreateFederationRequest.__FIELDS__ = (_NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_METADATA, _NEBIUS_IAM_V1_CREATEFEDERATIONREQUEST_SPEC)
-
-_NEBIUS_IAM_V1_DEACTIVATEFEDERATIONREQUEST_FEDERATION_ID = Field('federation_id', 'federation_id', 1, STRING, json_name='federationId')
-DeactivateFederationRequest.__FIELDS__ = (_NEBIUS_IAM_V1_DEACTIVATEFEDERATIONREQUEST_FEDERATION_ID,)
-
-_NEBIUS_IAM_V1_DELETEFEDERATIONREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-DeleteFederationRequest.__FIELDS__ = (_NEBIUS_IAM_V1_DELETEFEDERATIONREQUEST_ID,)
-
-_NEBIUS_IAM_V1_GETFEDERATIONREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-GetFederationRequest.__FIELDS__ = (_NEBIUS_IAM_V1_GETFEDERATIONREQUEST_ID,)
-
-_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PARENT_ID = Field('parent_id', 'parent_id', 1, STRING, json_name='parentId')
-_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
-_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_TOKEN = Field('page_token', 'page_token', 3, STRING, json_name='pageToken')
-_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_FILTER = Field('filter', 'filter', 4, STRING, json_name='filter')
-ListFederationsRequest.__FIELDS__ = (_NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PARENT_ID, _NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_SIZE, _NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_PAGE_TOKEN, _NEBIUS_IAM_V1_LISTFEDERATIONSREQUEST_FILTER)
-
-_NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_ITEMS = Field('items', 'items', 1, message_codec(lambda: REGISTRY.message_class('nebius.iam.v1.Federation')), repeated=True, json_name='items')
-_NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_NEXT_PAGE_TOKEN = Field('next_page_token', 'next_page_token', 2, STRING, json_name='nextPageToken')
-ListFederationsResponse.__FIELDS__ = (_NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_ITEMS, _NEBIUS_IAM_V1_LISTFEDERATIONSRESPONSE_NEXT_PAGE_TOKEN)
-
-_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.iam.v1.FederationSpec')), json_name='spec')
-_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_STATUS = Field('status', 'status', 3, message_codec(lambda: REGISTRY.message_class('nebius.iam.v1.FederationStatus')), json_name='status')
-UpdateFederationRequest.__FIELDS__ = (_NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_METADATA, _NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_SPEC, _NEBIUS_IAM_V1_UPDATEFEDERATIONREQUEST_STATUS)
-
-_NEBIUS_IAM_V1_GROUP_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_IAM_V1_GROUP_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.iam.v1.GroupSpec')), json_name='spec')
-_NEBIUS_IAM_V1_GROUP_STATUS = Field('status', 'status', 3, message_codec(lambda: REGISTRY.message_class('nebius.iam.v1.GroupStatus')), json_name='status')
-Group.__FIELDS__ = (_NEBIUS_IAM_V1_GROUP_METADATA, _NEBIUS_IAM_V1_GROUP_SPEC, _NEBIUS_IAM_V1_GROUP_STATUS)
-
-GroupSpec.__FIELDS__ = ()
-
-_NEBIUS_IAM_V1_GROUPSTATUS_STATE = Field('state', 'state', 1, enum_codec((0, 1), default=0, closed=False, names={'UNSPECIFIED': 0, 'ACTIVE': 1}, enum_type=lambda: REGISTRY.enum_class('nebius.iam.v1.GroupStatus.State')), json_name='state')
-_NEBIUS_IAM_V1_GROUPSTATUS_MEMBERS_COUNT = Field('members_count', 'members_count', 2, INT32, json_name='membersCount')
-_NEBIUS_IAM_V1_GROUPSTATUS_SERVICE_ACCOUNTS_COUNT = Field('service_accounts_count', 'service_accounts_count', 3, INT32, json_name='serviceAccountsCount')
-_NEBIUS_IAM_V1_GROUPSTATUS_TENANT_USER_ACCOUNTS_COUNT = Field('tenant_user_accounts_count', 'tenant_user_accounts_count', 4, INT32, json_name='tenantUserAccountsCount')
-GroupStatus.__FIELDS__ = (_NEBIUS_IAM_V1_GROUPSTATUS_STATE, _NEBIUS_IAM_V1_GROUPSTATUS_MEMBERS_COUNT, _NEBIUS_IAM_V1_GROUPSTATUS_SERVICE_ACCOUNTS_COUNT, _NEBIUS_IAM_V1_GROUPSTATUS_TENANT_USER_ACCOUNTS_COUNT)
-
 # @@nebius-section:attachments@@
 Account__AnonymousAccount.__name__ = 'AnonymousAccount'
 Account__AnonymousAccount.__qualname__ = 'Account.AnonymousAccount'
@@ -4215,26 +4313,32 @@ FederationStatus__State.__qualname__ = 'FederationStatus.State'
 FederationCertificateStatus__State.__name__ = 'State'
 FederationCertificateStatus__State.__qualname__ = 'FederationCertificateStatus.State'
 
-GroupStatus__State.__name__ = 'State'
-GroupStatus__State.__qualname__ = 'GroupStatus.State'
-
 # @@nebius-section:extensions@@
 # @@nebius-section:services@@
 class AccessKeyServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Access keys management [deprecated]\n\nSupported until 09/01/26. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API.\n\nThis class provides client methods for the ``nebius.iam.v1.AccessKeyService`` service.'
     __service_name__ = 'nebius.iam.v1.AccessKeyService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.iam'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.iam.v1.AccessKeyService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.iam.v1.AccessKeyService')
+    """Alias for code that expects a protobuf service descriptor."""
     __service_deprecation_details__ = 'Supported until 09/01/26. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API.'
+    """Deprecation details emitted when the client is created."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,
@@ -4377,17 +4481,25 @@ class AccessKeyServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_
 class AccessPermitServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.iam.v1.AccessPermitService`` service.'
     __service_name__ = 'nebius.iam.v1.AccessPermitService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.iam'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.iam.v1.AccessPermitService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.iam.v1.AccessPermitService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,
@@ -4446,17 +4558,25 @@ class AccessPermitServiceClient(_NebiusClientWithOperations[_type_nebius_common_
 class AuthPublicKeyServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.iam.v1.AuthPublicKeyService`` service.'
     __service_name__ = 'nebius.iam.v1.AuthPublicKeyService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.iam'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.iam.v1.AuthPublicKeyService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.iam.v1.AuthPublicKeyService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,
@@ -4573,17 +4693,25 @@ class AuthPublicKeyServiceClient(_NebiusClientWithOperations[_type_nebius_common
 class FederatedCredentialsServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     '[PUBLIC PREVIEW]\nThe federated credentials feature is currently fully available with Nebius Managed Kubernetes issuers.\nCustom external credentials providers are available only for early adopters.\nContact the support team to check whether this feature is available for your tenant.\nAlternatively, you can use them in conjunction with local JWK set storage without limitations.\n\nThis class provides client methods for the ``nebius.iam.v1.FederatedCredentialsService`` service.'
     __service_name__ = 'nebius.iam.v1.FederatedCredentialsService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.iam'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.iam.v1.FederatedCredentialsService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.iam.v1.FederatedCredentialsService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -4672,17 +4800,25 @@ class FederatedCredentialsServiceClient(_NebiusClientWithOperations[_type_nebius
 class FederationCertificateServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.iam.v1.FederationCertificateService`` service.'
     __service_name__ = 'nebius.iam.v1.FederationCertificateService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.iam'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.iam.v1.FederationCertificateService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.iam.v1.FederationCertificateService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,
@@ -4772,132 +4908,5 @@ class FederationCertificateServiceClient(_NebiusClientWithOperations[_type_nebiu
             **kwargs,
         )
 
-class FederationServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
-    'This class provides client methods for the ``nebius.iam.v1.FederationService`` service.'
-    __service_name__ = 'nebius.iam.v1.FederationService'
-    __api_service_name__ = 'cpl.iam'
-    __registry__ = REGISTRY
-
-    @classmethod
-    def get_descriptor(cls) -> _NebiusObject:
-        return REGISTRY.service_descriptor('nebius.iam.v1.FederationService')
-
-    __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.iam.v1.FederationService')
-    __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
-    __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
-    __operation_source_method__ = 'Create'
-
-    def create(
-        self,
-        request: _NebiusType_nebius_iam_v1_CreateFederationRequest_b9eda79e,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_iam_v1_CreateFederationRequest_b9eda79e, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Creates a federation.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Create',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def get(
-        self,
-        request: _NebiusType_nebius_iam_v1_GetFederationRequest_f1b4a8cb,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_iam_v1_GetFederationRequest_f1b4a8cb, _NebiusType_nebius_iam_v1_Federation_6acd8081]:
-        'Retrieves information about a federation by ID.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Get',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.iam.v1.Federation'),
-            **kwargs,
-        )
-
-    def get_by_name(
-        self,
-        request: _type_nebius_common_v1_e3b886bd.GetByNameRequest,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_type_nebius_common_v1_e3b886bd.GetByNameRequest, _NebiusType_nebius_iam_v1_Federation_6acd8081]:
-        'Retrieves information about a federation by name and parent container.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='GetByName',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.iam.v1.Federation'),
-            **kwargs,
-        )
-
-    def list(
-        self,
-        request: _NebiusType_nebius_iam_v1_ListFederationsRequest_75f09bc1,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_iam_v1_ListFederationsRequest_75f09bc1, _NebiusType_nebius_iam_v1_ListFederationsResponse_47214761]:
-        'Lists federations by parent container.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='List',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.iam.v1.ListFederationsResponse'),
-            **kwargs,
-        )
-
-    def update(
-        self,
-        request: _NebiusType_nebius_iam_v1_UpdateFederationRequest_0e6c335b,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_iam_v1_UpdateFederationRequest_0e6c335b, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Updates a federation.\n\nThe request object is returned without starting the RPC.'
-        kwargs['metadata'] = ensure_reset_mask_in_metadata(
-            request, kwargs.get('metadata'),
-        )
-        return super().request(
-            method='Update',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def activate(
-        self,
-        request: _NebiusType_nebius_iam_v1_ActivateFederationRequest_d1f0d7e4,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_iam_v1_ActivateFederationRequest_d1f0d7e4, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Activates an existing federation.\nBy default, a newly created federation is in the active state.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Activate',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def deactivate(
-        self,
-        request: _NebiusType_nebius_iam_v1_DeactivateFederationRequest_f73f67f9,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_iam_v1_DeactivateFederationRequest_f73f67f9, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Deactivates an existing federation.\nWhen a federation is inactive, all users under it cannot authenticate.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Deactivate',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def delete(
-        self,
-        request: _NebiusType_nebius_iam_v1_DeleteFederationRequest_b827d715,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_iam_v1_DeleteFederationRequest_b827d715, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'Deletes a federation. An active federation cannot be deleted and must be deactivated first.\n\nThe request object is returned without starting the RPC.'
-        return super().request(
-            method='Delete',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
 # @@nebius-section:exports@@
-__all__ = ['AccessKey', 'AccessKeyServiceClient', 'AccessKeySpec', 'AccessKeyStatus', 'AccessPermit', 'AccessPermitServiceClient', 'AccessPermitSpec', 'AccessPermitStatus', 'Account', 'ActivateAccessKeyRequest', 'ActivateAuthPublicKeyRequest', 'ActivateFederationRequest', 'AuthPublicKey', 'AuthPublicKeyServiceClient', 'AuthPublicKeySpec', 'AuthPublicKeyStatus', 'Container', 'ContainerSpec', 'ContainerStatus', 'CreateAccessKeyRequest', 'CreateAccessPermitRequest', 'CreateAuthPublicKeyRequest', 'CreateFederatedCredentialsRequest', 'CreateFederationCertificateRequest', 'CreateFederationRequest', 'DeactivateAccessKeyRequest', 'DeactivateAuthPublicKeyRequest', 'DeactivateFederationRequest', 'DeleteAccessKeyRequest', 'DeleteAccessPermitRequest', 'DeleteAuthPublicKeyRequest', 'DeleteFederatedCredentialsRequest', 'DeleteFederationCertificateRequest', 'DeleteFederationRequest', 'FederatedCredentials', 'FederatedCredentialsServiceClient', 'FederatedCredentialsSpec', 'FederatedCredentialsStatus', 'Federation', 'FederationCertificate', 'FederationCertificateServiceClient', 'FederationCertificateSpec', 'FederationCertificateStatus', 'FederationServiceClient', 'FederationSpec', 'FederationStatus', 'GetAccessKeyByAwsIdRequest', 'GetAccessKeyByIdRequest', 'GetAccessKeySecretOnceRequest', 'GetAccessKeySecretOnceResponse', 'GetAccessPermitRequest', 'GetAuthPublicKeyRequest', 'GetByNameFederatedCredentialsRequest', 'GetFederatedCredentialsRequest', 'GetFederationCertificateRequest', 'GetFederationRequest', 'Group', 'GroupSpec', 'GroupStatus', 'KeyIdentity', 'ListAccessKeysByAccountRequest', 'ListAccessKeysRequest', 'ListAccessKeysResponse', 'ListAccessPermitRequest', 'ListAccessPermitResponse', 'ListAuthPublicKeyByAccountRequest', 'ListAuthPublicKeyRequest', 'ListAuthPublicKeyResponse', 'ListFederatedCredentialsRequest', 'ListFederatedCredentialsResponse', 'ListFederationCertificateByFederationRequest', 'ListFederationCertificateResponse', 'ListFederationsRequest', 'ListFederationsResponse', 'OidcCredentialsProvider', 'SamlSettings', 'UpdateAccessKeyRequest', 'UpdateAuthPublicKeyRequest', 'UpdateBulkFederationCertificateRequest', 'UpdateFederatedCredentialsRequest', 'UpdateFederationCertificateRequest', 'UpdateFederationRequest']
+__all__ = ['AccessKey', 'AccessKeyServiceClient', 'AccessKeySpec', 'AccessKeyStatus', 'AccessPermit', 'AccessPermitServiceClient', 'AccessPermitSpec', 'AccessPermitStatus', 'Account', 'ActivateAccessKeyRequest', 'ActivateAuthPublicKeyRequest', 'AuthPublicKey', 'AuthPublicKeyServiceClient', 'AuthPublicKeySpec', 'AuthPublicKeyStatus', 'Container', 'ContainerSpec', 'ContainerStatus', 'CreateAccessKeyRequest', 'CreateAccessPermitRequest', 'CreateAuthPublicKeyRequest', 'CreateFederatedCredentialsRequest', 'CreateFederationCertificateRequest', 'DeactivateAccessKeyRequest', 'DeactivateAuthPublicKeyRequest', 'DeleteAccessKeyRequest', 'DeleteAccessPermitRequest', 'DeleteAuthPublicKeyRequest', 'DeleteFederatedCredentialsRequest', 'DeleteFederationCertificateRequest', 'FederatedCredentials', 'FederatedCredentialsServiceClient', 'FederatedCredentialsSpec', 'FederatedCredentialsStatus', 'Federation', 'FederationCertificate', 'FederationCertificateServiceClient', 'FederationCertificateSpec', 'FederationCertificateStatus', 'FederationSpec', 'FederationStatus', 'GetAccessKeyByAwsIdRequest', 'GetAccessKeyByIdRequest', 'GetAccessKeySecretOnceRequest', 'GetAccessKeySecretOnceResponse', 'GetAccessPermitRequest', 'GetAuthPublicKeyRequest', 'GetByNameFederatedCredentialsRequest', 'GetFederatedCredentialsRequest', 'GetFederationCertificateRequest', 'KeyIdentity', 'ListAccessKeysByAccountRequest', 'ListAccessKeysRequest', 'ListAccessKeysResponse', 'ListAccessPermitRequest', 'ListAccessPermitResponse', 'ListAuthPublicKeyByAccountRequest', 'ListAuthPublicKeyRequest', 'ListAuthPublicKeyResponse', 'ListFederatedCredentialsRequest', 'ListFederatedCredentialsResponse', 'ListFederationCertificateByFederationRequest', 'ListFederationCertificateResponse', 'OidcCredentialsProvider', 'SamlSettings', 'UpdateAccessKeyRequest', 'UpdateAuthPublicKeyRequest', 'UpdateBulkFederationCertificateRequest', 'UpdateFederatedCredentialsRequest', 'UpdateFederationCertificateRequest']

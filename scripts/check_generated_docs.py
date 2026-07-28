@@ -17,6 +17,73 @@ REQUIRED_PAGES = (
     "nebius.api.nebius.compute.v1.InstanceServiceClient.html",
 )
 API_REFERENCE_LINK = "nebius.api.nebius.compute.v1.InstanceServiceClient.html"
+FRAMEWORK_MEMBERS = {
+    "nebius.api.nebius.compute.v1.CreateFilesystemRequest.html": (
+        "__init__",
+        "metadata.setter",
+        "__PROTO_DESCRIPTOR__",
+        "__PROTO_FULL_NAME__",
+        "__PY_TO_PB2__",
+    ),
+    "nebius.base.protos.direct.Message.html": (
+        "from_json",
+        "FromString",
+        "get_descriptor",
+        "is_credentials",
+        "is_sensitive",
+        "__dir__",
+        "__repr__",
+        "ByteSize",
+        "check_presence",
+        "Clear",
+        "clear_extension",
+        "ClearField",
+        "CopyFrom",
+        "FindInitializationErrors",
+        "get_extension",
+        "get_full_update_reset_mask",
+        "get_mask",
+        "has_extension",
+        "HasField",
+        "is_default",
+        "IsInitialized",
+        "MergeFrom",
+        "MergeFromString",
+        "ParseFromString",
+        "SerializeToString",
+        "set_extension",
+        "set_mask",
+        "to_json",
+        "which_field_in_oneof",
+        "WhichOneof",
+        "__EXTENSION_REGISTRY__",
+        "__FIELDS__",
+        "__MAX_NESTING_DEPTH__",
+        "__PB2_DESCRIPTOR__",
+        "__PROTO_DESCRIPTOR__",
+        "__PROTO_FULL_NAME__",
+        "__PY_TO_PB2__",
+        "__REGISTRY__",
+        "Extensions",
+    ),
+    "nebius.api.google.protobuf.NullValue.html": (
+        "get_descriptor",
+        "__PB2_DESCRIPTOR__",
+        "__PROTO_DESCRIPTOR__",
+        "__PROTO_FULL_NAME__",
+        "__REGISTRY__",
+    ),
+    "nebius.api.nebius.compute.v1.InstanceServiceClient.html": (
+        "get_descriptor",
+        "__PB2_DESCRIPTOR__",
+        "__api_service_name__",
+        "__operation_service_class__",
+        "__operation_source_method__",
+        "__operation_type__",
+        "__registry__",
+        "__service_name__",
+    ),
+}
 
 
 def _local_html_links(page: Path) -> set[str]:
@@ -26,6 +93,30 @@ def _local_html_links(page: Path) -> set[str]:
         if not target.scheme and target.path.endswith(".html"):
             links.add(unquote(target.path))
     return links
+
+
+def _check_framework_member_docs(output: Path) -> None:
+    missing: list[str] = []
+    undocumented: list[str] = []
+    for page_name, members in FRAMEWORK_MEMBERS.items():
+        text = (output / page_name).read_text(encoding="utf-8")
+        rows = re.findall(r"<tr\b.*?</tr>", text, flags=re.DOTALL)
+        for member in members:
+            target = re.compile(rf'href="[^"]*#{re.escape(member)}"')
+            matches = [row for row in rows if target.search(row)]
+            qualified_name = f"{page_name.removesuffix('.html')}.{member}"
+            if not matches:
+                missing.append(qualified_name)
+            elif all('class="undocumented"' in row for row in matches):
+                undocumented.append(qualified_name)
+    if missing:
+        raise RuntimeError(
+            "documentation omitted framework-owned members: " + ", ".join(missing[:5])
+        )
+    if undocumented:
+        raise RuntimeError(
+            "framework-owned members are undocumented: " + ", ".join(undocumented[:5])
+        )
 
 
 def validate(output: Path) -> None:
@@ -40,6 +131,8 @@ def validate(output: Path) -> None:
         raise RuntimeError(
             "API reference omitted the representative Instance service client"
         )
+
+    _check_framework_member_docs(output)
 
     mangled_annotations = [
         page.name

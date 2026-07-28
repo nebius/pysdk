@@ -57,9 +57,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class CodeGeneratorResponse__Feature(Enum):
     __PROTO_FULL_NAME__ = 'google.protobuf.compiler.CodeGeneratorResponse.Feature'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.protobuf.compiler.CodeGeneratorResponse.Feature')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     FEATURE_NONE = 0
     FEATURE_PROTO3_OPTIONAL = 1
     FEATURE_SUPPORTS_EDITIONS = 2
@@ -68,10 +72,15 @@ _NebiusType_google_protobuf_compiler_CodeGeneratorResponse_Feature_15ed57f7 = Co
 # @@nebius-section:messages@@
 class CodeGeneratorResponse__File(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.compiler.CodeGeneratorResponse.File'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.compiler.CodeGeneratorResponse.File')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -82,6 +91,7 @@ class CodeGeneratorResponse__File(Message):
         content: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         generated_code_info: _type_google_protobuf_dfd76a75.GeneratedCodeInfo | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -100,6 +110,7 @@ class CodeGeneratorResponse__File(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_FILE_NAME, value)
 
     @_NebiusProperty
@@ -109,6 +120,7 @@ class CodeGeneratorResponse__File(Message):
 
     @insertion_point.setter
     def insertion_point(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``insertion_point`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_FILE_INSERTION_POINT, value)
 
     @_NebiusProperty
@@ -118,6 +130,7 @@ class CodeGeneratorResponse__File(Message):
 
     @content.setter
     def content(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``content`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_FILE_CONTENT, value)
 
     @_NebiusProperty
@@ -127,18 +140,25 @@ class CodeGeneratorResponse__File(Message):
 
     @generated_code_info.setter
     def generated_code_info(self, value: _type_google_protobuf_dfd76a75.GeneratedCodeInfo | None) -> None:
+        """Set or clear the generated ``generated_code_info`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_FILE_GENERATED_CODE_INFO, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'insertion_point': 'insertion_point', 'content': 'content', 'generated_code_info': 'generated_code_info'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_compiler_CodeGeneratorResponse_File_d84d1c29 = CodeGeneratorResponse__File
 
 
 class CodeGeneratorRequest(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.compiler.CodeGeneratorRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.compiler.CodeGeneratorRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -150,6 +170,7 @@ class CodeGeneratorRequest(Message):
         source_file_descriptors: _NebiusIterable[_type_google_protobuf_dfd76a75.FileDescriptorProto] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         compiler_version: _NebiusType_google_protobuf_compiler_Version_c886dc83 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if file_to_generate is not _NEBIUS_UNSET:
             values['file_to_generate'] = file_to_generate
@@ -170,6 +191,7 @@ class CodeGeneratorRequest(Message):
 
     @file_to_generate.setter
     def file_to_generate(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``file_to_generate`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORREQUEST_FILE_TO_GENERATE, value)
 
     @_NebiusProperty
@@ -179,6 +201,7 @@ class CodeGeneratorRequest(Message):
 
     @parameter.setter
     def parameter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parameter`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORREQUEST_PARAMETER, value)
 
     @_NebiusProperty
@@ -188,6 +211,7 @@ class CodeGeneratorRequest(Message):
 
     @proto_file.setter
     def proto_file(self, value: _NebiusIterable[_type_google_protobuf_dfd76a75.FileDescriptorProto] | None) -> None:
+        """Set or clear the generated ``proto_file`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORREQUEST_PROTO_FILE, value)
 
     @_NebiusProperty
@@ -197,6 +221,7 @@ class CodeGeneratorRequest(Message):
 
     @source_file_descriptors.setter
     def source_file_descriptors(self, value: _NebiusIterable[_type_google_protobuf_dfd76a75.FileDescriptorProto] | None) -> None:
+        """Set or clear the generated ``source_file_descriptors`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORREQUEST_SOURCE_FILE_DESCRIPTORS, value)
 
     @_NebiusProperty
@@ -206,18 +231,25 @@ class CodeGeneratorRequest(Message):
 
     @compiler_version.setter
     def compiler_version(self, value: _NebiusType_google_protobuf_compiler_Version_c886dc83 | None) -> None:
+        """Set or clear the generated ``compiler_version`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORREQUEST_COMPILER_VERSION, value)
 
     __PY_TO_PB2__ = {'file_to_generate': 'file_to_generate', 'parameter': 'parameter', 'proto_file': 'proto_file', 'source_file_descriptors': 'source_file_descriptors', 'compiler_version': 'compiler_version'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_compiler_CodeGeneratorRequest_e49fe6b1 = CodeGeneratorRequest
 
 
 class CodeGeneratorResponse(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.compiler.CodeGeneratorResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.compiler.CodeGeneratorResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     File: _NebiusTypeAlias = _NebiusType_google_protobuf_compiler_CodeGeneratorResponse_File_d84d1c29
     Feature: _NebiusTypeAlias = _NebiusType_google_protobuf_compiler_CodeGeneratorResponse_Feature_15ed57f7
 
@@ -231,6 +263,7 @@ class CodeGeneratorResponse(Message):
         maximum_edition: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         file: _NebiusIterable[_NebiusType_google_protobuf_compiler_CodeGeneratorResponse_File_d84d1c29] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if error is not _NEBIUS_UNSET:
             values['error'] = error
@@ -251,6 +284,7 @@ class CodeGeneratorResponse(Message):
 
     @error.setter
     def error(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``error`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_ERROR, value)
 
     @_NebiusProperty
@@ -260,6 +294,7 @@ class CodeGeneratorResponse(Message):
 
     @supported_features.setter
     def supported_features(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``supported_features`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_SUPPORTED_FEATURES, value)
 
     @_NebiusProperty
@@ -269,6 +304,7 @@ class CodeGeneratorResponse(Message):
 
     @minimum_edition.setter
     def minimum_edition(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``minimum_edition`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_MINIMUM_EDITION, value)
 
     @_NebiusProperty
@@ -278,6 +314,7 @@ class CodeGeneratorResponse(Message):
 
     @maximum_edition.setter
     def maximum_edition(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``maximum_edition`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_MAXIMUM_EDITION, value)
 
     @_NebiusProperty
@@ -287,18 +324,25 @@ class CodeGeneratorResponse(Message):
 
     @file.setter
     def file(self, value: _NebiusIterable[_NebiusType_google_protobuf_compiler_CodeGeneratorResponse_File_d84d1c29] | None) -> None:
+        """Set or clear the generated ``file`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_CODEGENERATORRESPONSE_FILE, value)
 
     __PY_TO_PB2__ = {'error': 'error', 'supported_features': 'supported_features', 'minimum_edition': 'minimum_edition', 'maximum_edition': 'maximum_edition', 'file': 'file', 'File': 'File', 'Feature': 'Feature'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_compiler_CodeGeneratorResponse_d337f47d = CodeGeneratorResponse
 
 
 class Version(Message):
     __PROTO_FULL_NAME__ = 'google.protobuf.compiler.Version'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.protobuf.compiler.Version')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -309,6 +353,7 @@ class Version(Message):
         patch: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         suffix: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if major is not _NEBIUS_UNSET:
             values['major'] = major
@@ -327,6 +372,7 @@ class Version(Message):
 
     @major.setter
     def major(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``major`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_VERSION_MAJOR, value)
 
     @_NebiusProperty
@@ -336,6 +382,7 @@ class Version(Message):
 
     @minor.setter
     def minor(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``minor`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_VERSION_MINOR, value)
 
     @_NebiusProperty
@@ -345,6 +392,7 @@ class Version(Message):
 
     @patch.setter
     def patch(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``patch`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_VERSION_PATCH, value)
 
     @_NebiusProperty
@@ -354,9 +402,11 @@ class Version(Message):
 
     @suffix.setter
     def suffix(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``suffix`` field."""
         self._set_field(_GOOGLE_PROTOBUF_COMPILER_VERSION_SUFFIX, value)
 
     __PY_TO_PB2__ = {'major': 'major', 'minor': 'minor', 'patch': 'patch', 'suffix': 'suffix'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_protobuf_compiler_Version_c886dc83 = Version
 
 # @@nebius-section:fields@@

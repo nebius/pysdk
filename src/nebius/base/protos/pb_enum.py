@@ -14,7 +14,13 @@ if TYPE_CHECKING:
 
 
 class Enum(IntEnum):
-    """IntEnum subclass that can resolve its protobuf descriptor."""
+    """Integer enum that can resolve its protobuf descriptor.
+
+    :cvar __PROTO_FULL_NAME__: Fully qualified protobuf enum name.
+    :cvar __REGISTRY__: Registry for the enum and its descriptor.
+    :cvar __PROTO_DESCRIPTOR__: Enum descriptor from the registry.
+    :cvar __PB2_DESCRIPTOR__: Alias for code that expects a protobuf descriptor.
+    """
 
     __PROTO_FULL_NAME__: ClassVar[str]
     __REGISTRY__: ClassVar[Registry | None] = None

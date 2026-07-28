@@ -36,10 +36,11 @@ class Client:
     class attribute and expose RPC methods that in turn call
     :meth:`request` to construct a :class:`nebius.aio.request.Request`.
 
-    :cvar __service_name__: the fully-qualified service name used in RPC
-        routing (string).
-    :cvar __service_deprecation_details__: optional deprecation message
-        emitted as a runtime warning when the client is constructed.
+    :cvar __service_name__: Fully qualified service name for RPC routes.
+    :cvar __api_service_name__: Optional API gateway name for service routes.
+    :cvar __registry__: Descriptor registry for request metadata.
+    :cvar __service_deprecation_details__: Optional deprecation message. The
+        client writes this message to the warning log when it starts.
 
     :param channel: a channel implementing :class:`ClientChannelInterface`
     :type channel: :class:`ClientChannelInterface`
