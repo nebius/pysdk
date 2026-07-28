@@ -1,9 +1,8 @@
-"""Convenience bearer for federated credentials.
+"""Exchange federated credentials for renewable access tokens.
 
-This module exposes :class:`FederatedCredentialsBearer`, a convenience
-wrapper that composes the low-level federated credentials reader/token
-requester implementations with the exchangeable and renewable bearers
-to provide a ready-to-use bearer producing short-lived access tokens.
+:class:`FederatedCredentialsBearer` combines a federated-credentials reader
+or requester with exchangeable and renewable bearers. It supplies short-lived
+access tokens.
 
 The class accepts one of several inputs for ``federated_credentials``:
 
@@ -16,12 +15,10 @@ The class accepts one of several inputs for ``federated_credentials``:
 - a string path pointing to a file understood by
   :class:`nebius.base.service_account.federated_credentials.FileFederatedCredentials`.
 
-The resulting bearer performs the token exchange via
-:class:`nebius.aio.token.exchangeable.Bearer` and adds background
-refresh via :class:`nebius.aio.token.renewable.Bearer`. When the
-underlying credentials originate from a file the resulting bearer is
-wrapped in a :class:`nebius.aio.token.token.NamedBearer` to provide a
-stable diagnostic name.
+The resulting bearer uses :class:`nebius.aio.token.exchangeable.Bearer` for
+the token exchange. It uses :class:`nebius.aio.token.renewable.Bearer` for
+background refresh. For file credentials, a
+:class:`nebius.aio.token.token.NamedBearer` supplies a stable diagnostic name.
 
 Example
 -------
@@ -66,14 +63,11 @@ from nebius.base.service_account.federated_credentials import (
 class FederatedCredentialsBearer(ParentBearer):
     """Bearer that exchanges federated credentials for access tokens.
 
-    The class composes an :class:`ExchangeableBearer` (performs the
-    token exchange) wrapped by :class:`RenewableBearer` (background
-    refresh). It is a convenience wrapper for the common case where a
-    consumer has federated credentials stored in a file or provided via
-    a reader.
+    :class:`ExchangeableBearer` performs the token exchange.
+    :class:`RenewableBearer` wraps it and refreshes tokens in the background.
+    Use this class with credentials from a file or reader.
 
-    If the federated credentials originate from a file, the resulting
-    bearer is wrapped in a :class:`NamedBearer` to provide a stable cacheable name.
+    For file credentials, :class:`NamedBearer` supplies a stable cache name.
 
     Parameters are the same as for the underlying components and are
     passed through accordingly. See the examples in the module
@@ -112,11 +106,14 @@ class FederatedCredentialsBearer(ParentBearer):
         # Create a future for the channel that will be resolved with the SDK
         channel_future = Future()
 
-        sdk = SDK(credentials=FederatedCredentialsBearer(
-            federated_credentials="/path/to/fed-credentials.json",
-            service_account_id="your-service-account-id",
-            channel=channel_future,
-        ))
+        sdk = SDK(
+            credentials=FederatedCredentialsBearer(
+                federated_credentials="/path/to/fed-credentials.json",
+                service_account_id="your-service-account-id",
+                channel=channel_future,
+            ),
+            user_agent_prefix="example-application/1.0",
+        )
 
         # Resolve the future with the newly created SDK
         channel_future.set_result(sdk)
@@ -190,8 +187,8 @@ class FederatedCredentialsBearer(ParentBearer):
     def set_channel(self, channel: ClientChannelInterface) -> None:
         """Attach a concrete gRPC channel to the underlying exchangeable.
 
-        This is a simple convenience method that forwards the channel to
-        the embedded :class:`ExchangeableBearer`.
+        This method gives the channel to the embedded
+        :class:`ExchangeableBearer`.
         """
         self._exchangeable.set_channel(channel)
 
@@ -199,7 +196,7 @@ class FederatedCredentialsBearer(ParentBearer):
     def wrapped(self) -> "ParentBearer|None":
         """Return the outermost wrapped bearer (typically the renewable source).
 
-        :returns: The wrapped :class:`ParentBearer` used by this convenience wrapper.
+        :returns: The wrapped :class:`ParentBearer`.
         """
         return self._source
 

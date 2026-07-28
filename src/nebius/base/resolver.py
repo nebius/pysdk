@@ -1,20 +1,18 @@
 """Service address resolvers used by the SDK and generated clients.
 
-This module defines a small composable resolver abstraction used to map a
-logical service identifier (for example the fully-qualified protobuf service
-name) to a concrete network address or address template used for routing RPCs.
+Resolvers map a logical service ID to a network address or address template.
+For example, a logical ID can be a fully qualified Protocol Buffers service
+name.
 
 Common usage patterns:
 
 - `Single` maps a single explicit id to an address.
 - `Prefix` maps any service id beginning with a prefix to an address.
-- `Basic` is a convenience factory that chooses `Single` or `Prefix`
-    depending on whether the provided id ends with a ``*``.
+- `Basic` selects `Single` or `Prefix` according to a final ``*`` in the ID.
 - `Constant` always returns the same address regardless of id.
-- `Conventional` implements a convention-based mapping used by the SDK
-    (parses service names like ``nebius.<service>...Service`` and returns
-    ``<service>.{domain}`` by default; it also honors a protobuf extension named
-    ``api_service_name`` when present).
+- `Conventional` maps names such as ``nebius.<service>...Service``. By
+  default, it returns ``<service>.{domain}``. The ``api_service_name``
+  Protocol Buffers extension can replace the service name.
 - `Chain` composes multiple resolvers and returns the first match.
 - `Cached` memoizes results from another resolver.
 - `TemplateExpander` applies simple string substitutions on resolved
@@ -52,12 +50,10 @@ class UnknownServiceError(SDKError):
 class Resolver(ABC):
     """Abstract resolver interface.
 
-    Implementations map a logical ``service_id`` (typically a fully
-    qualified protobuf service name such as ``nebius.foo.v1.FooService``) to a
-    concrete address string. Implementations MUST raise
-    :class:`UnknownServiceError` when they do not match the provided
-    ``service_id``; callers can compose resolvers (for example via
-    :class:`Chain`) to try multiple strategies.
+    Implementations map ``service_id`` to an address. The ID is usually a
+    fully qualified Protocol Buffers service name. An implementation must
+    raise :class:`UnknownServiceError` if it does not match the ID. Use
+    :class:`Chain` to try multiple resolvers.
 
     The returned address is typically a hostname or an address template
     (for example ``service.{domain}``) which may be further processed by
@@ -77,7 +73,7 @@ class Resolver(ABC):
 
 
 class Basic(Resolver):
-    """Convenience resolver that selects `Single` or `Prefix`.
+    """Select a `Single` or `Prefix` resolver.
 
     If the provided `id` ends with a literal ``*`` the instance delegates to a
     :class:`Prefix` resolver (with the trailing star removed). Otherwise it
@@ -204,9 +200,8 @@ class Conventional(Resolver):
     service short-name (``foo`` in the example) and returns a templated
     address ``<service>.{domain}``.
 
-    If the protobuf service descriptor defines the ``api_service_name``
-    extension the extension value will be used as the service short-name
-    instead of the second dot-separated path element.
+    If the service descriptor has ``api_service_name``, the resolver uses its
+    value as the short name. Otherwise, it uses the second path element.
     """
 
     def resolve(self, service_id: str) -> str:
@@ -306,10 +301,9 @@ class Cached(Resolver):
 class TemplateExpander(Resolver):
     """Resolver that applies simple string substitutions to results.
 
-    The resolver delegates to an underlying resolver and then replaces all
-    occurrences of each key in ``substitutions`` with its corresponding
-    value in the returned address string. This is intended for simple
-    templating (for example replacing ``{domain}``).
+    The underlying resolver returns an address. This resolver replaces each
+    key in ``substitutions`` with its value. Use it for simple templates such
+    as ``{domain}``.
 
     :param substitutions: Mapping of substrings to replace in the resolved
         address.

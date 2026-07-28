@@ -1,7 +1,6 @@
 """Protobuf helper utilities for the Nebius SDK.
 
-This package provides lightweight helpers that wrap protobuf descriptors and
-generated message classes used throughout the SDK. The helpers focus on
-introspection (descriptor lookups) and convenience wrappers rather than
-implementing the protobuf runtime itself.
+This package supplies small wrappers for Protocol Buffers descriptors and
+generated message classes. The wrappers support descriptor lookup and related
+operations. They do not implement the Protocol Buffers runtime.
 """

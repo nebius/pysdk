@@ -37,13 +37,12 @@ def _generate_random_string(length: int = 8) -> str:
 
 
 def _get_config_file_path() -> tuple[str | None, bool]:
-    """
-    Get the config file path from environment variable.
+    """Get the configuration file path from an environment variable.
 
     Returns:
-        tuple: (config_file_path, is_temp_file)
-        - config_file_path: Path to the config file or None if not available
-        - is_temp_file: True if the file was created from base64 content
+        A tuple with the file path and a temporary-file flag. The path is
+        ``None`` if no file is available. The flag is true for decoded Base64
+        content.
     """
     # First try NEBIUS_E2E_CONFIG_FILE
     config_file = os.environ.get("NEBIUS_E2E_CONFIG_FILE")

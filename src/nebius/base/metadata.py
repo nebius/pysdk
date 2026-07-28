@@ -13,8 +13,8 @@ class Authorization:
 class Metadata(MutableSequence[tuple[str, str]]):
     """Mutable metadata collection with case-insensitive keys.
 
-    This container normalizes keys to lowercase and supports convenient
-    indexing by integer, slice, or key string:
+    This container changes keys to lowercase. You can index it by an integer,
+    slice, or key string:
 
     - ``metadata[i]`` returns the key/value tuple at index ``i``.
     - ``metadata[i:j]`` returns a list of key/value tuples.

@@ -18,11 +18,9 @@ HEADER = "authorization"
 class TokenAuthenticator(Authenticator):
     """Per-request authenticator that injects a bearer token.
 
-    The authenticator uses a :class:`token.Receiver` to fetch a token which
-    is then written into the request metadata under the header named by
-    :data:`HEADER` as ``Bearer <token>``. The instance holds a reference to
-    the receiver and delegates retry decisions to the receiver via
-    :meth:`token.Receiver.can_retry`.
+    The authenticator uses a :class:`token.Receiver` to get a token. It writes
+    ``Bearer <token>`` to the metadata header named by :data:`HEADER`. It uses
+    :meth:`token.Receiver.can_retry` for retry decisions.
 
     :param receiver: Token receiver used to fetch tokens for each request.
     :type receiver: :class:`token.Receiver`
@@ -89,8 +87,7 @@ class TokenProvider(Provider):
     Example
     -------
 
-    Construct a bearer-backed provider and (illustratively) pass it to the
-    SDK via the credentials parameter::
+    Give a bearer-backed provider to the SDK through ``credentials``::
 
         from nebius.aio.token.static import EnvBearer
         from nebius.aio.authorization.token import TokenProvider
@@ -98,7 +95,10 @@ class TokenProvider(Provider):
 
         bearer = EnvBearer("NEBIUS_IAM_TOKEN")
         provider = TokenProvider(bearer)
-        sdk = SDK(credentials=provider)  # illustrative only
+        sdk = SDK(
+            credentials=provider,
+            user_agent_prefix="example-application/1.0",
+        )
 
     """
 

@@ -1,10 +1,9 @@
 """CLI-style configuration reader used by the SDK.
 
-This module provides a small :class:`Config` helper to read Nebius CLI-style
-configuration files and translate profile entries into credential bearers
-that the SDK can use. It supports multiple auth types such as federation and
-service-account credentials and will prefer an environment-supplied token if
-present.
+The :class:`Config` helper reads Nebius CLI-style configuration files. It
+converts profile entries to SDK credential bearers. It supports federation
+and service-account credentials. An environment token has priority when it is
+available.
 
 The primary entrypoint is :class:`Config.get_credentials` which returns a
 credentials object ready to be consumed by :class:`nebius.aio.channel.Channel`.
@@ -63,10 +62,9 @@ class NoParentIdError(ConfigError):
 class Config:
     """Reader for Nebius CLI-style configuration files.
 
-    The :class:`Config` class locates and parses a YAML-based configuration
-    file (by default under ``~/.nebius/config.yaml``) and exposes convenience
-    methods to obtain the default parent id, endpoint, and credentials
-    configured for the active profile.
+    :class:`Config` finds and parses a YAML configuration file. The default
+    file is ``~/.nebius/config.yaml``. Its methods get the active profile's
+    default parent ID, endpoint, and credentials.
 
     :param client_id: Optional client id used for federation flows.
     :type client_id: optional `str`
@@ -119,7 +117,10 @@ class Config:
         from nebius.aio.cli_config import Config
 
         # Initialize SDK with CLI config reader
-        sdk = SDK(config_reader=Config())
+        sdk = SDK(
+            config_reader=Config(),
+            user_agent_prefix="example-application/1.0",
+        )
 
         # The config reader will automatically handle authentication
         # based on the active CLI profile
@@ -357,12 +358,9 @@ class Config:
            ``service account`` and will create the corresponding bearer
            implementation.
 
-        The returned object is suitable to be consumed by
-        :class:`nebius.aio.channel.Channel` and may be one of
-        :class:`nebius.aio.authorization.authorization.Provider`, a
-        :class:`nebius.aio.token.token.Bearer`, a :class:`TokenRequester`
-        reader, a low-level :class:`nebius.aio.token.token.Token`, or a raw
-        string token depending on the profile and environment.
+        :class:`nebius.aio.channel.Channel` accepts the returned object. Its
+        type depends on the profile and environment. It can be a provider,
+        bearer, token requester, low-level token, or raw token string.
 
         :param channel: channel instance used for network-bound credential flows
         :type channel: :class:`ClientChannelInterface`

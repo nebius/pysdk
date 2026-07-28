@@ -1,12 +1,9 @@
-"""Token Sanitizer Module.
+"""Remove sensitive parts from tokens.
 
-This module provides functionality for sanitizing sensitive tokens such as access tokens
-and credentials by masking their signatures or sensitive parts without masking the
-non-sensitive but useful parts. It supports various token formats including Nebius IAM
-tokens and JWT tokens.
-
-The module defines token versions with their prefixes, delimiters, and signature
-positions, allowing for flexible sanitization based on token type.
+This module masks signatures and other sensitive token parts. It keeps useful
+nonsensitive parts visible. It supports Nebius IAM tokens and JWT tokens.
+Token-version definitions specify prefixes, delimiters, and signature
+positions.
 """
 
 from abc import ABC, abstractmethod
@@ -22,12 +19,10 @@ NO_SIGNATURE: int = -1
 
 
 class TokenVersion:
-    """
-    Represents a token version with its structural properties.
+    """Describe the structure of a token version.
 
-    This class encapsulates the characteristics of a token format, including
-    the prefix, delimiter used to separate parts, the position of the signature
-    within the token parts, and the expected number of token parts.
+    The structure contains a prefix, a delimiter, a signature position, and an
+    expected number of token parts.
 
     :ivar prefix: The prefix that identifies this token version.
     :ivar delimiter: The delimiter used to split the token into parts.
@@ -66,10 +61,9 @@ ACCESS_TOKEN_VERSIONS: dict[str, TokenVersion] = {
     ),
 }
 """
-Predefined token formats for access tokens.
+Supported access-token formats.
 
-This dictionary maps version names to TokenVersion objects for supported
-access token formats.
+The keys are version names. The values describe each format.
 """
 
 CREDENTIALS_VERSIONS: dict[str, TokenVersion] = {
@@ -82,19 +76,17 @@ CREDENTIALS_VERSIONS: dict[str, TokenVersion] = {
     ),
 }
 """
-Predefined token formats for all types of credentials.
+Supported credential formats.
 
-This dictionary includes all access token versions plus additional credential
-formats like DE1 and JWT.
+The mapping contains all access-token formats, DE1, and JWT.
 """
 
 
 class TokenSanitizer:
-    """
-    Main class for sanitizing tokens based on extracted version information.
+    """Mask sensitive token parts according to the token version.
 
-    This class uses a TokenVersionExtractor to identify the token format and
-    applies appropriate sanitization rules to mask sensitive parts like signatures.
+    A :class:`TokenVersionExtractor` identifies the token format. The
+    sanitizer then masks sensitive parts such as signatures.
 
     :ivar extractor: The extractor used to determine token version and recognition
         status.
@@ -107,8 +99,7 @@ class TokenSanitizer:
 
     @staticmethod
     def access_token_sanitizer() -> "TokenSanitizer":
-        """
-        Create a TokenSanitizer configured for access tokens.
+        """Create a sanitizer for access tokens.
 
         :returns: A sanitizer instance with access token versions.
         """
@@ -116,16 +107,14 @@ class TokenSanitizer:
 
     @staticmethod
     def credentials_sanitizer() -> "TokenSanitizer":
-        """
-        Create a TokenSanitizer configured for credentials.
+        """Create a sanitizer for credentials.
 
         :returns: A sanitizer instance with credentials versions.
         """
         return TokenSanitizer(DefaultTokenVersionExtractor(CREDENTIALS_VERSIONS))
 
     def sanitize(self, token: str) -> str:
-        """
-        Sanitize a token by masking its sensitive parts.
+        """Mask the sensitive parts of a token.
 
         :param token: The token string to sanitize.
         :returns: The sanitized token with sensitive parts masked.
@@ -149,8 +138,7 @@ class TokenSanitizer:
         return version.delimiter.join(token_parts)
 
     def is_supported(self, token: str) -> bool:
-        """
-        Check if a token is supported by this sanitizer.
+        """Return whether this sanitizer supports the token format.
 
         :param token: The token string to check.
         :returns: True if the token format is supported, False otherwise.
@@ -163,11 +151,10 @@ class TokenSanitizer:
 
 
 def sanitize_no_signature(token: str, prefix: str) -> str:
-    """
-    Sanitize tokens without signatures by limiting visible payload length.
+    """Limit the visible payload of a token that has no signature.
 
-    For tokens without a signature, this function shows the full token if it's
-    short enough, otherwise masks the excess with MASK_STRING.
+    Return the complete token if its payload is not too long. Otherwise,
+    replace the end of the payload with :data:`MASK_STRING`.
 
     :param token: The full token string.
     :param prefix: The prefix of the token version.
@@ -180,11 +167,9 @@ def sanitize_no_signature(token: str, prefix: str) -> str:
 
 
 def sanitize_unrecognized(token: str) -> str:
-    """
-    Sanitize unrecognized tokens by masking after a certain length.
+    """Limit the visible part of an unrecognized token.
 
-    For tokens that don't match any known format, this function shows a
-    portion of the token and masks the rest.
+    Show the first part of the token and mask the remaining part.
 
     :param token: The token string to sanitize.
     :returns: The sanitized token.
@@ -195,17 +180,14 @@ def sanitize_unrecognized(token: str) -> str:
 
 
 class TokenVersionExtractor(ABC):
-    """
-    Abstract base class for extracting token version from a token string.
+    """Define the interface that identifies a token version.
 
-    Subclasses must implement the extract method to identify the token format
-    and return the corresponding TokenVersion along with recognition status.
+    Subclasses must implement :meth:`extract`.
     """
 
     @abstractmethod
     def extract(self, token: str) -> tuple[TokenVersion, bool]:
-        """
-        Extract the token version from a token string.
+        """Get the token version from a token string.
 
         :param token: The token string to analyze.
         :returns: A tuple containing the TokenVersion and a boolean indicating
@@ -215,11 +197,9 @@ class TokenVersionExtractor(ABC):
 
 
 class DefaultTokenVersionExtractor(TokenVersionExtractor):
-    """
-    Default implementation of TokenVersionExtractor using predefined versions.
+    """Identify token versions from a predefined mapping.
 
-    This extractor checks if the token starts with any of the predefined prefixes
-    and returns the matching TokenVersion.
+    The extractor returns the version with a prefix that matches the token.
 
     :ivar versions: Dictionary of available token versions.
 
@@ -230,8 +210,7 @@ class DefaultTokenVersionExtractor(TokenVersionExtractor):
         self.versions: dict[str, TokenVersion] = versions
 
     def extract(self, token: str) -> tuple[TokenVersion, bool]:
-        """
-        Extract the token version by matching prefixes.
+        """Get the token version that has a matching prefix.
 
         :param token: The token string to analyze.
         :returns: The matching TokenVersion and True if recognized, otherwise

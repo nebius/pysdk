@@ -25,7 +25,10 @@ and caches them for five minutes::
     from nebius.sdk import SDK
 
     bearer = PureFileCacheBearer('my-service')
-    sdk = SDK(credentials=bearer)
+    sdk = SDK(
+        credentials=bearer,
+        user_agent_prefix="example-application/1.0",
+    )
 
 """
 
@@ -137,7 +140,10 @@ class PureFileCacheBearer(ParentBearer):
         from nebius.sdk import SDK
 
         bearer = PureFileCacheBearer('my-service')
-        sdk = SDK(credentials=bearer)
+        sdk = SDK(
+            credentials=bearer,
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(

@@ -1,11 +1,9 @@
 """Static token bearer and receiver implementations.
 
-This module contains simple bearer and receiver implementations useful for
-local testing or when a fixed access token is made available (for example via
-an environment variable). The ``EnvBearer`` reads the token from an
-environment variable (by default :data:`nebius.base.constants.TOKEN_ENV`) and
-``Bearer`` accepts a pre-configured :class:`Token` instance or raw token
-string.
+Use these bearer and receiver implementations for tests or fixed access
+tokens. ``EnvBearer`` reads an environment variable. By default, it reads
+:data:`nebius.base.constants.TOKEN_ENV`. ``Bearer`` accepts a configured
+:class:`Token` or a raw token string.
 
 Examples
 --------
@@ -58,8 +56,8 @@ class Receiver(ParentReceiver):
 
     This receiver is useful when the token is known in advance (for
     example embedded in configuration or provided via an environment
-    variable). The receiver simply returns the supplied :class:`Token` and
-    never indicates that a retry would be useful.
+    variable). The receiver returns the supplied :class:`Token` and never
+    permits a retry.
 
     :param token: Token instance to be returned by :meth:`_fetch`.
     """
@@ -124,7 +122,10 @@ class Bearer(ParentBearer):
         from nebius.sdk import SDK
         from nebius.aio.token.static import Bearer
 
-        sdk = SDK(credentials=Bearer("my-static-token"))
+        sdk = SDK(
+            credentials=Bearer("my-static-token"),
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(self, token: Token | str) -> None:
@@ -163,7 +164,10 @@ class EnvBearer(Bearer):
         from nebius.aio.token.static import EnvBearer
 
         os.environ["NEBIUS_IAM_TOKEN"] = "token-from-env"
-        sdk = SDK(credentials=EnvBearer())
+        sdk = SDK(
+            credentials=EnvBearer(),
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(self, env_var_name: str = TOKEN_ENV) -> None:

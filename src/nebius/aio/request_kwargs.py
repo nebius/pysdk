@@ -1,4 +1,4 @@
-"""Request arguments that are passed in all the SDK requests.
+"""Define keyword arguments that apply to all SDK requests.
 
 Usage::
 
@@ -44,28 +44,27 @@ class StreamRequestKwargs(TypedDict, total=False):
 
 
 class RequestKwargsForOperation(TypedDict, total=False):
-    """Encapsulates the general keyword arguments for all requests, including operation
-    wait requests, where some parameters are overridden or renamed. The full set of
-    parameters is available in :class:`RequestKwargs`.
+    """Define common keyword arguments for requests and operation waits.
+
+    Operation waits replace or rename some :class:`RequestKwargs` parameters.
+    See that class for the complete parameter set.
 
     :ivar metadata: Optional initial gRPC metadata to attach to the call.
     :type metadata: either :class:`nebius.base.metadata.Metadata`
         or list of ``(str, str)`` tuples.
 
-    :ivar auth_timeout: Timeout budget (seconds) reserved for authorization
-        flows plus the request execution. When provided the total authorization
-        + request time will not exceed this value.
+    :ivar auth_timeout: Maximum time in seconds for authorization and request
+        execution. The total time does not exceed this value.
         Default is :data:`nebius.aio.request.DEFAULT_AUTH_TIMEOUT`.
-        Provide `None` for infinite timeout.
-    :type auth_timeout: optional `float` or `None`
+        Set ``None`` for no timeout.
+    :type auth_timeout: optional ``float`` or ``None``
 
-    :ivar auth_options: Optional dictionary forwarded to the authenticator
-        when performing authorization. See the authenticator documentation for
+    :ivar auth_options: Optional dictionary that the request gives to the
+        authenticator. See the authenticator documentation for
         provider-specific keys.
     :type auth_options: optional ``dict[str, str]``
 
-    :ivar credentials: Optional gRPC :class:`CallCredentials` to use for the
-        RPC invocation.
+    :ivar credentials: Optional gRPC :class:`CallCredentials` for the RPC.
     :type credentials: optional :class:`grpc.CallCredentials`
 
     :ivar compression: Optional gRPC compression setting for the RPC.
@@ -80,20 +79,21 @@ class RequestKwargsForOperation(TypedDict, total=False):
 
 
 class RequestKwargs(RequestKwargsForOperation, total=False):
-    """Encapsulates the general keyword arguments for any request.
+    """Define common keyword arguments for all requests.
 
-    :ivar timeout: Overall timeout (seconds) applied to the request execution
-        portion. Or `None` for infinite timeout.
+    :ivar timeout: Maximum time in seconds for request execution.
+        Set ``None`` for no timeout.
         Default is :data:`nebius.aio.request.DEFAULT_TIMEOUT`.
-    :type timeout: optional `float` or `None`
+    :type timeout: optional ``float`` or ``None``
 
-    :ivar retries: Number of retry attempts for transient failures. Default is 3.
-    :type retries: optional `int` or `None`
+    :ivar retries: Number of retry attempts after temporary failures.
+        The default value is 3.
+    :type retries: optional ``int`` or ``None``
 
-    :ivar per_retry_timeout: Timeout (seconds) applied to each retry attempt
-        individually. You can pass `None` for infinite timeout. Default is
+    :ivar per_retry_timeout: Maximum time in seconds for each retry attempt.
+        Set ``None`` for no timeout. The default value is
         :data:`nebius.aio.request.DEFAULT_PER_RETRY_TIMEOUT`.
-    :type per_retry_timeout: optional `float` or `None`
+    :type per_retry_timeout: optional ``float`` or ``None``
     """
 
     timeout: float | None | UnsetType

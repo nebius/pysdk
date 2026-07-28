@@ -113,9 +113,9 @@ class LoopError(SDKError):
     """Exception raised when a synchronous helper is used incorrectly with
     an asyncio event loop.
 
-    This error is raised when the code attempts to perform a synchronous
-    operation (for example, calling :meth:`Channel.run_sync`) while the
-    targeted asyncio event loop is already running in the current thread.
+    A synchronous operation raises this error if its asyncio event loop is
+    already running in the current thread. :meth:`Channel.run_sync` is one
+    example of such an operation.
 
     The exception subclasses :class:`SDKError` so callers
     catching SDK-related errors will also catch this condition.
@@ -138,10 +138,9 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
     """A small callable wrapper that binds RPC calls to a Channel-managed
     address channel.
 
-    Instances of this class behave like a gRPC :class:`UnaryUnaryMultiCallable`
-    but ensure that the underlying transport channel is obtained from the
-    SDK :class:`Channel` pool and returned (or discarded) when the RPC
-    completes.
+    Instances act as gRPC :class:`UnaryUnaryMultiCallable` objects. They get
+    the transport channel from the SDK :class:`Channel` pool. When the RPC is
+    complete, they return or discard the transport channel.
     """
 
     def __init__(
@@ -180,9 +179,9 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
 
         This method resolves the concrete address for ``self._method`` and
         requests an :class:`AddressChannel` from the parent :class:`Channel`.
-        The returned :class:`grpc.aio.UnaryUnaryCall` has a done-callback
-        attached that returns or discards the address channel back to the
-        channel pool when the RPC completes.
+        A completion callback on the returned
+        :class:`grpc.aio.UnaryUnaryCall` returns or discards the address
+        channel after the RPC.
 
         :param request: The protobuf request message to send.
         :param timeout: Optional per-call timeout in seconds.
@@ -231,9 +230,8 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
 class NoCredentials:
     """Marker type used to explicitly disable authorization.
 
-    When this value is supplied as the ``credentials`` parameter to
-    :class:`Channel`, the channel will not attempt to acquire or attach any
-    authorization tokens for outgoing requests.
+    Give this value as the :class:`Channel` ``credentials`` parameter to
+    disable authorization tokens for outgoing requests.
     """
 
 
@@ -348,38 +346,32 @@ def set_user_agent_option(
 
 
 class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
-    """A high-level gRPC channel manager used by the SDK.
+    """Manage high-level gRPC channels for the SDK.
 
     Responsibilities and behavior
     ==============================
 
-    - Resolve service names to addresses and create underlying gRPC channels for
-        those addresses.
-    - Maintain a small pool of free channels per address to reuse connections and
-        reduce churn (see ``max_free_channels_per_address`` init param).
-    - Provide helpers to attach authorization credentials and manage token
-        providers, including synchronous and asynchronous token acquisition via
-        :meth:`get_token` and :meth:`get_token_sync`.
-    - Expose convenience wrappers for unary-unary RPCs that ensure the address
-        channel is returned to the pool when the RPC completes (see
-        :class:`NebiusUnaryUnaryMultiCallable`).
-    - Offer both async and sync usage models. Use the async context manager
-        (``async with Channel(...)``) or call ``close()``/``sync_close()`` to
-        gracefully shut down resources.
+    - Resolve service names and create gRPC channels for the resolved addresses.
+    - Keep a small pool for each address to reuse connections. See
+      ``max_free_channels_per_address``.
+    - Attach authorization credentials and manage token providers.
+    - Get tokens with :meth:`get_token` or :meth:`get_token_sync`.
+    - Return unary-unary RPC channels to the pool after use. See
+      :class:`NebiusUnaryUnaryMultiCallable`.
+    - Support asynchronous and synchronous use.
+    - Use ``async with Channel(...)``, ``close()``, or ``sync_close()`` to
+      release resources.
 
     Important notes
     ---------------
 
-    - The channel owns a configurable asyncio event loop (optionally provided at
-        construction). When calling ``run_sync`` from within an already running
-        loop, a :class:`LoopError` is raised unless a separate loop was supplied at
-        initialization.
-    - The class cooperates with several SDK subsystems (token bearers,
-        authorization providers, idempotency interceptor, and a resolver) and
-        wires them together during initialization.
-    - Public helper methods include: ``get_token``/``get_token_sync``,
-        ``run_sync``, ``bg_task``, ``get_channel_by_method``, and
-        ``create_address_channel``.
+    - The channel owns a configurable asyncio event loop.
+    - ``run_sync`` raises :class:`LoopError` in a running loop unless
+      initialization supplied a separate loop.
+    - Initialization connects token bearers, authorization providers, the
+      idempotency interceptor, and a resolver.
+    - Public methods include ``get_token``, ``get_token_sync``, ``run_sync``,
+      ``bg_task``, ``get_channel_by_method``, and ``create_address_channel``.
 
     Usage example
     =============
@@ -387,7 +379,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     Async usage (recommended)::
 
         async with Channel(...) as channel:
-            # use channel or pass it to generated service clients
+            # Use the channel or give it to generated service clients.
             pass
 
     Synchronous usage::
@@ -424,10 +416,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     :type user_agent_prefix: optional str
 
     :param domain:
-        Optional domain to substitute into service addresses. When not
-        provided the constructor will try to obtain it from the provided
-        ``config_reader`` via ``config_reader.endpoint()``, and fall back
-        to the package-level ``DOMAIN`` constant if still unset.
+        Optional domain for service addresses. If absent, the constructor
+        calls ``config_reader.endpoint()``. If that has no value, it uses
+        the package ``DOMAIN`` constant.
     :type domain: optional str
 
     :param options:
@@ -512,20 +503,21 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     :param keepalive:
         Optional SDK gRPC keepalive configuration. By default the channel uses
-        GoSDK-compatible defaults and reads ``NEBIUS_GRPC_KEEPALIVE_*``
-        environment variables. Pass ``False`` to disable SDK keepalive, or pass
+        defaults compatible with the Nebius SDK for Go. It reads
+        ``NEBIUS_GRPC_KEEPALIVE_*`` environment variables. Set ``False`` to
+        disable SDK keepalive, or give
         :class:`nebius.aio.keepalive.KeepaliveOptions` / a mapping with
         ``time_ms``, ``timeout_ms`` and ``permit_without_stream`` overrides.
-        Explicit keepalive options ignore the environment variables; user
-        channel options passed via ``options`` or ``address_options`` are still
-        applied later and may override individual gRPC keepalive arguments.
+        Explicit keepalive options ignore the environment variables. Channel
+        ``options`` and ``address_options`` apply later and can replace
+        individual keepalive arguments.
     :type keepalive: optional :class:`KeepaliveOptions`, mapping or bool
 
     :param metrics:
         Optional callback object or mapping that receives both config-reader
-        and auth metrics. Supported callback names use Python snake_case, such
-        as ``token_acquire`` and ``credentials_resolve``; camelCase callback
-        names are also accepted for parity with the TypeScript SDK.
+        and authorization metrics. Callback names can use Python snake_case,
+        such as ``token_acquire`` and ``credentials_resolve``. camelCase names
+        support compatibility with the TypeScript SDK.
     :type metrics: optional object or mapping
 
     :param auth_metrics:
@@ -603,15 +595,14 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         federation_invitation_writer: TextIO | None = None,
         federation_invitation_no_browser_open: bool = False,
     ) -> None:
-        """
-        Construct a new Channel instance.
+        """Construct a new :class:`Channel`.
 
-        This constructor wires together the SDK's gRPC channel management,
-        credential providers, resolvers, TLS configuration and interceptors.
+        The constructor connects gRPC channel management, credential
+        providers, resolvers, TLS configuration, and interceptors.
 
-        The Channel is responsible for resolving logical service names to
-        transport addresses, creating and pooling underlying gRPC channels,
-        and exposing helpers for synchronous and asynchronous usage.
+        The channel resolves logical service names to transport addresses. It
+        creates and pools gRPC channels. It also supplies synchronous and
+        asynchronous methods.
 
         :raises SDKError:
             Raised for unsupported credential types or if ``parent_id`` is an
@@ -626,10 +617,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
           3. ``config_reader.get_credentials(...)``
           4. environment-backed bearer (:class:`EnvBearer`)
 
-        - Token readers are wrapped into exchangeable/renewable bearers so
-          that token refresh happens transparently in the background and the
-          Channel adds the bearer to its graceful shutdown set to ensure
-          background tasks are cleaned up on :meth:`close`.
+        - The constructor wraps token readers in exchangeable and renewable
+          bearers. These bearers refresh tokens in the background.
+        - The channel adds each bearer to its shutdown set. :meth:`close`
+          stops their background tasks.
 
         Examples
         --------
@@ -876,11 +867,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         timeout: float | None,
         options: dict[str, str] | None = None,
     ) -> Token:
-        """Synchronously fetch an authorization :class:`Token`.
+        """Get an authorization :class:`Token` synchronously.
 
-        This method is a convenience wrapper around :meth:`get_token` that
-        runs the async fetch on the channel's owned event loop and blocks the
-        calling thread until the token is available or the timeout expires.
+        This method runs :meth:`get_token` on the channel event loop. It
+        blocks the calling thread until a token is available or time expires.
 
         A small grace period is added to the supplied timeout to allow the
         internal token bearer shutdown logic to complete during immediate
@@ -952,15 +942,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
         """Run an awaitable to completion on the channel's event loop.
 
-        This helper supports two usage patterns:
+        This method supports two usage patterns:
 
-        - If the channel was initialized with an explicit event loop, the
-          awaitable will be scheduled on that loop and this function may be
-          safely called from another thread.
-        - If the channel has no provided loop, an internal loop is created or
-          reused and ``run_until_complete`` is used. Calling this from a
-          running loop without providing a separate loop raises
-          :class:`LoopError`.
+        - With an explicit event loop, the method schedules the awaitable on
+          that loop. You can call the method safely from another thread.
+        - Without an explicit loop, the method creates or reuses an internal
+          loop and calls ``run_until_complete``. It raises :class:`LoopError`
+          if the current loop is running.
 
         :param awaitable: The awaitable to run to completion.
         :param timeout: Optional wall-clock timeout in seconds. If provided
@@ -1007,8 +995,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def sync_close(self, timeout: float | None = None) -> None:
         """Synchronously close the channel and wait for graceful shutdown.
 
-        This is a convenience wrapper around :meth:`close` that blocks until
-        the shutdown completes or the optional timeout elapses.
+        This method calls :meth:`close` and blocks until shutdown is complete
+        or time expires.
 
         :param timeout: Optional timeout in seconds for the shutdown.
         :type timeout: optional float
@@ -1021,11 +1009,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     async def close(self, grace: float | None = None) -> None:
         """Gracefully close the channel and all associated background work.
 
-        The channel will stop handing out address channels and will attempt to
-        close any pooled gRPC channels and all registered ``GracefulInterface``
-        objects (for example token bearers). Background tasks started via
-        :meth:`bg_task` are cancelled. Any exceptions raised during shutdown
-        are logged.
+        The channel stops supplying address channels. It closes pooled gRPC
+        channels and registered ``GracefulInterface`` objects, such as token
+        bearers. It cancels tasks from :meth:`bg_task` and logs shutdown
+        exceptions.
 
         :param grace: Optional per-transport grace period passed to underlying
             channel close methods.
@@ -1053,16 +1040,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """Return an operations service stub for the same address as a
         generated service stub.
 
-        Many long-running operations are associated with the service that
-        initiated them. This helper resolves the service address for the
-        provided generated stub class and returns an instantiated
-        :class:`OperationServiceStub` bound to the transport channel for that address.
+        Long-running operations are associated with their source service. This
+        method resolves the address for the generated stub class. It returns
+        an ``OperationServiceStub`` on the transport channel for that
+        address.
 
         :param service_stub_class: Generated gRPC service stub class (the SDK service
             descriptor type).
         :return: An operations service stub bound to the same backend used by
             the provided service.
-        :rtype: :class:`OperationServiceStub`
+        :rtype: ``OperationServiceStub``
         """
 
         addr = self.get_addr_from_stub(service_stub_class)
@@ -1133,10 +1120,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def get_addr_by_method(self, method_name: str) -> str:
         """Return the cached address for a fully-qualified RPC method name.
 
-        If the method-to-service mapping has not been seen before it is
-        computed using :func:`service_from_method_name`
-        and resolved via :meth:`get_addr_from_service_name`. The result is
-        cached to accelerate future lookups.
+        For a new method, call :func:`service_from_method_name` to get its
+        service. Then, resolve it with :meth:`get_addr_from_service_name` and
+        cache the result.
 
         :param method_name: Full RPC method string (``'/package.service/Method'``).
         :return: Resolved address string.
@@ -1207,10 +1193,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def return_channel(self, chan: AddressChannel | None) -> None:
         """Return an :class:`AddressChannel` to the internal pool.
 
-        Channels returned to the pool will be reused by subsequent
-        :meth:`get_channel_by_addr` calls up to the configured
-        ``max_free_channels_per_address`` limit. Channels that are shut down
-        or exceed the pool size are closed asynchronously.
+        Later :meth:`get_channel_by_addr` calls reuse channels in the pool.
+        The pool keeps at most ``max_free_channels_per_address`` channels.
+        The method closes excess or stopped channels asynchronously.
 
         :param chan: The :class:`AddressChannel` to return, or ``None``.
         :raises ChannelClosedError: If the SDK channel has been closed.
@@ -1248,8 +1233,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self.bg_task(chan.channel.close(None))
 
     def get_channel_by_method(self, method_name: str) -> AddressChannel:
-        """Convenience to obtain an :class:`AddressChannel` for an RPC
-        method name.
+        """Get an :class:`AddressChannel` for an RPC method name.
+
         The method resolves the address via :meth:`get_addr_by_method` and
         then calls :meth:`get_channel_by_addr` to obtain the channel.
 
@@ -1299,11 +1284,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def create_address_channel(self, addr: str) -> AddressChannel:
         """Create a new underlying gRPC channel for the given address.
 
-        The method composes options and interceptors, extracts known
-        special options such as ``INSECURE`` and ``COMPRESSION``, and then
-        constructs either a secure or insecure gRPC channel wrapper. The
-        returned object is an :class:`AddressChannel` that pairs the gRPC
-        channel with the resolved address string.
+        The method combines options and interceptors. It extracts special
+        options such as ``INSECURE`` and ``COMPRESSION``. Then, it constructs
+        a secure or insecure gRPC channel wrapper. The returned
+        :class:`AddressChannel` contains the gRPC channel and resolved address.
 
         :param addr: Resolved address string.
         :type addr: str

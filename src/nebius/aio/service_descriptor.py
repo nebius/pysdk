@@ -1,9 +1,7 @@
-"""Service descriptor utilities for gRPC services.
+"""Extract service names from gRPC service stubs.
 
-This module provides classes and functions to extract service names from gRPC
-stub classes and handle service method descriptors in the Nebius async SDK.
-It includes stub implementations that prevent actual calls and an extractor
-channel for introspecting service metadata.
+The placeholder calls prevent network requests. An extractor channel records
+service metadata for the Nebius asynchronous SDK.
 """
 
 from typing import Any, Protocol, TypeVar
@@ -42,11 +40,10 @@ Res = TypeVar("Res", bound=Message)
 
 
 class NotATrueCallError(SDKError):
-    """Error raised when attempting to call a stub method that is not meant to be
-    executed.
+    """Report an attempt to run an introspection stub.
 
-    This exception is used by stub classes in this module to indicate that they
-    are placeholders for service introspection, not actual callable methods.
+    Placeholder stubs raise this error because they record service metadata.
+    They do not make RPCs.
     """
 
     def __init__(self, *args: object) -> None:
@@ -54,10 +51,9 @@ class NotATrueCallError(SDKError):
 
 
 class NoMethodsInServiceError(SDKError):
-    """Error raised when no methods are found in a service stub.
+    """Report a service stub that has no gRPC methods.
 
-    This exception occurs during service name extraction if the stub class
-    does not define any gRPC methods.
+    Service-name extraction raises this error when it cannot record a method.
     """
 
     def __init__(self, *args: object) -> None:
@@ -65,10 +61,9 @@ class NoMethodsInServiceError(SDKError):
 
 
 class StubUU(UnaryUnaryMultiCallable):  # type: ignore[unused-ignore,misc,type-arg]
-    """Stub implementation for unary-unary gRPC methods.
+    """Represent a unary-unary gRPC method during introspection.
 
-    This class raises NotATrueCallError when called, as it is used only for
-    service introspection, not actual RPC execution.
+    A call raises :class:`NotATrueCallError` and does not make an RPC.
     """
 
     def __call__(  # type: ignore
@@ -85,10 +80,9 @@ class StubUU(UnaryUnaryMultiCallable):  # type: ignore[unused-ignore,misc,type-a
 
 
 class StubUS(UnaryStreamMultiCallable):  # type: ignore[unused-ignore,misc,type-arg]
-    """Stub implementation for unary-stream gRPC methods.
+    """Represent a unary-stream gRPC method during introspection.
 
-    This class raises NotATrueCallError when called, as it is used only for
-    service introspection, not actual RPC execution.
+    A call raises :class:`NotATrueCallError` and does not make an RPC.
     """
 
     def __call__(  # type: ignore
@@ -105,10 +99,9 @@ class StubUS(UnaryStreamMultiCallable):  # type: ignore[unused-ignore,misc,type-
 
 
 class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
-    """Stub implementation for stream-unary gRPC methods.
+    """Represent a stream-unary gRPC method during introspection.
 
-    This class raises NotATrueCallError when called, as it is used only for
-    service introspection, not actual RPC execution.
+    A call raises :class:`NotATrueCallError` and does not make an RPC.
     """
 
     def __call__(  # type: ignore[unused-ignore]
@@ -124,10 +117,9 @@ class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
 
 
 class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc]
-    """Stub implementation for stream-stream gRPC methods.
+    """Represent a stream-stream gRPC method during introspection.
 
-    This class raises NotATrueCallError when called, as it is used only for
-    service introspection, not actual RPC execution.
+    A call raises :class:`NotATrueCallError` and does not make an RPC.
     """
 
     def __call__(  # type: ignore[unused-ignore]
@@ -143,11 +135,10 @@ class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc]
 
 
 class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
-    """A mock gRPC channel for extracting service names from stub classes.
+    """Extract service names from gRPC stub classes.
 
-    This channel implementation records the last method called on it and can
-    extract the service name from the method name. It is used to introspect
-    gRPC stub classes without making actual network calls.
+    This channel records the last method that a stub calls. It gets the service
+    name from that method and does not make a network request.
     """
 
     def __init__(self) -> None:
@@ -155,7 +146,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         self._last_method = ""
 
     def get_service_name(self) -> str:
-        """Extract the service name from the last recorded method.
+        """Return the service name from the last recorded method.
 
         :return: The service name.
         :rtype: str
@@ -177,19 +168,19 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: :class:`SerializingFunction` or None
+        :type request_serializer: ``SerializingFunction`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: :class:`DeserializingFunction` or None
+        :type response_deserializer: ``DeserializingFunction`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.
-        :rtype: :class:`UnaryUnaryMultiCallable`
+        :rtype: ``UnaryUnaryMultiCallable``
         """
         self._last_method = method
         return StubUU()
 
     async def close(self, grace: float | None = None) -> None:
-        """Close the channel (no-op for this mock implementation).
+        """Return without an action because this channel has no connection.
 
         :param grace: Optional grace period.
         :type grace: float or None
@@ -197,7 +188,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         pass
 
     async def __aenter__(self) -> "ExtractorChannel":
-        """Enter async context.
+        """Enter the asynchronous context.
 
         :return: Self.
         :rtype: :class:`ExtractorChannel`
@@ -205,7 +196,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         return self
 
     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
-        """Exit async context.
+        """Exit the asynchronous context.
 
         :param exc_type: Exception type.
         :type exc_type: Any
@@ -217,7 +208,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         await self.close(None)
 
     def get_state(self, try_to_connect: bool = False) -> ChannelConnectivity:
-        """Get the channel state (always READY for this mock).
+        """Return ``READY`` for this introspection channel.
 
         :param try_to_connect: Whether to attempt connection.
         :type try_to_connect: bool
@@ -230,7 +221,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         self,
         last_observed_state: ChannelConnectivity,
     ) -> None:
-        """Wait for state change (not implemented for this mock).
+        """Reject a state-change wait for this introspection channel.
 
         :param last_observed_state: The last observed state.
         :type last_observed_state: :class:`ChannelConnectivity`
@@ -239,7 +230,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         raise NotImplementedError("this method has no meaning for this channel")
 
     async def channel_ready(self) -> None:
-        """Wait for channel to be ready (no-op for this mock)."""
+        """Return immediately because this introspection channel is ready."""
         return
 
     def unary_stream(  # type: ignore[override]
@@ -254,13 +245,13 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: :class:`SerializingFunction` or None
+        :type request_serializer: ``SerializingFunction`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: :class:`DeserializingFunction` or None
+        :type response_deserializer: ``DeserializingFunction`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.
-        :rtype: :class:`UnaryStreamMultiCallable`
+        :rtype: ``UnaryStreamMultiCallable``
         """
         self._last_method = method
         return StubUS()
@@ -277,13 +268,13 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: :class:`SerializingFunction` or None
+        :type request_serializer: ``SerializingFunction`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: :class:`DeserializingFunction` or None
+        :type response_deserializer: ``DeserializingFunction`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.
-        :rtype: :class:`StreamUnaryMultiCallable`
+        :rtype: ``StreamUnaryMultiCallable``
         """
         self._last_method = method
         return StubSU()
@@ -300,36 +291,32 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: :class:`SerializingFunction` or None
+        :type request_serializer: ``SerializingFunction`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: :class:`DeserializingFunction` or None
+        :type response_deserializer: ``DeserializingFunction`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.
-        :rtype: :class:`StreamStreamMultiCallable`
+        :rtype: ``StreamStreamMultiCallable``
         """
         self._last_method = method
         return StubSS()
 
 
 class ServiceStub(Protocol):
-    """Protocol for gRPC service stub classes.
-
-    This protocol defines the expected interface for gRPC stub classes
-    that can be instantiated with a channel.
-    """
+    """Define gRPC service stub classes that accept a channel."""
 
     def __init__(self, channel: GRPCChannel) -> None: ...
 
 
 def from_stub_class(stub: type[ServiceStub]) -> str:
-    """Extract the service name from a gRPC stub class.
+    """Return the service name from a gRPC stub class.
 
-    Uses an ExtractorChannel to instantiate the stub and record method calls,
-    then extracts the service name from the recorded method.
+    Create the stub with an :class:`ExtractorChannel`. The channel records a
+    method and returns its service name.
 
     :param stub: The stub class to extract from.
-    :type stub: type[:class:`ServiceStub`]
+    :type stub: ``type[ServiceStub]``
     :return: The service name.
     :rtype: str
     """

@@ -6,9 +6,8 @@ This module exposes two small helper classes:
   resolved address string used to create it. The SDK uses this wrapper to
   keep track of which transport channel corresponds to which logical
   endpoint.
-- :class:`ChannelBase` is a trivial subclass of the gRPC channel type used
-  to annotate and accept SDK-style channels where a :class:`grpc.aio.Channel`
-  is expected.
+- :class:`ChannelBase` is a small subclass of the gRPC channel type. Use it
+  for SDK channels where code expects :class:`grpc.aio.Channel`.
 """
 
 from grpc.aio import Channel as GRPCChannel
@@ -39,9 +38,8 @@ class AddressChannel:
 class ChannelBase(GRPCChannel):
     """Base class used for SDK channel implementations.
 
-    This trivial subclass exists primarily for type clarity: SDK components
-    can accept a :class:`ChannelBase` to indicate they expect a gRPC channel
-    implementing the SDK's extended behavior.
+    SDK components accept this type when they require the SDK extensions to a
+    gRPC channel.
     """
 
     pass

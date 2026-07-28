@@ -4,12 +4,11 @@ This module provides an asynchronous variant of the renewable file-backed
 bearer which uses a :class:`ThrottledTokenCache` and runs a background
 refresh task. The implementation exposes two primary classes:
 
-- :class:`AsynchronousRenewableFileCacheReceiver` -- An async receiver that
-    prefers the cached token when it's fresh and, when required, requests a
-    renewal from the wrapped bearer. It implements a limited retry strategy.
+- :class:`AsynchronousRenewableFileCacheReceiver` -- An asynchronous receiver
+  that uses a fresh cached token. If necessary, it requests a renewal from the
+  wrapped bearer. It uses a limited retry strategy.
 - :class:`AsynchronousRenewableFileCacheBearer` -- A bearer that wraps an
-    existing :class:`nebius.aio.token.token.Bearer` and manages a background
-    refresh loop that persists tokens to a file-backed cache.
+  existing bearer. Its background refresh loop saves tokens to a file cache.
 
 Example
 -------
@@ -237,7 +236,10 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         named_bearer = NamedBearer(custom_bearer, "heavy-load-bearer")
         cached_bearer = AsynchronousRenewableFileCacheBearer(named_bearer)
 
-        sdk = SDK(credentials=cached_bearer)
+        sdk = SDK(
+            credentials=cached_bearer,
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(
@@ -257,9 +259,9 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
     ) -> None:
         """Initialize the asynchronous renewable bearer.
 
-        The constructor constructs a :class:`ThrottledTokenCache` using the
-        source bearer's :attr:`nebius.aio.token.token.Bearer.name` and prepares internal
-        synchronization primitives used by the background refresh loop.
+        The constructor creates a :class:`ThrottledTokenCache` with the source
+        bearer name. It also prepares synchronization objects for the
+        background refresh loop.
 
         :raises ValueError: When the wrapped bearer has no name.
         """

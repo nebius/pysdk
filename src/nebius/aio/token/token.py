@@ -55,9 +55,8 @@ class Token:
       :class:`nebius.base.token_sanitizer.TokenSanitizer` to avoid logging
       secrets in plaintext. When expiration is present, the ISO timestamp and
       a relative ``expires_in`` delta are included in the representation.
-    - ``to_dict`` serializes the token into a mapping with ``token`` and
-      ``expires_at`` keys, where ``expires_at`` is an integer POSIX timestamp
-      (or ``None`` when no expiration was set).
+    - ``to_dict`` returns a mapping with ``token`` and ``expires_at``.
+      ``expires_at`` is an integer POSIX timestamp or ``None``.
 
     :param token: The raw token string. May be empty for an "empty" token.
     :type token: `str`
@@ -204,14 +203,12 @@ class Token:
 class Receiver(ABC):
     """Abstract asynchronous token receiver interface.
 
-    Implementations fetch bearer tokens from an external source (for
-    example an OAuth token endpoint or a local cache) and expose a small API
-    that the request layer uses to obtain tokens for per-request
-    authentication.
+    Implementations get bearer tokens from an external source, such as an
+    OAuth endpoint or local cache. The request layer uses this interface for
+    per-request authentication.
 
-    The receiver is responsible for fetching and refreshing the token for one request
-    only, reflecting the authentication process, while the :class:`Bearer` class
-    supports multiple requests and provides per-request receivers on demand.
+    A receiver gets and refreshes a token for one request. A :class:`Bearer`
+    supports multiple requests and supplies a receiver for each request.
     """
 
     _latest: Token | None
@@ -226,10 +223,9 @@ class Receiver(ABC):
     ) -> Token:
         """Low-level asynchronous fetch implementation.
 
-        Subclasses must implement this method to perform the actual token
-        retrieval. This method is intentionally prefixed with an underscore to
-        indicate it is the minimal primitive; callers should use
-        :meth:`fetch` which records the result in ``_latest``.
+        Subclasses must implement this token-retrieval method. Call
+        :meth:`fetch` instead of this internal method. :meth:`fetch` records
+        the result in ``_latest``.
 
         :param timeout: Optional timeout in seconds for the fetch operation.
         :type timeout: optional `float`
@@ -276,10 +272,9 @@ class Receiver(ABC):
     ) -> bool:
         """Decide whether a failed authentication attempt should be retried.
 
-        Implementations inspect ``err`` (for example gRPC status codes or
-        specific exception types) and optional ``options`` to decide whether a
-        fresh call to :meth:`fetch` is likely to succeed (for example after
-        refreshing credentials).
+        Inspect ``err`` and optional ``options``. Return whether a new
+        :meth:`fetch` call is likely to succeed, for example after credential
+        refresh.
 
         Default implementations should return `False`.
 
@@ -318,7 +313,10 @@ class Bearer(ABC):
             def can_retry(self, err, options=None) -> bool:
                 return False
 
-        sdk = SDK(credentials=MyBearer())
+        sdk = SDK(
+            credentials=MyBearer(),
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     @abstractmethod
@@ -432,7 +430,10 @@ class NamedBearer(Bearer):
         named_bearer = NamedBearer(custom_bearer, "heavy-load-bearer")
         cached_bearer = AsynchronousRenewableFileCacheBearer(named_bearer)
 
-        sdk = SDK(credentials=cached_bearer)
+        sdk = SDK(
+            credentials=cached_bearer,
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(self, wrapped: Bearer, name: str) -> None:

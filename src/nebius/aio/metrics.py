@@ -1,9 +1,9 @@
 """Callback-based SDK metrics helpers.
 
-Metrics are opt-in. Public constructors that accept ``metrics`` or
-``auth_metrics`` expect either an object with callback methods or a mapping
-whose values are callback functions. Python snake_case names are preferred and
-camelCase aliases are accepted for parity with the TypeScript SDK.
+Metrics are optional. The ``metrics`` and ``auth_metrics`` parameters accept
+an object with callback methods or a mapping of callback functions. Use
+Python snake_case names. camelCase aliases support compatibility with the
+TypeScript SDK.
 
 Full SDK/config metrics may implement:
 
@@ -21,11 +21,10 @@ Auth metrics may implement:
 - ``cache_refresh(metric: CacheMetric)``
 - ``cache_invalidate(metric: CacheMetric)``
 
-Callbacks may be synchronous or asynchronous. Awaitable callback results are
-bounded by a short timeout; they are scheduled when emitted from a running event
-loop and waited for when emitted from synchronous code. Callback exceptions are
-swallowed so metrics collection never changes request or authentication
-behavior.
+Callbacks can be synchronous or asynchronous. A short timeout limits awaitable
+callback results. A running event loop schedules these callbacks. Synchronous
+code waits for them. The SDK ignores callback exceptions, so metrics do not
+change request or authentication behavior.
 """
 
 from __future__ import annotations

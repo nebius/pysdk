@@ -1,12 +1,10 @@
 """Helpers for working with long-running operations.
 
-This module provides an :class:`Operation` wrapper that normalizes different
-versions of the service operation protobuf and exposes convenient helpers for
-polling, synchronous waiting, and inspecting operation metadata.
+The :class:`Operation` wrapper normalizes different service-operation
+versions. Its methods poll, wait synchronously, and inspect operation metadata.
 
-The wrapper accepts operation protobufs from either the current v1 API or an
-older v1alpha1 variant and routes calls to the corresponding operation
-service client.
+The wrapper accepts current v1 and older v1alpha1 operation messages. It
+routes calls to the applicable operation-service client.
 """
 
 from __future__ import annotations
@@ -57,10 +55,10 @@ T = TypeVar("T")
 
 
 class CurrentStep:
-    """Wrapper describing a step of an operation progress tracker.
+    """Describe one step in an operation progress tracker.
 
-    This class wraps a ``ProgressTracker.Step`` instance and exposes
-    convenient accessors that normalize missing fields as ``None``.
+    This class wraps a ``ProgressTracker.Step`` instance. Its methods return
+    ``None`` for missing fields.
 
     When a step includes work estimates (``work_done``), the
     :meth:`work_fraction` helper converts them into a usable fraction.
@@ -126,10 +124,10 @@ class CurrentStep:
 
 
 class OperationProgressTracker(Protocol):
-    """Protocol describing operation-level progress tracking.
+    """Define operation-level progress tracking.
 
-    This protocol mirrors the server-side ``ProgressTracker`` object and adds
-    convenience helpers for time and work fractions.
+    This protocol mirrors the server-side ``ProgressTracker`` object. It adds
+    methods for time and work fractions.
 
     The tracker is only available for v1 operations that include a
     ``progress_tracker`` field. For v1alpha1 operations,
@@ -185,22 +183,22 @@ class OperationProgressTracker(Protocol):
 
 
 class Operation(Generic[OperationPb]):
-    """A convenience wrapper around operation protobufs.
+    """Wrap an operation message.
 
     The :class:`Operation` wrapper normalizes
     :class:`nebius.api.nebius.common.v1.Operation`
-    and :class:`nebius.api.nebius.common.v1alpha1.Operation` representations and
-    provides helpers to:
+    and :class:`nebius.api.nebius.common.v1alpha1.Operation` representations.
+    Its methods:
 
     - inspect operation metadata (id, resource_id, timestamps),
     - poll/update the operation state via the corresponding operation
       service, and
     - wait for completion either asynchronously or synchronously.
 
-    The wrapper stores an operation service client bound to a
-    :class:`nebius.aio.constant_channel.Constant` that points at the provided
-    ``source_method`` and reuses the provided ``channel`` for network/auth
-    behaviors.
+    The wrapper stores an operation-service client. A
+    :class:`nebius.aio.constant_channel.Constant` points this client at
+    ``source_method``. The client reuses ``channel`` for network and
+    authorization functions.
 
     :param source_method: the originating ``service.method`` name used to build a
         constant channel for operation management calls
@@ -223,7 +221,10 @@ class Operation(Generic[OperationPb]):
             CreateBucketRequest
         )
 
-        sdk = SDK(config_reader=Config())
+        sdk = SDK(
+            config_reader=Config(),
+            user_agent_prefix="example-application/1.0",
+        )
         service = BucketServiceClient(sdk)
 
         # Create operation from service action
@@ -242,7 +243,10 @@ class Operation(Generic[OperationPb]):
         from nebius.api.nebius.storage.v1 import BucketServiceClient
         from nebius.api.nebius.common.v1 import ListOperationsRequest
 
-        sdk = SDK(config_reader=Config())
+        sdk = SDK(
+            config_reader=Config(),
+            user_agent_prefix="example-application/1.0",
+        )
         service = BucketServiceClient(sdk)
 
         # Get operation service client from the bucket service
@@ -317,9 +321,8 @@ class Operation(Generic[OperationPb]):
     def progress_tracker(self) -> OperationProgressTracker | None:
         """Return an operation progress tracker when available.
 
-        This helper returns ``None`` when the operation does not expose a
-        progress tracker (for example, v1alpha1 operations or services that do
-        not provide progress details).
+        Return ``None`` if the operation has no progress tracker. For example,
+        v1alpha1 operations do not have one.
 
         Example
         -------
@@ -562,9 +565,7 @@ class Operation(Generic[OperationPb]):
 
     @property
     def finished_at(self) -> datetime | None:
-        """Return the completion timestamp for the operation or ``None`` if
-        the operation hasn't finished yet.
-        """
+        """Return the completion time or ``None`` if the operation is not finished."""
         return self._operation.finished_at
 
     @property

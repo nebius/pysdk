@@ -29,7 +29,10 @@ if __name__ == "__main__":
         )
         args = parser.parse_args()
 
-        sdk = SDK(domain=args.domain)
+        sdk = SDK(
+            domain=args.domain,
+            user_agent_prefix="example-application/1.0",
+        )
         print(await sdk.whoami())
 
         project_id: str = args.project_id

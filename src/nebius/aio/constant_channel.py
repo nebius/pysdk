@@ -1,12 +1,11 @@
 """A tiny channel implementation that routes all calls to a single
 service/method combination.
 
-The :class:`Constant` channel wraps an existing :class:`ClientChannelInterface`
-and forces all method-based lookups to resolve to a previously-declared
-``method`` name. This is used by generated helpers that build a small client
-targeting a single service-method namespace (for example operation-management
-helpers) while reusing the underlying channel implementation for network and
-auth behaviors.
+The :class:`Constant` channel wraps an existing
+:class:`ClientChannelInterface`. It resolves all method lookups to one
+specified ``method`` name. Generated helpers use it for clients that target
+one service-method namespace. These clients reuse the source channel's
+network and authorization functions.
 """
 
 from collections.abc import Awaitable
@@ -25,7 +24,7 @@ class Constant(ClientChannelInterface):
 
     :param method: the fully-qualified method name (service.method) to route to
     :param source: an existing :class:`ClientChannelInterface` that performs
-        the actual channel operations (authorization, pooling, etc.)
+        authorization, pooling, and other channel operations
     :param parent_id: optional parent id to override the source's parent id
     """
 

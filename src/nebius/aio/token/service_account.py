@@ -1,17 +1,14 @@
-"""Service-account based bearer for asynchronous authentication.
+"""Use a service account for asynchronous authentication.
 
-- This module provides a convenience :class:`ServiceAccountBearer` which
-- composes several internal bearer implementations to support exchanging
-- service account credentials for access tokens, automatic renewal and a
-- stable diagnostic name.
+:class:`ServiceAccountBearer` combines internal bearers. It exchanges service
+account credentials for access tokens, renews tokens, and supplies a stable
+diagnostic name.
 
-- The bearer may be constructed from one of three inputs:
-    - a :class:`nebius.base.service_account.service_account.Reader` instance
-        which will be used to read the actual
-        :class:`nebius.base.service_account.service_account.ServiceAccount`;
-- a ready-made :class:`nebius.base.service_account.service_account.ServiceAccount`;
-- a string service account id together with ``private_key`` and ``public_key_id``
-  which will be used to build an in-memory :class:`ServiceAccount`.
+Construct the bearer from one of these inputs:
+
+- A reader that supplies a service account.
+- A service-account object.
+- A service-account ID with ``private_key`` and ``public_key_id``.
 
 Examples
 Constructing from an environment/CLI-backed reader (recommended):
@@ -64,9 +61,8 @@ from nebius.base.service_account.static import Reader as ServiceAccountReaderSta
 class ServiceAccountBearer(ParentBearer):
     """Bearer that obtains tokens using a service account.
 
-    The class composes an exchangeable bearer (that performs the token
-    exchange), wraps it into a renewable bearer (to handle background token
-    refresh) and finally assigns a stable ``name`` using :class:`NamedBearer`.
+    An exchangeable bearer performs the token exchange. A renewable bearer
+    adds background refresh. :class:`NamedBearer` adds a stable name.
 
     The chain from the outermost to innermost is as follows:
 
@@ -122,12 +118,15 @@ class ServiceAccountBearer(ParentBearer):
         # Create a future for the channel that will be resolved with the SDK
         channel_future = Future()
 
-        sdk = SDK(credentials=ServiceAccountBearer(
-            "service-account-id",
-            private_key=private_key,
-            public_key_id="public-key-id",
-            channel=channel_future,
-        ))
+        sdk = SDK(
+            credentials=ServiceAccountBearer(
+                "service-account-id",
+                private_key=private_key,
+                public_key_id="public-key-id",
+                channel=channel_future,
+            ),
+            user_agent_prefix="example-application/1.0",
+        )
 
         # Resolve the future with the newly created SDK
         channel_future.set_result(sdk)
@@ -149,16 +148,12 @@ class ServiceAccountBearer(ParentBearer):
     ) -> None:
         """Initialize a service-account based bearer.
 
-        This is essentially a convenience wrapper that composes several
-        internal bearer implementations to provide a ready-to-use bearer
-        that fetches tokens using service account credentials and is being conveniently
-        named with the service account parameters.
+        This wrapper combines the internal bearers. It gets tokens with
+        service-account credentials. The service-account parameters supply
+        its name.
 
-        **Important note:**
-        When constructing the bearer using a dynamic :class:`ServiceAccountReader`,
-        the name of the bearer will reflect the service account as read during
-        construction time. If the reader returns different service accounts
-        on subsequent reads, the name will not reflect those changes.
+        With a dynamic :class:`ServiceAccountReader`, the initial read sets the
+        bearer name. Later service-account changes do not change this name.
         """
         reader: ServiceAccountReader | None = None
         if isinstance(service_account, ServiceAccountReader):

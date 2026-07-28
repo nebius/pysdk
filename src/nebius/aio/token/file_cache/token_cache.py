@@ -1,15 +1,12 @@
 """File-based token cache used by the SDK.
 
-This module provides :class:`TokenCache`, a small asynchronous file
-cache that stores named :class:`nebius.aio.token.token.Token` objects in
-a YAML file. Access to the cache is protected by a file lock
-(:class:`nebius.aio.token.file_cache.async_flock.Lock`) to ensure
-concurrent processes or coroutines do not corrupt the cache.
+The asynchronous :class:`TokenCache` stores named tokens in a YAML file.
+:class:`nebius.aio.token.file_cache.async_flock.Lock` serializes access from
+concurrent processes and coroutines.
 
-The cache stores data in YAML under the ``tokens`` key where each
-token value is the mapping produced by :meth:`Token.to_dict` and may
-include an ``expires_at`` timestamp. Expired tokens are ignored and
-cleaned up automatically.
+The ``tokens`` key contains mappings from :meth:`Token.to_dict`. A mapping can
+contain an ``expires_at`` timestamp. The cache ignores and removes expired
+tokens.
 
 Example
 -------
@@ -72,9 +69,8 @@ class TokenCache:
     def _yaml_parse(self, data: str) -> dict[str, Token]:
         """Parse YAML content and return a mapping of token name -> Token.
 
-        The function expects a YAML mapping with a top-level ``tokens`` key
-        containing a mapping of string names to token dictionaries produced
-        by :meth:`Token.to_dict`.
+        The top-level YAML mapping must contain a ``tokens`` key. This key
+        maps string names to dictionaries from :meth:`Token.to_dict`.
 
         :param data: YAML document as a string.
         :returns: Mapping from token name to :class:`Token`.
