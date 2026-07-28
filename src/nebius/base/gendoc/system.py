@@ -5,6 +5,7 @@ from inspect import Parameter, Signature
 from pathlib import Path
 from typing import cast
 
+from docutils.nodes import Text  # type: ignore[import-untyped]
 from pydoctor.astbuilder import (  # type: ignore[import-untyped]
     _AnnotationValueFormatter,
 )
@@ -209,6 +210,12 @@ class NamespacePackageSystem(BaseSystem):  # type: ignore[misc]
         )
         if isinstance(documentable, Function):
             cls._rewrite_function_annotations(documentable, transformer)
+            for overload in documentable.overloads:
+                overload.signature = cls._rewrite_overload_signature(
+                    overload.signature,
+                    documentable,
+                    transformer,
+                )
         elif isinstance(documentable, Class):
             public_bases: list[tuple[str, ast.expr]] = []
             for _, base in documentable.rawbases:
@@ -239,6 +246,47 @@ class NamespacePackageSystem(BaseSystem):  # type: ignore[misc]
             for name, annotation in function.annotations.items()
         }
         function.signature = cls._rewrite_signature(function.signature, function)
+
+    @classmethod
+    def _rewrite_overload_signature(
+        cls,
+        signature: Signature,
+        function: Function,
+        transformer: _PublicAnnotationNames,
+    ) -> Signature:
+        parameters = [
+            parameter.replace(
+                annotation=cls._rewrite_formatted_annotation(
+                    parameter.annotation,
+                    function,
+                    transformer,
+                )
+            )
+            for parameter in signature.parameters.values()
+        ]
+        return signature.replace(
+            parameters=parameters,
+            return_annotation=cls._rewrite_formatted_annotation(
+                signature.return_annotation,
+                function,
+                transformer,
+            ),
+        )
+
+    @staticmethod
+    def _rewrite_formatted_annotation(
+        annotation: object,
+        function: Function,
+        transformer: _PublicAnnotationNames,
+    ) -> object:
+        if not isinstance(annotation, _AnnotationValueFormatter):
+            return annotation
+
+        document = annotation._colorized.to_node()
+        source = "".join(str(node) for node in document.findall(Text))
+        expression = ast.parse(source, mode="eval").body
+        public_expression = cast(ast.expr, transformer.visit(expression))
+        return _AnnotationValueFormatter(public_expression, ctx=function)
 
     @staticmethod
     def _rewrite_signature(

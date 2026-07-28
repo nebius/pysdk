@@ -126,3 +126,6 @@ def test_generated_type_aliases_are_public_in_annotations(tmp_path: Path) -> Non
     assert "RequestMessage" in signature
     assert "ResponseMessage" in signature
     assert len(call.overloads) == 1
+    assert "_Nebius" not in str(call.overloads[0].signature)
+    assert "RequestMessage" in str(call.overloads[0].signature)
+    assert "ResponseMessage" in str(call.overloads[0].signature)
