@@ -54,9 +54,13 @@ from ....._registry import EXTENSION_HANDLES, EXTENSIONS, REGISTRY
 # @@nebius-section:enums@@
 class ServiceError__RetryType(Enum):
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.ServiceError.RetryType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.common.error.v1alpha1.ServiceError.RetryType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     UNSPECIFIED = 0
     CALL = 1
     'Just retry the failed call.'
@@ -69,10 +73,15 @@ _NebiusType_nebius_common_error_v1alpha1_ServiceError_RetryType_7cfa0cdb = Servi
 # @@nebius-section:messages@@
 class BadRequest__Violation(Message):
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.BadRequest.Violation'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.BadRequest.Violation')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -81,6 +90,7 @@ class BadRequest__Violation(Message):
         field: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if field is not _NEBIUS_UNSET:
             values['field'] = field
@@ -96,6 +106,7 @@ class BadRequest__Violation(Message):
 
     @field.setter
     def field(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``field`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_BADREQUEST_VIOLATION_FIELD, value)
 
     @_NebiusProperty
@@ -106,18 +117,25 @@ class BadRequest__Violation(Message):
 
     @message.setter
     def message(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``message`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_BADREQUEST_VIOLATION_MESSAGE, value)
 
     __PY_TO_PB2__ = {'field': 'field', 'message': 'message'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_BadRequest_Violation_c948a8d3 = BadRequest__Violation
 
 
 class QuotaFailure__Violation(Message):
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.QuotaFailure.Violation'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.QuotaFailure.Violation')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -128,6 +146,7 @@ class QuotaFailure__Violation(Message):
         limit: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         requested: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if quota is not _NEBIUS_UNSET:
             values['quota'] = quota
@@ -147,6 +166,7 @@ class QuotaFailure__Violation(Message):
 
     @quota.setter
     def quota(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``quota`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_QUOTAFAILURE_VIOLATION_QUOTA, value)
 
     @_NebiusProperty
@@ -157,6 +177,7 @@ class QuotaFailure__Violation(Message):
 
     @message.setter
     def message(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``message`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_QUOTAFAILURE_VIOLATION_MESSAGE, value)
 
     @_NebiusProperty
@@ -167,6 +188,7 @@ class QuotaFailure__Violation(Message):
 
     @limit.setter
     def limit(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``limit`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_QUOTAFAILURE_VIOLATION_LIMIT, value)
 
     @_NebiusProperty
@@ -177,19 +199,26 @@ class QuotaFailure__Violation(Message):
 
     @requested.setter
     def requested(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``requested`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_QUOTAFAILURE_VIOLATION_REQUESTED, value)
 
     __PY_TO_PB2__ = {'quota': 'quota', 'message': 'message', 'limit': 'limit', 'requested': 'requested'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_QuotaFailure_Violation_8e4855eb = QuotaFailure__Violation
 
 
 class BadRequest(Message):
     'The request is invalid.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.BadRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.BadRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Violation: _NebiusTypeAlias = _NebiusType_nebius_common_error_v1alpha1_BadRequest_Violation_c948a8d3
 
     def __init__(
@@ -198,6 +227,7 @@ class BadRequest(Message):
         *,
         violations: _NebiusIterable[_NebiusType_nebius_common_error_v1alpha1_BadRequest_Violation_c948a8d3] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if violations is not _NEBIUS_UNSET:
             values['violations'] = violations
@@ -211,19 +241,26 @@ class BadRequest(Message):
 
     @violations.setter
     def violations(self, value: _NebiusIterable[_NebiusType_nebius_common_error_v1alpha1_BadRequest_Violation_c948a8d3] | None) -> None:
+        """Set or clear the generated ``violations`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_BADREQUEST_VIOLATIONS, value)
 
     __PY_TO_PB2__ = {'violations': 'violations', 'Violation': 'Violation'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_BadRequest_0840faf6 = BadRequest
 
 
 class BadResourceState(Message):
     'The resource we are trying to use, create, change or delete is in a bad state and cannot be used.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.BadResourceState'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.BadResourceState')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -232,6 +269,7 @@ class BadResourceState(Message):
         resource_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_id is not _NEBIUS_UNSET:
             values['resource_id'] = resource_id
@@ -247,6 +285,7 @@ class BadResourceState(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_BADRESOURCESTATE_RESOURCE_ID, value)
 
     @_NebiusProperty
@@ -257,19 +296,26 @@ class BadResourceState(Message):
 
     @message.setter
     def message(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``message`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_BADRESOURCESTATE_MESSAGE, value)
 
     __PY_TO_PB2__ = {'resource_id': 'resource_id', 'message': 'message'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_BadResourceState_3f2a27b3 = BadResourceState
 
 
 class InternalError(Message):
     'Generic internal error.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.InternalError'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.InternalError')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -278,6 +324,7 @@ class InternalError(Message):
         request_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         trace_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if request_id is not _NEBIUS_UNSET:
             values['request_id'] = request_id
@@ -293,6 +340,7 @@ class InternalError(Message):
 
     @request_id.setter
     def request_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``request_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_INTERNALERROR_REQUEST_ID, value)
 
     @_NebiusProperty
@@ -303,19 +351,26 @@ class InternalError(Message):
 
     @trace_id.setter
     def trace_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``trace_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_INTERNALERROR_TRACE_ID, value)
 
     __PY_TO_PB2__ = {'request_id': 'request_id', 'trace_id': 'trace_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_InternalError_7fa5efac = InternalError
 
 
 class OperationAborted(Message):
     'Operation on the resource has been aborted by a subsequent operation.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.OperationAborted'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.OperationAborted')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -325,6 +380,7 @@ class OperationAborted(Message):
         aborted_by_operation_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         resource_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if operation_id is not _NEBIUS_UNSET:
             values['operation_id'] = operation_id
@@ -342,6 +398,7 @@ class OperationAborted(Message):
 
     @operation_id.setter
     def operation_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``operation_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_OPERATIONABORTED_OPERATION_ID, value)
 
     @_NebiusProperty
@@ -352,6 +409,7 @@ class OperationAborted(Message):
 
     @aborted_by_operation_id.setter
     def aborted_by_operation_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``aborted_by_operation_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_OPERATIONABORTED_ABORTED_BY_OPERATION_ID, value)
 
     @_NebiusProperty
@@ -362,19 +420,26 @@ class OperationAborted(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_OPERATIONABORTED_RESOURCE_ID, value)
 
     __PY_TO_PB2__ = {'operation_id': 'operation_id', 'aborted_by_operation_id': 'aborted_by_operation_id', 'resource_id': 'resource_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_OperationAborted_20a36313 = OperationAborted
 
 
 class OutOfRange(Message):
     'Indicates that element with requested parameters is exceeding the particular range.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.OutOfRange'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.OutOfRange')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -383,6 +448,7 @@ class OutOfRange(Message):
         requested: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         limit: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if requested is not _NEBIUS_UNSET:
             values['requested'] = requested
@@ -398,6 +464,7 @@ class OutOfRange(Message):
 
     @requested.setter
     def requested(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``requested`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_OUTOFRANGE_REQUESTED, value)
 
     @_NebiusProperty
@@ -408,19 +475,26 @@ class OutOfRange(Message):
 
     @limit.setter
     def limit(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``limit`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_OUTOFRANGE_LIMIT, value)
 
     __PY_TO_PB2__ = {'requested': 'requested', 'limit': 'limit'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_OutOfRange_cdb40b87 = OutOfRange
 
 
 class PermissionDenied(Message):
     'Indicates that the action cannot be performed because there are insufficient access rights to a resource.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.PermissionDenied'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.PermissionDenied')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -428,6 +502,7 @@ class PermissionDenied(Message):
         *,
         resource_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_id is not _NEBIUS_UNSET:
             values['resource_id'] = resource_id
@@ -441,19 +516,26 @@ class PermissionDenied(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_PERMISSIONDENIED_RESOURCE_ID, value)
 
     __PY_TO_PB2__ = {'resource_id': 'resource_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_PermissionDenied_9076a538 = PermissionDenied
 
 
 class QuotaFailure(Message):
     'Indicates a failure due to exceeding specified limits or allocations in a system or service'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.QuotaFailure'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.QuotaFailure')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Violation: _NebiusTypeAlias = _NebiusType_nebius_common_error_v1alpha1_QuotaFailure_Violation_8e4855eb
 
     def __init__(
@@ -462,6 +544,7 @@ class QuotaFailure(Message):
         *,
         violations: _NebiusIterable[_NebiusType_nebius_common_error_v1alpha1_QuotaFailure_Violation_8e4855eb] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if violations is not _NEBIUS_UNSET:
             values['violations'] = violations
@@ -475,19 +558,26 @@ class QuotaFailure(Message):
 
     @violations.setter
     def violations(self, value: _NebiusIterable[_NebiusType_nebius_common_error_v1alpha1_QuotaFailure_Violation_8e4855eb] | None) -> None:
+        """Set or clear the generated ``violations`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_QUOTAFAILURE_VIOLATIONS, value)
 
     __PY_TO_PB2__ = {'violations': 'violations', 'Violation': 'Violation'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_QuotaFailure_d0aaeace = QuotaFailure
 
 
 class ResourceAlreadyExists(Message):
     'Resource we are trying to create already exists.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.ResourceAlreadyExists'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.ResourceAlreadyExists')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -495,6 +585,7 @@ class ResourceAlreadyExists(Message):
         *,
         resource_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_id is not _NEBIUS_UNSET:
             values['resource_id'] = resource_id
@@ -508,19 +599,26 @@ class ResourceAlreadyExists(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_RESOURCEALREADYEXISTS_RESOURCE_ID, value)
 
     __PY_TO_PB2__ = {'resource_id': 'resource_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_ResourceAlreadyExists_8826989d = ResourceAlreadyExists
 
 
 class ResourceConflict(Message):
     'There is a difference between the actual resource state and the expected one.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.ResourceConflict'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.ResourceConflict')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -529,6 +627,7 @@ class ResourceConflict(Message):
         resource_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_id is not _NEBIUS_UNSET:
             values['resource_id'] = resource_id
@@ -544,6 +643,7 @@ class ResourceConflict(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_RESOURCECONFLICT_RESOURCE_ID, value)
 
     @_NebiusProperty
@@ -554,19 +654,26 @@ class ResourceConflict(Message):
 
     @message.setter
     def message(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``message`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_RESOURCECONFLICT_MESSAGE, value)
 
     __PY_TO_PB2__ = {'resource_id': 'resource_id', 'message': 'message'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_ResourceConflict_7515c5a9 = ResourceConflict
 
 
 class ResourceNotFound(Message):
     'Resource we are trying to interact with does not exist.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.ResourceNotFound'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.ResourceNotFound')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -574,6 +681,7 @@ class ResourceNotFound(Message):
         *,
         resource_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if resource_id is not _NEBIUS_UNSET:
             values['resource_id'] = resource_id
@@ -587,19 +695,26 @@ class ResourceNotFound(Message):
 
     @resource_id.setter
     def resource_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``resource_id`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_RESOURCENOTFOUND_RESOURCE_ID, value)
 
     __PY_TO_PB2__ = {'resource_id': 'resource_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_ResourceNotFound_156928c8 = ResourceNotFound
 
 
 class TooManyRequests(Message):
     'You initiated too many requests to the service at once. Enhance your calm.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.TooManyRequests'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.TooManyRequests')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -607,6 +722,7 @@ class TooManyRequests(Message):
         *,
         violation: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if violation is not _NEBIUS_UNSET:
             values['violation'] = violation
@@ -620,18 +736,25 @@ class TooManyRequests(Message):
 
     @violation.setter
     def violation(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``violation`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_TOOMANYREQUESTS_VIOLATION, value)
 
     __PY_TO_PB2__ = {'violation': 'violation'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_TooManyRequests_24b9ae5a = TooManyRequests
 
 class ServiceError(Message):
     'Migrate to common/v1.'
     __PROTO_FULL_NAME__ = 'nebius.common.error.v1alpha1.ServiceError'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.common.error.v1alpha1.ServiceError')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     RetryType: _NebiusTypeAlias = _NebiusType_nebius_common_error_v1alpha1_ServiceError_RetryType_7cfa0cdb
 
     class __OneOfClass_details__(_NebiusOneOf):
@@ -764,6 +887,7 @@ class ServiceError(Message):
         internal_error: _NebiusType_nebius_common_error_v1alpha1_InternalError_7fa5efac | None | _NebiusUnsetType = _NEBIUS_UNSET,
         retry_type: _NebiusType_nebius_common_error_v1alpha1_ServiceError_RetryType_7cfa0cdb | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         _nebius_get_logger('deprecation').warning('Message nebius.common.error.v1alpha1.ServiceError is deprecated. Migrate to common/v1.', stack_info=True, stacklevel=2)
         if service is not _NEBIUS_UNSET:
@@ -804,6 +928,7 @@ class ServiceError(Message):
 
     @service.setter
     def service(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``service`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_SERVICE, value)
 
     @_NebiusProperty
@@ -814,6 +939,7 @@ class ServiceError(Message):
 
     @code.setter
     def code(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``code`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_CODE, value)
 
     @_NebiusProperty
@@ -823,6 +949,7 @@ class ServiceError(Message):
 
     @bad_request.setter
     def bad_request(self, value: _NebiusType_nebius_common_error_v1alpha1_BadRequest_0840faf6 | None) -> None:
+        """Set or clear the generated ``bad_request`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_BAD_REQUEST, value)
 
     @_NebiusProperty
@@ -832,6 +959,7 @@ class ServiceError(Message):
 
     @bad_resource_state.setter
     def bad_resource_state(self, value: _NebiusType_nebius_common_error_v1alpha1_BadResourceState_3f2a27b3 | None) -> None:
+        """Set or clear the generated ``bad_resource_state`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_BAD_RESOURCE_STATE, value)
 
     @_NebiusProperty
@@ -841,6 +969,7 @@ class ServiceError(Message):
 
     @resource_not_found.setter
     def resource_not_found(self, value: _NebiusType_nebius_common_error_v1alpha1_ResourceNotFound_156928c8 | None) -> None:
+        """Set or clear the generated ``resource_not_found`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_RESOURCE_NOT_FOUND, value)
 
     @_NebiusProperty
@@ -850,6 +979,7 @@ class ServiceError(Message):
 
     @resource_already_exists.setter
     def resource_already_exists(self, value: _NebiusType_nebius_common_error_v1alpha1_ResourceAlreadyExists_8826989d | None) -> None:
+        """Set or clear the generated ``resource_already_exists`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_RESOURCE_ALREADY_EXISTS, value)
 
     @_NebiusProperty
@@ -859,6 +989,7 @@ class ServiceError(Message):
 
     @out_of_range.setter
     def out_of_range(self, value: _NebiusType_nebius_common_error_v1alpha1_OutOfRange_cdb40b87 | None) -> None:
+        """Set or clear the generated ``out_of_range`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_OUT_OF_RANGE, value)
 
     @_NebiusProperty
@@ -868,6 +999,7 @@ class ServiceError(Message):
 
     @permission_denied.setter
     def permission_denied(self, value: _NebiusType_nebius_common_error_v1alpha1_PermissionDenied_9076a538 | None) -> None:
+        """Set or clear the generated ``permission_denied`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_PERMISSION_DENIED, value)
 
     @_NebiusProperty
@@ -877,6 +1009,7 @@ class ServiceError(Message):
 
     @resource_conflict.setter
     def resource_conflict(self, value: _NebiusType_nebius_common_error_v1alpha1_ResourceConflict_7515c5a9 | None) -> None:
+        """Set or clear the generated ``resource_conflict`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_RESOURCE_CONFLICT, value)
 
     @_NebiusProperty
@@ -886,6 +1019,7 @@ class ServiceError(Message):
 
     @operation_aborted.setter
     def operation_aborted(self, value: _NebiusType_nebius_common_error_v1alpha1_OperationAborted_20a36313 | None) -> None:
+        """Set or clear the generated ``operation_aborted`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_OPERATION_ABORTED, value)
 
     @_NebiusProperty
@@ -895,6 +1029,7 @@ class ServiceError(Message):
 
     @too_many_requests.setter
     def too_many_requests(self, value: _NebiusType_nebius_common_error_v1alpha1_TooManyRequests_24b9ae5a | None) -> None:
+        """Set or clear the generated ``too_many_requests`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_TOO_MANY_REQUESTS, value)
 
     @_NebiusProperty
@@ -904,6 +1039,7 @@ class ServiceError(Message):
 
     @quota_failure.setter
     def quota_failure(self, value: _NebiusType_nebius_common_error_v1alpha1_QuotaFailure_d0aaeace | None) -> None:
+        """Set or clear the generated ``quota_failure`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_QUOTA_FAILURE, value)
 
     @_NebiusProperty
@@ -913,6 +1049,7 @@ class ServiceError(Message):
 
     @internal_error.setter
     def internal_error(self, value: _NebiusType_nebius_common_error_v1alpha1_InternalError_7fa5efac | None) -> None:
+        """Set or clear the generated ``internal_error`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_INTERNAL_ERROR, value)
 
     @_NebiusProperty
@@ -923,9 +1060,11 @@ class ServiceError(Message):
 
     @retry_type.setter
     def retry_type(self, value: _NebiusType_nebius_common_error_v1alpha1_ServiceError_RetryType_7cfa0cdb | None) -> None:
+        """Set or clear the generated ``retry_type`` field."""
         self._set_field(_NEBIUS_COMMON_ERROR_V1ALPHA1_SERVICEERROR_RETRY_TYPE, value)
 
     __PY_TO_PB2__ = {'service': 'service', 'code': 'code', 'bad_request': 'bad_request', 'bad_resource_state': 'bad_resource_state', 'resource_not_found': 'resource_not_found', 'resource_already_exists': 'resource_already_exists', 'out_of_range': 'out_of_range', 'permission_denied': 'permission_denied', 'resource_conflict': 'resource_conflict', 'operation_aborted': 'operation_aborted', 'too_many_requests': 'too_many_requests', 'quota_failure': 'quota_failure', 'internal_error': 'internal_error', 'retry_type': 'retry_type', 'details': 'details', 'RetryType': 'RetryType'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_error_v1alpha1_ServiceError_58587460 = ServiceError
 
 # @@nebius-section:fields@@

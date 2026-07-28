@@ -57,9 +57,13 @@ from ...common import v1 as _type_nebius_common_v1_e3b886bd
 class RecordSpec__RecordType(Enum):
     'DNS Record type'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.RecordSpec.RecordType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.dns.v1.RecordSpec.RecordType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     RECORD_TYPE_UNSPECIFIED = 0
     'Record type is not specified'
     A = 1
@@ -92,10 +96,15 @@ _NebiusType_nebius_dns_v1_RecordSpec_RecordType_9640ea95 = RecordSpec__RecordTyp
 class CreateRecordRequest(Message):
     'Request to create a DNS record'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.CreateRecordRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.CreateRecordRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -104,6 +113,7 @@ class CreateRecordRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_dns_v1_RecordSpec_a8b30b9a | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -119,6 +129,7 @@ class CreateRecordRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_DNS_V1_CREATERECORDREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -129,19 +140,26 @@ class CreateRecordRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_dns_v1_RecordSpec_a8b30b9a | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_DNS_V1_CREATERECORDREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_CreateRecordRequest_60152ecf = CreateRecordRequest
 
 
 class DeleteRecordRequest(Message):
     'Request to delete the DNS record by its ID'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.DeleteRecordRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.DeleteRecordRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -151,6 +169,7 @@ class DeleteRecordRequest(Message):
         resource_version: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         force: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -168,6 +187,7 @@ class DeleteRecordRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_DNS_V1_DELETERECORDREQUEST_ID, value)
 
     @_NebiusProperty
@@ -178,6 +198,7 @@ class DeleteRecordRequest(Message):
 
     @resource_version.setter
     def resource_version(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``resource_version`` field."""
         self._set_field(_NEBIUS_DNS_V1_DELETERECORDREQUEST_RESOURCE_VERSION, value)
 
     @_NebiusProperty
@@ -188,19 +209,26 @@ class DeleteRecordRequest(Message):
 
     @force.setter
     def force(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``force`` field."""
         self._set_field(_NEBIUS_DNS_V1_DELETERECORDREQUEST_FORCE, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'resource_version': 'resource_version', 'force': 'force'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_DeleteRecordRequest_5fe547cb = DeleteRecordRequest
 
 
 class GetRecordRequest(Message):
     'Request to get the DNS record by its ID and, optionally, its resource version'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.GetRecordRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.GetRecordRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -209,6 +237,7 @@ class GetRecordRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         resource_version: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -224,6 +253,7 @@ class GetRecordRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_DNS_V1_GETRECORDREQUEST_ID, value)
 
     @_NebiusProperty
@@ -234,19 +264,26 @@ class GetRecordRequest(Message):
 
     @resource_version.setter
     def resource_version(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``resource_version`` field."""
         self._set_field(_NEBIUS_DNS_V1_GETRECORDREQUEST_RESOURCE_VERSION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'resource_version': 'resource_version'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_GetRecordRequest_1dd5b461 = GetRecordRequest
 
 
 class ListRecordsRequest(Message):
     'Request to list DNS records in the specified parent DNS zone'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.ListRecordsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.ListRecordsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -256,6 +293,7 @@ class ListRecordsRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -273,6 +311,7 @@ class ListRecordsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTRECORDSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -283,6 +322,7 @@ class ListRecordsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTRECORDSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -293,19 +333,26 @@ class ListRecordsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTRECORDSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_ListRecordsRequest_ccb65f8d = ListRecordsRequest
 
 
 class ListRecordsResponse(Message):
     'Response with a single page of DNS record listing results'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.ListRecordsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.ListRecordsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -314,6 +361,7 @@ class ListRecordsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_dns_v1_Record_eedf8fd4] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -329,6 +377,7 @@ class ListRecordsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_dns_v1_Record_eedf8fd4] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTRECORDSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -339,19 +388,26 @@ class ListRecordsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTRECORDSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_ListRecordsResponse_6474be47 = ListRecordsResponse
 
 
 class Record(Message):
     'API Resource: DNS *Resource Record* (RR), an information entry about a specific domain\n\nEach record is contained within a DNS zone, which is a container for DNS data of a specific domain, and, possibly, its subdomains\nDNS zones are represented in this API by the ``Zone`` API Resource which is managed by the ``ZoneService``'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.Record'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.Record')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -361,6 +417,7 @@ class Record(Message):
         spec: _NebiusType_nebius_dns_v1_RecordSpec_a8b30b9a | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_dns_v1_RecordStatus_fec78e35 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -378,6 +435,7 @@ class Record(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORD_METADATA, value)
 
     @_NebiusProperty
@@ -388,6 +446,7 @@ class Record(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_dns_v1_RecordSpec_a8b30b9a | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORD_SPEC, value)
 
     @_NebiusProperty
@@ -398,19 +457,26 @@ class Record(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_dns_v1_RecordStatus_fec78e35 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORD_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_Record_eedf8fd4 = Record
 
 
 class RecordSpec(Message):
     'DNS record specification'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.RecordSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.RecordSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     RecordType: _NebiusTypeAlias = _NebiusType_nebius_dns_v1_RecordSpec_RecordType_9640ea95
 
     def __init__(
@@ -423,6 +489,7 @@ class RecordSpec(Message):
         data: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         deletion_protection: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if relative_name is not _NEBIUS_UNSET:
             values['relative_name'] = relative_name
@@ -444,6 +511,7 @@ class RecordSpec(Message):
 
     @relative_name.setter
     def relative_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``relative_name`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSPEC_RELATIVE_NAME, value)
 
     @_NebiusProperty
@@ -454,6 +522,7 @@ class RecordSpec(Message):
 
     @type.setter
     def type(self, value: _NebiusType_nebius_dns_v1_RecordSpec_RecordType_9640ea95 | None) -> None:
+        """Set or clear the generated ``type`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSPEC_TYPE, value)
 
     @_NebiusProperty
@@ -464,6 +533,7 @@ class RecordSpec(Message):
 
     @ttl.setter
     def ttl(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``ttl`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSPEC_TTL, value)
 
     @_NebiusProperty
@@ -474,6 +544,7 @@ class RecordSpec(Message):
 
     @data.setter
     def data(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``data`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSPEC_DATA, value)
 
     @_NebiusProperty
@@ -484,19 +555,26 @@ class RecordSpec(Message):
 
     @deletion_protection.setter
     def deletion_protection(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``deletion_protection`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSPEC_DELETION_PROTECTION, value)
 
     __PY_TO_PB2__ = {'relative_name': 'relative_name', 'type': 'type', 'ttl': 'ttl', 'data': 'data', 'deletion_protection': 'deletion_protection', 'RecordType': 'RecordType'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_RecordSpec_a8b30b9a = RecordSpec
 
 
 class RecordStatus(Message):
     'DNS record status'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.RecordStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.RecordStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -506,6 +584,7 @@ class RecordStatus(Message):
         effective_fqdn: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         reconciling: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if zone_domain_name is not _NEBIUS_UNSET:
             values['zone_domain_name'] = zone_domain_name
@@ -523,6 +602,7 @@ class RecordStatus(Message):
 
     @zone_domain_name.setter
     def zone_domain_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``zone_domain_name`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSTATUS_ZONE_DOMAIN_NAME, value)
 
     @_NebiusProperty
@@ -533,6 +613,7 @@ class RecordStatus(Message):
 
     @effective_fqdn.setter
     def effective_fqdn(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``effective_fqdn`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSTATUS_EFFECTIVE_FQDN, value)
 
     @_NebiusProperty
@@ -543,19 +624,26 @@ class RecordStatus(Message):
 
     @reconciling.setter
     def reconciling(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``reconciling`` field."""
         self._set_field(_NEBIUS_DNS_V1_RECORDSTATUS_RECONCILING, value)
 
     __PY_TO_PB2__ = {'zone_domain_name': 'zone_domain_name', 'effective_fqdn': 'effective_fqdn', 'reconciling': 'reconciling'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_RecordStatus_fec78e35 = RecordStatus
 
 
 class UpdateRecordRequest(Message):
     'Request to update the DNS record by its ID'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.UpdateRecordRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.UpdateRecordRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -564,6 +652,7 @@ class UpdateRecordRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_dns_v1_RecordSpec_a8b30b9a | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -579,6 +668,7 @@ class UpdateRecordRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_DNS_V1_UPDATERECORDREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -589,18 +679,25 @@ class UpdateRecordRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_dns_v1_RecordSpec_a8b30b9a | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_DNS_V1_UPDATERECORDREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_UpdateRecordRequest_cf3e9dc7 = UpdateRecordRequest
 
 class CreateZoneRequest(Message):
     'Request to create a DNS zone'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.CreateZoneRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.CreateZoneRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -609,6 +706,7 @@ class CreateZoneRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_dns_v1_ZoneSpec_f5b0caca | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -624,6 +722,7 @@ class CreateZoneRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_DNS_V1_CREATEZONEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -634,18 +733,25 @@ class CreateZoneRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_dns_v1_ZoneSpec_f5b0caca | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_DNS_V1_CREATEZONEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_CreateZoneRequest_13df60c8 = CreateZoneRequest
 
 
 class DeleteZoneRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.DeleteZoneRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.DeleteZoneRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -654,6 +760,7 @@ class DeleteZoneRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         resource_version: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -669,6 +776,7 @@ class DeleteZoneRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_DNS_V1_DELETEZONEREQUEST_ID, value)
 
     @_NebiusProperty
@@ -679,19 +787,26 @@ class DeleteZoneRequest(Message):
 
     @resource_version.setter
     def resource_version(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``resource_version`` field."""
         self._set_field(_NEBIUS_DNS_V1_DELETEZONEREQUEST_RESOURCE_VERSION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'resource_version': 'resource_version'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_DeleteZoneRequest_9a1db560 = DeleteZoneRequest
 
 
 class GetZoneRequest(Message):
     'Request to get the DNS zone by its ID and, optionally, its resource version'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.GetZoneRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.GetZoneRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -700,6 +815,7 @@ class GetZoneRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         resource_version: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -715,6 +831,7 @@ class GetZoneRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_DNS_V1_GETZONEREQUEST_ID, value)
 
     @_NebiusProperty
@@ -725,19 +842,26 @@ class GetZoneRequest(Message):
 
     @resource_version.setter
     def resource_version(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``resource_version`` field."""
         self._set_field(_NEBIUS_DNS_V1_GETZONEREQUEST_RESOURCE_VERSION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'resource_version': 'resource_version'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_GetZoneRequest_9260e7e5 = GetZoneRequest
 
 
 class ListZonesRequest(Message):
     'Request to list DNS zones in the specified parent IAM container'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.ListZonesRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.ListZonesRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -747,6 +871,7 @@ class ListZonesRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -764,6 +889,7 @@ class ListZonesRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTZONESREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -774,6 +900,7 @@ class ListZonesRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTZONESREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -784,19 +911,26 @@ class ListZonesRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTZONESREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_ListZonesRequest_4cb66ac2 = ListZonesRequest
 
 
 class ListZonesResponse(Message):
     'Response with a single page of DNS zone listing results'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.ListZonesResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.ListZonesResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -805,6 +939,7 @@ class ListZonesResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_dns_v1_Zone_0c68e980] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -820,6 +955,7 @@ class ListZonesResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_dns_v1_Zone_0c68e980] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTZONESRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -830,19 +966,26 @@ class ListZonesResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_DNS_V1_LISTZONESRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_ListZonesResponse_5674fd71 = ListZonesResponse
 
 
 class SoaSpec(Message):
     'Custom SOA (Start of Authority) record specification for the zone'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.SoaSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.SoaSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -850,6 +993,7 @@ class SoaSpec(Message):
         *,
         negative_ttl: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if negative_ttl is not _NEBIUS_UNSET:
             values['negative_ttl'] = negative_ttl
@@ -863,19 +1007,26 @@ class SoaSpec(Message):
 
     @negative_ttl.setter
     def negative_ttl(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``negative_ttl`` field."""
         self._set_field(_NEBIUS_DNS_V1_SOASPEC_NEGATIVE_TTL, value)
 
     __PY_TO_PB2__ = {'negative_ttl': 'negative_ttl'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_SoaSpec_fef33b38 = SoaSpec
 
 
 class UpdateZoneRequest(Message):
     'Request to update the DNS zone by its ID'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.UpdateZoneRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.UpdateZoneRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -884,6 +1035,7 @@ class UpdateZoneRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_dns_v1_ZoneSpec_f5b0caca | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -899,6 +1051,7 @@ class UpdateZoneRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_DNS_V1_UPDATEZONEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -909,19 +1062,26 @@ class UpdateZoneRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_dns_v1_ZoneSpec_f5b0caca | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_DNS_V1_UPDATEZONEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_UpdateZoneRequest_33c38daf = UpdateZoneRequest
 
 
 class VpcZoneScope(Message):
     'VPC zone scope specification'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.VpcZoneScope'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.VpcZoneScope')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -929,6 +1089,7 @@ class VpcZoneScope(Message):
         *,
         primary_network_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if primary_network_id is not _NEBIUS_UNSET:
             values['primary_network_id'] = primary_network_id
@@ -942,19 +1103,26 @@ class VpcZoneScope(Message):
 
     @primary_network_id.setter
     def primary_network_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``primary_network_id`` field."""
         self._set_field(_NEBIUS_DNS_V1_VPCZONESCOPE_PRIMARY_NETWORK_ID, value)
 
     __PY_TO_PB2__ = {'primary_network_id': 'primary_network_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_VpcZoneScope_89dabb0e = VpcZoneScope
 
 
 class Zone(Message):
     "API Resource: *DNS zone*\\ , a container for DNS data\n\nEach DNS zone starts at a particular domain within the hierarchical DNS namespace tree,\ne.g., ``example.com.``, and can also include its subdomains,\ne.g., ``sales.example.com.`` DNS Zones contain *Resource Records* (RRs), which are individual information entries about the domain(s),\ne.g., a domain's IP address\nSee the `graphical explanation of DNS zones and Resource Records on\nWikipedia <https://en.wikipedia.org/wiki/Domain_Name_System#/media/File:Domain_name_space.svg>`_\n\nA Resource Record is represented in this API by the ``Record`` API Resource which is managed by the ``RecordService``"
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.Zone'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.Zone')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -964,6 +1132,7 @@ class Zone(Message):
         spec: _NebiusType_nebius_dns_v1_ZoneSpec_f5b0caca | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_dns_v1_ZoneStatus_5abbd7d5 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -981,6 +1150,7 @@ class Zone(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONE_METADATA, value)
 
     @_NebiusProperty
@@ -991,6 +1161,7 @@ class Zone(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_dns_v1_ZoneSpec_f5b0caca | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONE_SPEC, value)
 
     @_NebiusProperty
@@ -1001,19 +1172,26 @@ class Zone(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_dns_v1_ZoneStatus_5abbd7d5 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_Zone_0c68e980 = Zone
 
 
 class ZoneSpec(Message):
     'DNS Zone specification'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.ZoneSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.ZoneSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_scope__(_NebiusOneOf):
         name: str = 'scope'
@@ -1044,6 +1222,7 @@ class ZoneSpec(Message):
         vpc: _NebiusType_nebius_dns_v1_VpcZoneScope_89dabb0e | None | _NebiusUnsetType = _NEBIUS_UNSET,
         soa_spec: _NebiusType_nebius_dns_v1_SoaSpec_fef33b38 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if domain_name is not _NEBIUS_UNSET:
             values['domain_name'] = domain_name
@@ -1061,6 +1240,7 @@ class ZoneSpec(Message):
 
     @domain_name.setter
     def domain_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``domain_name`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONESPEC_DOMAIN_NAME, value)
 
     @_NebiusProperty
@@ -1071,6 +1251,7 @@ class ZoneSpec(Message):
 
     @vpc.setter
     def vpc(self, value: _NebiusType_nebius_dns_v1_VpcZoneScope_89dabb0e | None) -> None:
+        """Set or clear the generated ``vpc`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONESPEC_VPC, value)
 
     @_NebiusProperty
@@ -1081,19 +1262,26 @@ class ZoneSpec(Message):
 
     @soa_spec.setter
     def soa_spec(self, value: _NebiusType_nebius_dns_v1_SoaSpec_fef33b38 | None) -> None:
+        """Set or clear the generated ``soa_spec`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONESPEC_SOA_SPEC, value)
 
     __PY_TO_PB2__ = {'domain_name': 'domain_name', 'vpc': 'vpc', 'soa_spec': 'soa_spec', 'scope': 'scope'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_ZoneSpec_f5b0caca = ZoneSpec
 
 
 class ZoneStatus(Message):
     'DNS zone status'
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.ZoneStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.ZoneStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1102,6 +1290,7 @@ class ZoneStatus(Message):
         record_count: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         reconciling: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if record_count is not _NEBIUS_UNSET:
             values['record_count'] = record_count
@@ -1117,6 +1306,7 @@ class ZoneStatus(Message):
 
     @record_count.setter
     def record_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``record_count`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONESTATUS_RECORD_COUNT, value)
 
     @_NebiusProperty
@@ -1127,9 +1317,11 @@ class ZoneStatus(Message):
 
     @reconciling.setter
     def reconciling(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``reconciling`` field."""
         self._set_field(_NEBIUS_DNS_V1_ZONESTATUS_RECONCILING, value)
 
     __PY_TO_PB2__ = {'record_count': 'record_count', 'reconciling': 'reconciling'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_ZoneStatus_5abbd7d5 = ZoneStatus
 
 # @@nebius-section:fields@@
@@ -1230,17 +1422,25 @@ RecordSpec__RecordType.__qualname__ = 'RecordSpec.RecordType'
 class RecordServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Service for managing DNS records (``Record`` resources)\n\nThis class provides client methods for the ``nebius.dns.v1.RecordService`` service.'
     __service_name__ = 'nebius.dns.v1.RecordService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'dns'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.dns.v1.RecordService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.dns.v1.RecordService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -1329,17 +1529,25 @@ class RecordServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b
 class ZoneServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Service for managing DNS zones (``Zone`` resources)\n\nThis class provides client methods for the ``nebius.dns.v1.ZoneService`` service.'
     __service_name__ = 'nebius.dns.v1.ZoneService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'dns'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.dns.v1.ZoneService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.dns.v1.ZoneService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,

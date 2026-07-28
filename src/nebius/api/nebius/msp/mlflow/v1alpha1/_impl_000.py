@@ -60,10 +60,15 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:messages@@
 class Cluster(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.Cluster'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.Cluster')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -73,6 +78,7 @@ class Cluster(Message):
         spec: _NebiusType_nebius_msp_mlflow_v1alpha1_ClusterSpec_be7628e9 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_msp_mlflow_v1alpha1_MlflowClusterStatus_088486a8 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -89,6 +95,7 @@ class Cluster(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTER_METADATA, value)
 
     @_NebiusProperty
@@ -98,6 +105,7 @@ class Cluster(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_msp_mlflow_v1alpha1_ClusterSpec_be7628e9 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTER_SPEC, value)
 
     @_NebiusProperty
@@ -107,19 +115,26 @@ class Cluster(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_msp_mlflow_v1alpha1_MlflowClusterStatus_088486a8 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTER_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_Cluster_a5866709 = Cluster
 
 
 class ClusterSpec(Message):
     'Cluster specification'
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.ClusterSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.ClusterSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -134,6 +149,7 @@ class ClusterSpec(Message):
         network_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         size: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -161,6 +177,7 @@ class ClusterSpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -171,6 +188,7 @@ class ClusterSpec(Message):
 
     @public_access.setter
     def public_access(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``public_access`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_PUBLIC_ACCESS, value)
 
     @_NebiusProperty
@@ -181,6 +199,7 @@ class ClusterSpec(Message):
 
     @admin_username.setter
     def admin_username(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``admin_username`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_ADMIN_USERNAME, value)
 
     @_NebiusProperty
@@ -191,6 +210,7 @@ class ClusterSpec(Message):
 
     @admin_password.setter
     def admin_password(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``admin_password`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_ADMIN_PASSWORD, value)
 
     @_NebiusProperty
@@ -201,6 +221,7 @@ class ClusterSpec(Message):
 
     @service_account_id.setter
     def service_account_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``service_account_id`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_SERVICE_ACCOUNT_ID, value)
 
     @_NebiusProperty
@@ -211,6 +232,7 @@ class ClusterSpec(Message):
 
     @storage_bucket_name.setter
     def storage_bucket_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``storage_bucket_name`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_STORAGE_BUCKET_NAME, value)
 
     @_NebiusProperty
@@ -221,6 +243,7 @@ class ClusterSpec(Message):
 
     @network_id.setter
     def network_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``network_id`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_NETWORK_ID, value)
 
     @_NebiusProperty
@@ -231,18 +254,25 @@ class ClusterSpec(Message):
 
     @size.setter
     def size(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``size`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CLUSTERSPEC_SIZE, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'public_access': 'public_access', 'admin_username': 'admin_username', 'admin_password': 'admin_password', 'service_account_id': 'service_account_id', 'storage_bucket_name': 'storage_bucket_name', 'network_id': 'network_id', 'size': 'size'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_ClusterSpec_be7628e9 = ClusterSpec
 
 
 class Endpoints(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.Endpoints'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.Endpoints')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -251,6 +281,7 @@ class Endpoints(Message):
         private: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         public: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if private is not _NEBIUS_UNSET:
             values['private'] = private
@@ -266,6 +297,7 @@ class Endpoints(Message):
 
     @private.setter
     def private(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``private`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_ENDPOINTS_PRIVATE, value)
 
     @_NebiusProperty
@@ -276,18 +308,25 @@ class Endpoints(Message):
 
     @public.setter
     def public(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``public`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_ENDPOINTS_PUBLIC, value)
 
     __PY_TO_PB2__ = {'private': 'private', 'public': 'public'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_Endpoints_1733e2e6 = Endpoints
 
 
 class MlflowClusterStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.MlflowClusterStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.MlflowClusterStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -301,6 +340,7 @@ class MlflowClusterStatus(Message):
         mlflow_version: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         tracking_endpoints: _NebiusType_nebius_msp_mlflow_v1alpha1_Endpoints_1733e2e6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if phase is not _NEBIUS_UNSET:
             if phase == _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.Phase.PHASE_DELETED:
@@ -328,6 +368,7 @@ class MlflowClusterStatus(Message):
 
     @phase.setter
     def phase(self, value: _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.Phase | None) -> None:
+        """Set or clear the generated ``phase`` field."""
         if value == _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.Phase.PHASE_DELETED:
             _nebius_get_logger('deprecation').warning('Setting deprecated enum value nebius.msp.v1alpha1.ClusterStatus.Phase.PHASE_DELETED for field nebius.msp.mlflow.v1alpha1.MlflowClusterStatus.phase is deprecated. Deprecated.', stack_info=True, stacklevel=2)
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_MLFLOWCLUSTERSTATUS_PHASE, value)
@@ -340,6 +381,7 @@ class MlflowClusterStatus(Message):
 
     @state.setter
     def state(self, value: _type_nebius_msp_v1alpha1_6bbb9836.ClusterStatus.State | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_MLFLOWCLUSTERSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -350,6 +392,7 @@ class MlflowClusterStatus(Message):
 
     @tracking_endpoint.setter
     def tracking_endpoint(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``tracking_endpoint`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_MLFLOWCLUSTERSTATUS_TRACKING_ENDPOINT, value)
 
     @_NebiusProperty
@@ -360,6 +403,7 @@ class MlflowClusterStatus(Message):
 
     @effective_storage_bucket_name.setter
     def effective_storage_bucket_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``effective_storage_bucket_name`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_MLFLOWCLUSTERSTATUS_EFFECTIVE_STORAGE_BUCKET_NAME, value)
 
     @_NebiusProperty
@@ -370,6 +414,7 @@ class MlflowClusterStatus(Message):
 
     @experiments_count.setter
     def experiments_count(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``experiments_count`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_MLFLOWCLUSTERSTATUS_EXPERIMENTS_COUNT, value)
 
     @_NebiusProperty
@@ -380,6 +425,7 @@ class MlflowClusterStatus(Message):
 
     @mlflow_version.setter
     def mlflow_version(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``mlflow_version`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_MLFLOWCLUSTERSTATUS_MLFLOW_VERSION, value)
 
     @_NebiusProperty
@@ -390,17 +436,24 @@ class MlflowClusterStatus(Message):
 
     @tracking_endpoints.setter
     def tracking_endpoints(self, value: _NebiusType_nebius_msp_mlflow_v1alpha1_Endpoints_1733e2e6 | None) -> None:
+        """Set or clear the generated ``tracking_endpoints`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_MLFLOWCLUSTERSTATUS_TRACKING_ENDPOINTS, value)
 
     __PY_TO_PB2__ = {'phase': 'phase', 'state': 'state', 'tracking_endpoint': 'tracking_endpoint', 'effective_storage_bucket_name': 'effective_storage_bucket_name', 'experiments_count': 'experiments_count', 'mlflow_version': 'mlflow_version', 'tracking_endpoints': 'tracking_endpoints'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_MlflowClusterStatus_088486a8 = MlflowClusterStatus
 
 class CreateClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.CreateClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.CreateClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -409,6 +462,7 @@ class CreateClusterRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_msp_mlflow_v1alpha1_ClusterSpec_be7628e9 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -424,6 +478,7 @@ class CreateClusterRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CREATECLUSTERREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -434,18 +489,25 @@ class CreateClusterRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_msp_mlflow_v1alpha1_ClusterSpec_be7628e9 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_CREATECLUSTERREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_CreateClusterRequest_406bd9bd = CreateClusterRequest
 
 
 class DeleteClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.DeleteClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.DeleteClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -453,6 +515,7 @@ class DeleteClusterRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -466,18 +529,25 @@ class DeleteClusterRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_DELETECLUSTERREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_DeleteClusterRequest_edc7fc1d = DeleteClusterRequest
 
 
 class GetClusterByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.GetClusterByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.GetClusterByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -486,6 +556,7 @@ class GetClusterByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -501,6 +572,7 @@ class GetClusterByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_GETCLUSTERBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -511,18 +583,25 @@ class GetClusterByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_GETCLUSTERBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_GetClusterByNameRequest_ffcb26f8 = GetClusterByNameRequest
 
 
 class GetClusterRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.GetClusterRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.GetClusterRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -530,6 +609,7 @@ class GetClusterRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -543,18 +623,25 @@ class GetClusterRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_GETCLUSTERREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_GetClusterRequest_02d383f7 = GetClusterRequest
 
 
 class ListClustersRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.ListClustersRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.ListClustersRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -564,6 +651,7 @@ class ListClustersRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -581,6 +669,7 @@ class ListClustersRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_LISTCLUSTERSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -591,6 +680,7 @@ class ListClustersRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_LISTCLUSTERSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -601,18 +691,25 @@ class ListClustersRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_LISTCLUSTERSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_ListClustersRequest_4fceaf51 = ListClustersRequest
 
 
 class ListClustersResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.mlflow.v1alpha1.ListClustersResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.mlflow.v1alpha1.ListClustersResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -621,6 +718,7 @@ class ListClustersResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_msp_mlflow_v1alpha1_Cluster_a5866709] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -636,6 +734,7 @@ class ListClustersResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_msp_mlflow_v1alpha1_Cluster_a5866709] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_LISTCLUSTERSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -646,9 +745,11 @@ class ListClustersResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_MSP_MLFLOW_V1ALPHA1_LISTCLUSTERSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_mlflow_v1alpha1_ListClustersResponse_10fd51d9 = ListClustersResponse
 
 # @@nebius-section:fields@@
@@ -709,17 +810,25 @@ ListClustersResponse.__FIELDS__ = (_NEBIUS_MSP_MLFLOW_V1ALPHA1_LISTCLUSTERSRESPO
 class ClusterServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1alpha1_bd389d5d.Operation, _type_nebius_common_v1alpha1_bd389d5d.OperationServiceClient]):
     'This class provides client methods for the ``nebius.msp.mlflow.v1alpha1.ClusterService`` service.'
     __service_name__ = 'nebius.msp.mlflow.v1alpha1.ClusterService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'mlflow.msp'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.msp.mlflow.v1alpha1.ClusterService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.msp.mlflow.v1alpha1.ClusterService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1alpha1_bd389d5d.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1alpha1_bd389d5d.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,

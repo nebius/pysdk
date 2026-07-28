@@ -58,9 +58,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class SecretStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.mysterybox.v1.SecretStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     ACTIVE = 1
     'Resource is active, ready for use'
@@ -70,9 +74,13 @@ _NebiusType_nebius_mysterybox_v1_SecretStatus_State_7921d61f = SecretStatus__Sta
 
 class SecretVersionStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretVersionStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.mysterybox.v1.SecretVersionStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     ACTIVE = 1
     'Resource is active, ready for use'
@@ -84,10 +92,15 @@ _NebiusType_nebius_mysterybox_v1_SecretVersionStatus_State_3f0ffc4b = SecretVers
 class Payload(Message):
     "Represents the secret's content as key-value pair."
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.Payload'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.Payload')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_payload__(_NebiusOneOf):
         name: str = 'payload'
@@ -127,6 +140,7 @@ class Payload(Message):
         string_value: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         binary_value: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key is not _NEBIUS_UNSET:
             values['key'] = key
@@ -144,6 +158,7 @@ class Payload(Message):
 
     @key.setter
     def key(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_PAYLOAD_KEY, value)
 
     @_NebiusProperty
@@ -154,6 +169,7 @@ class Payload(Message):
 
     @string_value.setter
     def string_value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``string_value`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_PAYLOAD_STRING_VALUE, value)
 
     @_NebiusProperty
@@ -164,17 +180,24 @@ class Payload(Message):
 
     @binary_value.setter
     def binary_value(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``binary_value`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_PAYLOAD_BINARY_VALUE, value)
 
     __PY_TO_PB2__ = {'key': 'key', 'string_value': 'string_value', 'binary_value': 'binary_value', 'payload': 'payload'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_Payload_817066c2 = Payload
 
 class GetPayloadByKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.GetPayloadByKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.GetPayloadByKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -184,6 +207,7 @@ class GetPayloadByKeyRequest(Message):
         version_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         key: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if secret_id is not _NEBIUS_UNSET:
             values['secret_id'] = secret_id
@@ -200,6 +224,7 @@ class GetPayloadByKeyRequest(Message):
 
     @secret_id.setter
     def secret_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``secret_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETPAYLOADBYKEYREQUEST_SECRET_ID, value)
 
     @_NebiusProperty
@@ -210,6 +235,7 @@ class GetPayloadByKeyRequest(Message):
 
     @version_id.setter
     def version_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``version_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETPAYLOADBYKEYREQUEST_VERSION_ID, value)
 
     @_NebiusProperty
@@ -220,18 +246,25 @@ class GetPayloadByKeyRequest(Message):
 
     @key.setter
     def key(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETPAYLOADBYKEYREQUEST_KEY, value)
 
     __PY_TO_PB2__ = {'secret_id': 'secret_id', 'version_id': 'version_id', 'key': 'key'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_GetPayloadByKeyRequest_533cddf4 = GetPayloadByKeyRequest
 
 
 class GetPayloadRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.GetPayloadRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.GetPayloadRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -240,6 +273,7 @@ class GetPayloadRequest(Message):
         secret_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         version_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if secret_id is not _NEBIUS_UNSET:
             values['secret_id'] = secret_id
@@ -254,6 +288,7 @@ class GetPayloadRequest(Message):
 
     @secret_id.setter
     def secret_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``secret_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETPAYLOADREQUEST_SECRET_ID, value)
 
     @_NebiusProperty
@@ -264,18 +299,25 @@ class GetPayloadRequest(Message):
 
     @version_id.setter
     def version_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``version_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETPAYLOADREQUEST_VERSION_ID, value)
 
     __PY_TO_PB2__ = {'secret_id': 'secret_id', 'version_id': 'version_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_GetPayloadRequest_8282e135 = GetPayloadRequest
 
 
 class SecretPayload(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretPayload'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.SecretPayload')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -284,6 +326,7 @@ class SecretPayload(Message):
         version_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         data: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_Payload_817066c2] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if version_id is not _NEBIUS_UNSET:
             values['version_id'] = version_id
@@ -299,6 +342,7 @@ class SecretPayload(Message):
 
     @version_id.setter
     def version_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``version_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETPAYLOAD_VERSION_ID, value)
 
     @_NebiusProperty
@@ -308,18 +352,25 @@ class SecretPayload(Message):
 
     @data.setter
     def data(self, value: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_Payload_817066c2] | None) -> None:
+        """Set or clear the generated ``data`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETPAYLOAD_DATA, value)
 
     __PY_TO_PB2__ = {'version_id': 'version_id', 'data': 'data'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_SecretPayload_44271377 = SecretPayload
 
 
 class SecretPayloadEntry(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretPayloadEntry'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.SecretPayloadEntry')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -328,6 +379,7 @@ class SecretPayloadEntry(Message):
         version_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         data: _NebiusType_nebius_mysterybox_v1_Payload_817066c2 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if version_id is not _NEBIUS_UNSET:
             values['version_id'] = version_id
@@ -343,6 +395,7 @@ class SecretPayloadEntry(Message):
 
     @version_id.setter
     def version_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``version_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETPAYLOADENTRY_VERSION_ID, value)
 
     @_NebiusProperty
@@ -352,17 +405,24 @@ class SecretPayloadEntry(Message):
 
     @data.setter
     def data(self, value: _NebiusType_nebius_mysterybox_v1_Payload_817066c2 | None) -> None:
+        """Set or clear the generated ``data`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETPAYLOADENTRY_DATA, value)
 
     __PY_TO_PB2__ = {'version_id': 'version_id', 'data': 'data'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_SecretPayloadEntry_4560b416 = SecretPayloadEntry
 
 class Secret(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.Secret'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.Secret')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -372,6 +432,7 @@ class Secret(Message):
         spec: _NebiusType_nebius_mysterybox_v1_SecretSpec_901fd738 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_mysterybox_v1_SecretStatus_3477326a | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -388,6 +449,7 @@ class Secret(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRET_METADATA, value)
 
     @_NebiusProperty
@@ -398,6 +460,7 @@ class Secret(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_mysterybox_v1_SecretSpec_901fd738 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRET_SPEC, value)
 
     @_NebiusProperty
@@ -408,18 +471,25 @@ class Secret(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_mysterybox_v1_SecretStatus_3477326a | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRET_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_Secret_57500782 = Secret
 
 
 class SecretSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.SecretSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__primary_version_id__(_NebiusOneOf):
         name: str = '_primary_version_id'
@@ -450,6 +520,7 @@ class SecretSpec(Message):
         primary_version_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         secret_version: _NebiusType_nebius_mysterybox_v1_SecretVersionSpec_3f57511d | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -467,6 +538,7 @@ class SecretSpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETSPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -477,6 +549,7 @@ class SecretSpec(Message):
 
     @primary_version_id.setter
     def primary_version_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``primary_version_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETSPEC_PRIMARY_VERSION_ID, value)
 
     @_NebiusProperty
@@ -487,18 +560,25 @@ class SecretSpec(Message):
 
     @secret_version.setter
     def secret_version(self, value: _NebiusType_nebius_mysterybox_v1_SecretVersionSpec_3f57511d | None) -> None:
+        """Set or clear the generated ``secret_version`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETSPEC_SECRET_VERSION, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'primary_version_id': 'primary_version_id', 'secret_version': 'secret_version', '_primary_version_id': '_primary_version_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_SecretSpec_901fd738 = SecretSpec
 
 
 class SecretStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.SecretStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_mysterybox_v1_SecretStatus_State_7921d61f
 
     def __init__(
@@ -510,6 +590,7 @@ class SecretStatus(Message):
         purge_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         effective_kms_key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -529,6 +610,7 @@ class SecretStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_mysterybox_v1_SecretStatus_State_7921d61f | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -539,6 +621,7 @@ class SecretStatus(Message):
 
     @deleted_at.setter
     def deleted_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``deleted_at`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETSTATUS_DELETED_AT, value)
 
     @_NebiusProperty
@@ -549,6 +632,7 @@ class SecretStatus(Message):
 
     @purge_at.setter
     def purge_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``purge_at`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETSTATUS_PURGE_AT, value)
 
     @_NebiusProperty
@@ -558,17 +642,24 @@ class SecretStatus(Message):
 
     @effective_kms_key_id.setter
     def effective_kms_key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``effective_kms_key_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETSTATUS_EFFECTIVE_KMS_KEY_ID, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'deleted_at': 'deleted_at', 'purge_at': 'purge_at', 'effective_kms_key_id': 'effective_kms_key_id', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_SecretStatus_3477326a = SecretStatus
 
 class CreateSecretRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.CreateSecretRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.CreateSecretRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -577,6 +668,7 @@ class CreateSecretRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_mysterybox_v1_SecretSpec_901fd738 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -591,6 +683,7 @@ class CreateSecretRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_CREATESECRETREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -600,18 +693,25 @@ class CreateSecretRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_mysterybox_v1_SecretSpec_901fd738 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_CREATESECRETREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_CreateSecretRequest_78f332db = CreateSecretRequest
 
 
 class DeleteSecretRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.DeleteSecretRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.DeleteSecretRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -619,6 +719,7 @@ class DeleteSecretRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -632,18 +733,25 @@ class DeleteSecretRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_DELETESECRETREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_DeleteSecretRequest_62e0ec5d = DeleteSecretRequest
 
 
 class GetSecretByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.GetSecretByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.GetSecretByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -652,6 +760,7 @@ class GetSecretByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -667,6 +776,7 @@ class GetSecretByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETSECRETBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -676,18 +786,25 @@ class GetSecretByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETSECRETBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_GetSecretByNameRequest_37bbc184 = GetSecretByNameRequest
 
 
 class GetSecretRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.GetSecretRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.GetSecretRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -696,6 +813,7 @@ class GetSecretRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -711,6 +829,7 @@ class GetSecretRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETSECRETREQUEST_ID, value)
 
     @_NebiusProperty
@@ -721,18 +840,25 @@ class GetSecretRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETSECRETREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_GetSecretRequest_0e398d46 = GetSecretRequest
 
 
 class ListSecretsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.ListSecretsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.ListSecretsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -743,6 +869,7 @@ class ListSecretsRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -762,6 +889,7 @@ class ListSecretsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -772,6 +900,7 @@ class ListSecretsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -782,6 +911,7 @@ class ListSecretsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -792,18 +922,25 @@ class ListSecretsRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETSREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_ListSecretsRequest_e19df39b = ListSecretsRequest
 
 
 class ListSecretsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.ListSecretsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.ListSecretsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -812,6 +949,7 @@ class ListSecretsResponse(Message):
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         items: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_Secret_57500782] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if next_page_token is not _NEBIUS_UNSET:
             values['next_page_token'] = next_page_token
@@ -827,6 +965,7 @@ class ListSecretsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -837,18 +976,25 @@ class ListSecretsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_Secret_57500782] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETSRESPONSE_ITEMS, value)
 
     __PY_TO_PB2__ = {'next_page_token': 'next_page_token', 'items': 'items'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_ListSecretsResponse_f4fa9a03 = ListSecretsResponse
 
 
 class UndeleteSecretRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.UndeleteSecretRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.UndeleteSecretRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -857,6 +1003,7 @@ class UndeleteSecretRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -872,6 +1019,7 @@ class UndeleteSecretRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_UNDELETESECRETREQUEST_ID, value)
 
     @_NebiusProperty
@@ -882,18 +1030,25 @@ class UndeleteSecretRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_UNDELETESECRETREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_UndeleteSecretRequest_83d1a027 = UndeleteSecretRequest
 
 
 class UpdateSecretRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.UpdateSecretRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.UpdateSecretRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -902,6 +1057,7 @@ class UpdateSecretRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_mysterybox_v1_SecretSpec_901fd738 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -916,6 +1072,7 @@ class UpdateSecretRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_UPDATESECRETREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -925,17 +1082,24 @@ class UpdateSecretRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_mysterybox_v1_SecretSpec_901fd738 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_UPDATESECRETREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_UpdateSecretRequest_3a61a2e0 = UpdateSecretRequest
 
 class SecretVersion(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretVersion'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.SecretVersion')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -945,6 +1109,7 @@ class SecretVersion(Message):
         spec: _NebiusType_nebius_mysterybox_v1_SecretVersionSpec_3f57511d | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_mysterybox_v1_SecretVersionStatus_8027f1ce | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -961,6 +1126,7 @@ class SecretVersion(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSION_METADATA, value)
 
     @_NebiusProperty
@@ -970,6 +1136,7 @@ class SecretVersion(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_mysterybox_v1_SecretVersionSpec_3f57511d | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSION_SPEC, value)
 
     @_NebiusProperty
@@ -980,18 +1147,25 @@ class SecretVersion(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_mysterybox_v1_SecretVersionStatus_8027f1ce | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSION_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_SecretVersion_1290090a = SecretVersion
 
 
 class SecretVersionSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretVersionSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.SecretVersionSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1001,6 +1175,7 @@ class SecretVersionSpec(Message):
         payload: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_Payload_817066c2] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         set_primary: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -1018,6 +1193,7 @@ class SecretVersionSpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSIONSPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -1028,6 +1204,7 @@ class SecretVersionSpec(Message):
 
     @payload.setter
     def payload(self, value: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_Payload_817066c2] | None) -> None:
+        """Set or clear the generated ``payload`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSIONSPEC_PAYLOAD, value)
 
     @_NebiusProperty
@@ -1037,18 +1214,25 @@ class SecretVersionSpec(Message):
 
     @set_primary.setter
     def set_primary(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``set_primary`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSIONSPEC_SET_PRIMARY, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'payload': 'payload', 'set_primary': 'set_primary'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_SecretVersionSpec_3f57511d = SecretVersionSpec
 
 
 class SecretVersionStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.SecretVersionStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.SecretVersionStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_mysterybox_v1_SecretVersionStatus_State_3f0ffc4b
 
     def __init__(
@@ -1059,6 +1243,7 @@ class SecretVersionStatus(Message):
         deleted_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         purge_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -1076,6 +1261,7 @@ class SecretVersionStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_mysterybox_v1_SecretVersionStatus_State_3f0ffc4b | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSIONSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -1086,6 +1272,7 @@ class SecretVersionStatus(Message):
 
     @deleted_at.setter
     def deleted_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``deleted_at`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSIONSTATUS_DELETED_AT, value)
 
     @_NebiusProperty
@@ -1096,17 +1283,24 @@ class SecretVersionStatus(Message):
 
     @purge_at.setter
     def purge_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``purge_at`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_SECRETVERSIONSTATUS_PURGE_AT, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'deleted_at': 'deleted_at', 'purge_at': 'purge_at', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_SecretVersionStatus_8027f1ce = SecretVersionStatus
 
 class CreateSecretVersionRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.CreateSecretVersionRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.CreateSecretVersionRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1115,6 +1309,7 @@ class CreateSecretVersionRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_mysterybox_v1_SecretVersionSpec_3f57511d | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1129,6 +1324,7 @@ class CreateSecretVersionRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_CREATESECRETVERSIONREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1138,18 +1334,25 @@ class CreateSecretVersionRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_mysterybox_v1_SecretVersionSpec_3f57511d | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_CREATESECRETVERSIONREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_CreateSecretVersionRequest_ba41a053 = CreateSecretVersionRequest
 
 
 class DeleteSecretVersionRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.DeleteSecretVersionRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.DeleteSecretVersionRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1157,6 +1360,7 @@ class DeleteSecretVersionRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1170,18 +1374,25 @@ class DeleteSecretVersionRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_DELETESECRETVERSIONREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_DeleteSecretVersionRequest_235c8861 = DeleteSecretVersionRequest
 
 
 class GetSecretVersionRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.GetSecretVersionRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.GetSecretVersionRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1190,6 +1401,7 @@ class GetSecretVersionRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1205,6 +1417,7 @@ class GetSecretVersionRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETSECRETVERSIONREQUEST_ID, value)
 
     @_NebiusProperty
@@ -1215,18 +1428,25 @@ class GetSecretVersionRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_GETSECRETVERSIONREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_GetSecretVersionRequest_91f53cf4 = GetSecretVersionRequest
 
 
 class ListSecretVersionsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.ListSecretVersionsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.ListSecretVersionsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1237,6 +1457,7 @@ class ListSecretVersionsRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1256,6 +1477,7 @@ class ListSecretVersionsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETVERSIONSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1266,6 +1488,7 @@ class ListSecretVersionsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETVERSIONSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1276,6 +1499,7 @@ class ListSecretVersionsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETVERSIONSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -1286,18 +1510,25 @@ class ListSecretVersionsRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETVERSIONSREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_ListSecretVersionsRequest_7d2ac15c = ListSecretVersionsRequest
 
 
 class ListSecretVersionsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.ListSecretVersionsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.ListSecretVersionsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1306,6 +1537,7 @@ class ListSecretVersionsResponse(Message):
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         items: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_SecretVersion_1290090a] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if next_page_token is not _NEBIUS_UNSET:
             values['next_page_token'] = next_page_token
@@ -1321,6 +1553,7 @@ class ListSecretVersionsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETVERSIONSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -1331,18 +1564,25 @@ class ListSecretVersionsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_mysterybox_v1_SecretVersion_1290090a] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_LISTSECRETVERSIONSRESPONSE_ITEMS, value)
 
     __PY_TO_PB2__ = {'next_page_token': 'next_page_token', 'items': 'items'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_ListSecretVersionsResponse_c542a5b6 = ListSecretVersionsResponse
 
 
 class UndeleteSecretVersionRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.mysterybox.v1.UndeleteSecretVersionRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.mysterybox.v1.UndeleteSecretVersionRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1350,6 +1590,7 @@ class UndeleteSecretVersionRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1363,9 +1604,11 @@ class UndeleteSecretVersionRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_MYSTERYBOX_V1_UNDELETESECRETVERSIONREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_mysterybox_v1_UndeleteSecretVersionRequest_7d2ba38a = UndeleteSecretVersionRequest
 
 # @@nebius-section:fields@@
@@ -1491,14 +1734,19 @@ SecretVersionStatus__State.__qualname__ = 'SecretVersionStatus.State'
 class PayloadServiceClient(_NebiusClient):
     'This class provides client methods for the ``nebius.mysterybox.v1.PayloadService`` service.'
     __service_name__ = 'nebius.mysterybox.v1.PayloadService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'dpl.mysterybox'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.mysterybox.v1.PayloadService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.mysterybox.v1.PayloadService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def get(
         self,
@@ -1529,17 +1777,25 @@ class PayloadServiceClient(_NebiusClient):
 class SecretServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'A set of methods for managing secrets.\n\nThis class provides client methods for the ``nebius.mysterybox.v1.SecretService`` service.'
     __service_name__ = 'nebius.mysterybox.v1.SecretService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.mysterybox'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.mysterybox.v1.SecretService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.mysterybox.v1.SecretService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,
@@ -1642,17 +1898,25 @@ class SecretServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b
 class SecretVersionServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     "A set of methods for managing secret's versions.\n\nThis class provides client methods for the ``nebius.mysterybox.v1.SecretVersionService`` service."
     __service_name__ = 'nebius.mysterybox.v1.SecretVersionService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.mysterybox'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.mysterybox.v1.SecretVersionService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.mysterybox.v1.SecretVersionService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,

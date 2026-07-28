@@ -59,9 +59,13 @@ if _NEBIUS_TYPE_CHECKING:
 class AsymmetricAlgorithm(Enum):
     'Supported asymmetric algorithms.'
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricAlgorithm'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.kms.v1.AsymmetricAlgorithm')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     ASYMMETRIC_ALGORITHM_UNSPECIFIED = 0
     ECDSA_NIST_P256_SHA_256 = 1
     'ECDSA signature with NIST P-256 curve and SHA-256'
@@ -74,9 +78,13 @@ _NebiusType_nebius_kms_v1_AsymmetricAlgorithm_00996cd3 = AsymmetricAlgorithm
 class KeyState(Enum):
     'Key state'
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.KeyState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.kms.v1.KeyState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     KEY_STATE_UNSPECIFIED = 0
     ACTIVE = 1
     'Key is active, ready for use'
@@ -87,9 +95,13 @@ _NebiusType_nebius_kms_v1_KeyState_5b280aee = KeyState
 class SymmetricAlgorithm(Enum):
     'Supported symmetric encryption algorithms.'
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricAlgorithm'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.kms.v1.SymmetricAlgorithm')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     SYMMETRIC_ALGORITHM_UNSPECIFIED = 0
     AES_128 = 1
     'Deprecated. It is impossible to create new keys with this algorithm.\nAES algorithm with 128-bit keys.'
@@ -100,10 +112,15 @@ _NebiusType_nebius_kms_v1_SymmetricAlgorithm_7f32c8a0 = SymmetricAlgorithm
 # @@nebius-section:messages@@
 class AsymmetricDecryptRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricDecryptRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricDecryptRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -112,6 +129,7 @@ class AsymmetricDecryptRequest(Message):
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         ciphertext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -127,6 +145,7 @@ class AsymmetricDecryptRequest(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICDECRYPTREQUEST_KEY_ID, value)
 
     @_NebiusProperty
@@ -137,18 +156,25 @@ class AsymmetricDecryptRequest(Message):
 
     @ciphertext.setter
     def ciphertext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``ciphertext`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICDECRYPTREQUEST_CIPHERTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'ciphertext': 'ciphertext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricDecryptRequest_59a1e56b = AsymmetricDecryptRequest
 
 
 class AsymmetricDecryptResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricDecryptResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricDecryptResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -157,6 +183,7 @@ class AsymmetricDecryptResponse(Message):
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         plaintext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -172,6 +199,7 @@ class AsymmetricDecryptResponse(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICDECRYPTRESPONSE_KEY_ID, value)
 
     @_NebiusProperty
@@ -182,18 +210,25 @@ class AsymmetricDecryptResponse(Message):
 
     @plaintext.setter
     def plaintext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``plaintext`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICDECRYPTRESPONSE_PLAINTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'plaintext': 'plaintext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricDecryptResponse_1b0a3844 = AsymmetricDecryptResponse
 
 
 class AsymmetricGetPublicKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricGetPublicKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricGetPublicKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -201,6 +236,7 @@ class AsymmetricGetPublicKeyRequest(Message):
         *,
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -214,18 +250,25 @@ class AsymmetricGetPublicKeyRequest(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICGETPUBLICKEYREQUEST_KEY_ID, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricGetPublicKeyRequest_a0170823 = AsymmetricGetPublicKeyRequest
 
 
 class AsymmetricGetPublicKeyResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricGetPublicKeyResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricGetPublicKeyResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -234,6 +277,7 @@ class AsymmetricGetPublicKeyResponse(Message):
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         public_key: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -249,6 +293,7 @@ class AsymmetricGetPublicKeyResponse(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICGETPUBLICKEYRESPONSE_KEY_ID, value)
 
     @_NebiusProperty
@@ -259,18 +304,25 @@ class AsymmetricGetPublicKeyResponse(Message):
 
     @public_key.setter
     def public_key(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``public_key`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICGETPUBLICKEYRESPONSE_PUBLIC_KEY, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'public_key': 'public_key'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricGetPublicKeyResponse_f85dbdc6 = AsymmetricGetPublicKeyResponse
 
 
 class AsymmetricSignHashRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricSignHashRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricSignHashRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -279,6 +331,7 @@ class AsymmetricSignHashRequest(Message):
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         hash: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -294,6 +347,7 @@ class AsymmetricSignHashRequest(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICSIGNHASHREQUEST_KEY_ID, value)
 
     @_NebiusProperty
@@ -304,18 +358,25 @@ class AsymmetricSignHashRequest(Message):
 
     @hash.setter
     def hash(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``hash`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICSIGNHASHREQUEST_HASH, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'hash': 'hash'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricSignHashRequest_e794fbf3 = AsymmetricSignHashRequest
 
 
 class AsymmetricSignHashResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricSignHashResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricSignHashResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -324,6 +385,7 @@ class AsymmetricSignHashResponse(Message):
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         signature: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -339,6 +401,7 @@ class AsymmetricSignHashResponse(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICSIGNHASHRESPONSE_KEY_ID, value)
 
     @_NebiusProperty
@@ -349,18 +412,25 @@ class AsymmetricSignHashResponse(Message):
 
     @signature.setter
     def signature(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``signature`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICSIGNHASHRESPONSE_SIGNATURE, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'signature': 'signature'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricSignHashResponse_4630fa8b = AsymmetricSignHashResponse
 
 class AsymmetricKey(Message):
     'An asymmetric KMS key that may contain several versions of the cryptographic material.'
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricKey'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricKey')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -370,6 +440,7 @@ class AsymmetricKey(Message):
         spec: _NebiusType_nebius_kms_v1_AsymmetricKeySpec_75dd66e5 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_kms_v1_AsymmetricKeyStatus_afe5f9d2 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -386,6 +457,7 @@ class AsymmetricKey(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEY_METADATA, value)
 
     @_NebiusProperty
@@ -396,6 +468,7 @@ class AsymmetricKey(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_kms_v1_AsymmetricKeySpec_75dd66e5 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEY_SPEC, value)
 
     @_NebiusProperty
@@ -406,18 +479,25 @@ class AsymmetricKey(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_kms_v1_AsymmetricKeyStatus_afe5f9d2 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEY_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricKey_ec473b59 = AsymmetricKey
 
 
 class AsymmetricKeySpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricKeySpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricKeySpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -426,6 +506,7 @@ class AsymmetricKeySpec(Message):
         description: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         algorithm: _NebiusType_nebius_kms_v1_AsymmetricAlgorithm_00996cd3 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -441,6 +522,7 @@ class AsymmetricKeySpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEYSPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -451,18 +533,25 @@ class AsymmetricKeySpec(Message):
 
     @algorithm.setter
     def algorithm(self, value: _NebiusType_nebius_kms_v1_AsymmetricAlgorithm_00996cd3 | None) -> None:
+        """Set or clear the generated ``algorithm`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEYSPEC_ALGORITHM, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'algorithm': 'algorithm'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricKeySpec_75dd66e5 = AsymmetricKeySpec
 
 
 class AsymmetricKeyStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.AsymmetricKeyStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.AsymmetricKeyStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -472,6 +561,7 @@ class AsymmetricKeyStatus(Message):
         deleted_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         purge_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -489,6 +579,7 @@ class AsymmetricKeyStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_kms_v1_KeyState_5b280aee | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEYSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -499,6 +590,7 @@ class AsymmetricKeyStatus(Message):
 
     @deleted_at.setter
     def deleted_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``deleted_at`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEYSTATUS_DELETED_AT, value)
 
     @_NebiusProperty
@@ -509,17 +601,24 @@ class AsymmetricKeyStatus(Message):
 
     @purge_at.setter
     def purge_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``purge_at`` field."""
         self._set_field(_NEBIUS_KMS_V1_ASYMMETRICKEYSTATUS_PURGE_AT, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'deleted_at': 'deleted_at', 'purge_at': 'purge_at'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_AsymmetricKeyStatus_afe5f9d2 = AsymmetricKeyStatus
 
 class CreateAsymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.CreateAsymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.CreateAsymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -528,6 +627,7 @@ class CreateAsymmetricKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_kms_v1_AsymmetricKeySpec_75dd66e5 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -543,6 +643,7 @@ class CreateAsymmetricKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_KMS_V1_CREATEASYMMETRICKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -553,18 +654,25 @@ class CreateAsymmetricKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_kms_v1_AsymmetricKeySpec_75dd66e5 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_KMS_V1_CREATEASYMMETRICKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_CreateAsymmetricKeyRequest_886b8093 = CreateAsymmetricKeyRequest
 
 
 class DeleteAsymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.DeleteAsymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.DeleteAsymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -572,6 +680,7 @@ class DeleteAsymmetricKeyRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -585,18 +694,25 @@ class DeleteAsymmetricKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_DELETEASYMMETRICKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_DeleteAsymmetricKeyRequest_8c87ace5 = DeleteAsymmetricKeyRequest
 
 
 class GetAsymmetricKeyByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.GetAsymmetricKeyByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.GetAsymmetricKeyByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -605,6 +721,7 @@ class GetAsymmetricKeyByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -620,6 +737,7 @@ class GetAsymmetricKeyByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETASYMMETRICKEYBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -629,18 +747,25 @@ class GetAsymmetricKeyByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETASYMMETRICKEYBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_GetAsymmetricKeyByNameRequest_c74ee5b7 = GetAsymmetricKeyByNameRequest
 
 
 class GetAsymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.GetAsymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.GetAsymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -649,6 +774,7 @@ class GetAsymmetricKeyRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -664,6 +790,7 @@ class GetAsymmetricKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETASYMMETRICKEYREQUEST_ID, value)
 
     @_NebiusProperty
@@ -674,18 +801,25 @@ class GetAsymmetricKeyRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETASYMMETRICKEYREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_GetAsymmetricKeyRequest_22302cd8 = GetAsymmetricKeyRequest
 
 
 class ListAsymmetricKeysRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.ListAsymmetricKeysRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.ListAsymmetricKeysRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -696,6 +830,7 @@ class ListAsymmetricKeysRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -715,6 +850,7 @@ class ListAsymmetricKeysRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTASYMMETRICKEYSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -725,6 +861,7 @@ class ListAsymmetricKeysRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTASYMMETRICKEYSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -735,6 +872,7 @@ class ListAsymmetricKeysRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTASYMMETRICKEYSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -745,18 +883,25 @@ class ListAsymmetricKeysRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTASYMMETRICKEYSREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_ListAsymmetricKeysRequest_45f032c4 = ListAsymmetricKeysRequest
 
 
 class ListAsymmetricKeysResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.ListAsymmetricKeysResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.ListAsymmetricKeysResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -765,6 +910,7 @@ class ListAsymmetricKeysResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_kms_v1_AsymmetricKey_ec473b59] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -780,6 +926,7 @@ class ListAsymmetricKeysResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_kms_v1_AsymmetricKey_ec473b59] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTASYMMETRICKEYSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -790,18 +937,25 @@ class ListAsymmetricKeysResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTASYMMETRICKEYSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_ListAsymmetricKeysResponse_c69eed53 = ListAsymmetricKeysResponse
 
 
 class UndeleteAsymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.UndeleteAsymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.UndeleteAsymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -810,6 +964,7 @@ class UndeleteAsymmetricKeyRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -825,6 +980,7 @@ class UndeleteAsymmetricKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_UNDELETEASYMMETRICKEYREQUEST_ID, value)
 
     @_NebiusProperty
@@ -835,18 +991,25 @@ class UndeleteAsymmetricKeyRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_KMS_V1_UNDELETEASYMMETRICKEYREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_UndeleteAsymmetricKeyRequest_bb5c1a26 = UndeleteAsymmetricKeyRequest
 
 
 class UpdateAsymmetricKeyDeletionDelayRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.UpdateAsymmetricKeyDeletionDelayRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.UpdateAsymmetricKeyDeletionDelayRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -855,6 +1018,7 @@ class UpdateAsymmetricKeyDeletionDelayRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         deletion_delay: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -870,6 +1034,7 @@ class UpdateAsymmetricKeyDeletionDelayRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATEASYMMETRICKEYDELETIONDELAYREQUEST_ID, value)
 
     @_NebiusProperty
@@ -880,18 +1045,25 @@ class UpdateAsymmetricKeyDeletionDelayRequest(Message):
 
     @deletion_delay.setter
     def deletion_delay(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``deletion_delay`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATEASYMMETRICKEYDELETIONDELAYREQUEST_DELETION_DELAY, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'deletion_delay': 'deletion_delay'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_UpdateAsymmetricKeyDeletionDelayRequest_73377c46 = UpdateAsymmetricKeyDeletionDelayRequest
 
 
 class UpdateAsymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.UpdateAsymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.UpdateAsymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -900,6 +1072,7 @@ class UpdateAsymmetricKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_kms_v1_AsymmetricKeySpec_75dd66e5 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -915,6 +1088,7 @@ class UpdateAsymmetricKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATEASYMMETRICKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -925,17 +1099,24 @@ class UpdateAsymmetricKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_kms_v1_AsymmetricKeySpec_75dd66e5 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATEASYMMETRICKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_UpdateAsymmetricKeyRequest_ba0c606c = UpdateAsymmetricKeyRequest
 
 class GenerateDataKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.GenerateDataKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.GenerateDataKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -946,6 +1127,7 @@ class GenerateDataKeyRequest(Message):
         data_key_spec: _NebiusType_nebius_kms_v1_SymmetricAlgorithm_7f32c8a0 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         skip_plaintext: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -965,6 +1147,7 @@ class GenerateDataKeyRequest(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_GENERATEDATAKEYREQUEST_KEY_ID, value)
 
     @_NebiusProperty
@@ -975,6 +1158,7 @@ class GenerateDataKeyRequest(Message):
 
     @aad_context.setter
     def aad_context(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``aad_context`` field."""
         self._set_field(_NEBIUS_KMS_V1_GENERATEDATAKEYREQUEST_AAD_CONTEXT, value)
 
     @_NebiusProperty
@@ -985,6 +1169,7 @@ class GenerateDataKeyRequest(Message):
 
     @data_key_spec.setter
     def data_key_spec(self, value: _NebiusType_nebius_kms_v1_SymmetricAlgorithm_7f32c8a0 | None) -> None:
+        """Set or clear the generated ``data_key_spec`` field."""
         self._set_field(_NEBIUS_KMS_V1_GENERATEDATAKEYREQUEST_DATA_KEY_SPEC, value)
 
     @_NebiusProperty
@@ -995,18 +1180,25 @@ class GenerateDataKeyRequest(Message):
 
     @skip_plaintext.setter
     def skip_plaintext(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``skip_plaintext`` field."""
         self._set_field(_NEBIUS_KMS_V1_GENERATEDATAKEYREQUEST_SKIP_PLAINTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'aad_context': 'aad_context', 'data_key_spec': 'data_key_spec', 'skip_plaintext': 'skip_plaintext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_GenerateDataKeyRequest_cb8fd63e = GenerateDataKeyRequest
 
 
 class GenerateDataKeyResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.GenerateDataKeyResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.GenerateDataKeyResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1016,6 +1208,7 @@ class GenerateDataKeyResponse(Message):
         data_key_plaintext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
         data_key_ciphertext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -1033,6 +1226,7 @@ class GenerateDataKeyResponse(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_GENERATEDATAKEYRESPONSE_KEY_ID, value)
 
     @_NebiusProperty
@@ -1043,6 +1237,7 @@ class GenerateDataKeyResponse(Message):
 
     @data_key_plaintext.setter
     def data_key_plaintext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``data_key_plaintext`` field."""
         self._set_field(_NEBIUS_KMS_V1_GENERATEDATAKEYRESPONSE_DATA_KEY_PLAINTEXT, value)
 
     @_NebiusProperty
@@ -1053,18 +1248,25 @@ class GenerateDataKeyResponse(Message):
 
     @data_key_ciphertext.setter
     def data_key_ciphertext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``data_key_ciphertext`` field."""
         self._set_field(_NEBIUS_KMS_V1_GENERATEDATAKEYRESPONSE_DATA_KEY_CIPHERTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'data_key_plaintext': 'data_key_plaintext', 'data_key_ciphertext': 'data_key_ciphertext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_GenerateDataKeyResponse_3a16edf0 = GenerateDataKeyResponse
 
 
 class SymmetricDecryptRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricDecryptRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.SymmetricDecryptRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1074,6 +1276,7 @@ class SymmetricDecryptRequest(Message):
         aad_context: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
         ciphertext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -1091,6 +1294,7 @@ class SymmetricDecryptRequest(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICDECRYPTREQUEST_KEY_ID, value)
 
     @_NebiusProperty
@@ -1101,6 +1305,7 @@ class SymmetricDecryptRequest(Message):
 
     @aad_context.setter
     def aad_context(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``aad_context`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICDECRYPTREQUEST_AAD_CONTEXT, value)
 
     @_NebiusProperty
@@ -1111,18 +1316,25 @@ class SymmetricDecryptRequest(Message):
 
     @ciphertext.setter
     def ciphertext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``ciphertext`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICDECRYPTREQUEST_CIPHERTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'aad_context': 'aad_context', 'ciphertext': 'ciphertext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_SymmetricDecryptRequest_4d337c4e = SymmetricDecryptRequest
 
 
 class SymmetricDecryptResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricDecryptResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.SymmetricDecryptResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1131,6 +1343,7 @@ class SymmetricDecryptResponse(Message):
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         plaintext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -1146,6 +1359,7 @@ class SymmetricDecryptResponse(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICDECRYPTRESPONSE_KEY_ID, value)
 
     @_NebiusProperty
@@ -1156,18 +1370,25 @@ class SymmetricDecryptResponse(Message):
 
     @plaintext.setter
     def plaintext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``plaintext`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICDECRYPTRESPONSE_PLAINTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'plaintext': 'plaintext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_SymmetricDecryptResponse_c36fbd26 = SymmetricDecryptResponse
 
 
 class SymmetricEncryptRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricEncryptRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.SymmetricEncryptRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1177,6 +1398,7 @@ class SymmetricEncryptRequest(Message):
         aad_context: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
         plaintext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -1194,6 +1416,7 @@ class SymmetricEncryptRequest(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICENCRYPTREQUEST_KEY_ID, value)
 
     @_NebiusProperty
@@ -1204,6 +1427,7 @@ class SymmetricEncryptRequest(Message):
 
     @aad_context.setter
     def aad_context(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``aad_context`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICENCRYPTREQUEST_AAD_CONTEXT, value)
 
     @_NebiusProperty
@@ -1214,18 +1438,25 @@ class SymmetricEncryptRequest(Message):
 
     @plaintext.setter
     def plaintext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``plaintext`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICENCRYPTREQUEST_PLAINTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'aad_context': 'aad_context', 'plaintext': 'plaintext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_SymmetricEncryptRequest_0c8601f6 = SymmetricEncryptRequest
 
 
 class SymmetricEncryptResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricEncryptResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.SymmetricEncryptResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1234,6 +1465,7 @@ class SymmetricEncryptResponse(Message):
         key_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         ciphertext: _NebiusBytes | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if key_id is not _NEBIUS_UNSET:
             values['key_id'] = key_id
@@ -1249,6 +1481,7 @@ class SymmetricEncryptResponse(Message):
 
     @key_id.setter
     def key_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``key_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICENCRYPTRESPONSE_KEY_ID, value)
 
     @_NebiusProperty
@@ -1259,18 +1492,25 @@ class SymmetricEncryptResponse(Message):
 
     @ciphertext.setter
     def ciphertext(self, value: _NebiusBytes | None) -> None:
+        """Set or clear the generated ``ciphertext`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICENCRYPTRESPONSE_CIPHERTEXT, value)
 
     __PY_TO_PB2__ = {'key_id': 'key_id', 'ciphertext': 'ciphertext'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_SymmetricEncryptResponse_1d1b14ff = SymmetricEncryptResponse
 
 class SymmetricKey(Message):
     'A symmetric KMS key.'
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricKey'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.SymmetricKey')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1280,6 +1520,7 @@ class SymmetricKey(Message):
         spec: _NebiusType_nebius_kms_v1_SymmetricKeySpec_1a01fccc | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_kms_v1_SymmetricKeyStatus_48d9a2ce | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1296,6 +1537,7 @@ class SymmetricKey(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEY_METADATA, value)
 
     @_NebiusProperty
@@ -1306,6 +1548,7 @@ class SymmetricKey(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_kms_v1_SymmetricKeySpec_1a01fccc | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEY_SPEC, value)
 
     @_NebiusProperty
@@ -1316,18 +1559,25 @@ class SymmetricKey(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_kms_v1_SymmetricKeyStatus_48d9a2ce | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEY_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_SymmetricKey_60a5a934 = SymmetricKey
 
 
 class SymmetricKeySpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricKeySpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.SymmetricKeySpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1337,6 +1587,7 @@ class SymmetricKeySpec(Message):
         algorithm: _NebiusType_nebius_kms_v1_SymmetricAlgorithm_7f32c8a0 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         rotation_period: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -1354,6 +1605,7 @@ class SymmetricKeySpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEYSPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -1364,6 +1616,7 @@ class SymmetricKeySpec(Message):
 
     @algorithm.setter
     def algorithm(self, value: _NebiusType_nebius_kms_v1_SymmetricAlgorithm_7f32c8a0 | None) -> None:
+        """Set or clear the generated ``algorithm`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEYSPEC_ALGORITHM, value)
 
     @_NebiusProperty
@@ -1374,18 +1627,25 @@ class SymmetricKeySpec(Message):
 
     @rotation_period.setter
     def rotation_period(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``rotation_period`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEYSPEC_ROTATION_PERIOD, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'algorithm': 'algorithm', 'rotation_period': 'rotation_period'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_SymmetricKeySpec_1a01fccc = SymmetricKeySpec
 
 
 class SymmetricKeyStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.SymmetricKeyStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.SymmetricKeyStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1395,6 +1655,7 @@ class SymmetricKeyStatus(Message):
         deleted_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
         purge_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -1412,6 +1673,7 @@ class SymmetricKeyStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_kms_v1_KeyState_5b280aee | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEYSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -1422,6 +1684,7 @@ class SymmetricKeyStatus(Message):
 
     @deleted_at.setter
     def deleted_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``deleted_at`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEYSTATUS_DELETED_AT, value)
 
     @_NebiusProperty
@@ -1432,17 +1695,24 @@ class SymmetricKeyStatus(Message):
 
     @purge_at.setter
     def purge_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``purge_at`` field."""
         self._set_field(_NEBIUS_KMS_V1_SYMMETRICKEYSTATUS_PURGE_AT, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'deleted_at': 'deleted_at', 'purge_at': 'purge_at'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_SymmetricKeyStatus_48d9a2ce = SymmetricKeyStatus
 
 class CreateSymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.CreateSymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.CreateSymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1451,6 +1721,7 @@ class CreateSymmetricKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_kms_v1_SymmetricKeySpec_1a01fccc | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1465,6 +1736,7 @@ class CreateSymmetricKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_KMS_V1_CREATESYMMETRICKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1474,18 +1746,25 @@ class CreateSymmetricKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_kms_v1_SymmetricKeySpec_1a01fccc | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_KMS_V1_CREATESYMMETRICKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_CreateSymmetricKeyRequest_10260471 = CreateSymmetricKeyRequest
 
 
 class DeleteSymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.DeleteSymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.DeleteSymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1493,6 +1772,7 @@ class DeleteSymmetricKeyRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1506,18 +1786,25 @@ class DeleteSymmetricKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_DELETESYMMETRICKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_DeleteSymmetricKeyRequest_e7e90ac5 = DeleteSymmetricKeyRequest
 
 
 class GetSymmetricKeyByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.GetSymmetricKeyByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.GetSymmetricKeyByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1526,6 +1813,7 @@ class GetSymmetricKeyByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1541,6 +1829,7 @@ class GetSymmetricKeyByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETSYMMETRICKEYBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1550,18 +1839,25 @@ class GetSymmetricKeyByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETSYMMETRICKEYBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_GetSymmetricKeyByNameRequest_f34281f0 = GetSymmetricKeyByNameRequest
 
 
 class GetSymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.GetSymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.GetSymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1570,6 +1866,7 @@ class GetSymmetricKeyRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1585,6 +1882,7 @@ class GetSymmetricKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETSYMMETRICKEYREQUEST_ID, value)
 
     @_NebiusProperty
@@ -1595,18 +1893,25 @@ class GetSymmetricKeyRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_KMS_V1_GETSYMMETRICKEYREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_GetSymmetricKeyRequest_a4061f90 = GetSymmetricKeyRequest
 
 
 class ListSymmetricKeysRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.ListSymmetricKeysRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.ListSymmetricKeysRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1617,6 +1922,7 @@ class ListSymmetricKeysRequest(Message):
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         show_scheduled_for_deletion: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1635,6 +1941,7 @@ class ListSymmetricKeysRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTSYMMETRICKEYSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1645,6 +1952,7 @@ class ListSymmetricKeysRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTSYMMETRICKEYSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1655,6 +1963,7 @@ class ListSymmetricKeysRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTSYMMETRICKEYSREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -1665,18 +1974,25 @@ class ListSymmetricKeysRequest(Message):
 
     @show_scheduled_for_deletion.setter
     def show_scheduled_for_deletion(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``show_scheduled_for_deletion`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTSYMMETRICKEYSREQUEST_SHOW_SCHEDULED_FOR_DELETION, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'show_scheduled_for_deletion': 'show_scheduled_for_deletion'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_ListSymmetricKeysRequest_6e0850a9 = ListSymmetricKeysRequest
 
 
 class ListSymmetricKeysResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.ListSymmetricKeysResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.ListSymmetricKeysResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1685,6 +2001,7 @@ class ListSymmetricKeysResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_kms_v1_SymmetricKey_60a5a934] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1700,6 +2017,7 @@ class ListSymmetricKeysResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_kms_v1_SymmetricKey_60a5a934] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTSYMMETRICKEYSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1710,18 +2028,25 @@ class ListSymmetricKeysResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_KMS_V1_LISTSYMMETRICKEYSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_ListSymmetricKeysResponse_18613b01 = ListSymmetricKeysResponse
 
 
 class RotateSymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.RotateSymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.RotateSymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1729,6 +2054,7 @@ class RotateSymmetricKeyRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1742,18 +2068,25 @@ class RotateSymmetricKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_ROTATESYMMETRICKEYREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_RotateSymmetricKeyRequest_72087dc2 = RotateSymmetricKeyRequest
 
 
 class UndeleteSymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.UndeleteSymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.UndeleteSymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1762,6 +2095,7 @@ class UndeleteSymmetricKeyRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1777,6 +2111,7 @@ class UndeleteSymmetricKeyRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_UNDELETESYMMETRICKEYREQUEST_ID, value)
 
     @_NebiusProperty
@@ -1787,18 +2122,25 @@ class UndeleteSymmetricKeyRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_KMS_V1_UNDELETESYMMETRICKEYREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_UndeleteSymmetricKeyRequest_f8ba977a = UndeleteSymmetricKeyRequest
 
 
 class UpdateSymmetricKeyDeletionDelayRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.UpdateSymmetricKeyDeletionDelayRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.UpdateSymmetricKeyDeletionDelayRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1807,6 +2149,7 @@ class UpdateSymmetricKeyDeletionDelayRequest(Message):
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         deletion_delay: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1822,6 +2165,7 @@ class UpdateSymmetricKeyDeletionDelayRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATESYMMETRICKEYDELETIONDELAYREQUEST_ID, value)
 
     @_NebiusProperty
@@ -1832,18 +2176,25 @@ class UpdateSymmetricKeyDeletionDelayRequest(Message):
 
     @deletion_delay.setter
     def deletion_delay(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``deletion_delay`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATESYMMETRICKEYDELETIONDELAYREQUEST_DELETION_DELAY, value)
 
     __PY_TO_PB2__ = {'id': 'id', 'deletion_delay': 'deletion_delay'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_UpdateSymmetricKeyDeletionDelayRequest_355acdd3 = UpdateSymmetricKeyDeletionDelayRequest
 
 
 class UpdateSymmetricKeyRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.kms.v1.UpdateSymmetricKeyRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.kms.v1.UpdateSymmetricKeyRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1852,6 +2203,7 @@ class UpdateSymmetricKeyRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_kms_v1_SymmetricKeySpec_1a01fccc | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1867,6 +2219,7 @@ class UpdateSymmetricKeyRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATESYMMETRICKEYREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1877,9 +2230,11 @@ class UpdateSymmetricKeyRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_kms_v1_SymmetricKeySpec_1a01fccc | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_KMS_V1_UPDATESYMMETRICKEYREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_kms_v1_UpdateSymmetricKeyRequest_e2e78173 = UpdateSymmetricKeyRequest
 
 # @@nebius-section:fields@@
@@ -2047,14 +2402,19 @@ UpdateSymmetricKeyRequest.__FIELDS__ = (_NEBIUS_KMS_V1_UPDATESYMMETRICKEYREQUEST
 class AsymmetricCryptoServiceClient(_NebiusClient):
     'Data plane for KMS asymmetric cryptography operations.\n\nThis class provides client methods for the ``nebius.kms.v1.AsymmetricCryptoService`` service.'
     __service_name__ = 'nebius.kms.v1.AsymmetricCryptoService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'dpl.kms'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.kms.v1.AsymmetricCryptoService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.kms.v1.AsymmetricCryptoService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def sign_hash(
         self,
@@ -2098,17 +2458,25 @@ class AsymmetricCryptoServiceClient(_NebiusClient):
 class AsymmetricKeyServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Set of methods for managing asymmetric keys.\n\nThis class provides client methods for the ``nebius.kms.v1.AsymmetricKeyService`` service.'
     __service_name__ = 'nebius.kms.v1.AsymmetricKeyService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.kms'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.kms.v1.AsymmetricKeyService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.kms.v1.AsymmetricKeyService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,
@@ -2225,14 +2593,19 @@ class AsymmetricKeyServiceClient(_NebiusClientWithOperations[_type_nebius_common
 class SymmetricCryptoServiceClient(_NebiusClient):
     '--- Data plane for KMS symmetric cryptography operations\n\nSet of methods that perform symmetric encryption and decryption.\n\nThis class provides client methods for the ``nebius.kms.v1.SymmetricCryptoService`` service.'
     __service_name__ = 'nebius.kms.v1.SymmetricCryptoService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'dpl.kms'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.kms.v1.SymmetricCryptoService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.kms.v1.SymmetricCryptoService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def encrypt(
         self,
@@ -2276,17 +2649,25 @@ class SymmetricCryptoServiceClient(_NebiusClient):
 class SymmetricKeyServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'Set of methods for managing symmetric KMS keys.\n\nThis class provides client methods for the ``nebius.kms.v1.SymmetricKeyService`` service.'
     __service_name__ = 'nebius.kms.v1.SymmetricKeyService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'cpl.kms'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.kms.v1.SymmetricKeyService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.kms.v1.SymmetricKeyService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def create(
         self,

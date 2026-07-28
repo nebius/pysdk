@@ -57,9 +57,13 @@ if _NEBIUS_TYPE_CHECKING:
 # @@nebius-section:enums@@
 class Code(Enum):
     __PROTO_FULL_NAME__ = 'google.rpc.Code'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('google.rpc.Code')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     OK = 0
     CANCELLED = 1
     UNKNOWN = 2
@@ -82,10 +86,15 @@ _NebiusType_google_rpc_Code_195d0d19 = Code
 # @@nebius-section:messages@@
 class Status(Message):
     __PROTO_FULL_NAME__ = 'google.rpc.Status'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('google.rpc.Status')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -95,6 +104,7 @@ class Status(Message):
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         details: _NebiusIterable[_type_google_protobuf_dfd76a75.Any] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if code is not _NEBIUS_UNSET:
             values['code'] = code
@@ -111,6 +121,7 @@ class Status(Message):
 
     @code.setter
     def code(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``code`` field."""
         self._set_field(_GOOGLE_RPC_STATUS_CODE, value)
 
     @_NebiusProperty
@@ -120,6 +131,7 @@ class Status(Message):
 
     @message.setter
     def message(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``message`` field."""
         self._set_field(_GOOGLE_RPC_STATUS_MESSAGE, value)
 
     @_NebiusProperty
@@ -129,9 +141,11 @@ class Status(Message):
 
     @details.setter
     def details(self, value: _NebiusIterable[_type_google_protobuf_dfd76a75.Any] | None) -> None:
+        """Set or clear the generated ``details`` field."""
         self._set_field(_GOOGLE_RPC_STATUS_DETAILS, value)
 
     __PY_TO_PB2__ = {'code': 'code', 'message': 'message', 'details': 'details'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_google_rpc_Status_a4ab23a7 = Status
 
 # @@nebius-section:fields@@

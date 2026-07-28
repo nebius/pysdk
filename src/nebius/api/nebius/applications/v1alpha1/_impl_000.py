@@ -56,9 +56,13 @@ from ...common import v1 as _type_nebius_common_v1_e3b886bd
 # @@nebius-section:enums@@
 class K8sReleaseStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.K8sReleaseStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.applications.v1alpha1.K8sReleaseStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     UNSPECIFIED = 0
     CREATED = 1
     RUNNING = 2
@@ -70,10 +74,15 @@ _NebiusType_nebius_applications_v1alpha1_K8sReleaseStatus_State_36112d1e = K8sRe
 # @@nebius-section:messages@@
 class K8sRelease(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.K8sRelease'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.K8sRelease')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -83,6 +92,7 @@ class K8sRelease(Message):
         spec: _NebiusType_nebius_applications_v1alpha1_K8sReleaseSpec_7417a416 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_applications_v1alpha1_K8sReleaseStatus_101b3b6e | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -99,6 +109,7 @@ class K8sRelease(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASE_METADATA, value)
 
     @_NebiusProperty
@@ -108,6 +119,7 @@ class K8sRelease(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_applications_v1alpha1_K8sReleaseSpec_7417a416 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASE_SPEC, value)
 
     @_NebiusProperty
@@ -117,18 +129,25 @@ class K8sRelease(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_applications_v1alpha1_K8sReleaseStatus_101b3b6e | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_K8sRelease_f3e25416 = K8sRelease
 
 
 class K8sReleaseSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.K8sReleaseSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.K8sReleaseSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -141,6 +160,7 @@ class K8sReleaseSpec(Message):
         values: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         set: _NebiusMapping[_NebiusStr, _NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values_: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cluster_id is not _NEBIUS_UNSET:
             values_['cluster_id'] = cluster_id
@@ -163,6 +183,7 @@ class K8sReleaseSpec(Message):
 
     @cluster_id.setter
     def cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cluster_id`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESPEC_CLUSTER_ID, value)
 
     @_NebiusProperty
@@ -172,6 +193,7 @@ class K8sReleaseSpec(Message):
 
     @product_slug.setter
     def product_slug(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``product_slug`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESPEC_PRODUCT_SLUG, value)
 
     @_NebiusProperty
@@ -181,6 +203,7 @@ class K8sReleaseSpec(Message):
 
     @namespace.setter
     def namespace(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``namespace`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESPEC_NAMESPACE, value)
 
     @_NebiusProperty
@@ -190,6 +213,7 @@ class K8sReleaseSpec(Message):
 
     @application_name.setter
     def application_name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``application_name`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESPEC_APPLICATION_NAME, value)
 
     @_NebiusProperty
@@ -199,6 +223,7 @@ class K8sReleaseSpec(Message):
 
     @values.setter
     def values(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``values`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESPEC_VALUES, value)
 
     @_NebiusProperty
@@ -208,18 +233,25 @@ class K8sReleaseSpec(Message):
 
     @set.setter
     def set(self, value: _NebiusMapping[_NebiusStr, _NebiusStr] | None) -> None:
+        """Set or clear the generated ``set`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESPEC_SET, value)
 
     __PY_TO_PB2__ = {'cluster_id': 'cluster_id', 'product_slug': 'product_slug', 'namespace': 'namespace', 'application_name': 'application_name', 'values': 'values', 'set': 'set', 'SetEntry': 'SetEntry'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_K8sReleaseSpec_7417a416 = K8sReleaseSpec
 
 
 class K8sReleaseStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.K8sReleaseStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.K8sReleaseStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_applications_v1alpha1_K8sReleaseStatus_State_36112d1e
 
     def __init__(
@@ -229,6 +261,7 @@ class K8sReleaseStatus(Message):
         state: _NebiusType_nebius_applications_v1alpha1_K8sReleaseStatus_State_36112d1e | None | _NebiusUnsetType = _NEBIUS_UNSET,
         error_message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -243,6 +276,7 @@ class K8sReleaseStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_applications_v1alpha1_K8sReleaseStatus_State_36112d1e | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESTATUS_STATE, value)
 
     @_NebiusProperty
@@ -252,17 +286,24 @@ class K8sReleaseStatus(Message):
 
     @error_message.setter
     def error_message(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``error_message`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_K8SRELEASESTATUS_ERROR_MESSAGE, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'error_message': 'error_message', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_K8sReleaseStatus_101b3b6e = K8sReleaseStatus
 
 class CreateK8sReleaseRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.CreateK8sReleaseRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.CreateK8sReleaseRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -271,6 +312,7 @@ class CreateK8sReleaseRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_applications_v1alpha1_K8sReleaseSpec_7417a416 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -285,6 +327,7 @@ class CreateK8sReleaseRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_CREATEK8SRELEASEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -294,18 +337,25 @@ class CreateK8sReleaseRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_applications_v1alpha1_K8sReleaseSpec_7417a416 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_CREATEK8SRELEASEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_CreateK8sReleaseRequest_43529e7a = CreateK8sReleaseRequest
 
 
 class DeleteK8sReleaseRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.DeleteK8sReleaseRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.DeleteK8sReleaseRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -313,6 +363,7 @@ class DeleteK8sReleaseRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -325,18 +376,25 @@ class DeleteK8sReleaseRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_DELETEK8SRELEASEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_DeleteK8sReleaseRequest_d00aadb2 = DeleteK8sReleaseRequest
 
 
 class GetK8sReleaseRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.GetK8sReleaseRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.GetK8sReleaseRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -344,6 +402,7 @@ class GetK8sReleaseRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -356,18 +415,25 @@ class GetK8sReleaseRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_GETK8SRELEASEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_GetK8sReleaseRequest_0da42cde = GetK8sReleaseRequest
 
 
 class ListK8sReleasesRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.ListK8sReleasesRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.ListK8sReleasesRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -379,6 +445,7 @@ class ListK8sReleasesRequest(Message):
         filter: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         cluster_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -399,6 +466,7 @@ class ListK8sReleasesRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_LISTK8SRELEASESREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -408,6 +476,7 @@ class ListK8sReleasesRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_LISTK8SRELEASESREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -417,6 +486,7 @@ class ListK8sReleasesRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_LISTK8SRELEASESREQUEST_PAGE_TOKEN, value)
 
     @_NebiusProperty
@@ -426,6 +496,7 @@ class ListK8sReleasesRequest(Message):
 
     @filter.setter
     def filter(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``filter`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_LISTK8SRELEASESREQUEST_FILTER, value)
 
     @_NebiusProperty
@@ -435,18 +506,25 @@ class ListK8sReleasesRequest(Message):
 
     @cluster_id.setter
     def cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cluster_id`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_LISTK8SRELEASESREQUEST_CLUSTER_ID, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token', 'filter': 'filter', 'cluster_id': 'cluster_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_ListK8sReleasesRequest_64041153 = ListK8sReleasesRequest
 
 
 class ListK8sReleasesResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.ListK8sReleasesResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.ListK8sReleasesResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -455,6 +533,7 @@ class ListK8sReleasesResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_applications_v1alpha1_K8sRelease_f3e25416] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -469,6 +548,7 @@ class ListK8sReleasesResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_applications_v1alpha1_K8sRelease_f3e25416] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_LISTK8SRELEASESRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -478,18 +558,25 @@ class ListK8sReleasesResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_LISTK8SRELEASESRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_ListK8sReleasesResponse_039847fb = ListK8sReleasesResponse
 
 
 class UpdateK8sReleaseRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.applications.v1alpha1.UpdateK8sReleaseRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.applications.v1alpha1.UpdateK8sReleaseRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -498,6 +585,7 @@ class UpdateK8sReleaseRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_applications_v1alpha1_K8sReleaseSpec_7417a416 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -512,6 +600,7 @@ class UpdateK8sReleaseRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_UPDATEK8SRELEASEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -521,9 +610,11 @@ class UpdateK8sReleaseRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_applications_v1alpha1_K8sReleaseSpec_7417a416 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_APPLICATIONS_V1ALPHA1_UPDATEK8SRELEASEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_applications_v1alpha1_UpdateK8sReleaseRequest_b858ebd7 = UpdateK8sReleaseRequest
 
 # @@nebius-section:fields@@
@@ -578,17 +669,25 @@ K8sReleaseStatus__State.__qualname__ = 'K8sReleaseStatus.State'
 class K8sReleaseServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.applications.v1alpha1.K8sReleaseService`` service.'
     __service_name__ = 'nebius.applications.v1alpha1.K8sReleaseService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'deployment-manager.mkt'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.applications.v1alpha1.K8sReleaseService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.applications.v1alpha1.K8sReleaseService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,

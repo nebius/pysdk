@@ -58,9 +58,13 @@ if _NEBIUS_TYPE_CHECKING:
 class Action(Enum):
     'Action to be taken by the agent based on version check.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.Action'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.logging.agentmanager.v1.Action')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     ACTION_UNDEFINED = 0
     'Default undefined action.'
     NOP = 1
@@ -74,9 +78,13 @@ _NebiusType_nebius_logging_agentmanager_v1_Action_c2108ef0 = Action
 class AgentState(Enum):
     'Current operational state of the agent.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.AgentState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.logging.agentmanager.v1.AgentState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNDEFINED = 0
     'Default undefined state.'
     STATE_HEALTHY = 1
@@ -88,9 +96,13 @@ _NebiusType_nebius_logging_agentmanager_v1_AgentState_f5ebb763 = AgentState
 class AgentType(Enum):
     'Type of the agent in the system.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.AgentType'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.logging.agentmanager.v1.AgentType')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     AGENT_UNDEFINED = 0
     'Default undefined state.'
     O11Y_AGENT = 1
@@ -101,10 +113,15 @@ _NebiusType_nebius_logging_agentmanager_v1_AgentType_b8fca536 = AgentType
 class GetVersionRequest(Message):
     'Request message for GetVersion RPC containing agent status and system information.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.GetVersionRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.GetVersionRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -133,6 +150,7 @@ class GetVersionRequest(Message):
         healthcheck_logs: _NebiusType_nebius_logging_agentmanager_v1_HealthCheckLogs_4ef3a9b5 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         last_seen_config_version: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if type is not _NEBIUS_UNSET:
             values['type'] = type
@@ -188,6 +206,7 @@ class GetVersionRequest(Message):
 
     @type.setter
     def type(self, value: _NebiusType_nebius_logging_agentmanager_v1_AgentType_b8fca536 | None) -> None:
+        """Set or clear the generated ``type`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_TYPE, value)
 
     @_NebiusProperty
@@ -198,6 +217,7 @@ class GetVersionRequest(Message):
 
     @agent_version.setter
     def agent_version(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``agent_version`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_AGENT_VERSION, value)
 
     @_NebiusProperty
@@ -208,6 +228,7 @@ class GetVersionRequest(Message):
 
     @updater_version.setter
     def updater_version(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``updater_version`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_UPDATER_VERSION, value)
 
     @_NebiusProperty
@@ -218,6 +239,7 @@ class GetVersionRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -228,6 +250,7 @@ class GetVersionRequest(Message):
 
     @instance_id.setter
     def instance_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``instance_id`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_INSTANCE_ID, value)
 
     @_NebiusProperty
@@ -238,6 +261,7 @@ class GetVersionRequest(Message):
 
     @os_info.setter
     def os_info(self, value: _NebiusType_nebius_logging_agentmanager_v1_OSInfo_24f147f6 | None) -> None:
+        """Set or clear the generated ``os_info`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_OS_INFO, value)
 
     @_NebiusProperty
@@ -248,6 +272,7 @@ class GetVersionRequest(Message):
 
     @agent_state.setter
     def agent_state(self, value: _NebiusType_nebius_logging_agentmanager_v1_AgentState_f5ebb763 | None) -> None:
+        """Set or clear the generated ``agent_state`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_AGENT_STATE, value)
 
     @_NebiusProperty
@@ -258,6 +283,7 @@ class GetVersionRequest(Message):
 
     @agent_uptime.setter
     def agent_uptime(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``agent_uptime`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_AGENT_UPTIME, value)
 
     @_NebiusProperty
@@ -268,6 +294,7 @@ class GetVersionRequest(Message):
 
     @system_uptime.setter
     def system_uptime(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``system_uptime`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_SYSTEM_UPTIME, value)
 
     @_NebiusProperty
@@ -278,6 +305,7 @@ class GetVersionRequest(Message):
 
     @updater_uptime.setter
     def updater_uptime(self, value: _NebiusTimedelta | _type_google_protobuf_dfd76a75.Duration | None) -> None:
+        """Set or clear the generated ``updater_uptime`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_UPDATER_UPTIME, value)
 
     @_NebiusProperty
@@ -288,6 +316,7 @@ class GetVersionRequest(Message):
 
     @agent_state_messages.setter
     def agent_state_messages(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``agent_state_messages`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_AGENT_STATE_MESSAGES, value)
 
     @_NebiusProperty
@@ -298,6 +327,7 @@ class GetVersionRequest(Message):
 
     @last_update_error.setter
     def last_update_error(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``last_update_error`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_LAST_UPDATE_ERROR, value)
 
     @_NebiusProperty
@@ -308,6 +338,7 @@ class GetVersionRequest(Message):
 
     @mk8s_cluster_id.setter
     def mk8s_cluster_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``mk8s_cluster_id`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_MK8S_CLUSTER_ID, value)
 
     @_NebiusProperty
@@ -318,6 +349,7 @@ class GetVersionRequest(Message):
 
     @modules_health.setter
     def modules_health(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModulesHealth_64d3a69e | None) -> None:
+        """Set or clear the generated ``modules_health`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_MODULES_HEALTH, value)
 
     @_NebiusProperty
@@ -328,6 +360,7 @@ class GetVersionRequest(Message):
 
     @cloud_init_status.setter
     def cloud_init_status(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cloud_init_status`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_CLOUD_INIT_STATUS, value)
 
     @_NebiusProperty
@@ -338,6 +371,7 @@ class GetVersionRequest(Message):
 
     @instance_id_used_fallback.setter
     def instance_id_used_fallback(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``instance_id_used_fallback`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_INSTANCE_ID_USED_FALLBACK, value)
 
     @_NebiusProperty
@@ -348,6 +382,7 @@ class GetVersionRequest(Message):
 
     @last_agent_logs.setter
     def last_agent_logs(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``last_agent_logs`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_LAST_AGENT_LOGS, value)
 
     @_NebiusProperty
@@ -358,6 +393,7 @@ class GetVersionRequest(Message):
 
     @gpu_model.setter
     def gpu_model(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``gpu_model`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_GPU_MODEL, value)
 
     @_NebiusProperty
@@ -368,6 +404,7 @@ class GetVersionRequest(Message):
 
     @gpu_number.setter
     def gpu_number(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``gpu_number`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_GPU_NUMBER, value)
 
     @_NebiusProperty
@@ -378,6 +415,7 @@ class GetVersionRequest(Message):
 
     @dcgm_version.setter
     def dcgm_version(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``dcgm_version`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_DCGM_VERSION, value)
 
     @_NebiusProperty
@@ -388,6 +426,7 @@ class GetVersionRequest(Message):
 
     @healthcheck_logs.setter
     def healthcheck_logs(self, value: _NebiusType_nebius_logging_agentmanager_v1_HealthCheckLogs_4ef3a9b5 | None) -> None:
+        """Set or clear the generated ``healthcheck_logs`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_HEALTHCHECK_LOGS, value)
 
     @_NebiusProperty
@@ -398,19 +437,26 @@ class GetVersionRequest(Message):
 
     @last_seen_config_version.setter
     def last_seen_config_version(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``last_seen_config_version`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONREQUEST_LAST_SEEN_CONFIG_VERSION, value)
 
     __PY_TO_PB2__ = {'type': 'type', 'agent_version': 'agent_version', 'updater_version': 'updater_version', 'parent_id': 'parent_id', 'instance_id': 'instance_id', 'os_info': 'os_info', 'agent_state': 'agent_state', 'agent_uptime': 'agent_uptime', 'system_uptime': 'system_uptime', 'updater_uptime': 'updater_uptime', 'agent_state_messages': 'agent_state_messages', 'last_update_error': 'last_update_error', 'mk8s_cluster_id': 'mk8s_cluster_id', 'modules_health': 'modules_health', 'cloud_init_status': 'cloud_init_status', 'instance_id_used_fallback': 'instance_id_used_fallback', 'last_agent_logs': 'last_agent_logs', 'gpu_model': 'gpu_model', 'gpu_number': 'gpu_number', 'dcgm_version': 'dcgm_version', 'healthcheck_logs': 'healthcheck_logs', 'last_seen_config_version': 'last_seen_config_version'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_GetVersionRequest_e6a8a1f8 = GetVersionRequest
 
 
 class GetVersionResponse(Message):
     'Response message for GetVersion RPC containing required action for the agent.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.GetVersionResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.GetVersionResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_response__(_NebiusOneOf):
         name: str = 'response'
@@ -463,6 +509,7 @@ class GetVersionResponse(Message):
         feature_flags_unavailable: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         config_version: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if action is not _NEBIUS_UNSET:
             values['action'] = action
@@ -488,6 +535,7 @@ class GetVersionResponse(Message):
 
     @action.setter
     def action(self, value: _NebiusType_nebius_logging_agentmanager_v1_Action_c2108ef0 | None) -> None:
+        """Set or clear the generated ``action`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONRESPONSE_ACTION, value)
 
     @_NebiusProperty
@@ -498,6 +546,7 @@ class GetVersionResponse(Message):
 
     @nop.setter
     def nop(self, value: _NebiusType_nebius_logging_agentmanager_v1_NopActionParams_31cda5e2 | None) -> None:
+        """Set or clear the generated ``nop`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONRESPONSE_NOP, value)
 
     @_NebiusProperty
@@ -508,6 +557,7 @@ class GetVersionResponse(Message):
 
     @update.setter
     def update(self, value: _NebiusType_nebius_logging_agentmanager_v1_UpdateActionParams_2df15982 | None) -> None:
+        """Set or clear the generated ``update`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONRESPONSE_UPDATE, value)
 
     @_NebiusProperty
@@ -518,6 +568,7 @@ class GetVersionResponse(Message):
 
     @restart.setter
     def restart(self, value: _NebiusType_nebius_logging_agentmanager_v1_RestartActionParams_c8a96f51 | None) -> None:
+        """Set or clear the generated ``restart`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONRESPONSE_RESTART, value)
 
     @_NebiusProperty
@@ -528,6 +579,7 @@ class GetVersionResponse(Message):
 
     @feature_flags.setter
     def feature_flags(self, value: _NebiusMapping[_NebiusStr, _NebiusStr] | None) -> None:
+        """Set or clear the generated ``feature_flags`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONRESPONSE_FEATURE_FLAGS, value)
 
     @_NebiusProperty
@@ -538,6 +590,7 @@ class GetVersionResponse(Message):
 
     @feature_flags_unavailable.setter
     def feature_flags_unavailable(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``feature_flags_unavailable`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONRESPONSE_FEATURE_FLAGS_UNAVAILABLE, value)
 
     @_NebiusProperty
@@ -548,19 +601,26 @@ class GetVersionResponse(Message):
 
     @config_version.setter
     def config_version(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``config_version`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_GETVERSIONRESPONSE_CONFIG_VERSION, value)
 
     __PY_TO_PB2__ = {'action': 'action', 'nop': 'nop', 'update': 'update', 'restart': 'restart', 'feature_flags': 'feature_flags', 'feature_flags_unavailable': 'feature_flags_unavailable', 'config_version': 'config_version', 'response': 'response', 'FeatureFlagsEntry': 'FeatureFlagsEntry'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_GetVersionResponse_a7981ea3 = GetVersionResponse
 
 
 class HealthCheckLogs(Message):
     'Health check logs information for monitoring disk usage.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.HealthCheckLogs'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.HealthCheckLogs')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -569,6 +629,7 @@ class HealthCheckLogs(Message):
         directory_size_bytes: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         mountpoint_total_bytes: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if directory_size_bytes is not _NEBIUS_UNSET:
             values['directory_size_bytes'] = directory_size_bytes
@@ -584,6 +645,7 @@ class HealthCheckLogs(Message):
 
     @directory_size_bytes.setter
     def directory_size_bytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``directory_size_bytes`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_HEALTHCHECKLOGS_DIRECTORY_SIZE_BYTES, value)
 
     @_NebiusProperty
@@ -594,19 +656,26 @@ class HealthCheckLogs(Message):
 
     @mountpoint_total_bytes.setter
     def mountpoint_total_bytes(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``mountpoint_total_bytes`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_HEALTHCHECKLOGS_MOUNTPOINT_TOTAL_BYTES, value)
 
     __PY_TO_PB2__ = {'directory_size_bytes': 'directory_size_bytes', 'mountpoint_total_bytes': 'mountpoint_total_bytes'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_HealthCheckLogs_4ef3a9b5 = HealthCheckLogs
 
 
 class ModuleHealth(Message):
     'Health status information for an individual module.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.ModuleHealth'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.ModuleHealth')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -616,6 +685,7 @@ class ModuleHealth(Message):
         messages: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         parameters: _NebiusIterable[_NebiusType_nebius_logging_agentmanager_v1_Parameter_862ce37a] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -633,6 +703,7 @@ class ModuleHealth(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_logging_agentmanager_v1_AgentState_f5ebb763 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULEHEALTH_STATE, value)
 
     @_NebiusProperty
@@ -643,6 +714,7 @@ class ModuleHealth(Message):
 
     @messages.setter
     def messages(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``messages`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULEHEALTH_MESSAGES, value)
 
     @_NebiusProperty
@@ -653,19 +725,26 @@ class ModuleHealth(Message):
 
     @parameters.setter
     def parameters(self, value: _NebiusIterable[_NebiusType_nebius_logging_agentmanager_v1_Parameter_862ce37a] | None) -> None:
+        """Set or clear the generated ``parameters`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULEHEALTH_PARAMETERS, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'messages': 'messages', 'parameters': 'parameters'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 = ModuleHealth
 
 
 class ModulesHealth(Message):
     'Health status information for all agent modules.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.ModulesHealth'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.ModulesHealth')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -682,6 +761,7 @@ class ModulesHealth(Message):
         journald_pipeline: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         nccl_metrics_pipeline: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if process is not _NEBIUS_UNSET:
             values['process'] = process
@@ -713,6 +793,7 @@ class ModulesHealth(Message):
 
     @process.setter
     def process(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``process`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_PROCESS, value)
 
     @_NebiusProperty
@@ -723,6 +804,7 @@ class ModulesHealth(Message):
 
     @gpu_pipeline.setter
     def gpu_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``gpu_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_GPU_PIPELINE, value)
 
     @_NebiusProperty
@@ -733,6 +815,7 @@ class ModulesHealth(Message):
 
     @cpu_pipeline.setter
     def cpu_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``cpu_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_CPU_PIPELINE, value)
 
     @_NebiusProperty
@@ -743,6 +826,7 @@ class ModulesHealth(Message):
 
     @cilium_pipeline.setter
     def cilium_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``cilium_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_CILIUM_PIPELINE, value)
 
     @_NebiusProperty
@@ -753,6 +837,7 @@ class ModulesHealth(Message):
 
     @vmapps_pipeline.setter
     def vmapps_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``vmapps_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_VMAPPS_PIPELINE, value)
 
     @_NebiusProperty
@@ -763,6 +848,7 @@ class ModulesHealth(Message):
 
     @common_service_logs_pipeline.setter
     def common_service_logs_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``common_service_logs_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_COMMON_SERVICE_LOGS_PIPELINE, value)
 
     @_NebiusProperty
@@ -773,6 +859,7 @@ class ModulesHealth(Message):
 
     @vm_service_logs_pipeline.setter
     def vm_service_logs_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``vm_service_logs_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_VM_SERVICE_LOGS_PIPELINE, value)
 
     @_NebiusProperty
@@ -783,6 +870,7 @@ class ModulesHealth(Message):
 
     @compute_gpu_logs_pipeline.setter
     def compute_gpu_logs_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``compute_gpu_logs_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_COMPUTE_GPU_LOGS_PIPELINE, value)
 
     @_NebiusProperty
@@ -793,6 +881,7 @@ class ModulesHealth(Message):
 
     @journald_pipeline.setter
     def journald_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``journald_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_JOURNALD_PIPELINE, value)
 
     @_NebiusProperty
@@ -803,39 +892,53 @@ class ModulesHealth(Message):
 
     @nccl_metrics_pipeline.setter
     def nccl_metrics_pipeline(self, value: _NebiusType_nebius_logging_agentmanager_v1_ModuleHealth_0ba48858 | None) -> None:
+        """Set or clear the generated ``nccl_metrics_pipeline`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_MODULESHEALTH_NCCL_METRICS_PIPELINE, value)
 
     __PY_TO_PB2__ = {'process': 'process', 'gpu_pipeline': 'gpu_pipeline', 'cpu_pipeline': 'cpu_pipeline', 'cilium_pipeline': 'cilium_pipeline', 'vmapps_pipeline': 'vmapps_pipeline', 'common_service_logs_pipeline': 'common_service_logs_pipeline', 'vm_service_logs_pipeline': 'vm_service_logs_pipeline', 'compute_gpu_logs_pipeline': 'compute_gpu_logs_pipeline', 'journald_pipeline': 'journald_pipeline', 'nccl_metrics_pipeline': 'nccl_metrics_pipeline'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_ModulesHealth_64d3a69e = ModulesHealth
 
 
 class NopActionParams(Message):
     'Parameters when no operation is required.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.NopActionParams'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.NopActionParams')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_NopActionParams_31cda5e2 = NopActionParams
 
 
 class OSInfo(Message):
     'Operating system information for the instance.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.OSInfo'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.OSInfo')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -845,6 +948,7 @@ class OSInfo(Message):
         uname: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         architecture: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -862,6 +966,7 @@ class OSInfo(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_OSINFO_NAME, value)
 
     @_NebiusProperty
@@ -872,6 +977,7 @@ class OSInfo(Message):
 
     @uname.setter
     def uname(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``uname`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_OSINFO_UNAME, value)
 
     @_NebiusProperty
@@ -882,19 +988,26 @@ class OSInfo(Message):
 
     @architecture.setter
     def architecture(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``architecture`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_OSINFO_ARCHITECTURE, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'uname': 'uname', 'architecture': 'architecture'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_OSInfo_24f147f6 = OSInfo
 
 
 class Parameter(Message):
     'Key-value parameter for module configuration.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.Parameter'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.Parameter')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -903,6 +1016,7 @@ class Parameter(Message):
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         value: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if name is not _NEBIUS_UNSET:
             values['name'] = name
@@ -918,6 +1032,7 @@ class Parameter(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_PARAMETER_NAME, value)
 
     @_NebiusProperty
@@ -928,39 +1043,53 @@ class Parameter(Message):
 
     @value.setter
     def value(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``value`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_PARAMETER_VALUE, value)
 
     __PY_TO_PB2__ = {'name': 'name', 'value': 'value'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_Parameter_862ce37a = Parameter
 
 
 class RestartActionParams(Message):
     'Parameters for agent restart action.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.RestartActionParams'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.RestartActionParams')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_RestartActionParams_c8a96f51 = RestartActionParams
 
 
 class UpdateActionParams(Message):
     'Parameters for agent update action.'
     __PROTO_FULL_NAME__ = 'nebius.logging.agentmanager.v1.UpdateActionParams'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.logging.agentmanager.v1.UpdateActionParams')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -969,6 +1098,7 @@ class UpdateActionParams(Message):
         version: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         repo_url: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if version is not _NEBIUS_UNSET:
             values['version'] = version
@@ -984,6 +1114,7 @@ class UpdateActionParams(Message):
 
     @version.setter
     def version(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``version`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_UPDATEACTIONPARAMS_VERSION, value)
 
     @_NebiusProperty
@@ -994,9 +1125,11 @@ class UpdateActionParams(Message):
 
     @repo_url.setter
     def repo_url(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``repo_url`` field."""
         self._set_field(_NEBIUS_LOGGING_AGENTMANAGER_V1_UPDATEACTIONPARAMS_REPO_URL, value)
 
     __PY_TO_PB2__ = {'version': 'version', 'repo_url': 'repo_url'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_logging_agentmanager_v1_UpdateActionParams_2df15982 = UpdateActionParams
 
 # @@nebius-section:fields@@
@@ -1077,14 +1210,19 @@ UpdateActionParams.__FIELDS__ = (_NEBIUS_LOGGING_AGENTMANAGER_V1_UPDATEACTIONPAR
 class VersionServiceClient(_NebiusClient):
     'VersionService provides functionality for managing nebius-observability-agent versions and health status\nin the Nebius observability system.\n\nThis class provides client methods for the ``nebius.logging.agentmanager.v1.VersionService`` service.'
     __service_name__ = 'nebius.logging.agentmanager.v1.VersionService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'observability-agent-manager'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.logging.agentmanager.v1.VersionService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.logging.agentmanager.v1.VersionService')
+    """Alias for code that expects a protobuf service descriptor."""
 
     def get_version(
         self,

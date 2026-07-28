@@ -57,9 +57,13 @@ from ...common import v1 as _type_nebius_common_v1_e3b886bd
 class AllocationStatus__State(Enum):
     'Enumeration of possible states of the Allocation.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.AllocationStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.AllocationStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     'Default state, unspecified.'
     CREATING = 1
@@ -74,9 +78,13 @@ _NebiusType_nebius_vpc_v1_AllocationStatus_State_2f998751 = AllocationStatus__St
 
 class NetworkInterfaceAssignment__Type(Enum):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NetworkInterfaceAssignment.Type'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.NetworkInterfaceAssignment.Type')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     TYPE_UNSPECIFIED = 0
     PRIMARY = 1
     'Allocation is attached as the interface private IPv4 address.'
@@ -89,9 +97,13 @@ _NebiusType_nebius_vpc_v1_NetworkInterfaceAssignment_Type_d484da5d = NetworkInte
 class NetworkStatus__State(Enum):
     'Enumeration of possible states of the network.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NetworkStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.NetworkStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     'Default state, unspecified.'
     CREATING = 1
@@ -105,9 +117,13 @@ _NebiusType_nebius_vpc_v1_NetworkStatus_State_7e6173c1 = NetworkStatus__State
 class AddressBlockState(Enum):
     'Controls provisioning of IP addresses from this pool to other pools\nor allocations. Defaults to AVAILABLE.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.AddressBlockState'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.AddressBlockState')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     'Not used, mandated by the protocol.'
     AVAILABLE = 1
@@ -118,9 +134,13 @@ _NebiusType_nebius_vpc_v1_AddressBlockState_c061c785 = AddressBlockState
 
 class IpVersion(Enum):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.IpVersion'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.IpVersion')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     IP_VERSION_UNSPECIFIED = 0
     'Default, unspecified IP version.'
     IPV4 = 1
@@ -131,9 +151,13 @@ _NebiusType_nebius_vpc_v1_IpVersion_4d855904 = IpVersion
 
 class IpVisibility(Enum):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.IpVisibility'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.IpVisibility')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     IP_VISIBILITY_UNSPECIFIED = 0
     'Default, unspecified IP visibility.'
     PRIVATE = 1
@@ -145,9 +169,13 @@ _NebiusType_nebius_vpc_v1_IpVisibility_bf6e9b79 = IpVisibility
 class PoolStatus__State(Enum):
     'Possible states of the Pool.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.PoolStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.PoolStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     'Default, unspecified state.'
     CREATING = 1
@@ -160,9 +188,13 @@ _NebiusType_nebius_vpc_v1_PoolStatus_State_405f8e8d = PoolStatus__State
 
 class RouteStatus__State(Enum):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.RouteStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     'The state is unknown or not yet set.'
     READY = 10
@@ -172,9 +204,13 @@ _NebiusType_nebius_vpc_v1_RouteStatus_State_353d266d = RouteStatus__State
 class RouteStatus__Type(Enum):
     'Route type.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteStatus.Type'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.RouteStatus.Type')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     TYPE_UNSPECIFIED = 0
     STATIC = 1
     REDISTRIBUTED = 2
@@ -183,34 +219,31 @@ _NebiusType_nebius_vpc_v1_RouteStatus_Type_e2efdcce = RouteStatus__Type
 class RouteTableStatus__State(Enum):
     'State indicates the current operational state of the route table.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteTableStatus.State'
+    """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
     __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.RouteTableStatus.State')
+    """Protobuf enum descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
     STATE_UNSPECIFIED = 0
     'The state is unknown or not yet set.'
     READY = 10
     'The route table is configured and operational.'
 _NebiusType_nebius_vpc_v1_RouteTableStatus_State_6354d088 = RouteTableStatus__State
 
-class SecurityGroupStatus__State(Enum):
-    'Enumeration of possible states of the security group.'
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.SecurityGroupStatus.State'
-    __REGISTRY__ = REGISTRY
-    __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.vpc.v1.SecurityGroupStatus.State')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-    STATE_UNSPECIFIED = 0
-    'Default state, unspecified.'
-    READY = 2
-    'Security group is ready for use.'
-_NebiusType_nebius_vpc_v1_SecurityGroupStatus_State_3789d75b = SecurityGroupStatus__State
-
 # @@nebius-section:messages@@
 class Allocation(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.Allocation'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.Allocation')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -220,6 +253,7 @@ class Allocation(Message):
         spec: _NebiusType_nebius_vpc_v1_AllocationSpec_f3aca1b3 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_vpc_v1_AllocationStatus_0b57daa3 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -237,6 +271,7 @@ class Allocation(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATION_METADATA, value)
 
     @_NebiusProperty
@@ -247,6 +282,7 @@ class Allocation(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_AllocationSpec_f3aca1b3 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATION_SPEC, value)
 
     @_NebiusProperty
@@ -257,18 +293,25 @@ class Allocation(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_vpc_v1_AllocationStatus_0b57daa3 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATION_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_Allocation_e9f66f36 = Allocation
 
 
 class AllocationDetails(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.AllocationDetails'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.AllocationDetails')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -279,6 +322,7 @@ class AllocationDetails(Message):
         version: _NebiusType_nebius_vpc_v1_IpVersion_4d855904 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         subnet_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if allocated_cidr is not _NEBIUS_UNSET:
             values['allocated_cidr'] = allocated_cidr
@@ -298,6 +342,7 @@ class AllocationDetails(Message):
 
     @allocated_cidr.setter
     def allocated_cidr(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``allocated_cidr`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONDETAILS_ALLOCATED_CIDR, value)
 
     @_NebiusProperty
@@ -308,6 +353,7 @@ class AllocationDetails(Message):
 
     @pool_id.setter
     def pool_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``pool_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONDETAILS_POOL_ID, value)
 
     @_NebiusProperty
@@ -318,6 +364,7 @@ class AllocationDetails(Message):
 
     @version.setter
     def version(self, value: _NebiusType_nebius_vpc_v1_IpVersion_4d855904 | None) -> None:
+        """Set or clear the generated ``version`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONDETAILS_VERSION, value)
 
     @_NebiusProperty
@@ -328,18 +375,25 @@ class AllocationDetails(Message):
 
     @subnet_id.setter
     def subnet_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``subnet_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONDETAILS_SUBNET_ID, value)
 
     __PY_TO_PB2__ = {'allocated_cidr': 'allocated_cidr', 'pool_id': 'pool_id', 'version': 'version', 'subnet_id': 'subnet_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_AllocationDetails_f8ccfcdf = AllocationDetails
 
 
 class AllocationSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.AllocationSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.AllocationSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_ip_spec__(_NebiusOneOf):
         name: str = 'ip_spec'
@@ -378,6 +432,7 @@ class AllocationSpec(Message):
         ipv4_private: _NebiusType_nebius_vpc_v1_IPv4PrivateAllocationSpec_258a1f71 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         ipv4_public: _NebiusType_nebius_vpc_v1_IPv4PublicAllocationSpec_8c3e1eba | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if ipv4_private is not _NEBIUS_UNSET:
             values['ipv4_private'] = ipv4_private
@@ -392,6 +447,7 @@ class AllocationSpec(Message):
 
     @ipv4_private.setter
     def ipv4_private(self, value: _NebiusType_nebius_vpc_v1_IPv4PrivateAllocationSpec_258a1f71 | None) -> None:
+        """Set or clear the generated ``ipv4_private`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONSPEC_IPV4_PRIVATE, value)
 
     @_NebiusProperty
@@ -401,18 +457,25 @@ class AllocationSpec(Message):
 
     @ipv4_public.setter
     def ipv4_public(self, value: _NebiusType_nebius_vpc_v1_IPv4PublicAllocationSpec_8c3e1eba | None) -> None:
+        """Set or clear the generated ``ipv4_public`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONSPEC_IPV4_PUBLIC, value)
 
     __PY_TO_PB2__ = {'ipv4_private': 'ipv4_private', 'ipv4_public': 'ipv4_public', 'ip_spec': 'ip_spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_AllocationSpec_f3aca1b3 = AllocationSpec
 
 
 class AllocationStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.AllocationStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.AllocationStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_AllocationStatus_State_2f998751
 
     def __init__(
@@ -424,6 +487,7 @@ class AllocationStatus(Message):
         assignment: _NebiusType_nebius_vpc_v1_Assignment_af52d8fd | None | _NebiusUnsetType = _NEBIUS_UNSET,
         static: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -443,6 +507,7 @@ class AllocationStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_vpc_v1_AllocationStatus_State_2f998751 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -453,6 +518,7 @@ class AllocationStatus(Message):
 
     @details.setter
     def details(self, value: _NebiusType_nebius_vpc_v1_AllocationDetails_f8ccfcdf | None) -> None:
+        """Set or clear the generated ``details`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONSTATUS_DETAILS, value)
 
     @_NebiusProperty
@@ -463,6 +529,7 @@ class AllocationStatus(Message):
 
     @assignment.setter
     def assignment(self, value: _NebiusType_nebius_vpc_v1_Assignment_af52d8fd | None) -> None:
+        """Set or clear the generated ``assignment`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONSTATUS_ASSIGNMENT, value)
 
     @_NebiusProperty
@@ -473,18 +540,25 @@ class AllocationStatus(Message):
 
     @static.setter
     def static(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``static`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONSTATUS_STATIC, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'details': 'details', 'assignment': 'assignment', 'static': 'static', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_AllocationStatus_0b57daa3 = AllocationStatus
 
 
 class Assignment(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.Assignment'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.Assignment')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_type__(_NebiusOneOf):
         name: str = 'type'
@@ -523,6 +597,7 @@ class Assignment(Message):
         network_interface: _NebiusType_nebius_vpc_v1_NetworkInterfaceAssignment_bc9db92d | None | _NebiusUnsetType = _NEBIUS_UNSET,
         load_balancer: _NebiusType_nebius_vpc_v1_LoadBalancerAssignment_216920c6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if network_interface is not _NEBIUS_UNSET:
             values['network_interface'] = network_interface
@@ -537,6 +612,7 @@ class Assignment(Message):
 
     @network_interface.setter
     def network_interface(self, value: _NebiusType_nebius_vpc_v1_NetworkInterfaceAssignment_bc9db92d | None) -> None:
+        """Set or clear the generated ``network_interface`` field."""
         self._set_field(_NEBIUS_VPC_V1_ASSIGNMENT_NETWORK_INTERFACE, value)
 
     @_NebiusProperty
@@ -546,19 +622,26 @@ class Assignment(Message):
 
     @load_balancer.setter
     def load_balancer(self, value: _NebiusType_nebius_vpc_v1_LoadBalancerAssignment_216920c6 | None) -> None:
+        """Set or clear the generated ``load_balancer`` field."""
         self._set_field(_NEBIUS_VPC_V1_ASSIGNMENT_LOAD_BALANCER, value)
 
     __PY_TO_PB2__ = {'network_interface': 'network_interface', 'load_balancer': 'load_balancer', 'type': 'type'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_Assignment_af52d8fd = Assignment
 
 
 class IPv4PrivateAllocationSpec(Message):
     'Private IPv4 address configuration for the allocation.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.IPv4PrivateAllocationSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.IPv4PrivateAllocationSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_pool__(_NebiusOneOf):
         name: str = 'pool'
@@ -598,6 +681,7 @@ class IPv4PrivateAllocationSpec(Message):
         subnet_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         pool_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cidr is not _NEBIUS_UNSET:
             values['cidr'] = cidr
@@ -615,6 +699,7 @@ class IPv4PrivateAllocationSpec(Message):
 
     @cidr.setter
     def cidr(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cidr`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PRIVATEALLOCATIONSPEC_CIDR, value)
 
     @_NebiusProperty
@@ -625,6 +710,7 @@ class IPv4PrivateAllocationSpec(Message):
 
     @subnet_id.setter
     def subnet_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``subnet_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PRIVATEALLOCATIONSPEC_SUBNET_ID, value)
 
     @_NebiusProperty
@@ -635,19 +721,26 @@ class IPv4PrivateAllocationSpec(Message):
 
     @pool_id.setter
     def pool_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``pool_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PRIVATEALLOCATIONSPEC_POOL_ID, value)
 
     __PY_TO_PB2__ = {'cidr': 'cidr', 'subnet_id': 'subnet_id', 'pool_id': 'pool_id', 'pool': 'pool'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_IPv4PrivateAllocationSpec_258a1f71 = IPv4PrivateAllocationSpec
 
 
 class IPv4PublicAllocationSpec(Message):
     'Public IPv4 address configuration for the allocation.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.IPv4PublicAllocationSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.IPv4PublicAllocationSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_pool__(_NebiusOneOf):
         name: str = 'pool'
@@ -687,6 +780,7 @@ class IPv4PublicAllocationSpec(Message):
         subnet_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         pool_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cidr is not _NEBIUS_UNSET:
             values['cidr'] = cidr
@@ -704,6 +798,7 @@ class IPv4PublicAllocationSpec(Message):
 
     @cidr.setter
     def cidr(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cidr`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PUBLICALLOCATIONSPEC_CIDR, value)
 
     @_NebiusProperty
@@ -714,6 +809,7 @@ class IPv4PublicAllocationSpec(Message):
 
     @subnet_id.setter
     def subnet_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``subnet_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PUBLICALLOCATIONSPEC_SUBNET_ID, value)
 
     @_NebiusProperty
@@ -724,18 +820,25 @@ class IPv4PublicAllocationSpec(Message):
 
     @pool_id.setter
     def pool_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``pool_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PUBLICALLOCATIONSPEC_POOL_ID, value)
 
     __PY_TO_PB2__ = {'cidr': 'cidr', 'subnet_id': 'subnet_id', 'pool_id': 'pool_id', 'pool': 'pool'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_IPv4PublicAllocationSpec_8c3e1eba = IPv4PublicAllocationSpec
 
 
 class LoadBalancerAssignment(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.LoadBalancerAssignment'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.LoadBalancerAssignment')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -743,6 +846,7 @@ class LoadBalancerAssignment(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -756,18 +860,25 @@ class LoadBalancerAssignment(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LOADBALANCERASSIGNMENT_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_LoadBalancerAssignment_216920c6 = LoadBalancerAssignment
 
 
 class NetworkInterfaceAssignment(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NetworkInterfaceAssignment'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.NetworkInterfaceAssignment')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     Type: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_NetworkInterfaceAssignment_Type_d484da5d
 
     def __init__(
@@ -778,6 +889,7 @@ class NetworkInterfaceAssignment(Message):
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         type: _NebiusType_nebius_vpc_v1_NetworkInterfaceAssignment_Type_d484da5d | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if instance_id is not _NEBIUS_UNSET:
             values['instance_id'] = instance_id
@@ -795,6 +907,7 @@ class NetworkInterfaceAssignment(Message):
 
     @instance_id.setter
     def instance_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``instance_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKINTERFACEASSIGNMENT_INSTANCE_ID, value)
 
     @_NebiusProperty
@@ -805,6 +918,7 @@ class NetworkInterfaceAssignment(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKINTERFACEASSIGNMENT_NAME, value)
 
     @_NebiusProperty
@@ -815,17 +929,24 @@ class NetworkInterfaceAssignment(Message):
 
     @type.setter
     def type(self, value: _NebiusType_nebius_vpc_v1_NetworkInterfaceAssignment_Type_d484da5d | None) -> None:
+        """Set or clear the generated ``type`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKINTERFACEASSIGNMENT_TYPE, value)
 
     __PY_TO_PB2__ = {'instance_id': 'instance_id', 'name': 'name', 'type': 'type', 'Type': 'Type'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_NetworkInterfaceAssignment_bc9db92d = NetworkInterfaceAssignment
 
 class CreateAllocationRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.CreateAllocationRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.CreateAllocationRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -834,6 +955,7 @@ class CreateAllocationRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_AllocationSpec_f3aca1b3 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -848,6 +970,7 @@ class CreateAllocationRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATEALLOCATIONREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -857,18 +980,25 @@ class CreateAllocationRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_AllocationSpec_f3aca1b3 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATEALLOCATIONREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_CreateAllocationRequest_95e99ce6 = CreateAllocationRequest
 
 
 class DeleteAllocationRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.DeleteAllocationRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.DeleteAllocationRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -876,6 +1006,7 @@ class DeleteAllocationRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -888,18 +1019,25 @@ class DeleteAllocationRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_DELETEALLOCATIONREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_DeleteAllocationRequest_65cc5e8d = DeleteAllocationRequest
 
 
 class GetAllocationByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetAllocationByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetAllocationByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -908,6 +1046,7 @@ class GetAllocationByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -923,6 +1062,7 @@ class GetAllocationByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETALLOCATIONBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -932,18 +1072,25 @@ class GetAllocationByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETALLOCATIONBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetAllocationByNameRequest_f17832c7 = GetAllocationByNameRequest
 
 
 class GetAllocationRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetAllocationRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetAllocationRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -951,6 +1098,7 @@ class GetAllocationRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -963,18 +1111,25 @@ class GetAllocationRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETALLOCATIONREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetAllocationRequest_2e78b55e = GetAllocationRequest
 
 
 class ListAllocationsByPoolRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListAllocationsByPoolRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListAllocationsByPoolRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -984,6 +1139,7 @@ class ListAllocationsByPoolRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if pool_id is not _NEBIUS_UNSET:
             values['pool_id'] = pool_id
@@ -1000,6 +1156,7 @@ class ListAllocationsByPoolRequest(Message):
 
     @pool_id.setter
     def pool_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``pool_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSBYPOOLREQUEST_POOL_ID, value)
 
     @_NebiusProperty
@@ -1009,6 +1166,7 @@ class ListAllocationsByPoolRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSBYPOOLREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1018,18 +1176,25 @@ class ListAllocationsByPoolRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSBYPOOLREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'pool_id': 'pool_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListAllocationsByPoolRequest_877f713a = ListAllocationsByPoolRequest
 
 
 class ListAllocationsBySubnetRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListAllocationsBySubnetRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListAllocationsBySubnetRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1039,6 +1204,7 @@ class ListAllocationsBySubnetRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if subnet_id is not _NEBIUS_UNSET:
             values['subnet_id'] = subnet_id
@@ -1055,6 +1221,7 @@ class ListAllocationsBySubnetRequest(Message):
 
     @subnet_id.setter
     def subnet_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``subnet_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSBYSUBNETREQUEST_SUBNET_ID, value)
 
     @_NebiusProperty
@@ -1064,6 +1231,7 @@ class ListAllocationsBySubnetRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSBYSUBNETREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1073,18 +1241,25 @@ class ListAllocationsBySubnetRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSBYSUBNETREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'subnet_id': 'subnet_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListAllocationsBySubnetRequest_a40c624e = ListAllocationsBySubnetRequest
 
 
 class ListAllocationsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListAllocationsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListAllocationsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1094,6 +1269,7 @@ class ListAllocationsRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1111,6 +1287,7 @@ class ListAllocationsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1120,6 +1297,7 @@ class ListAllocationsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1129,18 +1307,25 @@ class ListAllocationsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListAllocationsRequest_0c9d27eb = ListAllocationsRequest
 
 
 class ListAllocationsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListAllocationsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListAllocationsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1149,6 +1334,7 @@ class ListAllocationsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_vpc_v1_Allocation_e9f66f36] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1163,6 +1349,7 @@ class ListAllocationsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_Allocation_e9f66f36] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1172,18 +1359,25 @@ class ListAllocationsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTALLOCATIONSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListAllocationsResponse_cec26e92 = ListAllocationsResponse
 
 
 class UpdateAllocationRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.UpdateAllocationRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.UpdateAllocationRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1192,6 +1386,7 @@ class UpdateAllocationRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_AllocationSpec_f3aca1b3 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1206,6 +1401,7 @@ class UpdateAllocationRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATEALLOCATIONREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1215,17 +1411,24 @@ class UpdateAllocationRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_AllocationSpec_f3aca1b3 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATEALLOCATIONREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_UpdateAllocationRequest_eb532b30 = UpdateAllocationRequest
 
 class IPv4PrivateNetworkPools(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.IPv4PrivateNetworkPools'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.IPv4PrivateNetworkPools')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1233,6 +1436,7 @@ class IPv4PrivateNetworkPools(Message):
         *,
         pools: _NebiusIterable[_NebiusType_nebius_vpc_v1_NetworkPool_53a64edc] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if pools is not _NEBIUS_UNSET:
             values['pools'] = pools
@@ -1245,18 +1449,25 @@ class IPv4PrivateNetworkPools(Message):
 
     @pools.setter
     def pools(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_NetworkPool_53a64edc] | None) -> None:
+        """Set or clear the generated ``pools`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PRIVATENETWORKPOOLS_POOLS, value)
 
     __PY_TO_PB2__ = {'pools': 'pools'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_IPv4PrivateNetworkPools_b118387f = IPv4PrivateNetworkPools
 
 
 class IPv4PublicNetworkPools(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.IPv4PublicNetworkPools'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.IPv4PublicNetworkPools')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1264,6 +1475,7 @@ class IPv4PublicNetworkPools(Message):
         *,
         pools: _NebiusIterable[_NebiusType_nebius_vpc_v1_NetworkPool_53a64edc] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if pools is not _NEBIUS_UNSET:
             values['pools'] = pools
@@ -1276,19 +1488,26 @@ class IPv4PublicNetworkPools(Message):
 
     @pools.setter
     def pools(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_NetworkPool_53a64edc] | None) -> None:
+        """Set or clear the generated ``pools`` field."""
         self._set_field(_NEBIUS_VPC_V1_IPV4PUBLICNETWORKPOOLS_POOLS, value)
 
     __PY_TO_PB2__ = {'pools': 'pools'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_IPv4PublicNetworkPools_9bf70f5e = IPv4PublicNetworkPools
 
 
 class Network(Message):
     'Defines a Network, which serves as a virtual representation of a traditional LAN\nwithin a cloud environment.\nNetworks facilitate communication between subnets.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.Network'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.Network')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1298,6 +1517,7 @@ class Network(Message):
         spec: _NebiusType_nebius_vpc_v1_NetworkSpec_ae815c80 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_vpc_v1_NetworkStatus_a382a222 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1315,6 +1535,7 @@ class Network(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORK_METADATA, value)
 
     @_NebiusProperty
@@ -1325,6 +1546,7 @@ class Network(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_NetworkSpec_ae815c80 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORK_SPEC, value)
 
     @_NebiusProperty
@@ -1335,18 +1557,25 @@ class Network(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_vpc_v1_NetworkStatus_a382a222 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORK_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_Network_e0792eaf = Network
 
 
 class NetworkPool(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NetworkPool'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.NetworkPool')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1354,6 +1583,7 @@ class NetworkPool(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1367,18 +1597,25 @@ class NetworkPool(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKPOOL_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_NetworkPool_53a64edc = NetworkPool
 
 
 class NetworkSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NetworkSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.NetworkSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1387,6 +1624,7 @@ class NetworkSpec(Message):
         ipv4_private_pools: _NebiusType_nebius_vpc_v1_IPv4PrivateNetworkPools_b118387f | None | _NebiusUnsetType = _NEBIUS_UNSET,
         ipv4_public_pools: _NebiusType_nebius_vpc_v1_IPv4PublicNetworkPools_9bf70f5e | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if ipv4_private_pools is not _NEBIUS_UNSET:
             values['ipv4_private_pools'] = ipv4_private_pools
@@ -1402,6 +1640,7 @@ class NetworkSpec(Message):
 
     @ipv4_private_pools.setter
     def ipv4_private_pools(self, value: _NebiusType_nebius_vpc_v1_IPv4PrivateNetworkPools_b118387f | None) -> None:
+        """Set or clear the generated ``ipv4_private_pools`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKSPEC_IPV4_PRIVATE_POOLS, value)
 
     @_NebiusProperty
@@ -1412,18 +1651,25 @@ class NetworkSpec(Message):
 
     @ipv4_public_pools.setter
     def ipv4_public_pools(self, value: _NebiusType_nebius_vpc_v1_IPv4PublicNetworkPools_9bf70f5e | None) -> None:
+        """Set or clear the generated ``ipv4_public_pools`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKSPEC_IPV4_PUBLIC_POOLS, value)
 
     __PY_TO_PB2__ = {'ipv4_private_pools': 'ipv4_private_pools', 'ipv4_public_pools': 'ipv4_public_pools'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_NetworkSpec_ae815c80 = NetworkSpec
 
 
 class NetworkStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NetworkStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.NetworkStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_NetworkStatus_State_7e6173c1
 
     def __init__(
@@ -1433,6 +1679,7 @@ class NetworkStatus(Message):
         state: _NebiusType_nebius_vpc_v1_NetworkStatus_State_7e6173c1 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         default_route_table_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -1448,6 +1695,7 @@ class NetworkStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_vpc_v1_NetworkStatus_State_7e6173c1 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -1458,17 +1706,24 @@ class NetworkStatus(Message):
 
     @default_route_table_id.setter
     def default_route_table_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``default_route_table_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_NETWORKSTATUS_DEFAULT_ROUTE_TABLE_ID, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'default_route_table_id': 'default_route_table_id', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_NetworkStatus_a382a222 = NetworkStatus
 
 class CreateDefaultNetworkRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.CreateDefaultNetworkRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.CreateDefaultNetworkRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1476,6 +1731,7 @@ class CreateDefaultNetworkRequest(Message):
         *,
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1488,18 +1744,25 @@ class CreateDefaultNetworkRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATEDEFAULTNETWORKREQUEST_METADATA, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_CreateDefaultNetworkRequest_fbca6ec4 = CreateDefaultNetworkRequest
 
 
 class CreateNetworkRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.CreateNetworkRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.CreateNetworkRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1508,6 +1771,7 @@ class CreateNetworkRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_NetworkSpec_ae815c80 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1522,6 +1786,7 @@ class CreateNetworkRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATENETWORKREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1531,18 +1796,25 @@ class CreateNetworkRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_NetworkSpec_ae815c80 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATENETWORKREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_CreateNetworkRequest_11496980 = CreateNetworkRequest
 
 
 class DeleteNetworkRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.DeleteNetworkRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.DeleteNetworkRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1550,6 +1822,7 @@ class DeleteNetworkRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1562,18 +1835,25 @@ class DeleteNetworkRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_DELETENETWORKREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_DeleteNetworkRequest_ce85918f = DeleteNetworkRequest
 
 
 class GetNetworkByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetNetworkByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetNetworkByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1582,6 +1862,7 @@ class GetNetworkByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1597,6 +1878,7 @@ class GetNetworkByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETNETWORKBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1606,18 +1888,25 @@ class GetNetworkByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETNETWORKBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetNetworkByNameRequest_0e3b14a7 = GetNetworkByNameRequest
 
 
 class GetNetworkRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetNetworkRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetNetworkRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1625,6 +1914,7 @@ class GetNetworkRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -1637,18 +1927,25 @@ class GetNetworkRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETNETWORKREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetNetworkRequest_c8a7a5e3 = GetNetworkRequest
 
 
 class ListNetworksRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListNetworksRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListNetworksRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1658,6 +1955,7 @@ class ListNetworksRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -1675,6 +1973,7 @@ class ListNetworksRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTNETWORKSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -1684,6 +1983,7 @@ class ListNetworksRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTNETWORKSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -1693,18 +1993,25 @@ class ListNetworksRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTNETWORKSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListNetworksRequest_e0520928 = ListNetworksRequest
 
 
 class ListNetworksResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListNetworksResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListNetworksResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1713,6 +2020,7 @@ class ListNetworksResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_vpc_v1_Network_e0792eaf] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -1727,6 +2035,7 @@ class ListNetworksResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_Network_e0792eaf] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTNETWORKSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -1736,18 +2045,25 @@ class ListNetworksResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTNETWORKSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListNetworksResponse_208bbed5 = ListNetworksResponse
 
 
 class UpdateNetworkRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.UpdateNetworkRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.UpdateNetworkRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1756,6 +2072,7 @@ class UpdateNetworkRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_NetworkSpec_ae815c80 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1770,6 +2087,7 @@ class UpdateNetworkRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATENETWORKREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -1779,17 +2097,24 @@ class UpdateNetworkRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_NetworkSpec_ae815c80 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATENETWORKREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_UpdateNetworkRequest_bcb2ec98 = UpdateNetworkRequest
 
 class Pool(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.Pool'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.Pool')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1799,6 +2124,7 @@ class Pool(Message):
         spec: _NebiusType_nebius_vpc_v1_PoolSpec_70b0fd36 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_vpc_v1_PoolStatus_87b4330d | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -1816,6 +2142,7 @@ class Pool(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOL_METADATA, value)
 
     @_NebiusProperty
@@ -1826,6 +2153,7 @@ class Pool(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_PoolSpec_70b0fd36 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOL_SPEC, value)
 
     @_NebiusProperty
@@ -1836,18 +2164,25 @@ class Pool(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_vpc_v1_PoolStatus_87b4330d | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOL_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_Pool_71298b93 = Pool
 
 
 class PoolAssignment(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.PoolAssignment'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.PoolAssignment')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1856,6 +2191,7 @@ class PoolAssignment(Message):
         networks: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         subnets: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if networks is not _NEBIUS_UNSET:
             values['networks'] = networks
@@ -1871,6 +2207,7 @@ class PoolAssignment(Message):
 
     @networks.setter
     def networks(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``networks`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLASSIGNMENT_NETWORKS, value)
 
     @_NebiusProperty
@@ -1881,18 +2218,25 @@ class PoolAssignment(Message):
 
     @subnets.setter
     def subnets(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``subnets`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLASSIGNMENT_SUBNETS, value)
 
     __PY_TO_PB2__ = {'networks': 'networks', 'subnets': 'subnets'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_PoolAssignment_9a43c356 = PoolAssignment
 
 
 class PoolCidr(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.PoolCidr'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.PoolCidr')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1902,6 +2246,7 @@ class PoolCidr(Message):
         state: _NebiusType_nebius_vpc_v1_AddressBlockState_c061c785 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         max_mask_length: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cidr is not _NEBIUS_UNSET:
             values['cidr'] = cidr
@@ -1919,6 +2264,7 @@ class PoolCidr(Message):
 
     @cidr.setter
     def cidr(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cidr`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLCIDR_CIDR, value)
 
     @_NebiusProperty
@@ -1929,6 +2275,7 @@ class PoolCidr(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_vpc_v1_AddressBlockState_c061c785 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLCIDR_STATE, value)
 
     @_NebiusProperty
@@ -1939,18 +2286,25 @@ class PoolCidr(Message):
 
     @max_mask_length.setter
     def max_mask_length(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``max_mask_length`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLCIDR_MAX_MASK_LENGTH, value)
 
     __PY_TO_PB2__ = {'cidr': 'cidr', 'state': 'state', 'max_mask_length': 'max_mask_length'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_PoolCidr_627c3df3 = PoolCidr
 
 
 class PoolSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.PoolSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.PoolSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -1961,6 +2315,7 @@ class PoolSpec(Message):
         visibility: _NebiusType_nebius_vpc_v1_IpVisibility_bf6e9b79 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         cidrs: _NebiusIterable[_NebiusType_nebius_vpc_v1_PoolCidr_627c3df3] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if source_pool_id is not _NEBIUS_UNSET:
             values['source_pool_id'] = source_pool_id
@@ -1980,6 +2335,7 @@ class PoolSpec(Message):
 
     @source_pool_id.setter
     def source_pool_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``source_pool_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSPEC_SOURCE_POOL_ID, value)
 
     @_NebiusProperty
@@ -1990,6 +2346,7 @@ class PoolSpec(Message):
 
     @version.setter
     def version(self, value: _NebiusType_nebius_vpc_v1_IpVersion_4d855904 | None) -> None:
+        """Set or clear the generated ``version`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSPEC_VERSION, value)
 
     @_NebiusProperty
@@ -2000,6 +2357,7 @@ class PoolSpec(Message):
 
     @visibility.setter
     def visibility(self, value: _NebiusType_nebius_vpc_v1_IpVisibility_bf6e9b79 | None) -> None:
+        """Set or clear the generated ``visibility`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSPEC_VISIBILITY, value)
 
     @_NebiusProperty
@@ -2010,18 +2368,25 @@ class PoolSpec(Message):
 
     @cidrs.setter
     def cidrs(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_PoolCidr_627c3df3] | None) -> None:
+        """Set or clear the generated ``cidrs`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSPEC_CIDRS, value)
 
     __PY_TO_PB2__ = {'source_pool_id': 'source_pool_id', 'version': 'version', 'visibility': 'visibility', 'cidrs': 'cidrs'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_PoolSpec_70b0fd36 = PoolSpec
 
 
 class PoolStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.PoolStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.PoolStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_PoolStatus_State_405f8e8d
 
     def __init__(
@@ -2033,6 +2398,7 @@ class PoolStatus(Message):
         scope_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         assignment: _NebiusType_nebius_vpc_v1_PoolAssignment_9a43c356 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -2052,6 +2418,7 @@ class PoolStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_vpc_v1_PoolStatus_State_405f8e8d | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSTATUS_STATE, value)
 
     @_NebiusProperty
@@ -2062,6 +2429,7 @@ class PoolStatus(Message):
 
     @cidrs.setter
     def cidrs(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``cidrs`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSTATUS_CIDRS, value)
 
     @_NebiusProperty
@@ -2072,6 +2440,7 @@ class PoolStatus(Message):
 
     @scope_id.setter
     def scope_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``scope_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSTATUS_SCOPE_ID, value)
 
     @_NebiusProperty
@@ -2082,17 +2451,24 @@ class PoolStatus(Message):
 
     @assignment.setter
     def assignment(self, value: _NebiusType_nebius_vpc_v1_PoolAssignment_9a43c356 | None) -> None:
+        """Set or clear the generated ``assignment`` field."""
         self._set_field(_NEBIUS_VPC_V1_POOLSTATUS_ASSIGNMENT, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'cidrs': 'cidrs', 'scope_id': 'scope_id', 'assignment': 'assignment', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_PoolStatus_87b4330d = PoolStatus
 
 class CreatePoolRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.CreatePoolRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.CreatePoolRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2101,6 +2477,7 @@ class CreatePoolRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_PoolSpec_70b0fd36 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2115,6 +2492,7 @@ class CreatePoolRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATEPOOLREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -2124,18 +2502,25 @@ class CreatePoolRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_PoolSpec_70b0fd36 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATEPOOLREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_CreatePoolRequest_9f2eab39 = CreatePoolRequest
 
 
 class DeletePoolRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.DeletePoolRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.DeletePoolRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2143,6 +2528,7 @@ class DeletePoolRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -2155,18 +2541,25 @@ class DeletePoolRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_DELETEPOOLREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_DeletePoolRequest_fd317e4d = DeletePoolRequest
 
 
 class GetPoolByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetPoolByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetPoolByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2175,6 +2568,7 @@ class GetPoolByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -2190,6 +2584,7 @@ class GetPoolByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETPOOLBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -2199,18 +2594,25 @@ class GetPoolByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETPOOLBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetPoolByNameRequest_6b9af50d = GetPoolByNameRequest
 
 
 class GetPoolRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetPoolRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetPoolRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2218,6 +2620,7 @@ class GetPoolRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -2230,18 +2633,25 @@ class GetPoolRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETPOOLREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetPoolRequest_a5125925 = GetPoolRequest
 
 
 class ListPoolsBySourcePoolRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListPoolsBySourcePoolRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListPoolsBySourcePoolRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2251,6 +2661,7 @@ class ListPoolsBySourcePoolRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if pool_id is not _NEBIUS_UNSET:
             values['pool_id'] = pool_id
@@ -2267,6 +2678,7 @@ class ListPoolsBySourcePoolRequest(Message):
 
     @pool_id.setter
     def pool_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``pool_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSBYSOURCEPOOLREQUEST_POOL_ID, value)
 
     @_NebiusProperty
@@ -2276,6 +2688,7 @@ class ListPoolsBySourcePoolRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSBYSOURCEPOOLREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -2285,18 +2698,25 @@ class ListPoolsBySourcePoolRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSBYSOURCEPOOLREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'pool_id': 'pool_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListPoolsBySourcePoolRequest_a6e71e98 = ListPoolsBySourcePoolRequest
 
 
 class ListPoolsRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListPoolsRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListPoolsRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2306,6 +2726,7 @@ class ListPoolsRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -2323,6 +2744,7 @@ class ListPoolsRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -2332,6 +2754,7 @@ class ListPoolsRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -2341,18 +2764,25 @@ class ListPoolsRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListPoolsRequest_9ebba178 = ListPoolsRequest
 
 
 class ListPoolsResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListPoolsResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListPoolsResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2361,6 +2791,7 @@ class ListPoolsResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_vpc_v1_Pool_71298b93] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -2375,6 +2806,7 @@ class ListPoolsResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_Pool_71298b93] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -2384,18 +2816,25 @@ class ListPoolsResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTPOOLSRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListPoolsResponse_bc3e116a = ListPoolsResponse
 
 
 class UpdatePoolRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.UpdatePoolRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.UpdatePoolRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2404,6 +2843,7 @@ class UpdatePoolRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_PoolSpec_70b0fd36 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2418,6 +2858,7 @@ class UpdatePoolRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATEPOOLREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -2427,18 +2868,25 @@ class UpdatePoolRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_PoolSpec_70b0fd36 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATEPOOLREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_UpdatePoolRequest_afc5c249 = UpdatePoolRequest
 
 class AllocationNextHop(Message):
     'AllocationNextHop specifies an IP allocation as the next hop.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.AllocationNextHop'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.AllocationNextHop')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2446,6 +2894,7 @@ class AllocationNextHop(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -2459,18 +2908,25 @@ class AllocationNextHop(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONNEXTHOP_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_AllocationNextHop_4cebbb37 = AllocationNextHop
 
 
 class AllocationNextHopState(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.AllocationNextHopState'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.AllocationNextHopState')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2478,6 +2934,7 @@ class AllocationNextHopState(Message):
         *,
         cidr: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cidr is not _NEBIUS_UNSET:
             values['cidr'] = cidr
@@ -2491,37 +2948,51 @@ class AllocationNextHopState(Message):
 
     @cidr.setter
     def cidr(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cidr`` field."""
         self._set_field(_NEBIUS_VPC_V1_ALLOCATIONNEXTHOPSTATE_CIDR, value)
 
     __PY_TO_PB2__ = {'cidr': 'cidr'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_AllocationNextHopState_78564ae6 = AllocationNextHopState
 
 
 class DefaultEgressGatewayState(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.DefaultEgressGatewayState'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.DefaultEgressGatewayState')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     pass
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         super().__init__(initial_message, **values)
 
     __PY_TO_PB2__ = {}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_DefaultEgressGatewayState_f78e5b11 = DefaultEgressGatewayState
 
 
 class DestinationMatch(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.DestinationMatch'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.DestinationMatch')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2529,6 +3000,7 @@ class DestinationMatch(Message):
         *,
         cidr: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if cidr is not _NEBIUS_UNSET:
             values['cidr'] = cidr
@@ -2542,18 +3014,25 @@ class DestinationMatch(Message):
 
     @cidr.setter
     def cidr(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``cidr`` field."""
         self._set_field(_NEBIUS_VPC_V1_DESTINATIONMATCH_CIDR, value)
 
     __PY_TO_PB2__ = {'cidr': 'cidr'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_DestinationMatch_e3765522 = DestinationMatch
 
 
 class NextHop(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NextHop'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.NextHop')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_next_hop__(_NebiusOneOf):
         name: str = 'next_hop'
@@ -2592,6 +3071,7 @@ class NextHop(Message):
         allocation: _NebiusType_nebius_vpc_v1_AllocationNextHop_4cebbb37 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         default_egress_gateway: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if allocation is not _NEBIUS_UNSET:
             values['allocation'] = allocation
@@ -2607,6 +3087,7 @@ class NextHop(Message):
 
     @allocation.setter
     def allocation(self, value: _NebiusType_nebius_vpc_v1_AllocationNextHop_4cebbb37 | None) -> None:
+        """Set or clear the generated ``allocation`` field."""
         self._set_field(_NEBIUS_VPC_V1_NEXTHOP_ALLOCATION, value)
 
     @_NebiusProperty
@@ -2617,18 +3098,25 @@ class NextHop(Message):
 
     @default_egress_gateway.setter
     def default_egress_gateway(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``default_egress_gateway`` field."""
         self._set_field(_NEBIUS_VPC_V1_NEXTHOP_DEFAULT_EGRESS_GATEWAY, value)
 
     __PY_TO_PB2__ = {'allocation': 'allocation', 'default_egress_gateway': 'default_egress_gateway', 'next_hop': 'next_hop'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_NextHop_132da1e0 = NextHop
 
 
 class NextHopState(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.NextHopState'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.NextHopState')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass_next_hop__(_NebiusOneOf):
         name: str = 'next_hop'
@@ -2667,6 +3155,7 @@ class NextHopState(Message):
         allocation: _NebiusType_nebius_vpc_v1_AllocationNextHopState_78564ae6 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         default_egress_gateway: _NebiusType_nebius_vpc_v1_DefaultEgressGatewayState_f78e5b11 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if allocation is not _NEBIUS_UNSET:
             values['allocation'] = allocation
@@ -2682,6 +3171,7 @@ class NextHopState(Message):
 
     @allocation.setter
     def allocation(self, value: _NebiusType_nebius_vpc_v1_AllocationNextHopState_78564ae6 | None) -> None:
+        """Set or clear the generated ``allocation`` field."""
         self._set_field(_NEBIUS_VPC_V1_NEXTHOPSTATE_ALLOCATION, value)
 
     @_NebiusProperty
@@ -2692,19 +3182,26 @@ class NextHopState(Message):
 
     @default_egress_gateway.setter
     def default_egress_gateway(self, value: _NebiusType_nebius_vpc_v1_DefaultEgressGatewayState_f78e5b11 | None) -> None:
+        """Set or clear the generated ``default_egress_gateway`` field."""
         self._set_field(_NEBIUS_VPC_V1_NEXTHOPSTATE_DEFAULT_EGRESS_GATEWAY, value)
 
     __PY_TO_PB2__ = {'allocation': 'allocation', 'default_egress_gateway': 'default_egress_gateway', 'next_hop': 'next_hop'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_NextHopState_c71def7f = NextHopState
 
 
 class Route(Message):
     'Routes determine how network traffic is directed within a VPC network,\nspecifying the path that traffic should take based on destination addresses.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.Route'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.Route')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2714,6 +3211,7 @@ class Route(Message):
         spec: _NebiusType_nebius_vpc_v1_RouteSpec_29f46500 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_vpc_v1_RouteStatus_db531b29 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2731,6 +3229,7 @@ class Route(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTE_METADATA, value)
 
     @_NebiusProperty
@@ -2741,6 +3240,7 @@ class Route(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_RouteSpec_29f46500 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTE_SPEC, value)
 
     @_NebiusProperty
@@ -2751,18 +3251,25 @@ class Route(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_vpc_v1_RouteStatus_db531b29 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_Route_511caef7 = Route
 
 
 class RouteSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.RouteSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2772,6 +3279,7 @@ class RouteSpec(Message):
         destination: _NebiusType_nebius_vpc_v1_DestinationMatch_e3765522 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_hop: _NebiusType_nebius_vpc_v1_NextHop_132da1e0 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if description is not _NEBIUS_UNSET:
             values['description'] = description
@@ -2789,6 +3297,7 @@ class RouteSpec(Message):
 
     @description.setter
     def description(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``description`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTESPEC_DESCRIPTION, value)
 
     @_NebiusProperty
@@ -2799,6 +3308,7 @@ class RouteSpec(Message):
 
     @destination.setter
     def destination(self, value: _NebiusType_nebius_vpc_v1_DestinationMatch_e3765522 | None) -> None:
+        """Set or clear the generated ``destination`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTESPEC_DESTINATION, value)
 
     @_NebiusProperty
@@ -2809,18 +3319,25 @@ class RouteSpec(Message):
 
     @next_hop.setter
     def next_hop(self, value: _NebiusType_nebius_vpc_v1_NextHop_132da1e0 | None) -> None:
+        """Set or clear the generated ``next_hop`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTESPEC_NEXT_HOP, value)
 
     __PY_TO_PB2__ = {'description': 'description', 'destination': 'destination', 'next_hop': 'next_hop'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_RouteSpec_29f46500 = RouteSpec
 
 
 class RouteStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.RouteStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_RouteStatus_State_353d266d
     Type: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_RouteStatus_Type_e2efdcce
 
@@ -2833,6 +3350,7 @@ class RouteStatus(Message):
         type: _NebiusType_nebius_vpc_v1_RouteStatus_Type_e2efdcce | None | _NebiusUnsetType = _NEBIUS_UNSET,
         priority: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -2852,6 +3370,7 @@ class RouteStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_vpc_v1_RouteStatus_State_353d266d | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTESTATUS_STATE, value)
 
     @_NebiusProperty
@@ -2862,6 +3381,7 @@ class RouteStatus(Message):
 
     @next_hop.setter
     def next_hop(self, value: _NebiusType_nebius_vpc_v1_NextHopState_c71def7f | None) -> None:
+        """Set or clear the generated ``next_hop`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTESTATUS_NEXT_HOP, value)
 
     @_NebiusProperty
@@ -2872,6 +3392,7 @@ class RouteStatus(Message):
 
     @type.setter
     def type(self, value: _NebiusType_nebius_vpc_v1_RouteStatus_Type_e2efdcce | None) -> None:
+        """Set or clear the generated ``type`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTESTATUS_TYPE, value)
 
     @_NebiusProperty
@@ -2882,17 +3403,24 @@ class RouteStatus(Message):
 
     @priority.setter
     def priority(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``priority`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTESTATUS_PRIORITY, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'next_hop': 'next_hop', 'type': 'type', 'priority': 'priority', 'State': 'State', 'Type': 'Type'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_RouteStatus_db531b29 = RouteStatus
 
 class CreateRouteRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.CreateRouteRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.CreateRouteRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2901,6 +3429,7 @@ class CreateRouteRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_RouteSpec_29f46500 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -2915,6 +3444,7 @@ class CreateRouteRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATEROUTEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -2924,18 +3454,25 @@ class CreateRouteRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_RouteSpec_29f46500 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_CREATEROUTEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_CreateRouteRequest_ead82757 = CreateRouteRequest
 
 
 class DeleteRouteRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.DeleteRouteRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.DeleteRouteRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2943,6 +3480,7 @@ class DeleteRouteRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -2955,18 +3493,25 @@ class DeleteRouteRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_DELETEROUTEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_DeleteRouteRequest_9e7d2c0d = DeleteRouteRequest
 
 
 class GetRouteByNameRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetRouteByNameRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetRouteByNameRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -2975,6 +3520,7 @@ class GetRouteByNameRequest(Message):
         parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -2990,6 +3536,7 @@ class GetRouteByNameRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETROUTEBYNAMEREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -2999,18 +3546,25 @@ class GetRouteByNameRequest(Message):
 
     @name.setter
     def name(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``name`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETROUTEBYNAMEREQUEST_NAME, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetRouteByNameRequest_9188f20a = GetRouteByNameRequest
 
 
 class GetRouteRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetRouteRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetRouteRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3018,6 +3572,7 @@ class GetRouteRequest(Message):
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
@@ -3030,18 +3585,25 @@ class GetRouteRequest(Message):
 
     @id.setter
     def id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_VPC_V1_GETROUTEREQUEST_ID, value)
 
     __PY_TO_PB2__ = {'id': 'id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_GetRouteRequest_2c016833 = GetRouteRequest
 
 
 class ListRoutesRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListRoutesRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListRoutesRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3051,6 +3613,7 @@ class ListRoutesRequest(Message):
         page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if parent_id is not _NEBIUS_UNSET:
             values['parent_id'] = parent_id
@@ -3068,6 +3631,7 @@ class ListRoutesRequest(Message):
 
     @parent_id.setter
     def parent_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTROUTESREQUEST_PARENT_ID, value)
 
     @_NebiusProperty
@@ -3077,6 +3641,7 @@ class ListRoutesRequest(Message):
 
     @page_size.setter
     def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTROUTESREQUEST_PAGE_SIZE, value)
 
     @_NebiusProperty
@@ -3086,18 +3651,25 @@ class ListRoutesRequest(Message):
 
     @page_token.setter
     def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTROUTESREQUEST_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListRoutesRequest_59a79b0d = ListRoutesRequest
 
 
 class ListRoutesResponse(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListRoutesResponse'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListRoutesResponse')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3106,6 +3678,7 @@ class ListRoutesResponse(Message):
         items: _NebiusIterable[_NebiusType_nebius_vpc_v1_Route_511caef7] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if items is not _NEBIUS_UNSET:
             values['items'] = items
@@ -3120,6 +3693,7 @@ class ListRoutesResponse(Message):
 
     @items.setter
     def items(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_Route_511caef7] | None) -> None:
+        """Set or clear the generated ``items`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTROUTESRESPONSE_ITEMS, value)
 
     @_NebiusProperty
@@ -3129,18 +3703,25 @@ class ListRoutesResponse(Message):
 
     @next_page_token.setter
     def next_page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         self._set_field(_NEBIUS_VPC_V1_LISTROUTESRESPONSE_NEXT_PAGE_TOKEN, value)
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_ListRoutesResponse_231f8057 = ListRoutesResponse
 
 
 class UpdateRouteRequest(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.UpdateRouteRequest'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.UpdateRouteRequest')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3149,6 +3730,7 @@ class UpdateRouteRequest(Message):
         metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
         spec: _NebiusType_nebius_vpc_v1_RouteSpec_29f46500 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -3163,6 +3745,7 @@ class UpdateRouteRequest(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATEROUTEREQUEST_METADATA, value)
 
     @_NebiusProperty
@@ -3172,18 +3755,25 @@ class UpdateRouteRequest(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_RouteSpec_29f46500 | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_UPDATEROUTEREQUEST_SPEC, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_UpdateRouteRequest_eb9d1351 = UpdateRouteRequest
 
 class RouteTable(Message):
     'RouteTable represents a routing configuration for a VPC network.\nEach route table can be associated with multiple subnets\nand contains rules for routing traffic to different destinations.'
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteTable'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.RouteTable')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3193,6 +3783,7 @@ class RouteTable(Message):
         spec: _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc | None | _NebiusUnsetType = _NEBIUS_UNSET,
         status: _NebiusType_nebius_vpc_v1_RouteTableStatus_ddff3857 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if metadata is not _NEBIUS_UNSET:
             values['metadata'] = metadata
@@ -3210,6 +3801,7 @@ class RouteTable(Message):
 
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLE_METADATA, value)
 
     @_NebiusProperty
@@ -3220,6 +3812,7 @@ class RouteTable(Message):
 
     @spec.setter
     def spec(self, value: _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc | None) -> None:
+        """Set or clear the generated ``spec`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLE_SPEC, value)
 
     @_NebiusProperty
@@ -3230,18 +3823,25 @@ class RouteTable(Message):
 
     @status.setter
     def status(self, value: _NebiusType_nebius_vpc_v1_RouteTableStatus_ddff3857 | None) -> None:
+        """Set or clear the generated ``status`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLE_STATUS, value)
 
     __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_RouteTable_74d4ca9b = RouteTable
 
 
 class RouteTableAssignment(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteTableAssignment'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.RouteTableAssignment')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3249,6 +3849,7 @@ class RouteTableAssignment(Message):
         *,
         subnets: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if subnets is not _NEBIUS_UNSET:
             values['subnets'] = subnets
@@ -3262,18 +3863,25 @@ class RouteTableAssignment(Message):
 
     @subnets.setter
     def subnets(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``subnets`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLEASSIGNMENT_SUBNETS, value)
 
     __PY_TO_PB2__ = {'subnets': 'subnets'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_RouteTableAssignment_6b2cbded = RouteTableAssignment
 
 
 class RouteTableSpec(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteTableSpec'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.RouteTableSpec')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     def __init__(
         self,
@@ -3281,6 +3889,7 @@ class RouteTableSpec(Message):
         *,
         network_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if network_id is not _NEBIUS_UNSET:
             values['network_id'] = network_id
@@ -3294,18 +3903,25 @@ class RouteTableSpec(Message):
 
     @network_id.setter
     def network_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``network_id`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLESPEC_NETWORK_ID, value)
 
     __PY_TO_PB2__ = {'network_id': 'network_id'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc = RouteTableSpec
 
 
 class RouteTableStatus(Message):
     __PROTO_FULL_NAME__ = 'nebius.vpc.v1.RouteTableStatus'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.RouteTableStatus')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
     State: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_RouteTableStatus_State_6354d088
 
     def __init__(
@@ -3316,6 +3932,7 @@ class RouteTableStatus(Message):
         default: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
         assignment: _NebiusType_nebius_vpc_v1_RouteTableAssignment_6b2cbded | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if state is not _NEBIUS_UNSET:
             values['state'] = state
@@ -3333,6 +3950,7 @@ class RouteTableStatus(Message):
 
     @state.setter
     def state(self, value: _NebiusType_nebius_vpc_v1_RouteTableStatus_State_6354d088 | None) -> None:
+        """Set or clear the generated ``state`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLESTATUS_STATE, value)
 
     @_NebiusProperty
@@ -3343,6 +3961,7 @@ class RouteTableStatus(Message):
 
     @default.setter
     def default(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``default`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLESTATUS_DEFAULT, value)
 
     @_NebiusProperty
@@ -3353,491 +3972,12 @@ class RouteTableStatus(Message):
 
     @assignment.setter
     def assignment(self, value: _NebiusType_nebius_vpc_v1_RouteTableAssignment_6b2cbded | None) -> None:
+        """Set or clear the generated ``assignment`` field."""
         self._set_field(_NEBIUS_VPC_V1_ROUTETABLESTATUS_ASSIGNMENT, value)
 
     __PY_TO_PB2__ = {'state': 'state', 'default': 'default', 'assignment': 'assignment', 'State': 'State'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_vpc_v1_RouteTableStatus_ddff3857 = RouteTableStatus
-
-class CreateRouteTableRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.CreateRouteTableRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.CreateRouteTableRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        value = self._get_field(_NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc:
-        value = self._get_field(_NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_SPEC, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
-_NebiusType_nebius_vpc_v1_CreateRouteTableRequest_92ab613b = CreateRouteTableRequest
-
-
-class DeleteRouteTableRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.DeleteRouteTableRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.DeleteRouteTableRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_VPC_V1_DELETEROUTETABLEREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_DELETEROUTETABLEREQUEST_ID, value)
-
-    __PY_TO_PB2__ = {'id': 'id'}
-_NebiusType_nebius_vpc_v1_DeleteRouteTableRequest_0a9d838a = DeleteRouteTableRequest
-
-
-class GetRouteTableByNameRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetRouteTableByNameRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetRouteTableByNameRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if parent_id is not _NEBIUS_UNSET:
-            values['parent_id'] = parent_id
-        if name is not _NEBIUS_UNSET:
-            values['name'] = name
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def parent_id(self) -> _NebiusStr:
-        'ID of the Project.'
-        value = self._get_field(_NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_PARENT_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @parent_id.setter
-    def parent_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_PARENT_ID, value)
-
-    @_NebiusProperty
-    def name(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_NAME, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @name.setter
-    def name(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_NAME, value)
-
-    __PY_TO_PB2__ = {'parent_id': 'parent_id', 'name': 'name'}
-_NebiusType_nebius_vpc_v1_GetRouteTableByNameRequest_6c700a99 = GetRouteTableByNameRequest
-
-
-class GetRouteTableRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.GetRouteTableRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.GetRouteTableRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if id is not _NEBIUS_UNSET:
-            values['id'] = id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def id(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_VPC_V1_GETROUTETABLEREQUEST_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @id.setter
-    def id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_GETROUTETABLEREQUEST_ID, value)
-
-    __PY_TO_PB2__ = {'id': 'id'}
-_NebiusType_nebius_vpc_v1_GetRouteTableRequest_e652eb20 = GetRouteTableRequest
-
-
-class ListRouteTablesByNetworkRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListRouteTablesByNetworkRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListRouteTablesByNetworkRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        network_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if network_id is not _NEBIUS_UNSET:
-            values['network_id'] = network_id
-        if page_size is not _NEBIUS_UNSET:
-            values['page_size'] = page_size
-        if page_token is not _NEBIUS_UNSET:
-            values['page_token'] = page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def network_id(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_NETWORK_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @network_id.setter
-    def network_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_NETWORK_ID, value)
-
-    @_NebiusProperty
-    def page_size(self) -> _NebiusInt:
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_SIZE, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @page_size.setter
-    def page_size(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_SIZE, value)
-
-    @_NebiusProperty
-    def page_token(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @page_token.setter
-    def page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'network_id': 'network_id', 'page_size': 'page_size', 'page_token': 'page_token'}
-_NebiusType_nebius_vpc_v1_ListRouteTablesByNetworkRequest_982fd3bc = ListRouteTablesByNetworkRequest
-
-
-class ListRouteTablesRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListRouteTablesRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListRouteTablesRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        parent_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if parent_id is not _NEBIUS_UNSET:
-            values['parent_id'] = parent_id
-        if page_size is not _NEBIUS_UNSET:
-            values['page_size'] = page_size
-        if page_token is not _NEBIUS_UNSET:
-            values['page_token'] = page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def parent_id(self) -> _NebiusStr:
-        'ID of the Project.'
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PARENT_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @parent_id.setter
-    def parent_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PARENT_ID, value)
-
-    @_NebiusProperty
-    def page_size(self) -> _NebiusInt:
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_SIZE, absent_is_none=False)
-        return _nebius_cast('_NebiusInt', value)
-
-    @page_size.setter
-    def page_size(self, value: _NebiusInt | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_SIZE, value)
-
-    @_NebiusProperty
-    def page_token(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @page_token.setter
-    def page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'parent_id': 'parent_id', 'page_size': 'page_size', 'page_token': 'page_token'}
-_NebiusType_nebius_vpc_v1_ListRouteTablesRequest_ee7eeb49 = ListRouteTablesRequest
-
-
-class ListRouteTablesResponse(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.ListRouteTablesResponse'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.ListRouteTablesResponse')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        items: _NebiusIterable[_NebiusType_nebius_vpc_v1_RouteTable_74d4ca9b] | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        next_page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if items is not _NEBIUS_UNSET:
-            values['items'] = items
-        if next_page_token is not _NEBIUS_UNSET:
-            values['next_page_token'] = next_page_token
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def items(self) -> _NebiusMutableSequence[_NebiusType_nebius_vpc_v1_RouteTable_74d4ca9b]:
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_ITEMS, absent_is_none=False)
-        return _nebius_cast('_NebiusMutableSequence[_NebiusType_nebius_vpc_v1_RouteTable_74d4ca9b]', value)
-
-    @items.setter
-    def items(self, value: _NebiusIterable[_NebiusType_nebius_vpc_v1_RouteTable_74d4ca9b] | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_ITEMS, value)
-
-    @_NebiusProperty
-    def next_page_token(self) -> _NebiusStr:
-        value = self._get_field(_NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_NEXT_PAGE_TOKEN, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @next_page_token.setter
-    def next_page_token(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_NEXT_PAGE_TOKEN, value)
-
-    __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
-_NebiusType_nebius_vpc_v1_ListRouteTablesResponse_a5f1fa3d = ListRouteTablesResponse
-
-
-class UpdateRouteTableRequest(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.UpdateRouteTableRequest'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.UpdateRouteTableRequest')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        value = self._get_field(_NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc:
-        value = self._get_field(_NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_vpc_v1_RouteTableSpec_1ac7e4fc | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_SPEC, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec'}
-_NebiusType_nebius_vpc_v1_UpdateRouteTableRequest_36975db1 = UpdateRouteTableRequest
-
-class SecurityGroup(Message):
-    'SecurityGroup is a logical grouping of resources\nused to manage and apply network security policies collectively.\nSecurity group applies implicit deny at the end (traffic not matched by any rule will be denied).'
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.SecurityGroup'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.SecurityGroup')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        metadata: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        spec: _NebiusType_nebius_vpc_v1_SecurityGroupSpec_bffb3702 | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        status: _NebiusType_nebius_vpc_v1_SecurityGroupStatus_26e0f1f2 | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if metadata is not _NEBIUS_UNSET:
-            values['metadata'] = metadata
-        if spec is not _NEBIUS_UNSET:
-            values['spec'] = spec
-        if status is not _NEBIUS_UNSET:
-            values['status'] = status
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def metadata(self) -> _type_nebius_common_v1_e3b886bd.ResourceMetadata:
-        '``metadata.parent_id`` represents the Project.'
-        value = self._get_field(_NEBIUS_VPC_V1_SECURITYGROUP_METADATA, absent_is_none=False)
-        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ResourceMetadata', value)
-
-    @metadata.setter
-    def metadata(self, value: _type_nebius_common_v1_e3b886bd.ResourceMetadata | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_SECURITYGROUP_METADATA, value)
-
-    @_NebiusProperty
-    def spec(self) -> _NebiusType_nebius_vpc_v1_SecurityGroupSpec_bffb3702:
-        "Specification of the security group's configuration."
-        value = self._get_field(_NEBIUS_VPC_V1_SECURITYGROUP_SPEC, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_vpc_v1_SecurityGroupSpec_bffb3702', value)
-
-    @spec.setter
-    def spec(self, value: _NebiusType_nebius_vpc_v1_SecurityGroupSpec_bffb3702 | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_SECURITYGROUP_SPEC, value)
-
-    @_NebiusProperty
-    def status(self) -> _NebiusType_nebius_vpc_v1_SecurityGroupStatus_26e0f1f2:
-        'Current status of the security group.'
-        value = self._get_field(_NEBIUS_VPC_V1_SECURITYGROUP_STATUS, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_vpc_v1_SecurityGroupStatus_26e0f1f2', value)
-
-    @status.setter
-    def status(self, value: _NebiusType_nebius_vpc_v1_SecurityGroupStatus_26e0f1f2 | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_SECURITYGROUP_STATUS, value)
-
-    __PY_TO_PB2__ = {'metadata': 'metadata', 'spec': 'spec', 'status': 'status'}
-_NebiusType_nebius_vpc_v1_SecurityGroup_47fee02c = SecurityGroup
-
-
-class SecurityGroupSpec(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.SecurityGroupSpec'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.SecurityGroupSpec')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        network_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if network_id is not _NEBIUS_UNSET:
-            values['network_id'] = network_id
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def network_id(self) -> _NebiusStr:
-        'ID of the VPC network this security group belongs to.'
-        value = self._get_field(_NEBIUS_VPC_V1_SECURITYGROUPSPEC_NETWORK_ID, absent_is_none=False)
-        return _nebius_cast('_NebiusStr', value)
-
-    @network_id.setter
-    def network_id(self, value: _NebiusStr | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_SECURITYGROUPSPEC_NETWORK_ID, value)
-
-    __PY_TO_PB2__ = {'network_id': 'network_id'}
-_NebiusType_nebius_vpc_v1_SecurityGroupSpec_bffb3702 = SecurityGroupSpec
-
-
-class SecurityGroupStatus(Message):
-    __PROTO_FULL_NAME__ = 'nebius.vpc.v1.SecurityGroupStatus'
-    __REGISTRY__ = REGISTRY
-    __EXTENSION_REGISTRY__ = EXTENSIONS
-    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.vpc.v1.SecurityGroupStatus')
-    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
-    State: _NebiusTypeAlias = _NebiusType_nebius_vpc_v1_SecurityGroupStatus_State_3789d75b
-
-    def __init__(
-        self,
-        initial_message: _NebiusSerializableMessage | None = None,
-        *,
-        state: _NebiusType_nebius_vpc_v1_SecurityGroupStatus_State_3789d75b | None | _NebiusUnsetType = _NEBIUS_UNSET,
-        default: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
-    ) -> None:
-        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
-        if state is not _NEBIUS_UNSET:
-            values['state'] = state
-        if default is not _NEBIUS_UNSET:
-            values['default'] = default
-        super().__init__(initial_message, **values)
-
-    @_NebiusProperty
-    def state(self) -> _NebiusType_nebius_vpc_v1_SecurityGroupStatus_State_3789d75b:
-        'Current state of the security group.'
-        value = self._get_field(_NEBIUS_VPC_V1_SECURITYGROUPSTATUS_STATE, absent_is_none=False)
-        return _nebius_cast('_NebiusType_nebius_vpc_v1_SecurityGroupStatus_State_3789d75b', None if value is None else REGISTRY.enum_class('nebius.vpc.v1.SecurityGroupStatus.State')(value))
-
-    @state.setter
-    def state(self, value: _NebiusType_nebius_vpc_v1_SecurityGroupStatus_State_3789d75b | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_SECURITYGROUPSTATUS_STATE, value)
-
-    @_NebiusProperty
-    def default(self) -> _NebiusBool:
-        'Indicates if this is the default security group for the network.\nOnly one security group can be default per network.\nWill be used on the interface if no other is specified.'
-        value = self._get_field(_NEBIUS_VPC_V1_SECURITYGROUPSTATUS_DEFAULT, absent_is_none=False)
-        return _nebius_cast('_NebiusBool', value)
-
-    @default.setter
-    def default(self, value: _NebiusBool | None) -> None:
-        self._set_field(_NEBIUS_VPC_V1_SECURITYGROUPSTATUS_DEFAULT, value)
-
-    __PY_TO_PB2__ = {'state': 'state', 'default': 'default', 'State': 'State'}
-_NebiusType_nebius_vpc_v1_SecurityGroupStatus_26e0f1f2 = SecurityGroupStatus
 
 # @@nebius-section:fields@@
 _NEBIUS_VPC_V1_ALLOCATION_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
@@ -4108,50 +4248,6 @@ _NEBIUS_VPC_V1_ROUTETABLESTATUS_DEFAULT = Field('default', 'default', 2, BOOL, j
 _NEBIUS_VPC_V1_ROUTETABLESTATUS_ASSIGNMENT = Field('assignment', 'assignment', 3, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1.RouteTableAssignment')), json_name='assignment')
 RouteTableStatus.__FIELDS__ = (_NEBIUS_VPC_V1_ROUTETABLESTATUS_STATE, _NEBIUS_VPC_V1_ROUTETABLESTATUS_DEFAULT, _NEBIUS_VPC_V1_ROUTETABLESTATUS_ASSIGNMENT)
 
-_NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1.RouteTableSpec')), json_name='spec')
-CreateRouteTableRequest.__FIELDS__ = (_NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_METADATA, _NEBIUS_VPC_V1_CREATEROUTETABLEREQUEST_SPEC)
-
-_NEBIUS_VPC_V1_DELETEROUTETABLEREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-DeleteRouteTableRequest.__FIELDS__ = (_NEBIUS_VPC_V1_DELETEROUTETABLEREQUEST_ID,)
-
-_NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_PARENT_ID = Field('parent_id', 'parent_id', 1, STRING, json_name='parentId')
-_NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_NAME = Field('name', 'name', 2, STRING, json_name='name')
-GetRouteTableByNameRequest.__FIELDS__ = (_NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_PARENT_ID, _NEBIUS_VPC_V1_GETROUTETABLEBYNAMEREQUEST_NAME)
-
-_NEBIUS_VPC_V1_GETROUTETABLEREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-GetRouteTableRequest.__FIELDS__ = (_NEBIUS_VPC_V1_GETROUTETABLEREQUEST_ID,)
-
-_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_NETWORK_ID = Field('network_id', 'network_id', 1, STRING, json_name='networkId')
-_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
-_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_TOKEN = Field('page_token', 'page_token', 3, STRING, json_name='pageToken')
-ListRouteTablesByNetworkRequest.__FIELDS__ = (_NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_NETWORK_ID, _NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_SIZE, _NEBIUS_VPC_V1_LISTROUTETABLESBYNETWORKREQUEST_PAGE_TOKEN)
-
-_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PARENT_ID = Field('parent_id', 'parent_id', 1, STRING, json_name='parentId')
-_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
-_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_TOKEN = Field('page_token', 'page_token', 3, STRING, json_name='pageToken')
-ListRouteTablesRequest.__FIELDS__ = (_NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PARENT_ID, _NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_SIZE, _NEBIUS_VPC_V1_LISTROUTETABLESREQUEST_PAGE_TOKEN)
-
-_NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_ITEMS = Field('items', 'items', 1, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1.RouteTable')), repeated=True, json_name='items')
-_NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_NEXT_PAGE_TOKEN = Field('next_page_token', 'next_page_token', 2, STRING, json_name='nextPageToken')
-ListRouteTablesResponse.__FIELDS__ = (_NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_ITEMS, _NEBIUS_VPC_V1_LISTROUTETABLESRESPONSE_NEXT_PAGE_TOKEN)
-
-_NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1.RouteTableSpec')), json_name='spec')
-UpdateRouteTableRequest.__FIELDS__ = (_NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_METADATA, _NEBIUS_VPC_V1_UPDATEROUTETABLEREQUEST_SPEC)
-
-_NEBIUS_VPC_V1_SECURITYGROUP_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
-_NEBIUS_VPC_V1_SECURITYGROUP_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1.SecurityGroupSpec')), json_name='spec')
-_NEBIUS_VPC_V1_SECURITYGROUP_STATUS = Field('status', 'status', 3, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1.SecurityGroupStatus')), json_name='status')
-SecurityGroup.__FIELDS__ = (_NEBIUS_VPC_V1_SECURITYGROUP_METADATA, _NEBIUS_VPC_V1_SECURITYGROUP_SPEC, _NEBIUS_VPC_V1_SECURITYGROUP_STATUS)
-
-_NEBIUS_VPC_V1_SECURITYGROUPSPEC_NETWORK_ID = Field('network_id', 'network_id', 1, STRING, json_name='networkId')
-SecurityGroupSpec.__FIELDS__ = (_NEBIUS_VPC_V1_SECURITYGROUPSPEC_NETWORK_ID,)
-
-_NEBIUS_VPC_V1_SECURITYGROUPSTATUS_STATE = Field('state', 'state', 1, enum_codec((0, 2), default=0, closed=False, names={'STATE_UNSPECIFIED': 0, 'READY': 2}, enum_type=lambda: REGISTRY.enum_class('nebius.vpc.v1.SecurityGroupStatus.State')), json_name='state')
-_NEBIUS_VPC_V1_SECURITYGROUPSTATUS_DEFAULT = Field('default', 'default', 2, BOOL, json_name='default')
-SecurityGroupStatus.__FIELDS__ = (_NEBIUS_VPC_V1_SECURITYGROUPSTATUS_STATE, _NEBIUS_VPC_V1_SECURITYGROUPSTATUS_DEFAULT)
-
 # @@nebius-section:attachments@@
 AllocationStatus__State.__name__ = 'State'
 AllocationStatus__State.__qualname__ = 'AllocationStatus.State'
@@ -4172,25 +4268,30 @@ RouteStatus__Type.__qualname__ = 'RouteStatus.Type'
 RouteTableStatus__State.__name__ = 'State'
 RouteTableStatus__State.__qualname__ = 'RouteTableStatus.State'
 
-SecurityGroupStatus__State.__name__ = 'State'
-SecurityGroupStatus__State.__qualname__ = 'SecurityGroupStatus.State'
-
 # @@nebius-section:extensions@@
 # @@nebius-section:services@@
 class AllocationServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.vpc.v1.AllocationService`` service.'
     __service_name__ = 'nebius.vpc.v1.AllocationService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'vpc'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.vpc.v1.AllocationService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.vpc.v1.AllocationService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -4305,17 +4406,25 @@ class AllocationServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1
 class NetworkServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.vpc.v1.NetworkService`` service.'
     __service_name__ = 'nebius.vpc.v1.NetworkService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'vpc'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.vpc.v1.NetworkService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.vpc.v1.NetworkService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -4418,17 +4527,25 @@ class NetworkServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3
 class PoolServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.vpc.v1.PoolService`` service.'
     __service_name__ = 'nebius.vpc.v1.PoolService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'vpc'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.vpc.v1.PoolService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.vpc.v1.PoolService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -4530,17 +4647,25 @@ class PoolServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b88
 class RouteServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
     'This class provides client methods for the ``nebius.vpc.v1.RouteService`` service.'
     __service_name__ = 'nebius.vpc.v1.RouteService'
+    """Fully qualified protobuf service name for RPC routes."""
     __api_service_name__ = 'vpc'
+    """API gateway name for service routes."""
     __registry__ = REGISTRY
+    """Descriptor registry for request metadata."""
 
     @classmethod
     def get_descriptor(cls) -> _NebiusObject:
+        """Return the protobuf service descriptor from the registry."""
         return REGISTRY.service_descriptor('nebius.vpc.v1.RouteService')
 
     __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.vpc.v1.RouteService')
+    """Alias for code that expects a protobuf service descriptor."""
     __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
+    """Message type representing a long-running operation."""
     __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
+    """Client class that manages long-running operations."""
     __operation_source_method__ = 'Create'
+    """RPC method that supplies the operation route."""
 
     def get(
         self,
@@ -4626,117 +4751,5 @@ class RouteServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b8
             **kwargs,
         )
 
-class RouteTableServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886bd.Operation, _type_nebius_common_v1_e3b886bd.OperationServiceClient]):
-    'This class provides client methods for the ``nebius.vpc.v1.RouteTableService`` service.'
-    __service_name__ = 'nebius.vpc.v1.RouteTableService'
-    __api_service_name__ = 'vpc'
-    __registry__ = REGISTRY
-
-    @classmethod
-    def get_descriptor(cls) -> _NebiusObject:
-        return REGISTRY.service_descriptor('nebius.vpc.v1.RouteTableService')
-
-    __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor('nebius.vpc.v1.RouteTableService')
-    __operation_type__ = _type_nebius_common_v1_e3b886bd.Operation
-    __operation_service_class__ = _type_nebius_common_v1_e3b886bd.OperationServiceClient
-    __operation_source_method__ = 'Create'
-
-    def get(
-        self,
-        request: _NebiusType_nebius_vpc_v1_GetRouteTableRequest_e652eb20,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_vpc_v1_GetRouteTableRequest_e652eb20, _NebiusType_nebius_vpc_v1_RouteTable_74d4ca9b]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='Get',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.vpc.v1.RouteTable'),
-            **kwargs,
-        )
-
-    def get_by_name(
-        self,
-        request: _NebiusType_nebius_vpc_v1_GetRouteTableByNameRequest_6c700a99,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_vpc_v1_GetRouteTableByNameRequest_6c700a99, _NebiusType_nebius_vpc_v1_RouteTable_74d4ca9b]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='GetByName',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.vpc.v1.RouteTable'),
-            **kwargs,
-        )
-
-    def list(
-        self,
-        request: _NebiusType_nebius_vpc_v1_ListRouteTablesRequest_ee7eeb49,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_vpc_v1_ListRouteTablesRequest_ee7eeb49, _NebiusType_nebius_vpc_v1_ListRouteTablesResponse_a5f1fa3d]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='List',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.vpc.v1.ListRouteTablesResponse'),
-            **kwargs,
-        )
-
-    def list_by_network(
-        self,
-        request: _NebiusType_nebius_vpc_v1_ListRouteTablesByNetworkRequest_982fd3bc,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_vpc_v1_ListRouteTablesByNetworkRequest_982fd3bc, _NebiusType_nebius_vpc_v1_ListRouteTablesResponse_a5f1fa3d]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='ListByNetwork',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.vpc.v1.ListRouteTablesResponse'),
-            **kwargs,
-        )
-
-    def create(
-        self,
-        request: _NebiusType_nebius_vpc_v1_CreateRouteTableRequest_92ab613b,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_vpc_v1_CreateRouteTableRequest_92ab613b, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='Create',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def update(
-        self,
-        request: _NebiusType_nebius_vpc_v1_UpdateRouteTableRequest_36975db1,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_vpc_v1_UpdateRouteTableRequest_36975db1, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'The request object is returned without starting the RPC.'
-        kwargs['metadata'] = ensure_reset_mask_in_metadata(
-            request, kwargs.get('metadata'),
-        )
-        return super().request(
-            method='Update',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
-    def delete(
-        self,
-        request: _NebiusType_nebius_vpc_v1_DeleteRouteTableRequest_0a9d838a,
-        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
-    ) -> _NebiusRequest[_NebiusType_nebius_vpc_v1_DeleteRouteTableRequest_0a9d838a, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
-        'The request object is returned without starting the RPC.'
-        return super().request(
-            method='Delete',
-            request=request,
-            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
-            result_wrapper=_NebiusOperation,
-            **kwargs,
-        )
-
 # @@nebius-section:exports@@
-__all__ = ['AddressBlockState', 'Allocation', 'AllocationDetails', 'AllocationNextHop', 'AllocationNextHopState', 'AllocationServiceClient', 'AllocationSpec', 'AllocationStatus', 'Assignment', 'CreateAllocationRequest', 'CreateDefaultNetworkRequest', 'CreateNetworkRequest', 'CreatePoolRequest', 'CreateRouteRequest', 'CreateRouteTableRequest', 'DefaultEgressGatewayState', 'DeleteAllocationRequest', 'DeleteNetworkRequest', 'DeletePoolRequest', 'DeleteRouteRequest', 'DeleteRouteTableRequest', 'DestinationMatch', 'GetAllocationByNameRequest', 'GetAllocationRequest', 'GetNetworkByNameRequest', 'GetNetworkRequest', 'GetPoolByNameRequest', 'GetPoolRequest', 'GetRouteByNameRequest', 'GetRouteRequest', 'GetRouteTableByNameRequest', 'GetRouteTableRequest', 'IPv4PrivateAllocationSpec', 'IPv4PrivateNetworkPools', 'IPv4PublicAllocationSpec', 'IPv4PublicNetworkPools', 'IpVersion', 'IpVisibility', 'ListAllocationsByPoolRequest', 'ListAllocationsBySubnetRequest', 'ListAllocationsRequest', 'ListAllocationsResponse', 'ListNetworksRequest', 'ListNetworksResponse', 'ListPoolsBySourcePoolRequest', 'ListPoolsRequest', 'ListPoolsResponse', 'ListRouteTablesByNetworkRequest', 'ListRouteTablesRequest', 'ListRouteTablesResponse', 'ListRoutesRequest', 'ListRoutesResponse', 'LoadBalancerAssignment', 'Network', 'NetworkInterfaceAssignment', 'NetworkPool', 'NetworkServiceClient', 'NetworkSpec', 'NetworkStatus', 'NextHop', 'NextHopState', 'Pool', 'PoolAssignment', 'PoolCidr', 'PoolServiceClient', 'PoolSpec', 'PoolStatus', 'Route', 'RouteServiceClient', 'RouteSpec', 'RouteStatus', 'RouteTable', 'RouteTableAssignment', 'RouteTableServiceClient', 'RouteTableSpec', 'RouteTableStatus', 'SecurityGroup', 'SecurityGroupSpec', 'SecurityGroupStatus', 'UpdateAllocationRequest', 'UpdateNetworkRequest', 'UpdatePoolRequest', 'UpdateRouteRequest', 'UpdateRouteTableRequest']
+__all__ = ['AddressBlockState', 'Allocation', 'AllocationDetails', 'AllocationNextHop', 'AllocationNextHopState', 'AllocationServiceClient', 'AllocationSpec', 'AllocationStatus', 'Assignment', 'CreateAllocationRequest', 'CreateDefaultNetworkRequest', 'CreateNetworkRequest', 'CreatePoolRequest', 'CreateRouteRequest', 'DefaultEgressGatewayState', 'DeleteAllocationRequest', 'DeleteNetworkRequest', 'DeletePoolRequest', 'DeleteRouteRequest', 'DestinationMatch', 'GetAllocationByNameRequest', 'GetAllocationRequest', 'GetNetworkByNameRequest', 'GetNetworkRequest', 'GetPoolByNameRequest', 'GetPoolRequest', 'GetRouteByNameRequest', 'GetRouteRequest', 'IPv4PrivateAllocationSpec', 'IPv4PrivateNetworkPools', 'IPv4PublicAllocationSpec', 'IPv4PublicNetworkPools', 'IpVersion', 'IpVisibility', 'ListAllocationsByPoolRequest', 'ListAllocationsBySubnetRequest', 'ListAllocationsRequest', 'ListAllocationsResponse', 'ListNetworksRequest', 'ListNetworksResponse', 'ListPoolsBySourcePoolRequest', 'ListPoolsRequest', 'ListPoolsResponse', 'ListRoutesRequest', 'ListRoutesResponse', 'LoadBalancerAssignment', 'Network', 'NetworkInterfaceAssignment', 'NetworkPool', 'NetworkServiceClient', 'NetworkSpec', 'NetworkStatus', 'NextHop', 'NextHopState', 'Pool', 'PoolAssignment', 'PoolCidr', 'PoolServiceClient', 'PoolSpec', 'PoolStatus', 'Route', 'RouteServiceClient', 'RouteSpec', 'RouteStatus', 'RouteTable', 'RouteTableAssignment', 'RouteTableSpec', 'RouteTableStatus', 'UpdateAllocationRequest', 'UpdateNetworkRequest', 'UpdatePoolRequest', 'UpdateRouteRequest']

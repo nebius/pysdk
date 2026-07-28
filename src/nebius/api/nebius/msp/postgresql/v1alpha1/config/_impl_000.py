@@ -55,10 +55,15 @@ from ......_registry import EXTENSION_HANDLES, EXTENSIONS, REGISTRY
 # @@nebius-section:messages@@
 class PostgresqlConfig16(Message):
     __PROTO_FULL_NAME__ = 'nebius.msp.postgresql.v1alpha1.config.PostgresqlConfig16'
+    """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
     __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
     __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.msp.postgresql.v1alpha1.config.PostgresqlConfig16')
+    """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
 
     class __OneOfClass__autovacuum_work_mem__(_NebiusOneOf):
         name: str = '_autovacuum_work_mem'
@@ -329,6 +334,7 @@ class PostgresqlConfig16(Message):
         max_connections: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
         shared_buffers: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
+        """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if autovacuum_work_mem is not _NEBIUS_UNSET:
             values['autovacuum_work_mem'] = autovacuum_work_mem
@@ -364,6 +370,7 @@ class PostgresqlConfig16(Message):
 
     @autovacuum_work_mem.setter
     def autovacuum_work_mem(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``autovacuum_work_mem`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_AUTOVACUUM_WORK_MEM, value)
 
     @_NebiusProperty
@@ -374,6 +381,7 @@ class PostgresqlConfig16(Message):
 
     @statement_timeout.setter
     def statement_timeout(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``statement_timeout`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_STATEMENT_TIMEOUT, value)
 
     @_NebiusProperty
@@ -384,6 +392,7 @@ class PostgresqlConfig16(Message):
 
     @idle_in_transaction_session_timeout.setter
     def idle_in_transaction_session_timeout(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``idle_in_transaction_session_timeout`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_IDLE_IN_TRANSACTION_SESSION_TIMEOUT, value)
 
     @_NebiusProperty
@@ -394,6 +403,7 @@ class PostgresqlConfig16(Message):
 
     @autovacuum_vacuum_cost_delay.setter
     def autovacuum_vacuum_cost_delay(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``autovacuum_vacuum_cost_delay`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_AUTOVACUUM_VACUUM_COST_DELAY, value)
 
     @_NebiusProperty
@@ -403,6 +413,7 @@ class PostgresqlConfig16(Message):
 
     @autovacuum_vacuum_cost_limit.setter
     def autovacuum_vacuum_cost_limit(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``autovacuum_vacuum_cost_limit`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_AUTOVACUUM_VACUUM_COST_LIMIT, value)
 
     @_NebiusProperty
@@ -413,6 +424,7 @@ class PostgresqlConfig16(Message):
 
     @autovacuum_naptime.setter
     def autovacuum_naptime(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``autovacuum_naptime`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_AUTOVACUUM_NAPTIME, value)
 
     @_NebiusProperty
@@ -422,6 +434,7 @@ class PostgresqlConfig16(Message):
 
     @autovacuum_vacuum_scale_factor.setter
     def autovacuum_vacuum_scale_factor(self, value: _NebiusFloat | None) -> None:
+        """Set or clear the generated ``autovacuum_vacuum_scale_factor`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_AUTOVACUUM_VACUUM_SCALE_FACTOR, value)
 
     @_NebiusProperty
@@ -431,6 +444,7 @@ class PostgresqlConfig16(Message):
 
     @autovacuum_analyze_scale_factor.setter
     def autovacuum_analyze_scale_factor(self, value: _NebiusFloat | None) -> None:
+        """Set or clear the generated ``autovacuum_analyze_scale_factor`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_AUTOVACUUM_ANALYZE_SCALE_FACTOR, value)
 
     @_NebiusProperty
@@ -440,6 +454,7 @@ class PostgresqlConfig16(Message):
 
     @default_transaction_read_only.setter
     def default_transaction_read_only(self, value: _NebiusBool | None) -> None:
+        """Set or clear the generated ``default_transaction_read_only`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_DEFAULT_TRANSACTION_READ_ONLY, value)
 
     @_NebiusProperty
@@ -449,6 +464,7 @@ class PostgresqlConfig16(Message):
 
     @search_path.setter
     def search_path(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``search_path`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_SEARCH_PATH, value)
 
     @_NebiusProperty
@@ -458,6 +474,7 @@ class PostgresqlConfig16(Message):
 
     @max_connections.setter
     def max_connections(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``max_connections`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_MAX_CONNECTIONS, value)
 
     @_NebiusProperty
@@ -468,9 +485,11 @@ class PostgresqlConfig16(Message):
 
     @shared_buffers.setter
     def shared_buffers(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``shared_buffers`` field."""
         self._set_field(_NEBIUS_MSP_POSTGRESQL_V1ALPHA1_CONFIG_POSTGRESQLCONFIG16_SHARED_BUFFERS, value)
 
     __PY_TO_PB2__ = {'autovacuum_work_mem': 'autovacuum_work_mem', 'statement_timeout': 'statement_timeout', 'idle_in_transaction_session_timeout': 'idle_in_transaction_session_timeout', 'autovacuum_vacuum_cost_delay': 'autovacuum_vacuum_cost_delay', 'autovacuum_vacuum_cost_limit': 'autovacuum_vacuum_cost_limit', 'autovacuum_naptime': 'autovacuum_naptime', 'autovacuum_vacuum_scale_factor': 'autovacuum_vacuum_scale_factor', 'autovacuum_analyze_scale_factor': 'autovacuum_analyze_scale_factor', 'default_transaction_read_only': 'default_transaction_read_only', 'search_path': 'search_path', 'max_connections': 'max_connections', 'shared_buffers': 'shared_buffers', '_autovacuum_work_mem': '_autovacuum_work_mem', '_statement_timeout': '_statement_timeout', '_idle_in_transaction_session_timeout': '_idle_in_transaction_session_timeout', '_autovacuum_vacuum_cost_delay': '_autovacuum_vacuum_cost_delay', '_autovacuum_vacuum_cost_limit': '_autovacuum_vacuum_cost_limit', '_autovacuum_naptime': '_autovacuum_naptime', '_autovacuum_vacuum_scale_factor': '_autovacuum_vacuum_scale_factor', '_autovacuum_analyze_scale_factor': '_autovacuum_analyze_scale_factor', '_default_transaction_read_only': '_default_transaction_read_only', '_search_path': '_search_path', '_max_connections': '_max_connections', '_shared_buffers': '_shared_buffers'}
+    """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_msp_postgresql_v1alpha1_config_PostgresqlConfig16_643e90df = PostgresqlConfig16
 
 # @@nebius-section:fields@@
