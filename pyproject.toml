@@ -258,6 +258,7 @@ template-dir="docs/templates"
 project-url="https://github.com/nebius/pysdk"
 html-base-url="https://nebius.github.io/pysdk"
 html-writer="nebius.base.gendoc.writer.TemplateWriter"
+system-class="nebius.base.gendoc.system.NamespacePackageSystem"
 html-viewsource-base="https://github.com/nebius/pysdk/tree/main"
 intersphinx = [
     "https://docs.python.org/3/objects.inv",
@@ -269,6 +270,10 @@ privacy = [
     "HIDDEN:nebius.api.nebius.example.**",
     "HIDDEN:nebius.api.nebius.example",
     "PRIVATE:nebius.base.gendoc",
+    "HIDDEN:nebius.api.**._impl_*",
+    "HIDDEN:nebius.api._registry_fragment",
+    "HIDDEN:nebius.api.**._registry_fragment",
+    "HIDDEN:nebius.api._registry",
     "PRIVATE:nebius.api.**_pb2",
     "PRIVATE:nebius.api.**_pb2_grpc",
 ]

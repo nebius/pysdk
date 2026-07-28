@@ -1,4 +1,4 @@
-# Directory for the submodule and output directory for generated files
+# Directory for the submodule
 PROTO_DIR = nebius-api
 
 # Always execute these targets
@@ -24,7 +24,9 @@ verify-generated:
 update-proto: update-submodule generate
 
 gen-doc:
-	pydoctor
+	rm -rf docs/generated
+	PYTHONPATH=src pydoctor
+	python scripts/check_generated_docs.py docs/generated
 
 tag-ver:
 	src/scripts/tag_version.sh --no-push
