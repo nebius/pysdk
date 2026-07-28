@@ -83,6 +83,26 @@ jobs:
     - name: Build API documentation
       run: make gen-doc
 
+    - name: Upload documentation preview
+      id: docs-preview
+      uses: actions/upload-artifact@v7
+      with:
+        name: docs-preview-${{ github.event.pull_request.number || github.run_id }}
+        path: docs/generated
+        if-no-files-found: error
+        retention-days: 14
+
+    - name: Link documentation preview
+      env:
+        ARTIFACT_URL: ${{ steps.docs-preview.outputs.artifact-url }}
+      run: |
+        {
+          echo "### Documentation preview"
+          echo
+          echo "[Download the generated site]($ARTIFACT_URL) (retained for 14 days)."
+          echo "Extract the archive and open \`apiReference.html\` in a browser."
+        } >> "$GITHUB_STEP_SUMMARY"
+
   generated-api:
     if: ${{ always() }}
     needs:
