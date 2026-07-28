@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -38,6 +39,26 @@ def validate(output: Path) -> None:
     if API_REFERENCE_LINK not in reference:
         raise RuntimeError(
             "API reference omitted the representative Instance service client"
+        )
+
+    mangled_annotations = [
+        page.name
+        for page in output.glob("nebius.api.*.html")
+        if any(
+            re.search(r"(?<![A-Za-z0-9_])(?:_Nebius|_type_)", line)
+            and (
+                'class="function-signature"' in line
+                or 'class="class-signature"' in line
+                or "<code>_Nebius" in line
+                or "<code>_type_" in line
+            )
+            for line in page.read_text(encoding="utf-8").splitlines()
+        )
+    ]
+    if mangled_annotations:
+        raise RuntimeError(
+            "documentation exposed generated annotation aliases: "
+            + ", ".join(mangled_annotations[:5])
         )
 
     broken = sorted(
