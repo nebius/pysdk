@@ -1112,7 +1112,7 @@ _NebiusType_nebius_dns_v1_VpcZoneScope_89dabb0e = VpcZoneScope
 
 
 class Zone(Message):
-    "API Resource: *DNS zone*\\ , a container for DNS data\n\nEach DNS zone starts at a particular domain within the hierarchical DNS namespace tree,\ne.g., ``example.com.``, and can also include its subdomains,\ne.g., ``sales.example.com.`` DNS Zones contain *Resource Records* (RRs), which are individual information entries about the domain(s),\ne.g., a domain's IP address\nSee the `graphical explanation of DNS zones and Resource Records on\nWikipedia <https://en.wikipedia.org/wiki/Domain_Name_System#/media/File:Domain_name_space.svg>`_\n\nA Resource Record is represented in this API by the ``Record`` API Resource which is managed by the ``RecordService``"
+    "API Resource: *DNS zone*\\ , a container for DNS data\n\nEach DNS zone starts at a particular domain within the hierarchical DNS namespace tree,\ne.g., ``example.com.``, and is also responsible for its subdomains (e.g., ``sales.example.com.``)\nunless there are explicit DNS zones defined for them.\n\nDNS zones contain *Resource Records* (RRs), which are individual information entries about the domain(s),\ne.g., a domain's IP address.\nEach Resource Record is represented in this API by the ``Record`` API Resource which is managed by the ``RecordService``.\n\nSee the `graphical explanation of DNS zones and Resource Records on\nWikipedia <https://en.wikipedia.org/wiki/Domain_Name_System#/media/File:Domain_name_space.svg>`_"
     __PROTO_FULL_NAME__ = 'nebius.dns.v1.Zone'
     """Fully qualified protobuf message name."""
     __REGISTRY__ = REGISTRY
