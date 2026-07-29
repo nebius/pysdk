@@ -59,6 +59,21 @@ class Constant(ClientChannelInterface):
         """
         return self._source.discard_channel(chan)
 
+    def release_channel(
+        self,
+        chan: AddressChannel | None,
+        *,
+        discard: bool = False,
+    ) -> None:
+        """Release a channel through the source's non-masking lifecycle path."""
+        release = getattr(self._source, "release_channel", None)
+        if callable(release):
+            release(chan, discard=discard)
+        elif discard:
+            self._source.discard_channel(chan)
+        else:
+            self._source.return_channel(chan)
+
     def parent_id(self) -> str | None:
         """Return the effective parent id for this constant channel.
 

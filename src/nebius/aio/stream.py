@@ -17,6 +17,7 @@ from typing import Any, Generic, TypeVar, cast
 from grpc import CallCredentials, Compression
 from grpc.aio import Metadata as GrpcMetadata
 
+from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
@@ -187,10 +188,11 @@ class StreamRequest(Generic[Req, Res]):
     def _release(self, *, discard: bool = False) -> None:
         if self._released or self._address_channel is None:
             return
-        method = "discard_channel" if discard else "return_channel"
-        callback = getattr(self._channel, method, None)
-        if callable(callback):
-            callback(self._address_channel)
+        release_address_channel(
+            self._channel,
+            self._address_channel,
+            discard=discard,
+        )
         self._released = True
 
     def _abort(self) -> None:

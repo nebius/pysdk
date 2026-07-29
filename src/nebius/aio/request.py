@@ -29,6 +29,7 @@ from grpc.aio import Metadata as GrpcMetadata
 from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 
 from nebius.aio.abc import ClientChannelInterface as Channel
+from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
@@ -756,16 +757,23 @@ class Request(Generic[Req, Res]):
                     e = AioRpcError(code, mdi, mdt, msg, None)  # type: ignore
                     self._convert_request_error(e)
                     if self._result_wrapper is not None:
-                        return self._result_wrapper(
+                        wrapped = self._result_wrapper(
                             self._service + "." + self._method,
                             self._channel,
                             ret,
                         )
-                    self._channel.return_channel(self._grpc_channel)
+                        release_address_channel(self._channel, self._grpc_channel)
+                        self._grpc_channel = None
+                        return wrapped
+                    release_address_channel(self._channel, self._grpc_channel)
                     self._grpc_channel = None
                     return ret  # type: ignore
                 except CancelledError as e:
-                    self._channel.discard_channel(self._grpc_channel)
+                    release_address_channel(
+                        self._channel,
+                        self._grpc_channel,
+                        discard=True,
+                    )
                     self._grpc_channel = None
                     raise e
                 except AioRpcError as e:
@@ -784,9 +792,13 @@ class Request(Generic[Req, Res]):
                     continue
                 if deadline is not None and deadline <= time():
                     if isinstance(e, RequestError) and e.status.request_id == "":
-                        self._channel.discard_channel(self._grpc_channel)
+                        release_address_channel(
+                            self._channel,
+                            self._grpc_channel,
+                            discard=True,
+                        )
                         self._grpc_channel = None
-                self._channel.return_channel(self._grpc_channel)
+                release_address_channel(self._channel, self._grpc_channel)
                 raise e
         raise RequestIsCancelledError()
 
