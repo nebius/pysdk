@@ -86,6 +86,27 @@ class ClientChannelInterface(Protocol):
         ...
 
 
+def release_address_channel(
+    channel: ClientChannelInterface,
+    chan: AddressChannel | None,
+    *,
+    discard: bool = False,
+) -> None:
+    """Release a transport through the SDK's non-masking lifecycle path.
+
+    Older or custom channel implementations do not expose ``release_channel``;
+    those retain the original return/discard behavior.
+    """
+    release = getattr(channel, "release_channel", None)
+    if callable(release):
+        release(chan, discard=discard)
+    else:
+        method = "discard_channel" if discard else "return_channel"
+        callback = getattr(channel, method, None)
+        if callable(callback):
+            callback(chan)
+
+
 class GracefulInterface(Protocol):
     """Define components that support controlled asynchronous shutdown.
 

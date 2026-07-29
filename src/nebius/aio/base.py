@@ -10,6 +10,8 @@ This module exposes two small helper classes:
   for SDK channels where code expects :class:`grpc.aio.Channel`.
 """
 
+from asyncio import AbstractEventLoop, get_event_loop, get_running_loop
+
 from grpc.aio import Channel as GRPCChannel
 
 
@@ -20,19 +22,41 @@ class AddressChannel:
     :type address: str
     :ivar channel: The underlying gRPC channel instance.
     :type channel: :class:`grpc.aio.Channel`
+    :ivar event_loop: Event loop that owns the underlying gRPC channel.
+    :type event_loop: optional :class:`asyncio.AbstractEventLoop`
 
     :param channel: The underlying :class:`grpc.aio.Channel` instance.
     :param address: The resolved address string (for example ``'host:port'``)
       that was used to create the channel.
+    :param event_loop: Event loop that owns ``channel``. This is optional for
+      compatibility with callers constructing an ``AddressChannel`` directly.
+      When omitted, ownership is inferred from the running or current loop.
+      Callers wrapping a channel created elsewhere should pass its owner loop
+      explicitly because this inference is only best effort.
     """
 
     address: str
     channel: GRPCChannel
+    event_loop: AbstractEventLoop | None
 
-    def __init__(self, channel: GRPCChannel, address: str) -> None:
+    def __init__(
+        self,
+        channel: GRPCChannel,
+        address: str,
+        event_loop: AbstractEventLoop | None = None,
+    ) -> None:
         """Initialize an :class:`AddressChannel` instance."""
         self.address = address
         self.channel = channel
+        if event_loop is None:
+            try:
+                event_loop = get_running_loop()
+            except RuntimeError:
+                try:
+                    event_loop = get_event_loop()
+                except RuntimeError:
+                    pass
+        self.event_loop = event_loop
 
 
 class ChannelBase(GRPCChannel):

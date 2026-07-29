@@ -9,17 +9,22 @@ from asyncio import (
     create_task,
     gather,
     get_event_loop,
+    get_running_loop,
     iscoroutine,
     new_event_loop,
     run_coroutine_threadsafe,
+    shield,
     sleep,
     wait,
+    wrap_future,
 )
 from collections.abc import Awaitable, Coroutine, Mapping, Sequence
+from concurrent.futures import Future as ConcurrentFuture
 from contextlib import suppress
 from inspect import isawaitable
 from logging import getLogger
 from pathlib import Path
+from threading import Lock
 from typing import Any, TextIO, TypeVar, cast
 
 from google.protobuf.message import Message
@@ -30,7 +35,6 @@ from grpc import (
     Compression,
     ssl_channel_credentials,
 )
-from grpc.aio import Channel as GRPCChannel
 from grpc.aio._base_call import UnaryUnaryCall
 from grpc.aio._base_channel import (
     StreamStreamMultiCallable,
@@ -277,6 +281,14 @@ def _wrap_awaitable(awaitable: Awaitable[T]) -> Coroutine[Any, Any, T]:
         return await awaitable
 
     return wrap()
+
+
+def _get_working_loop() -> AbstractEventLoop:
+    """Return the loop that a newly created gRPC AsyncIO channel will use."""
+    try:
+        return get_running_loop()
+    except RuntimeError:
+        return get_event_loop()
 
 
 async def _run_awaitable_with_timeout(
@@ -684,7 +696,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             tls_credentials = ssl_channel_credentials(root_certificates=trusted_certs)
         self._tls_credentials = tls_credentials
 
-        self._free_channels = dict[str, list[GRPCChannel]]()
+        self._free_channels = dict[str, list[AddressChannel]]()
+        self._leased_channels = dict[int, AddressChannel]()
+        self._channel_pool_lock = Lock()
+        self._close_completion: ConcurrentFuture[None] | None = None
+        self._close_task: Task[None] | None = None
         self._methods = dict[str, str]()
         self._routes = dict[tuple[int, str, str, str], str]()
         self.user_agent = "nebius-python-sdk/" + version
@@ -1019,19 +1035,54 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :type grace: optional float
         """
 
-        self._closed = True
-        awaits = list[Coroutine[Any, Any, Any]]()
-        for chans in self._free_channels.values():
-            for chan in chans:
-                awaits.append(chan.close(grace))
-        for graceful in self._gracefuls:
-            awaits.append(graceful.close(grace))
-        for task in self._tasks:
-            task.cancel()
-        rets = await gather(*awaits, *self._tasks, return_exceptions=True)
-        for ret in rets:
-            if isinstance(ret, BaseException) and not isinstance(ret, CancelledError):
-                logger.error(f"Error while graceful shutdown: {ret}", exc_info=ret)
+        with self._channel_pool_lock:
+            completion = self._close_completion
+            if completion is None:
+                completion = ConcurrentFuture[None]()
+                self._close_completion = completion
+                self._closed = True
+                channels = {
+                    id(chan): chan
+                    for chans in self._free_channels.values()
+                    for chan in chans
+                }
+                channels.update(self._leased_channels)
+                self._free_channels.clear()
+                gracefuls = list(self._gracefuls)
+                tasks = list(self._tasks)
+                run_cleanup = True
+            else:
+                run_cleanup = False
+        if not run_cleanup:
+            await shield(wrap_future(completion))
+            return
+
+        async def cleanup() -> None:
+            try:
+                awaits = list[Coroutine[Any, Any, Any]]()
+                for chan in channels.values():
+                    awaits.append(self._close_address_channel(chan, grace))
+                for graceful in gracefuls:
+                    awaits.append(graceful.close(grace))
+                for task in tasks:
+                    task.cancel()
+                rets = await gather(*awaits, *tasks, return_exceptions=True)
+                for ret in rets:
+                    if isinstance(ret, BaseException) and not isinstance(
+                        ret,
+                        CancelledError,
+                    ):
+                        logger.error(
+                            f"Error while graceful shutdown: {ret}",
+                            exc_info=ret,
+                        )
+            except BaseException as error:
+                completion.set_exception(error)
+            else:
+                completion.set_result(None)
+
+        self._close_task = create_task(cleanup(), name="Channel.close cleanup")
+        await shield(wrap_future(completion))
 
     def get_corresponding_operation_service(
         self,
@@ -1163,6 +1214,15 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """Return a pooled channel selected from generated route metadata."""
         return self.get_channel_by_addr(self.get_addr_by_route(route))
 
+    def _lease_address_channel(self, chan: AddressChannel) -> AddressChannel:
+        """Track a checked-out transport or retire it if shutdown won the race."""
+        with self._channel_pool_lock:
+            if not self._closed:
+                self._leased_channels[id(chan)] = chan
+                return chan
+        self._schedule_address_channel_close(chan, None)
+        raise ChannelClosedError("Channel closed")
+
     def get_channel_by_addr(self, addr: str) -> AddressChannel:
         """Request an :class:`AddressChannel` for the given resolved address.
 
@@ -1177,18 +1237,27 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises ChannelClosedError: If the SDK channel has already been closed.
         """
 
-        if self._closed:
-            raise ChannelClosedError("Channel closed")
-        if addr not in self._free_channels:
-            self._free_channels[addr] = []
-        chans = self._free_channels[addr]
-        while len(chans) > 0:
-            chan = chans.pop()
-            if chan.get_state() != ChannelConnectivity.SHUTDOWN:
-                return AddressChannel(chan, addr)
-            self.bg_task(chan.close(None))
+        current_loop = _get_working_loop()
+        while True:
+            chan: AddressChannel | None = None
+            with self._channel_pool_lock:
+                if self._closed:
+                    raise ChannelClosedError("Channel closed")
+                chans = self._free_channels.setdefault(addr, [])
+                for index in range(len(chans) - 1, -1, -1):
+                    if getattr(chans[index], "event_loop", None) is current_loop:
+                        chan = chans.pop(index)
+                        break
+            if chan is None:
+                break
+            if chan.channel.get_state() != ChannelConnectivity.SHUTDOWN:
+                return self._lease_address_channel(chan)
+            self._schedule_address_channel_close(chan, None)
 
-        return self.create_address_channel(addr)
+        chan = self.create_address_channel(addr)
+        if getattr(chan, "event_loop", None) is None:
+            chan.event_loop = current_loop
+        return self._lease_address_channel(chan)
 
     def return_channel(self, chan: AddressChannel | None) -> None:
         """Return an :class:`AddressChannel` to the internal pool.
@@ -1201,36 +1270,158 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises ChannelClosedError: If the SDK channel has been closed.
         """
 
+        self._release_address_channel(
+            chan,
+            discard=False,
+            raise_if_closed=True,
+        )
+
+    def release_channel(
+        self,
+        chan: AddressChannel | None,
+        *,
+        discard: bool = False,
+    ) -> None:
+        """Release an internal transport without masking a concurrent shutdown.
+
+        Generated request and stream paths use this method so a
+        :class:`ChannelClosedError` raised during cleanup cannot replace the RPC
+        result or its original error. Direct callers of :meth:`return_channel`
+        and :meth:`discard_channel` retain their previous closed-channel error.
+        """
+        self._release_address_channel(
+            chan,
+            discard=discard,
+            raise_if_closed=False,
+        )
+
+    def _release_address_channel(
+        self,
+        chan: AddressChannel | None,
+        *,
+        discard: bool,
+        raise_if_closed: bool,
+    ) -> None:
         if chan is None:
             return
-        if self._closed:
+        with self._channel_pool_lock:
+            leased = self._leased_channels.pop(id(chan), None)
+            closed = self._closed
+        if closed:
+            if leased is None:
+                self._schedule_address_channel_close(chan, None)
+            if raise_if_closed:
+                raise ChannelClosedError("Channel closed")
+            return
+        reusable = (
+            not discard
+            and getattr(chan, "event_loop", None) is not None
+            and chan.channel.get_state() != ChannelConnectivity.SHUTDOWN
+        )
+        with self._channel_pool_lock:
+            closed = self._closed
+            if not closed and reusable:
+                chans = self._free_channels.setdefault(chan.address, [])
+                if any(pooled is chan for pooled in chans):
+                    return
+                if len(chans) < self._max_free_channels_per_address:
+                    chans.append(chan)
+                    return
+        self._schedule_address_channel_close(chan, None)
+        if closed and raise_if_closed:
             raise ChannelClosedError("Channel closed")
-        if chan.address not in self._free_channels:
-            self._free_channels[chan.address] = []
+
+    async def _close_address_channel(
+        self,
+        chan: AddressChannel,
+        grace: float | None,
+    ) -> None:
+        """Close a pooled transport on its owner loop when that loop is running."""
+        owner_loop = getattr(chan, "event_loop", None)
+        current_loop = get_running_loop()
         if (
-            chan.channel.get_state() != ChannelConnectivity.SHUTDOWN
-            and len(self._free_channels[chan.address])
-            < self._max_free_channels_per_address
+            owner_loop is not None
+            and owner_loop is not current_loop
+            and owner_loop.is_running()
         ):
-            self._free_channels[chan.address].append(chan.channel)
-        else:
-            self.discard_channel(chan)
+            close_coro = chan.channel.close(grace)
+            try:
+                close_future = run_coroutine_threadsafe(
+                    close_coro,
+                    owner_loop,
+                )
+            except RuntimeError:
+                try:
+                    await close_coro
+                except RuntimeError as error:
+                    logger.warning(
+                        "Unable to close channel after its owner loop stopped",
+                        exc_info=error,
+                    )
+            else:
+                await wrap_future(close_future)
+            return
+        await chan.channel.close(grace)
+
+    def _schedule_address_channel_close(
+        self,
+        chan: AddressChannel,
+        grace: float | None,
+    ) -> None:
+        """Schedule an unpooled transport close without sharing loop-local tasks."""
+
+        async def close_and_log() -> None:
+            try:
+                await self._close_address_channel(chan, grace)
+            except CancelledError:
+                pass
+            except Exception as e:
+                logger.error(
+                    "Unhandled exception while closing address channel",
+                    exc_info=e,
+                )
+
+        owner_loop = getattr(chan, "event_loop", None)
+        try:
+            current_loop = get_running_loop()
+        except RuntimeError:
+            current_loop = None
+        if (
+            owner_loop is not None
+            and owner_loop is not current_loop
+            and owner_loop.is_running()
+        ):
+            close_coro = close_and_log()
+            try:
+                run_coroutine_threadsafe(close_coro, owner_loop)
+                return
+            except RuntimeError:
+                close_coro.close()
+        if current_loop is None:
+            logger.warning(
+                "Unable to schedule channel close without a running event loop"
+            )
+            return
+        create_task(
+            close_and_log(),
+            name=f"Channel transport close for {chan.address}",
+        )
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
         """Dispose of an :class:`AddressChannel` by scheduling its close.
 
-        The close is performed asynchronously via :meth:`bg_task` to avoid
-        blocking the caller.
+        The close is performed asynchronously on the transport's owner loop
+        without blocking the caller.
 
         :param chan: The :class:`AddressChannel` to discard, or ``None``.
         :raises ChannelClosedError: If the SDK channel has been closed.
         """
 
-        if chan is None:
-            return
-        if self._closed:
-            raise ChannelClosedError("Channel closed")
-        self.bg_task(chan.channel.close(None))
+        self._release_address_channel(
+            chan,
+            discard=True,
+            raise_if_closed=True,
+        )
 
     def get_channel_by_method(self, method_name: str) -> AddressChannel:
         """Get an :class:`AddressChannel` for an RPC method name.
@@ -1296,6 +1487,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """
 
         logger.debug(f"creating channel for {addr=}")
+        event_loop = _get_working_loop()
         opts = self.get_address_options(addr)
         opts, insecure = pop_option(opts, INSECURE, bool)
         opts, compression = pop_option(opts, COMPRESSION, Compression)
@@ -1304,6 +1496,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             return AddressChannel(
                 insecure_channel(addr, opts, compression, interceptors),  # type: ignore[unused-ignore,no-any-return]
                 addr,
+                event_loop,
             )
         return AddressChannel(
             secure_channel(  # type: ignore[unused-ignore,no-any-return]
@@ -1314,6 +1507,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 interceptors,
             ),
             addr,
+            event_loop,
         )
 
     def unary_unary(  # type: ignore[unused-ignore,override]
