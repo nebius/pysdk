@@ -84,8 +84,10 @@ class SDK(Channel):
         ) as sdk:
             resp = await sdk.whoami()
 
-    Synchronous use has more risk. It can raise
-    :class:`nebius.aio.channel.LoopError` in an active loop. Use this form::
+    Each SDK owns a separate daemon event-loop thread and a private daemon
+    executor by default. Its awaitable handles may be awaited from any asyncio
+    loop. Synchronous helpers remain invalid inside an active async call stack;
+    await the handle there. Use synchronous helpers from regular threads::
 
           sdk = SDK(
               ...,
@@ -96,9 +98,8 @@ class SDK(Channel):
           finally:
               sdk.sync_close()
 
-    A separate event loop lets threads call synchronous methods safely. Do not
-    mix synchronous calls with a running event loop if you do not supply a
-    separate loop.
+    To use a caller-owned loop, pass an already-running ``event_loop``. Closing
+    the SDK does not stop or reconfigure a supplied loop.
 
     Authentication and ``auth_timeout``
     -----------------------------------

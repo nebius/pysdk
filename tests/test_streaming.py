@@ -1,11 +1,56 @@
 from __future__ import annotations
 
 import asyncio
+from threading import Barrier, Thread
 
 import pytest
 
+from nebius.aio.channel import Channel as SDKChannel
+from nebius.aio.channel import NoCredentials
 from nebius.aio.route import Route
 from nebius.aio.stream import StreamRequest
+
+
+def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> None:
+    class Result:
+        @classmethod
+        def FromString(cls, data):  # noqa: N802
+            return cls()
+
+    channel = SDKChannel(credentials=NoCredentials())
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=Result,
+        client_streaming=False,
+        server_streaming=True,
+    )
+    barrier = Barrier(11)
+    results: list[bool] = []
+    errors: list[BaseException] = []
+
+    def cancel() -> None:
+        barrier.wait()
+        try:
+            results.append(stream.cancel())
+        except BaseException as error:
+            errors.append(error)
+
+    def close() -> None:
+        barrier.wait()
+        channel.sync_close(timeout=5)
+
+    threads = [Thread(target=cancel) for _ in range(10)]
+    threads.append(Thread(target=close))
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join(timeout=5)
+        assert not thread.is_alive()
+
+    assert errors == []
+    assert sum(results) <= 1
 
 
 @pytest.mark.asyncio

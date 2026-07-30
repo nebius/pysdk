@@ -44,9 +44,11 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from inspect import isawaitable
 from math import isfinite
+from threading import Lock
 from time import monotonic
 from typing import Literal, SupportsFloat, SupportsIndex, cast
 
+from nebius.aio._task_context import bridge_awaitable, task_scheduler
 from nebius.aio.token.token import Bearer as _TokenBearer
 from nebius.aio.token.token import Receiver as _TokenReceiver
 from nebius.aio.token.token import Token as _Token
@@ -456,6 +458,7 @@ def _metric_attribute_value(metrics: object, name: str) -> object | None:
 # collected mid-execution, producing "Task was destroyed but it is pending!" warnings
 # (reported in #94 via SkyPilot).
 _metric_tasks: set[Task[None]] = set()
+_metric_tasks_lock = Lock()
 
 
 def _schedule_metric_awaitable(
@@ -463,14 +466,28 @@ def _schedule_metric_awaitable(
     timeout: object = DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS,
 ) -> None:
     timeout_seconds = sanitize_metric_callback_timeout_seconds(timeout)
+    scheduler = task_scheduler.get()
+    if scheduler is not None:
+        wrapped = _swallow_metric_awaitable(awaitable, timeout_seconds)
+        try:
+            scheduler(wrapped)
+        except (CancelledError, Exception):
+            wrapped.close()
+        return
     try:
         get_running_loop()
     except RuntimeError:
         _run_metric_awaitable(awaitable, timeout_seconds)
         return
     task = create_task(_swallow_metric_awaitable(awaitable, timeout_seconds))
-    _metric_tasks.add(task)
-    task.add_done_callback(_metric_tasks.discard)
+    with _metric_tasks_lock:
+        _metric_tasks.add(task)
+    task.add_done_callback(_discard_metric_task)
+
+
+def _discard_metric_task(task: Task[None]) -> None:
+    with _metric_tasks_lock:
+        _metric_tasks.discard(task)
 
 
 async def _swallow_metric_awaitable(
@@ -478,7 +495,7 @@ async def _swallow_metric_awaitable(
     timeout: float,
 ) -> None:
     try:
-        await wait_for(awaitable, timeout)
+        await wait_for(bridge_awaitable(awaitable), timeout)
     except (CancelledError, Exception):
         return
 

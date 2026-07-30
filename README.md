@@ -264,8 +264,14 @@ async def my_call():
 asyncio.run(my_call())
 ```
 
-The SDK is designed for `asyncio`. Use an asynchronous context when possible.
-If no asynchronous event loop is running, you can use the SDK synchronously:
+Each SDK instance uses one internal asyncio loop. By default it starts a
+dedicated daemon loop thread and a private daemon executor with two workers.
+SDK request, authentication, renewal, streaming, metrics, and cleanup work
+runs there. Returned SDK awaitables can be awaited from any external asyncio
+loop.
+
+Use an asynchronous context when possible. If no asynchronous event loop is
+running, you can use the SDK synchronously:
 
 ```python
 try:
@@ -275,9 +281,33 @@ finally:
     sdk.sync_close()
 ```
 
-Synchronous calls can hang, even if you set timeouts. They do not work in an
-asynchronous call stack unless the SDK has a separate event loop. A separate
-loop reduces this risk but does not prevent all deadlocks.
+Do not call synchronous helpers from an asynchronous call stack; await the SDK
+handle instead. Synchronous helpers are safe to call concurrently from regular
+threads.
+
+Advanced callers may pass an already-running `event_loop` to `SDK`. That loop
+remains caller-owned and is not stopped or reconfigured by `SDK.close()`.
+Use `executor_max_workers` to change the owned executor size from its default
+of two workers.
+
+Custom resolvers, interceptors, asynchronous metrics callbacks, and generated
+request options now execute or become fixed on the internal SDK loop. Configure
+a request before its first await or `.wait()` call; submission freezes its
+mutable options.
+
+`get_channel_by_addr()` and related low-level pool methods still expose
+`AddressChannel.channel` for custom transport compatibility. That field is a
+native `grpc.aio.Channel` owned by the SDK loop and must not be invoked from an
+external loop. Use generated clients or `Channel.unary_unary()` when a call
+must be awaited from arbitrary loops. Likewise,
+`get_authorization_provider()` preserves the configured provider object for
+identity and extension compatibility; generated SDK requests dispatch it
+internally, but manual direct use remains the caller's responsibility.
+
+When `close()` is awaited from work already running on the internal SDK loop,
+the current synchronous continuation may return a value. If it yields again,
+shutdown cancels that continuation so closing the SDK cannot leave its owned
+thread pool alive.
 
 If you do not close the SDK, unterminated tasks can cause errors.
 

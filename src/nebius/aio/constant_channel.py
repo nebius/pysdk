@@ -9,7 +9,7 @@ network and authorization functions.
 """
 
 from collections.abc import Awaitable
-from typing import TypeVar
+from typing import TypeVar, cast
 
 from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
@@ -115,3 +115,11 @@ class Constant(ClientChannelInterface):
         :returns: the awaitable result
         """
         return self._source.run_sync(awaitable, timeout)
+
+    def run_async(self, awaitable: Awaitable[T]) -> Awaitable[T]:
+        """Submit an awaitable to the source channel's SDK event loop."""
+
+        submit = getattr(self._source, "run_async", None)
+        if callable(submit):
+            return cast(Awaitable[T], submit(awaitable))
+        return awaitable

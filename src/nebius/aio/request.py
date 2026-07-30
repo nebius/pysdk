@@ -16,10 +16,11 @@ The request logic is central to SDK call semantics. Make only small changes
 that do not affect behavior.
 """
 
-from asyncio import CancelledError, Future, ensure_future, wait_for
+from asyncio import CancelledError, ensure_future, get_running_loop, wait_for
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
+from threading import Lock
 from time import time
 from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
@@ -298,7 +299,8 @@ class Request(Generic[Req, Res]):
         self._request_id: str | None = None
 
         self._awaited = False
-        self._future: Future[Res] | None = None
+        self._future: Awaitable[Res] | None = None
+        self._future_lock = Lock()
 
     def __repr__(self) -> str:
         """Return a short representation including service, method and status."""
@@ -309,14 +311,16 @@ class Request(Generic[Req, Res]):
 
     def done(self) -> bool:
         """Return True if the underlying gRPC call has completed."""
-        if self._call is None:
-            return False
-        return self._call.done()
+        future = self._future
+        done = getattr(future, "done", None)
+        return bool(done()) if callable(done) else False
 
     def cancelled(self) -> bool:
         """Return True if the call was cancelled (locally or remotely)."""
-        if self._call is not None:
-            return self._call.cancelled()
+        future = self._future
+        cancelled = getattr(future, "cancelled", None)
+        if callable(cancelled) and cancelled():
+            return True
         return self._cancelled
 
     def cancel(self) -> bool:
@@ -326,11 +330,21 @@ class Request(Generic[Req, Res]):
         If the gRPC call exists, cancel that call. Otherwise, set a local flag
         to prevent the request from sending the call.
         """
-        if self._call is not None:
-            return self._call.cancel()
-        else:
-            self._cancelled = True
-            return self._cancelled
+        with self._future_lock:
+            if self._cancelled:
+                return False
+            future = self._future
+            if future is None:
+                self._cancelled = True
+                return True
+        cancel = getattr(future, "cancel", None)
+        if callable(cancel):
+            cancelled = bool(cancel())
+            if cancelled:
+                with self._future_lock:
+                    self._cancelled = True
+            return cancelled
+        return False
 
     def input_metadata(self) -> Metadata:
         """Return the metadata that will be sent with the request (mutable).
@@ -350,9 +364,10 @@ class Request(Generic[Req, Res]):
 
     @timeout.setter
     def timeout(self, timeout: float | None) -> None:
-        if self._call is not None:
-            raise RequestIsSentError()
-        self._timeout = timeout
+        with self._future_lock:
+            if self._future is not None:
+                raise RequestIsSentError()
+            self._timeout = timeout
 
     @property
     def credentials(self) -> CallCredentials | None:
@@ -361,9 +376,10 @@ class Request(Generic[Req, Res]):
 
     @credentials.setter
     def credentials(self, credentials: CallCredentials | None) -> None:
-        if self._call is not None:
-            raise RequestIsSentError()
-        self._credentials = credentials
+        with self._future_lock:
+            if self._future is not None:
+                raise RequestIsSentError()
+            self._credentials = credentials
 
     @property
     def wait_for_ready(self) -> bool | None:
@@ -372,9 +388,10 @@ class Request(Generic[Req, Res]):
 
     @wait_for_ready.setter
     def wait_for_ready(self, wait_for_ready: bool | None) -> None:
-        if self._call is not None:
-            raise RequestIsSentError()
-        self._wait_for_ready = wait_for_ready
+        with self._future_lock:
+            if self._future is not None:
+                raise RequestIsSentError()
+            self._wait_for_ready = wait_for_ready
 
     @property
     def compression(self) -> Compression | None:
@@ -383,9 +400,10 @@ class Request(Generic[Req, Res]):
 
     @compression.setter
     def compression(self, compression: Compression | None) -> None:
-        if self._call is not None:
-            raise RequestIsSentError()
-        self._compression = compression
+        with self._future_lock:
+            if self._future is not None:
+                raise RequestIsSentError()
+            self._compression = compression
 
     def _send(self, timeout: float | None) -> None:
         """Prepare and start the underlying gRPC unary-unary call.
@@ -438,6 +456,11 @@ class Request(Generic[Req, Res]):
         s_name = self._service
         if s_name[0] == ".":
             s_name = s_name[1:]
+        owner_loop = getattr(self._grpc_channel, "event_loop", None)
+        if owner_loop is not None and owner_loop is not get_running_loop():
+            raise RequestError(
+                "grpc_channel_override belongs to a different event loop"
+            )
         self._call = self._grpc_channel.channel.unary_unary(  # type: ignore
             "/" + s_name + "/" + self._method,
             serializer,
@@ -811,7 +834,16 @@ class Request(Generic[Req, Res]):
         overall auth timeout.
         """
         # If no provider or authorization explicitly disabled, just run the request
-        provider = self._channel.get_authorization_provider()
+        runtime_provider = getattr(
+            self._channel,
+            "_get_runtime_authorization_provider",
+            None,
+        )
+        provider = (
+            runtime_provider()
+            if callable(runtime_provider)
+            else self._channel.get_authorization_provider()
+        )
 
         auth_type = self._auth_options.get(OPTION_TYPE, None)
         if provider is None or auth_type == Types.DISABLE:
@@ -875,9 +907,16 @@ class Request(Generic[Req, Res]):
         This helper memoizes the created Future so the underlying request is
         executed only once even if multiple awaiters call it.
         """
-        if self._future is None:
-            self._future = ensure_future(self._request_with_authorization_loop())
-        return await self._future
+        with self._future_lock:
+            if self._future is None:
+                coroutine = self._request_with_authorization_loop()
+                submit = getattr(self._channel, "run_async", None)
+                submitted = (
+                    submit(coroutine) if callable(submit) else ensure_future(coroutine)
+                )
+                self._future = submitted
+            future = self._future
+        return await future
 
     def __await__(self) -> Generator[Any, None, Res]:
         """Support awaiting the Request instance.
@@ -885,9 +924,10 @@ class Request(Generic[Req, Res]):
         The first await schedules the internal request; awaiting a finished
         request raises a RuntimeError to prevent double-execution semantics.
         """
-        if self._awaited:
-            raise RuntimeError("cannot await the finished coroutine")
-        self._awaited = True
+        with self._future_lock:
+            if self._awaited:
+                raise RuntimeError("cannot await the finished coroutine")
+            self._awaited = True
 
         res = yield from self._await_result().__await__()
         return res

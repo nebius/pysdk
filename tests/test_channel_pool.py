@@ -35,7 +35,7 @@ def _stop_event_loop(loop: asyncio.AbstractEventLoop, thread: Thread) -> None:
     assert not thread.is_alive()
 
 
-def test_pooled_channels_are_not_reused_across_event_loops() -> None:
+def test_pooled_channels_are_reused_through_the_internal_loop() -> None:
     channel = Channel(
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -50,12 +50,12 @@ def test_pooled_channels_are_not_reused_across_event_loops() -> None:
         loop_a_channel = asyncio.run(checkout_and_return())
         loop_b_channel = asyncio.run(checkout_and_return())
 
-        assert loop_b_channel is not loop_a_channel
+        assert loop_b_channel is loop_a_channel
     finally:
         asyncio.run(channel.close())
 
 
-def test_close_idle_channel_after_its_owner_loop_stops() -> None:
+def test_idle_channel_is_owned_by_the_internal_loop_until_close() -> None:
     channel = Channel(
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -68,7 +68,7 @@ def test_close_idle_channel_after_its_owner_loop_stops() -> None:
 
     address_channel = asyncio.run(checkout_and_return())
     assert address_channel.event_loop is not None
-    assert address_channel.event_loop.is_closed()
+    assert address_channel.event_loop.is_running()
 
     asyncio.run(channel.close())
 
@@ -122,6 +122,118 @@ def test_generated_requests_use_loop_owned_pooled_channels() -> None:
         _stop_event_loop(loop_a, thread_a)
         _stop_event_loop(loop_b, thread_b)
         server.stop(None).wait()
+
+
+def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None:
+    class MockDiskService:
+        def Get(  # noqa: N802
+            self,
+            request: GetDiskRequest,
+            context: grpc.ServicerContext,
+        ) -> Disk:
+            ret = Disk()
+            ret.metadata.id = request.id
+            return ret
+
+    server = grpc.server(ThreadPoolExecutor(max_workers=1))
+    add_service(server, DiskServiceClient, MockDiskService())
+    port = server.add_insecure_port("127.0.0.1:0")
+    server.start()
+    loop_a, thread_a = _start_event_loop()
+    loop_b, thread_b = _start_event_loop()
+    channel = Channel(
+        domain=f"localhost:{port}",
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda request: request.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="cross-loop"))
+
+    async def await_call() -> Disk:
+        return await call
+
+    try:
+        result = asyncio.run_coroutine_threadsafe(await_call(), loop_a).result(
+            timeout=5
+        )
+        assert result.metadata.id == "cross-loop"
+
+        channel.sync_close(timeout=5)
+
+        assert (
+            asyncio.run_coroutine_threadsafe(call.code(), loop_b).result(timeout=5)
+            == grpc.StatusCode.OK
+        )
+        assert (
+            asyncio.run_coroutine_threadsafe(call.details(), loop_b).result(timeout=5)
+            == ""
+        )
+        assert (
+            asyncio.run_coroutine_threadsafe(
+                call.initial_metadata(),
+                loop_b,
+            ).result(timeout=5)
+            is not None
+        )
+        assert (
+            asyncio.run_coroutine_threadsafe(
+                call.trailing_metadata(),
+                loop_b,
+            ).result(timeout=5)
+            is not None
+        )
+    finally:
+        if channel.get_state() != grpc.ChannelConnectivity.SHUTDOWN:
+            channel.sync_close(timeout=5)
+        _stop_event_loop(loop_a, thread_a)
+        _stop_event_loop(loop_b, thread_b)
+        server.stop(None).wait()
+
+
+def test_generated_requests_complete_from_many_sync_threads() -> None:
+    class MockDiskService:
+        def Get(  # noqa: N802
+            self,
+            request: GetDiskRequest,
+            context: grpc.ServicerContext,
+        ) -> Disk:
+            ret = Disk()
+            ret.metadata.id = request.id
+            return ret
+
+    server = grpc.server(ThreadPoolExecutor(max_workers=4))
+    add_service(server, DiskServiceClient, MockDiskService())
+    port = server.add_insecure_port("127.0.0.1:0")
+    server.start()
+    channel = Channel(
+        domain=f"localhost:{port}",
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+    client = DiskServiceClient(channel)
+    barrier = Barrier(11)
+    results: list[str] = []
+
+    def call(index: int) -> None:
+        barrier.wait()
+        result = client.get(GetDiskRequest(id=str(index)), timeout=5).wait()
+        results.append(result.metadata.id)
+
+    threads = [Thread(target=call, args=(index,)) for index in range(10)]
+    try:
+        for thread in threads:
+            thread.start()
+        barrier.wait()
+        for thread in threads:
+            thread.join(timeout=10)
+            assert not thread.is_alive()
+        assert sorted(results, key=int) == [str(index) for index in range(10)]
+    finally:
+        channel.sync_close(timeout=5)
+        server.stop(0).wait()
 
 
 def test_pooled_channels_are_reused_on_the_same_event_loop() -> None:
@@ -203,7 +315,7 @@ def test_legacy_constructor_keeps_creation_loop_ownership() -> None:
 
         assert legacy_wrapper.event_loop is loop_a
         assert checked_out is not legacy_wrapper
-        assert checked_out.event_loop is loop_b
+        assert checked_out.event_loop is channel._event_loop
 
         asyncio.run(channel.close())
     finally:
@@ -354,20 +466,22 @@ def test_concurrent_close_runs_graceful_cleanup_once() -> None:
     class BlockingGraceful:
         def __init__(self) -> None:
             self.close_calls = 0
-            self.started = asyncio.Event()
-            self.release = asyncio.Event()
+            self.started = Event()
+            self.release = Event()
 
         async def close(self, grace: float | None = None) -> None:
             self.close_calls += 1
             self.started.set()
-            await self.release.wait()
+            while not self.release.is_set():
+                await asyncio.sleep(0)
 
     async def run() -> int:
         channel = Channel(credentials=NoCredentials())
         graceful = BlockingGraceful()
         channel._gracefuls.add(graceful)
         first = asyncio.create_task(channel.close())
-        await graceful.started.wait()
+        while not graceful.started.is_set():
+            await asyncio.sleep(0)
         second = asyncio.create_task(channel.close())
         await asyncio.sleep(0)
         graceful.release.set()
@@ -416,20 +530,22 @@ def test_cancelled_close_caller_does_not_cancel_cleanup() -> None:
     class BlockingGraceful:
         def __init__(self) -> None:
             self.close_calls = 0
-            self.started = asyncio.Event()
-            self.release = asyncio.Event()
+            self.started = Event()
+            self.release = Event()
 
         async def close(self, grace: float | None = None) -> None:
             self.close_calls += 1
             self.started.set()
-            await self.release.wait()
+            while not self.release.is_set():
+                await asyncio.sleep(0)
 
     async def run() -> int:
         channel = Channel(credentials=NoCredentials())
         graceful = BlockingGraceful()
         channel._gracefuls.add(graceful)
         first = asyncio.create_task(channel.close())
-        await graceful.started.wait()
+        while not graceful.started.is_set():
+            await asyncio.sleep(0)
         first.cancel()
         with pytest.raises(asyncio.CancelledError):
             await first

@@ -9,12 +9,15 @@ from asyncio import (
     Lock,
     ensure_future,
     gather,
+    get_running_loop,
     wait,
 )
-from collections.abc import AsyncIterator, Callable, Generator
+from collections.abc import AsyncIterator, Awaitable, Callable, Generator
+from contextlib import suppress
+from threading import Lock as ThreadLock
 from typing import Any, Generic, TypeVar, cast
 
-from grpc import CallCredentials, Compression
+from grpc import CallCredentials, ChannelConnectivity, Compression
 from grpc.aio import Metadata as GrpcMetadata
 
 from nebius.aio.abc import release_address_channel
@@ -26,6 +29,7 @@ from nebius.base.metadata import Metadata
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
+T = TypeVar("T")
 
 
 class StreamRequest(Generic[Req, Res]):
@@ -81,9 +85,14 @@ class StreamRequest(Generic[Req, Res]):
         self._wait_for_ready = wait_for_ready
         self._address_channel = grpc_channel_override
         self._call: Any = None
+        self._response_iterator: AsyncIterator[Res] | None = None
         self._start_error: BaseException | None = None
         self._start_lock = Lock()
+        self._read_lock = Lock()
+        self._write_lock = Lock()
         self._cancel_event = Event()
+        self._state_lock = ThreadLock()
+        self._cancel_requested = False
         self._cancelled = False
         self._released = False
 
@@ -142,11 +151,11 @@ class StreamRequest(Generic[Req, Res]):
                 return self._call
             if self._start_error is not None:
                 raise self._start_error
-            if self._cancelled:
+            if self._is_cancelled():
                 raise CancelledError
             ensure_key_in_metadata(self._metadata)
             await self._authenticate()
-            if self._cancelled:
+            if self._is_cancelled():
                 raise CancelledError
             if self._address_channel is None:
                 routed = getattr(self._channel, "get_channel_by_route", None)
@@ -158,6 +167,11 @@ class StreamRequest(Generic[Req, Res]):
                     )
             try:
                 transport = self._address_channel.channel
+                owner_loop = getattr(self._address_channel, "event_loop", None)
+                if owner_loop is not None and owner_loop is not get_running_loop():
+                    raise RuntimeError(
+                        "grpc_channel_override belongs to a different event loop"
+                    )
                 shape = (
                     "stream_stream"
                     if self._client_streaming and self._server_streaming
@@ -186,17 +200,28 @@ class StreamRequest(Generic[Req, Res]):
                 raise
 
     def _release(self, *, discard: bool = False) -> None:
-        if self._released or self._address_channel is None:
-            return
+        with self._state_lock:
+            if self._released or self._address_channel is None:
+                return
+            address_channel = self._address_channel
+            self._released = True
         release_address_channel(
             self._channel,
-            self._address_channel,
+            address_channel,
             discard=discard,
         )
-        self._released = True
+
+    def _is_cancelled(self) -> bool:
+        with self._state_lock:
+            return self._cancelled
+
+    def _is_released(self) -> bool:
+        with self._state_lock:
+            return self._released
 
     def _abort(self) -> None:
-        self._cancelled = True
+        with self._state_lock:
+            self._cancelled = True
         self._cancel_event.set()
         try:
             if self._call is not None:
@@ -204,9 +229,18 @@ class StreamRequest(Generic[Req, Res]):
         finally:
             self._release(discard=True)
 
+    async def _on_sdk_loop(self, awaitable: Awaitable[T]) -> T:
+        submit = getattr(self._channel, "run_async", None)
+        if callable(submit):
+            return cast(T, await submit(awaitable))
+        return await awaitable
+
     async def _result(self) -> Res:
         if self._server_streaming:
             raise TypeError("server-streaming RPCs are async iterators")
+        return await self._on_sdk_loop(self._result_internal())
+
+    async def _result_internal(self) -> Res:
         call = await self._start()
         try:
             return cast(Res, await call)
@@ -222,6 +256,24 @@ class StreamRequest(Generic[Req, Res]):
     async def _responses(self) -> AsyncIterator[Res]:
         if not self._server_streaming:
             raise TypeError("stream-unary RPCs are awaitable, not async iterators")
+        submit = getattr(self._channel, "run_async", None)
+        if not callable(submit):
+            async for response in self._responses_internal():
+                yield response
+            return
+        try:
+            while True:
+                try:
+                    response = await submit(self._next_response())
+                except StopAsyncIteration:
+                    return
+                yield response
+        finally:
+            if not self._is_released():
+                with suppress(Exception):
+                    await submit(self._aclose())
+
+    async def _responses_internal(self) -> AsyncIterator[Res]:
         call = await self._start()
         try:
             async for response in call:
@@ -232,35 +284,60 @@ class StreamRequest(Generic[Req, Res]):
         finally:
             self._release()
 
+    async def _next_response(self) -> Res:
+        async with self._read_lock:
+            if self._response_iterator is None:
+                call = await self._start()
+                self._response_iterator = call.__aiter__()
+            try:
+                return await anext(self._response_iterator)
+            except StopAsyncIteration:
+                self._release()
+                raise
+            except BaseException:
+                self._abort()
+                raise
+
     def __aiter__(self) -> AsyncIterator[Res]:
         return self._responses()
 
     async def write(self, request: Req) -> None:
-        if not self._client_streaming:
-            raise TypeError("RPC does not accept a client stream")
-        if self._request is not None:
-            raise TypeError("cannot mix a request iterator with write()")
-        call = await self._start()
-        try:
-            await call.write(request)
-        except BaseException:
-            self._abort()
-            raise
+        await self._on_sdk_loop(self._write(request))
+
+    async def _write(self, request: Req) -> None:
+        async with self._write_lock:
+            if not self._client_streaming:
+                raise TypeError("RPC does not accept a client stream")
+            if self._request is not None:
+                raise TypeError("cannot mix a request iterator with write()")
+            call = await self._start()
+            try:
+                await call.write(request)
+            except BaseException:
+                self._abort()
+                raise
 
     async def done_writing(self) -> None:
-        if not self._client_streaming:
-            raise TypeError("RPC does not accept a client stream")
-        if self._request is not None:
-            raise TypeError("request iterators finish their own writes")
-        call = await self._start()
-        try:
-            await call.done_writing()
-        except BaseException:
-            self._abort()
-            raise
+        await self._on_sdk_loop(self._done_writing())
+
+    async def _done_writing(self) -> None:
+        async with self._write_lock:
+            if not self._client_streaming:
+                raise TypeError("RPC does not accept a client stream")
+            if self._request is not None:
+                raise TypeError("request iterators finish their own writes")
+            call = await self._start()
+            try:
+                await call.done_writing()
+            except BaseException:
+                self._abort()
+                raise
 
     async def aclose(self) -> None:
         """Cancel the native call and discard its address channel."""
+        await self._on_sdk_loop(self._aclose())
+
+    async def _aclose(self) -> None:
         self._abort()
 
     async def __aenter__(self) -> "StreamRequest[Req, Res]":
@@ -275,11 +352,23 @@ class StreamRequest(Generic[Req, Res]):
         await self.aclose()
 
     def cancel(self) -> bool:
-        self._cancelled = True
-        self._cancel_event.set()
-        if self._call is None:
+        with self._state_lock:
+            if self._cancel_requested or self._cancelled or self._released:
+                return False
+            self._cancel_requested = True
+        submit = getattr(self._channel, "run_async", None)
+        if callable(submit):
+            closing = self._aclose()
+            try:
+                submit(closing)
+            except Exception:
+                closing.close()
+                get_state = getattr(self._channel, "get_state", None)
+                if callable(get_state) and get_state() == ChannelConnectivity.SHUTDOWN:
+                    return False
+                with self._state_lock:
+                    self._cancel_requested = False
+                raise
             return True
-        try:
-            return bool(self._call.cancel())
-        finally:
-            self._release(discard=True)
+        self._abort()
+        return True

@@ -13,6 +13,7 @@ import importlib
 from asyncio import sleep
 from collections.abc import Sequence
 from datetime import datetime, timedelta
+from threading import Lock
 from time import time
 from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
 
@@ -291,6 +292,11 @@ class Operation(Generic[OperationPb]):
         self._service = service_type(Constant(source_method, channel))
         self._get_request_obj = get_type
         self._operation = operation
+        self._state_lock = Lock()
+
+    def _operation_snapshot(self) -> OperationPb:
+        with self._state_lock:
+            return self._operation
 
     def __repr__(self) -> str:
         """Return a compact string representation useful for debugging."""
@@ -316,7 +322,7 @@ class Operation(Generic[OperationPb]):
 
         :rtype: :class:`RequestStatus` or nothing
         """
-        return self._operation.status
+        return self._operation_snapshot().status
 
     def progress_tracker(self) -> OperationProgressTracker | None:
         """Return an operation progress tracker when available.
@@ -380,6 +386,17 @@ class Operation(Generic[OperationPb]):
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         """
+        submit = getattr(self._channel, "run_async", None)
+        update = self._update_internal(**kwargs)
+        if callable(submit):
+            await submit(update)
+        else:
+            await update
+
+    async def _update_internal(
+        self,
+        **kwargs: Unpack[RequestKwargs],
+    ) -> None:
         if self.done():
             return
 
@@ -482,6 +499,29 @@ class Operation(Generic[OperationPb]):
 
         :raises TimeoutError: when the overall timeout is exceeded
         """
+        submit = getattr(self._channel, "run_async", None)
+        wait = self._wait_internal(
+            interval=interval,
+            timeout=timeout,
+            poll_iteration_timeout=poll_iteration_timeout,
+            poll_per_retry_timeout=poll_per_retry_timeout,
+            poll_retries=poll_retries,
+            **kwargs,
+        )
+        if callable(submit):
+            await submit(wait)
+        else:
+            await wait
+
+    async def _wait_internal(
+        self,
+        interval: float | timedelta = 1,
+        timeout: float | None = None,
+        poll_iteration_timeout: float | UnsetType | None = Unset,
+        poll_per_retry_timeout: float | UnsetType | None = Unset,
+        poll_retries: int | None = None,
+        **kwargs: Unpack[RequestKwargsForOperation],
+    ) -> None:
 
         start = time()
         if poll_iteration_timeout is None:
@@ -504,7 +544,7 @@ class Operation(Generic[OperationPb]):
 
         async def _safe_update() -> None:
             try:
-                await self.update(
+                await self._update_internal(
                     timeout=poll_iteration_timeout,
                     per_retry_timeout=poll_per_retry_timeout,
                     retries=poll_retries,
@@ -530,20 +570,21 @@ class Operation(Generic[OperationPb]):
         protobuf class as the currently wrapped object; otherwise an
         :class:`SDKError` is raised.
         """
-        if isinstance(operation, self._operation.__class__):
-            self._operation = operation
-        else:
-            raise SDKError(f"Operation type {type(operation)} not supported.")
+        with self._state_lock:
+            if isinstance(operation, self._operation.__class__):
+                self._operation = operation
+                return
+        raise SDKError(f"Operation type {type(operation)} not supported.")
 
     @property
     def id(self) -> str:
         """Return the operation identifier (string)."""
-        return self._operation.id
+        return self._operation_snapshot().id
 
     @property
     def description(self) -> str:
         """Return the operation description as provided by the service."""
-        return self._operation.description
+        return self._operation_snapshot().description
 
     @property
     def created_at(self) -> datetime:
@@ -553,7 +594,7 @@ class Operation(Generic[OperationPb]):
         returns the current time in the local timezone.
         :rtype: datetime
         """
-        ca = self._operation.created_at
+        ca = self._operation_snapshot().created_at
         if ca is None:
             return datetime.now(local_timezone)
         return ca
@@ -561,17 +602,17 @@ class Operation(Generic[OperationPb]):
     @property
     def created_by(self) -> str:
         """Return the identity that created the operation (string)."""
-        return self._operation.created_by
+        return self._operation_snapshot().created_by
 
     @property
     def finished_at(self) -> datetime | None:
         """Return the completion time or ``None`` if the operation is not finished."""
-        return self._operation.finished_at
+        return self._operation_snapshot().finished_at
 
     @property
     def resource_id(self) -> str:
         """Return the resource id associated with the operation."""
-        return self._operation.resource_id
+        return self._operation_snapshot().resource_id
 
     def successful(self) -> bool:
         """Return True when the operation completed successfully."""
@@ -584,7 +625,7 @@ class Operation(Generic[OperationPb]):
         Use this to access version-specific fields that are not exposed by the
         normalized wrapper.
         """
-        return self._operation
+        return self._operation_snapshot()
 
 
 def _check_presence(message: object, field: str) -> bool:
