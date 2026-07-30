@@ -216,6 +216,10 @@ class AsyncRuntime:
         self._close_returning_submissions: set[CrossLoopAwaitable[Any]] = set()
         self._active_tasks: set[asyncio.Task[Any]] = set()
         self._protected_tasks: set[asyncio.Task[Any]] = set()
+        self._task_submissions: dict[
+            asyncio.Task[Any],
+            CrossLoopAwaitable[Any],
+        ] = {}
         self._current_submission: ContextVar[CrossLoopAwaitable[Any] | None] = (
             ContextVar(
                 f"nebius_sdk_submission_{id(self)}",
@@ -369,11 +373,6 @@ class AsyncRuntime:
             self._accepting = False
 
     async def cancel_submissions(self) -> None:
-        with self._submissions_lock:
-            submissions = list(self._submissions - self._protected_submissions)
-        for submitted in submissions:
-            submitted.cancel()
-        await asyncio.sleep(0)
         current = asyncio.current_task(self._loop)
         tasks = list(
             self._active_tasks
@@ -381,7 +380,31 @@ class AsyncRuntime:
             - ({current} if current is not None else set())
         )
         for task in tasks:
-            task.cancel()
+            submitted = self._task_submissions.get(task)
+            if submitted is None or not submitted.cancelled():
+                task.cancel()
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+
+        # Task cancellation propagates to its concurrent Future. Let those
+        # callbacks publish before cancelling submissions that never started;
+        # cancelling both representations can inject a second CancelledError
+        # into an async finalizer.
+        await asyncio.sleep(0)
+        with self._submissions_lock:
+            submissions = list(self._submissions - self._protected_submissions)
+        for submitted in submissions:
+            submitted.cancel()
+        await asyncio.sleep(0)
+
+        # A submission may have started between the initial task snapshot and
+        # cancellation of the remaining concurrent Futures. Its one forwarded
+        # cancellation is enough; only wait for its finalizer here.
+        tasks = list(
+            self._active_tasks
+            - self._protected_tasks
+            - ({current} if current is not None else set())
+        )
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
 
@@ -438,6 +461,9 @@ class AsyncRuntime:
         task = asyncio.current_task(self._loop)
         if task is not None:
             self._active_tasks.add(task)
+            submitted = self._current_submission.get()
+            if submitted is not None:
+                self._task_submissions[task] = submitted
             if protect_task:
                 self._protected_tasks.add(task)
         scheduler_token = task_scheduler.set(self.submit_background)
@@ -450,6 +476,7 @@ class AsyncRuntime:
             if task is not None:
                 self._active_tasks.discard(task)
                 self._protected_tasks.discard(task)
+                self._task_submissions.pop(task, None)
 
     def bridge_awaitable(self, awaitable: Awaitable[T]) -> Awaitable[T]:
         if (
@@ -564,7 +591,8 @@ class AsyncRuntime:
             await asyncio.sleep(0)
             protected_tasks = list(self._protected_tasks)
             for task in protected_tasks:
-                if not task.done():
+                submitted = self._task_submissions.get(task)
+                if not task.done() and (submitted is None or not submitted.cancelled()):
                     task.cancel()
             if protected_tasks:
                 await asyncio.gather(

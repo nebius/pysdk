@@ -339,13 +339,16 @@ def test_supplied_loop_close_cancels_and_drains_submissions() -> None:
     channel = Channel(credentials=NoCredentials(), event_loop=loop)
     started = Event()
     finalized = Event()
+    finalizer_steps: list[int] = []
 
     async def pending() -> None:
         started.set()
         try:
             await asyncio.Event().wait()
         finally:
-            await asyncio.sleep(0)
+            for step in range(3):
+                await asyncio.sleep(0)
+                finalizer_steps.append(step)
             finalized.set()
 
     submitted = channel.run_async(pending())
@@ -353,6 +356,35 @@ def test_supplied_loop_close_cancels_and_drains_submissions() -> None:
         assert started.wait(timeout=5)
         channel.sync_close(timeout=5)
         assert submitted.cancelled()
+        assert finalized.wait(timeout=5)
+        assert finalizer_steps == [0, 1, 2]
+        assert loop.is_running()
+    finally:
+        _stop_loop(loop, thread)
+
+
+def test_close_does_not_recancel_a_task_already_in_its_finalizer() -> None:
+    loop, thread = _start_loop()
+    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    started = Event()
+    finalizer_started = Event()
+    finalized = Event()
+
+    async def pending() -> None:
+        started.set()
+        try:
+            await asyncio.Event().wait()
+        finally:
+            finalizer_started.set()
+            await asyncio.sleep(0.05)
+            finalized.set()
+
+    submitted = channel.run_async(pending())
+    try:
+        assert started.wait(timeout=5)
+        assert submitted.cancel()
+        assert finalizer_started.wait(timeout=5)
+        channel.sync_close(timeout=5)
         assert finalized.wait(timeout=5)
         assert loop.is_running()
     finally:
@@ -387,6 +419,44 @@ def test_internal_close_stops_continuation_on_its_next_await() -> None:
         submitted.result(timeout=5)
     assert close_returned.wait(timeout=5)
     assert finalized.wait(timeout=5)
+
+
+def test_internal_close_does_not_recancel_an_externally_cancelled_finalizer() -> None:
+    class BlockingGraceful:
+        def __init__(self) -> None:
+            self.started = Event()
+            self.release = Event()
+
+        async def close(self, grace: float | None = None) -> None:
+            self.started.set()
+            while not self.release.is_set():
+                await asyncio.sleep(0)
+
+    channel = Channel(credentials=NoCredentials())
+    graceful = BlockingGraceful()
+    channel._gracefuls.add(graceful)
+    finalizer_started = Event()
+    finalized = Event()
+
+    async def close_then_finalize() -> None:
+        try:
+            await channel.close()
+        finally:
+            finalizer_started.set()
+            await asyncio.sleep(0.05)
+            finalized.set()
+
+    submitted = channel.run_async(close_then_finalize())
+    try:
+        assert graceful.started.wait(timeout=5)
+        assert submitted.cancel()
+        assert finalizer_started.wait(timeout=5)
+        graceful.release.set()
+        channel._runtime._shutdown_complete.result(timeout=5)
+        assert finalized.wait(timeout=5)
+    finally:
+        graceful.release.set()
+        channel._runtime.shutdown_async().result(timeout=5)
 
 
 def test_run_sync_preserves_runtime_error_from_awaitable() -> None:
