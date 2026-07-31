@@ -15,7 +15,6 @@ from asyncio import (
     wait,
 )
 from collections.abc import AsyncIterator, Awaitable, Callable, Generator
-from contextlib import suppress
 from logging import getLogger
 from threading import Lock as ThreadLock
 from typing import Any, Generic, TypeVar, cast
@@ -442,8 +441,15 @@ class StreamRequest(Generic[Req, Res]):
                 yield response
         finally:
             if not self._is_released():
-                with suppress(Exception):
+                # Import locally to keep the streaming wrapper independent of
+                # the concrete Channel module during module initialization.
+                from nebius.aio.channel import ChannelClosedError
+
+                try:
                     await submit(self._aclose())
+                except ChannelClosedError:
+                    # Channel shutdown already owns every snapshotted lease.
+                    pass
 
     async def _responses_internal(self) -> AsyncIterator[Res]:
         """Yield streaming responses directly on the call owner loop."""

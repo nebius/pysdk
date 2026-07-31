@@ -2209,9 +2209,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         if method_name not in self._methods:
             service_name = service_from_method_name(method_name)
-            self._methods[method_name] = self._get_addr_from_service_name_internal(
-                service_name
-            )
+            # Keep the established subclass customization point. This method
+            # runs on the SDK loop, so the base implementation does not need
+            # another cross-loop dispatch.
+            self._methods[method_name] = self.get_addr_from_service_name(service_name)
         return self._methods[method_name]
 
     def get_addr_by_route(self, route: Route) -> str:
@@ -2262,7 +2263,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             for find, replace in self._route_substitutions.items():
                 address = address.replace(find, replace)
         if address is None:
-            address = self._get_addr_from_service_name_internal(route.service)
+            # Route fallback has always honored public resolver overrides.
+            # The base method recognizes the SDK loop and resolves inline.
+            address = self.get_addr_from_service_name(route.service)
         self._routes[key] = address
         return address
 

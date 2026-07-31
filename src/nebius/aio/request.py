@@ -419,11 +419,18 @@ class Request(Generic[Req, Res]):
             )
 
     def cancel(self) -> bool:
-        """Cancel the request; returns True when the request is marked
-        cancelled.
+        """Request cancellation and report whether the intent was accepted.
 
         If the gRPC call exists, cancel that call. Otherwise, set a local flag
         to prevent the request from sending the call.
+
+        A native attempt can finish immediately before its SDK-loop wrapper
+        classifies the result. In that narrow interval this method returns
+        ``True`` because it accepted the cancellation intent, but an already
+        authoritative success still wins. The request then completes
+        successfully and :meth:`cancelled` returns ``False``. Thus the return
+        value describes acceptance at call time, not a guarantee about the
+        request's eventual terminal state.
         """
         self._check_process()
         with self._future_lock:

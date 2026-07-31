@@ -1124,6 +1124,70 @@ def test_failed_stream_release_can_be_retried() -> None:
     assert successful_releases == 1
 
 
+@pytest.mark.asyncio
+async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable() -> (
+    None
+):
+    """Implicit iterator cleanup must not hide an unexpected release error."""
+
+    release_calls = 0
+
+    class Call:
+        def __aiter__(self):
+            async def responses():
+                yield object()
+                await asyncio.Event().wait()
+
+            return responses()
+
+        def cancel(self) -> bool:
+            return True
+
+    class Result:
+        @classmethod
+        def FromString(cls, data):  # noqa: N802
+            return cls()
+
+    class Transport:
+        def unary_stream(self, *args, **kwargs):
+            return lambda *call_args, **call_kwargs: Call()
+
+    class Address:
+        channel = Transport()
+
+    class Channel:
+        def get_channel_by_route(self, route):
+            return Address()
+
+        def run_async(self, awaitable):
+            return awaitable
+
+        def release_channel(self, address, *, discard=False) -> None:
+            nonlocal release_calls
+            release_calls += 1
+            if release_calls == 1:
+                raise RuntimeError("release failed")
+
+    stream = StreamRequest(
+        channel=Channel(),
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=Result,
+        client_streaming=False,
+        server_streaming=True,
+    )
+    responses = stream.__aiter__()
+    await anext(responses)
+
+    with pytest.raises(RuntimeError, match="release failed"):
+        await responses.aclose()
+    assert not stream._released
+
+    await stream.aclose()
+    assert stream._released
+    assert release_calls == 2
+
+
 def test_failed_async_stream_cancel_release_can_be_retried() -> None:
     """A scheduled cancellation observes cleanup failure and permits retry."""
 
