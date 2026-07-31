@@ -2017,17 +2017,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     awaits.append(self._close_address_channel(chan, grace))
                 for graceful in gracefuls:
                     awaits.append(graceful.close(grace))
-                with self._tasks_lock:
-                    transport_closes = list(self._transport_closes.values())
-                transport_tasks = [
-                    wrap_future(completion) for _, completion in transport_closes
-                ]
                 for task in tasks:
                     task.cancel()
                 rets = await gather(
                     *awaits,
                     *tasks,
-                    *transport_tasks,
                     return_exceptions=True,
                 )
                 for ret in rets:
@@ -2039,18 +2033,35 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                             f"Error while graceful shutdown: {ret}",
                             exc_info=ret,
                         )
+                with self._channel_pool_lock:
+                    for channel_id, address_channel in channels.items():
+                        if self._leased_channels.get(channel_id) is address_channel:
+                            self._leased_channels.pop(channel_id, None)
+                # A request finalizer can publish a transport close after the
+                # main cleanup snapshot. Drain registrations until the set is
+                # empty, and publish completion under the same lock used to
+                # register them. A later registration is then unambiguously a
+                # post-close best-effort cleanup.
+                while True:
+                    with self._tasks_lock:
+                        transport_tasks = [
+                            wrap_future(transport_completion)
+                            for _, transport_completion in (
+                                self._transport_closes.values()
+                            )
+                            if not transport_completion.done()
+                        ]
+                        if not transport_tasks:
+                            completion.set_result(None)
+                            break
+                    await gather(*transport_tasks, return_exceptions=True)
             except BaseException as error:
                 with self._channel_pool_lock:
                     for channel_id, address_channel in channels.items():
                         if self._leased_channels.get(channel_id) is address_channel:
                             self._leased_channels.pop(channel_id, None)
-                completion.set_exception(error)
-            else:
-                with self._channel_pool_lock:
-                    for channel_id, address_channel in channels.items():
-                        if self._leased_channels.get(channel_id) is address_channel:
-                            self._leased_channels.pop(channel_id, None)
-                completion.set_result(None)
+                with self._tasks_lock:
+                    completion.set_exception(error)
 
         self._close_task = create_task(cleanup(), name="Channel.close cleanup")
         await shield(wrap_future(completion))
@@ -2669,13 +2680,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             except RuntimeError:
                 current_loop = None
             fallback = close_and_log()
-            if (
-                owner_loop is not None
-                and owner_loop is not current_loop
-                and owner_loop.is_running()
-            ):
+            fallback_loop = owner_loop or self._event_loop
+            if fallback_loop is not current_loop and fallback_loop.is_running():
                 try:
-                    run_coroutine_threadsafe(fallback, owner_loop)
+                    run_coroutine_threadsafe(fallback, fallback_loop)
                     return
                 except RuntimeError:
                     fallback.close()

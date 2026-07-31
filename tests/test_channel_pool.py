@@ -555,6 +555,78 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
     assert close_calls == [None]
 
 
+@pytest.mark.parametrize("borrowed_loop", [False, True])
+def test_close_drains_transport_registered_after_cleanup_snapshot(
+    borrowed_loop: bool,
+) -> None:
+    """Close completion includes transport closes published during cleanup."""
+
+    supplied_loop: asyncio.AbstractEventLoop | None = None
+    supplied_thread: Thread | None = None
+    if borrowed_loop:
+        supplied_loop, supplied_thread = _start_event_loop()
+    channel = Channel(credentials=NoCredentials(), event_loop=supplied_loop)
+    graceful_started = Event()
+    release_graceful = Event()
+    graceful_finished = Event()
+    transport_started = Event()
+    release_transport = Event()
+    close_calls = 0
+    errors: list[BaseException] = []
+
+    class Graceful:
+        async def close(self, grace: float | None = None) -> None:
+            graceful_started.set()
+            while not release_graceful.is_set():
+                await asyncio.sleep(0.001)
+            graceful_finished.set()
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            nonlocal close_calls
+            close_calls += 1
+            transport_started.set()
+            while not release_transport.is_set():
+                await asyncio.sleep(0.001)
+
+    channel._gracefuls.add(Graceful())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "late-close.example:443",
+        channel._event_loop,
+    )
+
+    def close() -> None:
+        try:
+            channel.sync_close(timeout=5)
+        except BaseException as error:
+            errors.append(error)
+
+    closer = Thread(target=close)
+    closer.start()
+    try:
+        assert graceful_started.wait(timeout=5)
+        channel._schedule_address_channel_close(address, None)
+        assert transport_started.wait(timeout=5)
+        release_graceful.set()
+        assert graceful_finished.wait(timeout=5)
+        assert closer.is_alive()
+        release_transport.set()
+        closer.join(timeout=5)
+        assert not closer.is_alive()
+        assert errors == []
+        assert close_calls == 1
+        assert address._is_closed_by_sdk()
+        with channel._tasks_lock:
+            assert channel._transport_closes == {}
+    finally:
+        release_graceful.set()
+        release_transport.set()
+        closer.join(timeout=5)
+        if supplied_loop is not None and supplied_thread is not None:
+            _stop_event_loop(supplied_loop, supplied_thread)
+
+
 def test_release_between_close_boundary_and_snapshot_closes_lease_once(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

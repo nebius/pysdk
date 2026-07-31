@@ -2219,6 +2219,26 @@ def test_run_sync_translates_expired_wait_and_cancels_work() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_run_sync_keeps_deadline_classification_during_completion_race() -> None:
+    """Completion after a wait expires cannot impersonate an application error."""
+
+    channel = Channel(credentials=NoCredentials())
+    future: Future[int] = Future()
+
+    class DeadlineRace(CrossLoopAwaitable[int]):
+        def _result(self, timeout: float | None = None) -> int:
+            future.set_result(42)
+            raise TimeoutError
+
+    handle = DeadlineRace(future, channel._event_loop)
+    try:
+        with pytest.raises(TimeoutError, match="Awaitable timed out"):
+            channel.run_sync(handle, timeout=0.01)
+        assert handle.result() == 42
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_constructor_config_metrics_run_on_internal_loop_and_are_drained(
     tmp_path: Path,
 ) -> None:

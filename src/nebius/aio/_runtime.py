@@ -24,6 +24,9 @@ import os
 import weakref
 from collections.abc import Awaitable, Callable, Generator
 from concurrent.futures import (
+    CancelledError as FutureCancelledError,
+)
+from concurrent.futures import (
     Future,
     InvalidStateError,
     ThreadPoolExecutor,
@@ -1217,15 +1220,20 @@ class AsyncRuntime:
         )
         try:
             return cast(CrossLoopAwaitable[T], submitted)._result(timeout)
-        except FutureTimeoutError:
+        except FutureTimeoutError as error:
             submitted_handle = cast(CrossLoopAwaitable[T], submitted)
             # Future.result() raises the same built-in TimeoutError both when
             # its wait expires and when completed work raised TimeoutError.
-            # A finished handle identifies the latter and preserves the
-            # application's original exception instead of rewriting it as an
-            # SDK wait timeout.
+            # Completion can race the wait deadline, so terminal state alone
+            # is insufficient. Only the identical stored exception proves
+            # that the application raised the error we caught.
             if submitted_handle.done():
-                raise
+                try:
+                    terminal_error = submitted_handle.exception(timeout=0)
+                except FutureCancelledError:
+                    terminal_error = None
+                if terminal_error is error:
+                    raise
             submitted_handle.cancel()
             raise TimeoutError("Awaitable timed out") from None
 
