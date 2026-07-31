@@ -2228,7 +2228,7 @@ def test_run_sync_keeps_deadline_classification_during_completion_race() -> None
     class DeadlineRace(CrossLoopAwaitable[int]):
         def _result(self, timeout: float | None = None) -> int:
             future.set_result(42)
-            raise TimeoutError
+            raise runtime_module.FutureTimeoutError
 
     handle = DeadlineRace(future, channel._event_loop)
     try:
