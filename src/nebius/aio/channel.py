@@ -27,6 +27,7 @@ from asyncio import (
     wait_for,
     wrap_future,
 )
+from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Awaitable, Callable, Coroutine, Generator, Mapping, Sequence
 from concurrent.futures import CancelledError as ConcurrentCancelledError
 from concurrent.futures import Future as ConcurrentFuture
@@ -1597,7 +1598,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         waiter = ensure_future(submitted)
         try:
             return await wait_for(waiter, timeout=remaining)
-        except TimeoutError as error:
+        except (TimeoutError, AsyncTimeoutError) as error:
             if waiter.done() and not waiter.cancelled():
                 terminal_error = waiter.exception()
                 if terminal_error is error:
@@ -1711,12 +1712,26 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """
 
         self._check_process(awaitable)
+        failure: BaseException | None = None
+        rejection: ChannelClosedError | None = None
         with self._channel_pool_lock:
             if self._closed:
                 rejection = ChannelClosedError("Channel is closed")
             else:
-                return self._runtime.submit(awaitable)
+                # Keep channel-close admission atomic with runtime admission,
+                # but defer caller-controlled disposal until this lock is no
+                # longer held. Self-submission rejection owns an existing
+                # handle and therefore must not dispose it at all.
+                self._runtime._reject_self_submission(awaitable)
+                try:
+                    return self._runtime._submit_without_disposal(awaitable)
+                except BaseException as error:
+                    failure = error
         dispose_unstarted_awaitable(awaitable)
+        if failure is not None:
+            raise failure
+        if rejection is None:  # pragma: no cover - admission is exhaustive
+            raise RuntimeError("SDK submission failed without a reason")
         raise rejection
 
     def _run_sdk_callable(

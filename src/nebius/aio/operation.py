@@ -460,7 +460,7 @@ class Operation(Generic[OperationPb]):
         waiter = ensure_future(submitted)
         try:
             await wait_for(waiter, timeout=remaining)
-        except TimeoutError as error:
+        except (TimeoutError, AsyncTimeoutError) as error:
             if waiter.done() and not waiter.cancelled():
                 terminal_error = waiter.exception()
                 if terminal_error is error:

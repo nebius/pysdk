@@ -15,6 +15,7 @@ from asyncio import (
     wait,
     wait_for,
 )
+from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import AsyncIterator, Awaitable, Callable, Generator
 from logging import getLogger
 from threading import Lock as ThreadLock
@@ -447,7 +448,7 @@ class StreamRequest(Generic[Req, Res]):
             waiter = ensure_future(operation)
             try:
                 return cast(T, await wait_for(waiter, timeout=remaining))
-            except TimeoutError as error:
+            except (TimeoutError, AsyncTimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
                     terminal_error = waiter.exception()
                     if terminal_error is error:

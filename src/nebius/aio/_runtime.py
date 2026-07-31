@@ -823,6 +823,26 @@ class AsyncRuntime:
                 "an SDK runtime cannot be used after fork; construct SDK "
                 "objects only after the child process starts"
             )
+        self._reject_self_submission(awaitable)
+        try:
+            return self._submit_without_disposal(awaitable, track=track)
+        except BaseException:
+            # Custom close/cancellation hooks can re-enter SDK lifecycle APIs.
+            # Run them only after the runtime admission lock is released.
+            dispose_unstarted_awaitable(awaitable)
+            raise
+
+    def _reject_self_submission(self, awaitable: Awaitable[object]) -> None:
+        """Reject a handle that would indirectly await its own submission.
+
+        Rejection deliberately does not dispose the handle: it represents the
+        currently running submission rather than new, unowned work.
+
+        :param awaitable: Candidate SDK work.
+        :raises RuntimeError: If the current submission resubmits its own
+            pending handle.
+        """
+
         binding = _current_submission.get()
         if (
             isinstance(awaitable, CrossLoopAwaitable)
@@ -836,6 +856,25 @@ class AsyncRuntime:
             # awaited the parent. Keep ownership with the running submission
             # and reject without cancelling or disposing its handle.
             raise RuntimeError("SDK work cannot submit its own submission handle")
+
+    def _submit_without_disposal(
+        self,
+        awaitable: Awaitable[T],
+        *,
+        track: bool = True,
+    ) -> CrossLoopAwaitable[T]:
+        """Admit SDK work without invoking caller cleanup hooks on failure.
+
+        Callers use this primitive while they hold a lifecycle admission lock.
+        They must dispose rejected work after releasing that lock. Process and
+        self-submission validation must already be complete.
+
+        :param awaitable: Work to schedule.
+        :param track: Track the submission for normal close cancellation.
+        :return: Cross-loop awaitable for the result.
+        :raises RuntimeError: If the runtime is closing or its loop stopped.
+        """
+
         rejection: RuntimeError | None = None
         with self._shutdown_lock:
             if self._shutdown or not self._accepting:
@@ -859,7 +898,6 @@ class AsyncRuntime:
             if rejection is None and track:
                 self._track_submission(submitted)
         if rejection is not None:
-            dispose_unstarted_awaitable(awaitable)
             raise rejection
         return submitted
 
@@ -902,7 +940,6 @@ class AsyncRuntime:
             future = asyncio.run_coroutine_threadsafe(runner, self._loop)
         except BaseException:
             runner.close()
-            dispose_unstarted_awaitable(awaitable)
             raise
         submitted = CrossLoopAwaitable._for_runtime(
             future,

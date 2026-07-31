@@ -18,6 +18,7 @@ that do not affect behavior.
 
 import os
 from asyncio import CancelledError, ensure_future, get_running_loop, shield, wait_for
+from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from logging import getLogger
@@ -609,7 +610,7 @@ class Request(Generic[Req, Res]):
         if callable(add_done_callback):
             add_done_callback(self._mark_native_attempt_terminal)
 
-    def _mark_native_attempt_terminal(self, _: object) -> None:
+    def _mark_native_attempt_terminal(self, completed: object) -> None:
         """Publish native attempt completion before its awaiter resumes.
 
         The SDK loop still has to classify a terminal attempt as success,
@@ -619,7 +620,7 @@ class Request(Generic[Req, Res]):
         """
 
         with self._future_lock:
-            if not self._native_terminal:
+            if completed is self._call and not self._native_terminal:
                 self._native_attempt_terminal = True
 
     def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
@@ -1407,7 +1408,7 @@ class Request(Generic[Req, Res]):
             waiter = ensure_future(wait_shared())
             try:
                 return await wait_for(waiter, timeout=remaining)
-            except TimeoutError as error:
+            except (TimeoutError, AsyncTimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
                     terminal_error = waiter.exception()
                     if terminal_error is error:

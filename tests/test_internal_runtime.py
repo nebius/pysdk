@@ -1317,6 +1317,46 @@ def test_runtime_rejects_resubmitting_current_handle() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_submission_failure_disposes_reentrant_awaitable_outside_locks(
+    monkeypatch,
+) -> None:
+    """A custom close hook may safely re-enter channel state on rejection."""
+
+    channel = Channel(credentials=NoCredentials())
+    original_submit = runtime_module.asyncio.run_coroutine_threadsafe
+    closed: list[grpc.ChannelConnectivity] = []
+
+    class ReentrantAwaitable:
+        def __await__(self):
+            async def result() -> None:
+                return None
+
+            return result().__await__()
+
+        def close(self) -> None:
+            closed.append(channel.get_state())
+
+    def reject_dispatch(*args, **kwargs):
+        raise RuntimeError("dispatch failed")
+
+    monkeypatch.setattr(
+        runtime_module.asyncio,
+        "run_coroutine_threadsafe",
+        reject_dispatch,
+    )
+    try:
+        with pytest.raises(RuntimeError, match="dispatch failed"):
+            channel.run_async(ReentrantAwaitable())  # type: ignore[arg-type]
+        assert closed == [grpc.ChannelConnectivity.READY]
+    finally:
+        monkeypatch.setattr(
+            runtime_module.asyncio,
+            "run_coroutine_threadsafe",
+            original_submit,
+        )
+        channel.sync_close(timeout=5)
+
+
 def test_context_submission_binding_isolated_for_sdks_sharing_loop() -> None:
     """Nested and concurrent SDK tasks keep runtime-specific ContextVars."""
 
@@ -3169,6 +3209,31 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
             accessor.join(timeout=5)
         if not close_done.is_set():
             channel.sync_close(timeout=5)
+
+
+def test_generated_request_ignores_stale_attempt_completion_callback() -> None:
+    """A delayed old callback cannot suppress current-attempt cancellation."""
+
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="stale-attempt-callback"),
+        Disk,
+    )
+    old_call = object()
+    current_call = object()
+    current_submission: Future[Disk] = Future()
+    request._call = current_call  # type: ignore[assignment]
+    request._future = current_submission
+    try:
+        request._mark_native_attempt_terminal(old_call)
+        assert not request._native_attempt_terminal
+        assert request.cancel()
+        assert current_submission.cancelled()
+    finally:
+        channel.sync_close(timeout=5)
 
 
 def test_generated_request_rejects_cancel_after_native_success() -> None:
