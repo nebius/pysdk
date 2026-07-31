@@ -141,9 +141,19 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
             work_item = self._work_queue.get()
             if work_item is None:
                 return
-            work_item.run()
-            del work_item
-            self._idle_semaphore.release()
+            try:
+                work_item.run()
+            except BaseException as error:
+                # Concurrent Future callbacks run inline when a work item
+                # publishes its result. One callback must not permanently
+                # remove a daemon worker from this bounded executor.
+                logger.critical(
+                    "Unhandled exception in SDK executor completion callback",
+                    exc_info=error,
+                )
+            finally:
+                del work_item
+                self._idle_semaphore.release()
 
     def submit(
         self,

@@ -23,7 +23,7 @@ from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from logging import getLogger
 from sys import exc_info
 from threading import RLock
-from time import time
+from time import monotonic, time
 from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
 from google.protobuf.message import Message as ProviderMessage
@@ -165,13 +165,15 @@ class Request(Generic[Req, Res]):
         or list of ``(str, str)`` tuples.
 
     :param timeout: Overall timeout (seconds) applied to the request execution
-        portion. Or `None` for infinite timeout.
+        portion, including dispatch to the SDK loop. Or `None` for infinite
+        timeout.
         Default is :data:`DEFAULT_TIMEOUT`.
     :type timeout: optional `float` or `None`
 
     :param auth_timeout: Timeout budget (seconds) reserved for authorization
-        flows plus the request execution. When provided the total authorization
-        + request time will not exceed this value.
+        flows plus SDK-loop dispatch and request execution. When provided the
+        total dispatch + authorization + request time will not exceed this
+        value.
         Default is :data:`DEFAULT_AUTH_TIMEOUT`.
         Provide `None` for infinite timeout.
     :type auth_timeout: optional `float` or `None`
@@ -353,6 +355,9 @@ class Request(Generic[Req, Res]):
         self._retry_decision_pending = False
         self._native_attempt_terminal = False
         self._cancel_after_terminal_attempt = False
+        self._request_deadline: float | None = None
+        self._authorization_deadline: float | None = None
+        self._submission_deadline: float | None = None
 
     def _check_process(self) -> None:
         """Reject a request inherited by a child process before locking."""
@@ -1001,9 +1006,9 @@ class Request(Generic[Req, Res]):
 
         self._start_time = time()
         # Compute this loop's absolute deadline, capped by an outer deadline if provided
-        own_deadline = (
-            None if self._timeout is None else self._start_time + self._timeout
-        )
+        own_deadline = self._request_deadline
+        if own_deadline is None and self._timeout is not None:
+            own_deadline = self._start_time + self._timeout
         if outer_deadline is None:
             deadline = own_deadline
         elif own_deadline is None:
@@ -1014,6 +1019,8 @@ class Request(Generic[Req, Res]):
         while not self._cancelled:
             attempt += 1
             timeout = None if deadline is None else deadline - time()
+            if timeout is not None and timeout <= 0:
+                raise TimeoutError("request timed out before RPC dispatch")
 
             if self._per_retry_timeout is not None and (
                 timeout is None or timeout > self._per_retry_timeout
@@ -1242,8 +1249,9 @@ class Request(Generic[Req, Res]):
         if provider is None or auth_type == Types.DISABLE:
             return await self._retry_loop()
 
-        start = time()
-        deadline = None if self._auth_timeout is None else start + self._auth_timeout
+        deadline = self._authorization_deadline
+        if deadline is None and self._auth_timeout is not None:
+            deadline = time() + self._auth_timeout
         auth = provider.authenticator()
 
         while True:
@@ -1338,6 +1346,28 @@ class Request(Generic[Req, Res]):
             if self._future is None:
                 self._input_metadata = Metadata(self._input_metadata)
                 self._auth_options = dict(self._auth_options)
+                submitted_wall = time()
+                submitted_monotonic = monotonic()
+                self._request_deadline = (
+                    None
+                    if self._timeout is None
+                    else submitted_wall + max(self._timeout, 0)
+                )
+                self._authorization_deadline = (
+                    None
+                    if self._auth_timeout is None
+                    else submitted_wall + max(self._auth_timeout, 0)
+                )
+                deadline_limits = [
+                    value
+                    for value in (self._timeout, self._auth_timeout)
+                    if value is not None
+                ]
+                self._submission_deadline = (
+                    None
+                    if not deadline_limits
+                    else submitted_monotonic + max(min(deadline_limits), 0)
+                )
                 coroutine = self._request_with_authorization_loop()
                 submit = getattr(self._channel, "run_async", None)
                 candidate = submit(coroutine) if callable(submit) else coroutine
@@ -1356,11 +1386,35 @@ class Request(Generic[Req, Res]):
         """Await the request's shared submission and return its result."""
 
         future = self._ensure_submitted()
-        try:
+
+        async def wait_shared() -> Res:
+            """Wait without propagating one waiter cancellation directly."""
+
             shielded_wait = getattr(future, "_wait_shielded", None)
             if callable(shielded_wait):
                 return cast(Res, await shielded_wait())
-            return await shield(future)
+            return cast(Res, await shield(future))
+
+        try:
+            done = getattr(future, "done", None)
+            already_done = bool(done()) if callable(done) else False
+            deadline = self._submission_deadline
+            if deadline is None or already_done:
+                return await wait_shared()
+            remaining = deadline - monotonic()
+            if remaining <= 0:
+                self.cancel()
+                raise TimeoutError("Request timed out before SDK-loop dispatch")
+            waiter = ensure_future(wait_shared())
+            try:
+                return await wait_for(waiter, timeout=remaining)
+            except TimeoutError as error:
+                if waiter.done() and not waiter.cancelled():
+                    terminal_error = waiter.exception()
+                    if terminal_error is error:
+                        raise
+                self.cancel()
+                raise TimeoutError("Request timed out") from None
         except CancelledError:
             # Shield prevents asyncio from cancelling the shared future
             # directly. Route propagation through the request state machine,

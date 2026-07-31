@@ -13,16 +13,18 @@ from asyncio import (
     get_running_loop,
     shield,
     wait,
+    wait_for,
 )
 from collections.abc import AsyncIterator, Awaitable, Callable, Generator
 from logging import getLogger
 from threading import Lock as ThreadLock
+from time import monotonic
 from typing import Any, Generic, TypeVar, cast
 
 from grpc import CallCredentials, ChannelConnectivity, Compression
 from grpc.aio import Metadata as GrpcMetadata
 
-from nebius.aio._task_context import bridge_awaitable
+from nebius.aio._task_context import bridge_awaitable, dispose_unstarted_awaitable
 from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.base import AddressChannel
@@ -59,6 +61,10 @@ class StreamRequest(Generic[Req, Res]):
     wrapper is created. Each explicit :meth:`write` copies a supported message
     before dispatch to the SDK loop. Unknown custom values keep their previous
     pass-through behavior and must be safe to share between threads.
+
+    Timeout budgets start with the first stream operation. They include time
+    waiting for SDK-loop dispatch, authentication, and the native RPC rather
+    than starting only after a queued operation reaches the internal loop.
     """
 
     def __init__(
@@ -117,6 +123,9 @@ class StreamRequest(Generic[Req, Res]):
         self._native_terminal = False
         self._released = False
         self._owner_loop: Any = None
+        self._deadlines_started = False
+        self._request_deadline: float | None = None
+        self._authorization_deadline: float | None = None
         self._process_id = os.getpid()
 
     def _check_process(self) -> None:
@@ -140,12 +149,15 @@ class StreamRequest(Generic[Req, Res]):
         provider = provider_getter() if callable(provider_getter) else None
         if provider is None or self._auth_options.get(OPTION_TYPE) == Types.DISABLE:
             return
+        timeout = self._remaining_deadline()
+        if timeout is not None and timeout <= 0:
+            raise TimeoutError("stream authorization timed out before dispatch")
         auth = provider.authenticator()
         authenticating = ensure_future(
             bridge_awaitable(
                 auth.authenticate(
                     self._metadata,
-                    self._auth_timeout,
+                    timeout,
                     self._auth_options,
                 )
             )
@@ -154,7 +166,7 @@ class StreamRequest(Generic[Req, Res]):
         try:
             done, _ = await wait(
                 (authenticating, cancelled),
-                timeout=self._auth_timeout,
+                timeout=timeout,
                 return_when=FIRST_COMPLETED,
             )
         except BaseException:
@@ -259,9 +271,12 @@ class StreamRequest(Generic[Req, Res]):
                 arguments: tuple[object, ...] = (
                     () if self._request is None else (self._request,)
                 )
+                timeout = self._remaining_deadline()
+                if timeout is not None and timeout <= 0:
+                    raise TimeoutError("stream timed out before RPC dispatch")
                 call = multi(
                     *arguments,
-                    timeout=self._timeout,
+                    timeout=timeout,
                     metadata=GrpcMetadata(*self._metadata),
                     credentials=self._credentials,
                     wait_for_ready=self._wait_for_ready,
@@ -358,41 +373,99 @@ class StreamRequest(Generic[Req, Res]):
         finally:
             self._release(discard=True)
 
-    async def _on_sdk_loop(self, awaitable: Awaitable[T]) -> T:
+    def _remaining_deadline(self, *, initialize: bool = False) -> float | None:
+        """Return the shared stream deadline remaining in seconds.
+
+        The first caller-side operation fixes monotonic request and
+        authorization deadlines under the state lock. Later operations reuse
+        those deadlines, so concurrent reads and writes cannot each obtain a
+        fresh budget and SDK-loop queueing is charged to the same native RPC
+        lifetime.
+
+        :param initialize: Start the deadlines when no prior stream operation
+            has done so. Cleanup calls leave this false because they must be
+            able to release transport state after a deadline expires.
+        :return: The smaller remaining request/authorization budget, or
+            ``None`` when both configured limits are infinite.
+        """
+
+        now = monotonic()
+        with self._state_lock:
+            if initialize and not self._deadlines_started:
+                self._deadlines_started = True
+                self._request_deadline = (
+                    None if self._timeout is None else now + max(self._timeout, 0)
+                )
+                self._authorization_deadline = (
+                    None
+                    if self._auth_timeout is None
+                    else now + max(self._auth_timeout, 0)
+                )
+            deadlines = [
+                deadline
+                for deadline in (self._request_deadline, self._authorization_deadline)
+                if deadline is not None
+            ]
+        return None if not deadlines else min(deadlines) - now
+
+    async def _on_sdk_loop(
+        self,
+        awaitable: Awaitable[T],
+        *,
+        enforce_deadline: bool = True,
+    ) -> T:
         """Run an awaitable on the SDK loop when the channel supports dispatch.
 
         :param awaitable: Stream work to run.
+        :param enforce_deadline: Apply the stream's caller-side deadline. Close
+            cleanup disables this limit so an expired stream can release its
+            transport.
         :return: Result of the stream work.
         """
 
         self._check_process()
+        remaining = self._remaining_deadline(initialize=enforce_deadline)
         submit = getattr(self._channel, "run_async", None)
         if callable(submit):
+            operation = submit(awaitable)
+        else:
+            current_loop = get_running_loop()
+            with self._state_lock:
+                if self._owner_loop is None:
+                    self._owner_loop = current_loop
+                elif self._owner_loop is not current_loop:
+                    dispose_unstarted_awaitable(awaitable)
+                    raise RuntimeError("stream work belongs to a different event loop")
+            operation = awaitable
+        try:
+            if remaining is None or not enforce_deadline:
+                return cast(T, await operation)
+            if remaining <= 0:
+                dispose_unstarted_awaitable(operation)
+                self.cancel()
+                raise TimeoutError("Stream timed out before SDK-loop dispatch")
+            waiter = ensure_future(operation)
             try:
-                return cast(T, await submit(awaitable))
-            except CancelledError:
-                # The runtime may cancel a queued submission before its
-                # wrapper coroutine starts. In that case the wrapper cannot
-                # reach its own abort/finally block, so establish cancellation
-                # and queue transport cleanup from the caller side.
-                try:
-                    self.cancel()
-                except BaseException as cleanup_error:
-                    logger.warning(
-                        "Failed to schedule stream cleanup after cancellation",
-                        exc_info=cleanup_error,
-                    )
-                raise
-        current_loop = get_running_loop()
-        with self._state_lock:
-            if self._owner_loop is None:
-                self._owner_loop = current_loop
-            elif self._owner_loop is not current_loop:
-                close = getattr(awaitable, "close", None)
-                if callable(close):
-                    close()
-                raise RuntimeError("stream work belongs to a different event loop")
-        return await awaitable
+                return cast(T, await wait_for(waiter, timeout=remaining))
+            except TimeoutError as error:
+                if waiter.done() and not waiter.cancelled():
+                    terminal_error = waiter.exception()
+                    if terminal_error is error:
+                        raise
+                self.cancel()
+                raise TimeoutError("Stream timed out") from None
+        except CancelledError:
+            # The runtime may cancel a queued submission before its wrapper
+            # coroutine starts. Establish cancellation and queue transport
+            # cleanup from the caller side in that case.
+            try:
+                self.cancel()
+            except BaseException as cleanup_error:
+                logger.warning(
+                    "Failed to schedule stream cleanup after cancellation",
+                    exc_info=cleanup_error,
+                )
+            raise
 
     async def _result(self) -> Res:
         if self._server_streaming:
@@ -429,13 +502,14 @@ class StreamRequest(Generic[Req, Res]):
             raise TypeError("stream-unary RPCs are awaitable, not async iterators")
         submit = getattr(self._channel, "run_async", None)
         if not callable(submit):
+            self._remaining_deadline(initialize=True)
             async for response in self._responses_internal():
                 yield response
             return
         try:
             while True:
                 try:
-                    response = await submit(self._next_response())
+                    response = await self._on_sdk_loop(self._next_response())
                 except StopAsyncIteration:
                     return
                 yield response
@@ -541,7 +615,7 @@ class StreamRequest(Generic[Req, Res]):
 
     async def aclose(self) -> None:
         """Cancel the native call and discard its address channel."""
-        await self._on_sdk_loop(self._aclose())
+        await self._on_sdk_loop(self._aclose(), enforce_deadline=False)
 
     async def _aclose(self) -> None:
         """Abort the native call and release its leased channel."""

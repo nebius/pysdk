@@ -254,6 +254,66 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
     assert discarded == [address]
 
 
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("timeout", "auth_timeout"),
+    ((0.05, 5), (5, 0.05)),
+    ids=("request-timeout", "authorization-timeout"),
+)
+async def test_stream_timeout_includes_sdk_loop_queueing(
+    timeout: float,
+    auth_timeout: float,
+) -> None:
+    """A queued stream operation expires before opening a native RPC."""
+
+    loop_blocked = Event()
+    release_loop = Event()
+    released = Event()
+    call_factory_used = Event()
+    channel = SDKChannel(credentials=NoCredentials())
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    class Transport:
+        def stream_unary(self, *args, **kwargs):
+            call_factory_used.set()
+            raise AssertionError("expired stream must not open a native RPC")
+
+    address = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": channel._event_loop},
+    )()
+    channel.release_channel = (  # type: ignore[method-assign]
+        lambda value, *, discard=False: released.set()
+    )
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        timeout=timeout,
+        auth_timeout=auth_timeout,
+        grpc_channel_override=address,  # type: ignore[arg-type]
+    )
+    try:
+        with pytest.raises(TimeoutError, match="Stream timed out"):
+            await stream.done_writing()
+        release_loop.set()
+        await blocker
+        assert await asyncio.to_thread(released.wait, 5)
+        assert not call_factory_used.is_set()
+    finally:
+        release_loop.set()
+        await channel.close()
+
+
 def test_legacy_constant_stream_cancel_runs_on_owner_loop() -> None:
     """Constant's one-shot fallback must not discard stream cancellation."""
 

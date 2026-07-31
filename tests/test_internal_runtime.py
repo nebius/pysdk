@@ -190,6 +190,37 @@ def test_executor_reuses_idle_worker_for_sequential_submissions() -> None:
         executor.shutdown(wait=True, cancel_futures=True)
 
 
+def test_executor_survives_base_exception_from_completion_callback() -> None:
+    """One hostile Future callback cannot remove bounded pool capacity."""
+
+    executor = DaemonThreadPoolExecutor(1, "nebius-test-worker-callback")
+    work_started = Event()
+    release_work = Event()
+    callback_ran = Event()
+
+    def first_work() -> int:
+        work_started.set()
+        release_work.wait(timeout=5)
+        return 1
+
+    def fail_callback(_: Future[int]) -> None:
+        callback_ran.set()
+        raise SystemExit("callback failed")
+
+    try:
+        first = executor.submit(first_work)
+        assert work_started.wait(timeout=5)
+        first.add_done_callback(fail_callback)
+        release_work.set()
+        assert first.result(timeout=5) == 1
+        assert callback_ran.wait(timeout=5)
+        assert executor.submit(lambda: 2).result(timeout=5) == 2
+        assert len(executor._threads) == 1
+    finally:
+        release_work.set()
+        executor.shutdown(wait=True, cancel_futures=True)
+
+
 def test_executor_registers_worker_before_it_can_consume_queued_work() -> None:
     """Every started worker is recognizable before it executes SDK work."""
 
@@ -1703,6 +1734,54 @@ def test_synchronous_request_timeout_cancels_before_delayed_start() -> None:
     finally:
         release_loop.set()
         channel.sync_close(timeout=5)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("timeout", "auth_timeout"),
+    ((0.05, 5), (5, 0.05)),
+    ids=("request-timeout", "authorization-timeout"),
+)
+async def test_async_request_timeout_includes_sdk_loop_queueing(
+    timeout: float,
+    auth_timeout: float,
+) -> None:
+    """An async deadline expires even while the SDK loop cannot dispatch."""
+
+    loop_blocked = Event()
+    release_loop = Event()
+    rpc_started = Event()
+    channel = Channel(credentials=NoCredentials())
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="async-timeout-before-start"),
+        Disk,
+        timeout=timeout,
+        auth_timeout=auth_timeout,
+    )
+    request._send = lambda timeout: rpc_started.set()  # type: ignore[method-assign]
+    started = monotonic()
+    try:
+        with pytest.raises(TimeoutError, match="Request timed out"):
+            await request
+        assert monotonic() - started < 0.5
+        release_loop.set()
+        await blocker
+        await asyncio.sleep(0.05)
+        assert not rpc_started.is_set()
+        assert request.cancelled()
+    finally:
+        release_loop.set()
+        await channel.close()
 
 
 @pytest.mark.asyncio

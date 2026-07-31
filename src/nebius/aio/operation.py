@@ -16,6 +16,7 @@ from asyncio import TimeoutError as AsyncTimeoutError
 from asyncio import sleep, wait_for
 from collections.abc import Sequence
 from datetime import datetime, timedelta
+from math import isfinite
 from threading import Lock
 from time import monotonic
 from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
@@ -516,7 +517,9 @@ class Operation(Generic[OperationPb]):
         reached. Certain transient errors (deadline exceeded) are treated as
         ignorable and will be retried.
 
-        :param interval: polling interval (seconds or timedelta)
+        :param interval: Positive, finite polling interval (seconds or
+            timedelta). This value is ignored when the operation is already
+            terminal.
         :type interval: `float` or `timedelta`
         :param timeout: overall timeout (seconds) for waiting, or `None` for
             infinite timeout, default infinite.
@@ -535,6 +538,8 @@ class Operation(Generic[OperationPb]):
             details.
 
         :raises TimeoutError: when the overall timeout is exceeded
+        :raises ValueError: when an unfinished operation receives a
+            non-positive or non-finite polling interval
         """
         self._check_process()
         # Preserve the historical terminal fast path. In particular,
@@ -542,6 +547,10 @@ class Operation(Generic[OperationPb]):
         # even when that coroutine would immediately observe terminal state.
         if self.done():
             return
+        if isinstance(interval, timedelta):
+            interval = interval.total_seconds()
+        if not isfinite(interval) or interval <= 0:
+            raise ValueError("interval must be a finite positive number of seconds")
         deadline = None if timeout is None else monotonic() + max(timeout, 0)
         submit = getattr(self._channel, "run_async", None)
         wait = self._wait_internal(

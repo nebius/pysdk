@@ -404,3 +404,33 @@ async def test_terminal_operation_wait_accepts_zero_timeout() -> None:
         await operation.wait(timeout=-1)
     finally:
         await channel.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("interval", [0, -1, float("nan"), float("inf")])
+async def test_unfinished_operation_rejects_invalid_poll_interval(
+    interval: float,
+) -> None:
+    """Invalid intervals fail before dispatching an operation-service RPC."""
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-invalid-interval"),
+    )
+
+    class Service:
+        def get(self, request, **kwargs):
+            raise AssertionError("invalid interval must fail before polling")
+
+    operation._service = Service()
+    try:
+        with pytest.raises(ValueError, match="finite positive"):
+            await operation.wait(interval=interval)
+    finally:
+        await channel.close()
