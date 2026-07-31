@@ -385,6 +385,159 @@ async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("timeout", "auth_timeout"),
+    ((0.05, 5), (5, 0.05)),
+    ids=("request-timeout", "authorization-timeout"),
+)
+async def test_operation_update_timeout_includes_sdk_loop_queueing(
+    timeout: float,
+    auth_timeout: float,
+) -> None:
+    """Direct update budgets expire before a late service request starts."""
+
+    from threading import Event
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-update-timeout"),
+    )
+    loop_blocked = Event()
+    release_loop = Event()
+    request_started = Event()
+
+    class Service:
+        def get(self, request, **kwargs):
+            request_started.set()
+            raise AssertionError("expired update must not issue an RPC")
+
+    operation._service = Service()
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    try:
+        with pytest.raises(TimeoutError, match="Operation update timed out"):
+            await operation.update(timeout=timeout, auth_timeout=auth_timeout)
+        release_loop.set()
+        await blocker
+        await asyncio.sleep(0.05)
+        assert not request_started.is_set()
+    finally:
+        release_loop.set()
+        await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_operation_update_snapshots_mutable_request_options() -> None:
+    """Queued update metadata and auth options retain submission values."""
+
+    from threading import Event
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.google.rpc import Status
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-update-snapshot"),
+    )
+    loop_blocked = Event()
+    release_loop = Event()
+    received: list[tuple[list[tuple[str, str]], dict[str, str]]] = []
+
+    class Response:
+        def __init__(self) -> None:
+            self._operation = OperationMessage(
+                id="op-update-snapshot",
+                status=Status(code=0),
+            )
+
+    class Service:
+        def get(self, request, **kwargs):
+            received.append((list(kwargs["metadata"]), dict(kwargs["auth_options"])))
+
+            async def result() -> Response:
+                return Response()
+
+            return result()
+
+    operation._service = Service()
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    metadata = [("x-scope", "before")]
+    auth_options = {"scope": "before"}
+    update = asyncio.create_task(
+        operation.update(
+            timeout=5,
+            auth_timeout=5,
+            metadata=metadata,
+            auth_options=auth_options,
+        )
+    )
+    await asyncio.sleep(0)
+    metadata[0] = ("x-scope", "after")
+    auth_options["scope"] = "after"
+    try:
+        release_loop.set()
+        await update
+        await blocker
+        assert received == [([("x-scope", "before")], {"scope": "before"})]
+    finally:
+        release_loop.set()
+        await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_operation_update_preserves_service_timeout_error() -> None:
+    """A service TimeoutError is not rewritten as caller deadline expiry."""
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-update-application-timeout"),
+    )
+    application_error = TimeoutError("service timeout")
+
+    class Service:
+        def get(self, request, **kwargs):
+            async def result():
+                raise application_error
+
+            return result()
+
+    operation._service = Service()
+    try:
+        with pytest.raises(TimeoutError, match="service timeout") as raised:
+            await operation.update(timeout=5, auth_timeout=5)
+        assert raised.value is application_error
+    finally:
+        await channel.close()
+
+
+@pytest.mark.asyncio
 async def test_terminal_operation_wait_accepts_zero_timeout() -> None:
     """A terminal operation returns before applying a zero timeout."""
 

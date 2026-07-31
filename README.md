@@ -622,7 +622,8 @@ await real_operation.wait()
 
 SDK requests have an internal retry layer and two request timeouts:
 
-- Overall request timeout: Limits the complete request, including all retries.
+- Overall request timeout: Limits the complete request, including SDK-loop
+  dispatch and all retries.
 - Per-retry timeout: Limits each retry attempt. If you do not set this value,
   it uses the overall request timeout.
 
@@ -642,10 +643,10 @@ have the `poll_` prefix.
 
 ###### Authentication timeout (auth_timeout)
 
-The independent `auth_timeout` value limits the complete authentication flow.
-Authentication includes token acquisition or renewal and can retry before and
-during the RPC. This timeout includes internal authentication retries and the
-request inside the authentication loop.
+The independent `auth_timeout` value limits SDK-loop dispatch and the complete
+authentication flow. Authentication includes token acquisition or renewal and
+can retry before and during the RPC. This timeout includes internal
+authentication retries and the request inside the authentication loop.
 
 - Default: 15 minutes (900 seconds)
 - Scope: The authentication loop and its request
@@ -666,8 +667,9 @@ response = await service.get(req, auth_timeout=300.0)  # 5 minutes
 
 Notes:
 
-- `auth_timeout` starts with the request. It limits the authorized request
-  `timeout`, which limits each `per_retry_timeout`.
+- `auth_timeout` starts when the request is submitted, before it waits for the
+  SDK loop. It limits the authorized request `timeout`, which limits each
+  `per_retry_timeout`.
 - Individual token-exchange attempts can have shorter deadlines.
   `auth_timeout` limits their total time.
 

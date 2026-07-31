@@ -24,6 +24,7 @@ from asyncio import (
     run_coroutine_threadsafe,
     shield,
     sleep,
+    wait_for,
     wrap_future,
 )
 from collections.abc import Awaitable, Callable, Coroutine, Generator, Mapping, Sequence
@@ -1572,9 +1573,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         configured. If no bearer was configured, the method raises
         :class:`SDKError`.
 
-        :param timeout: Maximum time in seconds to wait for a token. If
-            ``None`` the operation may block indefinitely according to the
-            bearer semantics.
+        :param timeout: Maximum time in seconds to wait for a token, including
+            dispatch to the SDK loop. If ``None`` the operation may block
+            indefinitely according to the bearer semantics.
         :type timeout: optional float
         :param options: Optional mapping of string options passed to the
             underlying token receiver.
@@ -1584,16 +1585,35 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises SDKError: If no token bearer was configured on the channel.
         """
 
-        return await self.run_async(self._get_token_internal(timeout, options))
+        options_snapshot = None if options is None else dict(options)
+        deadline = None if timeout is None else monotonic() + max(timeout, 0)
+        submitted = self.run_async(self._get_token_internal(deadline, options_snapshot))
+        if deadline is None or submitted.done():
+            return await submitted
+        remaining = deadline - monotonic()
+        if remaining <= 0:
+            submitted.cancel()
+            raise TimeoutError("Token fetch timed out before SDK-loop dispatch")
+        waiter = ensure_future(submitted)
+        try:
+            return await wait_for(waiter, timeout=remaining)
+        except TimeoutError as error:
+            if waiter.done() and not waiter.cancelled():
+                terminal_error = waiter.exception()
+                if terminal_error is error:
+                    raise
+            submitted.cancel()
+            raise TimeoutError("Token fetch timed out") from None
 
     async def _get_token_internal(
         self,
-        timeout: float | None,
+        deadline: float | None,
         options: dict[str, str] | None = None,
     ) -> Token:
         """Get a token on the SDK event loop.
 
-        :param timeout: Maximum wait time in seconds.
+        :param deadline: Absolute monotonic deadline that includes caller-side
+            SDK-loop dispatch, or ``None`` for no limit.
         :param options: Optional token receiver settings.
         :return: Authorization token.
         :raises SDKError: If the channel has no token bearer.
@@ -1601,6 +1621,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         if self._token_bearer is None:
             raise SDKError("Token bearer is not set")
+        timeout = None if deadline is None else deadline - monotonic()
+        if timeout is not None and timeout <= 0:
+            raise TimeoutError("Token fetch timed out before receiver dispatch")
         receiver = self._token_bearer.receiver()
         return await receiver.fetch(
             timeout=timeout,

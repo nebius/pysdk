@@ -33,6 +33,9 @@ from nebius.aio.operation import Operation
 from nebius.aio.request import Request
 from nebius.aio.stream import StreamRequest
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
+from nebius.aio.token.token import Bearer as TokenBearer
+from nebius.aio.token.token import Receiver as TokenReceiver
+from nebius.aio.token.token import Token
 from nebius.api.nebius.compute.v1 import (
     Disk,
     DiskServiceClient,
@@ -1781,6 +1784,115 @@ async def test_async_request_timeout_includes_sdk_loop_queueing(
         assert request.cancelled()
     finally:
         release_loop.set()
+        await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_token_timeout_includes_sdk_loop_queueing() -> None:
+    """A token deadline expires without starting a late receiver fetch."""
+
+    loop_blocked = Event()
+    release_loop = Event()
+    fetch_started = Event()
+
+    class Receiver(TokenReceiver):
+        async def _fetch(self, timeout=None, options=None):
+            fetch_started.set()
+            return Token("late-token")
+
+        def can_retry(self, err, options=None):
+            return False
+
+    class Bearer(TokenBearer):
+        def receiver(self):
+            return Receiver()
+
+    channel = Channel(credentials=Bearer())
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    try:
+        with pytest.raises(TimeoutError, match="Token fetch timed out"):
+            await channel.get_token(0.05)
+        release_loop.set()
+        await blocker
+        await asyncio.sleep(0.05)
+        assert not fetch_started.is_set()
+    finally:
+        release_loop.set()
+        await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_token_options_are_snapshotted_before_sdk_loop_dispatch() -> None:
+    """Caller mutation cannot change token options already submitted."""
+
+    loop_blocked = Event()
+    release_loop = Event()
+    received: list[dict[str, str] | None] = []
+
+    class Receiver(TokenReceiver):
+        async def _fetch(self, timeout=None, options=None):
+            received.append(options)
+            return Token("snapshot-token")
+
+        def can_retry(self, err, options=None):
+            return False
+
+    class Bearer(TokenBearer):
+        def receiver(self):
+            return Receiver()
+
+    channel = Channel(credentials=Bearer())
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    options = {"scope": "before"}
+    token_task = asyncio.create_task(channel.get_token(5, options))
+    await asyncio.sleep(0)
+    options["scope"] = "after"
+    try:
+        release_loop.set()
+        token = await token_task
+        await blocker
+        assert token.token == "snapshot-token"
+        assert received == [{"scope": "before"}]
+    finally:
+        release_loop.set()
+        await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_token_fetch_preserves_receiver_timeout_error() -> None:
+    """A receiver's own TimeoutError is not rewritten as dispatch expiry."""
+
+    application_error = TimeoutError("receiver timeout")
+
+    class Receiver(TokenReceiver):
+        async def _fetch(self, timeout=None, options=None):
+            raise application_error
+
+        def can_retry(self, err, options=None):
+            return False
+
+    class Bearer(TokenBearer):
+        def receiver(self):
+            return Receiver()
+
+    channel = Channel(credentials=Bearer())
+    try:
+        with pytest.raises(TimeoutError, match="receiver timeout") as raised:
+            await channel.get_token(5)
+        assert raised.value is application_error
+    finally:
         await channel.close()
 
 

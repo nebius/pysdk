@@ -23,7 +23,7 @@ from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from logging import getLogger
 from sys import exc_info
 from threading import RLock
-from time import monotonic, time
+from time import monotonic
 from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
 from google.protobuf.message import Message as ProviderMessage
@@ -991,7 +991,7 @@ class Request(Generic[Req, Res]):
         It returns the RPC result or raises the error that terminated the
         operation.
 
-        :param outer_deadline: optional absolute timestamp (time.time()) that
+        :param outer_deadline: optional absolute monotonic timestamp that
             caps the total time budget for this retry loop.
         :param defer_unauthenticated_release: Keep the active transport when an
             ``UNAUTHENTICATED`` error must be classified by the outer
@@ -1004,7 +1004,7 @@ class Request(Generic[Req, Res]):
         """
         from .service_error import RequestError, is_retriable_error
 
-        self._start_time = time()
+        self._start_time = monotonic()
         # Compute this loop's absolute deadline, capped by an outer deadline if provided
         own_deadline = self._request_deadline
         if own_deadline is None and self._timeout is not None:
@@ -1018,7 +1018,7 @@ class Request(Generic[Req, Res]):
         attempt = 0
         while not self._cancelled:
             attempt += 1
-            timeout = None if deadline is None else deadline - time()
+            timeout = None if deadline is None else deadline - monotonic()
             if timeout is not None and timeout <= 0:
                 raise TimeoutError("request timed out before RPC dispatch")
 
@@ -1028,7 +1028,7 @@ class Request(Generic[Req, Res]):
                 # Clip per-retry timeout by remaining overall deadline if present
                 per_attempt = self._per_retry_timeout
                 if deadline is not None:
-                    remaining = deadline - time()
+                    remaining = deadline - monotonic()
                     if remaining <= 0:
                         per_attempt = 0
                     else:
@@ -1067,7 +1067,7 @@ class Request(Generic[Req, Res]):
                         StatusCode.RESOURCE_EXHAUSTED,
                         StatusCode.UNAVAILABLE,
                     )
-                    retry_time_available = deadline is None or deadline > time()
+                    retry_time_available = deadline is None or deadline > monotonic()
                     could_retry = (
                         retry_time_available
                         and (
@@ -1102,7 +1102,7 @@ class Request(Generic[Req, Res]):
                     self._raise_request_error(e)
             except Exception as e:
                 retry = (
-                    (deadline is None or deadline > time())
+                    (deadline is None or deadline > monotonic())
                     and is_retriable_error(e, deadline_retriable=True)
                     and (self._retries is None or self._retries > attempt)
                 )
@@ -1151,7 +1151,7 @@ class Request(Generic[Req, Res]):
                         exc_info=exc_info(),
                     )
                     continue
-                if deadline is not None and deadline <= time():
+                if deadline is not None and deadline <= monotonic():
                     if isinstance(e, RequestError) and e.status.request_id == "":
                         self._release_grpc_channel(discard=True)
                         raise e
@@ -1251,11 +1251,11 @@ class Request(Generic[Req, Res]):
 
         deadline = self._authorization_deadline
         if deadline is None and self._auth_timeout is not None:
-            deadline = time() + self._auth_timeout
+            deadline = monotonic() + self._auth_timeout
         auth = provider.authenticator()
 
         while True:
-            timeout = None if deadline is None else (deadline - time())
+            timeout = None if deadline is None else (deadline - monotonic())
             if timeout is not None and timeout <= 0:
                 self._release_grpc_channel()
                 raise TimeoutError("authorization timed out")
@@ -1269,7 +1269,7 @@ class Request(Generic[Req, Res]):
             except Exception as e:  # noqa: BLE001
                 # If authentication itself failed (e.g., token refresh timeout),
                 # retry if authenticator allows and we are within deadline.
-                if deadline is not None and deadline <= time():
+                if deadline is not None and deadline <= monotonic():
                     self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
@@ -1310,7 +1310,7 @@ class Request(Generic[Req, Res]):
                     self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
-                if deadline is not None and deadline <= time():
+                if deadline is not None and deadline <= monotonic():
                     self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
@@ -1346,17 +1346,16 @@ class Request(Generic[Req, Res]):
             if self._future is None:
                 self._input_metadata = Metadata(self._input_metadata)
                 self._auth_options = dict(self._auth_options)
-                submitted_wall = time()
                 submitted_monotonic = monotonic()
                 self._request_deadline = (
                     None
                     if self._timeout is None
-                    else submitted_wall + max(self._timeout, 0)
+                    else submitted_monotonic + max(self._timeout, 0)
                 )
                 self._authorization_deadline = (
                     None
                     if self._auth_timeout is None
-                    else submitted_wall + max(self._auth_timeout, 0)
+                    else submitted_monotonic + max(self._auth_timeout, 0)
                 )
                 deadline_limits = [
                     value

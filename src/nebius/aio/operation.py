@@ -13,7 +13,7 @@ import importlib
 import os
 from asyncio import Lock as AsyncLock
 from asyncio import TimeoutError as AsyncTimeoutError
-from asyncio import sleep, wait_for
+from asyncio import ensure_future, sleep, wait_for
 from collections.abc import Sequence
 from datetime import datetime, timedelta
 from math import isfinite
@@ -25,9 +25,10 @@ from grpc import StatusCode
 from typing_extensions import Unpack
 
 from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.request import DEFAULT_TIMEOUT
+from nebius.aio.request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT
 from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
 from nebius.base.error import SDKError
+from nebius.base.metadata import Metadata
 from nebius.base.protos.unset import Unset, UnsetType
 from nebius.base.protos.well_known_direct import local_timezone
 
@@ -411,15 +412,69 @@ class Operation(Generic[OperationPb]):
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         """
         self._check_process()
+        if self.done():
+            return
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
+        timeout_option = kwargs.get("timeout", Unset)
+        timeout = (
+            DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
+        )
+        auth_timeout_option = kwargs.get("auth_timeout", Unset)
+        auth_timeout = (
+            DEFAULT_AUTH_TIMEOUT
+            if isinstance(auth_timeout_option, UnsetType)
+            else auth_timeout_option
+        )
+        submitted_at = monotonic()
+        request_deadline = None if timeout is None else submitted_at + max(timeout, 0)
+        authorization_deadline = (
+            None if auth_timeout is None else submitted_at + max(auth_timeout, 0)
+        )
         submit = getattr(self._channel, "run_async", None)
-        update = self._update_internal(**kwargs)
-        if callable(submit):
-            await submit(update)
-        else:
-            await update
+        update = self._update_internal(
+            request_deadline=request_deadline,
+            authorization_deadline=authorization_deadline,
+            **kwargs,
+        )
+        submitted = submit(update) if callable(submit) else update
+        deadlines = [
+            deadline
+            for deadline in (request_deadline, authorization_deadline)
+            if deadline is not None
+        ]
+        done = getattr(submitted, "done", None)
+        if not deadlines or (callable(done) and done()):
+            await submitted
+            return
+        remaining = min(deadlines) - monotonic()
+        if remaining <= 0:
+            cancel = getattr(submitted, "cancel", None)
+            if callable(cancel):
+                cancel()
+            raise TimeoutError("Operation update timed out before SDK-loop dispatch")
+        waiter = ensure_future(submitted)
+        try:
+            await wait_for(waiter, timeout=remaining)
+        except TimeoutError as error:
+            if waiter.done() and not waiter.cancelled():
+                terminal_error = waiter.exception()
+                if terminal_error is error:
+                    raise
+            cancel = getattr(submitted, "cancel", None)
+            if callable(cancel):
+                cancel()
+            raise TimeoutError("Operation update timed out") from None
 
     async def _update_internal(
         self,
+        *,
+        request_deadline: float | None = None,
+        authorization_deadline: float | None = None,
         **kwargs: Unpack[RequestKwargs],
     ) -> None:
         """Fetch and store one operation update on the SDK event loop.
@@ -429,12 +484,31 @@ class Operation(Generic[OperationPb]):
         operation state. Once a terminal response is stored, later queued
         updates return without making another request.
 
+        :param request_deadline: Absolute monotonic request deadline captured
+            before SDK-loop dispatch.
+        :param authorization_deadline: Absolute monotonic authorization
+            deadline captured before SDK-loop dispatch.
         :param kwargs: Request options for the operation service.
         """
 
         async with self._update_lock:
             if self.done():
                 return
+
+            if request_deadline is not None:
+                request_timeout = request_deadline - monotonic()
+                if request_timeout <= 0:
+                    raise TimeoutError(
+                        "Operation update timed out before request dispatch"
+                    )
+                kwargs["timeout"] = request_timeout
+            if authorization_deadline is not None:
+                authorization_timeout = authorization_deadline - monotonic()
+                if authorization_timeout <= 0:
+                    raise TimeoutError(
+                        "Operation update authorization timed out before dispatch"
+                    )
+                kwargs["auth_timeout"] = authorization_timeout
 
             req = self._service.get(
                 self._get_request_obj(id=self.id),
