@@ -4,10 +4,12 @@ import asyncio
 from concurrent.futures import Future
 from threading import Barrier, Event, Thread
 
+import grpc
 import pytest
 
 from nebius.aio.channel import Channel as SDKChannel
 from nebius.aio.channel import NoCredentials
+from nebius.aio.constant_channel import Constant
 from nebius.aio.route import Route
 from nebius.aio.stream import StreamRequest
 from nebius.api.nebius.compute.v1 import Disk, GetDiskRequest
@@ -118,6 +120,83 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
     assert isinstance(errors[0], asyncio.CancelledError)
     assert not call_factory_used.is_set()
     assert discarded == [address]
+
+
+def test_legacy_constant_stream_cancel_runs_on_owner_loop() -> None:
+    """Constant's one-shot fallback must not discard stream cancellation."""
+
+    ready: Future[asyncio.AbstractEventLoop] = Future()
+    cancelled = Event()
+    discarded = Event()
+
+    def run_loop() -> None:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        ready.set_result(loop)
+        loop.run_forever()
+        loop.close()
+
+    class LegacySource:
+        def parent_id(self) -> None:
+            return None
+
+        def discard_channel(self, channel: object) -> None:
+            discarded.set()
+
+    class NativeCall:
+        def cancel(self) -> bool:
+            cancelled.set()
+            return True
+
+    thread = Thread(target=run_loop, daemon=True)
+    thread.start()
+    owner_loop = ready.result(timeout=5)
+    channel = Constant(
+        "acme.Service.Watch",
+        LegacySource(),  # type: ignore[arg-type]
+    )
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=object,
+        client_streaming=False,
+        server_streaming=True,
+    )
+    stream._owner_loop = owner_loop
+    stream._call = NativeCall()
+    stream._address_channel = object()
+    try:
+        assert stream.cancel()
+        assert cancelled.wait(timeout=5)
+        assert discarded.wait(timeout=5)
+    finally:
+        owner_loop.call_soon_threadsafe(owner_loop.stop)
+        thread.join(timeout=5)
+        assert not thread.is_alive()
+
+
+def test_rejected_stream_cancel_restores_retryable_state() -> None:
+    """A rejected SDK dispatch must not retain an accepted-cancel marker."""
+
+    class ClosedChannel:
+        def run_async(self, awaitable: object) -> None:
+            raise RuntimeError("closed")
+
+        def get_state(self):
+            return grpc.ChannelConnectivity.SHUTDOWN
+
+    stream = StreamRequest(
+        channel=ClosedChannel(),
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=object,
+        client_streaming=False,
+        server_streaming=True,
+    )
+
+    assert not stream.cancel()
+    assert not stream._cancel_requested
 
 
 def test_stream_snapshots_unary_request_and_auth_options() -> None:

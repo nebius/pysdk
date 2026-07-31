@@ -1160,6 +1160,87 @@ def test_public_authorization_provider_dispatches_to_internal_loop() -> None:
         channel.sync_close(timeout=5)
 
 
+@pytest.mark.asyncio
+async def test_authentication_retry_reopens_request_cancellation() -> None:
+    """A retried UNAUTHENTICATED call must not stay terminal."""
+
+    from nebius.aio.service_error import RequestError as ServiceRequestError
+    from nebius.aio.service_error import RequestStatusExtended
+
+    class RetryAuthenticator(Authenticator):
+        async def authenticate(
+            self,
+            metadata: Metadata,
+            timeout: float | None = None,
+            options: dict[str, str] | None = None,
+        ) -> None:
+            return None
+
+        def can_retry(
+            self,
+            err: Exception,
+            options: dict[str, str] | None = None,
+        ) -> bool:
+            return True
+
+    class RetryProvider(Provider):
+        def authenticator(self) -> Authenticator:
+            return RetryAuthenticator()
+
+    class LegacyChannel:
+        def get_authorization_provider(self) -> Provider:
+            return RetryProvider()
+
+    request: Request[GetDiskRequest, Disk] = Request(
+        LegacyChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="auth-retry-cancel"),
+        Disk,
+    )
+    retry_count = 0
+    second_attempt = asyncio.Event()
+
+    async def retry_loop(*, outer_deadline: float | None = None) -> Disk:
+        nonlocal retry_count
+        retry_count += 1
+        if retry_count == 1:
+            with request._future_lock:
+                request._native_terminal = True
+            raise ServiceRequestError(
+                RequestStatusExtended(
+                    code=grpc.StatusCode.UNAUTHENTICATED,
+                    message="expired credential",
+                    details=[],
+                    service_errors=[],
+                    request_id="",
+                    trace_id="",
+                )
+            )
+        second_attempt.set()
+        await asyncio.Event().wait()
+        raise AssertionError("cancelled authentication retry returned")
+
+    request._retry_loop = retry_loop  # type: ignore[method-assign]
+    pending = asyncio.create_task(request._request_with_authorization_loop())
+    with request._future_lock:
+        request._future = pending
+    attempt_waiter = asyncio.create_task(second_attempt.wait())
+    done, _ = await asyncio.wait(
+        (pending, attempt_waiter),
+        timeout=5,
+        return_when=asyncio.FIRST_COMPLETED,
+    )
+    if pending in done:
+        await pending
+    assert attempt_waiter in done
+
+    assert request.cancel()
+    with pytest.raises(asyncio.CancelledError):
+        await pending
+    assert retry_count == 2
+
+
 def test_async_metric_callback_is_owned_and_cancelled_by_runtime() -> None:
     started = Event()
     cancelled = Event()
@@ -2127,6 +2208,29 @@ def test_legacy_constant_request_memoizes_a_reusable_task() -> None:
 
     asyncio.run(run())
     assert calls == 1
+
+
+@pytest.mark.parametrize("hook_name", ["close", "_cancel_unstarted_threadsafe"])
+def test_failed_unstarted_disposal_preserves_submission_error(hook_name: str) -> None:
+    """A custom cleanup failure must not mask runtime rejection."""
+
+    class CustomAwaitable:
+        def __await__(self):
+            async def result() -> None:
+                return None
+
+            return result().__await__()
+
+    def fail_disposal() -> None:
+        raise ValueError("cleanup failed")
+
+    runtime = AsyncRuntime(None, 2)
+    runtime.shutdown_async().result(timeout=5)
+    awaitable = CustomAwaitable()
+    setattr(awaitable, hook_name, fail_disposal)
+
+    with pytest.raises(RuntimeError, match="closing or closed"):
+        runtime.submit(awaitable)
 
 
 def test_async_close_does_not_block_external_loop_needed_by_worker() -> None:

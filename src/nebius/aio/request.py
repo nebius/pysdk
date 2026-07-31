@@ -972,6 +972,12 @@ class Request(Generic[Req, Res]):
                     raise
                 if not auth.can_retry(e, self._auth_options):
                     raise
+                # The failed native call is no longer the request's final
+                # outcome: authorization and RPC execution are about to start
+                # another attempt. Reopen cancellation before yielding back
+                # to the authentication loop.
+                with self._future_lock:
+                    self._native_terminal = False
                 # loop continues to re-authenticate and retry
 
     async def _await_result(self) -> Res:

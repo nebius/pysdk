@@ -131,6 +131,8 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
     ``_cancel_unstarted_threadsafe`` hook cannot be disposed safely because
     their hidden loop ownership is unknown. A foreign asyncio owner loop must
     remain running through dispatch, as required by the cross-loop contract.
+    Exceptions raised by custom disposal hooks are suppressed so cleanup does
+    not replace the lifecycle or submission error that caused disposal.
 
     :param awaitable: Never-started caller work to release.
     :return: ``True`` when disposal completed or was accepted for dispatch;
@@ -164,9 +166,18 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
         return awaitable.cancel()
     cancel_threadsafe = getattr(awaitable, "_cancel_unstarted_threadsafe", None)
     if callable(cancel_threadsafe):
-        return bool(cancel_threadsafe())
+        try:
+            return bool(cancel_threadsafe())
+        except Exception:
+            # Disposal is best-effort and normally runs while another error is
+            # already being reported. A custom hook must not replace that
+            # primary lifecycle or submission failure.
+            return False
     close = getattr(awaitable, "close", None)
     if callable(close):
-        close()
+        try:
+            close()
+        except Exception:
+            return False
         return True
     return False

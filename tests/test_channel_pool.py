@@ -10,7 +10,7 @@ import pytest
 from grpc_service import add_service
 
 from nebius.aio.base import AddressChannel
-from nebius.aio.channel import Channel, ChannelClosedError, NoCredentials
+from nebius.aio.channel import Channel, ChannelClosedError, LoopError, NoCredentials
 from nebius.api.nebius.common.v1 import (
     GetOperationRequest,
     Operation,
@@ -56,7 +56,7 @@ def test_pooled_channels_are_reused_through_the_internal_loop() -> None:
 
     async def checkout_and_return() -> object:
         address_channel = await _checkout(channel, "127.0.0.1:1")
-        channel.return_channel(address_channel)
+        await asyncio.to_thread(channel.return_channel, address_channel)
         return address_channel.channel
 
     try:
@@ -76,7 +76,7 @@ def test_idle_channel_is_owned_by_the_internal_loop_until_close() -> None:
 
     async def checkout_and_return() -> AddressChannel:
         address_channel = await _checkout(channel, "127.0.0.1:1")
-        channel.return_channel(address_channel)
+        await asyncio.to_thread(channel.return_channel, address_channel)
         return address_channel
 
     address_channel = asyncio.run(checkout_and_return())
@@ -86,6 +86,31 @@ def test_idle_channel_is_owned_by_the_internal_loop_until_close() -> None:
     asyncio.run(channel.close())
 
     assert address_channel.channel.get_state() == grpc.ChannelConnectivity.SHUTDOWN
+
+
+def test_direct_pool_release_rejects_active_external_loop() -> None:
+    """Synchronous release helpers must not block an asyncio loop."""
+
+    channel = Channel(
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+
+    async def exercise() -> None:
+        returned = await _checkout(channel, "127.0.0.1:1")
+        with pytest.raises(LoopError, match="Synchronous call inside async context"):
+            channel.return_channel(returned)
+        await asyncio.to_thread(channel.return_channel, returned)
+
+        discarded = await _checkout(channel, "127.0.0.1:2")
+        with pytest.raises(LoopError, match="Synchronous call inside async context"):
+            channel.discard_channel(discarded)
+        await asyncio.to_thread(channel.discard_channel, discarded)
+
+    try:
+        asyncio.run(exercise())
+    finally:
+        channel.sync_close(timeout=5)
 
 
 def test_generated_requests_use_loop_owned_pooled_channels() -> None:
@@ -520,9 +545,9 @@ def test_pooled_channels_are_reused_on_the_same_event_loop() -> None:
 
     async def checkout_twice() -> tuple[object, object]:
         first = await _checkout(channel, "127.0.0.1:1")
-        channel.return_channel(first)
+        await asyncio.to_thread(channel.return_channel, first)
         second = await _checkout(channel, "127.0.0.1:1")
-        channel.return_channel(second)
+        await asyncio.to_thread(channel.return_channel, second)
         return first.channel, second.channel
 
     try:
@@ -547,9 +572,9 @@ def test_legacy_address_channel_factory_override_is_compatible() -> None:
 
     async def checkout_twice() -> tuple[AddressChannel, AddressChannel]:
         first = await _checkout(channel, "127.0.0.1:1")
-        channel.return_channel(first)
+        await asyncio.to_thread(channel.return_channel, first)
         second = await _checkout(channel, "127.0.0.1:1")
-        channel.return_channel(second)
+        await asyncio.to_thread(channel.return_channel, second)
         return first, second
 
     try:
@@ -576,7 +601,7 @@ def test_legacy_constructor_keeps_creation_loop_ownership() -> None:
     async def return_and_checkout(
         legacy_wrapper: AddressChannel,
     ) -> AddressChannel:
-        channel.return_channel(legacy_wrapper)
+        await asyncio.to_thread(channel.return_channel, legacy_wrapper)
         return await _checkout(channel, address)
 
     try:
@@ -635,7 +660,7 @@ def test_discard_on_another_loop_does_not_block_close() -> None:
     )
 
     async def discard() -> None:
-        channel.discard_channel(address_channel)
+        await asyncio.to_thread(channel.discard_channel, address_channel)
 
     try:
         asyncio.run_coroutine_threadsafe(discard(), loop).result(timeout=5)
@@ -660,7 +685,7 @@ def test_pool_limit_remains_global_across_event_loops() -> None:
 
     async def checkout_and_return() -> None:
         address_channel = await _checkout(channel, address)
-        channel.return_channel(address_channel)
+        await asyncio.to_thread(channel.return_channel, address_channel)
 
     try:
         asyncio.run(checkout_and_return())
@@ -687,7 +712,7 @@ def test_concurrent_returns_cannot_exceed_pool_limit() -> None:
 
     async def return_together(address_channel: AddressChannel) -> None:
         barrier.wait(timeout=5)
-        channel.return_channel(address_channel)
+        await asyncio.to_thread(channel.return_channel, address_channel)
 
     try:
         first = asyncio.run_coroutine_threadsafe(checkout(), loop_a).result(timeout=5)

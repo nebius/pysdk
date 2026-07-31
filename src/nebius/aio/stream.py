@@ -488,11 +488,13 @@ class StreamRequest(Generic[Req, Res]):
         """Request cancellation without accessing loop-owned state off-loop.
 
         SDK channels dispatch cancellation to the SDK loop. A compatibility
-        channel without ``run_async`` instead uses the loop that started the
-        stream. A foreign caller receives ``False`` if that owner loop is not
-        running or closes during dispatch; it may retry after restoring the
-        loop. As with every accepted event-loop callback, the owner must remain
-        running long enough to execute it.
+        channel without immediate scheduling support—including an adapter
+        whose ``run_async`` returns the original one-shot awaitable—uses the
+        loop that started the stream instead. A foreign caller receives
+        ``False`` if that owner loop is not running or closes during dispatch;
+        it may retry after restoring the loop. As with every accepted
+        event-loop callback, the owner must remain running long enough to
+        execute it.
 
         :return: ``True`` if cancellation was applied or accepted for dispatch;
             otherwise ``False``.
@@ -507,16 +509,26 @@ class StreamRequest(Generic[Req, Res]):
         if callable(submit):
             closing = self._aclose()
             try:
-                submit(closing)
+                scheduled = submit(closing)
             except Exception:
                 closing.close()
+                with self._state_lock:
+                    self._cancel_requested = False
                 get_state = getattr(self._channel, "get_state", None)
                 if callable(get_state) and get_state() == ChannelConnectivity.SHUTDOWN:
                     return False
-                with self._state_lock:
-                    self._cancel_requested = False
                 raise
-            return True
+            # SDK channels return an already-scheduled Future-like handle.
+            # Constant and other legacy adapters can instead return the same
+            # one-shot awaitable unchanged. Dispose that unscheduled wrapper
+            # and use the stream's recorded owner loop below.
+            if callable(getattr(scheduled, "done", None)):
+                return True
+            dispose = getattr(scheduled, "close", None)
+            if callable(dispose):
+                dispose()
+            if scheduled is not closing:
+                closing.close()
         with self._state_lock:
             owner_loop = self._owner_loop
         try:

@@ -2209,6 +2209,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         :param chan: The :class:`AddressChannel` to return, or ``None``.
         :raises ChannelClosedError: If the SDK channel has been closed.
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
         """
 
         self._release_channel_on_sdk_loop(
@@ -2273,7 +2275,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             )
             return
         try:
-            self._runtime.run_sync(
+            self.run_sync(
                 self._release_address_channel_async(
                     chan,
                     discard=discard,
@@ -2487,6 +2489,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         :param chan: The :class:`AddressChannel` to discard, or ``None``.
         :raises ChannelClosedError: If the SDK channel has been closed.
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
         """
 
         self._release_channel_on_sdk_loop(
