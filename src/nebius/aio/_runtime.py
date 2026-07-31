@@ -446,13 +446,13 @@ class CrossLoopAwaitable(Generic[T]):
         of calling it inline. It uses the event loop active at registration,
         or the associated SDK loop when no loop is active. The registration
         context is retained unless ``context`` is supplied explicitly. The
-        registration loop must stay open until callback delivery. If it closes
-        later, the SDK logs a warning and drops the callback instead of running
-        loop-affine code on another thread.
+        registration loop must stay running until callback delivery. If it
+        stops or closes later, the SDK logs a warning and drops the callback
+        instead of running loop-affine code on another thread.
 
         :param callback: Function that receives this awaitable.
         :param context: Optional context in which to run ``callback``.
-        :raises RuntimeError: If the callback loop is already closed.
+        :raises RuntimeError: If the callback loop is not running.
         """
 
         self._check_process()
@@ -460,8 +460,8 @@ class CrossLoopAwaitable(Generic[T]):
             callback_loop = asyncio.get_running_loop()
         except RuntimeError:
             callback_loop = self._event_loop
-        if callback_loop.is_closed():
-            raise RuntimeError("callback event loop is closed")
+        if callback_loop.is_closed() or not callback_loop.is_running():
+            raise RuntimeError("callback event loop is not running")
         callback_context = copy_context() if context is None else context
         state: dict[str, Any] = {
             "callback": callback,
@@ -477,6 +477,12 @@ class CrossLoopAwaitable(Generic[T]):
             retained_loop = state.pop("loop", None)
             if retained_callback is None or retained_loop is None:
                 return
+            if not retained_loop.is_running():
+                logger.warning(
+                    "SDK completion callback was not run because its "
+                    "registration loop is not running"
+                )
+                return
             try:
                 retained_loop.call_soon_threadsafe(
                     retained_callback,
@@ -489,7 +495,7 @@ class CrossLoopAwaitable(Generic[T]):
                 # thread.
                 logger.warning(
                     "SDK completion callback was not run because its "
-                    "registration loop is closed"
+                    "registration loop is not running"
                 )
 
         self._future.add_done_callback(schedule)

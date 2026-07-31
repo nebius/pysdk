@@ -390,6 +390,16 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             return result
         except CancelledError:
             discard = True
+            with self._terminal_lock:
+                self._terminal.update(
+                    {
+                        "initial_metadata": GrpcMetadata(),
+                        "trailing_metadata": GrpcMetadata(),
+                        "code": StatusCode.CANCELLED,
+                        "details": ("Locally cancelled by application or SDK shutdown"),
+                        "debug_error_string": "",
+                    }
+                )
             raise
         except Exception as error:
             discard = True
@@ -1248,6 +1258,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             int,
             tuple[AddressChannel, ConcurrentFuture[None]],
         ]()
+        self._foreign_close_tasks = set[Task[Any]]()
         self._tasks_lock = Lock()
 
         self._resolver: Resolver = Conventional()
@@ -1916,8 +1927,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                             exc_info=ret,
                         )
             except BaseException as error:
+                with self._channel_pool_lock:
+                    for channel_id, address_channel in channels.items():
+                        if self._leased_channels.get(channel_id) is address_channel:
+                            self._leased_channels.pop(channel_id, None)
                 completion.set_exception(error)
             else:
+                with self._channel_pool_lock:
+                    for channel_id, address_channel in channels.items():
+                        if self._leased_channels.get(channel_id) is address_channel:
+                            self._leased_channels.pop(channel_id, None)
                 completion.set_result(None)
 
         self._close_task = create_task(cleanup(), name="Channel.close cleanup")
@@ -2442,10 +2461,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             except RuntimeError:
                 current_loop = None
             if owner_loop is current_loop:
-                create_task(
+                task = create_task(
                     close_coro,
                     name=f"Channel transport close for {chan.address}",
                 )
+                with self._tasks_lock:
+                    self._foreign_close_tasks.add(task)
+                task.add_done_callback(self._discard_foreign_close_task)
                 return
             try:
                 run_coroutine_threadsafe(close_coro, owner_loop)
@@ -2493,10 +2515,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     fallback.close()
                     fallback = close_and_log()
             if current_loop is not None:
-                create_task(
+                task = create_task(
                     fallback,
                     name=f"Channel transport close for {chan.address}",
                 )
+                with self._tasks_lock:
+                    self._foreign_close_tasks.add(task)
+                task.add_done_callback(self._discard_foreign_close_task)
             else:
                 fallback.close()
                 logger.warning(
@@ -2504,6 +2529,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 )
                 completion.set_result(None)
             return
+
+    def _discard_foreign_close_task(self, task: Task[Any]) -> None:
+        """Release a completed fire-and-forget foreign-loop close task."""
+
+        with self._tasks_lock:
+            self._foreign_close_tasks.discard(task)
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
         """Dispose of an :class:`AddressChannel` by scheduling its close.

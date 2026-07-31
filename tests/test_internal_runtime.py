@@ -611,7 +611,7 @@ def test_completed_callback_rejects_closed_sdk_loop() -> None:
     submitted = channel.run_async(asyncio.sleep(0, result=42))
     assert submitted.result(timeout=5) == 42
     channel.sync_close(timeout=5)
-    with pytest.raises(RuntimeError, match="callback event loop is closed"):
+    with pytest.raises(RuntimeError, match="callback event loop is not running"):
         submitted.add_done_callback(lambda _: None)
 
 
@@ -1783,6 +1783,15 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         assert call.cancel()
         assert transport_closed.wait(timeout=5)
         assert not terminal_capture_started.is_set()
+        channel.sync_close(timeout=5)
+
+        async def terminal_status() -> None:
+            assert await call.code() == grpc.StatusCode.CANCELLED
+            assert "cancel" in (await call.details()).lower()
+            assert await call.initial_metadata() is not None
+            assert await call.trailing_metadata() is not None
+
+        asyncio.run(terminal_status())
     finally:
         channel.sync_close(timeout=5)
 

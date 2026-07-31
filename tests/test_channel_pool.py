@@ -753,14 +753,16 @@ def test_close_closes_a_checked_out_transport() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(transport, addr)  # type: ignore[arg-type]
 
-    async def run() -> None:
+    async def run() -> Channel:
         channel = RecordingChannel(credentials=NoCredentials())
         await _checkout(channel, "127.0.0.1:1")
 
         await channel.close()
+        return channel
 
-    asyncio.run(run())
+    channel = asyncio.run(run())
     assert transport.close_calls == 1
+    assert channel._leased_channels == {}
 
 
 def test_concurrent_close_runs_graceful_cleanup_once() -> None:
