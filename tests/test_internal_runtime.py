@@ -1921,6 +1921,72 @@ def test_generated_request_rejects_cancel_after_native_success() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_generated_request_rejects_cancel_after_native_error() -> None:
+    """Error translation cannot replace an authoritative RPC failure."""
+
+    translation_started = Event()
+    release_translation = Event()
+    errors: list[BaseException] = []
+
+    class FailedCall:
+        def __await__(self):
+            async def result() -> Disk:
+                raise grpc.aio.AioRpcError(
+                    grpc.StatusCode.INVALID_ARGUMENT,
+                    (),
+                    (),
+                    "invalid request",
+                    "debug details",
+                )
+
+            return result().__await__()
+
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="late-error-cancel"),
+        Disk,
+        retries=1,
+    )
+
+    def send(timeout: float | None) -> None:
+        request._call = FailedCall()  # type: ignore[assignment]
+
+    original_raise = request._raise_request_error
+
+    def translate(error: grpc.aio.AioRpcError) -> None:
+        translation_started.set()
+        release_translation.wait(timeout=5)
+        original_raise(error)
+
+    request._send = send  # type: ignore[method-assign]
+    request._raise_request_error = translate  # type: ignore[method-assign]
+
+    def wait_for_result() -> None:
+        try:
+            asyncio.run(request._await_result())
+        except BaseException as error:
+            errors.append(error)
+
+    waiter = Thread(target=wait_for_result)
+    waiter.start()
+    try:
+        assert translation_started.wait(timeout=5)
+        assert not request.cancel()
+        release_translation.set()
+        waiter.join(timeout=5)
+        assert not waiter.is_alive()
+        assert len(errors) == 1
+        assert not isinstance(errors[0], asyncio.CancelledError)
+        assert "invalid request" in str(errors[0])
+    finally:
+        release_translation.set()
+        waiter.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
 def test_request_inputs_are_snapshotted_at_first_submission() -> None:
     """External mutation after submission must not race SDK-loop processing."""
 

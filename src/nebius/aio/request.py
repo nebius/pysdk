@@ -863,6 +863,11 @@ class Request(Generic[Req, Res]):
                     self._grpc_channel = None
                     raise e
                 except AioRpcError as e:
+                    # A native RPC error is authoritative while its SDK error
+                    # representation is being built. The retry branch below
+                    # reopens cancellation before starting another attempt.
+                    with self._future_lock:
+                        self._native_terminal = True
                     self._raise_request_error(e)
             except Exception as e:
                 if (
