@@ -39,6 +39,8 @@ class AddressChannel:
     address: str
     channel: GRPCChannel
     event_loop: AbstractEventLoop | None
+    _close_state_lock: Lock
+    _closed_by_sdk: bool
     _legacy_close_state_init_lock = Lock()
 
     def __init__(
@@ -86,12 +88,16 @@ class AddressChannel:
         :return: Per-wrapper lock protecting the SDK-close marker.
         """
 
-        close_state_lock = getattr(self, "_close_state_lock", None)
-        if close_state_lock is not None:
+        try:
+            close_state_lock = self._close_state_lock
+        except AttributeError:
+            pass
+        else:
             return close_state_lock
         with self._legacy_close_state_init_lock:
-            close_state_lock = getattr(self, "_close_state_lock", None)
-            if close_state_lock is None:
+            try:
+                close_state_lock = self._close_state_lock
+            except AttributeError:
                 close_state_lock = Lock()
                 self._close_state_lock = close_state_lock
                 self._closed_by_sdk = False
