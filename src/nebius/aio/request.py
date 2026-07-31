@@ -611,6 +611,18 @@ class Request(Generic[Req, Res]):
             if timeout is not None:
                 timeout += 0.2  # 200 ms for an internal graceful shutdown
             if cast(Any, func) is self:
+                try:
+                    get_running_loop()
+                except RuntimeError:
+                    caller_loop_running = False
+                else:
+                    caller_loop_running = True
+                runtime = getattr(self._channel, "_runtime", None)
+                in_executor_thread = (
+                    runtime.in_executor_thread() if runtime is not None else False
+                )
+                if caller_loop_running or in_executor_thread:
+                    return cast(T, self._channel.run_sync(func, timeout=timeout))
                 submitted = self._ensure_submitted()
                 if isinstance(submitted, CrossLoopAwaitable):
                     return cast(T, submitted.result(timeout))
