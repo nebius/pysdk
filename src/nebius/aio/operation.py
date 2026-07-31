@@ -555,19 +555,25 @@ class Operation(Generic[OperationPb]):
         """Synchronously perform a single update of the operation state.
 
         This wraps the coroutine :meth:`update` and runs it via the channel's
-        synchronous runner. A small safety margin is added to the provided
-        timeout to allow for scheduling overhead.
+        synchronous runner. The shorter request or authorization budget bounds
+        SDK-loop queueing, with a small safety margin for scheduling overhead.
 
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         """
         self._check_process()
-        timeout = kwargs.get("timeout", Unset)
-        run_timeout: float | None = None
-        if isinstance(timeout, (int, float)):
-            run_timeout = timeout + 0.2
-        elif isinstance(timeout, UnsetType):
-            run_timeout = DEFAULT_TIMEOUT + 0.2
+        timeout_option = kwargs.get("timeout", Unset)
+        timeout = (
+            DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
+        )
+        auth_timeout_option = kwargs.get("auth_timeout", Unset)
+        auth_timeout = (
+            DEFAULT_AUTH_TIMEOUT
+            if isinstance(auth_timeout_option, UnsetType)
+            else auth_timeout_option
+        )
+        limits = [value for value in (timeout, auth_timeout) if value is not None]
+        run_timeout = None if not limits else max(0.0, min(limits)) + 0.2
         return self._channel.run_sync(
             self.update(
                 **kwargs,

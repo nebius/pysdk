@@ -626,8 +626,10 @@ class Request(Generic[Req, Res]):
     def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
         """Run an awaitable synchronously using the channel's sync runner.
 
-        Call the channel's synchronous runner with ``_auth_timeout``. If the
-        runner raises :class:`TimeoutError`, convert it to
+        Bound the synchronous wait by the shorter request or authorization
+        budget. For a request that has already been submitted, use the
+        remaining absolute submission deadline rather than granting a fresh
+        timeout. If the runner raises :class:`TimeoutError`, convert it to
         :class:`RequestError` with ``DEADLINE_EXCEEDED``. Callers can then
         inspect all timeout failures in the same way.
 
@@ -637,10 +639,6 @@ class Request(Generic[Req, Res]):
         """
         direct_submission: CrossLoopAwaitable[Any] | None = None
         try:
-            # Overall timeout should include authorization + request execution
-            timeout = self._auth_timeout
-            if timeout is not None:
-                timeout += 0.2  # 200 ms for an internal graceful shutdown
             if cast(Any, func) is self:
                 try:
                     get_running_loop()
@@ -653,7 +651,13 @@ class Request(Generic[Req, Res]):
                     runtime.in_executor_thread() if runtime is not None else False
                 )
                 if caller_loop_running or in_executor_thread:
-                    return cast(T, self._channel.run_sync(func, timeout=timeout))
+                    return cast(
+                        T,
+                        self._channel.run_sync(
+                            func,
+                            timeout=self._sync_wait_timeout(),
+                        ),
+                    )
                 # Only the built-in runtime is known to return a reusable
                 # cross-loop handle before the channel's synchronous runner
                 # starts. A legacy channel may drive its own private loop;
@@ -664,8 +668,11 @@ class Request(Generic[Req, Res]):
                     if isinstance(submitted, CrossLoopAwaitable):
                         self._claim_await()
                         direct_submission = submitted
-                        return cast(T, submitted.result(timeout))
-            return self._channel.run_sync(func, timeout=timeout)
+                        return cast(T, submitted.result(self._sync_wait_timeout()))
+            return self._channel.run_sync(
+                func,
+                timeout=self._sync_wait_timeout(),
+            )
         except (TimeoutError, ConcurrentTimeoutError) as e:
             if direct_submission is not None:
                 # ``Future.result(timeout)`` does not cancel pending work.
@@ -684,6 +691,36 @@ class Request(Generic[Req, Res]):
                 registry=self._registry,
             )
             raise RequestError(self._status) from e
+
+    def _sync_wait_timeout(self) -> float | None:
+        """Return the bounded wait used by synchronous request adapters.
+
+        Request and authorization deadlines both start when built-in runtime
+        work is submitted. Once that boundary exists, this method returns its
+        remaining monotonic budget. Before submission (including legacy
+        channels), it derives the same minimum from the configured timeout
+        values. A small grace period lets the internal timeout path publish
+        its structured error and finish cancellation before the outer blocking
+        wait expires.
+
+        :return: Remaining synchronous wait in seconds, or ``None`` when both
+            request and authorization budgets are unlimited.
+        """
+
+        with self._future_lock:
+            deadline = self._submission_deadline
+            if deadline is not None:
+                budget = max(0.0, deadline - monotonic())
+            else:
+                limits = [
+                    value
+                    for value in (self._timeout, self._auth_timeout)
+                    if value is not None
+                ]
+                if not limits:
+                    return None
+                budget = max(0.0, min(limits))
+        return budget + 0.2
 
     def wait(self) -> Res:
         """Wait for the request synchronously.

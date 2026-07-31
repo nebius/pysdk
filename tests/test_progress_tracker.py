@@ -437,6 +437,60 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
         await channel.close()
 
 
+@pytest.mark.parametrize(
+    ("timeout", "auth_timeout"),
+    ((0.01, 5), (5, 0.01), (0.01, None)),
+    ids=("request-timeout", "authorization-timeout", "unlimited-auth"),
+)
+def test_operation_sync_update_uses_shorter_queue_deadline(
+    timeout: float,
+    auth_timeout: float | None,
+) -> None:
+    """Synchronous update cannot outwait its shorter dispatch budget."""
+
+    from threading import Event
+    from time import monotonic
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-sync-update-timeout"),
+    )
+    loop_blocked = Event()
+    release_loop = Event()
+    request_started = Event()
+
+    class Service:
+        def get(self, request, **kwargs):
+            request_started.set()
+            raise AssertionError("expired sync update must not issue an RPC")
+
+    operation._service = Service()
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert loop_blocked.wait(timeout=5)
+    started = monotonic()
+    try:
+        with pytest.raises(TimeoutError):
+            operation.sync_update(timeout=timeout, auth_timeout=auth_timeout)
+        assert monotonic() - started < 0.5
+        release_loop.set()
+        blocker.result(timeout=5)
+        assert not request_started.wait(timeout=0.05)
+    finally:
+        release_loop.set()
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.asyncio
 async def test_operation_update_snapshots_mutable_request_options() -> None:
     """Queued update metadata and auth options retain submission values."""

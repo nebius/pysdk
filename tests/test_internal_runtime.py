@@ -1740,7 +1740,15 @@ async def test_request_releases_override_when_authentication_is_cancelled() -> N
     assert released == [(override, False)]
 
 
-def test_synchronous_request_timeout_cancels_before_delayed_start() -> None:
+@pytest.mark.parametrize(
+    ("timeout", "auth_timeout"),
+    ((0.01, 5), (5, 0.01), (0.01, None)),
+    ids=("request-timeout", "authorization-timeout", "unlimited-auth"),
+)
+def test_synchronous_request_timeout_cancels_before_delayed_start(
+    timeout: float,
+    auth_timeout: float | None,
+) -> None:
     """A direct cross-loop wait timeout cannot leave the RPC queued."""
 
     from nebius.aio.service_error import RequestError as ServiceRequestError
@@ -1762,18 +1770,62 @@ def test_synchronous_request_timeout_cancels_before_delayed_start() -> None:
         "Get",
         GetDiskRequest(id="sync-timeout-before-start"),
         Disk,
-        auth_timeout=0.01,
+        timeout=timeout,
+        auth_timeout=auth_timeout,
     )
     request._send = lambda timeout: rpc_started.set()  # type: ignore[method-assign]
     try:
+        started = monotonic()
         with pytest.raises(ServiceRequestError) as raised:
             request.wait()
         assert raised.value.status.code is grpc.StatusCode.DEADLINE_EXCEEDED
+        assert monotonic() - started < 0.5
         release_loop.set()
         blocker.result(timeout=5)
         sleep(0.05)
         assert not rpc_started.is_set()
         assert request.cancelled()
+    finally:
+        release_loop.set()
+        channel.sync_close(timeout=5)
+
+
+def test_synchronous_request_wait_uses_remaining_submission_deadline() -> None:
+    """A previously submitted request does not receive a fresh sync budget."""
+
+    from nebius.aio.service_error import RequestError as ServiceRequestError
+
+    loop_blocked = Event()
+    release_loop = Event()
+    rpc_started = Event()
+    channel = Channel(credentials=NoCredentials())
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert loop_blocked.wait(timeout=5)
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="sync-remaining-deadline"),
+        Disk,
+        timeout=0.2,
+        auth_timeout=5,
+    )
+    request._send = lambda timeout: rpc_started.set()  # type: ignore[method-assign]
+    request._ensure_submitted()
+    sleep(0.15)
+    started = monotonic()
+    try:
+        with pytest.raises(ServiceRequestError):
+            request.wait()
+        assert monotonic() - started < 0.32
+        release_loop.set()
+        blocker.result(timeout=5)
+        assert not rpc_started.wait(timeout=0.05)
     finally:
         release_loop.set()
         channel.sync_close(timeout=5)
