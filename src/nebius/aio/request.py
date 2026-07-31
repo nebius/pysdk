@@ -637,11 +637,17 @@ class Request(Generic[Req, Res]):
                 )
                 if caller_loop_running or in_executor_thread:
                     return cast(T, self._channel.run_sync(func, timeout=timeout))
-                submitted = self._ensure_submitted()
-                if isinstance(submitted, CrossLoopAwaitable):
-                    self._claim_await()
-                    direct_submission = submitted
-                    return cast(T, submitted.result(timeout))
+                # Only the built-in runtime is known to return a reusable
+                # cross-loop handle before the channel's synchronous runner
+                # starts. A legacy channel may drive its own private loop;
+                # creating its fallback Task here would bind that Task to the
+                # caller thread's policy loop instead.
+                if runtime is not None:
+                    submitted = self._ensure_submitted()
+                    if isinstance(submitted, CrossLoopAwaitable):
+                        self._claim_await()
+                        direct_submission = submitted
+                        return cast(T, submitted.result(timeout))
             return self._channel.run_sync(func, timeout=timeout)
         except (TimeoutError, ConcurrentTimeoutError) as e:
             if direct_submission is not None:

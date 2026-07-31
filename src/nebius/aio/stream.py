@@ -369,7 +369,21 @@ class StreamRequest(Generic[Req, Res]):
         self._check_process()
         submit = getattr(self._channel, "run_async", None)
         if callable(submit):
-            return cast(T, await submit(awaitable))
+            try:
+                return cast(T, await submit(awaitable))
+            except CancelledError:
+                # The runtime may cancel a queued submission before its
+                # wrapper coroutine starts. In that case the wrapper cannot
+                # reach its own abort/finally block, so establish cancellation
+                # and queue transport cleanup from the caller side.
+                try:
+                    self.cancel()
+                except BaseException as cleanup_error:
+                    logger.warning(
+                        "Failed to schedule stream cleanup after cancellation",
+                        exc_info=cleanup_error,
+                    )
+                raise
         current_loop = get_running_loop()
         with self._state_lock:
             if self._owner_loop is None:

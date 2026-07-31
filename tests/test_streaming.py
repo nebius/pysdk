@@ -520,6 +520,81 @@ def test_stream_write_snapshots_request_before_sdk_loop_dispatch() -> None:
     assert discarded == [address]
 
 
+@pytest.mark.parametrize("operation", ["result", "write", "done_writing", "aclose"])
+def test_prestart_stream_operation_cancellation_discards_override(
+    operation: str,
+) -> None:
+    """Queued stream cancellation still establishes cleanup and finality."""
+
+    loop_blocked = Event()
+    release_loop = Event()
+    released = Event()
+    opened = Event()
+    release_calls: list[tuple[object | None, bool]] = []
+
+    class Transport:
+        def stream_unary(self, *args: object) -> object:
+            opened.set()
+            raise AssertionError("cancelled queued stream must not start")
+
+    channel = SDKChannel(credentials=NoCredentials())
+    override = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": channel._event_loop},
+    )()
+
+    def release(address: object | None, *, discard: bool = False) -> None:
+        release_calls.append((address, discard))
+        released.set()
+
+    channel.release_channel = release  # type: ignore[method-assign]
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert loop_blocked.wait(timeout=5)
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        grpc_channel_override=override,  # type: ignore[arg-type]
+    )
+
+    async def cancel_operation() -> None:
+        if operation == "result":
+            awaitable = stream._result()
+        elif operation == "write":
+            awaitable = stream.write(GetDiskRequest(id="queued"))
+        elif operation == "done_writing":
+            awaitable = stream.done_writing()
+        else:
+            awaitable = stream.aclose()
+        pending = asyncio.create_task(awaitable)
+        await asyncio.sleep(0)
+        pending.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await pending
+
+    try:
+        asyncio.run(cancel_operation())
+        release_loop.set()
+        blocker.result(timeout=5)
+        assert released.wait(timeout=5)
+        assert not opened.is_set()
+        assert release_calls == [(override, True)]
+        assert stream._cancel_requested
+        assert stream._cancelled
+    finally:
+        release_loop.set()
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.parametrize("closes_during_dispatch", [False, True])
 def test_legacy_stream_cancel_stopped_dispatch_is_retryable(
     closes_during_dispatch: bool,

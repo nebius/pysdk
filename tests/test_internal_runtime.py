@@ -26,7 +26,7 @@ from nebius.aio._runtime import (
 from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.authorization.authorization import Authenticator, Provider
 from nebius.aio.base import AddressChannel
-from nebius.aio.channel import Channel, LoopError, NoCredentials
+from nebius.aio.channel import Channel, ChannelClosedError, LoopError, NoCredentials
 from nebius.aio.cli_config import Config
 from nebius.aio.constant_channel import Constant
 from nebius.aio.operation import Operation
@@ -1534,6 +1534,43 @@ def test_request_wait_for_ready_default_and_native_option() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_legacy_request_wait_binds_task_to_channel_sync_loop() -> None:
+    """A legacy sync runner creates the request task on its private loop."""
+
+    policy_loop = asyncio.new_event_loop()
+    private_loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(policy_loop)
+
+    class LegacyChannel:
+        def get_authorization_provider(self) -> None:
+            return None
+
+        def run_sync(self, awaitable, timeout=None):
+            return private_loop.run_until_complete(awaitable)
+
+    request: Request[GetDiskRequest, Disk] = Request(
+        LegacyChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="legacy-private-loop"),
+        Disk,
+    )
+    expected = Disk()
+
+    async def result() -> Disk:
+        return expected
+
+    request._request_with_authorization_loop = result  # type: ignore[method-assign]
+    try:
+        assert request.wait() is expected
+        assert isinstance(request._future, asyncio.Future)
+        assert request._future.get_loop() is private_loop
+    finally:
+        asyncio.set_event_loop(None)
+        policy_loop.close()
+        private_loop.close()
+
+
 @pytest.mark.asyncio
 async def test_request_releases_override_when_authenticator_setup_fails() -> None:
     """Pre-leased request transports are released before native setup."""
@@ -1929,6 +1966,30 @@ def test_sync_close_timeout_still_finishes_runtime_shutdown() -> None:
     while any(thread is not None and thread.is_alive() for thread in runtime_threads):
         assert monotonic() < deadline
         sleep(0.01)
+
+
+def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
+    """The first close call publishes rejection before SDK-loop dispatch."""
+
+    channel = Channel(credentials=NoCredentials())
+    loop_blocked = Event()
+    release_loop = Event()
+
+    async def block_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    channel.run_async(block_loop())
+    assert loop_blocked.wait(timeout=5)
+    try:
+        with pytest.raises(TimeoutError, match="shutdown timed out"):
+            channel.sync_close(timeout=0.05)
+        rejected = asyncio.sleep(0)
+        with pytest.raises(ChannelClosedError, match="closed"):
+            channel.run_async(rejected)
+    finally:
+        release_loop.set()
+        channel._runtime._shutdown_complete.result(timeout=5)
 
 
 def test_sync_close_timeout_covers_blocked_executor_shutdown() -> None:

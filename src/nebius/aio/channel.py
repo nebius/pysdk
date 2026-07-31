@@ -1944,10 +1944,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         with self._close_submit_lock:
             closing = self._close_handle
             if closing is None:
+                # Publish the public lifecycle boundary before queueing work.
+                # A blocked SDK loop must not leave a window in which another
+                # thread can submit work after close has started.
+                with self._channel_pool_lock:
+                    self._closed = True
                 closing = self._runtime.submit(
                     self._close_internal(grace),
                     track=False,
                 )
+                self._runtime.begin_close()
                 self._close_handle = closing
             return closing
 

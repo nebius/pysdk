@@ -1342,7 +1342,10 @@ class AsyncRuntime:
                     ]
                 if not waiting:
                     break
-                await asyncio.sleep(0)
+                # A protected external caller may remain active for an
+                # arbitrary interval. Yield with a bounded delay instead of
+                # continuously spinning the SDK loop while it finishes.
+                await asyncio.sleep(0.001)
 
             # Let protected callers execute the immediate continuation after
             # ``await close()``. A caller that yields again is post-close work.
@@ -1366,7 +1369,10 @@ class AsyncRuntime:
                     protected = list(self._protected_submissions)
                 if all(submitted.done() for submitted in protected):
                     break
-                await asyncio.sleep(0)
+                # Task completion and concurrent-future publication normally
+                # differ by one loop turn. A short delay also bounds CPU use
+                # if a non-standard future publishes more slowly.
+                await asyncio.sleep(0.001)
 
             # Tracked tasks can have asynchronous finalizers that continue
             # after cancellation becomes visible on their concurrent result.
