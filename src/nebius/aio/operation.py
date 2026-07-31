@@ -10,6 +10,7 @@ routes calls to the applicable operation-service client.
 from __future__ import annotations
 
 import importlib
+import os
 from asyncio import sleep
 from collections.abc import Sequence
 from datetime import datetime, timedelta
@@ -293,10 +294,21 @@ class Operation(Generic[OperationPb]):
         self._get_request_obj = get_type
         self._operation = operation
         self._state_lock = Lock()
+        self._process_id = os.getpid()
+
+    def _check_process(self) -> None:
+        """Reject an operation inherited across ``fork`` before locking."""
+
+        if os.getpid() != self._process_id:
+            raise RuntimeError(
+                "an SDK operation cannot be used after fork; construct SDK "
+                "objects only after the child process starts"
+            )
 
     def _operation_snapshot(self) -> OperationPb:
         """Return the current operation message under the state lock."""
 
+        self._check_process()
         with self._state_lock:
             return self._operation
 
@@ -388,6 +400,7 @@ class Operation(Generic[OperationPb]):
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         """
+        self._check_process()
         submit = getattr(self._channel, "run_async", None)
         update = self._update_internal(**kwargs)
         if callable(submit):
@@ -431,6 +444,7 @@ class Operation(Generic[OperationPb]):
 
         See :meth:`wait` for parameter details.
         """
+        self._check_process()
         run_timeout = None if timeout is None else timeout + 0.2
         return self._channel.run_sync(
             self.wait(
@@ -457,6 +471,7 @@ class Operation(Generic[OperationPb]):
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         """
+        self._check_process()
         timeout = kwargs.get("timeout", Unset)
         run_timeout: float | None = None
         if isinstance(timeout, (int, float)):
@@ -506,6 +521,7 @@ class Operation(Generic[OperationPb]):
 
         :raises TimeoutError: when the overall timeout is exceeded
         """
+        self._check_process()
         submit = getattr(self._channel, "run_async", None)
         wait = self._wait_internal(
             interval=interval,
@@ -597,6 +613,7 @@ class Operation(Generic[OperationPb]):
         protobuf class as the currently wrapped object; otherwise an
         :class:`SDKError` is raised.
         """
+        self._check_process()
         with self._state_lock:
             if isinstance(operation, self._operation.__class__):
                 self._operation = operation
@@ -685,9 +702,12 @@ class _ProgressTrackerWrapper:
         self._operation = operation
 
     def _tracker(self) -> object | None:
-        op_proto = getattr(self._operation, "_operation", None)
-        if op_proto is None:
-            return None
+        return self._tracker_from(self._operation._operation_snapshot())
+
+    @staticmethod
+    def _tracker_from(op_proto: object) -> object | None:
+        """Return a tracker from one stable operation snapshot."""
+
         if not _check_presence(op_proto, "progress_tracker"):
             return None
         return getattr(op_proto, "progress_tracker", None)
@@ -717,12 +737,13 @@ class _ProgressTrackerWrapper:
         return _get_work_done(tracker)
 
     def work_fraction(self) -> float | None:
-        if self._operation.done():
+        operation = self._operation._operation_snapshot()
+        if operation.status is not None:
             return 1.0
-        tracker = self._tracker()
+        tracker = self._tracker_from(operation)
         if tracker is None:
             return None
-        work_done = self.work_done()
+        work_done = _get_work_done(tracker)
         if work_done is None:
             return None
         total = getattr(work_done, "total_tick_count", 0)
@@ -732,21 +753,23 @@ class _ProgressTrackerWrapper:
         return float(done) / float(total)
 
     def estimated_finished_at(self) -> datetime | None:
-        tracker = self._tracker()
+        operation = self._operation._operation_snapshot()
+        tracker = self._tracker_from(operation)
         if tracker is None:
-            return _get_timestamp(self._operation._operation, "finished_at")
+            return _get_timestamp(operation, "finished_at")
         finished = _get_timestamp(tracker, "finished_at")
         if finished is not None:
             return finished
-        operation_finished = _get_timestamp(self._operation._operation, "finished_at")
+        operation_finished = _get_timestamp(operation, "finished_at")
         if operation_finished is not None:
             return operation_finished
         return _get_timestamp(tracker, "estimated_finished_at")
 
     def time_fraction(self) -> float | None:
-        if self._operation.done():
+        operation = self._operation._operation_snapshot()
+        if operation.status is not None:
             return 1.0
-        tracker = self._tracker()
+        tracker = self._tracker_from(operation)
         if tracker is None:
             return None
         started_at = _get_timestamp(tracker, "started_at")
@@ -813,9 +836,7 @@ def wrap_progress_tracker(
     """
     if operation is None:
         return None
-    op_proto = getattr(operation, "_operation", None)
-    if op_proto is None:
-        return None
+    op_proto = operation._operation_snapshot()
     if not _check_presence(op_proto, "progress_tracker"):
         return None
     tracker = getattr(op_proto, "progress_tracker", None)

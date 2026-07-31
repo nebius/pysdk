@@ -35,6 +35,12 @@ def _stop_event_loop(loop: asyncio.AbstractEventLoop, thread: Thread) -> None:
     assert not thread.is_alive()
 
 
+async def _checkout(channel: Channel, address: str) -> AddressChannel:
+    """Use the explicit async boundary for low-level pool test access."""
+
+    return await asyncio.to_thread(channel.get_channel_by_addr, address)
+
+
 def test_pooled_channels_are_reused_through_the_internal_loop() -> None:
     channel = Channel(
         options=[(INSECURE, True)],
@@ -42,7 +48,7 @@ def test_pooled_channels_are_reused_through_the_internal_loop() -> None:
     )
 
     async def checkout_and_return() -> object:
-        address_channel = channel.get_channel_by_addr("127.0.0.1:1")
+        address_channel = await _checkout(channel, "127.0.0.1:1")
         channel.return_channel(address_channel)
         return address_channel.channel
 
@@ -62,7 +68,7 @@ def test_idle_channel_is_owned_by_the_internal_loop_until_close() -> None:
     )
 
     async def checkout_and_return() -> AddressChannel:
-        address_channel = channel.get_channel_by_addr("127.0.0.1:1")
+        address_channel = await _checkout(channel, "127.0.0.1:1")
         channel.return_channel(address_channel)
         return address_channel
 
@@ -243,9 +249,9 @@ def test_pooled_channels_are_reused_on_the_same_event_loop() -> None:
     )
 
     async def checkout_twice() -> tuple[object, object]:
-        first = channel.get_channel_by_addr("127.0.0.1:1")
+        first = await _checkout(channel, "127.0.0.1:1")
         channel.return_channel(first)
-        second = channel.get_channel_by_addr("127.0.0.1:1")
+        second = await _checkout(channel, "127.0.0.1:1")
         channel.return_channel(second)
         return first.channel, second.channel
 
@@ -270,9 +276,9 @@ def test_legacy_address_channel_factory_override_is_compatible() -> None:
     channel = LegacyFactoryChannel(credentials=NoCredentials())
 
     async def checkout_twice() -> tuple[AddressChannel, AddressChannel]:
-        first = channel.get_channel_by_addr("127.0.0.1:1")
+        first = await _checkout(channel, "127.0.0.1:1")
         channel.return_channel(first)
-        second = channel.get_channel_by_addr("127.0.0.1:1")
+        second = await _checkout(channel, "127.0.0.1:1")
         channel.return_channel(second)
         return first, second
 
@@ -301,7 +307,7 @@ def test_legacy_constructor_keeps_creation_loop_ownership() -> None:
         legacy_wrapper: AddressChannel,
     ) -> AddressChannel:
         channel.return_channel(legacy_wrapper)
-        return channel.get_channel_by_addr(address)
+        return await _checkout(channel, address)
 
     try:
         legacy_wrapper = asyncio.run_coroutine_threadsafe(
@@ -383,7 +389,7 @@ def test_pool_limit_remains_global_across_event_loops() -> None:
     )
 
     async def checkout_and_return() -> None:
-        address_channel = channel.get_channel_by_addr(address)
+        address_channel = await _checkout(channel, address)
         channel.return_channel(address_channel)
 
     try:
@@ -407,7 +413,7 @@ def test_concurrent_returns_cannot_exceed_pool_limit() -> None:
     barrier = Barrier(2)
 
     async def checkout() -> AddressChannel:
-        return channel.get_channel_by_addr(address)
+        return await _checkout(channel, address)
 
     async def return_together(address_channel: AddressChannel) -> None:
         barrier.wait(timeout=5)
@@ -454,7 +460,7 @@ def test_close_closes_a_checked_out_transport() -> None:
 
     async def run() -> None:
         channel = RecordingChannel(credentials=NoCredentials())
-        channel.get_channel_by_addr("127.0.0.1:1")
+        await _checkout(channel, "127.0.0.1:1")
 
         await channel.close()
 
@@ -590,6 +596,129 @@ def test_release_after_close_preserves_direct_api_behavior() -> None:
     assert asyncio.run(run()) == (1, 1)
 
 
+@pytest.mark.parametrize("borrowed", [False, True])
+def test_close_drains_scheduled_unpooled_transport(borrowed: bool) -> None:
+    """SDK close waits for retained transport cleanup on its own loop."""
+
+    started = Event()
+    release = Event()
+    close_entered = Event()
+    close_done = Event()
+    errors: list[BaseException] = []
+    loop: asyncio.AbstractEventLoop | None = None
+    loop_thread: Thread | None = None
+    if borrowed:
+        loop, loop_thread = _start_event_loop()
+    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+
+    class SlowTransport:
+        async def close(self, grace: float | None = None) -> None:
+            started.set()
+            while not release.is_set():
+                await asyncio.sleep(0.01)
+
+    address_channel = AddressChannel(  # type: ignore[arg-type]
+        SlowTransport(),
+        "127.0.0.1:1",
+        channel._event_loop,
+    )
+    channel.discard_channel(address_channel)
+    assert started.wait(timeout=5)
+
+    def close() -> None:
+        try:
+            close_entered.set()
+            channel.sync_close(timeout=5)
+        except BaseException as error:
+            errors.append(error)
+        finally:
+            close_done.set()
+
+    closer = Thread(target=close)
+    closer.start()
+    assert close_entered.wait(timeout=5)
+    assert not close_done.wait(timeout=0.1)
+    release.set()
+    closer.join(timeout=5)
+
+    assert not closer.is_alive()
+    assert errors == []
+    if loop is not None and loop_thread is not None:
+        _stop_event_loop(loop, loop_thread)
+
+
+def test_get_close_dispatch_race_raises_channel_closed() -> None:
+    """A close that wins after the pool check keeps the pool exception type."""
+
+    channel = Channel(credentials=NoCredentials())
+    entered = Event()
+    resume = Event()
+    original_run_sync = channel._runtime.run_sync
+    errors: list[BaseException] = []
+
+    def paused_run_sync(awaitable: object, timeout: float | None = None) -> object:
+        entered.set()
+        resume.wait(timeout=5)
+        return original_run_sync(awaitable, timeout)  # type: ignore[arg-type]
+
+    channel._runtime.run_sync = paused_run_sync  # type: ignore[method-assign]
+
+    def checkout() -> None:
+        try:
+            channel.get_channel_by_addr("127.0.0.1:1")
+        except BaseException as error:
+            errors.append(error)
+
+    worker = Thread(target=checkout)
+    worker.start()
+    assert entered.wait(timeout=5)
+    channel.sync_close(timeout=5)
+    resume.set()
+    worker.join(timeout=5)
+
+    assert not worker.is_alive()
+    assert len(errors) == 1
+    assert isinstance(errors[0], ChannelClosedError)
+
+
+def test_return_close_dispatch_race_raises_channel_closed() -> None:
+    """Direct return preserves ChannelClosedError when close wins dispatch."""
+
+    channel = Channel(
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+    address_channel = channel.get_channel_by_addr("127.0.0.1:1")
+    entered = Event()
+    resume = Event()
+    original_run_sync = channel._runtime.run_sync
+    errors: list[BaseException] = []
+
+    def paused_run_sync(awaitable: object, timeout: float | None = None) -> object:
+        entered.set()
+        resume.wait(timeout=5)
+        return original_run_sync(awaitable, timeout)  # type: ignore[arg-type]
+
+    channel._runtime.run_sync = paused_run_sync  # type: ignore[method-assign]
+
+    def return_channel() -> None:
+        try:
+            channel.return_channel(address_channel)
+        except BaseException as error:
+            errors.append(error)
+
+    worker = Thread(target=return_channel)
+    worker.start()
+    assert entered.wait(timeout=5)
+    channel.sync_close(timeout=5)
+    resume.set()
+    worker.join(timeout=5)
+
+    assert not worker.is_alive()
+    assert len(errors) == 1
+    assert isinstance(errors[0], ChannelClosedError)
+
+
 def test_release_does_not_close_a_reclaimed_lease_twice() -> None:
     class RecordingTransport:
         def __init__(self) -> None:
@@ -617,8 +746,8 @@ def test_release_does_not_close_a_reclaimed_lease_twice() -> None:
 
     async def run() -> tuple[int, int]:
         channel = RecordingChannel()
-        internal = channel.get_channel_by_addr("127.0.0.1:1")
-        direct = channel.get_channel_by_addr("127.0.0.1:2")
+        internal = await _checkout(channel, "127.0.0.1:1")
+        direct = await _checkout(channel, "127.0.0.1:2")
 
         await channel.close()
 

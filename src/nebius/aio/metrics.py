@@ -48,7 +48,11 @@ from threading import Lock
 from time import monotonic
 from typing import Literal, SupportsFloat, SupportsIndex, cast
 
-from nebius.aio._task_context import bridge_awaitable, task_scheduler
+from nebius.aio._task_context import (
+    bridge_awaitable,
+    dispose_unstarted_awaitable,
+    task_scheduler,
+)
 from nebius.aio.token.token import Bearer as _TokenBearer
 from nebius.aio.token.token import Receiver as _TokenReceiver
 from nebius.aio.token.token import Token as _Token
@@ -468,11 +472,54 @@ def _schedule_metric_awaitable(
     timeout_seconds = sanitize_metric_callback_timeout_seconds(timeout)
     scheduler = task_scheduler.get()
     if scheduler is not None:
-        wrapped = _swallow_metric_awaitable(awaitable, timeout_seconds)
+        state_lock = Lock()
+        started = False
+        closed_before_start = False
+
+        async def run() -> None:
+            """Claim and run the callback unless cancellation closed it."""
+
+            nonlocal started
+            with state_lock:
+                if closed_before_start:
+                    return
+                started = True
+            await _swallow_metric_awaitable(awaitable, timeout_seconds)
+
+        wrapped = run()
         try:
-            scheduler(wrapped)
+            scheduled = scheduler(wrapped)
         except (CancelledError, Exception):
             wrapped.close()
+            with state_lock:
+                closed_before_start = True
+                should_close = not started
+            if should_close:
+                dispose_unstarted_awaitable(awaitable)
+        else:
+            add_done_callback = getattr(
+                scheduled,
+                "_add_internal_done_callback",
+                None,
+            )
+            if not callable(add_done_callback):
+                add_done_callback = getattr(scheduled, "add_done_callback", None)
+            if callable(add_done_callback):
+
+                def close_cancelled(completed: object) -> None:
+                    """Close a callback coroutine cancelled before it starts."""
+
+                    nonlocal closed_before_start
+                    cancelled = getattr(completed, "cancelled", None)
+                    if not callable(cancelled) or not cancelled():
+                        return
+                    with state_lock:
+                        if started:
+                            return
+                        closed_before_start = True
+                    dispose_unstarted_awaitable(awaitable)
+
+                add_done_callback(close_cancelled)
         return
     try:
         get_running_loop()
@@ -511,9 +558,7 @@ def _run_metric_awaitable(awaitable: Awaitable[object], timeout: float) -> None:
     try:
         asyncio_run(_swallow_metric_awaitable(awaitable, timeout))
     except (CancelledError, Exception):
-        close = getattr(awaitable, "close", None)
-        if callable(close):
-            close()
+        dispose_unstarted_awaitable(awaitable)
 
 
 def _apply_metrics_setter(

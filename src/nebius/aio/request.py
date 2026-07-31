@@ -16,6 +16,7 @@ The request logic is central to SDK call semantics. Make only small changes
 that do not affect behavior.
 """
 
+import os
 from asyncio import CancelledError, ensure_future, get_running_loop, wait_for
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
@@ -24,6 +25,7 @@ from threading import Lock
 from time import time
 from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
+from google.protobuf.message import Message as ProviderMessage
 from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import AioRpcError
 from grpc.aio import Metadata as GrpcMetadata
@@ -36,6 +38,8 @@ from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
+from nebius.base.protos.direct import Message as DirectMessage
+from nebius.base.protos.pb_classes import Message as LegacyMessage
 from nebius.base.protos.unset import Unset, UnsetType
 
 from .request_status import RequestStatus, UnfinishedRequestStatus
@@ -53,6 +57,33 @@ Err = TypeVar("Err")
 T = TypeVar("T")
 
 log = getLogger(__name__)
+
+
+def _snapshot_request_input(value: T) -> T:
+    """Clone a supported message before it crosses to the SDK event loop.
+
+    Direct generated messages and provider protobuf messages expose
+    ``CopyFrom``. Legacy SDK wrappers expose their provider protobuf through
+    ``__pb2_message__``. Unknown loop-neutral payload types retain their
+    historical pass-through behavior.
+
+    :param value: Request value to snapshot.
+    :return: Independent message, or ``value`` for an unknown payload type.
+    """
+
+    if isinstance(value, LegacyMessage):
+        provider_message = value.__pb2_message__
+        provider_copy = type(provider_message)()
+        provider_copy.CopyFrom(provider_message)
+        value_type = cast(Any, type(value))
+        return cast(T, value_type(provider_copy))
+
+    if isinstance(value, (DirectMessage, ProviderMessage)):
+        copied = cast(Any, type(value))()
+        copied_copy_from = cast(Callable[[T], None], copied.CopyFrom)
+        copied_copy_from(value)
+        return cast(T, copied)
+    return value
 
 
 class RequestError(SDKError):
@@ -255,6 +286,7 @@ class Request(Generic[Req, Res]):
         Initialize the request with the provided parameters.
         """
         self._channel = channel
+        self._process_id = os.getpid()
         self._input = request
         self._service = service
         self._method = method
@@ -302,6 +334,15 @@ class Request(Generic[Req, Res]):
         self._future: Awaitable[Res] | None = None
         self._future_lock = Lock()
 
+    def _check_process(self) -> None:
+        """Reject a request inherited by a child process before locking."""
+
+        if os.getpid() != self._process_id:
+            raise RuntimeError(
+                "an SDK request cannot be used after fork; fork before "
+                "creating any SDK objects"
+            )
+
     def __repr__(self) -> str:
         """Return a short representation including service, method and status."""
         return (
@@ -311,12 +352,14 @@ class Request(Generic[Req, Res]):
 
     def done(self) -> bool:
         """Return True if the underlying gRPC call has completed."""
+        self._check_process()
         future = self._future
         done = getattr(future, "done", None)
         return bool(done()) if callable(done) else False
 
     def cancelled(self) -> bool:
         """Return True if the call was cancelled (locally or remotely)."""
+        self._check_process()
         future = self._future
         cancelled = getattr(future, "cancelled", None)
         if callable(cancelled) and cancelled():
@@ -330,6 +373,7 @@ class Request(Generic[Req, Res]):
         If the gRPC call exists, cancel that call. Otherwise, set a local flag
         to prevent the request from sending the call.
         """
+        self._check_process()
         with self._future_lock:
             if self._cancelled:
                 return False
@@ -349,10 +393,17 @@ class Request(Generic[Req, Res]):
     def input_metadata(self) -> Metadata:
         """Return the metadata that will be sent with the request (mutable).
 
-        This object may be modified by authenticators before the request is
-        sent.
+        Before first submission, callers may modify the returned object. The
+        SDK snapshots it when the request is first awaited or synchronously
+        waited. After submission this method returns a copy, so external
+        mutation cannot race authorization or transport processing on the SDK
+        loop.
         """
-        return self._input_metadata
+        self._check_process()
+        with self._future_lock:
+            if self._future is None:
+                return self._input_metadata
+            return Metadata(self._input_metadata)
 
     @property
     def timeout(self) -> float | None:
@@ -364,6 +415,7 @@ class Request(Generic[Req, Res]):
 
     @timeout.setter
     def timeout(self, timeout: float | None) -> None:
+        self._check_process()
         with self._future_lock:
             if self._future is not None:
                 raise RequestIsSentError()
@@ -376,6 +428,7 @@ class Request(Generic[Req, Res]):
 
     @credentials.setter
     def credentials(self, credentials: CallCredentials | None) -> None:
+        self._check_process()
         with self._future_lock:
             if self._future is not None:
                 raise RequestIsSentError()
@@ -388,6 +441,7 @@ class Request(Generic[Req, Res]):
 
     @wait_for_ready.setter
     def wait_for_ready(self, wait_for_ready: bool | None) -> None:
+        self._check_process()
         with self._future_lock:
             if self._future is not None:
                 raise RequestIsSentError()
@@ -400,6 +454,7 @@ class Request(Generic[Req, Res]):
 
     @compression.setter
     def compression(self, compression: Compression | None) -> None:
+        self._check_process()
         with self._future_lock:
             if self._future is not None:
                 raise RequestIsSentError()
@@ -907,8 +962,12 @@ class Request(Generic[Req, Res]):
         This helper memoizes the created Future so the underlying request is
         executed only once even if multiple awaiters call it.
         """
+        self._check_process()
         with self._future_lock:
             if self._future is None:
+                self._input = _snapshot_request_input(self._input)
+                self._input_metadata = Metadata(self._input_metadata)
+                self._auth_options = dict(self._auth_options)
                 coroutine = self._request_with_authorization_loop()
                 submit = getattr(self._channel, "run_async", None)
                 submitted = (
@@ -924,6 +983,7 @@ class Request(Generic[Req, Res]):
         The first await schedules the internal request; awaiting a finished
         request raises a RuntimeError to prevent double-execution semantics.
         """
+        self._check_process()
         with self._future_lock:
             if self._awaited:
                 raise RuntimeError("cannot await the finished coroutine")

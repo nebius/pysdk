@@ -1,8 +1,16 @@
-"""High-level gRPC channel manager for the Nebius Python SDK."""
+"""High-level gRPC channel manager for the Nebius Python SDK.
 
+Channel locks follow one order. Code can acquire ``_channel_pool_lock`` before
+``_tasks_lock`` or a runtime lock, and ``_close_submit_lock`` before a runtime
+lock. It must not acquire these locks in reverse order. No code awaits, joins a
+thread, or waits for a future while it holds a channel lock. SDK task objects
+are copied under their lock and then cancelled or awaited after the lock is
+released.
+"""
+
+import os
 import sys
 from asyncio import (
-    FIRST_COMPLETED,
     AbstractEventLoop,
     CancelledError,
     Event,
@@ -11,23 +19,21 @@ from asyncio import (
     gather,
     get_event_loop,
     get_running_loop,
-    iscoroutine,
     run_coroutine_threadsafe,
     shield,
-    sleep,
-    wait,
     wrap_future,
 )
 from collections.abc import Awaitable, Callable, Coroutine, Generator, Mapping, Sequence
+from concurrent.futures import CancelledError as ConcurrentCancelledError
 from concurrent.futures import Future as ConcurrentFuture
 from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from contextlib import suppress
-from inspect import isawaitable
+from functools import wraps
 from logging import getLogger
 from pathlib import Path
 from threading import Lock
 from time import monotonic
-from typing import Any, TextIO, TypeVar, cast
+from typing import Any, Concatenate, ParamSpec, TextIO, TypeVar, cast
 from weakref import finalize
 
 from google.protobuf.message import Message
@@ -111,7 +117,7 @@ from nebius.base.tls_certificates import get_system_certificates
 from nebius.base.version import version
 
 from ._runtime import AsyncRuntime, CrossLoopAwaitable
-from ._task_context import bridge_awaitable
+from ._task_context import bridge_awaitable, dispose_unstarted_awaitable
 from .base import AddressChannel, ChannelBase
 
 logger = getLogger(__name__)
@@ -120,6 +126,57 @@ Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)
 
 T = TypeVar("T")
+P = ParamSpec("P")
+C = TypeVar("C")
+
+
+def _finalize_runtime(runtime: AsyncRuntime, process_id: int) -> None:
+    """Shut down a runtime only in the process that created it.
+
+    Threads and locks do not survive ``fork`` coherently. A child finalizer
+    must therefore avoid touching inherited runtime state.
+
+    :param runtime: Runtime owned by the finalized channel.
+    :param process_id: Process that created ``runtime``.
+    """
+
+    if os.getpid() == process_id:
+        runtime.shutdown_async()
+
+
+def _shutdown_runtime_on_init_failure(
+    initializer: Callable[Concatenate[C, P], None],
+) -> Callable[Concatenate[C, P], None]:
+    """Stop a partially constructed channel's runtime before re-raising.
+
+    A constructor traceback can retain the incomplete channel, so its weakref
+    finalizer is not a timely resource boundary. This wrapper provides the
+    same eager cleanup for every exception after runtime creation without
+    obscuring the constructor's public signature or documentation.
+
+    :param initializer: Channel initializer to guard.
+    :return: Initializer that stops an acquired runtime on failure.
+    """
+
+    @wraps(initializer)
+    def guarded(instance: C, *args: P.args, **kwargs: P.kwargs) -> None:
+        """Run the initializer and clean up a partial runtime on failure."""
+
+        try:
+            initializer(instance, *args, **kwargs)
+        except BaseException:
+            runtime = getattr(instance, "_runtime", None)
+            finalizer = getattr(instance, "_runtime_finalizer", None)
+            if finalizer is not None:
+                finalizer.detach()
+            if runtime is not None:
+                if runtime.event_loop.is_running():
+                    runtime.shutdown_async()._result()
+                else:
+                    runtime.shutdown()
+            raise
+
+    return cast(Callable[Concatenate[C, P], None], guarded)
 
 
 class LoopError(SDKError):
@@ -205,6 +262,37 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._address_channel: AddressChannel | None = None
         self._released = False
         self._submitted = channel.run_async(self._invoke())
+        self._submitted._add_internal_done_callback(self._submission_finished)
+
+    def _submission_finished(self, submitted: CrossLoopAwaitable[Res]) -> None:
+        """Publish terminal state when cancellation prevents call creation.
+
+        Cancellation can arrive through an external task awaiting this call,
+        not only through :meth:`cancel`. In either case the SDK coroutine may
+        never start, so no ``finally`` block can signal ``_call_ready``.
+
+        :param submitted: Completed SDK submission.
+        """
+
+        if submitted.cancelled() and self._call is None:
+            self._publish_prestart_cancellation()
+
+    def _publish_prestart_cancellation(self) -> None:
+        """Cache the standard local-cancellation status and wake waiters."""
+
+        with self._terminal_lock:
+            self._terminal.update(
+                {
+                    "initial_metadata": GrpcMetadata(),
+                    "trailing_metadata": GrpcMetadata(),
+                    "code": StatusCode.CANCELLED,
+                    "details": "Locally cancelled by application!",
+                }
+            )
+        try:
+            self._submitted.event_loop.call_soon_threadsafe(self._call_ready.set)
+        except RuntimeError:
+            pass
 
     async def _invoke(self) -> Res:
         """Create and run the native call on the SDK event loop."""
@@ -238,12 +326,20 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             result = await call
             await self._capture_terminal(call)
             return result
-        except BaseException:
+        except CancelledError:
+            discard = True
+            raise
+        except Exception:
             discard = True
             failed_call = self._call
             if failed_call is not None:
-                with suppress(BaseException):
+                # A new cancellation must propagate instead of being hidden by
+                # best-effort terminal-status capture.
+                with suppress(Exception):
                     await self._capture_terminal(failed_call)
+            raise
+        except BaseException:
+            discard = True
             raise
         finally:
             self._call_ready.set()
@@ -299,6 +395,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :return: Result of the named method.
         """
 
+        self._submitted._check_process()
         with self._terminal_lock:
             if method in self._terminal:
                 return self._terminal[method]
@@ -317,19 +414,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         cancelled = self._submitted.cancel()
         if cancelled and self._call is None:
-            with self._terminal_lock:
-                self._terminal.update(
-                    {
-                        "initial_metadata": GrpcMetadata(),
-                        "trailing_metadata": GrpcMetadata(),
-                        "code": StatusCode.CANCELLED,
-                        "details": "Locally cancelled by application!",
-                    }
-                )
-            try:
-                self._submitted.event_loop.call_soon_threadsafe(self._call_ready.set)
-            except RuntimeError:
-                pass
+            self._publish_prestart_cancellation()
         return cancelled
 
     def cancelled(self) -> bool:
@@ -352,10 +437,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
     def add_done_callback(self, callback: Callable[[Any], None]) -> None:
         """Add a function to call when the RPC is complete.
 
-        The callback follows concurrent-future thread rules. It normally runs
-        on the SDK completion thread. If the RPC is already complete, it runs
-        immediately on the registering thread. It does not run automatically
-        on the caller's event loop.
+        The callback is scheduled asynchronously on the event loop active at
+        registration. If no loop is active, it is scheduled on the SDK loop.
 
         :param callback: Function that receives this call.
         """
@@ -620,89 +703,12 @@ class _RuntimeAuthorizationProvider(AuthorizationProvider):
         return _RuntimeAuthenticator(self._channel, authenticator)
 
 
-def _wrap_awaitable(awaitable: Awaitable[T]) -> Coroutine[Any, Any, T]:
-    """Ensure the provided awaitable is a coroutine object.
-
-    gRPC helper functions in this module accept both coroutine objects and
-    other awaitable types (for example :class:`asyncio.Future`). This function
-    normalizes them into a coroutine so that they can be wrapped in an
-    :class:`asyncio.Task` safely.
-
-    :param awaitable: Any awaitable or coroutine-like object.
-    :return: A coroutine object ready to be scheduled.
-    :raises TypeError: If the argument is not awaitable.
-    """
-
-    if iscoroutine(awaitable):
-        return awaitable
-    if not isawaitable(awaitable):
-        raise TypeError(
-            "An asyncio.Future, a coroutine or an awaitable is "
-            + f"required, {type(awaitable)} given"
-        )
-
-    async def wrap() -> T:
-        """Adapter coroutine that awaits the supplied awaitable and returns
-        its result.
-
-        This small wrapper is used to convert generic awaitable objects into
-        a true coroutine so they can be scheduled as an :class:`asyncio.Task`.
-        """
-        return await awaitable
-
-    return wrap()
-
-
 def _get_working_loop() -> AbstractEventLoop:
     """Return the loop that a newly created gRPC AsyncIO channel will use."""
     try:
         return get_running_loop()
     except RuntimeError:
         return get_event_loop()
-
-
-async def _run_awaitable_with_timeout(
-    f: Awaitable[T],
-    timeout: float | None = None,
-) -> T:
-    """Run an awaitable with an optional wall-clock timeout.
-
-    The function creates an :class:`asyncio.Task` from the provided awaitable
-    and, if a timeout is supplied, a short timer task. It waits for the first
-    task to finish. If the timer completes first the awaited task is
-    cancelled and a :class:`TimeoutError` is raised. Exceptions raised by the
-    awaited task are propagated.
-
-    :param f: The awaitable to run.
-    :param timeout: Optional timeout in seconds. If ``None`` the awaitable is
-        allowed to run indefinitely.
-    :return: The awaited result.
-    :raises TimeoutError: If the awaitable did not finish before the timeout.
-    """
-
-    task = Task(_wrap_awaitable(f), name=f"Task for {f=}")
-    tasks: list[Task[Any]] = list[Task[Any]]([task])
-    if timeout is not None:
-        timer = Task(sleep(timeout), name=f"Timer for {f=}")
-        tasks.append(timer)
-    done, pending = await wait(
-        tasks,
-        return_when=FIRST_COMPLETED,
-    )
-    for p in pending:
-        logger.debug(f"Canceling pending task {p}")
-        p.cancel()
-    await gather(*pending, return_exceptions=True)
-    try:
-        if task.exception() is not None:
-            if task not in done:
-                raise TimeoutError("Awaitable timed out") from task.exception()
-            raise task.exception()  # type: ignore
-    except CancelledError as e:
-        if task not in done:
-            raise TimeoutError("Awaitable timed out") from e
-        raise e
-    return task.result()
 
 
 def set_user_agent_option(
@@ -920,8 +926,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     :param event_loop:
         Optional already-running asyncio event loop used for all SDK work.
         The caller retains ownership: :meth:`close` does not stop the loop or
-        replace its default executor. If omitted, the Channel eagerly starts
-        and owns a dedicated daemon loop thread.
+        replace its default executor. The caller must keep it running and
+        responsive until close completes. If omitted, the Channel eagerly
+        starts and owns a dedicated daemon loop thread.
     :type event_loop: optional :class:`AbstractEventLoop`
 
     :param executor_max_workers:
@@ -958,6 +965,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     :type federation_invitation_no_browser_open: optional bool
     """
 
+    @_shutdown_runtime_on_init_failure
     def __init__(
         self,
         *,
@@ -1032,9 +1040,15 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._metrics = metrics
         self._auth_metrics = metrics if metrics is not None else auth_metrics
+        self._process_id = os.getpid()
         self._runtime = AsyncRuntime(event_loop, executor_max_workers)
         self._event_loop = self._runtime.event_loop
-        self._runtime_finalizer = finalize(self, self._runtime.shutdown_async)
+        self._runtime_finalizer = finalize(
+            self,
+            _finalize_runtime,
+            self._runtime,
+            self._process_id,
+        )
         self._close_submit_lock = Lock()
         self._close_handle: CrossLoopAwaitable[None] | None = None
         self._closed = False
@@ -1067,6 +1081,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._gracefuls = set[GracefulInterface]()
         self._tasks = set[Any]()
+        self._transport_closes = dict[
+            int,
+            tuple[AddressChannel, CrossLoopAwaitable[None] | None],
+        ]()
         self._tasks_lock = Lock()
 
         self._resolver: Resolver = Conventional()
@@ -1342,6 +1360,27 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         return self._parent_id
 
+    def _check_process(self, awaitable: Awaitable[Any] | None = None) -> None:
+        """Reject a channel inherited from another process before locking.
+
+        After ``fork``, inherited Python locks may be permanently owned by
+        vanished threads. gRPC and event-loop state is not reusable. An
+        application must fork before it creates SDK or gRPC objects. It must
+        create separate SDK objects after each child starts.
+
+        :param awaitable: Optional coroutine to close when rejecting it.
+        :raises RuntimeError: If this process did not create the channel.
+        """
+
+        if os.getpid() == self._process_id:
+            return
+        if awaitable is not None:
+            dispose_unstarted_awaitable(awaitable)
+        raise RuntimeError(
+            "an SDK channel cannot be used after fork; construct SDK objects "
+            "only after the child process starts"
+        )
+
     def run_async(self, awaitable: Awaitable[T]) -> CrossLoopAwaitable[T]:
         """Submit SDK work to the channel's event loop.
 
@@ -1354,13 +1393,14 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises ChannelClosedError: If channel close has started.
         """
 
+        self._check_process(awaitable)
         with self._channel_pool_lock:
             if self._closed:
-                close = getattr(awaitable, "close", None)
-                if callable(close):
-                    close()
-                raise ChannelClosedError("Channel is closed")
-            return self._runtime.submit(awaitable)
+                rejection = ChannelClosedError("Channel is closed")
+            else:
+                return self._runtime.submit(awaitable)
+        dispose_unstarted_awaitable(awaitable)
+        raise rejection
 
     def _run_sdk_callable(
         self,
@@ -1382,20 +1422,33 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
             return callable_(*args)
 
-        return self._runtime.run_sync(call())
+        return self.run_sync(call())
 
     def bg_task(self, coro: Awaitable[T]) -> CrossLoopAwaitable[None]:
         """Run an awaitable in the background.
 
         The channel tracks the returned awaitable and cancels it during
         :meth:`close`. The method logs exceptions other than cancellation.
+        The result is not an :class:`asyncio.Task`; wrap it with
+        :func:`asyncio.ensure_future` before passing it to
+        :func:`asyncio.wait`.
 
         :param coro: Work to run in the background.
         :return: Cross-loop awaitable that completes after the background work.
         """
 
+        state_lock = Lock()
+        started = False
+        closed_before_start = False
+
         async def wrapper() -> None:
-            """Run background work and log its exception."""
+            """Claim and run background work unless cancellation closed it."""
+
+            nonlocal started
+            with state_lock:
+                if closed_before_start:
+                    return
+                started = True
 
             try:
                 await bridge_awaitable(coro)
@@ -1404,10 +1457,34 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             except Exception as e:
                 logger.error("Unhandled exception in Channel.bg_task", exc_info=e)
 
-        ret = self.run_async(wrapper())
+        wrapped = wrapper()
+        try:
+            ret = self.run_async(wrapped)
+        except BaseException:
+            wrapped.close()
+            with state_lock:
+                closed_before_start = True
+                should_close = not started
+            if should_close:
+                dispose_unstarted_awaitable(coro)
+            raise
+
+        def close_cancelled(completed: CrossLoopAwaitable[None]) -> None:
+            """Close caller work when cancellation prevents wrapper startup."""
+
+            nonlocal closed_before_start
+            if not completed.cancelled():
+                return
+            with state_lock:
+                if started:
+                    return
+                closed_before_start = True
+            dispose_unstarted_awaitable(coro)
+
+        ret._add_internal_done_callback(close_cancelled)
         with self._tasks_lock:
             self._tasks.add(ret)
-        ret.add_done_callback(self._discard_background_task)
+        ret._add_internal_done_callback(self._discard_background_task)
         return ret
 
     def _discard_background_task(self, task: CrossLoopAwaitable[Any]) -> None:
@@ -1423,42 +1500,40 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """Run an awaitable to completion on the channel's event loop.
 
         This method blocks the calling thread. It rejects calls from the SDK
-        event loop. When the SDK owns its loop, it also rejects calls from any
-        other running event loop. When the caller supplies the SDK loop, the
-        method permits a call from a different running loop and blocks that
-        loop until the result is ready.
+        event loop and from any other running event loop. Async callers must
+        await the cross-loop handle so their loop can continue making
+        progress.
 
         :param awaitable: The awaitable to run to completion.
         :param timeout: Optional maximum wait time in seconds.
         :return: The awaitable's result.
-        :raises LoopError: If the caller runs on the SDK loop, or if the SDK
-            owns its loop and the caller runs in any asynchronous context.
+        :raises LoopError: If the caller runs in any asynchronous context or
+            is one of the SDK's owned executor workers.
         :raises TimeoutError: If the time limit expires.
         """
 
+        self._check_process(awaitable)
+        if self._runtime.in_executor_thread():
+            dispose_unstarted_awaitable(awaitable)
+            raise LoopError(
+                "Cannot synchronously call the SDK from its executor worker; "
+                "return to the caller or use asynchronous SDK work."
+            )
         try:
             current_loop = get_running_loop()
         except RuntimeError:
             current_loop = None
         if current_loop is not None:
+            dispose_unstarted_awaitable(awaitable)
             if current_loop is self._event_loop:
-                close = getattr(awaitable, "close", None)
-                if callable(close):
-                    close()
                 raise LoopError(
-                    "Provided loop is equal to current thread's "
-                    "loop. Either use async/await or provide "
-                    "another loop at the SDK initialization."
+                    "Provided loop is equal to current thread's loop. Either use "
+                    "async/await or provide another loop at the SDK initialization."
                 )
-            if self._runtime.owned:
-                close = getattr(awaitable, "close", None)
-                if callable(close):
-                    close()
-                raise LoopError(
-                    "Synchronous call inside async context. Either use "
-                    "async/await or provide a safe and separate loop "
-                    "to run at the SDK initialization."
-                )
+            raise LoopError(
+                "Synchronous call inside async context. Either use async/await or "
+                "provide a safe and separate loop to run at the SDK initialization."
+            )
 
         return self._runtime.run_sync(awaitable, timeout)
 
@@ -1470,10 +1545,18 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         :param timeout: Optional timeout in seconds for the shutdown.
         :type timeout: optional float
+        :raises LoopError: If called from the SDK event loop, an asynchronous
+            context, or an SDK-owned executor worker.
         :raises TimeoutError: If the shutdown did not complete within the
             supplied timeout.
         """
 
+        self._check_process()
+        if self._runtime.in_executor_thread():
+            raise LoopError(
+                "Cannot synchronously close the SDK from its executor worker; "
+                "initiate shutdown outside the SDK executor."
+            )
         if self._runtime.in_event_loop():
             raise LoopError(
                 "Cannot synchronously close the SDK from its event loop; "
@@ -1483,7 +1566,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             current_loop = get_running_loop()
         except RuntimeError:
             current_loop = None
-        if current_loop is not None and self._runtime.owned:
+        if current_loop is not None:
             raise LoopError(
                 "Cannot synchronously close the SDK from an async context; "
                 "await close() instead."
@@ -1500,18 +1583,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         closing = self._get_close_handle(None)
         try:
-            closing.result(remaining())
+            closing._result(remaining())
         except ConcurrentTimeoutError:
-            closing.add_done_callback(lambda _: self._runtime.shutdown_async())
+            closing._add_internal_done_callback(
+                lambda _: self._runtime.shutdown_async()
+            )
             raise TimeoutError("SDK shutdown timed out") from None
         except BaseException:
             shutdown = self._runtime.shutdown_async()
-            shutdown.result(remaining())
+            shutdown._result(remaining())
             raise
 
         shutdown = self._runtime.shutdown_async()
         try:
-            shutdown.result(remaining())
+            shutdown._result(remaining())
         except ConcurrentTimeoutError:
             raise TimeoutError("SDK shutdown timed out") from None
 
@@ -1526,8 +1611,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param grace: Optional per-transport grace period passed to underlying
             channel close methods.
         :type grace: optional float
+        :raises LoopError: If called from an SDK-owned executor worker. Such a
+            worker cannot wait for shutdown of the finite pool it belongs to.
         """
 
+        self._check_process()
+        if self._runtime.in_executor_thread():
+            raise LoopError(
+                "Cannot close the SDK from its executor worker; initiate and "
+                "await close from outside the SDK executor."
+            )
         current_submission = self._runtime.protect_current_submission()
         completion = self._close_completion
         if completion is not None and completion.done():
@@ -1551,7 +1644,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 )
                 self._runtime.mark_current_submission_close_returning()
             else:
-                closing.add_done_callback(lambda _: self._runtime.shutdown_async())
+                closing._add_internal_done_callback(
+                    lambda _: self._runtime.shutdown_async()
+                )
 
     def _shutdown_after_internal_caller(
         self,
@@ -1571,7 +1666,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if closing is None or closing.done():
             self._runtime.shutdown_async()
         else:
-            closing.add_done_callback(lambda _: self._runtime.shutdown_async())
+            closing._add_internal_done_callback(
+                lambda _: self._runtime.shutdown_async()
+            )
 
     def _get_close_handle(
         self,
@@ -1633,9 +1730,23 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     awaits.append(self._close_address_channel(chan, grace))
                 for graceful in gracefuls:
                     awaits.append(graceful.close(grace))
+                with self._tasks_lock:
+                    transport_closes = list(self._transport_closes.values())
+                    self._transport_closes.clear()
+                transport_tasks = list[CrossLoopAwaitable[None]]()
+                for chan, closing in transport_closes:
+                    if closing is None:
+                        awaits.append(self._close_address_channel(chan, grace))
+                    else:
+                        transport_tasks.append(closing)
                 for task in tasks:
                     task.cancel()
-                rets = await gather(*awaits, *tasks, return_exceptions=True)
+                rets = await gather(
+                    *awaits,
+                    *tasks,
+                    *transport_tasks,
+                    return_exceptions=True,
+                )
                 for ret in rets:
                     if isinstance(ret, BaseException) and not isinstance(
                         ret,
@@ -1721,6 +1832,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             service (for example ``'host:port'`` or a resolver template
             expanded value).
         :rtype: str
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
         """
 
         service = from_stub_class(service_stub_class)
@@ -1736,11 +1849,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             conventions.
         :return: Resolved address string.
         :rtype: str
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
         """
 
         runtime = cast(AsyncRuntime | None, getattr(self, "_runtime", None))
         if runtime is not None and not runtime.in_event_loop():
-            return runtime.run_sync(self._get_addr_from_service_name(service_name))
+            return self.run_sync(self._get_addr_from_service_name(service_name))
         return self._get_addr_from_service_name_internal(service_name)
 
     async def _get_addr_from_service_name(self, service_name: str) -> str:
@@ -1773,11 +1888,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param method_name: Full RPC method string (``'/package.service/Method'``).
         :return: Resolved address string.
         :rtype: str
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
         """
 
         runtime = cast(AsyncRuntime | None, getattr(self, "_runtime", None))
         if runtime is not None and not runtime.in_event_loop():
-            return runtime.run_sync(self._get_addr_by_method(method_name))
+            return self.run_sync(self._get_addr_by_method(method_name))
         return self._get_addr_by_method_internal(method_name)
 
     async def _get_addr_by_method(self, method_name: str) -> str:
@@ -1804,10 +1921,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         return self._methods[method_name]
 
     def get_addr_by_route(self, route: Route) -> str:
-        """Resolve immutable generated route metadata without global descriptors."""
+        """Resolve immutable generated route metadata without global descriptors.
+
+        :param route: Generated route metadata.
+        :return: Resolved address string.
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
+        """
         runtime = cast(AsyncRuntime | None, getattr(self, "_runtime", None))
         if runtime is not None and not runtime.in_event_loop():
-            return runtime.run_sync(self._get_addr_by_route(route))
+            return self.run_sync(self._get_addr_by_route(route))
         return self._get_addr_by_route_internal(route)
 
     async def _get_addr_by_route(self, route: Route) -> str:
@@ -1874,6 +1997,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :return: An :class:`AddressChannel` wrapper for a gRPC channel.
         :rtype: :class:`AddressChannel`
         :raises ChannelClosedError: If the SDK channel has already been closed.
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
 
         .. warning::
            ``AddressChannel.channel`` is a native ``grpc.aio.Channel`` owned
@@ -1881,11 +2006,18 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
            clients or :meth:`unary_unary` for cross-loop call handling.
         """
 
+        self._check_process()
         with self._channel_pool_lock:
             if self._closed:
                 raise ChannelClosedError("Channel closed")
         if not self._runtime.in_event_loop():
-            return self._runtime.run_sync(self._get_channel_by_addr(addr))
+            try:
+                return self.run_sync(self._get_channel_by_addr(addr))
+            except (RuntimeError, ConcurrentCancelledError):
+                with self._channel_pool_lock:
+                    if self._closed:
+                        raise ChannelClosedError("Channel closed") from None
+                raise
         return self._get_channel_by_addr_internal(addr)
 
     async def _get_channel_by_addr(self, addr: str) -> AddressChannel:
@@ -1982,6 +2114,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             ``raise_if_closed`` is ``True``.
         """
 
+        self._check_process()
         if chan is None:
             return
         with self._channel_pool_lock:
@@ -2001,13 +2134,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 raise_if_closed=raise_if_closed,
             )
             return
-        self._runtime.run_sync(
-            self._release_address_channel_async(
-                chan,
-                discard=discard,
-                raise_if_closed=raise_if_closed,
+        try:
+            self._runtime.run_sync(
+                self._release_address_channel_async(
+                    chan,
+                    discard=discard,
+                    raise_if_closed=raise_if_closed,
+                )
             )
-        )
+        except (RuntimeError, ConcurrentCancelledError):
+            with self._channel_pool_lock:
+                if not self._closed:
+                    raise
+            if raise_if_closed:
+                raise ChannelClosedError("Channel closed") from None
 
     async def _release_address_channel_async(
         self,
@@ -2104,7 +2244,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         chan: AddressChannel,
         grace: float | None,
     ) -> None:
-        """Schedule an unpooled transport close without sharing loop-local tasks."""
+        """Schedule and retain an SDK-loop transport close until it finishes.
+
+        A transport explicitly owned by another loop remains that loop's
+        lifecycle responsibility. Its close is dispatched there but is not
+        allowed to make SDK shutdown depend on a caller-owned loop.
+        """
 
         async def close_and_log() -> None:
             try:
@@ -2118,30 +2263,77 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 )
 
         owner_loop = getattr(chan, "event_loop", None)
-        try:
-            current_loop = get_running_loop()
-        except RuntimeError:
-            current_loop = None
-        if (
-            owner_loop is not None
-            and owner_loop is not current_loop
-            and owner_loop.is_running()
-        ):
+        if owner_loop is not None and owner_loop is not self._event_loop:
             close_coro = close_and_log()
             try:
-                run_coroutine_threadsafe(close_coro, owner_loop)
+                current_loop = get_running_loop()
+            except RuntimeError:
+                current_loop = None
+            if owner_loop is current_loop:
+                create_task(
+                    close_coro,
+                    name=f"Channel transport close for {chan.address}",
+                )
                 return
+            try:
+                run_coroutine_threadsafe(close_coro, owner_loop)
             except RuntimeError:
                 close_coro.close()
-        if current_loop is None:
-            logger.warning(
-                "Unable to schedule channel close without a running event loop"
-            )
+                logger.warning("Unable to close channel after its owner loop stopped")
             return
-        create_task(
-            close_and_log(),
-            name=f"Channel transport close for {chan.address}",
-        )
+
+        channel_id = id(chan)
+        with self._tasks_lock:
+            self._transport_closes[channel_id] = (chan, None)
+        close_coro = close_and_log()
+        try:
+            closing = self._runtime.submit(close_coro, track=False)
+        except RuntimeError:
+            close_coro.close()
+            with self._tasks_lock:
+                self._transport_closes.pop(channel_id, None)
+            owner_loop = getattr(chan, "event_loop", None)
+            try:
+                current_loop = get_running_loop()
+            except RuntimeError:
+                current_loop = None
+            fallback = close_and_log()
+            if (
+                owner_loop is not None
+                and owner_loop is not current_loop
+                and owner_loop.is_running()
+            ):
+                try:
+                    run_coroutine_threadsafe(fallback, owner_loop)
+                    return
+                except RuntimeError:
+                    fallback.close()
+                    fallback = close_and_log()
+            if current_loop is not None:
+                create_task(
+                    fallback,
+                    name=f"Channel transport close for {chan.address}",
+                )
+            else:
+                fallback.close()
+                logger.warning(
+                    "Unable to schedule channel close without a running " "event loop"
+                )
+            return
+        with self._tasks_lock:
+            current = self._transport_closes.get(channel_id)
+            if current is not None:
+                self._transport_closes[channel_id] = (chan, closing)
+
+        def discard(completed: CrossLoopAwaitable[None]) -> None:
+            """Forget this transport only after its close has completed."""
+
+            with self._tasks_lock:
+                current = self._transport_closes.get(channel_id)
+                if current is not None and current[1] is completed:
+                    self._transport_closes.pop(channel_id, None)
+
+        closing._add_internal_done_callback(discard)
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
         """Dispose of an :class:`AddressChannel` by scheduling its close.
@@ -2220,10 +2412,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :type addr: str
         :return: An :class:`AddressChannel` containing the created channel.
         :rtype: :class:`AddressChannel`
+        :raises LoopError: If called from an active event loop or an SDK-owned
+            executor worker.
         """
 
         if not self._runtime.in_event_loop():
-            return self._runtime.run_sync(self._create_address_channel(addr))
+            return self.run_sync(self._create_address_channel(addr))
         return self._create_address_channel_internal(addr)
 
     async def _create_address_channel(self, addr: str) -> AddressChannel:

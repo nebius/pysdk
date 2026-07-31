@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from asyncio import (
     FIRST_COMPLETED,
     CancelledError,
@@ -44,6 +45,10 @@ class StreamRequest(Generic[Req, Res]):
 
     The context exit calls :meth:`aclose`. This call cancels the native stream
     and releases its address channel.
+
+    A caller-supplied asynchronous request iterator is consumed on the SDK
+    loop. It must not contain state bound to a different event loop. The SDK
+    cannot detect hidden loop ownership in an arbitrary iterator.
     """
 
     def __init__(
@@ -95,6 +100,17 @@ class StreamRequest(Generic[Req, Res]):
         self._cancel_requested = False
         self._cancelled = False
         self._released = False
+        self._owner_loop: Any = None
+        self._process_id = os.getpid()
+
+    def _check_process(self) -> None:
+        """Reject a stream inherited across ``fork`` before taking its locks."""
+
+        if os.getpid() != self._process_id:
+            raise RuntimeError(
+                "an SDK stream cannot be used after fork; construct SDK "
+                "objects only after the child process starts"
+            )
 
     @staticmethod
     def _serialize(message: object) -> bytes:
@@ -142,13 +158,22 @@ class StreamRequest(Generic[Req, Res]):
         await authenticating
 
     async def _start(self) -> Any:
-        if self._call is not None:
-            return self._call
+        current_loop = get_running_loop()
+        with self._state_lock:
+            if self._owner_loop is None:
+                self._owner_loop = current_loop
+            elif self._owner_loop is not current_loop:
+                raise RuntimeError("stream work belongs to a different event loop")
+            current_call = self._call
+        if current_call is not None:
+            return current_call
         if self._start_error is not None:
             raise self._start_error
         async with self._start_lock:
-            if self._call is not None:
-                return self._call
+            with self._state_lock:
+                current_call = self._call
+            if current_call is not None:
+                return current_call
             if self._start_error is not None:
                 raise self._start_error
             if self._is_cancelled():
@@ -157,18 +182,31 @@ class StreamRequest(Generic[Req, Res]):
             await self._authenticate()
             if self._is_cancelled():
                 raise CancelledError
-            if self._address_channel is None:
+            with self._state_lock:
+                address_channel = self._address_channel
+            if address_channel is None:
                 routed = getattr(self._channel, "get_channel_by_route", None)
                 if callable(routed):
-                    self._address_channel = routed(self._route)
+                    address_channel = routed(self._route)
                 else:
-                    self._address_channel = self._channel.get_channel_by_method(
+                    address_channel = self._channel.get_channel_by_method(
                         self._route.method_name
                     )
+                with self._state_lock:
+                    publish_address = not self._cancelled and not self._released
+                    if publish_address:
+                        self._address_channel = address_channel
+                if not publish_address:
+                    release_address_channel(
+                        self._channel,
+                        address_channel,
+                        discard=True,
+                    )
+                    raise CancelledError
             try:
-                transport = self._address_channel.channel
-                owner_loop = getattr(self._address_channel, "event_loop", None)
-                if owner_loop is not None and owner_loop is not get_running_loop():
+                transport = address_channel.channel
+                owner_loop = getattr(address_channel, "event_loop", None)
+                if owner_loop is not None and owner_loop is not current_loop:
                     raise RuntimeError(
                         "grpc_channel_override belongs to a different event loop"
                     )
@@ -185,7 +223,7 @@ class StreamRequest(Generic[Req, Res]):
                 arguments: tuple[object, ...] = (
                     () if self._request is None else (self._request,)
                 )
-                self._call = multi(
+                call = multi(
                     *arguments,
                     timeout=self._timeout,
                     metadata=GrpcMetadata(*self._metadata),
@@ -193,13 +231,21 @@ class StreamRequest(Generic[Req, Res]):
                     wait_for_ready=self._wait_for_ready,
                     compression=self._compression,
                 )
-                return self._call
+                with self._state_lock:
+                    publish_call = not self._cancelled and not self._released
+                    if publish_call:
+                        self._call = call
+                if not publish_call:
+                    call.cancel()
+                    raise CancelledError
+                return call
             except BaseException as error:
                 self._start_error = error
                 self._release(discard=True)
                 raise
 
     def _release(self, *, discard: bool = False) -> None:
+        self._check_process()
         with self._state_lock:
             if self._released or self._address_channel is None:
                 return
@@ -214,22 +260,26 @@ class StreamRequest(Generic[Req, Res]):
     def _is_cancelled(self) -> bool:
         """Return the cancellation state under the state lock."""
 
+        self._check_process()
         with self._state_lock:
             return self._cancelled
 
     def _is_released(self) -> bool:
         """Return the channel-release state under the state lock."""
 
+        self._check_process()
         with self._state_lock:
             return self._released
 
     def _abort(self) -> None:
+        self._check_process()
         with self._state_lock:
             self._cancelled = True
+            call = self._call
         self._cancel_event.set()
         try:
-            if self._call is not None:
-                self._call.cancel()
+            if call is not None:
+                call.cancel()
         finally:
             self._release(discard=True)
 
@@ -240,9 +290,19 @@ class StreamRequest(Generic[Req, Res]):
         :return: Result of the stream work.
         """
 
+        self._check_process()
         submit = getattr(self._channel, "run_async", None)
         if callable(submit):
             return cast(T, await submit(awaitable))
+        current_loop = get_running_loop()
+        with self._state_lock:
+            if self._owner_loop is None:
+                self._owner_loop = current_loop
+            elif self._owner_loop is not current_loop:
+                close = getattr(awaitable, "close", None)
+                if callable(close):
+                    close()
+                raise RuntimeError("stream work belongs to a different event loop")
         return await awaitable
 
     async def _result(self) -> Res:
@@ -319,6 +379,7 @@ class StreamRequest(Generic[Req, Res]):
                 raise
 
     def __aiter__(self) -> AsyncIterator[Res]:
+        self._check_process()
         return self._responses()
 
     async def write(self, request: Req) -> None:
@@ -374,6 +435,7 @@ class StreamRequest(Generic[Req, Res]):
         self._abort()
 
     async def __aenter__(self) -> "StreamRequest[Req, Res]":
+        self._check_process()
         return self
 
     async def __aexit__(
@@ -385,6 +447,20 @@ class StreamRequest(Generic[Req, Res]):
         await self.aclose()
 
     def cancel(self) -> bool:
+        """Request cancellation without accessing loop-owned state off-loop.
+
+        SDK channels dispatch cancellation to the SDK loop. A compatibility
+        channel without ``run_async`` instead uses the loop that started the
+        stream. A foreign caller receives ``False`` if that owner loop is not
+        running or closes during dispatch; it may retry after restoring the
+        loop. As with every accepted event-loop callback, the owner must remain
+        running long enough to execute it.
+
+        :return: ``True`` if cancellation was applied or accepted for dispatch;
+            otherwise ``False``.
+        """
+
+        self._check_process()
         with self._state_lock:
             if self._cancel_requested or self._cancelled or self._released:
                 return False
@@ -403,5 +479,23 @@ class StreamRequest(Generic[Req, Res]):
                     self._cancel_requested = False
                 raise
             return True
-        self._abort()
-        return True
+        with self._state_lock:
+            owner_loop = self._owner_loop
+        try:
+            current_loop = get_running_loop()
+        except RuntimeError:
+            current_loop = None
+        if owner_loop is None or owner_loop is current_loop:
+            self._abort()
+            return True
+        if owner_loop.is_running():
+            try:
+                owner_loop.call_soon_threadsafe(self._abort)
+            except RuntimeError:
+                pass
+            else:
+                return True
+        with self._state_lock:
+            if not self._cancelled and not self._released:
+                self._cancel_requested = False
+        return False

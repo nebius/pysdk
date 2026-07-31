@@ -266,9 +266,9 @@ asyncio.run(my_call())
 
 Each SDK instance uses one internal asyncio loop. By default it starts a
 dedicated daemon loop thread and a private daemon executor with two workers.
-SDK request, authentication, renewal, streaming, metrics, and cleanup work
-runs there. Returned SDK awaitables can be awaited from any external asyncio
-loop.
+SDK request, authentication, renewal, streaming, asynchronous metric results,
+and cleanup work runs there. Returned SDK awaitables can be awaited from any
+external asyncio loop.
 
 Use an asynchronous context when possible. If no asynchronous event loop is
 running, you can use the SDK synchronously:
@@ -281,19 +281,34 @@ finally:
     sdk.sync_close()
 ```
 
-Do not call synchronous helpers from an asynchronous call stack; await the SDK
-handle instead. Synchronous helpers are safe to call concurrently from regular
-threads.
+Do not call synchronous helpers from an asynchronous call stack. Await the SDK
+handle instead. For a synchronous low-level pool method, use
+`asyncio.to_thread()`. Synchronous helpers are safe to call concurrently from
+regular application threads while the SDK event loop remains responsive. Do
+not call them from SDK-owned executor workers.
 
 Advanced callers may pass an already-running `event_loop` to `SDK`. That loop
 remains caller-owned and is not stopped or reconfigured by `SDK.close()`.
+The caller must keep it running and responsive until SDK close completes.
 Use `executor_max_workers` to change the owned executor size from its default
-of two workers.
+of two workers. Shutdown waits for submitted executor work to finish, so an
+arbitrary caller function that never returns can delay shutdown indefinitely.
+Such functions must terminate cooperatively; Python cannot safely force-stop a
+running thread.
+
+Fork before you create SDK or gRPC objects. Create separate SDK objects after
+each child process starts. An SDK object inherited from the parent fails fast
+in the child because event-loop threads, gRPC state, and locks cannot be
+transferred safely.
 
 Custom resolvers, interceptors, asynchronous metrics callbacks, and generated
 request options now execute or become fixed on the internal SDK loop. Configure
 a request before its first await or `.wait()` call; submission freezes its
 mutable options.
+
+A caller-supplied asynchronous iterator for a client-streaming request is
+consumed on the SDK loop. The iterator must be loop-neutral. An iterator that
+contains state bound to another event loop is not supported.
 
 `get_channel_by_addr()` and related low-level pool methods still expose
 `AddressChannel.channel` for custom transport compatibility. That field is a
@@ -304,10 +319,25 @@ must be awaited from arbitrary loops. Likewise,
 identity and extension compatibility; generated SDK requests dispatch it
 internally, but manual direct use remains the caller's responsibility.
 
-When `close()` is awaited from work already running on the internal SDK loop,
-the current synchronous continuation may return a value. If it yields again,
-shutdown cancels that continuation so closing the SDK cannot leave its owned
-thread pool alive.
+When SDK work calls `close()` on the internal loop, the code immediately after
+`await close()` can finish. If that code waits again, shutdown cancels it.
+
+`Channel.bg_task()` now returns a cross-loop SDK handle instead of an
+`asyncio.Task`. Await it directly, or wrap it with `asyncio.ensure_future()`
+before passing it to `asyncio.wait()`. Task-only inspection and naming methods
+are not available. Its pending `result()` and `exception()` methods may block
+on regular application threads. They reject active event loops and SDK-owned
+executor workers. Async code must await the handle. A handle cannot await
+itself. Cancellation is shared by all direct waiters and becomes visible before
+an asynchronous finalizer necessarily finishes. `cancel(msg)` accepts but
+ignores the message. A cancelled `result()` or `exception()` raises
+`concurrent.futures.CancelledError`.
+
+Completion callbacks run asynchronously on the event loop that registered
+them. That loop must stay open until callback delivery. Registration on an
+already closed loop raises `RuntimeError`. If the loop closes after
+registration, the SDK logs a warning and does not run the callback on another
+thread.
 
 If you do not close the SDK, unterminated tasks can cause errors.
 

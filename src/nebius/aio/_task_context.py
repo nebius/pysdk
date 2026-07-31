@@ -60,7 +60,9 @@ awaitable can be created and used on any loop.
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import Awaitable, Callable
+from concurrent.futures import Future as ConcurrentFuture
 from contextvars import ContextVar
 from typing import Any
 
@@ -111,3 +113,60 @@ def bridge_awaitable(awaitable: Awaitable[Any]) -> Awaitable[Any]:
 
     bridge = awaitable_bridge.get()
     return awaitable if bridge is None else bridge(awaitable)
+
+
+def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
+    """Release awaitable work whose SDK wrapper provably never started.
+
+    A pending foreign :class:`asyncio.Future` must be cancelled through its
+    owner loop; calling it directly from an SDK or caller thread is not
+    asyncio-safe. A terminal failed Future has its exception retrieved on that
+    loop because the unstarted wrapper owns its observation. Retrieving the
+    exception does not prevent later awaits from raising it. A concurrent
+    future and an SDK cross-loop handle provide thread-safe cancellation.
+    Coroutine-like objects instead use ``close()`` so Python does not report
+    that they were never awaited.
+
+    Custom awaitables with neither ``close()`` nor the private SDK
+    ``_cancel_unstarted_threadsafe`` hook cannot be disposed safely because
+    their hidden loop ownership is unknown. A foreign asyncio owner loop must
+    remain running through dispatch, as required by the cross-loop contract.
+
+    :param awaitable: Never-started caller work to release.
+    :return: ``True`` when disposal completed or was accepted for dispatch;
+        otherwise ``False``.
+    """
+
+    if isinstance(awaitable, asyncio.Future):
+        owner_loop = awaitable.get_loop()
+        try:
+            current_loop = asyncio.get_running_loop()
+        except RuntimeError:
+            current_loop = None
+        callback: Callable[[], object]
+        if awaitable.done():
+            if awaitable.cancelled():
+                return True
+            callback = awaitable.exception
+        else:
+            callback = awaitable.cancel
+        if current_loop is owner_loop:
+            callback()
+            return True
+        if not owner_loop.is_running():
+            return False
+        try:
+            owner_loop.call_soon_threadsafe(callback)
+        except RuntimeError:
+            return False
+        return True
+    if isinstance(awaitable, ConcurrentFuture):
+        return awaitable.cancel()
+    cancel_threadsafe = getattr(awaitable, "_cancel_unstarted_threadsafe", None)
+    if callable(cancel_threadsafe):
+        return bool(cancel_threadsafe())
+    close = getattr(awaitable, "close", None)
+    if callable(close):
+        close()
+        return True
+    return False

@@ -3,11 +3,25 @@
 The runtime can own an event loop or use a loop that the caller supplies. An
 owned runtime also owns a daemon thread pool. The runtime converts submitted
 work to awaitables that callers can use from other event loops.
+
+Runtime state moves in one direction: accepting submissions, preparing close,
+then shut down. ``_shutdown_lock`` protects submission acceptance and the
+terminal shutdown flag. When code needs both it and ``_submissions_lock``, it
+always acquires them in that order. The background and shutdown-preparation
+locks protect independent sets and are never held while another thread is
+joined or a future result is awaited.
+
+``_active_tasks``, ``_protected_tasks``, and ``_task_submissions`` belong only
+to the SDK event-loop thread. They need no thread lock. Code must not acquire a
+runtime lock and then synchronously wait for work that needs the SDK loop. This
+rule keeps shutdown callbacks able to make progress.
 """
 
 from __future__ import annotations
 
 import asyncio
+import os
+import weakref
 from collections.abc import Awaitable, Callable, Generator
 from concurrent.futures import (
     Future,
@@ -17,15 +31,32 @@ from concurrent.futures import (
 from concurrent.futures import (
     TimeoutError as FutureTimeoutError,
 )
-from contextvars import ContextVar
+from contextvars import Context, ContextVar, copy_context
+from logging import getLogger
 from queue import Empty, Queue
 from threading import Lock, Thread, current_thread
 from types import TracebackType
 from typing import Any, Generic, TypeVar, cast
 
-from ._task_context import awaitable_bridge, task_scheduler
+from ._task_context import (
+    awaitable_bridge,
+    dispose_unstarted_awaitable,
+    task_scheduler,
+)
 
 T = TypeVar("T")
+logger = getLogger(__name__)
+
+_current_submission: ContextVar[
+    tuple["AsyncRuntime", "CrossLoopAwaitable[Any]"] | None
+] = ContextVar("nebius_sdk_current_submission", default=None)
+"""Runtime and submission bound to the current SDK task.
+
+The key is module-level, as required by :mod:`contextvars`. Its value belongs
+to an execution context rather than to the process as a whole. Storing the
+runtime beside the submission lets several SDKs safely share a thread or event
+loop: a runtime accepts only a binding whose runtime identity matches itself.
+"""
 
 
 class _WorkItem:
@@ -63,6 +94,9 @@ class _WorkItem:
             result = self.fn(*self.args, **self.kwargs)
         except BaseException as error:
             self.future.set_exception(error)
+            # Break the exception -> traceback -> frame -> self cycle while
+            # the future retains the exception.
+            self = None  # type: ignore[assignment]
         else:
             self.future.set_result(result)
 
@@ -89,20 +123,25 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
 
         if max_workers <= 0:
             raise ValueError("max_workers must be greater than 0")
-        self._max_workers = max_workers
-        self._thread_name_prefix = thread_name_prefix
+        # ThreadPoolExecutor.__init__ establishes its private invariants but
+        # does not start threads. We replace only the queue and worker creation
+        # needed to guarantee daemon threads; inherited asyncio checks still
+        # see a fully initialized ThreadPoolExecutor.
+        super().__init__(max_workers, thread_name_prefix=thread_name_prefix)
         self._work_queue: Queue[_WorkItem | None] = Queue()  # type: ignore[assignment]
-        self._shutdown = False
-        self._shutdown_lock = Lock()
         self._threads: set[Thread] = set()
-        for index in range(max_workers):
-            thread = Thread(
-                name=f"{thread_name_prefix}_{index}",
-                target=self._worker,
-                daemon=True,
-            )
-            self._threads.add(thread)
-            thread.start()
+        try:
+            for index in range(max_workers):
+                thread = Thread(
+                    name=f"{thread_name_prefix}_{index}",
+                    target=self._worker,
+                    daemon=True,
+                )
+                thread.start()
+                self._threads.add(thread)
+        except BaseException:
+            self.shutdown(wait=True, cancel_futures=True)
+            raise
 
     def _worker(self) -> None:
         """Run queued work until the queue contains a stop marker."""
@@ -112,6 +151,7 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
             if work_item is None:
                 return
             work_item.run()
+            del work_item
 
     def submit(
         self,
@@ -201,12 +241,27 @@ class CrossLoopAwaitable(Generic[T]):
     """Provide loop-independent access to a concurrent future.
 
     Callers can await the same instance from the SDK loop and from multiple
-    external loops. Synchronous callers can use :meth:`result`.
+    external loops. Synchronous callers can use :meth:`result`. An SDK-owned
+    executor worker cannot wait for a pending handle because the submitted
+    work can need that finite executor. A submission also cannot await its own
+    handle.
 
     All waiters share one concurrent future. Cancellation by one direct
     awaiter cancels that future and therefore affects every waiter. Use
     :func:`asyncio.shield` when cancellation of one waiter must not cancel the
-    shared submission.
+    shared submission. The concurrent future reports cancellation as soon as
+    it accepts the request. The SDK coroutine can still be running its
+    asynchronous ``finally`` block; SDK close drains that finalization.
+
+    This object is awaitable but is not an :class:`asyncio.Future` or
+    :class:`asyncio.Task`. Functions such as :func:`asyncio.gather` accept it.
+    Wrap it with :func:`asyncio.ensure_future` before giving it to
+    :func:`asyncio.wait`. Task-only naming, coroutine-inspection, and callback
+    removal methods are not available.
+
+    A public completion callback uses the event loop that registers it. The
+    loop must stay open until delivery. The SDK does not move the callback to
+    its completion thread if the registration loop closes.
     """
 
     def __init__(
@@ -216,73 +271,233 @@ class CrossLoopAwaitable(Generic[T]):
     ) -> None:
         """Initialize a cross-loop awaitable.
 
+        Applications normally receive this type from SDK methods instead of
+        constructing it directly.
+
         :param future: Concurrent future that stores the result.
         :param event_loop: Event loop for the associated SDK runtime. A
             bridged foreign future can still be owned by another loop.
         """
 
+        self._process_id = os.getpid()
         self._future = future
         self._event_loop = event_loop
+        self._executor: weakref.ReferenceType[DaemonThreadPoolExecutor] | None = None
+
+    @classmethod
+    def _for_runtime(
+        cls,
+        future: Future[T],
+        event_loop: asyncio.AbstractEventLoop,
+        executor: DaemonThreadPoolExecutor | None,
+    ) -> CrossLoopAwaitable[T]:
+        """Create a handle that can detect waits from its owned executor."""
+
+        ret = cls(future, event_loop)
+        if executor is not None:
+            ret._executor = weakref.ref(executor)
+        return ret
+
+    def _check_process(self) -> None:
+        """Reject a handle inherited by a child process before locking."""
+
+        if os.getpid() != self._process_id:
+            raise RuntimeError(
+                "an SDK awaitable cannot be used after fork; construct SDK "
+                "objects only after the child process starts"
+            )
 
     @property
     def event_loop(self) -> asyncio.AbstractEventLoop:
         """Return the event loop for the associated SDK runtime."""
 
+        self._check_process()
         return self._event_loop
 
-    def cancel(self) -> bool:
+    def cancel(self, msg: object | None = None) -> bool:
         """Request cancellation of the submitted work.
 
+        ``msg`` is accepted for :class:`asyncio.Task` call compatibility. A
+        concurrent future cannot carry that message, so it is ignored.
+
+        :param msg: Optional cancellation message, retained only for call
+            compatibility.
         :return: ``True`` if the future accepted the cancellation request.
         """
 
+        self._check_process()
         return self._future.cancel()
 
-    def cancelled(self) -> bool:
-        """Return whether the submitted work was cancelled."""
+    def _cancel_unstarted_threadsafe(self) -> bool:
+        """Cancel this thread-safe handle for an unstarted wrapper."""
 
+        return self.cancel()
+
+    def cancelled(self) -> bool:
+        """Return whether the submission accepted cancellation.
+
+        The SDK coroutine can still be completing an asynchronous finalizer.
+        """
+
+        self._check_process()
         return self._future.cancelled()
 
     def done(self) -> bool:
-        """Return whether the submitted work is complete."""
+        """Return whether the cross-loop result has reached a terminal state.
 
+        A cancelled result can become terminal before the SDK coroutine has
+        completed its asynchronous finalizer.
+        """
+
+        self._check_process()
         return self._future.done()
 
     def result(self, timeout: float | None = None) -> T:
         """Wait for and return the submitted work result.
 
+        A pending result cannot be synchronously read from an active asyncio
+        loop because doing so would block that loop. Await this object instead.
+
         :param timeout: Maximum wait time in seconds. Use ``None`` to wait
             without a time limit.
         :return: Result of the submitted work.
         :raises concurrent.futures.TimeoutError: If the time limit expires.
+        :raises RuntimeError: If a pending result is requested from an active
+            asyncio loop or an SDK-owned executor worker.
+        :raises concurrent.futures.CancelledError: If the submitted work was
+            cancelled. This is the concurrent-future exception, not
+            :class:`asyncio.CancelledError`.
         """
 
+        self._check_process()
+        self._reject_executor_wait()
+        self._reject_blocking_async_wait()
+        return self._future.result(timeout)
+
+    def _result(self, timeout: float | None = None) -> T:
+        """Return the result for a compatibility path that permits blocking.
+
+        Internal synchronous SDK adapters use this method after applying their
+        own loop and deadlock rules.
+
+        :param timeout: Maximum wait time in seconds.
+        :return: Submitted work result.
+        """
+
+        self._check_process()
+        self._reject_executor_wait()
         return self._future.result(timeout)
 
     def exception(self, timeout: float | None = None) -> BaseException | None:
         """Wait for and return the submitted work exception.
+
+        A pending exception cannot be synchronously read from an active
+        asyncio loop because doing so would block that loop. Await this object
+        instead.
 
         :param timeout: Maximum wait time in seconds. Use ``None`` to wait
             without a time limit.
         :return: Exception from the submitted work, or ``None`` if it
             completed successfully.
         :raises concurrent.futures.TimeoutError: If the time limit expires.
+        :raises RuntimeError: If a pending exception is requested from an
+            active asyncio loop or an SDK-owned executor worker.
+        :raises concurrent.futures.CancelledError: If the submitted work was
+            cancelled. This is the concurrent-future exception, not
+            :class:`asyncio.CancelledError`.
         """
 
+        self._check_process()
+        self._reject_executor_wait()
+        self._reject_blocking_async_wait()
         return self._future.exception(timeout)
+
+    def _reject_executor_wait(self) -> None:
+        """Reject a pending wait from a worker in the owned finite pool."""
+
+        if self._future.done() or self._executor is None:
+            return
+        executor = self._executor()
+        if executor is not None and executor.owns_thread(current_thread()):
+            raise RuntimeError(
+                "cannot wait for pending SDK work from its executor worker"
+            )
+
+    def _reject_blocking_async_wait(self) -> None:
+        """Reject a pending synchronous wait from an active event loop."""
+
+        self._check_process()
+        if self._future.done():
+            return
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            return
+        raise RuntimeError(
+            "cannot synchronously wait for pending SDK work from an asyncio "
+            "event loop; await it instead"
+        )
 
     def add_done_callback(
         self,
         callback: Callable[[CrossLoopAwaitable[T]], object],
+        *,
+        context: Context | None = None,
     ) -> None:
         """Add a function to call when the submitted work is complete.
 
-        The concurrent future controls the callback thread. It calls the
-        callback on the completion thread. If the future is already complete,
-        it calls the callback immediately on the registering thread. The
-        method does not dispatch the callback to an awaiter's event loop.
+        Like :class:`asyncio.Task`, this method schedules the callback instead
+        of calling it inline. It uses the event loop active at registration,
+        or the associated SDK loop when no loop is active. The registration
+        context is retained unless ``context`` is supplied explicitly. The
+        registration loop must stay open until callback delivery. If it closes
+        later, the SDK logs a warning and drops the callback instead of running
+        loop-affine code on another thread.
 
         :param callback: Function that receives this awaitable.
+        :param context: Optional context in which to run ``callback``.
+        :raises RuntimeError: If the callback loop is already closed.
+        """
+
+        self._check_process()
+        try:
+            callback_loop = asyncio.get_running_loop()
+        except RuntimeError:
+            callback_loop = self._event_loop
+        if callback_loop.is_closed():
+            raise RuntimeError("callback event loop is closed")
+        callback_context = copy_context() if context is None else context
+
+        def schedule(_: Future[T]) -> None:
+            """Schedule the public callback on its registration loop."""
+
+            try:
+                callback_loop.call_soon_threadsafe(
+                    callback,
+                    self,
+                    context=callback_context,
+                )
+            except RuntimeError:
+                # Affinity cannot be preserved after a caller-owned loop
+                # closes. Do not run loop-affine user code on the completion
+                # thread.
+                logger.warning(
+                    "SDK completion callback was not run because its "
+                    "registration loop is closed"
+                )
+
+        self._future.add_done_callback(schedule)
+
+    def _add_internal_done_callback(
+        self,
+        callback: Callable[[CrossLoopAwaitable[T]], object],
+    ) -> None:
+        """Run a lifecycle callback synchronously on future completion.
+
+        Internal cleanup must not depend on a caller-owned callback loop that
+        can stop or close independently of the SDK.
+
+        :param callback: Runtime callback that receives this awaitable.
         """
 
         self._future.add_done_callback(lambda _: callback(self))
@@ -290,11 +505,17 @@ class CrossLoopAwaitable(Generic[T]):
     async def _wait(self) -> T:
         """Wait for the concurrent future from the current event loop."""
 
+        self._check_process()
+        binding = _current_submission.get()
+        if binding is not None and binding[1] is self:
+            raise RuntimeError("SDK work cannot await its own submission handle")
+        self._reject_executor_wait()
         return await asyncio.wrap_future(self._future)
 
     def __await__(self) -> Generator[Any, None, T]:
         """Return an iterator that waits for the submitted work."""
 
+        self._check_process()
         return self._wait().__await__()
 
 
@@ -322,15 +543,23 @@ class AsyncRuntime:
         """
 
         self._owned = event_loop is None
+        self._process_id = os.getpid()
+        if self._owned and executor_max_workers <= 0:
+            raise ValueError("executor_max_workers must be greater than 0")
         self._loop = event_loop or asyncio.new_event_loop()
-        self._executor = (
-            DaemonThreadPoolExecutor(
-                executor_max_workers,
-                "nebius-sdk-worker",
+        try:
+            self._executor = (
+                DaemonThreadPoolExecutor(
+                    executor_max_workers,
+                    "nebius-sdk-worker",
+                )
+                if self._owned
+                else None
             )
-            if self._owned
-            else None
-        )
+        except BaseException:
+            if self._owned:
+                self._loop.close()
+            raise
         self._loop_thread: Thread | None = None
         self._shutdown_lock = Lock()
         self._accepting = True
@@ -350,37 +579,56 @@ class AsyncRuntime:
             asyncio.Task[Any],
             CrossLoopAwaitable[Any],
         ] = {}
-        self._current_submission: ContextVar[CrossLoopAwaitable[Any] | None] = (
-            ContextVar(
-                f"nebius_sdk_submission_{id(self)}",
-                default=None,
-            )
-        )
         if self._owned:
             started = Future[None]()
 
             def run() -> None:
                 """Run and close the owned event loop."""
-
-                asyncio.set_event_loop(self._loop)
-                executor = self._executor
-                if executor is None:
-                    raise RuntimeError("owned SDK runtime has no executor")
-                self._loop.set_default_executor(executor)
+                try:
+                    asyncio.set_event_loop(self._loop)
+                    executor = self._executor
+                    if executor is None:
+                        raise RuntimeError("owned SDK runtime has no executor")
+                    self._loop.set_default_executor(executor)
+                except BaseException as error:
+                    try:
+                        self._loop.close()
+                    finally:
+                        started.set_exception(error)
+                    return
                 started.set_result(None)
                 try:
                     self._loop.run_forever()
                 finally:
-                    self._cancel_remaining_tasks()
-                    self._loop.close()
+                    try:
+                        self._cancel_remaining_tasks()
+                    finally:
+                        self._loop.close()
 
             self._loop_thread = Thread(
                 name="nebius-sdk-loop",
                 target=run,
                 daemon=True,
             )
-            self._loop_thread.start()
-            started.result()
+            try:
+                self._loop_thread.start()
+                started.result()
+            except BaseException:
+                executor = self._executor
+                try:
+                    if self._loop.is_running():
+                        try:
+                            self._loop.call_soon_threadsafe(self._loop.stop)
+                        except RuntimeError:
+                            pass
+                    if self._loop_thread.ident is not None:
+                        self._loop_thread.join()
+                    if not self._loop.is_closed():
+                        self._loop.close()
+                finally:
+                    if executor is not None:
+                        executor.shutdown(wait=True, cancel_futures=True)
+                raise
         else:
             if not self._loop.is_running():
                 raise ValueError("a supplied event loop must already be running")
@@ -405,6 +653,12 @@ class AsyncRuntime:
         except RuntimeError:
             return False
 
+    def in_executor_thread(self) -> bool:
+        """Return whether the caller is an owned executor worker."""
+
+        executor = self._executor
+        return executor is not None and executor.owns_thread(current_thread())
+
     def submit(
         self,
         awaitable: Awaitable[T],
@@ -425,13 +679,19 @@ class AsyncRuntime:
         :raises RuntimeError: If runtime close has started.
         """
 
+        if os.getpid() != self._process_id:
+            dispose_unstarted_awaitable(awaitable)
+            raise RuntimeError(
+                "an SDK runtime cannot be used after fork; construct SDK "
+                "objects only after the child process starts"
+            )
+        rejection: RuntimeError | None = None
         with self._shutdown_lock:
             if self._shutdown or not self._accepting:
-                close = getattr(awaitable, "close", None)
-                if callable(close):
-                    close()
-                raise RuntimeError("SDK runtime is closing or closed")
-            if isinstance(awaitable, asyncio.Future):
+                rejection = RuntimeError("SDK runtime is closing or closed")
+            elif not self._loop.is_running():
+                rejection = RuntimeError("SDK event loop is not running")
+            elif isinstance(awaitable, asyncio.Future):
                 owner_loop = awaitable.get_loop()
                 if owner_loop is not self._loop:
                     submitted = self._bridge_foreign_future(awaitable, owner_loop)
@@ -440,13 +700,16 @@ class AsyncRuntime:
                         awaitable,
                         protect_task=not track,
                     )
-            else:
+            elif rejection is None:
                 submitted = self._submit_to_loop(
                     awaitable,
                     protect_task=not track,
                 )
-            if track:
+            if rejection is None and track:
                 self._track_submission(submitted)
+        if rejection is not None:
+            dispose_unstarted_awaitable(awaitable)
+            raise rejection
         return submitted
 
     def _submit_to_loop(
@@ -474,20 +737,27 @@ class AsyncRuntime:
             submitted = await asyncio.wrap_future(holder)
             with start_lock:
                 started = True
-            token = self._current_submission.set(submitted)
+            token = _current_submission.set((self, submitted))
             try:
                 return await self._run_awaitable(
                     awaitable,
                     protect_task=protect_task,
                 )
             finally:
-                self._current_submission.reset(token)
+                _current_submission.reset(token)
 
-        future = asyncio.run_coroutine_threadsafe(
-            run(),
+        runner = run()
+        try:
+            future = asyncio.run_coroutine_threadsafe(runner, self._loop)
+        except BaseException:
+            runner.close()
+            dispose_unstarted_awaitable(awaitable)
+            raise
+        submitted = CrossLoopAwaitable._for_runtime(
+            future,
             self._loop,
+            self._executor,
         )
-        submitted = CrossLoopAwaitable(future, self._loop)
 
         def close_unstarted(completed: Future[T]) -> None:
             """Close a coroutine that cancellation prevents from starting."""
@@ -495,9 +765,7 @@ class AsyncRuntime:
             with start_lock:
                 should_close = completed.cancelled() and not started
             if should_close:
-                close = getattr(awaitable, "close", None)
-                if callable(close):
-                    close()
+                dispose_unstarted_awaitable(awaitable)
 
         future.add_done_callback(close_unstarted)
         holder.set_result(submitted)
@@ -511,7 +779,7 @@ class AsyncRuntime:
 
         with self._submissions_lock:
             self._submissions.add(submitted)
-        submitted.add_done_callback(self._discard_submission)
+        submitted._add_internal_done_callback(self._discard_submission)
 
     def _discard_submission(self, submitted: CrossLoopAwaitable[Any]) -> None:
         """Remove a completed submission from runtime tracking.
@@ -531,7 +799,8 @@ class AsyncRuntime:
             runtime submission.
         """
 
-        submitted = self._current_submission.get()
+        binding = _current_submission.get()
+        submitted = binding[1] if binding is not None and binding[0] is self else None
         task = asyncio.current_task() if self.in_event_loop() else None
         if submitted is not None:
             with self._submissions_lock:
@@ -544,7 +813,8 @@ class AsyncRuntime:
     def mark_current_submission_close_returning(self) -> None:
         """Mark that the current internal caller can return from close."""
 
-        submitted = self._current_submission.get()
+        binding = _current_submission.get()
+        submitted = binding[1] if binding is not None and binding[0] is self else None
         if submitted is not None:
             with self._submissions_lock:
                 if submitted in self._protected_submissions:
@@ -656,7 +926,11 @@ class AsyncRuntime:
                 owner_loop.call_soon_threadsafe(source.add_done_callback, copy_result)
             except RuntimeError as error:
                 bridged.set_exception(error)
-        return CrossLoopAwaitable(bridged, self._loop)
+        return CrossLoopAwaitable._for_runtime(
+            bridged,
+            self._loop,
+            self._executor,
+        )
 
     async def _run_awaitable(
         self,
@@ -695,7 +969,10 @@ class AsyncRuntime:
         task = asyncio.current_task(self._loop)
         if task is not None:
             self._active_tasks.add(task)
-            submitted = self._current_submission.get()
+            binding = _current_submission.get()
+            submitted = (
+                binding[1] if binding is not None and binding[0] is self else None
+            )
             if submitted is not None:
                 self._task_submissions[task] = submitted
             if protect_task:
@@ -739,7 +1016,7 @@ class AsyncRuntime:
         submitted = self.submit(awaitable)
         with self._background_lock:
             self._background.add(submitted)
-        submitted.add_done_callback(self._discard_background)
+        submitted._add_internal_done_callback(self._discard_background)
         return submitted
 
     def _discard_background(self, submitted: CrossLoopAwaitable[Any]) -> None:
@@ -762,14 +1039,15 @@ class AsyncRuntime:
         :raises TimeoutError: If the time limit expires.
         """
 
+        if self.in_executor_thread():
+            dispose_unstarted_awaitable(awaitable)
+            raise RuntimeError("cannot synchronously wait from an SDK executor worker")
         try:
             current = asyncio.get_running_loop()
         except RuntimeError:
             current = None
         if current is self._loop:
-            close = getattr(awaitable, "close", None)
-            if callable(close):
-                close()
+            dispose_unstarted_awaitable(awaitable)
             raise RuntimeError("cannot synchronously wait on the SDK event loop")
         submitted = (
             awaitable
@@ -777,7 +1055,7 @@ class AsyncRuntime:
             else self.submit(awaitable)
         )
         try:
-            return cast(CrossLoopAwaitable[T], submitted).result(timeout)
+            return cast(CrossLoopAwaitable[T], submitted)._result(timeout)
         except FutureTimeoutError:
             cast(CrossLoopAwaitable[T], submitted).cancel()
             raise TimeoutError("Awaitable timed out") from None
@@ -792,15 +1070,18 @@ class AsyncRuntime:
         """
 
         with self._shutdown_lock:
-            if self._shutdown:
-                completion = self._shutdown_complete
-                executor = self._executor
-                if self._loop_thread is not current_thread() and (
-                    executor is None or not executor.owns_thread(current_thread())
-                ):
-                    completion.result()
-                return
-            self._shutdown = True
+            already_shutdown = self._shutdown
+            if not already_shutdown:
+                self._shutdown = True
+            completion = self._shutdown_complete
+            executor = self._executor
+            should_wait = self._loop_thread is not current_thread() and (
+                executor is None or not executor.owns_thread(current_thread())
+            )
+        if already_shutdown:
+            if should_wait:
+                completion.result()
+            return
         with self._background_lock:
             background = list(self._background)
         for submitted in background:
@@ -835,14 +1116,20 @@ class AsyncRuntime:
             if schedule:
                 self._shutdown_preparing = True
         if schedule:
-            try:
-                asyncio.run_coroutine_threadsafe(
-                    self._prepare_shutdown(),
-                    self._loop,
-                )
-            except RuntimeError:
+            if not self._loop.is_running():
                 self._start_shutdown_thread()
-        return CrossLoopAwaitable(self._shutdown_complete, self._loop)
+            else:
+                runner = self._prepare_shutdown()
+                try:
+                    asyncio.run_coroutine_threadsafe(runner, self._loop)
+                except RuntimeError:
+                    runner.close()
+                    self._start_shutdown_thread()
+        return CrossLoopAwaitable._for_runtime(
+            self._shutdown_complete,
+            self._loop,
+            self._executor,
+        )
 
     async def _prepare_shutdown(self) -> None:
         """Drain protected close callers and start final shutdown.
@@ -889,6 +1176,22 @@ class AsyncRuntime:
                 if all(submitted.done() for submitted in protected):
                     break
                 await asyncio.sleep(0)
+            if self._owned:
+                # Match asyncio.run ordering while this loop can still make
+                # progress: cancel raw untracked tasks, close async generators,
+                # then drain the default executor. A worker can use
+                # run_coroutine_threadsafe and depend on this loop for its
+                # final result.
+                current = asyncio.current_task(self._loop)
+                remaining_tasks = asyncio.all_tasks(self._loop) - (
+                    {current} if current is not None else set()
+                )
+                for task in remaining_tasks:
+                    task.cancel()
+                if remaining_tasks:
+                    await asyncio.gather(*remaining_tasks, return_exceptions=True)
+                await self._loop.shutdown_asyncgens()
+                await self._loop.shutdown_default_executor()
             self.shutdown()
         except BaseException:
             self._start_shutdown_thread()
