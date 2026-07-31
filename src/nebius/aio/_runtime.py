@@ -534,7 +534,7 @@ class CrossLoopAwaitable(Generic[T]):
 
         self._check_process()
         binding = _current_submission.get()
-        if binding is not None and binding[1] is self:
+        if binding is not None and binding[1] is self and not self._future.done():
             raise RuntimeError("SDK work cannot await its own submission handle")
         self._reject_executor_wait()
         return await asyncio.wrap_future(self._future)
@@ -551,7 +551,7 @@ class CrossLoopAwaitable(Generic[T]):
 
         self._check_process()
         binding = _current_submission.get()
-        if binding is not None and binding[1] is self:
+        if binding is not None and binding[1] is self and not self._future.done():
             raise RuntimeError("SDK work cannot await its own submission handle")
         self._reject_executor_wait()
         return await asyncio.shield(asyncio.wrap_future(self._future))

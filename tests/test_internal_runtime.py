@@ -2611,6 +2611,46 @@ def test_submission_cannot_await_its_own_cross_loop_handle() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_inherited_child_context_can_await_completed_parent_handle() -> None:
+    """A child task's inherited marker is not self-await after parent completion."""
+
+    channel = Channel(credentials=NoCredentials())
+    holder: Future[object] = Future()
+    child_started = Event()
+    release_child = Event()
+    child_done = Event()
+    child_results: list[int] = []
+    child_errors: list[BaseException] = []
+
+    async def parent() -> int:
+        async def child() -> None:
+            child_started.set()
+            await asyncio.to_thread(release_child.wait)
+            try:
+                handle = holder.result(timeout=5)
+                child_results.append(await handle)  # type: ignore[misc]
+            except BaseException as error:
+                child_errors.append(error)
+            finally:
+                child_done.set()
+
+        asyncio.create_task(child())
+        return 42
+
+    handle = channel.run_async(parent())
+    holder.set_result(handle)
+    try:
+        assert child_started.wait(timeout=5)
+        assert handle.result(timeout=5) == 42
+        release_child.set()
+        assert child_done.wait(timeout=5)
+        assert child_errors == []
+        assert child_results == [42]
+    finally:
+        release_child.set()
+        channel.sync_close(timeout=5)
+
+
 def test_borrowed_loop_sync_close_from_external_async_loop_is_rejected() -> None:
     """Sync close cannot block a loop that borrowed SDK work may need."""
 
