@@ -2636,6 +2636,106 @@ def test_low_level_native_completion_wins_before_wrapper_resumes(
         channel.sync_close(timeout=5)
 
 
+def test_low_level_done_callback_observes_remote_cancellation() -> None:
+    """Native done publication includes synchronous cancellation diagnostics."""
+
+    native_waiting = Event()
+    release_result = Event()
+    callback_called = Event()
+    observations: list[tuple[bool, bool, str]] = []
+
+    class RemoteCancelledCall:
+        def __init__(self) -> None:
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            self.callback = callback
+
+        def publish_completion(self) -> None:
+            assert self.callback is not None
+            self.callback(self)
+
+        def cancelled(self) -> bool:
+            return True
+
+        def debug_error_string(self) -> str:
+            return "remote cancellation"
+
+        def __await__(self):
+            async def result() -> Disk:
+                native_waiting.set()
+                await asyncio.to_thread(release_result.wait)
+                raise grpc.aio.AioRpcError(
+                    grpc.StatusCode.CANCELLED,
+                    (),
+                    (),
+                    "cancelled remotely",
+                    "remote cancellation",
+                )
+
+            return result().__await__()
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+        async def code(self) -> grpc.StatusCode:
+            return grpc.StatusCode.CANCELLED
+
+        async def details(self) -> str:
+            return "cancelled remotely"
+
+    native_call = RemoteCancelledCall()
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            return lambda *call_args, **call_kwargs: native_call
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    class TestChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
+
+    channel = TestChannel(credentials=NoCredentials())
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="remote-cancel"))
+    call.add_done_callback(
+        lambda completed: (
+            observations.append(
+                (
+                    completed.done(),
+                    completed.cancelled(),
+                    completed.debug_error_string(),
+                )
+            ),
+            callback_called.set(),
+        )
+    )
+    try:
+        assert native_waiting.wait(timeout=5)
+        native_call.publish_completion()
+        assert callback_called.wait(timeout=5)
+        assert observations == [(True, True, "remote cancellation")]
+        assert call.done()
+        assert call.cancelled()
+        release_result.set()
+        with pytest.raises(grpc.aio.AioRpcError):
+            call._submitted.result(timeout=5)
+    finally:
+        release_result.set()
+        channel.sync_close(timeout=5)
+
+
 def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
     """Accepted cancellation discards a resolved address before call creation."""
 
@@ -3144,6 +3244,72 @@ def test_generated_request_rejects_cancel_after_native_error() -> None:
         assert len(errors) == 1
         assert not isinstance(errors[0], asyncio.CancelledError)
         assert "invalid request" in str(errors[0])
+    finally:
+        release_translation.set()
+        waiter.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
+def test_generated_done_state_includes_remote_cancellation() -> None:
+    """Raw terminal code is visible before error translation completes."""
+
+    translation_started = Event()
+    release_translation = Event()
+    errors: list[BaseException] = []
+
+    class FailedCall:
+        def __await__(self):
+            async def result() -> Disk:
+                raise grpc.aio.AioRpcError(
+                    grpc.StatusCode.CANCELLED,
+                    (),
+                    (),
+                    "cancelled remotely",
+                    "remote cancellation",
+                )
+
+            return result().__await__()
+
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="remote-cancel"),
+        Disk,
+        retries=1,
+    )
+
+    def send(timeout: float | None) -> None:
+        request._call = FailedCall()  # type: ignore[assignment]
+
+    original_raise = request._raise_request_error
+
+    def translate(error: grpc.aio.AioRpcError) -> None:
+        translation_started.set()
+        release_translation.wait(timeout=5)
+        original_raise(error)
+
+    request._send = send  # type: ignore[method-assign]
+    request._raise_request_error = translate  # type: ignore[method-assign]
+
+    def wait_for_result() -> None:
+        try:
+            asyncio.run(request._await_result())
+        except BaseException as error:
+            errors.append(error)
+
+    waiter = Thread(target=wait_for_result)
+    waiter.start()
+    try:
+        assert translation_started.wait(timeout=5)
+        assert request.done()
+        assert request.cancelled()
+        assert not request.cancel()
+        release_translation.set()
+        waiter.join(timeout=5)
+        assert not waiter.is_alive()
+        assert len(errors) == 1
     finally:
         release_translation.set()
         waiter.join(timeout=5)

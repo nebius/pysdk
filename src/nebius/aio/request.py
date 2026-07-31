@@ -346,6 +346,7 @@ class Request(Generic[Req, Res]):
         self._future: Awaitable[Res] | None = None
         self._future_lock = RLock()
         self._native_terminal = False
+        self._native_code: StatusCode | None = None
         # A native attempt can finish before error translation decides whether
         # the logical request will retry. During that phase done() stays false
         # and cancel() may still cancel the request before another call opens.
@@ -415,7 +416,8 @@ class Request(Generic[Req, Res]):
                 return True
             status = self._status
             return self._cancelled or (
-                status is not None and status.code is StatusCode.CANCELLED
+                self._native_code is StatusCode.CANCELLED
+                or (status is not None and status.code is StatusCode.CANCELLED)
             )
 
     def cancel(self) -> bool:
@@ -545,6 +547,8 @@ class Request(Generic[Req, Res]):
         self._initial_metadata = None
         self._trailing_metadata = None
         self._status = None
+        with self._future_lock:
+            self._native_code = None
         req = self._input
         from nebius.base.protos.pb_classes import Message as LegacyMessage
 
@@ -776,6 +780,7 @@ class Request(Generic[Req, Res]):
             self._cancel_after_terminal_attempt = False
             if retry and not cancelled_retry:
                 self._native_terminal = False
+                self._native_code = None
             elif not retry:
                 self._cancelled = False
             return cancelled_retry
@@ -1036,6 +1041,7 @@ class Request(Generic[Req, Res]):
                     # shared lock linearizes this publication with cancel().
                     with self._future_lock:
                         self._native_terminal = True
+                        self._native_code = StatusCode.OK
                         self._native_attempt_terminal = False
                         if self._cancel_after_terminal_attempt:
                             self._cancel_after_terminal_attempt = False
@@ -1071,6 +1077,7 @@ class Request(Generic[Req, Res]):
                     )
                     with self._future_lock:
                         self._native_terminal = True
+                        self._native_code = raw_code
                         # Retain attempt-terminal state only while a synchronous
                         # authenticator still has to decide the logical retry.
                         # cancel() then records intent instead of cancelling
@@ -1123,6 +1130,7 @@ class Request(Generic[Req, Res]):
                         self._cancelled = False
                     if retry and terminal_attempt and not cancelled_during_decision:
                         self._native_terminal = False
+                        self._native_code = None
                 if cancelled_during_decision:
                     self._release_grpc_channel(discard=True)
                     raise RequestIsCancelledError() from e

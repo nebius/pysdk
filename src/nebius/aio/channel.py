@@ -300,6 +300,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._rpc_done: ConcurrentFuture[None] = ConcurrentFuture()
         self._terminal_ready: ConcurrentFuture[None] = ConcurrentFuture()
         self._native_terminal = False
+        self._native_cancelled = False
         self._cancel_requested = False
         self._address_channel: AddressChannel | None = None
         self._released = False
@@ -471,11 +472,42 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 self._publish_rpc_done()
                 self._publish_terminal_ready()
 
-    def _mark_native_terminal(self, _: object) -> None:
+    def _mark_native_terminal(self, completed: object) -> None:
         """Publish native call completion before the wrapper task resumes."""
 
+        native_cancelled = False
+        cancelled = getattr(completed, "cancelled", None)
+        if callable(cancelled):
+            try:
+                native_cancelled = bool(cancelled())
+            except Exception as error:
+                logger.debug(
+                    "Unable to read native gRPC cancellation state",
+                    exc_info=error,
+                )
+        debug_details: str | None = None
+        debug_error_string = getattr(completed, "debug_error_string", None)
+        if callable(debug_error_string):
+            try:
+                debug_result = debug_error_string()
+            except Exception as error:
+                logger.debug(
+                    "Unable to read native gRPC debug details at completion",
+                    exc_info=error,
+                )
+            else:
+                if isinstance(debug_result, str):
+                    debug_details = debug_result
+                else:
+                    # grpc interceptors can expose this as an async accessor.
+                    # Terminal capture owns the authoritative asynchronous
+                    # read; do not leak the probe coroutine created here.
+                    dispose_unstarted_awaitable(debug_result)
         with self._terminal_lock:
             self._native_terminal = True
+            self._native_cancelled = native_cancelled
+            if debug_details is not None:
+                self._terminal["debug_error_string"] = debug_details
         self._publish_rpc_done()
 
     async def _capture_terminal(self, call: UnaryUnaryCall[Req, Res]) -> None:
@@ -623,8 +655,10 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         self._submitted._check_process()
         with self._terminal_lock:
-            return self._submitted.cancelled() or (
-                self._terminal.get("code") is StatusCode.CANCELLED
+            return (
+                self._submitted.cancelled()
+                or self._native_cancelled
+                or (self._terminal.get("code") is StatusCode.CANCELLED)
             )
 
     def done(self) -> bool:
