@@ -18,7 +18,11 @@ import grpc
 import pytest
 
 import nebius.aio._runtime as runtime_module
-from nebius.aio._runtime import AsyncRuntime, DaemonThreadPoolExecutor
+from nebius.aio._runtime import (
+    AsyncRuntime,
+    CrossLoopAwaitable,
+    DaemonThreadPoolExecutor,
+)
 from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.authorization.authorization import Authenticator, Provider
 from nebius.aio.base import AddressChannel
@@ -147,11 +151,23 @@ def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
     monkeypatch.setattr(Thread, "start", fail_second_worker)
     before = set(enumerate_threads())
     executor = DaemonThreadPoolExecutor(3, "nebius-test-worker")
+    first_started = Event()
+    release_first = Event()
+
+    def block_first_worker() -> int:
+        first_started.set()
+        release_first.wait(timeout=5)
+        return 1
+
     try:
-        assert executor.submit(lambda: 1).result(timeout=5) == 1
+        first = executor.submit(block_first_worker)
+        assert first_started.wait(timeout=5)
         with pytest.raises(RuntimeError, match="worker start failed"):
             executor.submit(lambda: 2)
+        release_first.set()
+        assert first.result(timeout=5) == 1
     finally:
+        release_first.set()
         executor.shutdown(wait=True, cancel_futures=True)
 
     leaked = [
@@ -160,6 +176,18 @@ def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
         if thread.name.startswith("nebius-test-worker_") and thread.is_alive()
     ]
     assert leaked == []
+
+
+def test_executor_reuses_idle_worker_for_sequential_submissions() -> None:
+    """Completed sequential work does not grow the daemon worker pool."""
+
+    executor = DaemonThreadPoolExecutor(20, "nebius-test-worker-idle")
+    try:
+        for value in range(100):
+            assert executor.submit(lambda item=value: item).result(timeout=5) == value
+        assert len(executor._threads) == 1
+    finally:
+        executor.shutdown(wait=True, cancel_futures=True)
 
 
 def test_executor_registers_worker_before_it_can_consume_queued_work() -> None:
@@ -1220,6 +1248,44 @@ def test_borrowed_runtime_shutdown_drains_tracked_task_finalizer() -> None:
         _stop_loop(loop, thread)
 
 
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_channel_close_preserves_cleanup_and_shutdown_failures(
+    monkeypatch,
+    asynchronous: bool,
+) -> None:
+    """A runtime-shutdown error is chained behind the primary close error."""
+
+    channel = Channel(credentials=NoCredentials())
+    close_error = RuntimeError("channel cleanup failed")
+    shutdown_error = RuntimeError("runtime shutdown failed")
+    close_future: Future[None] = Future()
+    close_future.set_exception(close_error)
+    shutdown_future: Future[None] = Future()
+    shutdown_future.set_exception(shutdown_error)
+    close_handle = CrossLoopAwaitable(close_future, channel._event_loop)
+    shutdown_handle = CrossLoopAwaitable(shutdown_future, channel._event_loop)
+    original_get_close_handle = channel._get_close_handle
+    original_shutdown_async = channel._runtime.shutdown_async
+    monkeypatch.setattr(channel, "_get_close_handle", lambda grace: close_handle)
+    monkeypatch.setattr(channel._runtime, "shutdown_async", lambda: shutdown_handle)
+    try:
+        with pytest.raises(RuntimeError, match="channel cleanup failed") as raised:
+            if asynchronous:
+                asyncio.run(channel.close())
+            else:
+                channel.sync_close(timeout=5)
+        assert raised.value is close_error
+        assert raised.value.__cause__ is shutdown_error
+    finally:
+        monkeypatch.setattr(channel, "_get_close_handle", original_get_close_handle)
+        monkeypatch.setattr(
+            channel._runtime,
+            "shutdown_async",
+            original_shutdown_async,
+        )
+        channel.sync_close(timeout=5)
+
+
 def test_supplied_loop_is_not_stopped_or_reconfigured() -> None:
     loop, thread = _start_loop()
     original_executor = getattr(loop, "_default_executor", None)
@@ -1273,6 +1339,40 @@ def test_public_authorization_provider_dispatches_to_internal_loop() -> None:
 
         assert channel.run_sync(retry(), timeout=5) is False
         assert calls == [id(channel._event_loop)] * 3
+    finally:
+        channel.sync_close(timeout=5)
+
+
+def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
+    """A synchronous wait consumes the same one-shot claim as ``await``."""
+
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="one-shot-sync-wait"),
+        Disk,
+    )
+    rpc_count = 0
+
+    async def result() -> Disk:
+        nonlocal rpc_count
+        rpc_count += 1
+        return Disk()
+
+    request._request_with_authorization_loop = result  # type: ignore[method-assign]
+    try:
+        assert isinstance(request.wait(), Disk)
+        with pytest.raises(RuntimeError, match="cannot await the finished coroutine"):
+            request.wait()
+
+        async def await_again() -> None:
+            await request
+
+        with pytest.raises(RuntimeError, match="cannot await the finished coroutine"):
+            asyncio.run(await_again())
+        assert rpc_count == 1
     finally:
         channel.sync_close(timeout=5)
 
@@ -2105,11 +2205,19 @@ def test_low_level_native_completion_wins_before_wrapper_resumes(
         lambda value: value.SerializeToString(),
         Disk.FromString,
     )(GetDiskRequest(id="native-complete-before-resume"))
+    callback_called = Event()
+    callback_values: list[object] = []
+    call.add_done_callback(
+        lambda completed: (callback_values.append(completed), callback_called.set())
+    )
     closer: Thread | None = None
     try:
         assert native_waiting.wait(timeout=5)
         assert native_call is not None
         native_call.publish_completion()
+        assert call.done()
+        assert callback_called.wait(timeout=5)
+        assert callback_values == [call]
         if close_during_wait:
             closer = Thread(target=channel.sync_close, kwargs={"timeout": 5})
             closer.start()

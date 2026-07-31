@@ -358,6 +358,14 @@ class Request(Generic[Req, Res]):
                 "creating any SDK objects"
             )
 
+    def _claim_await(self) -> None:
+        """Claim the request's documented one-shot await operation."""
+
+        with self._future_lock:
+            if self._awaited:
+                raise RuntimeError("cannot await the finished coroutine")
+            self._awaited = True
+
     def _release_grpc_channel(self, *, discard: bool = False) -> None:
         """Release and forget the request's current transport lease.
 
@@ -627,6 +635,7 @@ class Request(Generic[Req, Res]):
                     return cast(T, self._channel.run_sync(func, timeout=timeout))
                 submitted = self._ensure_submitted()
                 if isinstance(submitted, CrossLoopAwaitable):
+                    self._claim_await()
                     direct_submission = submitted
                     return cast(T, submitted.result(timeout))
             return self._channel.run_sync(func, timeout=timeout)
@@ -1235,10 +1244,7 @@ class Request(Generic[Req, Res]):
         request raises a RuntimeError to prevent double-execution semantics.
         """
         self._check_process()
-        with self._future_lock:
-            if self._awaited:
-                raise RuntimeError("cannot await the finished coroutine")
-            self._awaited = True
+        self._claim_await()
 
         res = yield from self._await_result().__await__()
         return res

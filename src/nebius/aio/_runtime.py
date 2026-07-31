@@ -140,6 +140,7 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
                 return
             work_item.run()
             del work_item
+            self._idle_semaphore.release()
 
     def submit(
         self,
@@ -160,7 +161,8 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
         with self._shutdown_lock:
             if self._shutdown:
                 raise RuntimeError("cannot schedule new futures after shutdown")
-            if len(self._threads) < self._max_workers:
+            has_idle_worker = self._idle_semaphore.acquire(blocking=False)
+            if not has_idle_worker and len(self._threads) < self._max_workers:
                 thread = Thread(
                     name=f"{self._thread_name_prefix}_{len(self._threads)}",
                     target=self._worker,

@@ -295,6 +295,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._call_ready = Event()
         self._terminal_lock = RLock()
         self._terminal: dict[str, Any] = {}
+        self._rpc_done: ConcurrentFuture[None] = ConcurrentFuture()
         self._terminal_ready: ConcurrentFuture[None] = ConcurrentFuture()
         self._native_terminal = False
         self._cancel_requested = False
@@ -333,7 +334,15 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             self._submitted.event_loop.call_soon_threadsafe(self._call_ready.set)
         except RuntimeError:
             pass
+        self._publish_rpc_done()
         self._publish_terminal_ready()
+
+    def _publish_rpc_done(self) -> None:
+        """Signal the public native-RPC completion boundary once."""
+
+        with self._terminal_lock:
+            if not self._rpc_done.done():
+                self._rpc_done.set_result(None)
 
     def _publish_terminal_ready(self) -> None:
         """Signal that no further authoritative terminal capture is pending."""
@@ -409,6 +418,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 # caller cannot replace an RPC result with cancellation.
                 with self._terminal_lock:
                     self._native_terminal = True
+                self._publish_rpc_done()
             await self._capture_authoritative_terminal(call)
             return result
         except CancelledError:
@@ -456,6 +466,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     )
                     self._released = True
             finally:
+                self._publish_rpc_done()
                 self._publish_terminal_ready()
 
     def _mark_native_terminal(self, _: object) -> None:
@@ -463,6 +474,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         with self._terminal_lock:
             self._native_terminal = True
+        self._publish_rpc_done()
 
     async def _capture_terminal(self, call: UnaryUnaryCall[Req, Res]) -> None:
         """Cache terminal metadata and status values.
@@ -605,8 +617,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         """Return whether the RPC is complete."""
 
         self._submitted._check_process()
-        with self._terminal_lock:
-            return self._native_terminal or self._submitted.done()
+        return self._rpc_done.done()
 
     def time_remaining(self) -> float | None:
         """Return the remaining RPC timeout in seconds."""
@@ -624,7 +635,11 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param callback: Function that receives this call.
         """
 
-        self._submitted.add_done_callback(lambda _: callback(self))
+        completion = CrossLoopAwaitable(
+            self._rpc_done,
+            self._submitted.event_loop,
+        )
+        completion.add_done_callback(lambda _: callback(self))
 
     async def initial_metadata(self) -> Any:
         """Return the initial RPC metadata."""
@@ -1806,9 +1821,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 lambda _: self._runtime.shutdown_async()
             )
             raise TimeoutError("SDK shutdown timed out") from None
-        except BaseException:
+        except BaseException as close_error:
             shutdown = self._runtime.shutdown_async()
-            shutdown._result(remaining())
+            try:
+                shutdown._result(remaining())
+            except BaseException as shutdown_error:
+                raise close_error from shutdown_error
             raise
 
         shutdown = self._runtime.shutdown_async()
@@ -1851,9 +1869,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         closing = self._get_close_handle(grace)
         try:
             await shield(closing)
-        finally:
+        except BaseException as close_error:
             if current_submission is None and closing.done():
-                await shield(self._runtime.shutdown_async())
+                try:
+                    await shield(self._runtime.shutdown_async())
+                except BaseException as shutdown_error:
+                    raise close_error from shutdown_error
             elif current_submission is not None:
                 self._shutdown_after_internal_caller(
                     current_submission,
@@ -1864,6 +1885,15 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 closing._add_internal_done_callback(
                     lambda _: self._runtime.shutdown_async()
                 )
+            raise
+        if current_submission is None:
+            await shield(self._runtime.shutdown_async())
+        else:
+            self._shutdown_after_internal_caller(
+                current_submission,
+                closing,
+            )
+            self._runtime.mark_current_submission_close_returning()
 
     def _shutdown_after_internal_caller(
         self,
