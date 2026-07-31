@@ -1218,7 +1218,15 @@ class AsyncRuntime:
         try:
             return cast(CrossLoopAwaitable[T], submitted)._result(timeout)
         except FutureTimeoutError:
-            cast(CrossLoopAwaitable[T], submitted).cancel()
+            submitted_handle = cast(CrossLoopAwaitable[T], submitted)
+            # Future.result() raises the same built-in TimeoutError both when
+            # its wait expires and when completed work raised TimeoutError.
+            # A finished handle identifies the latter and preserves the
+            # application's original exception instead of rewriting it as an
+            # SDK wait timeout.
+            if submitted_handle.done():
+                raise
+            submitted_handle.cancel()
             raise TimeoutError("Awaitable timed out") from None
 
     def shutdown(self) -> None:

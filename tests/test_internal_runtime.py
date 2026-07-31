@@ -2179,6 +2179,46 @@ def test_run_sync_preserves_runtime_error_from_awaitable() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_run_sync_preserves_timeout_error_from_completed_awaitable() -> None:
+    """An application's TimeoutError is not mistaken for a wait deadline."""
+
+    channel = Channel(credentials=NoCredentials())
+    application_error = TimeoutError("application timeout")
+
+    async def fail() -> None:
+        raise application_error
+
+    try:
+        with pytest.raises(TimeoutError, match="application timeout") as raised:
+            channel.run_sync(fail(), timeout=5)
+        assert raised.value is application_error
+    finally:
+        channel.sync_close(timeout=5)
+
+
+def test_run_sync_translates_expired_wait_and_cancels_work() -> None:
+    """A real synchronous wait deadline cancels and drains submitted work."""
+
+    channel = Channel(credentials=NoCredentials())
+    started = Event()
+    finalized = Event()
+
+    async def block() -> None:
+        started.set()
+        try:
+            await asyncio.Event().wait()
+        finally:
+            finalized.set()
+
+    try:
+        with pytest.raises(TimeoutError, match="Awaitable timed out"):
+            channel.run_sync(block(), timeout=0.05)
+        assert started.is_set()
+        assert finalized.wait(timeout=5)
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_constructor_config_metrics_run_on_internal_loop_and_are_drained(
     tmp_path: Path,
 ) -> None:
