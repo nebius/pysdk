@@ -294,6 +294,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._call_ready = Event()
         self._terminal_lock = Lock()
         self._terminal: dict[str, Any] = {}
+        self._native_terminal = False
         self._address_channel: AddressChannel | None = None
         self._released = False
         self._submitted = channel.run_async(self._invoke())
@@ -363,7 +364,15 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             )
             self._call = call
             self._call_ready.set()
-            result = await call
+            try:
+                result = await call
+            finally:
+                # Native completion and wrapper completion are distinct. The
+                # latter remains pending while terminal metadata is copied.
+                # Publish the former before that asynchronous copy so a late
+                # caller cannot replace an RPC result with cancellation.
+                with self._terminal_lock:
+                    self._native_terminal = True
             await self._capture_terminal(call)
             return result
         except CancelledError:
@@ -461,9 +470,16 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
     def cancel(self) -> bool:
         """Request cancellation of the RPC.
 
-        :return: ``True`` if the submission accepted cancellation.
+        Cancellation is no longer accepted after the native RPC reaches a
+        terminal state, even when the wrapper is still copying terminal
+        metadata on the SDK loop.
+
+        :return: ``True`` if the active submission accepted cancellation.
         """
 
+        with self._terminal_lock:
+            if self._native_terminal:
+                return False
         cancelled = self._submitted.cancel()
         if cancelled and self._call is None:
             self._publish_prestart_cancellation()

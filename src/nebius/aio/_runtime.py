@@ -1109,7 +1109,14 @@ class AsyncRuntime:
         for submitted in submissions:
             submitted.cancel()
         if self._owned:
-            self._loop.call_soon_threadsafe(self._loop.stop)
+            if self._loop.is_running():
+                try:
+                    self._loop.call_soon_threadsafe(self._loop.stop)
+                except RuntimeError:
+                    # The loop may stop and close between ``is_running`` and
+                    # the thread-safe callback. Resource finalization must
+                    # still publish shutdown completion in that race.
+                    pass
             loop_thread = self._loop_thread
             if loop_thread is current_thread():
                 finalizer = Thread(
@@ -1117,7 +1124,15 @@ class AsyncRuntime:
                     target=self._finish_owned_shutdown,
                     daemon=True,
                 )
-                finalizer.start()
+                try:
+                    finalizer.start()
+                except BaseException as error:
+                    # Joining from the event-loop thread is impossible. Its
+                    # normal ``run`` finalizer closes the loop; expose the
+                    # inability to finish the executor join instead of
+                    # leaving shutdown waiters blocked forever.
+                    self._record_shutdown_failure(error)
+                    self._complete_shutdown()
                 return
             self._finish_owned_shutdown()
             return

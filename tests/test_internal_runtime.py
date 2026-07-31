@@ -319,6 +319,83 @@ def test_shutdown_async_reports_executor_cleanup_failure(
     assert calls >= 2
 
 
+def test_owned_runtime_shutdown_completes_after_loop_was_stopped() -> None:
+    """A previously stopped owned loop must not strand shutdown waiters."""
+
+    runtime = AsyncRuntime(None, 2)
+    loop_thread = runtime._loop_thread
+    assert loop_thread is not None
+    runtime.event_loop.call_soon_threadsafe(runtime.event_loop.stop)
+    loop_thread.join(timeout=5)
+    assert not loop_thread.is_alive()
+    assert runtime.event_loop.is_closed()
+
+    runtime.shutdown_async().result(timeout=5)
+    runtime.shutdown_async().result(timeout=5)
+
+
+def test_owned_runtime_shutdown_handles_loop_stop_race(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Loop closure during stop scheduling must still finish all resources."""
+
+    runtime = AsyncRuntime(None, 2)
+    loop_thread = runtime._loop_thread
+    assert loop_thread is not None
+    original_call = runtime.event_loop.call_soon_threadsafe
+
+    def stop_then_report_closed(
+        callback: object,
+        *args: object,
+    ) -> None:
+        original_call(callback, *args)  # type: ignore[arg-type]
+        loop_thread.join(timeout=5)
+        assert not loop_thread.is_alive()
+        raise RuntimeError("event loop is closed")
+
+    monkeypatch.setattr(
+        runtime.event_loop,
+        "call_soon_threadsafe",
+        stop_then_report_closed,
+    )
+
+    runtime.shutdown()
+    runtime._shutdown_complete.result(timeout=5)
+
+
+def test_owned_runtime_shutdown_reports_finalizer_start_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Failure to start an off-loop finalizer must not hang shutdown."""
+
+    runtime = AsyncRuntime(None, 2)
+    original_start = Thread.start
+    shutdown_called = Event()
+
+    def fail_shutdown_finalizer(thread: Thread) -> None:
+        if thread.name == "nebius-sdk-shutdown":
+            raise RuntimeError("shutdown finalizer start failed")
+        original_start(thread)
+
+    monkeypatch.setattr(Thread, "start", fail_shutdown_finalizer)
+
+    async def shutdown_on_sdk_loop() -> None:
+        runtime.shutdown()
+        shutdown_called.set()
+
+    asyncio.run_coroutine_threadsafe(
+        shutdown_on_sdk_loop(),
+        runtime.event_loop,
+    )
+    assert shutdown_called.wait(timeout=5)
+    with pytest.raises(RuntimeError, match="shutdown finalizer start failed"):
+        runtime._shutdown_complete.result(timeout=5)
+    loop_thread = runtime._loop_thread
+    assert loop_thread is not None
+    loop_thread.join(timeout=5)
+    assert not loop_thread.is_alive()
+
+
 @pytest.mark.skipif(not hasattr(os, "fork"), reason="requires os.fork")
 def test_runtime_rejects_use_after_fork_without_hanging() -> None:
     """A child must create its own SDK instead of using inherited threads."""
@@ -1493,6 +1570,75 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         assert transport_closed.wait(timeout=5)
         assert not terminal_capture_started.is_set()
     finally:
+        channel.sync_close(timeout=5)
+
+
+@pytest.mark.parametrize("native_error", [False, True])
+def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
+    native_error: bool,
+) -> None:
+    """Terminal metadata capture must not reopen native cancellation."""
+
+    terminal_capture_started = Event()
+    release_terminal_capture = Event()
+
+    class CompletedCall:
+        def __await__(self):
+            async def result() -> Disk:
+                if native_error:
+                    raise RuntimeError("native RPC failed")
+                return Disk()
+
+            return result().__await__()
+
+        async def _terminal(self) -> object:
+            terminal_capture_started.set()
+            await asyncio.to_thread(release_terminal_capture.wait)
+            return None
+
+        initial_metadata = _terminal
+        trailing_metadata = _terminal
+        code = _terminal
+        details = _terminal
+
+    class CompletedTransport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            def invoke(*call_args: object, **call_kwargs: object) -> CompletedCall:
+                return CompletedCall()
+
+            return invoke
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    class CompletedChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(CompletedTransport(), addr)  # type: ignore[arg-type]
+
+    channel = CompletedChannel(credentials=NoCredentials())
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda request: request.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="complete"))
+    try:
+        assert terminal_capture_started.wait(timeout=5)
+        assert not call.cancel()
+        release_terminal_capture.set()
+
+        async def await_result() -> None:
+            if native_error:
+                with pytest.raises(RuntimeError, match="native RPC failed"):
+                    await call
+            else:
+                assert isinstance(await call, Disk)
+
+        asyncio.run(await_result())
+    finally:
+        release_terminal_capture.set()
         channel.sync_close(timeout=5)
 
 
