@@ -212,10 +212,14 @@ class StreamRequest(Generic[Req, Res]):
         )
 
     def _is_cancelled(self) -> bool:
+        """Return the cancellation state under the state lock."""
+
         with self._state_lock:
             return self._cancelled
 
     def _is_released(self) -> bool:
+        """Return the channel-release state under the state lock."""
+
         with self._state_lock:
             return self._released
 
@@ -230,6 +234,12 @@ class StreamRequest(Generic[Req, Res]):
             self._release(discard=True)
 
     async def _on_sdk_loop(self, awaitable: Awaitable[T]) -> T:
+        """Run an awaitable on the SDK loop when the channel supports dispatch.
+
+        :param awaitable: Stream work to run.
+        :return: Result of the stream work.
+        """
+
         submit = getattr(self._channel, "run_async", None)
         if callable(submit):
             return cast(T, await submit(awaitable))
@@ -241,6 +251,8 @@ class StreamRequest(Generic[Req, Res]):
         return await self._on_sdk_loop(self._result_internal())
 
     async def _result_internal(self) -> Res:
+        """Read a unary response and release the leased channel."""
+
         call = await self._start()
         try:
             return cast(Res, await call)
@@ -274,6 +286,8 @@ class StreamRequest(Generic[Req, Res]):
                     await submit(self._aclose())
 
     async def _responses_internal(self) -> AsyncIterator[Res]:
+        """Yield streaming responses directly on the call owner loop."""
+
         call = await self._start()
         try:
             async for response in call:
@@ -285,6 +299,12 @@ class StreamRequest(Generic[Req, Res]):
             self._release()
 
     async def _next_response(self) -> Res:
+        """Read one response while serializing access to the iterator.
+
+        :return: Next streaming response.
+        :raises StopAsyncIteration: If the response stream is complete.
+        """
+
         async with self._read_lock:
             if self._response_iterator is None:
                 call = await self._start()
@@ -305,6 +325,12 @@ class StreamRequest(Generic[Req, Res]):
         await self._on_sdk_loop(self._write(request))
 
     async def _write(self, request: Req) -> None:
+        """Write one request on the call owner loop.
+
+        :param request: Request message to write.
+        :raises TypeError: If the RPC does not accept explicit writes.
+        """
+
         async with self._write_lock:
             if not self._client_streaming:
                 raise TypeError("RPC does not accept a client stream")
@@ -321,6 +347,11 @@ class StreamRequest(Generic[Req, Res]):
         await self._on_sdk_loop(self._done_writing())
 
     async def _done_writing(self) -> None:
+        """Finish explicit request writes on the call owner loop.
+
+        :raises TypeError: If the RPC does not accept explicit writes.
+        """
+
         async with self._write_lock:
             if not self._client_streaming:
                 raise TypeError("RPC does not accept a client stream")
@@ -338,6 +369,8 @@ class StreamRequest(Generic[Req, Res]):
         await self._on_sdk_loop(self._aclose())
 
     async def _aclose(self) -> None:
+        """Abort the native call and release its leased channel."""
+
         self._abort()
 
     async def __aenter__(self) -> "StreamRequest[Req, Res]":

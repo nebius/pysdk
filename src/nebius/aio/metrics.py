@@ -486,6 +486,13 @@ def _schedule_metric_awaitable(
 
 
 def _discard_metric_task(task: Task[None]) -> None:
+    """Remove a completed fallback metric task from global tracking.
+
+    This fallback set is used only when no SDK task scheduler is active.
+
+    :param task: Completed metric callback task.
+    """
+
     with _metric_tasks_lock:
         _metric_tasks.discard(task)
 

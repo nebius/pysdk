@@ -295,6 +295,8 @@ class Operation(Generic[OperationPb]):
         self._state_lock = Lock()
 
     def _operation_snapshot(self) -> OperationPb:
+        """Return the current operation message under the state lock."""
+
         with self._state_lock:
             return self._operation
 
@@ -397,6 +399,11 @@ class Operation(Generic[OperationPb]):
         self,
         **kwargs: Unpack[RequestKwargs],
     ) -> None:
+        """Fetch and store one operation update on the SDK event loop.
+
+        :param kwargs: Request options for the operation service.
+        """
+
         if self.done():
             return
 
@@ -522,6 +529,22 @@ class Operation(Generic[OperationPb]):
         poll_retries: int | None = None,
         **kwargs: Unpack[RequestKwargsForOperation],
     ) -> None:
+        """Poll the operation on the SDK event loop until it is complete.
+
+        A local timeout and a service ``DEADLINE_EXCEEDED`` response are
+        transient for one polling iteration. Other errors stop the wait.
+
+        :param interval: Delay between polling attempts, in seconds or as a
+            time delta.
+        :param timeout: Overall wait limit in seconds. Use ``None`` for no
+            limit.
+        :param poll_iteration_timeout: Timeout for one update request.
+        :param poll_per_retry_timeout: Timeout for each retry of an update
+            request.
+        :param poll_retries: Retry count for each update request.
+        :param kwargs: Additional request options for the operation service.
+        :raises TimeoutError: If the overall wait limit expires.
+        """
 
         start = time()
         if poll_iteration_timeout is None:
@@ -532,6 +555,8 @@ class Operation(Generic[OperationPb]):
         from nebius.aio.service_error import RequestError as ServiceRequestError
 
         def _is_ignorable(err: Exception) -> bool:
+            """Return whether one polling error is transient."""
+
             # TimeoutError raised locally or RequestError with DEADLINE_EXCEEDED
             if isinstance(err, TimeoutError):
                 return True
@@ -543,6 +568,8 @@ class Operation(Generic[OperationPb]):
             return False
 
         async def _safe_update() -> None:
+            """Run one update and ignore only transient polling errors."""
+
             try:
                 await self._update_internal(
                     timeout=poll_iteration_timeout,
