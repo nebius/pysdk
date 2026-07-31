@@ -560,6 +560,74 @@ async def test_operation_update_snapshots_mutable_request_options() -> None:
 
 
 @pytest.mark.asyncio
+async def test_operation_wait_snapshots_mutable_poll_options() -> None:
+    """Queued wait metadata and auth options retain submission values."""
+
+    from threading import Event
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.google.rpc import Status
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-wait-snapshot"),
+    )
+    loop_blocked = Event()
+    release_loop = Event()
+    received: list[tuple[list[tuple[str, str]], dict[str, str]]] = []
+
+    class Response:
+        def __init__(self) -> None:
+            self._operation = OperationMessage(
+                id="op-wait-snapshot",
+                status=Status(code=0),
+            )
+
+    class Service:
+        def get(self, request, **kwargs):
+            received.append((list(kwargs["metadata"]), dict(kwargs["auth_options"])))
+
+            async def result() -> Response:
+                return Response()
+
+            return result()
+
+    operation._service = Service()
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    metadata = [("x-scope", "before")]
+    auth_options = {"scope": "before"}
+    wait = asyncio.create_task(
+        operation.wait(
+            interval=0.01,
+            timeout=5,
+            metadata=metadata,
+            auth_options=auth_options,
+        )
+    )
+    await asyncio.sleep(0)
+    metadata[0] = ("x-scope", "after")
+    auth_options["scope"] = "after"
+    try:
+        release_loop.set()
+        await wait
+        await blocker
+        assert received == [([("x-scope", "before")], {"scope": "before"})]
+    finally:
+        release_loop.set()
+        await channel.close()
+
+
+@pytest.mark.asyncio
 async def test_operation_update_preserves_service_timeout_error() -> None:
     """A service TimeoutError is not rewritten as caller deadline expiry."""
 

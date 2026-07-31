@@ -615,7 +615,8 @@ class Operation(Generic[OperationPb]):
             the ``retries`` to each :meth:`update` call.
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargsForOperation` for
-            details.
+            details. Mutable metadata and authorization options are copied
+            before polling is submitted to the SDK event loop.
 
         :raises TimeoutError: when the overall timeout is exceeded
         :raises ValueError: when an unfinished operation receives a
@@ -631,6 +632,12 @@ class Operation(Generic[OperationPb]):
             interval = interval.total_seconds()
         if not isfinite(interval) or interval <= 0:
             raise ValueError("interval must be a finite positive number of seconds")
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
         deadline = None if timeout is None else monotonic() + max(timeout, 0)
         submit = getattr(self._channel, "run_async", None)
         wait = self._wait_internal(

@@ -553,12 +553,15 @@ class CrossLoopAwaitable(Generic[T]):
     async def _wait(self) -> T:
         """Wait for the concurrent future from the current event loop."""
 
-        self._check_process()
-        binding = _current_submission.get()
-        if binding is not None and binding[1] is self and not self._future.done():
-            raise RuntimeError("SDK work cannot await its own submission handle")
-        self._reject_executor_wait()
-        return await asyncio.wrap_future(self._future)
+        try:
+            return await self._wait_shielded()
+        except asyncio.CancelledError:
+            # A direct waiter owns cancellation of the shared submission.
+            # _wait_shielded uses an identity-preserving relay instead of
+            # asyncio.wrap_future(), whose exception conversion clones
+            # built-in TimeoutError on some supported Python versions.
+            self.cancel()
+            raise
 
     async def _wait_shielded(self) -> T:
         """Wait without letting one asyncio waiter cancel shared work.
@@ -916,48 +919,158 @@ class AsyncRuntime:
         :return: Cross-loop awaitable for the result.
         """
 
-        holder: Future[CrossLoopAwaitable[T]] = Future()
-        start_lock = Lock()
+        event_loop = self._loop
+        future: Future[T] = Future()
+        submitted = CrossLoopAwaitable._for_runtime(
+            future,
+            event_loop,
+            self._executor,
+        )
+        state_lock = Lock()
+        task: asyncio.Task[T] | None = None
+        start_claimed = False
         started = False
+        disposed = False
+        work: list[Awaitable[T]] = [awaitable]
 
         async def run() -> T:
             """Run the awaitable with its submission context."""
 
             nonlocal started
-            submitted = await asyncio.wrap_future(holder)
-            with start_lock:
+            with state_lock:
                 started = True
+                current_work = work[0]
             token = _current_submission.set((self, submitted))
             try:
                 return await self._run_awaitable(
-                    awaitable,
+                    current_work,
                     protect_task=protect_task,
                 )
             finally:
                 _current_submission.reset(token)
 
-        runner = run()
+        def forward_cancellation(completed: Future[T]) -> None:
+            """Send destination cancellation to the SDK task."""
+
+            nonlocal disposed
+            if not completed.cancelled():
+                return
+            with state_lock:
+                current_task = task
+                should_dispose = (
+                    current_task is None
+                    and not start_claimed
+                    and not started
+                    and not disposed
+                )
+                if should_dispose:
+                    disposed = True
+                    rejected_work = work.pop()
+            if should_dispose:
+                dispose_unstarted_awaitable(rejected_work)
+            elif current_task is not None:
+                try:
+                    event_loop.call_soon_threadsafe(current_task.cancel)
+                except RuntimeError:
+                    # Final loop cleanup also cancels remaining tasks. If the
+                    # loop is already closed, no callback can be dispatched.
+                    pass
+
+        def copy_outcome(completed: asyncio.Task[T]) -> None:
+            """Publish task completion without translating its exception."""
+
+            nonlocal disposed, task
+            if completed.cancelled():
+                with state_lock:
+                    should_dispose = not started and not disposed
+                    if should_dispose:
+                        disposed = True
+                        rejected_work = work.pop()
+                    else:
+                        work.clear()
+                    task = None
+                if should_dispose:
+                    dispose_unstarted_awaitable(rejected_work)
+                future.cancel()
+                return
+            try:
+                result = completed.result()
+            except BaseException as error:
+                with state_lock:
+                    work.clear()
+                    task = None
+                try:
+                    future.set_exception(error)
+                except InvalidStateError:
+                    pass
+            else:
+                with state_lock:
+                    work.clear()
+                    task = None
+                try:
+                    future.set_result(result)
+                except InvalidStateError:
+                    # The public handle won a cancellation race. Its callback
+                    # has already forwarded cancellation to the SDK task.
+                    pass
+
+        def start_on_loop() -> None:
+            """Create the SDK task only after dispatch reaches its loop."""
+
+            nonlocal disposed, start_claimed, task
+            with state_lock:
+                skip_start = future.cancelled() or disposed
+                should_dispose = skip_start and not disposed
+                if skip_start:
+                    if not disposed:
+                        disposed = True
+                        rejected_work = work.pop()
+                else:
+                    # A borrowed loop may use an eager task factory. Reserve
+                    # ownership before create_task(), then release this
+                    # non-reentrant lock before user code can start.
+                    start_claimed = True
+            if skip_start:
+                if should_dispose:
+                    dispose_unstarted_awaitable(rejected_work)
+                return
+
+            runner = run()
+            try:
+                created_task = event_loop.create_task(runner)
+            except BaseException as start_error:
+                runner.close()
+                with state_lock:
+                    start_claimed = False
+                    should_dispose = not started and not disposed
+                    if should_dispose:
+                        disposed = True
+                        rejected_work = work.pop()
+                if should_dispose:
+                    dispose_unstarted_awaitable(rejected_work)
+                try:
+                    future.set_exception(start_error)
+                except InvalidStateError:
+                    pass
+                return
+
+            with state_lock:
+                task = created_task
+                start_claimed = False
+                cancel_now = future.cancelled()
+            created_task.add_done_callback(copy_outcome)
+            if cancel_now:
+                created_task.cancel()
+
+        future.add_done_callback(forward_cancellation)
         try:
-            future = asyncio.run_coroutine_threadsafe(runner, self._loop)
+            event_loop.call_soon_threadsafe(start_on_loop)
         except BaseException:
-            runner.close()
+            with state_lock:
+                disposed = True
+                work.clear()
+            future.cancel()
             raise
-        submitted = CrossLoopAwaitable._for_runtime(
-            future,
-            self._loop,
-            self._executor,
-        )
-
-        def close_unstarted(completed: Future[T]) -> None:
-            """Close a coroutine that cancellation prevents from starting."""
-
-            with start_lock:
-                should_close = completed.cancelled() and not started
-            if should_close:
-                dispose_unstarted_awaitable(awaitable)
-
-        future.add_done_callback(close_unstarted)
-        holder.set_result(submitted)
         return submitted
 
     def _track_submission(self, submitted: CrossLoopAwaitable[Any]) -> None:
@@ -1361,6 +1474,10 @@ class AsyncRuntime:
     def shutdown_async(self) -> CrossLoopAwaitable[None]:
         """Start runtime shutdown without blocking the caller.
 
+        Each call returns an independent result handle. Cancelling one caller's
+        handle does not cancel the runtime-wide shutdown completion used by
+        later callers.
+
         :return: Cross-loop awaitable that completes after shutdown.
         """
 
@@ -1379,8 +1496,34 @@ class AsyncRuntime:
                     )
                 except RuntimeError:
                     self._start_shutdown_thread()
+        completion = Future[None]()
+
+        def publish_shutdown(source: Future[None]) -> None:
+            """Copy shutdown completion without accepting reverse cancellation."""
+
+            if completion.cancelled():
+                if not source.cancelled():
+                    source.exception()
+                return
+            try:
+                if source.cancelled():
+                    completion.cancel()
+                    return
+                error = source.exception()
+                if error is None:
+                    completion.set_result(None)
+                else:
+                    completion.set_exception(error)
+            except InvalidStateError:
+                # Cancellation can win after the check above. The source
+                # outcome has still been observed and remains authoritative
+                # for other shutdown callers.
+                if not source.cancelled():
+                    source.exception()
+
+        self._shutdown_complete.add_done_callback(publish_shutdown)
         return CrossLoopAwaitable._for_runtime(
-            self._shutdown_complete,
+            completion,
             self._loop,
             self._executor,
         )

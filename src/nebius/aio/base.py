@@ -40,6 +40,7 @@ class AddressChannel:
     channel: GRPCChannel
     event_loop: AbstractEventLoop | None
     _close_state_lock: Lock
+    _retired_by_sdk: bool
     _closed_by_sdk: bool
     _legacy_close_state_init_lock = Lock()
 
@@ -53,6 +54,7 @@ class AddressChannel:
         self.address = address
         self.channel = channel
         self._close_state_lock = Lock()
+        self._retired_by_sdk = False
         self._closed_by_sdk = False
         if event_loop is None:
             try:
@@ -69,7 +71,34 @@ class AddressChannel:
 
         close_state_lock = self._ensure_close_state()
         with close_state_lock:
+            self._retired_by_sdk = True
             self._closed_by_sdk = True
+
+    def _retire_by_sdk(self) -> bool:
+        """Atomically reserve this transport for SDK-managed closure.
+
+        :return: ``True`` only for the caller that changed the transport from
+            reusable to retired. Later close attempts return ``False``.
+
+        Retirement is permanent even when an owner loop stops before the
+        native close can finish. A transport whose close was requested must
+        never re-enter a pool while that close is pending or after its owner
+        loop becomes available again.
+        """
+
+        close_state_lock = self._ensure_close_state()
+        with close_state_lock:
+            if getattr(self, "_retired_by_sdk", False):
+                return False
+            self._retired_by_sdk = True
+            return True
+
+    def _is_retired_by_sdk(self) -> bool:
+        """Return whether SDK lifecycle management reserved this transport."""
+
+        close_state_lock = self._ensure_close_state()
+        with close_state_lock:
+            return getattr(self, "_retired_by_sdk", False)
 
     def _is_closed_by_sdk(self) -> bool:
         """Return whether SDK lifecycle management closed this transport."""
@@ -100,6 +129,7 @@ class AddressChannel:
             except AttributeError:
                 close_state_lock = Lock()
                 self._close_state_lock = close_state_lock
+                self._retired_by_sdk = False
                 self._closed_by_sdk = False
             return close_state_lock
 

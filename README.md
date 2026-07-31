@@ -325,12 +325,25 @@ each child process starts. An SDK object inherited from the parent fails fast
 in the child because event-loop threads, gRPC state, and locks cannot be
 transferred safely.
 
-Custom resolvers, interceptors, asynchronous metrics callbacks, and generated
-request options now execute or become fixed on the internal SDK loop. Supported
-mutable request payloads become fixed when the request wrapper is created, so
-generated reset-mask metadata remains consistent with the payload. Configure
-metadata, timeouts, credentials, and authentication options before the first
-await or `.wait()` call; submission freezes those options.
+Custom resolvers, interceptors, authorization providers, token bearers,
+asynchronous metrics callbacks, and generated request options now execute or
+become fixed on the internal SDK loop. Custom callback and credential objects
+must be thread-safe and loop-neutral. They must not contain an asyncio lock,
+event, queue, task, client session, or other state that belongs to an
+application loop. Thread-local application state does not move to the SDK
+thread. Use `ContextVar` state when context propagation is required.
+
+Treat a custom authorization provider or token bearer as owned by one SDK.
+Do not attach the same stateful instance to SDKs that use different internal
+loops. Create one credential object per SDK instead. Sharing an immutable,
+stateless implementation is possible only when that implementation explicitly
+supports concurrent calls and independent `close()` calls. The SDK cannot
+detect hidden loop ownership or mutable state in a custom object.
+
+Supported mutable request payloads become fixed when the request wrapper is
+created, so generated reset-mask metadata remains consistent with the payload.
+Configure metadata, timeouts, credentials, and authentication options before
+the first await or `.wait()` call; submission freezes those options.
 
 Low-level `Channel.unary_unary()` calls snapshot metadata and supported
 protobuf request messages when the call wrapper is created. Custom request

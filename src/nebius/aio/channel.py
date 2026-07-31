@@ -1150,6 +1150,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             (used rarely by advanced users).
         - :class:`NoCredentials`: disables authorization entirely.
 
+        A supplied bearer or provider runs on this channel's SDK event loop.
+        Custom implementations must be thread-safe and loop-neutral. Do not
+        attach one stateful instance to SDKs with different loops. Create one
+        credential object per SDK unless the implementation explicitly
+        supports concurrent use and independent close calls.
+
         Unsupported types raise :class:`SDKError`.
     :type credentials: token in form of string or :class:`Token`, or classes
         :class:`TokenBearer`, :class:`TokenRequester`,
@@ -2581,34 +2587,45 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     ) -> None:
         if chan is None:
             return
+        reserved_for_close = False
         with self._channel_pool_lock:
             closed = self._closed
             if closed and self._close_completion is None:
                 leased = self._leased_channels.get(id(chan))
             else:
                 leased = self._leased_channels.pop(id(chan), None)
-        already_closed = chan._is_closed_by_sdk()
+            if not closed and discard:
+                # Publish retirement while holding the pool lock so a
+                # simultaneous duplicate return cannot insert the transport
+                # between lease removal and close registration.
+                reserved_for_close = chan._retire_by_sdk()
+        already_retired = chan._is_retired_by_sdk()
         if closed:
-            if leased is None and not already_closed:
+            if leased is None and not already_retired:
                 self._schedule_address_channel_close(chan, None)
             if raise_if_closed:
                 raise ChannelClosedError("Channel closed")
             return
         reusable = (
             not discard
+            and not already_retired
             and getattr(chan, "event_loop", None) is self._event_loop
             and chan.channel.get_state() != ChannelConnectivity.SHUTDOWN
         )
         with self._channel_pool_lock:
             closed = self._closed
-            if not closed and reusable:
+            if not closed and reusable and not chan._is_retired_by_sdk():
                 chans = self._free_channels.setdefault(chan.address, [])
                 if any(pooled is chan for pooled in chans):
                     return
                 if len(chans) < self._max_free_channels_per_address:
                     chans.append(chan)
                     return
-        self._schedule_address_channel_close(chan, None)
+        self._schedule_address_channel_close(
+            chan,
+            None,
+            already_retired=reserved_for_close,
+        )
         if closed and raise_if_closed:
             raise ChannelClosedError("Channel closed")
 
@@ -2672,6 +2689,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
         chan: AddressChannel,
         grace: float | None,
+        *,
+        already_retired: bool = False,
     ) -> None:
         """Schedule and retain an SDK-loop transport close until it finishes.
 
@@ -2679,6 +2698,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         lifecycle responsibility. Its close is dispatched there but is not
         allowed to make SDK shutdown depend on a caller-owned loop.
         """
+
+        if not already_retired:
+            with self._channel_pool_lock:
+                if not chan._retire_by_sdk():
+                    return
+                # A direct caller may still hold a wrapper after returning it.
+                # Remove any duplicate pool entry atomically with retirement.
+                pooled = self._free_channels.get(chan.address)
+                if pooled is not None:
+                    pooled[:] = [
+                        candidate for candidate in pooled if candidate is not chan
+                    ]
+                    if not pooled:
+                        self._free_channels.pop(chan.address, None)
 
         completion: ConcurrentFuture[None] | None = None
 

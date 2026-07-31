@@ -68,6 +68,32 @@ def _stop_loop(loop: asyncio.AbstractEventLoop, thread: Thread) -> None:
     assert not thread.is_alive()
 
 
+@pytest.mark.skipif(
+    not hasattr(asyncio, "eager_task_factory"),
+    reason="asyncio eager tasks require Python 3.12 or newer",
+)
+def test_borrowed_loop_eager_task_factory_does_not_deadlock_submission() -> None:
+    """A caller-owned eager task factory may run SDK work during creation."""
+
+    loop, thread = _start_loop()
+    configured: Future[None] = Future()
+
+    def configure() -> None:
+        loop.set_task_factory(getattr(asyncio, "eager_task_factory"))
+        configured.set_result(None)
+
+    loop.call_soon_threadsafe(configure)
+    configured.result(timeout=5)
+    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    try:
+        assert channel.run_sync(asyncio.sleep(0, result=42), timeout=5) == 42
+    finally:
+        try:
+            channel.sync_close(timeout=5)
+        finally:
+            _stop_loop(loop, thread)
+
+
 def test_owned_runtime_threads_are_daemons_and_stop_on_close() -> None:
     channel = Channel(credentials=NoCredentials(), executor_max_workers=3)
     workers_ready = Barrier(4)
@@ -110,6 +136,29 @@ def test_owned_runtime_starts_executor_workers_lazily() -> None:
         assert created_workers == []
     finally:
         channel.sync_close(timeout=5)
+
+
+@pytest.mark.asyncio
+async def test_default_sdks_run_on_independent_internal_loops_in_parallel() -> None:
+    """Default SDK runtimes do not share loop threads or task context."""
+
+    first = Channel(credentials=NoCredentials())
+    second = Channel(credentials=NoCredentials())
+    both_running = Barrier(2)
+
+    async def identify() -> tuple[int, int]:
+        both_running.wait(timeout=5)
+        return id(asyncio.get_running_loop()), current_thread().ident or 0
+
+    try:
+        identities = await asyncio.gather(
+            first.run_async(identify()),
+            second.run_async(identify()),
+        )
+        assert len({loop_id for loop_id, _ in identities}) == 2
+        assert len({thread_id for _, thread_id in identities}) == 2
+    finally:
+        await asyncio.gather(first.close(), second.close())
 
 
 def test_runtime_startup_failure_is_reported_and_workers_stop(monkeypatch) -> None:
@@ -527,6 +576,32 @@ def test_owned_runtime_recovers_unexecuted_shutdown_dispatch(
     assert loop_thread is not None
     loop_thread.join(timeout=5)
     assert not loop_thread.is_alive()
+
+
+def test_cancelled_shutdown_waiter_does_not_poison_shared_completion() -> None:
+    """One cancelled shutdown handle cannot cancel later shutdown waiters."""
+
+    runtime = AsyncRuntime(None, 2)
+    loop_blocked = Event()
+    release_loop = Event()
+
+    def block_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    runtime.event_loop.call_soon_threadsafe(block_loop)
+    assert loop_blocked.wait(timeout=5)
+    first = runtime.shutdown_async()
+    second = runtime.shutdown_async()
+    assert first.cancel()
+    try:
+        release_loop.set()
+        second.result(timeout=5)
+    finally:
+        release_loop.set()
+    assert first.cancelled()
+    assert not runtime._shutdown_complete.cancelled()
+    runtime.shutdown_async().result(timeout=5)
 
 
 @pytest.mark.skipif(not hasattr(os, "fork"), reason="requires os.fork")
@@ -982,6 +1057,31 @@ def test_run_sync_is_safe_from_many_threads() -> None:
     assert sorted(results) == list(range(10))
 
 
+def test_completed_submission_handle_does_not_retain_input_awaitable() -> None:
+    """A reusable result handle must not keep completed caller work alive."""
+
+    channel = Channel(credentials=NoCredentials())
+
+    class Work:
+        def __await__(self):
+            async def result() -> int:
+                return 42
+
+            return result().__await__()
+
+    work = Work()
+    work_ref = ref(work)
+    submitted = channel.run_async(work)  # type: ignore[arg-type]
+    del work
+    try:
+        assert submitted.result(timeout=5) == 42
+        gc.collect()
+        assert work_ref() is None
+        assert submitted.result() == 42
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_submit_and_close_race_leaves_no_untracked_work() -> None:
     """Close waits until an accepted submission is registered for draining."""
 
@@ -1393,7 +1493,7 @@ def test_submission_failure_disposes_reentrant_awaitable_outside_locks(
     """A custom close hook may safely re-enter channel state on rejection."""
 
     channel = Channel(credentials=NoCredentials())
-    original_submit = runtime_module.asyncio.run_coroutine_threadsafe
+    original_submit = channel._event_loop.call_soon_threadsafe
     closed: list[grpc.ChannelConnectivity] = []
 
     class ReentrantAwaitable:
@@ -1410,8 +1510,8 @@ def test_submission_failure_disposes_reentrant_awaitable_outside_locks(
         raise RuntimeError("dispatch failed")
 
     monkeypatch.setattr(
-        runtime_module.asyncio,
-        "run_coroutine_threadsafe",
+        channel._event_loop,
+        "call_soon_threadsafe",
         reject_dispatch,
     )
     try:
@@ -1420,8 +1520,8 @@ def test_submission_failure_disposes_reentrant_awaitable_outside_locks(
         assert closed == [grpc.ChannelConnectivity.READY]
     finally:
         monkeypatch.setattr(
-            runtime_module.asyncio,
-            "run_coroutine_threadsafe",
+            channel._event_loop,
+            "call_soon_threadsafe",
             original_submit,
         )
         channel.sync_close(timeout=5)

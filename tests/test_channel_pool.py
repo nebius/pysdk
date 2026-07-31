@@ -624,6 +624,117 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
     assert close_calls == [None]
 
 
+def test_transport_in_flight_close_cannot_be_returned_to_pool() -> None:
+    """A duplicate return cannot resurrect a transport being discarded."""
+
+    close_started = Event()
+    release_close = Event()
+
+    class Transport:
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            close_started.set()
+            while not release_close.is_set():
+                await asyncio.sleep(0.001)
+
+    transport = Transport()
+
+    class RecordingChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(transport, addr, self._event_loop)  # type: ignore[arg-type]
+
+    channel = RecordingChannel(credentials=NoCredentials())
+    address = channel.get_channel_by_addr("retired.example:443")
+    try:
+        channel.discard_channel(address)
+        assert close_started.wait(timeout=5)
+
+        channel.return_channel(address)
+
+        with channel._channel_pool_lock:
+            assert all(
+                pooled is not address
+                for pooled in channel._free_channels.get(address.address, ())
+            )
+        assert address._is_retired_by_sdk()
+    finally:
+        release_close.set()
+        channel.sync_close(timeout=5)
+
+
+def test_transport_retirement_wins_return_publication_race(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Retirement published between return checks prevents pool insertion."""
+
+    return_checked = Event()
+    resume_return = Event()
+    release_close = Event()
+    errors: list[BaseException] = []
+
+    class Transport:
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            while not release_close.is_set():
+                await asyncio.sleep(0.001)
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "retirement-race.example:443",
+        channel._event_loop,
+    )
+    channel._lease_address_channel(address)
+    original_is_retired = address._is_retired_by_sdk
+    first_check = True
+
+    def pause_first_check() -> bool:
+        nonlocal first_check
+        retired = original_is_retired()
+        if first_check:
+            first_check = False
+            return_checked.set()
+            resume_return.wait(timeout=5)
+        return retired
+
+    monkeypatch.setattr(address, "_is_retired_by_sdk", pause_first_check)
+
+    def return_channel() -> None:
+        try:
+            channel._release_address_channel(
+                address,
+                discard=False,
+                raise_if_closed=True,
+            )
+        except BaseException as error:
+            errors.append(error)
+
+    returning = Thread(target=return_channel)
+    returning.start()
+    assert return_checked.wait(timeout=5)
+    try:
+        channel._schedule_address_channel_close(address, None)
+    finally:
+        resume_return.set()
+        returning.join(timeout=5)
+
+    try:
+        assert not returning.is_alive()
+        assert errors == []
+        with channel._channel_pool_lock:
+            assert all(
+                pooled is not address
+                for pooled in channel._free_channels.get(address.address, ())
+            )
+    finally:
+        release_close.set()
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.parametrize("borrowed_loop", [False, True])
 def test_close_drains_transport_registered_after_cleanup_snapshot(
     borrowed_loop: bool,
