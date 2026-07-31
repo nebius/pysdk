@@ -12,6 +12,7 @@ from __future__ import annotations
 import importlib
 import os
 from asyncio import Lock as AsyncLock
+from asyncio import TimeoutError as AsyncTimeoutError
 from asyncio import sleep, wait_for
 from collections.abc import Sequence
 from datetime import datetime, timedelta
@@ -550,7 +551,7 @@ class Operation(Generic[OperationPb]):
             # it. ``wait_for`` propagates cancellation to the one submitted
             # wait when the caller-side deadline expires.
             await wait_for(submitted, timeout=max(timeout, 0))
-        except TimeoutError as error:
+        except (TimeoutError, AsyncTimeoutError) as error:
             raise TimeoutError("Operation wait timeout") from error
 
     async def _wait_internal(
