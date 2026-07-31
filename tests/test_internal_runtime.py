@@ -1,15 +1,18 @@
 from __future__ import annotations
 
 import asyncio
+import gc
 import inspect
 import os
 import signal
 from concurrent.futures import CancelledError as ConcurrentCancelledError
 from concurrent.futures import Future
+from contextvars import ContextVar
 from pathlib import Path
 from threading import Barrier, Event, Lock, Thread
 from threading import enumerate as enumerate_threads
 from time import monotonic, sleep
+from weakref import ref
 
 import grpc
 import pytest
@@ -561,6 +564,42 @@ def test_cross_loop_callback_runs_on_registration_loop() -> None:
     try:
         registration_loop, callback_loop = asyncio.run(register())
         assert callback_loop == registration_loop
+    finally:
+        channel.sync_close(timeout=5)
+
+
+def test_completed_callback_releases_registration_context() -> None:
+    """A retained completed handle must not retain callback ContextVars."""
+
+    class Payload:
+        pass
+
+    payload_var: ContextVar[Payload | None] = ContextVar(
+        "callback_payload",
+        default=None,
+    )
+    channel = Channel(credentials=NoCredentials())
+
+    async def register():
+        submitted = channel.run_async(asyncio.sleep(0, result=42))
+        callback_done = asyncio.Event()
+        payload = Payload()
+        payload_ref = ref(payload)
+        token = payload_var.set(payload)
+        try:
+            submitted.add_done_callback(lambda _: callback_done.set())
+        finally:
+            payload_var.reset(token)
+        del payload
+        assert await submitted == 42
+        await asyncio.wait_for(callback_done.wait(), timeout=5)
+        return submitted, payload_ref
+
+    try:
+        retained_handle, payload_ref = asyncio.run(register())
+        gc.collect()
+        assert retained_handle.done()
+        assert payload_ref() is None
     finally:
         channel.sync_close(timeout=5)
 
@@ -1900,8 +1939,21 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
         lambda request: request.SerializeToString(),
         Disk.FromString,
     )(GetDiskRequest(id="complete"))
+    close_done = Event()
+    close_errors: list[BaseException] = []
+
+    def close_channel() -> None:
+        try:
+            channel.sync_close(timeout=5)
+        except BaseException as error:
+            close_errors.append(error)
+        finally:
+            close_done.set()
+
+    closer: Thread | None = None
     try:
         assert terminal_capture_started.wait(timeout=5)
+        assert call.done()
         assert not call.cancel()
 
         async def cancel_one_waiter() -> None:
@@ -1912,6 +1964,9 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
                 await waiter
 
         asyncio.run(cancel_one_waiter())
+        closer = Thread(target=close_channel)
+        closer.start()
+        assert not close_done.wait(timeout=0.1)
         release_terminal_capture.set()
 
         async def await_result() -> None:
@@ -1922,9 +1977,15 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
                 assert isinstance(await call, Disk)
 
         asyncio.run(await_result())
+        closer.join(timeout=5)
+        assert not closer.is_alive()
+        assert close_errors == []
     finally:
         release_terminal_capture.set()
-        channel.sync_close(timeout=5)
+        if closer is not None:
+            closer.join(timeout=5)
+        if not close_done.is_set():
+            channel.sync_close(timeout=5)
 
 
 def test_generated_request_rejects_cancel_after_native_success() -> None:
@@ -1978,8 +2039,21 @@ def test_generated_request_rejects_cancel_after_native_success() -> None:
 
     waiter = Thread(target=wait_for_result)
     waiter.start()
+    close_done = Event()
+    close_errors: list[BaseException] = []
+
+    def close_channel() -> None:
+        try:
+            channel.sync_close(timeout=5)
+        except BaseException as error:
+            close_errors.append(error)
+        finally:
+            close_done.set()
+
+    closer: Thread | None = None
     try:
         assert terminal_capture_started.wait(timeout=5)
+        assert request.done()
         assert not request.cancel()
 
         async def cancel_one_waiter() -> None:
@@ -1990,16 +2064,25 @@ def test_generated_request_rejects_cancel_after_native_success() -> None:
                 await pending
 
         asyncio.run(cancel_one_waiter())
+        closer = Thread(target=close_channel)
+        closer.start()
+        assert not close_done.wait(timeout=0.1)
         release_terminal_capture.set()
         waiter.join(timeout=5)
+        closer.join(timeout=5)
         assert not waiter.is_alive()
+        assert not closer.is_alive()
+        assert close_errors == []
         assert errors == []
         assert len(results) == 1
         assert isinstance(results[0], Disk)
     finally:
         release_terminal_capture.set()
         waiter.join(timeout=5)
-        channel.sync_close(timeout=5)
+        if closer is not None:
+            closer.join(timeout=5)
+        if not close_done.is_set():
+            channel.sync_close(timeout=5)
 
 
 def test_generated_request_rejects_cancel_after_native_error() -> None:

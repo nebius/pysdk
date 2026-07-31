@@ -463,15 +463,25 @@ class CrossLoopAwaitable(Generic[T]):
         if callback_loop.is_closed():
             raise RuntimeError("callback event loop is closed")
         callback_context = copy_context() if context is None else context
+        state: dict[str, Any] = {
+            "callback": callback,
+            "context": callback_context,
+            "loop": callback_loop,
+        }
 
         def schedule(_: Future[T]) -> None:
             """Schedule the public callback on its registration loop."""
 
+            retained_callback = state.pop("callback", None)
+            retained_context = state.pop("context", None)
+            retained_loop = state.pop("loop", None)
+            if retained_callback is None or retained_loop is None:
+                return
             try:
-                callback_loop.call_soon_threadsafe(
-                    callback,
+                retained_loop.call_soon_threadsafe(
+                    retained_callback,
                     self,
-                    context=callback_context,
+                    context=retained_context,
                 )
             except RuntimeError:
                 # Affinity cannot be preserved after a caller-owned loop
@@ -496,7 +506,20 @@ class CrossLoopAwaitable(Generic[T]):
         :param callback: Runtime callback that receives this awaitable.
         """
 
-        self._future.add_done_callback(lambda _: callback(self))
+        state: list[object] = [callback, self]
+
+        def invoke(_: Future[T]) -> None:
+            """Run once and release callback/runtime references."""
+
+            if not state:
+                return
+            retained_callback = cast(
+                Callable[[CrossLoopAwaitable[T]], object], state.pop(0)
+            )
+            retained_self = cast(CrossLoopAwaitable[T], state.pop(0))
+            retained_callback(retained_self)
+
+        self._future.add_done_callback(invoke)
 
     async def _wait(self) -> T:
         """Wait for the concurrent future from the current event loop."""
@@ -935,6 +958,7 @@ class AsyncRuntime:
         """
 
         bridged: Future[T] = Future()
+        state: dict[str, object] = {"source": source, "owner_loop": owner_loop}
 
         def copy_result(completed: asyncio.Future[T]) -> None:
             """Copy source completion to the bridge."""
@@ -961,25 +985,41 @@ class AsyncRuntime:
         def forward_cancellation(completed: Future[T]) -> None:
             """Send bridge cancellation to the source loop."""
 
-            if completed.cancelled():
+            retained_source = cast(
+                "asyncio.Future[T] | None", state.pop("source", None)
+            )
+            retained_loop = cast(
+                "asyncio.AbstractEventLoop | None", state.pop("owner_loop", None)
+            )
+            if (
+                completed.cancelled()
+                and retained_source is not None
+                and retained_loop is not None
+            ):
                 try:
-                    owner_loop.call_soon_threadsafe(cancel_on_owner)
+                    retained_loop.call_soon_threadsafe(
+                        cancel_on_owner,
+                        retained_source,
+                    )
                 except RuntimeError:
                     pass
 
-        def cancel_on_owner() -> None:
+        def cancel_on_owner(retained_source: asyncio.Future[T]) -> None:
             """Cancel the source only from its owning event loop."""
 
-            if not source.done():
-                source.cancel()
+            if not retained_source.done():
+                retained_source.cancel()
 
         def attach_on_owner() -> None:
             """Attach completion handling only from the owning event loop."""
 
+            retained_source = cast("asyncio.Future[T] | None", state.get("source"))
+            if retained_source is None:
+                return
             if bridged.cancelled():
-                cancel_on_owner()
+                cancel_on_owner(retained_source)
             else:
-                source.add_done_callback(copy_result)
+                retained_source.add_done_callback(copy_result)
 
         bridged.add_done_callback(forward_cancellation)
         if not owner_loop.is_running():

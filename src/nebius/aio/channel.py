@@ -386,7 +386,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 # caller cannot replace an RPC result with cancellation.
                 with self._terminal_lock:
                     self._native_terminal = True
-            await self._capture_terminal(call)
+            await self._capture_authoritative_terminal(call)
             return result
         except CancelledError:
             discard = True
@@ -407,10 +407,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                         self._terminal["debug_error_string"] = debug_details
             failed_call = self._call
             if failed_call is not None:
-                # A new cancellation must propagate instead of being hidden by
-                # best-effort terminal-status capture.
                 with suppress(Exception):
-                    await self._capture_terminal(failed_call)
+                    await self._capture_authoritative_terminal(failed_call)
             raise
         except BaseException:
             discard = True
@@ -444,6 +442,26 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             for name, value in zip(names, values):
                 if not isinstance(value, BaseException):
                     self._terminal[name] = value
+
+    async def _capture_authoritative_terminal(
+        self,
+        call: UnaryUnaryCall[Req, Res],
+    ) -> None:
+        """Finish terminal capture after native completion despite SDK close.
+
+        Runtime shutdown cancels ordinary submissions directly. Once the
+        native call is terminal, that cancellation must not replace its result
+        or error while metadata is copied, so capture continues in a shielded
+        child task and is drained before this submission finishes.
+
+        :param call: Authoritatively completed native call.
+        """
+
+        capture = create_task(self._capture_terminal(call))
+        try:
+            await shield(capture)
+        except CancelledError:
+            await capture
 
     async def _call_result(self, method: str) -> Any:
         """Return one value from the native call.
@@ -525,12 +543,18 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
     def cancelled(self) -> bool:
         """Return whether the RPC was cancelled."""
 
-        return self._submitted.cancelled()
+        self._submitted._check_process()
+        with self._terminal_lock:
+            return self._submitted.cancelled() or (
+                self._terminal.get("code") is StatusCode.CANCELLED
+            )
 
     def done(self) -> bool:
         """Return whether the RPC is complete."""
 
-        return self._submitted.done()
+        self._submitted._check_process()
+        with self._terminal_lock:
+            return self._native_terminal or self._submitted.done()
 
     def time_remaining(self) -> float | None:
         """Return the remaining RPC timeout in seconds."""

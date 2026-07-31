@@ -359,18 +359,23 @@ class Request(Generic[Req, Res]):
     def done(self) -> bool:
         """Return True if the underlying gRPC call has completed."""
         self._check_process()
-        future = self._future
-        done = getattr(future, "done", None)
-        return bool(done()) if callable(done) else False
+        with self._future_lock:
+            future = self._future
+            done = getattr(future, "done", None)
+            return self._native_terminal or (bool(done()) if callable(done) else False)
 
     def cancelled(self) -> bool:
         """Return True if the call was cancelled (locally or remotely)."""
         self._check_process()
-        future = self._future
-        cancelled = getattr(future, "cancelled", None)
-        if callable(cancelled) and cancelled():
-            return True
-        return self._cancelled
+        with self._future_lock:
+            future = self._future
+            cancelled = getattr(future, "cancelled", None)
+            if callable(cancelled) and cancelled():
+                return True
+            status = self._status
+            return self._cancelled or (
+                status is not None and status.code is StatusCode.CANCELLED
+            )
 
     def cancel(self) -> bool:
         """Cancel the request; returns True when the request is marked
@@ -836,24 +841,7 @@ class Request(Generic[Req, Res]):
                     # shared lock linearizes this publication with cancel().
                     with self._future_lock:
                         self._native_terminal = True
-                    code = await self._call.code()
-                    msg = await self._call.details()
-                    mdi = await self._call.initial_metadata()
-                    mdt = await self._call.trailing_metadata()
-                    e = AioRpcError(code, mdi, mdt, msg, None)  # type: ignore
-                    self._convert_request_error(e)
-                    if self._result_wrapper is not None:
-                        wrapped = self._result_wrapper(
-                            self._service + "." + self._method,
-                            self._channel,
-                            ret,
-                        )
-                        release_address_channel(self._channel, self._grpc_channel)
-                        self._grpc_channel = None
-                        return wrapped
-                    release_address_channel(self._channel, self._grpc_channel)
-                    self._grpc_channel = None
-                    return ret  # type: ignore
+                    return await self._complete_authoritative_success(ret)
                 except CancelledError as e:
                     release_address_channel(
                         self._channel,
@@ -897,6 +885,45 @@ class Request(Generic[Req, Res]):
                 release_address_channel(self._channel, self._grpc_channel)
                 raise e
         raise RequestIsCancelledError()
+
+    async def _complete_authoritative_success(self, result: Any) -> Res:
+        """Copy terminal state without allowing SDK close to erase success.
+
+        The native response is already authoritative when this method starts.
+        Runtime shutdown may cancel the parent submission, so final metadata,
+        error conversion, wrapping, and transport release run in a shielded
+        child task that the parent drains before returning.
+
+        :param result: Native response value.
+        :return: Native or wrapped response value.
+        """
+
+        async def complete() -> Res:
+            if self._call is None:
+                raise RequestSentNoCallError()
+            code = await self._call.code()
+            msg = await self._call.details()
+            mdi = await self._call.initial_metadata()
+            mdt = await self._call.trailing_metadata()
+            error = AioRpcError(code, mdi, mdt, msg, None)  # type: ignore
+            self._convert_request_error(error)
+            if self._result_wrapper is not None:
+                response = self._result_wrapper(
+                    self._service + "." + self._method,
+                    self._channel,
+                    result,
+                )
+            else:
+                response = cast(Res, result)
+            release_address_channel(self._channel, self._grpc_channel)
+            self._grpc_channel = None
+            return response
+
+        completion = ensure_future(complete())
+        try:
+            return await shield(completion)
+        except CancelledError:
+            return await completion
 
     async def _request_with_authorization_loop(self) -> Res:
         """Wrap request retry loop with an authorization loop.
