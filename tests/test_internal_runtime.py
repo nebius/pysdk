@@ -24,7 +24,12 @@ from nebius.aio.operation import Operation
 from nebius.aio.request import Request
 from nebius.aio.stream import StreamRequest
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
-from nebius.api.nebius.compute.v1 import Disk, DiskServiceClient, GetDiskRequest
+from nebius.api.nebius.compute.v1 import (
+    Disk,
+    DiskServiceClient,
+    GetDiskRequest,
+    UpdateDiskRequest,
+)
 from nebius.api.nebius.iam.v1 import ExchangeTokenRequest
 from nebius.base.metadata import Metadata
 from nebius.base.service_account.service_account import TokenRequester
@@ -611,6 +616,29 @@ def test_pending_future_from_stopped_loop_fails_bridge_promptly() -> None:
         foreign_loop.close()
 
 
+def test_completed_foreign_future_wins_stopped_loop_race(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A result published during the loop-state check remains observable."""
+
+    foreign_loop = asyncio.new_event_loop()
+    source = foreign_loop.create_future()
+    channel = Channel(credentials=NoCredentials())
+    original_is_running = foreign_loop.is_running
+
+    def complete_then_report_stopped() -> bool:
+        source.set_result(42)
+        return False
+
+    monkeypatch.setattr(foreign_loop, "is_running", complete_then_report_stopped)
+    try:
+        assert channel.run_async(source).result(timeout=5) == 42
+    finally:
+        monkeypatch.setattr(foreign_loop, "is_running", original_is_running)
+        channel.sync_close(timeout=5)
+        foreign_loop.close()
+
+
 def test_bg_task_bridges_foreign_loop_future() -> None:
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials())
@@ -871,6 +899,36 @@ def test_close_cancels_bg_task_foreign_loop_future() -> None:
     finally:
         if not source.done():
             loop.call_soon_threadsafe(source.cancel)
+        _stop_loop(loop, thread)
+
+
+def test_borrowed_runtime_shutdown_drains_tracked_task_finalizer() -> None:
+    """Shutdown completion follows asynchronous finalization on a borrowed loop."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    started = Event()
+    finalizing = Event()
+    finalized = Event()
+
+    async def work() -> None:
+        try:
+            started.set()
+            await asyncio.Event().wait()
+        finally:
+            finalizing.set()
+            await asyncio.sleep(0.05)
+            finalized.set()
+
+    runtime.submit(work())
+    assert started.wait(timeout=5)
+    try:
+        runtime.shutdown_async().result(timeout=5)
+        assert finalizing.is_set()
+        assert finalized.is_set()
+        assert loop.is_running()
+    finally:
+        runtime.shutdown_async().result(timeout=5)
         _stop_loop(loop, thread)
 
 
@@ -1488,6 +1546,24 @@ def test_request_inputs_are_snapshotted_at_first_submission() -> None:
         assert asyncio.run(submit_then_mutate()) == ("before", "before", "before")
     finally:
         release_loop.set()
+        channel.sync_close(timeout=5)
+
+
+def test_generated_update_payload_matches_eager_reset_mask() -> None:
+    """Mutation after wrapper creation cannot invalidate reset-mask metadata."""
+
+    channel = Channel(credentials=NoCredentials())
+    source = UpdateDiskRequest()
+    source.spec.block_size_bytes = 4096
+    pending = DiskServiceClient(channel).update(source)
+    reset_mask = pending.input_metadata().get_one("x-resetmask")
+
+    source.spec.block_size_bytes = None
+    try:
+        assert pending._input.spec.block_size_bytes == 4096
+        assert pending._input.get_full_update_reset_mask().marshal() == reset_mask
+        assert source.get_full_update_reset_mask().marshal() != reset_mask
+    finally:
         channel.sync_close(timeout=5)
 
 

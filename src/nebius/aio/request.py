@@ -149,8 +149,9 @@ class Request(Generic[Req, Res]):
         for example ``"Get"`` or ``"List"``.
     :type method: `str`
 
-    :param request: The request payload. Typically a protobuf wrapper or a
-        domain object that can be serialised by the generated client.
+    :param request: The request payload. Supported mutable protobuf messages
+        are copied when the wrapper is created. Unknown custom values retain
+        their historical pass-through behavior and must be thread-safe.
 
     :param result_pb2_class: Protobuf class used to deserialize the RPC
         response bytes into a message instance.
@@ -287,7 +288,11 @@ class Request(Generic[Req, Res]):
         """
         self._channel = channel
         self._process_id = os.getpid()
-        self._input = request
+        # Generated update methods derive reset-mask metadata before creating
+        # this wrapper. Copy supported mutable messages now so that metadata
+        # and the payload always describe the same state. Unknown custom
+        # payloads retain their historical pass-through behavior.
+        self._input = _snapshot_request_input(request)
         self._service = service
         self._method = method
         self._route = route or Route(service=service, method=method)
@@ -965,7 +970,6 @@ class Request(Generic[Req, Res]):
         self._check_process()
         with self._future_lock:
             if self._future is None:
-                self._input = _snapshot_request_input(self._input)
                 self._input_metadata = Metadata(self._input_metadata)
                 self._auth_options = dict(self._auth_options)
                 coroutine = self._request_with_authorization_loop()

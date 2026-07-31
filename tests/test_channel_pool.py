@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from concurrent.futures import Future, ThreadPoolExecutor
 from threading import Barrier, Event, Thread
+from time import sleep
 
 import grpc
 import pytest
@@ -399,6 +400,73 @@ def test_stopped_foreign_loop_transport_close_is_not_queued(caplog) -> None:
     finally:
         channel.sync_close(timeout=5)
         owner_loop.close()
+
+
+def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Shutdown awaits the published close instead of starting another one."""
+
+    submit_blocked = Event()
+    release_submit = Event()
+    close_calls: list[float | None] = []
+    errors: list[BaseException] = []
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            close_calls.append(grace)
+            await asyncio.sleep(0.05)
+
+    channel = Channel(credentials=NoCredentials())
+    address_channel = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "127.0.0.1:1",
+        channel._event_loop,
+    )
+    original_submit = channel._runtime.submit
+    first_submission = True
+
+    def pause_first_submission(awaitable, *, track=True):
+        nonlocal first_submission
+        pause = first_submission
+        first_submission = False
+        if pause:
+            submit_blocked.set()
+            release_submit.wait(timeout=5)
+        return original_submit(awaitable, track=track)
+
+    monkeypatch.setattr(channel._runtime, "submit", pause_first_submission)
+    scheduler = Thread(
+        target=channel._schedule_address_channel_close,
+        args=(address_channel, None),
+    )
+    scheduler.start()
+    assert submit_blocked.wait(timeout=5)
+
+    def close() -> None:
+        try:
+            channel.sync_close(timeout=5)
+        except BaseException as error:
+            errors.append(error)
+
+    closer = Thread(target=close)
+    closer.start()
+    try:
+        for _ in range(100):
+            if channel._close_completion is not None:
+                break
+            sleep(0.01)
+        assert channel._close_completion is not None
+        sleep(0.05)
+    finally:
+        release_submit.set()
+        scheduler.join(timeout=5)
+        closer.join(timeout=5)
+
+    assert not scheduler.is_alive()
+    assert not closer.is_alive()
+    assert errors == []
+    assert close_calls == [None]
 
 
 def test_generated_requests_complete_from_many_sync_threads() -> None:

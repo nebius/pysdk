@@ -933,9 +933,12 @@ class AsyncRuntime:
         if source.done():
             copy_result(source)
         elif not owner_loop.is_running():
-            bridged.set_exception(
-                RuntimeError("foreign future owner event loop is not running")
-            )
+            if source.done():
+                copy_result(source)
+            else:
+                bridged.set_exception(
+                    RuntimeError("foreign future owner event loop is not running")
+                )
         else:
             try:
                 owner_loop.call_soon_threadsafe(source.add_done_callback, copy_result)
@@ -1131,6 +1134,7 @@ class AsyncRuntime:
             if schedule:
                 self._shutdown_preparing = True
         if schedule:
+            self.begin_close()
             if not self._loop.is_running():
                 self._start_shutdown_thread()
             else:
@@ -1191,6 +1195,12 @@ class AsyncRuntime:
                 if all(submitted.done() for submitted in protected):
                     break
                 await asyncio.sleep(0)
+
+            # Tracked tasks can have asynchronous finalizers that continue
+            # after cancellation becomes visible on their concurrent result.
+            # Drain those finalizers on borrowed as well as owned loops before
+            # publishing runtime shutdown completion.
+            await self.cancel_submissions()
             if self._owned:
                 # Match asyncio.run ordering while this loop can still make
                 # progress: cancel raw untracked tasks, close async generators,

@@ -1167,7 +1167,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._tasks = set[Any]()
         self._transport_closes = dict[
             int,
-            tuple[AddressChannel, CrossLoopAwaitable[None] | None],
+            tuple[AddressChannel, ConcurrentFuture[None]],
         ]()
         self._tasks_lock = Lock()
 
@@ -1816,13 +1816,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     awaits.append(graceful.close(grace))
                 with self._tasks_lock:
                     transport_closes = list(self._transport_closes.values())
-                    self._transport_closes.clear()
-                transport_tasks = list[CrossLoopAwaitable[None]]()
-                for chan, closing in transport_closes:
-                    if closing is None:
-                        awaits.append(self._close_address_channel(chan, grace))
-                    else:
-                        transport_tasks.append(closing)
+                transport_tasks = [
+                    wrap_future(completion) for _, completion in transport_closes
+                ]
                 for task in tasks:
                     task.cancel()
                 rets = await gather(
@@ -2336,6 +2332,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         allowed to make SDK shutdown depend on a caller-owned loop.
         """
 
+        completion: ConcurrentFuture[None] | None = None
+
         async def close_and_log() -> None:
             try:
                 await self._close_address_channel(chan, grace)
@@ -2346,6 +2344,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     "Unhandled exception while closing address channel",
                     exc_info=e,
                 )
+            finally:
+                if completion is not None and not completion.done():
+                    completion.set_result(None)
 
         owner_loop = getattr(chan, "event_loop", None)
         if owner_loop is not None and owner_loop is not self._event_loop:
@@ -2373,15 +2374,26 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             return
 
         channel_id = id(chan)
+        completion = ConcurrentFuture()
         with self._tasks_lock:
-            self._transport_closes[channel_id] = (chan, None)
+            if channel_id in self._transport_closes:
+                return
+            self._transport_closes[channel_id] = (chan, completion)
+
+        def discard(completed: ConcurrentFuture[None]) -> None:
+            """Forget this transport only after its close has completed."""
+
+            with self._tasks_lock:
+                current = self._transport_closes.get(channel_id)
+                if current is not None and current[1] is completed:
+                    self._transport_closes.pop(channel_id, None)
+
+        completion.add_done_callback(discard)
         close_coro = close_and_log()
         try:
-            closing = self._runtime.submit(close_coro, track=False)
+            self._runtime.submit(close_coro, track=False)
         except RuntimeError:
             close_coro.close()
-            with self._tasks_lock:
-                self._transport_closes.pop(channel_id, None)
             owner_loop = getattr(chan, "event_loop", None)
             try:
                 current_loop = get_running_loop()
@@ -2409,21 +2421,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 logger.warning(
                     "Unable to schedule channel close without a running " "event loop"
                 )
+                completion.set_result(None)
             return
-        with self._tasks_lock:
-            current = self._transport_closes.get(channel_id)
-            if current is not None:
-                self._transport_closes[channel_id] = (chan, closing)
-
-        def discard(completed: CrossLoopAwaitable[None]) -> None:
-            """Forget this transport only after its close has completed."""
-
-            with self._tasks_lock:
-                current = self._transport_closes.get(channel_id)
-                if current is not None and current[1] is completed:
-                    self._transport_closes.pop(channel_id, None)
-
-        closing._add_internal_done_callback(discard)
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
         """Dispose of an :class:`AddressChannel` by scheduling its close.
