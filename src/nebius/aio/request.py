@@ -323,6 +323,10 @@ class Request(Generic[Req, Res]):
         )
         self._credentials = credentials
         self._compression = compression
+        # Requests historically asked gRPC to wait for channel readiness.
+        # Keep that default while making the existing public property complete
+        # and ensuring its pre-submission value reaches the native call.
+        self._wait_for_ready: bool | None = True
         self._call: UnaryUnaryCall | None = None  # type: ignore[type-arg,unused-ignore]
         self._retries = retries
         self._cancelled: bool = False
@@ -582,7 +586,7 @@ class Request(Generic[Req, Res]):
             timeout=timeout,
             metadata=GrpcMetadata(*self._input_metadata),
             credentials=self._credentials,
-            wait_for_ready=True,
+            wait_for_ready=self._wait_for_ready,
             compression=self._compression,
         )
         add_done_callback = getattr(self._call, "add_done_callback", None)

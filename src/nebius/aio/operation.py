@@ -12,11 +12,11 @@ from __future__ import annotations
 import importlib
 import os
 from asyncio import Lock as AsyncLock
-from asyncio import sleep
+from asyncio import sleep, wait_for
 from collections.abc import Sequence
 from datetime import datetime, timedelta
 from threading import Lock
-from time import time
+from time import monotonic
 from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
 
 from grpc import StatusCode
@@ -530,24 +530,34 @@ class Operation(Generic[OperationPb]):
         :raises TimeoutError: when the overall timeout is exceeded
         """
         self._check_process()
+        deadline = None if timeout is None else monotonic() + max(timeout, 0)
         submit = getattr(self._channel, "run_async", None)
         wait = self._wait_internal(
             interval=interval,
             timeout=timeout,
+            deadline=deadline,
             poll_iteration_timeout=poll_iteration_timeout,
             poll_per_retry_timeout=poll_per_retry_timeout,
             poll_retries=poll_retries,
             **kwargs,
         )
-        if callable(submit):
-            await submit(wait)
-        else:
-            await wait
+        submitted = submit(wait) if callable(submit) else wait
+        if timeout is None:
+            await submitted
+            return
+        try:
+            # Bound dispatch to the SDK loop as well as polling performed on
+            # it. ``wait_for`` propagates cancellation to the one submitted
+            # wait when the caller-side deadline expires.
+            await wait_for(submitted, timeout=max(timeout, 0))
+        except TimeoutError as error:
+            raise TimeoutError("Operation wait timeout") from error
 
     async def _wait_internal(
         self,
         interval: float | timedelta = 1,
         timeout: float | None = None,
+        deadline: float | None = None,
         poll_iteration_timeout: float | UnsetType | None = Unset,
         poll_per_retry_timeout: float | UnsetType | None = Unset,
         poll_retries: int | None = None,
@@ -562,6 +572,9 @@ class Operation(Generic[OperationPb]):
             time delta.
         :param timeout: Overall wait limit in seconds. Use ``None`` for no
             limit.
+        :param deadline: Absolute monotonic deadline captured before dispatch
+            to the SDK loop. This includes runtime queueing and update-lock
+            acquisition in the overall timeout.
         :param poll_iteration_timeout: Timeout for one update request.
         :param poll_per_retry_timeout: Timeout for each retry of an update
             request.
@@ -570,7 +583,8 @@ class Operation(Generic[OperationPb]):
         :raises TimeoutError: If the overall wait limit expires.
         """
 
-        start = time()
+        if deadline is None and timeout is not None:
+            deadline = monotonic() + max(timeout, 0)
         if poll_iteration_timeout is None:
             if timeout is not None:
                 poll_iteration_timeout = min(5, timeout)
@@ -595,23 +609,38 @@ class Operation(Generic[OperationPb]):
             """Run one update and ignore only transient polling errors."""
 
             try:
-                await self._update_internal(
+                update = self._update_internal(
                     timeout=poll_iteration_timeout,
                     per_retry_timeout=poll_per_retry_timeout,
                     retries=poll_retries,
                     **kwargs,
                 )
+                if deadline is None:
+                    await update
+                else:
+                    remaining = deadline - monotonic()
+                    if remaining <= 0:
+                        update.close()
+                        raise TimeoutError("Operation wait timeout")
+                    await wait_for(update, timeout=remaining)
             except Exception as e:  # noqa: S110
+                if deadline is not None and monotonic() >= deadline:
+                    raise TimeoutError("Operation wait timeout") from e
                 if not _is_ignorable(e):
                     raise
 
         if not self.done():
             await _safe_update()
         while not self.done():
-            current_time = time()
-            if timeout is not None and current_time > timeout + start:
+            if deadline is not None:
+                remaining = deadline - monotonic()
+                if remaining <= 0:
+                    raise TimeoutError("Operation wait timeout")
+                await sleep(min(interval, remaining))
+            else:
+                await sleep(interval)
+            if deadline is not None and monotonic() >= deadline:
                 raise TimeoutError("Operation wait timeout")
-            await sleep(interval)
             await _safe_update()
 
     def _set_new_operation(self, operation: OperationPb) -> None:

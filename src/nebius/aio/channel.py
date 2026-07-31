@@ -2821,6 +2821,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             :attr:`grpc.ChannelConnectivity.SHUTDOWN` if closed.
         :rtype: :class:`grpc.ChannelConnectivity`
         """
+        self._check_process()
         if self._closed:
             return ChannelConnectivity.SHUTDOWN
         return ChannelConnectivity.READY
@@ -2841,6 +2842,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """
         Channel is always ready, nothing to do here.
         """
+        self._check_process()
         return
 
     def unary_stream(  # type: ignore[unused-ignore,override]

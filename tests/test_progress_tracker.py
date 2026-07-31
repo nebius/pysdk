@@ -346,3 +346,39 @@ async def test_concurrent_operation_updates_are_serialized() -> None:
         assert operation.done()
     finally:
         await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
+    """Overall timeout includes waiting behind a serialized update."""
+
+    from threading import Event
+    from time import monotonic
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-timeout"),
+    )
+    lock_held = Event()
+
+    async def hold_update_lock() -> None:
+        async with operation._update_lock:
+            lock_held.set()
+            await asyncio.Event().wait()
+
+    blocker = channel.run_async(hold_update_lock())
+    assert await asyncio.to_thread(lock_held.wait, 5)
+    started = monotonic()
+    try:
+        with pytest.raises(TimeoutError, match="Operation wait timeout"):
+            await operation.wait(timeout=0.05)
+        assert monotonic() - started < 0.5
+    finally:
+        blocker.cancel()
+        await channel.close()

@@ -538,6 +538,18 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
         else:
             outcomes.append("channel: no error")
         try:
+            channel.get_state()
+        except RuntimeError as error:
+            outcomes.append(str(error))
+        else:
+            outcomes.append("channel state: no error")
+        try:
+            asyncio.run(channel.channel_ready())
+        except RuntimeError as error:
+            outcomes.append(str(error))
+        else:
+            outcomes.append("channel ready: no error")
+        try:
             submitted.done()
         except RuntimeError as error:
             outcomes.append(str(error))
@@ -589,7 +601,7 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
         waited, status = os.waitpid(child, 0)
         assert waited == child
         assert os.waitstatus_to_exitcode(status) == 0
-        assert "channel cannot be used after fork" in outcome
+        assert outcome.count("channel cannot be used after fork") >= 3
         assert "awaitable cannot be used after fork" in outcome
         assert "request cannot be used after fork" in outcome
         assert outcome.count("awaitable cannot be used after fork") >= 3
@@ -1373,6 +1385,48 @@ def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
         with pytest.raises(RuntimeError, match="cannot await the finished coroutine"):
             asyncio.run(await_again())
         assert rpc_count == 1
+    finally:
+        channel.sync_close(timeout=5)
+
+
+def test_request_wait_for_ready_default_and_native_option() -> None:
+    """The public readiness option is initialized and reaches gRPC."""
+
+    channel = Channel(credentials=NoCredentials())
+    observed: list[bool | None] = []
+
+    class NativeChannel:
+        def unary_unary(self, *args: object, **kwargs: object):
+            def invoke(
+                request: object,
+                *,
+                wait_for_ready: bool | None,
+                **call_kwargs: object,
+            ) -> object:
+                observed.append(wait_for_ready)
+                return object()
+
+            return invoke
+
+    override = object.__new__(AddressChannel)
+    override.channel = NativeChannel()  # type: ignore[assignment]
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="wait-for-ready"),
+        Disk,
+        grpc_channel_override=override,
+    )
+
+    async def send() -> None:
+        assert request.wait_for_ready is True
+        request.wait_for_ready = False
+        request._send(timeout=1)
+
+    try:
+        channel.run_sync(send(), timeout=5)
+        assert observed == [False]
     finally:
         channel.sync_close(timeout=5)
 
