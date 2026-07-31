@@ -377,6 +377,9 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             if not publish_call:
                 call.cancel()
                 raise CancelledError
+            add_done_callback = getattr(call, "add_done_callback", None)
+            if callable(add_done_callback):
+                add_done_callback(self._mark_native_terminal)
             self._call_ready.set()
             try:
                 result = await call
@@ -432,6 +435,12 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     discard=discard,
                 )
                 self._released = True
+
+    def _mark_native_terminal(self, _: object) -> None:
+        """Publish native call completion before the wrapper task resumes."""
+
+        with self._terminal_lock:
+            self._native_terminal = True
 
     async def _capture_terminal(self, call: UnaryUnaryCall[Req, Res]) -> None:
         """Cache terminal metadata and status values.

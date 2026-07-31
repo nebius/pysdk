@@ -343,6 +343,8 @@ class Request(Generic[Req, Res]):
         # the logical request will retry. During that phase done() stays false
         # and cancel() may still cancel the request before another call opens.
         self._retry_decision_pending = False
+        self._native_attempt_terminal = False
+        self._cancel_after_terminal_attempt = False
 
     def _check_process(self) -> None:
         """Reject a request inherited by a child process before locking."""
@@ -395,6 +397,13 @@ class Request(Generic[Req, Res]):
                 self._native_terminal and not self._retry_decision_pending
             ):
                 return False
+            if self._native_attempt_terminal:
+                # The owner loop has not classified the result as final or
+                # retriable yet. Record cancellation without cancelling the
+                # wrapper task, which could erase an authoritative success.
+                self._cancelled = True
+                self._cancel_after_terminal_attempt = True
+                return True
             future = self._future
             if future is None:
                 self._cancelled = True
@@ -550,6 +559,22 @@ class Request(Generic[Req, Res]):
             wait_for_ready=True,
             compression=self._compression,
         )
+        add_done_callback = getattr(self._call, "add_done_callback", None)
+        if callable(add_done_callback):
+            add_done_callback(self._mark_native_attempt_terminal)
+
+    def _mark_native_attempt_terminal(self, _: object) -> None:
+        """Publish native attempt completion before its awaiter resumes.
+
+        The SDK loop still has to classify a terminal attempt as success,
+        final error, or retriable error. Cancellation during that interval is
+        recorded but does not cancel the wrapper task and erase a native
+        success.
+        """
+
+        with self._future_lock:
+            if not self._native_terminal:
+                self._native_attempt_terminal = True
 
     def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
         """Run an awaitable synchronously using the channel's sync runner.
@@ -855,6 +880,10 @@ class Request(Generic[Req, Res]):
                     # shared lock linearizes this publication with cancel().
                     with self._future_lock:
                         self._native_terminal = True
+                        self._native_attempt_terminal = False
+                        if self._cancel_after_terminal_attempt:
+                            self._cancel_after_terminal_attempt = False
+                            self._cancelled = False
                     return await self._complete_authoritative_success(ret)
                 except CancelledError as e:
                     release_address_channel(
@@ -884,7 +913,11 @@ class Request(Generic[Req, Res]):
                     )
                     with self._future_lock:
                         self._native_terminal = True
+                        self._native_attempt_terminal = False
                         self._retry_decision_pending = could_retry
+                        if self._cancel_after_terminal_attempt and not could_retry:
+                            self._cancel_after_terminal_attempt = False
+                            self._cancelled = False
                     self._raise_request_error(e)
             except Exception as e:
                 retry = (
@@ -893,11 +926,24 @@ class Request(Generic[Req, Res]):
                     and (self._retries is None or self._retries > attempt)
                 )
                 with self._future_lock:
+                    terminal_attempt = (
+                        self._native_terminal or self._native_attempt_terminal
+                    )
+                    if terminal_attempt:
+                        self._native_terminal = True
+                        self._native_attempt_terminal = False
                     cancelled_during_decision = (
-                        retry and self._retry_decision_pending and self._cancelled
+                        retry
+                        and terminal_attempt
+                        and self._retry_decision_pending
+                        and self._cancelled
                     )
                     self._retry_decision_pending = False
-                    if retry and not cancelled_during_decision:
+                    if terminal_attempt:
+                        self._cancel_after_terminal_attempt = False
+                    if terminal_attempt and not retry:
+                        self._cancelled = False
+                    if retry and terminal_attempt and not cancelled_during_decision:
                         self._native_terminal = False
                 if cancelled_during_decision:
                     release_address_channel(

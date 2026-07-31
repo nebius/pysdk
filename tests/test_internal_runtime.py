@@ -9,7 +9,7 @@ from concurrent.futures import CancelledError as ConcurrentCancelledError
 from concurrent.futures import Future
 from contextvars import ContextVar
 from pathlib import Path
-from threading import Barrier, Event, Lock, Thread
+from threading import Barrier, Event, Lock, Thread, current_thread
 from threading import enumerate as enumerate_threads
 from time import monotonic, sleep
 from weakref import ref
@@ -159,6 +159,33 @@ def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
         if thread.name.startswith("nebius-test-worker_") and thread.is_alive()
     ]
     assert leaked == []
+
+
+def test_executor_registers_worker_before_it_can_consume_queued_work() -> None:
+    """Every started worker is recognizable before it executes SDK work."""
+
+    executor = DaemonThreadPoolExecutor(2, "nebius-test-worker-race")
+    first_worker_started = Event()
+    release_first_worker = Event()
+    original_worker = executor._worker
+
+    def controlled_worker() -> None:
+        if current_thread().name.endswith("_0"):
+            first_worker_started.set()
+            release_first_worker.wait(timeout=5)
+        original_worker()
+
+    executor._worker = controlled_worker  # type: ignore[method-assign]
+    try:
+        first = executor.submit(lambda: executor.owns_thread(current_thread()))
+        assert first_worker_started.wait(timeout=5)
+        second = executor.submit(lambda: executor.owns_thread(current_thread()))
+        assert first.result(timeout=5) is True
+        release_first_worker.set()
+        assert second.result(timeout=5) is True
+    finally:
+        release_first_worker.set()
+        executor.shutdown(wait=True, cancel_futures=True)
 
 
 def test_executor_construction_failure_closes_new_event_loop(monkeypatch) -> None:
@@ -1796,6 +1823,81 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_low_level_native_completion_wins_before_wrapper_resumes() -> None:
+    """A native done callback closes the pre-resumption cancellation window."""
+
+    native_waiting = Event()
+    release_result = Event()
+    native_call: CompletedCall | None = None
+
+    class CompletedCall:
+        def __init__(self) -> None:
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            self.callback = callback
+
+        def publish_completion(self) -> None:
+            assert self.callback is not None
+            self.callback(self)
+
+        def __await__(self):
+            async def result() -> Disk:
+                native_waiting.set()
+                await asyncio.to_thread(release_result.wait)
+                return Disk()
+
+            return result().__await__()
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+        async def code(self) -> grpc.StatusCode:
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            return ""
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            def create(*call_args: object, **call_kwargs: object) -> CompletedCall:
+                nonlocal native_call
+                native_call = CompletedCall()
+                return native_call
+
+            return create
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    class TestChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
+
+    channel = TestChannel(credentials=NoCredentials())
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="native-complete-before-resume"))
+    try:
+        assert native_waiting.wait(timeout=5)
+        assert native_call is not None
+        native_call.publish_completion()
+        assert not call.cancel()
+        release_result.set()
+        assert isinstance(call._submitted.result(timeout=5), Disk)
+    finally:
+        release_result.set()
+        channel.sync_close(timeout=5)
+
+
 def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
     """Accepted cancellation discards a resolved address before call creation."""
 
@@ -2092,6 +2194,98 @@ def test_generated_request_rejects_cancel_after_native_success() -> None:
             closer.join(timeout=5)
         if not close_done.is_set():
             channel.sync_close(timeout=5)
+
+
+def test_generated_native_success_wins_before_wrapper_resumes() -> None:
+    """A completed native success survives cancellation before await resumes."""
+
+    native_waiting = Event()
+    release_result = Event()
+    results: list[Disk] = []
+    errors: list[BaseException] = []
+
+    class CompletedCall:
+        def __init__(self) -> None:
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            self.callback = callback
+
+        def publish_completion(self) -> None:
+            assert self.callback is not None
+            self.callback(self)
+
+        def __await__(self):
+            async def result() -> Disk:
+                native_waiting.set()
+                await asyncio.to_thread(release_result.wait)
+                return Disk()
+
+            return result().__await__()
+
+        async def code(self) -> grpc.StatusCode:
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            return ""
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+    native_call = CompletedCall()
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            def create(*call_args: object, **call_kwargs: object) -> CompletedCall:
+                return native_call
+
+            return create
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    class TestChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
+
+    channel = TestChannel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="native-success-before-resume"),
+        Disk,
+    )
+
+    def wait_for_result() -> None:
+        try:
+            results.append(request.wait())
+        except BaseException as error:
+            errors.append(error)
+
+    waiter = Thread(target=wait_for_result)
+    waiter.start()
+    try:
+        assert native_waiting.wait(timeout=5)
+        native_call.publish_completion()
+        assert request.cancel()
+        release_result.set()
+        waiter.join(timeout=5)
+        assert not waiter.is_alive()
+        assert errors == []
+        assert len(results) == 1
+        assert isinstance(results[0], Disk)
+        assert not request.cancelled()
+    finally:
+        release_result.set()
+        waiter.join(timeout=5)
+        channel.sync_close(timeout=5)
 
 
 def test_generated_request_rejects_cancel_after_native_error() -> None:

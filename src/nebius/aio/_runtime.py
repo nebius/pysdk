@@ -166,8 +166,12 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
                     target=self._worker,
                     daemon=True,
                 )
-                thread.start()
                 self._threads.add(thread)
+                try:
+                    thread.start()
+                except BaseException:
+                    self._threads.discard(thread)
+                    raise
             future: Future[T] = Future()
             self._work_queue.put(_WorkItem(future, fn, args, kwargs))
             return future
