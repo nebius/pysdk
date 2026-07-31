@@ -273,6 +273,23 @@ awaited from any external asyncio loop. Reuse long-lived SDK instances instead
 of constructing one per request, because every default instance owns its loop
 thread and can start its configured executor workers.
 
+### Internal-loop migration notes
+
+This release intentionally changes a few loop-affine compatibility surfaces
+so that SDK-owned work cannot escape onto an application loop:
+
+| Previous use | Internal-loop behavior | Migration |
+| --- | --- | --- |
+| Treating `Channel.bg_task()` as an `asyncio.Task` | It returns a reusable `CrossLoopAwaitable` | Await it directly; wrap it with `asyncio.ensure_future()` before `asyncio.wait()`; Task-only inspection and callback removal are unavailable. |
+| Calling `run_sync()` or `sync_close()` from an async call stack | Every active caller loop is rejected, including one separate from the SDK loop | Await the SDK handle, or move the whole synchronous call to `asyncio.to_thread()`. |
+| Supplying a stopped `event_loop` for the SDK to drive | A supplied loop must already be running and remains caller-owned | Start and keep the loop running in its owner thread until SDK close completes. |
+
+`Channel.run_async()` is a new submission capability used by the built-in
+channel. It schedules work immediately and returns a reusable cross-loop
+handle. The minimal custom-channel protocol is deliberately unchanged:
+legacy implementations without `run_async()` retain their local-awaitable
+fallback instead of being forced to implement the new runtime.
+
 Use an asynchronous context when possible. If no asynchronous event loop is
 running, you can use the SDK synchronously:
 
@@ -315,6 +332,12 @@ Low-level `Channel.unary_unary()` calls snapshot metadata and supported
 protobuf request messages when the call wrapper is created. Custom request
 values with a serializer are serialized immediately. A custom value without a
 serializer must be immutable or otherwise safe to share between threads.
+After a native unary call becomes terminal, its `initial_metadata()`,
+`trailing_metadata()`, `code()`, and `details()` awaitables must finish
+promptly. Shutdown drains those accessors to preserve the authoritative RPC
+result despite cancellation. A custom transport that leaves one pending can
+therefore delay final runtime termination; `sync_close(timeout=...)` bounds
+the caller's wait but cannot safely terminate arbitrary transport code.
 
 Generated operation-service factories remain synchronous and may be called
 from asynchronous application code. They defer source-service resolution to

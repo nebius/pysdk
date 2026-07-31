@@ -1701,12 +1701,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             dispose_unstarted_awaitable(awaitable)
             if current_loop is self._event_loop:
                 raise LoopError(
-                    "Provided loop is equal to current thread's loop. Either use "
-                    "async/await or provide another loop at the SDK initialization."
+                    "Synchronous SDK calls are not allowed on the SDK event loop; "
+                    "await the SDK handle instead."
                 )
             raise LoopError(
-                "Synchronous call inside async context. Either use async/await or "
-                "provide a safe and separate loop to run at the SDK initialization."
+                "Synchronous SDK calls are not allowed inside an async context; "
+                "await the SDK handle or move the synchronous call to "
+                "asyncio.to_thread()."
             )
 
         return self._runtime.run_sync(awaitable, timeout)

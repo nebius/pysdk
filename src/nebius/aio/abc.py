@@ -39,7 +39,11 @@ class ClientChannelInterface(Protocol):
 
     Typical implementations are :class:`nebius.aio.channel.Channel` or
     simple test doubles that provide access to transport channels and
-    authorization providers.
+    authorization providers. The built-in channel additionally exposes
+    ``run_async``. It schedules work immediately and returns a reusable
+    cross-loop awaitable. That capability remains optional so existing custom
+    channels which implement this minimal protocol keep their local-awaitable
+    compatibility path.
     """
 
     def get_channel_by_method(self, method_name: str) -> AddressChannel:

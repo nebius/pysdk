@@ -255,9 +255,11 @@ class CrossLoopAwaitable(Generic[T]):
     :func:`asyncio.wait`. Task-only naming, coroutine-inspection, and callback
     removal methods are not available.
 
-    A public completion callback uses the event loop that registers it. The
-    loop must stay open until delivery. The SDK does not move the callback to
-    its completion thread if the registration loop closes.
+    A public completion callback uses the running event loop that registers
+    it. The loop must stay running until delivery. The SDK does not move the
+    callback to its completion thread if the registration loop stops or
+    closes. Asyncio cannot make callback registration atomic with the owner
+    stopping its loop, so a callback is logged and dropped if that race occurs.
     """
 
     def __init__(

@@ -98,12 +98,12 @@ def test_direct_pool_release_rejects_active_external_loop() -> None:
 
     async def exercise() -> None:
         returned = await _checkout(channel, "127.0.0.1:1")
-        with pytest.raises(LoopError, match="Synchronous call inside async context"):
+        with pytest.raises(LoopError, match="not allowed inside an async context"):
             channel.return_channel(returned)
         await asyncio.to_thread(channel.return_channel, returned)
 
         discarded = await _checkout(channel, "127.0.0.1:2")
-        with pytest.raises(LoopError, match="Synchronous call inside async context"):
+        with pytest.raises(LoopError, match="not allowed inside an async context"):
             channel.discard_channel(discarded)
         await asyncio.to_thread(channel.discard_channel, discarded)
 
