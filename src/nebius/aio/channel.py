@@ -16,7 +16,6 @@ from asyncio import (
     Event,
     Task,
     create_task,
-    current_task,
     gather,
     get_event_loop,
     get_running_loop,
@@ -296,6 +295,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._call_ready = Event()
         self._terminal_lock = RLock()
         self._terminal: dict[str, Any] = {}
+        self._terminal_ready: ConcurrentFuture[None] = ConcurrentFuture()
         self._native_terminal = False
         self._cancel_requested = False
         self._address_channel: AddressChannel | None = None
@@ -333,6 +333,14 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             self._submitted.event_loop.call_soon_threadsafe(self._call_ready.set)
         except RuntimeError:
             pass
+        self._publish_terminal_ready()
+
+    def _publish_terminal_ready(self) -> None:
+        """Signal that no further authoritative terminal capture is pending."""
+
+        with self._terminal_lock:
+            if not self._terminal_ready.done():
+                self._terminal_ready.set_result(None)
 
     async def _invoke(self) -> Res:
         """Create and run the native call on the SDK event loop."""
@@ -440,12 +448,15 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             raise
         finally:
             self._call_ready.set()
-            if not self._released:
-                self._channel.release_channel(
-                    self._address_channel,
-                    discard=discard,
-                )
-                self._released = True
+            try:
+                if not self._released:
+                    self._channel.release_channel(
+                        self._address_channel,
+                        discard=discard,
+                    )
+                    self._released = True
+            finally:
+                self._publish_terminal_ready()
 
     def _mark_native_terminal(self, _: object) -> None:
         """Publish native call completion before the wrapper task resumes."""
@@ -528,20 +539,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             # Close may reject this new accessor submission while it is
             # already draining the call submission that owns terminal capture.
             # Wait for that owner and use the cache it publishes.
-            accessor_task = current_task()
-            cancellations_before = (
-                accessor_task.cancelling() if accessor_task is not None else 0
-            )
-            try:
-                await self._submitted._wait_shielded()
-            except CancelledError:
-                if (
-                    accessor_task is not None
-                    and accessor_task.cancelling() > cancellations_before
-                ):
-                    raise
-            except BaseException:  # noqa: S110
-                pass  # Terminal cache below owns the shared outcome.
+            await shield(wrap_future(self._terminal_ready))
             with self._terminal_lock:
                 if method in self._terminal:
                     return self._terminal[method]

@@ -19,6 +19,7 @@ that do not affect behavior.
 import os
 from asyncio import CancelledError, ensure_future, get_running_loop, shield, wait_for
 from collections.abc import Awaitable, Callable, Generator, Iterable
+from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from logging import getLogger
 from sys import exc_info
 from threading import RLock
@@ -629,7 +630,7 @@ class Request(Generic[Req, Res]):
                     direct_submission = submitted
                     return cast(T, submitted.result(timeout))
             return self._channel.run_sync(func, timeout=timeout)
-        except TimeoutError as e:
+        except (TimeoutError, ConcurrentTimeoutError) as e:
             if direct_submission is not None:
                 # ``Future.result(timeout)`` does not cancel pending work.
                 # Preserve the previous run_sync timeout contract through the
