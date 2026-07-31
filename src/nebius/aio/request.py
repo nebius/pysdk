@@ -704,11 +704,68 @@ class Request(Generic[Req, Res]):
         :rtype: either :class:`nebius.aio.request_status.RequestStatus` or
             :class:`nebius.aio.request_status.UnfinishedRequestStatus`
         """
-        if self._status is not None:
-            return self._status
-        if self._call is None:
-            return UnfinishedRequestStatus.INITIALIZED
-        return UnfinishedRequestStatus.SENT
+        self._check_process()
+        with self._future_lock:
+            if self._status is not None:
+                return self._status
+            if self._call is None:
+                return UnfinishedRequestStatus.INITIALIZED
+            return UnfinishedRequestStatus.SENT
+
+    def _structured_error_is_retriable(self, error: AioRpcError) -> bool:
+        """Classify rich service retry hints before publishing finality.
+
+        Native gRPC status codes alone are insufficient: a rich status can
+        carry a service error whose retry policy is ``CALL``. Decode that
+        status before :meth:`cancel` decides whether the logical request is
+        final. Conversion is repeated by :meth:`_raise_request_error` only on
+        the exceptional path so that the public status retains request IDs.
+
+        :param error: Native RPC error containing optional rich status data.
+        :return: Whether its structured status requests a call retry.
+        """
+
+        try:
+            from .request_status import rpc_status_from_call
+            from .service_error import RequestStatusExtended
+
+            status = rpc_status_from_call(error, registry=self._registry)
+            if status is None:
+                return False
+            extended = RequestStatusExtended.from_rpc_status(
+                status,
+                trace_id="",
+                request_id="",
+                registry=self._registry,
+            )
+            return extended.is_retriable(deadline_retriable=True)
+        except Exception:
+            # The normal conversion path below remains authoritative and will
+            # surface malformed rich status instead of changing that contract.
+            return False
+
+    def _resolve_authorization_retry(self, retry: bool) -> bool:
+        """Publish an authorization retry decision atomically.
+
+        An ``UNAUTHENTICATED`` native error remains terminal while the
+        authenticator decides whether the *logical* request may retry. A
+        cancellation accepted during that interval wins only when a retry
+        would otherwise occur; a final native error remains authoritative.
+
+        :param retry: Whether authentication and the RPC would be retried.
+        :return: Whether a queued cancellation prevents that retry.
+        """
+
+        with self._future_lock:
+            cancelled_retry = retry and self._retry_decision_pending and self._cancelled
+            self._retry_decision_pending = False
+            self._native_attempt_terminal = False
+            self._cancel_after_terminal_attempt = False
+            if retry and not cancelled_retry:
+                self._native_terminal = False
+            elif not retry:
+                self._cancelled = False
+            return cancelled_retry
 
     async def _get_request_id(self) -> tuple[str, str]:
         """Ensure metadata is received and return the request and trace ids.
@@ -984,19 +1041,35 @@ class Request(Generic[Req, Res]):
                         StatusCode.RESOURCE_EXHAUSTED,
                         StatusCode.UNAVAILABLE,
                     )
+                    retry_time_available = deadline is None or deadline > time()
                     could_retry = (
-                        (deadline is None or deadline > time())
+                        retry_time_available
                         and (
                             raw_code_retriable
+                            or self._structured_error_is_retriable(e)
                             or is_retriable_error(e, deadline_retriable=True)
                         )
                         and (self._retries is None or self._retries > attempt)
                     )
+                    awaiting_auth_retry = (
+                        defer_unauthenticated_release
+                        and retry_time_available
+                        and raw_code is StatusCode.UNAUTHENTICATED
+                    )
                     with self._future_lock:
                         self._native_terminal = True
-                        self._native_attempt_terminal = False
-                        self._retry_decision_pending = could_retry
-                        if self._cancel_after_terminal_attempt and not could_retry:
+                        # Retain attempt-terminal state only while a synchronous
+                        # authenticator still has to decide the logical retry.
+                        # cancel() then records intent instead of cancelling
+                        # the wrapper that owns native-error cleanup.
+                        self._native_attempt_terminal = awaiting_auth_retry
+                        self._retry_decision_pending = (
+                            could_retry or awaiting_auth_retry
+                        )
+                        if (
+                            self._cancel_after_terminal_attempt
+                            and not self._retry_decision_pending
+                        ):
                             self._cancel_after_terminal_attempt = False
                             self._cancelled = False
                     self._raise_request_error(e)
@@ -1006,23 +1079,34 @@ class Request(Generic[Req, Res]):
                     and is_retriable_error(e, deadline_retriable=True)
                     and (self._retries is None or self._retries > attempt)
                 )
+                deferred_unauthenticated = (
+                    defer_unauthenticated_release
+                    and isinstance(e, RequestError)
+                    and (
+                        e.status.code == StatusCode.UNAUTHENTICATED
+                        or getattr(e.status.code, "name", None) == "UNAUTHENTICATED"
+                    )
+                )
                 with self._future_lock:
                     terminal_attempt = (
                         self._native_terminal or self._native_attempt_terminal
                     )
                     if terminal_attempt:
                         self._native_terminal = True
-                        self._native_attempt_terminal = False
+                        if not deferred_unauthenticated:
+                            self._native_attempt_terminal = False
                     cancelled_during_decision = (
                         retry
                         and terminal_attempt
                         and self._retry_decision_pending
                         and self._cancelled
                     )
-                    self._retry_decision_pending = False
-                    if terminal_attempt:
+                    if not deferred_unauthenticated:
+                        self._retry_decision_pending = False
+                    if terminal_attempt and not deferred_unauthenticated:
+                        self._native_attempt_terminal = False
                         self._cancel_after_terminal_attempt = False
-                    if terminal_attempt and not retry:
+                    if terminal_attempt and not retry and not deferred_unauthenticated:
                         self._cancelled = False
                     if retry and terminal_attempt and not cancelled_during_decision:
                         self._native_terminal = False
@@ -1043,14 +1127,6 @@ class Request(Generic[Req, Res]):
                     if isinstance(e, RequestError) and e.status.request_id == "":
                         self._release_grpc_channel(discard=True)
                         raise e
-                deferred_unauthenticated = (
-                    defer_unauthenticated_release
-                    and isinstance(e, RequestError)
-                    and (
-                        e.status.code == StatusCode.UNAUTHENTICATED
-                        or getattr(e.status.code, "name", None) == "UNAUTHENTICATED"
-                    )
-                )
                 if not deferred_unauthenticated:
                     self._release_grpc_channel()
                 raise e
@@ -1120,11 +1196,9 @@ class Request(Generic[Req, Res]):
 
         start = time()
         deadline = None if self._auth_timeout is None else start + self._auth_timeout
-        attempt = 0
         auth = provider.authenticator()
 
         while True:
-            attempt += 1
             timeout = None if deadline is None else (deadline - time())
             if timeout is not None and timeout <= 0:
                 self._release_grpc_channel()
@@ -1140,6 +1214,7 @@ class Request(Generic[Req, Res]):
                 # If authentication itself failed (e.g., token refresh timeout),
                 # retry if authenticator allows and we are within deadline.
                 if deadline is not None and deadline <= time():
+                    self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
                 try:
@@ -1169,31 +1244,35 @@ class Request(Generic[Req, Res]):
                     code = e.status.code
                 except Exception:
                     # If code is not available, don't treat it as auth failure
+                    self._resolve_authorization_retry(False)
+                    self._release_grpc_channel()
                     raise
                 if not (
                     code == StatusCode.UNAUTHENTICATED
                     or getattr(code, "name", None) == "UNAUTHENTICATED"
                 ):
+                    self._resolve_authorization_retry(False)
+                    self._release_grpc_channel()
                     raise
                 if deadline is not None and deadline <= time():
+                    self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
                 try:
                     can_retry = auth.can_retry(e, self._auth_options)
                 except BaseException:
+                    self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
                 if not can_retry:
+                    self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
+                if self._resolve_authorization_retry(True):
+                    self._release_grpc_channel(discard=True)
+                    raise RequestIsCancelledError() from e
                 if self._grpc_channel_override is None:
                     self._release_grpc_channel()
-                # The failed native call is no longer the request's final
-                # outcome: authorization and RPC execution are about to start
-                # another attempt. Reopen cancellation before yielding back
-                # to the authentication loop.
-                with self._future_lock:
-                    self._native_terminal = False
                 # loop continues to re-authenticate and retry
 
     def _ensure_submitted(self) -> Awaitable[Res]:

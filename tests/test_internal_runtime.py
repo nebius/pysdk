@@ -636,6 +636,75 @@ def test_cross_loop_callback_runs_on_registration_loop() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_cancelled_shielded_wait_observes_late_wrapper_exception() -> None:
+    """An abandoned loop-local wrapper cannot emit an unobserved error."""
+
+    async def run() -> None:
+        loop = asyncio.get_running_loop()
+        reported: list[dict[str, object]] = []
+        previous_handler = loop.get_exception_handler()
+        loop.set_exception_handler(lambda _loop, context: reported.append(context))
+        source: Future[int] = Future()
+        handle = CrossLoopAwaitable(source, loop)
+        waiter = asyncio.create_task(handle._wait_shielded())
+        try:
+            await asyncio.sleep(0)
+            waiter.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await waiter
+            source.set_exception(RuntimeError("late failure"))
+            await asyncio.sleep(0)
+            gc.collect()
+            await asyncio.sleep(0)
+            assert isinstance(handle.exception(), RuntimeError)
+            assert reported == []
+        finally:
+            loop.set_exception_handler(previous_handler)
+
+    asyncio.run(run())
+
+
+@pytest.mark.asyncio
+async def test_cancelled_low_level_accessor_does_not_cancel_native_accessor() -> None:
+    """Public accessor cancellation does not mutate shared native capture."""
+
+    from nebius.aio.channel import _CrossLoopUnaryUnaryCall
+
+    accessor_started = asyncio.Event()
+    accessor_release = asyncio.Event()
+    accessor_finished = asyncio.Event()
+    accessor_cancelled = False
+
+    class NativeCall:
+        async def code(self) -> grpc.StatusCode:
+            nonlocal accessor_cancelled
+            accessor_started.set()
+            try:
+                await accessor_release.wait()
+            except asyncio.CancelledError:
+                accessor_cancelled = True
+                raise
+            finally:
+                accessor_finished.set()
+            return grpc.StatusCode.OK
+
+    call = object.__new__(_CrossLoopUnaryUnaryCall)
+    call._terminal_lock = Lock()
+    call._terminal = {}
+    call._call_ready = asyncio.Event()
+    call._call_ready.set()
+    call._call = NativeCall()
+    pending = asyncio.create_task(call._call_result("code"))
+    await accessor_started.wait()
+    pending.cancel()
+    with pytest.raises(asyncio.CancelledError):
+        await pending
+    assert not accessor_cancelled
+    accessor_release.set()
+    await accessor_finished.wait()
+    assert not accessor_cancelled
+
+
 def test_completed_callback_releases_registration_context() -> None:
     """A retained completed handle must not retain callback ContextVars."""
 
@@ -2805,7 +2874,10 @@ def test_generated_request_rejects_cancel_after_native_error() -> None:
         channel.sync_close(timeout=5)
 
 
-def test_generated_request_accepts_cancel_while_deciding_to_retry() -> None:
+@pytest.mark.parametrize("structured_retry", [False, True])
+def test_generated_request_accepts_cancel_while_deciding_to_retry(
+    structured_retry: bool,
+) -> None:
     """An attempt's terminal state must not hide a pending logical retry."""
 
     translation_started = Event()
@@ -2816,6 +2888,28 @@ def test_generated_request_accepts_cancel_while_deciding_to_retry() -> None:
     class RetriableCall:
         def __await__(self):
             async def result() -> Disk:
+                if structured_retry:
+                    from nebius.api.nebius.common.v1 import ServiceError
+                    from nebius.base._service_error import trailing_metadata_of_errors
+
+                    details = "structured retryable failure"
+                    service_error = ServiceError(
+                        service="example.service",
+                        code="retry requested",
+                        retry_type=ServiceError.RetryType.CALL,
+                    )
+                    trailing_metadata = trailing_metadata_of_errors(
+                        service_error,
+                        status_code=grpc.StatusCode.FAILED_PRECONDITION.value,
+                        status_message=details,
+                    )
+                    raise grpc.aio.AioRpcError(
+                        grpc.StatusCode.FAILED_PRECONDITION,
+                        (),
+                        trailing_metadata,
+                        details,
+                        "debug details",
+                    )
                 raise grpc.aio.AioRpcError(
                     grpc.StatusCode.UNAVAILABLE,
                     (),
@@ -2875,6 +2969,98 @@ def test_generated_request_accepts_cancel_while_deciding_to_retry() -> None:
         release_translation.set()
         waiter.join(timeout=5)
         channel.sync_close(timeout=5)
+
+
+@pytest.mark.asyncio
+async def test_cancel_during_authorization_retry_decision_stops_retry() -> None:
+    """Cancellation queued during synchronous auth classification wins."""
+
+    from nebius.aio.request import RequestIsCancelledError
+    from nebius.aio.service_error import RequestError as ServiceRequestError
+    from nebius.aio.service_error import RequestStatusExtended
+
+    decision_started = Event()
+    release_decision = Event()
+    cancel_result: list[bool] = []
+
+    class BlockingAuthenticator(Authenticator):
+        async def authenticate(
+            self,
+            metadata: Metadata,
+            timeout: float | None = None,
+            options: dict[str, str] | None = None,
+        ) -> None:
+            return None
+
+        def can_retry(
+            self,
+            err: Exception,
+            options: dict[str, str] | None = None,
+        ) -> bool:
+            decision_started.set()
+            release_decision.wait(timeout=5)
+            return True
+
+    class BlockingProvider(Provider):
+        def authenticator(self) -> Authenticator:
+            return BlockingAuthenticator()
+
+    class LegacyChannel:
+        def get_authorization_provider(self) -> Provider:
+            return BlockingProvider()
+
+    request: Request[GetDiskRequest, Disk] = Request(
+        LegacyChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="cancel-auth-decision"),
+        Disk,
+    )
+    retry_count = 0
+
+    async def retry_loop(
+        *,
+        outer_deadline: float | None = None,
+        defer_unauthenticated_release: bool = False,
+    ) -> Disk:
+        nonlocal retry_count
+        retry_count += 1
+        with request._future_lock:
+            request._native_terminal = True
+            request._native_attempt_terminal = True
+            request._retry_decision_pending = True
+        raise ServiceRequestError(
+            RequestStatusExtended(
+                code=grpc.StatusCode.UNAUTHENTICATED,
+                message="expired credential",
+                details=[],
+                service_errors=[],
+                request_id="",
+                trace_id="",
+            )
+        )
+
+    request._retry_loop = retry_loop  # type: ignore[method-assign]
+    pending = asyncio.create_task(request._request_with_authorization_loop())
+    with request._future_lock:
+        request._future = pending
+
+    def cancel_during_decision() -> None:
+        assert decision_started.wait(timeout=5)
+        cancel_result.append(request.cancel())
+        release_decision.set()
+
+    canceller = Thread(target=cancel_during_decision)
+    canceller.start()
+    try:
+        with pytest.raises(RequestIsCancelledError):
+            await pending
+        assert cancel_result == [True]
+        assert retry_count == 1
+        assert request.cancelled()
+    finally:
+        release_decision.set()
+        canceller.join(timeout=5)
 
 
 def test_generated_request_discards_wrong_loop_override() -> None:

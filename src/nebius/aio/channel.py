@@ -14,8 +14,10 @@ from asyncio import (
     AbstractEventLoop,
     CancelledError,
     Event,
+    Future,
     Task,
     create_task,
+    ensure_future,
     gather,
     get_event_loop,
     get_running_loop,
@@ -532,7 +534,19 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         if call is None:
             await self._submitted
             raise RuntimeError("gRPC call was not created")
-        return await getattr(call, method)()
+        accessor = ensure_future(getattr(call, method)())
+        try:
+            return await shield(accessor)
+        except CancelledError:
+            # Cancelling one public accessor must not inject cancellation into
+            # a custom/native accessor that can share terminal-capture state
+            # with the authoritative RPC wrapper.
+            def observe_abandoned(future: Future[Any]) -> None:
+                if not future.cancelled():
+                    future.exception()
+
+            accessor.add_done_callback(observe_abandoned)
+            raise
 
     async def _public_call_result(self, method: str) -> Any:
         """Return one call value to an external event loop.
@@ -2822,9 +2836,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :rtype: :class:`grpc.ChannelConnectivity`
         """
         self._check_process()
-        if self._closed:
-            return ChannelConnectivity.SHUTDOWN
-        return ChannelConnectivity.READY
+        with self._channel_pool_lock:
+            if self._closed:
+                return ChannelConnectivity.SHUTDOWN
+            return ChannelConnectivity.READY
 
     async def wait_for_state_change(
         self,

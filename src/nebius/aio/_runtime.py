@@ -549,9 +549,12 @@ class CrossLoopAwaitable(Generic[T]):
     async def _wait_shielded(self) -> T:
         """Wait without letting one asyncio waiter cancel shared work.
 
-        The inner object is a plain loop-local Future rather than a Task.
-        Closing a cancelled waiter's event loop therefore cannot bypass a
-        higher-level wrapper's explicit cancellation state machine.
+        A private relay copies completion onto the current loop without
+        chaining cancellation back to the shared concurrent future. This is
+        deliberately not implemented with :func:`asyncio.shield`: newer
+        asyncio versions report a late inner exception when a shielded waiter
+        has already been cancelled. The relay observes that abandoned result
+        while independent waits retain the same shared outcome.
 
         :return: Submitted work result.
         """
@@ -561,7 +564,37 @@ class CrossLoopAwaitable(Generic[T]):
         if binding is not None and binding[1] is self and not self._future.done():
             raise RuntimeError("SDK work cannot await its own submission handle")
         self._reject_executor_wait()
-        return await asyncio.shield(asyncio.wrap_future(self._future))
+        loop = asyncio.get_running_loop()
+        relay: asyncio.Future[T] = loop.create_future()
+
+        def complete(source: Future[T]) -> None:
+            """Publish shared completion or observe an abandoned relay."""
+
+            def publish() -> None:
+                if relay.done():
+                    if not source.cancelled():
+                        source.exception()
+                    return
+                if source.cancelled():
+                    relay.cancel()
+                    return
+                error = source.exception()
+                if error is not None:
+                    relay.set_exception(error)
+                else:
+                    relay.set_result(source.result())
+
+            try:
+                loop.call_soon_threadsafe(publish)
+            except RuntimeError:
+                # A caller-owned loop can close after its waiter is cancelled.
+                # Consume only diagnostic state; the shared result remains
+                # available to other loops and synchronous readers.
+                if not source.cancelled():
+                    source.exception()
+
+        self._future.add_done_callback(complete)
+        return await relay
 
     def __await__(self) -> Generator[Any, None, T]:
         """Return an iterator that waits for the submitted work."""
