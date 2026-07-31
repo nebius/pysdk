@@ -117,7 +117,15 @@ class Constant(ClientChannelInterface):
         return self._source.run_sync(awaitable, timeout)
 
     def run_async(self, awaitable: Awaitable[T]) -> Awaitable[T]:
-        """Submit an awaitable to the source channel's SDK event loop."""
+        """Submit an awaitable to the source channel's SDK event loop.
+
+        A legacy source without ``run_async`` returns the original awaitable.
+        Callers that retain the result must schedule a one-shot coroutine on
+        their active loop before memoizing it.
+
+        :param awaitable: Work to submit or return for legacy execution.
+        :return: Source submission handle, or the unchanged awaitable.
+        """
 
         submit = getattr(self._source, "run_async", None)
         if callable(submit):

@@ -974,8 +974,14 @@ class Request(Generic[Req, Res]):
                 self._auth_options = dict(self._auth_options)
                 coroutine = self._request_with_authorization_loop()
                 submit = getattr(self._channel, "run_async", None)
+                candidate = submit(coroutine) if callable(submit) else coroutine
+                # SDK channels return a reusable cross-loop handle. A legacy
+                # adapter can return the original one-shot coroutine; schedule
+                # that fallback before memoizing it for status/metadata reads.
                 submitted = (
-                    submit(coroutine) if callable(submit) else ensure_future(coroutine)
+                    candidate
+                    if callable(getattr(candidate, "done", None))
+                    else ensure_future(candidate)
                 )
                 self._future = submitted
             future = self._future

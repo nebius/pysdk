@@ -31,7 +31,7 @@ from contextlib import suppress
 from functools import wraps
 from logging import getLogger
 from pathlib import Path
-from threading import Lock
+from threading import Lock, RLock
 from time import monotonic
 from typing import Any, Concatenate, ParamSpec, TextIO, TypeVar, cast
 from weakref import finalize
@@ -292,7 +292,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._started_at = monotonic()
         self._call: UnaryUnaryCall[Req, Res] | None = None
         self._call_ready = Event()
-        self._terminal_lock = Lock()
+        self._terminal_lock = RLock()
         self._terminal: dict[str, Any] = {}
         self._native_terminal = False
         self._address_channel: AddressChannel | None = None
@@ -477,10 +477,16 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :return: ``True`` if the active submission accepted cancellation.
         """
 
+        # Check the process before taking a lock that could have been held by
+        # a vanished thread when the process forked.
+        self._submitted._check_process()
         with self._terminal_lock:
             if self._native_terminal:
                 return False
-        cancelled = self._submitted.cancel()
+            # Keep the terminal check and concurrent-future cancellation in
+            # one critical section. ``Future.cancel`` runs callbacks inline;
+            # the reentrant lock lets the pre-start callback publish status.
+            cancelled = self._submitted.cancel()
         if cancelled and self._call is None:
             self._publish_prestart_cancellation()
         return cancelled
@@ -543,6 +549,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :return: Native debug details after a failed call, or an empty string.
         """
 
+        # Fail before an inherited lock can deadlock a child process.
+        self._submitted._check_process()
         with self._terminal_lock:
             return cast(str, self._terminal.get("debug_error_string", ""))
 

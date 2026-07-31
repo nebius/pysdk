@@ -20,6 +20,7 @@ from nebius.aio.authorization.authorization import Authenticator, Provider
 from nebius.aio.base import AddressChannel
 from nebius.aio.channel import Channel, LoopError, NoCredentials
 from nebius.aio.cli_config import Config
+from nebius.aio.constant_channel import Constant
 from nebius.aio.operation import Operation
 from nebius.aio.request import Request
 from nebius.aio.stream import StreamRequest
@@ -409,6 +410,11 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
         GetDiskRequest(id="forked"),
         Disk,
     )
+    low_level_call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="forked-low-level"))
     stream = object.__new__(StreamRequest)
     stream._process_id = os.getpid()
     stream._state_lock = Lock()
@@ -419,6 +425,7 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
     channel._channel_pool_lock.acquire()
     submitted._future._condition.acquire()
     request._future_lock.acquire()
+    low_level_call._terminal_lock.acquire()
     stream._state_lock.acquire()
     operation._state_lock.acquire()
     child = os.fork()
@@ -445,6 +452,18 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
         else:
             outcomes.append("request: no error")
         try:
+            low_level_call.cancel()
+        except RuntimeError as error:
+            outcomes.append(str(error))
+        else:
+            outcomes.append("low-level cancel: no error")
+        try:
+            low_level_call.debug_error_string()
+        except RuntimeError as error:
+            outcomes.append(str(error))
+        else:
+            outcomes.append("low-level debug: no error")
+        try:
             stream.cancel()
         except RuntimeError as error:
             outcomes.append(str(error))
@@ -462,6 +481,7 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
 
     operation._state_lock.release()
     stream._state_lock.release()
+    low_level_call._terminal_lock.release()
     request._future_lock.release()
     submitted._future._condition.release()
     channel._channel_pool_lock.release()
@@ -474,6 +494,7 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
         assert "channel cannot be used after fork" in outcome
         assert "awaitable cannot be used after fork" in outcome
         assert "request cannot be used after fork" in outcome
+        assert outcome.count("awaitable cannot be used after fork") >= 3
         assert "stream cannot be used after fork" in outcome
         assert "operation cannot be used after fork" in outcome
     finally:
@@ -1744,6 +1765,44 @@ def test_custom_copy_from_payload_retains_pass_through_compatibility() -> None:
         assert asyncio.run(request._await_result())
     finally:
         channel.sync_close(timeout=5)
+
+
+def test_legacy_constant_request_memoizes_a_reusable_task() -> None:
+    """A legacy Constant fallback must not retain a one-shot coroutine."""
+
+    class LegacySource:
+        def parent_id(self) -> None:
+            return None
+
+    channel = Constant(
+        "custom.Service.Call",
+        LegacySource(),  # type: ignore[arg-type]
+    )
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "custom.Service",
+        "Call",
+        GetDiskRequest(id="legacy"),
+        Disk,
+    )
+    calls = 0
+    initial_metadata = Metadata()
+
+    async def capture() -> Disk:
+        nonlocal calls
+        calls += 1
+        request._initial_metadata = initial_metadata
+        return Disk()
+
+    request._request_with_authorization_loop = capture  # type: ignore[method-assign]
+
+    async def run() -> None:
+        assert isinstance(await request, Disk)
+        assert await request.initial_metadata() is initial_metadata
+        assert isinstance(await request._await_result(), Disk)
+
+    asyncio.run(run())
+    assert calls == 1
 
 
 def test_async_close_does_not_block_external_loop_needed_by_worker() -> None:

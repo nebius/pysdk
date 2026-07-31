@@ -21,6 +21,7 @@ from typing import Any, Generic, TypeVar, cast
 from grpc import CallCredentials, ChannelConnectivity, Compression
 from grpc.aio import Metadata as GrpcMetadata
 
+from nebius.aio._task_context import bridge_awaitable
 from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.base import AddressChannel
@@ -137,10 +138,12 @@ class StreamRequest(Generic[Req, Res]):
             return
         auth = provider.authenticator()
         authenticating = ensure_future(
-            auth.authenticate(
-                self._metadata,
-                self._auth_timeout,
-                self._auth_options,
+            bridge_awaitable(
+                auth.authenticate(
+                    self._metadata,
+                    self._auth_timeout,
+                    self._auth_options,
+                )
             )
         )
         cancelled = ensure_future(self._cancel_event.wait())

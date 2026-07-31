@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+from concurrent.futures import Future
 from threading import Barrier, Event, Thread
 
 import pytest
@@ -189,6 +190,99 @@ def test_stream_snapshots_unary_request_and_auth_options() -> None:
     assert received_requests == ["before"]
     assert received_options == ["before"]
     assert discarded == [address]
+
+
+def test_sdk_stream_bridges_foreign_loop_authenticator_future() -> None:
+    """Streaming auth accepts a Future owned by another running loop."""
+
+    auth_ready: Future[tuple[asyncio.AbstractEventLoop, asyncio.Future[None]]] = (
+        Future()
+    )
+
+    def run_auth_loop() -> None:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        auth_ready.set_result((loop, loop.create_future()))
+        loop.run_forever()
+        loop.close()
+
+    auth_thread = Thread(target=run_auth_loop, daemon=True)
+    auth_thread.start()
+    auth_loop, auth_future = auth_ready.result(timeout=5)
+    auth_started = Event()
+    opened = Event()
+
+    class Authenticator:
+        def authenticate(
+            self,
+            metadata: object,
+            timeout: float | None,
+            options: object,
+        ) -> asyncio.Future[None]:
+            auth_started.set()
+            return auth_future
+
+    class Provider:
+        def authenticator(self) -> Authenticator:
+            return Authenticator()
+
+    class Call:
+        def __aiter__(self):
+            async def responses():
+                yield Disk()
+
+            return responses()
+
+        def cancel(self) -> bool:
+            return True
+
+    class Transport:
+        def unary_stream(self, path, serializer, deserializer):
+            def create(request, **kwargs):
+                opened.set()
+                return Call()
+
+            return create
+
+    channel = SDKChannel(credentials=NoCredentials())
+    address = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": channel._event_loop},
+    )()
+    channel.get_authorization_provider = lambda: Provider()  # type: ignore[method-assign]
+    channel.get_channel_by_route = lambda route: address  # type: ignore[method-assign]
+    channel.release_channel = lambda value, *, discard=False: None  # type: ignore[method-assign]
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="foreign-auth"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+    )
+
+    def complete_authentication() -> None:
+        assert auth_started.wait(timeout=5)
+        auth_loop.call_soon_threadsafe(auth_future.set_result, None)
+
+    completion_thread = Thread(target=complete_authentication)
+    completion_thread.start()
+
+    async def consume() -> None:
+        async with stream:
+            assert isinstance(await anext(stream.__aiter__()), Disk)
+
+    try:
+        asyncio.run(consume())
+        completion_thread.join(timeout=5)
+        assert not completion_thread.is_alive()
+        assert opened.is_set()
+    finally:
+        channel.sync_close(timeout=5)
+        auth_loop.call_soon_threadsafe(auth_loop.stop)
+        auth_thread.join(timeout=5)
+        assert not auth_thread.is_alive()
 
 
 def test_stream_write_snapshots_request_before_sdk_loop_dispatch() -> None:
