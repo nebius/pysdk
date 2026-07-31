@@ -123,7 +123,11 @@ from nebius.base.tls_certificates import get_system_certificates
 from nebius.base.version import version
 
 from ._runtime import AsyncRuntime, CrossLoopAwaitable
-from ._task_context import bridge_awaitable, dispose_unstarted_awaitable
+from ._task_context import (
+    bridge_awaitable,
+    close_rejected_sync_awaitable,
+    dispose_unstarted_awaitable,
+)
 from .base import AddressChannel, ChannelBase
 
 logger = getLogger(__name__)
@@ -1377,7 +1381,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             int,
             tuple[AddressChannel, ConcurrentFuture[None]],
         ]()
-        self._foreign_transport_close_ids = set[int]()
+        self._foreign_transport_closes = dict[int, AddressChannel]()
         self._foreign_close_tasks = set[Task[Any]]()
         self._tasks_lock = Lock()
 
@@ -1846,7 +1850,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._check_process(awaitable)
         if self._runtime.in_executor_thread():
-            dispose_unstarted_awaitable(awaitable)
+            close_rejected_sync_awaitable(awaitable)
             raise LoopError(
                 "Cannot synchronously call the SDK from its executor worker; "
                 "return to the caller or use asynchronous SDK work."
@@ -1856,7 +1860,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         except RuntimeError:
             current_loop = None
         if current_loop is not None:
-            dispose_unstarted_awaitable(awaitable)
+            close_rejected_sync_awaitable(awaitable)
             if current_loop is self._event_loop:
                 raise LoopError(
                     "Synchronous SDK calls are not allowed on the SDK event loop; "
@@ -2701,15 +2705,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 return
             channel_id = id(chan)
             with self._tasks_lock:
-                if channel_id in self._foreign_transport_close_ids:
+                if self._foreign_transport_closes.get(channel_id) is chan:
                     return
-                self._foreign_transport_close_ids.add(channel_id)
+                # Retain object identity, not only its raw ID. A stranded
+                # caller-loop close can otherwise leave an ID reservation that
+                # suppresses an unrelated transport after CPython reuses it.
+                self._foreign_transport_closes[channel_id] = chan
 
             def discard_foreign_reservation(_: object = None) -> None:
                 """Allow retry after this foreign close attempt terminates."""
 
                 with self._tasks_lock:
-                    self._foreign_transport_close_ids.discard(channel_id)
+                    current = self._foreign_transport_closes.get(channel_id)
+                    if current is chan:
+                        self._foreign_transport_closes.pop(channel_id, None)
 
             close_coro = close_and_log()
             try:

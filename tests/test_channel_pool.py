@@ -807,7 +807,7 @@ def test_concurrent_foreign_release_schedules_one_close() -> None:
     assert errors == []
     assert all(not releaser.is_alive() for releaser in releasers)
     with channel._tasks_lock:
-        assert channel._foreign_transport_close_ids == set()
+        assert channel._foreign_transport_closes == {}
 
 
 def test_generated_requests_complete_from_many_sync_threads() -> None:

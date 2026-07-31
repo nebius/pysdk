@@ -390,8 +390,8 @@ ignores the message. A cancelled `result()` or `exception()` raises
 `concurrent.futures.CancelledError`.
 
 Completion callbacks run asynchronously on the event loop that registered
-them. That loop must stay open until callback delivery. Registration on an
-already closed loop raises `RuntimeError`. If the loop closes after
+them. That loop must stay running until callback delivery. Registration on a
+stopped or closed loop raises `RuntimeError`. If the loop stops after
 registration, the SDK logs a warning and does not run the callback on another
 thread.
 

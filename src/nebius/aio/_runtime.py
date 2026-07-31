@@ -43,6 +43,7 @@ from typing import Any, Generic, TypeVar, cast
 
 from ._task_context import (
     awaitable_bridge,
+    close_rejected_sync_awaitable,
     dispose_unstarted_awaitable,
     task_scheduler,
 )
@@ -1264,14 +1265,14 @@ class AsyncRuntime:
         """
 
         if self.in_executor_thread():
-            dispose_unstarted_awaitable(awaitable)
+            close_rejected_sync_awaitable(awaitable)
             raise RuntimeError("cannot synchronously wait from an SDK executor worker")
         try:
             current = asyncio.get_running_loop()
         except RuntimeError:
             current = None
         if current is self._loop:
-            dispose_unstarted_awaitable(awaitable)
+            close_rejected_sync_awaitable(awaitable)
             raise RuntimeError("cannot synchronously wait on the SDK event loop")
         submitted = (
             awaitable

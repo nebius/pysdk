@@ -61,6 +61,7 @@ awaitable can be created and used on any loop.
 from __future__ import annotations
 
 import asyncio
+import inspect
 from collections.abc import Awaitable, Callable
 from concurrent.futures import Future as ConcurrentFuture
 from contextvars import ContextVar
@@ -113,6 +114,26 @@ def bridge_awaitable(awaitable: Awaitable[Any]) -> Awaitable[Any]:
 
     bridge = awaitable_bridge.get()
     return awaitable if bridge is None else bridge(awaitable)
+
+
+def close_rejected_sync_awaitable(awaitable: Awaitable[Any]) -> bool:
+    """Close only a fresh coroutine rejected by a synchronous adapter.
+
+    A synchronous call made from an event loop or SDK executor worker cannot
+    block safely. The adapter owns disposal of a coroutine object created only
+    for that rejected call, so closing it prevents an unawaited-coroutine
+    warning. It does not own an already scheduled Future, Task, concurrent
+    future, cross-loop handle, or opaque custom awaitable; those values may be
+    shared with other waiters and must remain untouched.
+
+    :param awaitable: Input rejected before a synchronous wait starts.
+    :return: ``True`` when a native coroutine object was closed.
+    """
+
+    if not inspect.iscoroutine(awaitable):
+        return False
+    awaitable.close()
+    return True
 
 
 def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:

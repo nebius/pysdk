@@ -891,6 +891,76 @@ def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
         _stop_loop(loop_b, thread_b)
 
 
+@pytest.mark.asyncio
+async def test_rejected_sync_wait_preserves_running_cross_loop_handle() -> None:
+    """An invalid blocking wait cannot cancel independently scheduled work."""
+
+    channel = Channel(credentials=NoCredentials())
+    started = Event()
+    release = Event()
+
+    async def work() -> int:
+        started.set()
+        while not release.is_set():
+            await asyncio.sleep(0)
+        return 42
+
+    submitted = channel.run_async(work())
+    assert await asyncio.to_thread(started.wait, 5)
+    fresh = asyncio.sleep(0)
+    try:
+        with pytest.raises(LoopError, match="async context"):
+            channel.run_sync(submitted)
+        assert not submitted.cancelled()
+        with pytest.raises(LoopError, match="async context"):
+            channel.run_sync(fresh)
+        assert inspect.getcoroutinestate(fresh) is inspect.CORO_CLOSED
+        release.set()
+        assert await submitted == 42
+    finally:
+        release.set()
+        await channel.close()
+
+
+def test_rejected_executor_sync_wait_preserves_running_handle() -> None:
+    """An executor-worker rejection also leaves shared work untouched."""
+
+    channel = Channel(credentials=NoCredentials())
+    started = Event()
+    release = Event()
+    errors: list[BaseException] = []
+
+    async def work() -> int:
+        started.set()
+        while not release.is_set():
+            await asyncio.sleep(0)
+        return 42
+
+    submitted = channel.run_async(work())
+    assert started.wait(timeout=5)
+
+    def reject_wait() -> None:
+        try:
+            channel.run_sync(submitted)
+        except BaseException as error:
+            errors.append(error)
+
+    async def invoke_worker() -> None:
+        await asyncio.get_running_loop().run_in_executor(None, reject_wait)
+
+    try:
+        channel.run_sync(invoke_worker(), timeout=5)
+        assert len(errors) == 1
+        assert isinstance(errors[0], LoopError)
+        assert "executor worker" in str(errors[0])
+        assert not submitted.cancelled()
+        release.set()
+        assert submitted.result(timeout=5) == 42
+    finally:
+        release.set()
+        channel.sync_close(timeout=5)
+
+
 def test_run_sync_is_safe_from_many_threads() -> None:
     channel = Channel(credentials=NoCredentials())
     barrier = Barrier(11)
