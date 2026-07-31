@@ -674,6 +674,7 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
     entered = asyncio.Event()
     resume = asyncio.Event()
     opened: list[Route] = []
+    released: list[tuple[object | None, bool]] = []
 
     class Authenticator:
         async def authenticate(self, metadata, timeout, options):
@@ -692,11 +693,15 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
             opened.append(route)
             raise AssertionError("cancelled stream must not resolve a channel")
 
+        def discard_channel(self, address):
+            released.append((address, True))
+
     class Result:
         @classmethod
         def FromString(cls, data):  # noqa: N802
             return cls()
 
+    override = object()
     stream = StreamRequest(
         channel=Channel(),
         route=Route("acme.Service", "Watch"),
@@ -704,6 +709,7 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
         result_class=Result,
         client_streaming=False,
         server_streaming=True,
+        grpc_channel_override=override,  # type: ignore[arg-type]
     )
     iteration = stream.__aiter__()
     pending = asyncio.create_task(anext(iteration))
@@ -713,6 +719,7 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
     with pytest.raises(asyncio.CancelledError):
         await asyncio.wait_for(pending, 0.1)
     assert opened == []
+    assert released == [(override, True)]
 
 
 @pytest.mark.asyncio

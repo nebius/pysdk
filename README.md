@@ -288,7 +288,11 @@ so that SDK-owned work cannot escape onto an application loop:
 channel. It schedules work immediately and returns a reusable cross-loop
 handle. The minimal custom-channel protocol is deliberately unchanged:
 legacy implementations without `run_async()` retain their local-awaitable
-fallback instead of being forced to implement the new runtime.
+fallback instead of being forced to implement the new runtime. That fallback
+does not make a legacy channel cross-loop: an operation or stream whose
+asyncio lock first becomes contended on one caller loop must continue to be
+used on that loop. Implement `run_async()` to gain the built-in channel's
+cross-loop scheduling contract.
 
 Use an asynchronous context when possible. If no asynchronous event loop is
 running, you can use the SDK synchronously:

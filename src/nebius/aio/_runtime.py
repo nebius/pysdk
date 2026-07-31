@@ -566,26 +566,34 @@ class CrossLoopAwaitable(Generic[T]):
         self._reject_executor_wait()
         loop = asyncio.get_running_loop()
         relay: asyncio.Future[T] = loop.create_future()
+        loop_ref = weakref.ref(loop)
+        relay_ref = weakref.ref(relay)
 
         def complete(source: Future[T]) -> None:
-            """Publish shared completion or observe an abandoned relay."""
+            """Publish shared completion without retaining an abandoned loop."""
 
             def publish() -> None:
-                if relay.done():
+                current_relay = relay_ref()
+                if current_relay is None or current_relay.done():
                     if not source.cancelled():
                         source.exception()
                     return
                 if source.cancelled():
-                    relay.cancel()
+                    current_relay.cancel()
                     return
                 error = source.exception()
                 if error is not None:
-                    relay.set_exception(error)
+                    current_relay.set_exception(error)
                 else:
-                    relay.set_result(source.result())
+                    current_relay.set_result(source.result())
 
+            current_loop = loop_ref()
+            if current_loop is None:
+                if not source.cancelled():
+                    source.exception()
+                return
             try:
-                loop.call_soon_threadsafe(publish)
+                current_loop.call_soon_threadsafe(publish)
             except RuntimeError:
                 # A caller-owned loop can close after its waiter is cancelled.
                 # Consume only diagnostic state; the shared result remains

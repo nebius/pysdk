@@ -664,6 +664,40 @@ def test_cancelled_shielded_wait_observes_late_wrapper_exception() -> None:
     asyncio.run(run())
 
 
+def test_cancelled_shielded_wait_does_not_retain_caller_loop() -> None:
+    """A pending shared submission cannot retain an abandoned caller loop."""
+
+    source: Future[int] = Future()
+    owner_loop = asyncio.new_event_loop()
+    handle = CrossLoopAwaitable(source, owner_loop)
+    caller_loop_ref: list[ref[asyncio.AbstractEventLoop]] = []
+
+    def abandon_wait() -> None:
+        caller_loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(caller_loop)
+
+        async def cancel_waiter() -> None:
+            waiter = asyncio.create_task(handle._wait_shielded())
+            await asyncio.sleep(0)
+            waiter.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await waiter
+
+        caller_loop.run_until_complete(cancel_waiter())
+        caller_loop_ref.append(ref(caller_loop))
+        caller_loop.close()
+        asyncio.set_event_loop(None)
+
+    thread = Thread(target=abandon_wait)
+    thread.start()
+    thread.join(timeout=5)
+    assert not thread.is_alive()
+    gc.collect()
+    assert caller_loop_ref[0]() is None
+    source.set_result(1)
+    owner_loop.close()
+
+
 @pytest.mark.asyncio
 async def test_cancelled_low_level_accessor_does_not_cancel_native_accessor() -> None:
     """Public accessor cancellation does not mutate shared native capture."""
@@ -1498,6 +1532,81 @@ def test_request_wait_for_ready_default_and_native_option() -> None:
         assert observed == [False]
     finally:
         channel.sync_close(timeout=5)
+
+
+@pytest.mark.asyncio
+async def test_request_releases_override_when_authenticator_setup_fails() -> None:
+    """Pre-leased request transports are released before native setup."""
+
+    released: list[tuple[object | None, bool]] = []
+
+    class FailingProvider:
+        def authenticator(self) -> object:
+            raise RuntimeError("authenticator setup failed")
+
+    class LegacyChannel:
+        def get_authorization_provider(self) -> FailingProvider:
+            return FailingProvider()
+
+        def return_channel(self, address: object | None) -> None:
+            released.append((address, False))
+
+    override = object.__new__(AddressChannel)
+    request: Request[GetDiskRequest, Disk] = Request(
+        LegacyChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="auth-setup-failure"),
+        Disk,
+        grpc_channel_override=override,
+    )
+
+    with pytest.raises(RuntimeError, match="authenticator setup failed"):
+        await request
+    assert released == [(override, False)]
+
+
+@pytest.mark.asyncio
+async def test_request_releases_override_when_authentication_is_cancelled() -> None:
+    """Cancellation during authentication releases a pre-leased transport."""
+
+    entered = asyncio.Event()
+    release_completed = asyncio.Event()
+    released: list[tuple[object | None, bool]] = []
+
+    class BlockingAuthenticator:
+        async def authenticate(self, *args: object) -> None:
+            entered.set()
+            await asyncio.Event().wait()
+
+    class Provider:
+        def authenticator(self) -> BlockingAuthenticator:
+            return BlockingAuthenticator()
+
+    class LegacyChannel:
+        def get_authorization_provider(self) -> Provider:
+            return Provider()
+
+        def return_channel(self, address: object | None) -> None:
+            released.append((address, False))
+            release_completed.set()
+
+    override = object.__new__(AddressChannel)
+    request: Request[GetDiskRequest, Disk] = Request(
+        LegacyChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="cancel-authentication"),
+        Disk,
+        grpc_channel_override=override,
+    )
+    waiter = asyncio.create_task(request._await_result())
+    await entered.wait()
+    waiter.cancel()
+    with pytest.raises(asyncio.CancelledError):
+        await waiter
+    await asyncio.wait_for(release_completed.wait(), timeout=1)
+    assert released == [(override, False)]
 
 
 def test_synchronous_request_timeout_cancels_before_delayed_start() -> None:

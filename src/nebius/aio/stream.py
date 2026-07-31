@@ -197,10 +197,24 @@ class StreamRequest(Generic[Req, Res]):
                 raise self._start_error
             if self._is_cancelled():
                 raise CancelledError
-            ensure_key_in_metadata(self._metadata)
-            await self._authenticate()
-            if self._is_cancelled():
-                raise CancelledError
+            try:
+                ensure_key_in_metadata(self._metadata)
+                await self._authenticate()
+                if self._is_cancelled():
+                    raise CancelledError
+            except BaseException as error:
+                # An explicit override is already a lease owned by this
+                # wrapper. Authentication and metadata setup happen before a
+                # native call exists, but must still release that lease.
+                self._start_error = error
+                try:
+                    self._release(discard=isinstance(error, CancelledError))
+                except BaseException as release_error:
+                    logger.warning(
+                        "Failed to release a stream transport after setup failed",
+                        exc_info=release_error,
+                    )
+                raise
             with self._state_lock:
                 address_channel = self._address_channel
             if address_channel is None:

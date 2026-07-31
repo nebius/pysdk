@@ -382,3 +382,25 @@ async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
     finally:
         blocker.cancel()
         await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_terminal_operation_wait_accepts_zero_timeout() -> None:
+    """A terminal operation returns before applying a zero timeout."""
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.google.rpc import Status
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-terminal", status=Status(code=0)),
+    )
+    try:
+        await operation.wait(timeout=0)
+        await operation.wait(timeout=-1)
+    finally:
+        await channel.close()

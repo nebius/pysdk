@@ -1173,10 +1173,37 @@ class Request(Generic[Req, Res]):
     async def _request_with_authorization_loop(self) -> Res:
         """Wrap request retry loop with an authorization loop.
 
+        This outer ownership guard releases a caller-supplied transport when
+        provider construction, authentication, or cancellation fails before
+        the native retry loop assumes responsibility for the lease. Cleanup
+        failures are logged without replacing the original request error.
+
+        :return: Deserialized or wrapped response value.
+        """
+        try:
+            return await self._request_with_authorization_loop_impl()
+        except BaseException:
+            if self._grpc_channel is not None:
+                try:
+                    self._release_grpc_channel(
+                        discard=self._call is not None and not self._native_terminal
+                    )
+                except BaseException as release_error:
+                    log.warning(
+                        "Failed to release a request transport after setup failed",
+                        exc_info=release_error,
+                    )
+            raise
+
+    async def _request_with_authorization_loop_impl(self) -> Res:
+        """Authenticate and run the native request/retry state machine.
+
         The authorization loop will attempt to authenticate and then execute the
         request retry loop. If the result is UNAUTHENTICATED and the authenticator
         allows retry, it will re-authenticate and try again while respecting the
         overall auth timeout.
+
+        :return: Deserialized or wrapped response value.
         """
         # If no provider or authorization explicitly disabled, just run the request
         runtime_provider = getattr(

@@ -204,6 +204,12 @@ class Operation(Generic[OperationPb]):
     ``source_method``. The client reuses ``channel`` for network and
     authorization functions.
 
+    Built-in channels schedule polling on the SDK loop, so this wrapper can be
+    used from unrelated caller loops. A legacy custom channel without
+    ``run_async`` keeps the historical local-awaitable fallback. Its update
+    lock becomes bound to the first caller loop that contends for it, and the
+    same wrapper must not then be used concurrently from another loop.
+
     :param source_method: the originating ``service.method`` name used to build a
         constant channel for operation management calls
     :param channel: channel used for network and auth operations
@@ -531,6 +537,11 @@ class Operation(Generic[OperationPb]):
         :raises TimeoutError: when the overall timeout is exceeded
         """
         self._check_process()
+        # Preserve the historical terminal fast path. In particular,
+        # asyncio.wait_for(..., 0) cannot start a newly submitted coroutine,
+        # even when that coroutine would immediately observe terminal state.
+        if self.done():
+            return
         deadline = None if timeout is None else monotonic() + max(timeout, 0)
         submit = getattr(self._channel, "run_async", None)
         wait = self._wait_internal(
