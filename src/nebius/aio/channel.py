@@ -16,6 +16,7 @@ from asyncio import (
     Event,
     Task,
     create_task,
+    current_task,
     gather,
     get_event_loop,
     get_running_loop,
@@ -527,8 +528,20 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             # Close may reject this new accessor submission while it is
             # already draining the call submission that owns terminal capture.
             # Wait for that owner and use the cache it publishes.
-            with suppress(BaseException):
+            accessor_task = current_task()
+            cancellations_before = (
+                accessor_task.cancelling() if accessor_task is not None else 0
+            )
+            try:
                 await self._submitted._wait_shielded()
+            except CancelledError:
+                if (
+                    accessor_task is not None
+                    and accessor_task.cancelling() > cancellations_before
+                ):
+                    raise
+            except BaseException:  # noqa: S110
+                pass  # Terminal cache below owns the shared outcome.
             with self._terminal_lock:
                 if method in self._terminal:
                     return self._terminal[method]

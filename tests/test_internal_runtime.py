@@ -1277,6 +1277,45 @@ def test_public_authorization_provider_dispatches_to_internal_loop() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_synchronous_request_timeout_cancels_before_delayed_start() -> None:
+    """A direct cross-loop wait timeout cannot leave the RPC queued."""
+
+    from nebius.aio.service_error import RequestError as ServiceRequestError
+
+    loop_blocked = Event()
+    release_loop = Event()
+    rpc_started = Event()
+    channel = Channel(credentials=NoCredentials())
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert loop_blocked.wait(timeout=5)
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="sync-timeout-before-start"),
+        Disk,
+        auth_timeout=0.01,
+    )
+    request._send = lambda timeout: rpc_started.set()  # type: ignore[method-assign]
+    try:
+        with pytest.raises(ServiceRequestError) as raised:
+            request.wait()
+        assert raised.value.status.code is grpc.StatusCode.DEADLINE_EXCEEDED
+        release_loop.set()
+        blocker.result(timeout=5)
+        sleep(0.05)
+        assert not rpc_started.is_set()
+        assert request.cancelled()
+    finally:
+        release_loop.set()
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.asyncio
 async def test_authentication_retry_reopens_request_cancellation() -> None:
     """A retried UNAUTHENTICATED call must not stay terminal."""
@@ -2192,8 +2231,10 @@ def test_low_level_reentrant_cancel_discards_unpublished_call() -> None:
 
 
 @pytest.mark.parametrize("native_error", [False, True])
+@pytest.mark.parametrize("cancel_accessor", [False, True])
 def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
     native_error: bool,
+    cancel_accessor: bool,
 ) -> None:
     """Terminal metadata capture must not reopen native cancellation."""
 
@@ -2246,6 +2287,9 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
     close_errors: list[BaseException] = []
     accessor_results: list[object] = []
     accessor_errors: list[BaseException] = []
+    accessor_ready = Event()
+    accessor_loop: list[asyncio.AbstractEventLoop] = []
+    accessor_tasks: list[asyncio.Task[object]] = []
 
     def close_channel() -> None:
         try:
@@ -2275,15 +2319,28 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
         assert not close_done.wait(timeout=0.1)
 
         def read_terminal_code() -> None:
+            async def read() -> object:
+                accessor_loop.append(asyncio.get_running_loop())
+                task = asyncio.current_task()
+                assert task is not None
+                accessor_tasks.append(task)
+                accessor_ready.set()
+                return await call.code()
+
             try:
-                accessor_results.append(asyncio.run(call.code()))
+                accessor_results.append(asyncio.run(read()))
             except BaseException as error:
                 accessor_errors.append(error)
 
         accessor = Thread(target=read_terminal_code)
         accessor.start()
+        assert accessor_ready.wait(timeout=5)
         sleep(0.05)
         assert accessor.is_alive()
+        if cancel_accessor:
+            accessor_loop[0].call_soon_threadsafe(accessor_tasks[0].cancel)
+            accessor.join(timeout=5)
+            assert not accessor.is_alive()
         release_terminal_capture.set()
 
         async def await_result() -> None:
@@ -2299,8 +2356,13 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
         assert not closer.is_alive()
         assert not accessor.is_alive()
         assert close_errors == []
-        assert accessor_errors == []
-        assert accessor_results == [None]
+        if cancel_accessor:
+            assert len(accessor_errors) == 1
+            assert isinstance(accessor_errors[0], asyncio.CancelledError)
+            assert accessor_results == []
+        else:
+            assert accessor_errors == []
+            assert accessor_results == [None]
     finally:
         release_terminal_capture.set()
         if closer is not None:

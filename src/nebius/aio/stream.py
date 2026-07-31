@@ -16,6 +16,7 @@ from asyncio import (
 )
 from collections.abc import AsyncIterator, Awaitable, Callable, Generator
 from contextlib import suppress
+from logging import getLogger
 from threading import Lock as ThreadLock
 from typing import Any, Generic, TypeVar, cast
 
@@ -34,6 +35,8 @@ from nebius.base.metadata import Metadata
 Req = TypeVar("Req")
 Res = TypeVar("Res")
 T = TypeVar("T")
+
+logger = getLogger(__name__)
 
 
 class StreamRequest(Generic[Req, Res]):
@@ -305,6 +308,24 @@ class StreamRequest(Generic[Req, Res]):
         with self._state_lock:
             self._native_terminal = True
 
+    def _cancel_submission_finished(self, completed: Any) -> None:
+        """Observe asynchronous cancellation cleanup and restore retryability.
+
+        :param completed: Future-like cancellation submission.
+        """
+
+        try:
+            error = completed.exception()
+        except BaseException as completion_error:
+            error = completion_error
+        if error is None:
+            return
+        with self._state_lock:
+            if not self._released:
+                self._cancel_requested = False
+                self._cancelled = False
+        logger.warning("Asynchronous stream cancellation failed", exc_info=error)
+
     def _is_released(self) -> bool:
         """Return the channel-release state under the state lock."""
 
@@ -515,7 +536,8 @@ class StreamRequest(Generic[Req, Res]):
         ``False`` if that owner loop is not running or closes during dispatch;
         it may retry after restoring the loop. As with every accepted
         event-loop callback, the owner must remain running long enough to
-        execute it.
+        execute it. A later asynchronous cleanup failure is logged and makes
+        cancellation retryable when the transport was not released.
 
         :return: ``True`` if cancellation was applied or accepted for dispatch;
             otherwise ``False``.
@@ -523,7 +545,12 @@ class StreamRequest(Generic[Req, Res]):
 
         self._check_process()
         with self._state_lock:
-            if self._cancel_requested or self._cancelled or self._released:
+            if (
+                self._cancel_requested
+                or self._cancelled
+                or self._native_terminal
+                or self._released
+            ):
                 return False
             self._cancel_requested = True
         submit = getattr(self._channel, "run_async", None)
@@ -548,6 +575,11 @@ class StreamRequest(Generic[Req, Res]):
             # one-shot awaitable unchanged. Dispose that unscheduled wrapper
             # and use the stream's recorded owner loop below.
             if callable(getattr(scheduled, "done", None)):
+                observe = getattr(scheduled, "_add_internal_done_callback", None)
+                if not callable(observe):
+                    observe = getattr(scheduled, "add_done_callback", None)
+                if callable(observe):
+                    observe(self._cancel_submission_finished)
                 return True
             dispose = getattr(scheduled, "close", None)
             if callable(dispose):

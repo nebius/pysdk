@@ -605,6 +605,7 @@ class Request(Generic[Req, Res]):
         :returns: result of the awaitable
         :raises RequestError: when execution times out or the request fails
         """
+        direct_submission: CrossLoopAwaitable[Any] | None = None
         try:
             # Overall timeout should include authorization + request execution
             timeout = self._auth_timeout
@@ -625,9 +626,15 @@ class Request(Generic[Req, Res]):
                     return cast(T, self._channel.run_sync(func, timeout=timeout))
                 submitted = self._ensure_submitted()
                 if isinstance(submitted, CrossLoopAwaitable):
+                    direct_submission = submitted
                     return cast(T, submitted.result(timeout))
             return self._channel.run_sync(func, timeout=timeout)
         except TimeoutError as e:
+            if direct_submission is not None:
+                # ``Future.result(timeout)`` does not cancel pending work.
+                # Preserve the previous run_sync timeout contract through the
+                # request's terminal-aware cancellation gate.
+                self.cancel()
             from .service_error import RequestError, RequestStatusExtended
 
             self._status = RequestStatusExtended(

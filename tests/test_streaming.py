@@ -125,6 +125,7 @@ def test_stream_unary_native_completion_wins_before_wrapper_resumes() -> None:
     try:
         assert native_waiting.wait(timeout=5)
         native_call.publish_completion()
+        assert not stream.cancel()
         closer = Thread(target=channel.sync_close, kwargs={"timeout": 5})
         closer.start()
         assert closer.is_alive()
@@ -996,3 +997,52 @@ def test_failed_stream_release_can_be_retried() -> None:
     assert stream._released
     assert release_calls == 2
     assert successful_releases == 1
+
+
+def test_failed_async_stream_cancel_release_can_be_retried() -> None:
+    """A scheduled cancellation observes cleanup failure and permits retry."""
+
+    first_release = Event()
+    successful_release = Event()
+    release_calls = 0
+
+    channel = SDKChannel(credentials=NoCredentials())
+    address = type(
+        "Address",
+        (),
+        {"channel": object(), "event_loop": channel._event_loop},
+    )()
+
+    def release(value: object, *, discard: bool = False) -> None:
+        nonlocal release_calls
+        release_calls += 1
+        if release_calls == 1:
+            first_release.set()
+            raise RuntimeError("release failed")
+        successful_release.set()
+
+    channel.release_channel = release  # type: ignore[method-assign]
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        grpc_channel_override=address,  # type: ignore[arg-type]
+    )
+    try:
+        assert stream.cancel()
+        assert first_release.wait(timeout=5)
+        for _ in range(100):
+            with stream._state_lock:
+                retryable = not stream._cancel_requested and not stream._cancelled
+            if retryable:
+                break
+            Event().wait(0.01)
+        assert retryable
+        assert stream.cancel()
+        assert successful_release.wait(timeout=5)
+        assert release_calls == 2
+    finally:
+        channel.sync_close(timeout=5)
