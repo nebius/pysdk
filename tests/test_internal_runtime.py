@@ -2160,6 +2160,123 @@ def test_generated_request_rejects_cancel_after_native_error() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_generated_request_accepts_cancel_while_deciding_to_retry() -> None:
+    """An attempt's terminal state must not hide a pending logical retry."""
+
+    translation_started = Event()
+    release_translation = Event()
+    errors: list[BaseException] = []
+    send_count = 0
+
+    class RetriableCall:
+        def __await__(self):
+            async def result() -> Disk:
+                raise grpc.aio.AioRpcError(
+                    grpc.StatusCode.UNAVAILABLE,
+                    (),
+                    (),
+                    "retryable failure",
+                    "debug details",
+                )
+
+            return result().__await__()
+
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="retry-decision-cancel"),
+        Disk,
+        retries=2,
+    )
+
+    def send(timeout: float | None) -> None:
+        nonlocal send_count
+        send_count += 1
+        request._call = RetriableCall()  # type: ignore[assignment]
+
+    original_raise = request._raise_request_error
+
+    def translate(error: grpc.aio.AioRpcError) -> None:
+        translation_started.set()
+        release_translation.wait(timeout=5)
+        original_raise(error)
+
+    request._send = send  # type: ignore[method-assign]
+    request._raise_request_error = translate  # type: ignore[method-assign]
+
+    def wait_for_result() -> None:
+        try:
+            request.wait()
+        except BaseException as error:
+            errors.append(error)
+
+    waiter = Thread(target=wait_for_result)
+    waiter.start()
+    try:
+        assert translation_started.wait(timeout=5)
+        assert not request.done()
+        assert request.cancel()
+        release_translation.set()
+        waiter.join(timeout=5)
+        assert not waiter.is_alive()
+        assert request.done()
+        assert request.cancelled()
+        assert send_count == 1
+        assert len(errors) == 1
+        assert isinstance(errors[0], ConcurrentCancelledError)
+    finally:
+        release_translation.set()
+        waiter.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
+def test_generated_request_discards_wrong_loop_override() -> None:
+    """An incompatible override must close on its owner loop, not enter the pool."""
+
+    from nebius.aio.request import RequestError
+
+    foreign_loop, foreign_thread = _start_loop()
+    closed = Event()
+    close_loops: list[asyncio.AbstractEventLoop] = []
+
+    class RecordingTransport:
+        async def close(self, grace: float | None = None) -> None:
+            close_loops.append(asyncio.get_running_loop())
+            closed.set()
+
+    override = AddressChannel(  # type: ignore[arg-type]
+        RecordingTransport(),
+        "foreign.example:443",
+        event_loop=foreign_loop,
+    )
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="wrong-loop-override"),
+        Disk,
+        grpc_channel_override=override,
+        retries=1,
+    )
+    try:
+        with pytest.raises(RequestError, match="belongs to a different event loop"):
+            request.wait()
+        assert closed.wait(timeout=5)
+        assert close_loops == [foreign_loop]
+        with channel._channel_pool_lock:
+            assert all(
+                pooled is not override
+                for channels in channel._free_channels.values()
+                for pooled in channels
+            )
+    finally:
+        channel.sync_close(timeout=5)
+        _stop_loop(foreign_loop, foreign_thread)
+
+
 def test_request_inputs_are_snapshotted_at_first_submission() -> None:
     """External mutation after submission must not race SDK-loop processing."""
 

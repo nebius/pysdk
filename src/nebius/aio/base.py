@@ -11,6 +11,7 @@ This module exposes two small helper classes:
 """
 
 from asyncio import AbstractEventLoop, get_event_loop, get_running_loop
+from threading import Lock
 
 from grpc.aio import Channel as GRPCChannel
 
@@ -48,6 +49,8 @@ class AddressChannel:
         """Initialize an :class:`AddressChannel` instance."""
         self.address = address
         self.channel = channel
+        self._close_state_lock = Lock()
+        self._closed_by_sdk = False
         if event_loop is None:
             try:
                 event_loop = get_running_loop()
@@ -57,6 +60,18 @@ class AddressChannel:
                 except RuntimeError:
                     pass
         self.event_loop = event_loop
+
+    def _mark_closed_by_sdk(self) -> None:
+        """Record that SDK lifecycle management closed this transport."""
+
+        with self._close_state_lock:
+            self._closed_by_sdk = True
+
+    def _is_closed_by_sdk(self) -> bool:
+        """Return whether SDK lifecycle management closed this transport."""
+
+        with self._close_state_lock:
+            return self._closed_by_sdk
 
 
 class ChannelBase(GRPCChannel):

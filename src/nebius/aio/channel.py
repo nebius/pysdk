@@ -2306,7 +2306,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if closed:
             with self._channel_pool_lock:
                 leased = self._leased_channels.pop(id(chan), None)
-            if leased is None:
+            already_closed = chan._is_closed_by_sdk()
+            if leased is None and not already_closed:
                 self._schedule_address_channel_close(chan, None)
             if raise_if_closed:
                 raise ChannelClosedError("Channel closed")
@@ -2367,15 +2368,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         with self._channel_pool_lock:
             leased = self._leased_channels.pop(id(chan), None)
             closed = self._closed
+        already_closed = chan._is_closed_by_sdk()
         if closed:
-            if leased is None:
+            if leased is None and not already_closed:
                 self._schedule_address_channel_close(chan, None)
             if raise_if_closed:
                 raise ChannelClosedError("Channel closed")
             return
         reusable = (
             not discard
-            and getattr(chan, "event_loop", None) is not None
+            and getattr(chan, "event_loop", None) is self._event_loop
             and chan.channel.get_state() != ChannelConnectivity.SHUTDOWN
         )
         with self._channel_pool_lock:
@@ -2418,8 +2420,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 logger.warning("Unable to close channel after its owner loop stopped")
             else:
                 await wrap_future(close_future)
+                chan._mark_closed_by_sdk()
             return
         await chan.channel.close(grace)
+        chan._mark_closed_by_sdk()
 
     def _schedule_address_channel_close(
         self,

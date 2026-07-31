@@ -887,7 +887,8 @@ def test_release_after_close_preserves_direct_api_behavior() -> None:
         channel.release_channel(internal)
         with pytest.raises(ChannelClosedError):
             channel.return_channel(direct)
-        await asyncio.sleep(0)
+        for _ in range(3):
+            await asyncio.sleep(0)
         return internal_transport.close_calls, direct_transport.close_calls
 
     assert asyncio.run(run()) == (1, 1)

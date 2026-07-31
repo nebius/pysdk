@@ -339,6 +339,10 @@ class Request(Generic[Req, Res]):
         self._future: Awaitable[Res] | None = None
         self._future_lock = RLock()
         self._native_terminal = False
+        # A native attempt can finish before error translation decides whether
+        # the logical request will retry. During that phase done() stays false
+        # and cancel() may still cancel the request before another call opens.
+        self._retry_decision_pending = False
 
     def _check_process(self) -> None:
         """Reject a request inherited by a child process before locking."""
@@ -362,7 +366,8 @@ class Request(Generic[Req, Res]):
         with self._future_lock:
             future = self._future
             done = getattr(future, "done", None)
-            return self._native_terminal or (bool(done()) if callable(done) else False)
+            terminal = self._native_terminal and not self._retry_decision_pending
+            return terminal or (bool(done()) if callable(done) else False)
 
     def cancelled(self) -> bool:
         """Return True if the call was cancelled (locally or remotely)."""
@@ -386,7 +391,9 @@ class Request(Generic[Req, Res]):
         """
         self._check_process()
         with self._future_lock:
-            if self._cancelled or self._native_terminal:
+            if self._cancelled or (
+                self._native_terminal and not self._retry_decision_pending
+            ):
                 return False
             future = self._future
             if future is None:
@@ -521,6 +528,13 @@ class Request(Generic[Req, Res]):
             s_name = s_name[1:]
         owner_loop = getattr(self._grpc_channel, "event_loop", None)
         if owner_loop is not None and owner_loop is not get_running_loop():
+            incompatible = self._grpc_channel
+            self._grpc_channel = None
+            release_address_channel(
+                self._channel,
+                incompatible,
+                discard=True,
+            )
             raise RequestError(
                 "grpc_channel_override belongs to a different event loop"
             )
@@ -854,20 +868,49 @@ class Request(Generic[Req, Res]):
                     # A native RPC error is authoritative while its SDK error
                     # representation is being built. The retry branch below
                     # reopens cancellation before starting another attempt.
+                    raw_code = e.code()
+                    raw_code_retriable = raw_code in (
+                        StatusCode.DEADLINE_EXCEEDED,
+                        StatusCode.RESOURCE_EXHAUSTED,
+                        StatusCode.UNAVAILABLE,
+                    )
+                    could_retry = (
+                        (deadline is None or deadline > time())
+                        and (
+                            raw_code_retriable
+                            or is_retriable_error(e, deadline_retriable=True)
+                        )
+                        and (self._retries is None or self._retries > attempt)
+                    )
                     with self._future_lock:
                         self._native_terminal = True
+                        self._retry_decision_pending = could_retry
                     self._raise_request_error(e)
             except Exception as e:
-                if (
+                retry = (
                     (deadline is None or deadline > time())
                     and is_retriable_error(e, deadline_retriable=True)
                     and (self._retries is None or self._retries > attempt)
-                ):
+                )
+                with self._future_lock:
+                    cancelled_during_decision = (
+                        retry and self._retry_decision_pending and self._cancelled
+                    )
+                    self._retry_decision_pending = False
+                    if retry and not cancelled_during_decision:
+                        self._native_terminal = False
+                if cancelled_during_decision:
+                    release_address_channel(
+                        self._channel,
+                        self._grpc_channel,
+                        discard=True,
+                    )
+                    self._grpc_channel = None
+                    raise RequestIsCancelledError() from e
+                if retry:
                     # A custom terminal accessor can fail after the native
                     # response was received. Retrying reopens cancellation
                     # until the next native attempt becomes terminal.
-                    with self._future_lock:
-                        self._native_terminal = False
                     log.error(
                         f"request attempt {attempt} for {self} failed with {e} "
                         + "but will be retried",
