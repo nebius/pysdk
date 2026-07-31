@@ -478,7 +478,24 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
     def __await__(self) -> Generator[Any, None, Res]:
         """Return an iterator that waits for the RPC result."""
 
-        return self._submitted.__await__()
+        return self._await_submitted().__await__()
+
+    async def _await_submitted(self) -> Res:
+        """Wait without bypassing terminal-aware cancellation.
+
+        Cancellation of one external asyncio task first cancels only its
+        shield wrapper. The explicit call to :meth:`cancel` then propagates
+        cancellation while the native RPC is active, but rejects it after a
+        native result or error has become authoritative.
+
+        :return: Native RPC result.
+        """
+
+        try:
+            return await self._submitted._wait_shielded()
+        except CancelledError:
+            self.cancel()
+            raise
 
     def cancel(self) -> bool:
         """Request cancellation of the RPC.

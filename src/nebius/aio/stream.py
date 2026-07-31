@@ -273,11 +273,19 @@ class StreamRequest(Generic[Req, Res]):
                 return
             address_channel = self._address_channel
             self._released = True
-        release_address_channel(
-            self._channel,
-            address_channel,
-            discard=discard,
-        )
+        try:
+            release_address_channel(
+                self._channel,
+                address_channel,
+                discard=discard,
+            )
+        except BaseException:
+            # Preserve the one-owner claim during release, but allow a later
+            # close/abort path to retry when a custom legacy hook fails.
+            with self._state_lock:
+                if self._address_channel is address_channel:
+                    self._released = False
+            raise
 
     def _is_cancelled(self) -> bool:
         """Return the cancellation state under the state lock."""

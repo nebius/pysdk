@@ -508,6 +508,23 @@ class CrossLoopAwaitable(Generic[T]):
         self._reject_executor_wait()
         return await asyncio.wrap_future(self._future)
 
+    async def _wait_shielded(self) -> T:
+        """Wait without letting one asyncio waiter cancel shared work.
+
+        The inner object is a plain loop-local Future rather than a Task.
+        Closing a cancelled waiter's event loop therefore cannot bypass a
+        higher-level wrapper's explicit cancellation state machine.
+
+        :return: Submitted work result.
+        """
+
+        self._check_process()
+        binding = _current_submission.get()
+        if binding is not None and binding[1] is self:
+            raise RuntimeError("SDK work cannot await its own submission handle")
+        self._reject_executor_wait()
+        return await asyncio.shield(asyncio.wrap_future(self._future))
+
     def __await__(self) -> Generator[Any, None, T]:
         """Return an iterator that waits for the submitted work."""
 
@@ -564,6 +581,7 @@ class AsyncRuntime:
         self._shutdown_complete = Future[None]()
         self._shutdown_prepare_lock = Lock()
         self._shutdown_preparing = False
+        self._shutdown_dispatch_abandoned = False
         self._background_lock = Lock()
         self._background: set[CrossLoopAwaitable[Any]] = set()
         self._submissions_lock = Lock()
@@ -606,6 +624,17 @@ class AsyncRuntime:
                     else:
                         self._record_shutdown_failure(error)
                 finally:
+                    with self._shutdown_lock:
+                        shutdown_started = self._shutdown
+                    with self._shutdown_prepare_lock:
+                        recover_shutdown = (
+                            self._shutdown_preparing and not shutdown_started
+                        )
+                        if recover_shutdown:
+                            # A queued preparation callback can otherwise run
+                            # during the cleanup loop's run_until_complete and
+                            # create a task too late to drain safely.
+                            self._shutdown_dispatch_abandoned = True
                     try:
                         self._cancel_remaining_tasks()
                     except BaseException as error:
@@ -615,6 +644,12 @@ class AsyncRuntime:
                             self._loop.close()
                         except BaseException as error:
                             self._record_shutdown_failure(error)
+                    # A thread-safe shutdown-preparation callback can be
+                    # accepted immediately after the loop takes its final
+                    # ready-queue snapshot. If it never executes, recover
+                    # after loop closure instead of stranding completion.
+                    if recover_shutdown:
+                        self._start_shutdown_thread()
 
             self._loop_thread = Thread(
                 name="nebius-sdk-loop",
@@ -1165,17 +1200,31 @@ class AsyncRuntime:
             if not self._loop.is_running():
                 self._start_shutdown_thread()
             else:
-                runner = self._prepare_shutdown()
                 try:
-                    asyncio.run_coroutine_threadsafe(runner, self._loop)
+                    self._loop.call_soon_threadsafe(
+                        self._start_shutdown_preparation_on_loop
+                    )
                 except RuntimeError:
-                    runner.close()
                     self._start_shutdown_thread()
         return CrossLoopAwaitable._for_runtime(
             self._shutdown_complete,
             self._loop,
             self._executor,
         )
+
+    def _start_shutdown_preparation_on_loop(self) -> None:
+        """Create graceful-shutdown work after dispatch reaches the loop.
+
+        Deferring coroutine creation avoids retaining an unawaited coroutine
+        when an accepted callback is left in the ready queue as the loop
+        stops. An owned loop's thread finalizer detects that case and starts
+        synchronous fallback shutdown.
+        """
+
+        with self._shutdown_prepare_lock:
+            if self._shutdown_dispatch_abandoned:
+                return
+        self._loop.create_task(self._prepare_shutdown())
 
     async def _prepare_shutdown(self) -> None:
         """Drain protected close callers and start final shutdown.

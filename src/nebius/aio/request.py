@@ -17,7 +17,7 @@ that do not affect behavior.
 """
 
 import os
-from asyncio import CancelledError, ensure_future, get_running_loop, wait_for
+from asyncio import CancelledError, ensure_future, get_running_loop, shield, wait_for
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
@@ -993,7 +993,17 @@ class Request(Generic[Req, Res]):
                 )
                 self._future = submitted
             future = self._future
-        return await future
+        try:
+            shielded_wait = getattr(future, "_wait_shielded", None)
+            if callable(shielded_wait):
+                return cast(Res, await shielded_wait())
+            return await shield(future)
+        except CancelledError:
+            # Shield prevents asyncio from cancelling the shared future
+            # directly. Route propagation through the request state machine,
+            # which rejects cancellation after native terminal completion.
+            self.cancel()
+            raise
 
     def __await__(self) -> Generator[Any, None, Res]:
         """Support awaiting the Request instance.

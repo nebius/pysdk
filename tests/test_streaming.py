@@ -754,3 +754,43 @@ async def test_context_manager_closes_server_stream_after_early_break() -> None:
 
     assert cancelled == [True]
     assert discarded == [address]
+
+
+def test_failed_stream_release_can_be_retried() -> None:
+    """A failing custom release hook must leave a later close retryable."""
+
+    release_calls = 0
+    successful_releases = 0
+
+    class Channel:
+        def release_channel(self, address, *, discard=False) -> None:
+            nonlocal release_calls, successful_releases
+            release_calls += 1
+            if release_calls == 1:
+                raise RuntimeError("release failed")
+            successful_releases += 1
+
+    class Call:
+        def cancel(self) -> bool:
+            return True
+
+    stream = StreamRequest(
+        channel=Channel(),
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=object,
+        client_streaming=False,
+        server_streaming=True,
+    )
+    address = object()
+    stream._address_channel = address  # type: ignore[assignment]
+    stream._call = Call()
+
+    with pytest.raises(RuntimeError, match="release failed"):
+        stream._release()
+    assert not stream._released
+
+    asyncio.run(stream.aclose())
+    assert stream._released
+    assert release_calls == 2
+    assert successful_releases == 1

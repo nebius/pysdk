@@ -397,6 +397,45 @@ def test_owned_runtime_shutdown_reports_finalizer_start_failure(
     assert not loop_thread.is_alive()
 
 
+def test_owned_runtime_recovers_unexecuted_shutdown_dispatch(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """An accepted prepare callback cannot strand owned-loop shutdown."""
+
+    runtime = AsyncRuntime(None, 2)
+    stop_callback_entered = Event()
+    release_stop_callback = Event()
+    preparation_started = Event()
+    original_prepare = runtime._prepare_shutdown
+
+    async def observe_preparation() -> None:
+        preparation_started.set()
+        await original_prepare()
+
+    monkeypatch.setattr(
+        runtime,
+        "_prepare_shutdown",
+        observe_preparation,
+    )
+
+    def stop_before_next_ready_snapshot() -> None:
+        runtime.event_loop.stop()
+        stop_callback_entered.set()
+        release_stop_callback.wait(timeout=5)
+
+    runtime.event_loop.call_soon_threadsafe(stop_before_next_ready_snapshot)
+    assert stop_callback_entered.wait(timeout=5)
+    shutdown = runtime.shutdown_async()
+    release_stop_callback.set()
+
+    shutdown.result(timeout=5)
+    assert not preparation_started.is_set()
+    loop_thread = runtime._loop_thread
+    assert loop_thread is not None
+    loop_thread.join(timeout=5)
+    assert not loop_thread.is_alive()
+
+
 @pytest.mark.skipif(not hasattr(os, "fork"), reason="requires os.fork")
 def test_runtime_rejects_use_after_fork_without_hanging() -> None:
     """A child must create its own SDK instead of using inherited threads."""
@@ -1783,6 +1822,15 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
     try:
         assert terminal_capture_started.wait(timeout=5)
         assert not call.cancel()
+
+        async def cancel_one_waiter() -> None:
+            waiter = asyncio.ensure_future(call)
+            await asyncio.sleep(0)
+            waiter.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await waiter
+
+        asyncio.run(cancel_one_waiter())
         release_terminal_capture.set()
 
         async def await_result() -> None:
@@ -1852,6 +1900,15 @@ def test_generated_request_rejects_cancel_after_native_success() -> None:
     try:
         assert terminal_capture_started.wait(timeout=5)
         assert not request.cancel()
+
+        async def cancel_one_waiter() -> None:
+            pending = asyncio.create_task(request._await_result())
+            await asyncio.sleep(0)
+            pending.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await pending
+
+        asyncio.run(cancel_one_waiter())
         release_terminal_capture.set()
         waiter.join(timeout=5)
         assert not waiter.is_alive()
