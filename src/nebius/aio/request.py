@@ -31,6 +31,7 @@ from grpc.aio import AioRpcError
 from grpc.aio import Metadata as GrpcMetadata
 from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 
+from nebius.aio._runtime import CrossLoopAwaitable
 from nebius.aio.abc import ClientChannelInterface as Channel
 from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
@@ -304,6 +305,7 @@ class Request(Generic[Req, Res]):
         self._result_pb2_class = result_pb2_class
         self._input_metadata = Metadata(metadata)
         self._result_wrapper = result_wrapper
+        self._grpc_channel_override = grpc_channel_override
         self._grpc_channel = grpc_channel_override
         self._timeout: float | None = (
             timeout if not isinstance(timeout, UnsetType) else DEFAULT_TIMEOUT
@@ -608,6 +610,10 @@ class Request(Generic[Req, Res]):
             timeout = self._auth_timeout
             if timeout is not None:
                 timeout += 0.2  # 200 ms for an internal graceful shutdown
+            if cast(Any, func) is self:
+                submitted = self._ensure_submitted()
+                if isinstance(submitted, CrossLoopAwaitable):
+                    return cast(T, submitted.result(timeout))
             return self._channel.run_sync(func, timeout=timeout)
         except TimeoutError as e:
             from .service_error import RequestError, RequestStatusExtended
@@ -836,7 +842,35 @@ class Request(Generic[Req, Res]):
         except RequestError:
             pass
 
-    async def _retry_loop(self, outer_deadline: float | None = None) -> Res:
+    async def _await_native_call(self) -> Res:
+        """Await the active native call without losing a completed result.
+
+        SDK shutdown cancels runtime tasks directly. When the native done
+        callback has already published completion, recover that authoritative
+        result or error instead of allowing wrapper cancellation to replace it.
+
+        :return: Native response value.
+        :raises RequestSentNoCallError: If no native call is active.
+        """
+
+        call = self._call
+        if call is None:
+            raise RequestSentNoCallError()
+        try:
+            return cast(Res, await call)
+        except CancelledError:
+            with self._future_lock:
+                native_terminal = self._native_attempt_terminal
+            if not native_terminal:
+                raise
+            return cast(Res, await shield(call))
+
+    async def _retry_loop(
+        self,
+        outer_deadline: float | None = None,
+        *,
+        defer_unauthenticated_release: bool = False,
+    ) -> Res:
         """Core retry loop for the RPC invocation.
 
         This coroutine executes the RPC, applies per-attempt and overall
@@ -846,6 +880,10 @@ class Request(Generic[Req, Res]):
 
         :param outer_deadline: optional absolute timestamp (time.time()) that
             caps the total time budget for this retry loop.
+        :param defer_unauthenticated_release: Keep the active transport when an
+            ``UNAUTHENTICATED`` error must be classified by the outer
+            authorization loop. The outer loop either retains an explicit
+            override for its retry or releases an ordinary pool lease.
         :returns: the deserialized RPC result (or wrapped result via
             ``result_wrapper`` when configured).
         :raises RequestError, AioRpcError, CancelledError: depending on the
@@ -889,7 +927,7 @@ class Request(Generic[Req, Res]):
                     self._send(timeout)
                     if self._call is None:
                         raise RequestSentNoCallError()
-                    ret = await self._call  # type: ignore[unused-ignore]
+                    ret = await self._await_native_call()
                     # A successful native response is authoritative even
                     # while status and metadata are still being copied. The
                     # shared lock linearizes this publication with cancel().
@@ -972,7 +1010,16 @@ class Request(Generic[Req, Res]):
                     if isinstance(e, RequestError) and e.status.request_id == "":
                         self._release_grpc_channel(discard=True)
                         raise e
-                self._release_grpc_channel()
+                deferred_unauthenticated = (
+                    defer_unauthenticated_release
+                    and isinstance(e, RequestError)
+                    and (
+                        e.status.code == StatusCode.UNAUTHENTICATED
+                        or getattr(e.status.code, "name", None) == "UNAUTHENTICATED"
+                    )
+                )
+                if not deferred_unauthenticated:
+                    self._release_grpc_channel()
                 raise e
         raise RequestIsCancelledError()
 
@@ -1047,6 +1094,7 @@ class Request(Generic[Req, Res]):
             attempt += 1
             timeout = None if deadline is None else (deadline - time())
             if timeout is not None and timeout <= 0:
+                self._release_grpc_channel()
                 raise TimeoutError("authorization timed out")
             # Perform authentication: use a gRPC Metadata, then copy back auth header
             # to the internal Metadata used when sending the request
@@ -1059,15 +1107,25 @@ class Request(Generic[Req, Res]):
                 # If authentication itself failed (e.g., token refresh timeout),
                 # retry if authenticator allows and we are within deadline.
                 if deadline is not None and deadline <= time():
+                    self._release_grpc_channel()
                     raise
-                if auth.can_retry(e, self._auth_options):
+                try:
+                    can_retry = auth.can_retry(e, self._auth_options)
+                except BaseException:
+                    self._release_grpc_channel()
+                    raise
+                if can_retry:
                     continue
+                self._release_grpc_channel()
                 raise
             self._input_metadata = auth_md
 
             # Run the request retry loop; map UNAUTHENTICATED to re-auth attempts
             try:
-                return await self._retry_loop(outer_deadline=deadline)
+                return await self._retry_loop(
+                    outer_deadline=deadline,
+                    defer_unauthenticated_release=True,
+                )
             except Exception as e:  # noqa: BLE001
                 # Only retry auth on UNAUTHENTICATED codes
                 from .service_error import RequestError as ServiceRequestError
@@ -1085,9 +1143,18 @@ class Request(Generic[Req, Res]):
                 ):
                     raise
                 if deadline is not None and deadline <= time():
+                    self._release_grpc_channel()
                     raise
-                if not auth.can_retry(e, self._auth_options):
+                try:
+                    can_retry = auth.can_retry(e, self._auth_options)
+                except BaseException:
+                    self._release_grpc_channel()
                     raise
+                if not can_retry:
+                    self._release_grpc_channel()
+                    raise
+                if self._grpc_channel_override is None:
+                    self._release_grpc_channel()
                 # The failed native call is no longer the request's final
                 # outcome: authorization and RPC execution are about to start
                 # another attempt. Reopen cancellation before yielding back
@@ -1096,12 +1163,16 @@ class Request(Generic[Req, Res]):
                     self._native_terminal = False
                 # loop continues to re-authenticate and retry
 
-    async def _await_result(self) -> Res:
-        """Ensure the request coroutine is scheduled and return its result.
+    def _ensure_submitted(self) -> Awaitable[Res]:
+        """Schedule the request once and return its shared awaitable.
 
-        This helper memoizes the created Future so the underlying request is
-        executed only once even if multiple awaiters call it.
+        Built-in channels return a reusable cross-loop handle, allowing
+        synchronous :meth:`wait` to avoid an unnecessary second runtime task.
+        Legacy channels retain their loop-local scheduled-awaitable behavior.
+
+        :return: Shared request awaitable.
         """
+
         self._check_process()
         with self._future_lock:
             if self._future is None:
@@ -1119,7 +1190,12 @@ class Request(Generic[Req, Res]):
                     else ensure_future(candidate)
                 )
                 self._future = submitted
-            future = self._future
+            return self._future
+
+    async def _await_result(self) -> Res:
+        """Await the request's shared submission and return its result."""
+
+        future = self._ensure_submitted()
         try:
             shielded_wait = getattr(future, "_wait_shielded", None)
             if callable(shielded_wait):

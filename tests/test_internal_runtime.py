@@ -1318,7 +1318,11 @@ async def test_authentication_retry_reopens_request_cancellation() -> None:
     retry_count = 0
     second_attempt = asyncio.Event()
 
-    async def retry_loop(*, outer_deadline: float | None = None) -> Disk:
+    async def retry_loop(
+        *,
+        outer_deadline: float | None = None,
+        defer_unauthenticated_release: bool = False,
+    ) -> Disk:
         nonlocal retry_count
         retry_count += 1
         if retry_count == 1:
@@ -1359,8 +1363,9 @@ async def test_authentication_retry_reopens_request_cancellation() -> None:
 
 
 @pytest.mark.asyncio
-async def test_authentication_retry_releases_and_reacquires_transport() -> None:
-    """An auth retry must not reuse a transport returned to the pool."""
+@pytest.mark.parametrize("use_override", [False, True])
+async def test_authentication_retry_transport_ownership(use_override: bool) -> None:
+    """An auth retry reacquires a lease but retains an explicit override."""
 
     from nebius.aio.service_error import RequestError as ServiceRequestError
     from nebius.aio.service_error import RequestStatusExtended
@@ -1416,6 +1421,7 @@ async def test_authentication_retry_releases_and_reacquires_transport() -> None:
         "Get",
         GetDiskRequest(id="auth-retry-lease"),
         Disk,
+        grpc_channel_override=first if use_override else None,
         retries=0,
     )
     attempt = 0
@@ -1469,8 +1475,12 @@ async def test_authentication_retry_releases_and_reacquires_transport() -> None:
     result = await request._request_with_authorization_loop()
 
     assert isinstance(result, Disk)
-    assert channel.leased == [first, second]
-    assert channel.released == [(first, False), (second, False)]
+    if use_override:
+        assert channel.leased == []
+        assert channel.released == [(first, False)]
+    else:
+        assert channel.leased == [first, second]
+        assert channel.released == [(first, False), (second, False)]
     assert request._grpc_channel is None
 
 
@@ -1990,8 +2000,11 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         channel.sync_close(timeout=5)
 
 
-def test_low_level_native_completion_wins_before_wrapper_resumes() -> None:
-    """A native done callback closes the pre-resumption cancellation window."""
+@pytest.mark.parametrize("close_during_wait", [False, True])
+def test_low_level_native_completion_wins_before_wrapper_resumes(
+    close_during_wait: bool,
+) -> None:
+    """Native completion wins over direct cancellation and SDK shutdown."""
 
     native_waiting = Event()
     release_result = Event()
@@ -2053,15 +2066,27 @@ def test_low_level_native_completion_wins_before_wrapper_resumes() -> None:
         lambda value: value.SerializeToString(),
         Disk.FromString,
     )(GetDiskRequest(id="native-complete-before-resume"))
+    closer: Thread | None = None
     try:
         assert native_waiting.wait(timeout=5)
         assert native_call is not None
         native_call.publish_completion()
-        assert not call.cancel()
+        if close_during_wait:
+            closer = Thread(target=channel.sync_close, kwargs={"timeout": 5})
+            closer.start()
+            sleep(0.05)
+            assert closer.is_alive()
+        else:
+            assert not call.cancel()
         release_result.set()
         assert isinstance(call._submitted.result(timeout=5), Disk)
+        if closer is not None:
+            closer.join(timeout=5)
+            assert not closer.is_alive()
     finally:
         release_result.set()
+        if closer is not None:
+            closer.join(timeout=5)
         channel.sync_close(timeout=5)
 
 
@@ -2219,6 +2244,8 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
     )(GetDiskRequest(id="complete"))
     close_done = Event()
     close_errors: list[BaseException] = []
+    accessor_results: list[object] = []
+    accessor_errors: list[BaseException] = []
 
     def close_channel() -> None:
         try:
@@ -2229,6 +2256,7 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
             close_done.set()
 
     closer: Thread | None = None
+    accessor: Thread | None = None
     try:
         assert terminal_capture_started.wait(timeout=5)
         assert call.done()
@@ -2245,6 +2273,17 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
         closer = Thread(target=close_channel)
         closer.start()
         assert not close_done.wait(timeout=0.1)
+
+        def read_terminal_code() -> None:
+            try:
+                accessor_results.append(asyncio.run(call.code()))
+            except BaseException as error:
+                accessor_errors.append(error)
+
+        accessor = Thread(target=read_terminal_code)
+        accessor.start()
+        sleep(0.05)
+        assert accessor.is_alive()
         release_terminal_capture.set()
 
         async def await_result() -> None:
@@ -2256,12 +2295,18 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
 
         asyncio.run(await_result())
         closer.join(timeout=5)
+        accessor.join(timeout=5)
         assert not closer.is_alive()
+        assert not accessor.is_alive()
         assert close_errors == []
+        assert accessor_errors == []
+        assert accessor_results == [None]
     finally:
         release_terminal_capture.set()
         if closer is not None:
             closer.join(timeout=5)
+        if accessor is not None:
+            accessor.join(timeout=5)
         if not close_done.is_set():
             channel.sync_close(timeout=5)
 
@@ -2363,8 +2408,11 @@ def test_generated_request_rejects_cancel_after_native_success() -> None:
             channel.sync_close(timeout=5)
 
 
-def test_generated_native_success_wins_before_wrapper_resumes() -> None:
-    """A completed native success survives cancellation before await resumes."""
+@pytest.mark.parametrize("close_during_wait", [False, True])
+def test_generated_native_success_wins_before_wrapper_resumes(
+    close_during_wait: bool,
+) -> None:
+    """A native success survives direct cancellation and SDK shutdown."""
 
     native_waiting = Event()
     release_result = Event()
@@ -2438,12 +2486,22 @@ def test_generated_native_success_wins_before_wrapper_resumes() -> None:
 
     waiter = Thread(target=wait_for_result)
     waiter.start()
+    closer: Thread | None = None
     try:
         assert native_waiting.wait(timeout=5)
         native_call.publish_completion()
-        assert request.cancel()
+        if close_during_wait:
+            closer = Thread(target=channel.sync_close, kwargs={"timeout": 5})
+            closer.start()
+            sleep(0.05)
+            assert closer.is_alive()
+        else:
+            assert request.cancel()
         release_result.set()
         waiter.join(timeout=5)
+        if closer is not None:
+            closer.join(timeout=5)
+            assert not closer.is_alive()
         assert not waiter.is_alive()
         assert errors == []
         assert len(results) == 1
@@ -2452,6 +2510,8 @@ def test_generated_native_success_wins_before_wrapper_resumes() -> None:
     finally:
         release_result.set()
         waiter.join(timeout=5)
+        if closer is not None:
+            closer.join(timeout=5)
         channel.sync_close(timeout=5)
 
 

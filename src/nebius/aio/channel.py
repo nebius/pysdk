@@ -382,7 +382,17 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 add_done_callback(self._mark_native_terminal)
             self._call_ready.set()
             try:
-                result = await call
+                try:
+                    result = await call
+                except CancelledError:
+                    # Runtime shutdown cancels wrapper tasks directly. If the
+                    # native done callback won that race, recover the native
+                    # outcome instead of reporting an ambiguous cancellation.
+                    with self._terminal_lock:
+                        native_terminal = self._native_terminal
+                    if not native_terminal:
+                        raise
+                    result = await shield(call)
             finally:
                 # Native completion and wrapper completion are distinct. The
                 # latter remains pending while terminal metadata is copied.
@@ -511,7 +521,18 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         with self._terminal_lock:
             if method in self._terminal:
                 return self._terminal[method]
-        return await self._channel.run_async(self._call_result(method))
+        try:
+            return await self._channel.run_async(self._call_result(method))
+        except ChannelClosedError:
+            # Close may reject this new accessor submission while it is
+            # already draining the call submission that owns terminal capture.
+            # Wait for that owner and use the cache it publishes.
+            with suppress(BaseException):
+                await self._submitted._wait_shielded()
+            with self._terminal_lock:
+                if method in self._terminal:
+                    return self._terminal[method]
+            raise
 
     def __await__(self) -> Generator[Any, None, Res]:
         """Return an iterator that waits for the RPC result."""

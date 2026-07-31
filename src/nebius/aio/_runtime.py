@@ -262,8 +262,8 @@ class CrossLoopAwaitable(Generic[T]):
     A public completion callback uses the running event loop that registers
     it. The loop must stay running until delivery. The SDK does not move the
     callback to its completion thread if the registration loop stops or
-    closes. Asyncio cannot make callback registration atomic with the owner
-    stopping its loop, so a callback is logged and dropped if that race occurs.
+    closes. Dispatch is best effort: a loop that stops after accepting the
+    callback can retain it until that loop is closed or run again.
     """
 
     def __init__(
@@ -452,9 +452,10 @@ class CrossLoopAwaitable(Generic[T]):
         of calling it inline. It uses the event loop active at registration,
         or the associated SDK loop when no loop is active. The registration
         context is retained unless ``context`` is supplied explicitly. The
-        registration loop must stay running until callback delivery. If it
-        stops or closes later, the SDK logs a warning and drops the callback
-        instead of running loop-affine code on another thread.
+        registration loop must stay running until callback delivery. The SDK
+        logs and drops a callback if the loop has already stopped or rejects
+        dispatch. A loop that stops after accepting dispatch can retain the
+        queued callback until it is closed or run again.
 
         :param callback: Function that receives this awaitable.
         :param context: Optional context in which to run ``callback``.

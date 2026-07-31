@@ -57,6 +57,94 @@ def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> No
     assert sum(results) <= 1
 
 
+def test_stream_unary_native_completion_wins_before_wrapper_resumes() -> None:
+    """SDK shutdown cannot replace a completed stream-unary response."""
+
+    native_waiting = Event()
+    release_result = Event()
+    released: list[tuple[object, bool]] = []
+    results: list[Disk] = []
+    errors: list[BaseException] = []
+
+    class CompletedCall:
+        def __init__(self) -> None:
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            self.callback = callback
+
+        def publish_completion(self) -> None:
+            assert self.callback is not None
+            self.callback(self)
+
+        def __await__(self):
+            async def result() -> Disk:
+                native_waiting.set()
+                await asyncio.to_thread(release_result.wait)
+                return Disk()
+
+            return result().__await__()
+
+        def cancel(self) -> bool:
+            return True
+
+    native_call = CompletedCall()
+
+    class Transport:
+        def stream_unary(self, path, serializer, deserializer):
+            return lambda **kwargs: native_call
+
+    channel = SDKChannel(credentials=NoCredentials())
+    address = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": channel._event_loop},
+    )()
+    channel.get_channel_by_route = lambda route: address  # type: ignore[method-assign]
+    channel.release_channel = (  # type: ignore[method-assign]
+        lambda value, *, discard=False: released.append((value, discard))
+    )
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+    )
+
+    def wait_for_result() -> None:
+        try:
+            results.append(asyncio.run(stream._result()))
+        except BaseException as error:
+            errors.append(error)
+
+    waiter = Thread(target=wait_for_result)
+    waiter.start()
+    closer: Thread | None = None
+    try:
+        assert native_waiting.wait(timeout=5)
+        native_call.publish_completion()
+        closer = Thread(target=channel.sync_close, kwargs={"timeout": 5})
+        closer.start()
+        assert closer.is_alive()
+        release_result.set()
+        waiter.join(timeout=5)
+        closer.join(timeout=5)
+        assert not waiter.is_alive()
+        assert not closer.is_alive()
+        assert errors == []
+        assert len(results) == 1
+        assert isinstance(results[0], Disk)
+        assert released == [(address, False)]
+    finally:
+        release_result.set()
+        waiter.join(timeout=5)
+        if closer is not None:
+            closer.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
 def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> None:
     """Accepted cross-thread cancellation prevents native call creation."""
 

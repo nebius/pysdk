@@ -11,6 +11,7 @@ from asyncio import (
     ensure_future,
     gather,
     get_running_loop,
+    shield,
     wait,
 )
 from collections.abc import AsyncIterator, Awaitable, Callable, Generator
@@ -111,6 +112,7 @@ class StreamRequest(Generic[Req, Res]):
         self._state_lock = ThreadLock()
         self._cancel_requested = False
         self._cancelled = False
+        self._native_terminal = False
         self._released = False
         self._owner_loop: Any = None
         self._process_id = os.getpid()
@@ -260,6 +262,9 @@ class StreamRequest(Generic[Req, Res]):
                 if not publish_call:
                     call.cancel()
                     raise CancelledError
+                add_done_callback = getattr(call, "add_done_callback", None)
+                if callable(add_done_callback):
+                    add_done_callback(self._mark_native_terminal)
                 return call
             except BaseException as error:
                 self._start_error = error
@@ -293,6 +298,12 @@ class StreamRequest(Generic[Req, Res]):
         self._check_process()
         with self._state_lock:
             return self._cancel_requested or self._cancelled
+
+    def _mark_native_terminal(self, _: object) -> None:
+        """Publish native completion before the stream wrapper resumes."""
+
+        with self._state_lock:
+            self._native_terminal = True
 
     def _is_released(self) -> bool:
         """Return the channel-release state under the state lock."""
@@ -345,7 +356,17 @@ class StreamRequest(Generic[Req, Res]):
 
         call = await self._start()
         try:
-            return cast(Res, await call)
+            try:
+                result = await call
+            except CancelledError:
+                with self._state_lock:
+                    native_terminal = self._native_terminal
+                if not native_terminal:
+                    raise
+                result = await shield(call)
+            with self._state_lock:
+                self._native_terminal = True
+            return cast(Res, result)
         except BaseException:
             self._abort()
             raise
