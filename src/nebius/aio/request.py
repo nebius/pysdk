@@ -21,7 +21,7 @@ from asyncio import CancelledError, ensure_future, get_running_loop, wait_for
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
-from threading import Lock
+from threading import RLock
 from time import time
 from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
@@ -337,7 +337,8 @@ class Request(Generic[Req, Res]):
 
         self._awaited = False
         self._future: Awaitable[Res] | None = None
-        self._future_lock = Lock()
+        self._future_lock = RLock()
+        self._native_terminal = False
 
     def _check_process(self) -> None:
         """Reject a request inherited by a child process before locking."""
@@ -380,20 +381,17 @@ class Request(Generic[Req, Res]):
         """
         self._check_process()
         with self._future_lock:
-            if self._cancelled:
+            if self._cancelled or self._native_terminal:
                 return False
             future = self._future
             if future is None:
                 self._cancelled = True
                 return True
-        cancel = getattr(future, "cancel", None)
-        if callable(cancel):
-            cancelled = bool(cancel())
+            cancel = getattr(future, "cancel", None)
+            cancelled = bool(cancel()) if callable(cancel) else False
             if cancelled:
-                with self._future_lock:
-                    self._cancelled = True
+                self._cancelled = True
             return cancelled
-        return False
 
     def input_metadata(self) -> Metadata:
         """Return the metadata that will be sent with the request (mutable).
@@ -833,6 +831,11 @@ class Request(Generic[Req, Res]):
                     if self._call is None:
                         raise RequestSentNoCallError()
                     ret = await self._call  # type: ignore[unused-ignore]
+                    # A successful native response is authoritative even
+                    # while status and metadata are still being copied. The
+                    # shared lock linearizes this publication with cancel().
+                    with self._future_lock:
+                        self._native_terminal = True
                     code = await self._call.code()
                     msg = await self._call.details()
                     mdi = await self._call.initial_metadata()
@@ -867,6 +870,11 @@ class Request(Generic[Req, Res]):
                     and is_retriable_error(e, deadline_retriable=True)
                     and (self._retries is None or self._retries > attempt)
                 ):
+                    # A custom terminal accessor can fail after the native
+                    # response was received. Retrying reopens cancellation
+                    # until the next native attempt becomes terminal.
+                    with self._future_lock:
+                        self._native_terminal = False
                     log.error(
                         f"request attempt {attempt} for {self} failed with {e} "
                         + "but will be retried",

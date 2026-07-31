@@ -714,27 +714,61 @@ def test_pending_future_from_stopped_loop_fails_bridge_promptly() -> None:
         foreign_loop.close()
 
 
-def test_completed_foreign_future_wins_stopped_loop_race(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    """A result published during the loop-state check remains observable."""
+def test_completed_foreign_future_from_stopped_loop_fails_without_inspection() -> None:
+    """A stopped owner prevents even terminal foreign-Future inspection."""
 
     foreign_loop = asyncio.new_event_loop()
     source = foreign_loop.create_future()
+    source.set_result(42)
     channel = Channel(credentials=NoCredentials())
-    original_is_running = foreign_loop.is_running
-
-    def complete_then_report_stopped() -> bool:
-        source.set_result(42)
-        return False
-
-    monkeypatch.setattr(foreign_loop, "is_running", complete_then_report_stopped)
     try:
-        assert channel.run_async(source).result(timeout=5) == 42
+        with pytest.raises(
+            RuntimeError,
+            match="foreign future owner event loop is not running",
+        ):
+            channel.run_async(source).result(timeout=5)
     finally:
-        monkeypatch.setattr(foreign_loop, "is_running", original_is_running)
         channel.sync_close(timeout=5)
         foreign_loop.close()
+
+
+def test_foreign_future_is_inspected_only_on_its_owner_loop() -> None:
+    """Bridge setup, completion, and result reads preserve Future affinity."""
+
+    loop, thread = _start_loop()
+    channel = Channel(credentials=NoCredentials())
+
+    class StrictFuture(asyncio.Future[int]):
+        def _check_owner(self) -> None:
+            assert asyncio.get_running_loop() is self.get_loop()
+
+        def done(self) -> bool:
+            self._check_owner()
+            return super().done()
+
+        def cancelled(self) -> bool:
+            self._check_owner()
+            return super().cancelled()
+
+        def exception(self) -> BaseException | None:
+            self._check_owner()
+            return super().exception()
+
+        def result(self) -> int:
+            self._check_owner()
+            return super().result()
+
+    async def create_future() -> StrictFuture:
+        return StrictFuture()
+
+    source = asyncio.run_coroutine_threadsafe(create_future(), loop).result(timeout=5)
+    bridged = channel.run_async(source)
+    try:
+        loop.call_soon_threadsafe(source.set_result, 42)
+        assert bridged.result(timeout=5) == 42
+    finally:
+        channel.sync_close(timeout=5)
+        _stop_loop(loop, thread)
 
 
 def test_bg_task_bridges_foreign_loop_future() -> None:
@@ -1594,6 +1628,107 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
+    """Accepted cancellation discards a resolved address before call creation."""
+
+    resolver_started = Event()
+    release_resolver = Event()
+    call_factory_used = Event()
+    address_released = Event()
+    discarded: list[AddressChannel] = []
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            call_factory_used.set()
+            raise AssertionError("cancelled unary call must not open transport")
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(Transport(), "test-address")  # type: ignore[arg-type]
+
+    def resolve(method: str) -> AddressChannel:
+        resolver_started.set()
+        release_resolver.wait(timeout=5)
+        return address
+
+    channel.get_channel_by_method = resolve  # type: ignore[method-assign]
+
+    def release(value: AddressChannel, *, discard: bool = False) -> None:
+        discarded.append(value)
+        address_released.set()
+
+    channel.release_channel = release  # type: ignore[method-assign]
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="cancel-during-resolution"))
+    try:
+        assert resolver_started.wait(timeout=5)
+        assert call.cancel()
+        release_resolver.set()
+        with pytest.raises(ConcurrentCancelledError):
+            call._submitted.result(timeout=5)
+        assert address_released.wait(timeout=5)
+        assert not call_factory_used.is_set()
+        assert discarded == [address]
+    finally:
+        release_resolver.set()
+        channel.sync_close(timeout=5)
+
+
+def test_low_level_reentrant_cancel_discards_unpublished_call() -> None:
+    """Cancellation inside call creation cancels the unpublished native call."""
+
+    wrapper_ready = Event()
+    native_cancelled_event = Event()
+    address_released = Event()
+    native_cancelled = 0
+    discarded: list[AddressChannel] = []
+    wrapper: object | None = None
+
+    class NativeCall:
+        def cancel(self) -> bool:
+            nonlocal native_cancelled
+            native_cancelled += 1
+            native_cancelled_event.set()
+            return True
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            def create(*call_args: object, **call_kwargs: object) -> NativeCall:
+                assert wrapper_ready.wait(timeout=5)
+                assert wrapper is not None
+                assert wrapper.cancel()  # type: ignore[attr-defined]
+                return NativeCall()
+
+            return create
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(Transport(), "test-address")  # type: ignore[arg-type]
+    channel.get_channel_by_method = lambda method: address  # type: ignore[method-assign]
+
+    def release(value: AddressChannel, *, discard: bool = False) -> None:
+        discarded.append(value)
+        address_released.set()
+
+    channel.release_channel = release  # type: ignore[method-assign]
+    wrapper = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="reentrant-cancel"))
+    wrapper_ready.set()
+    try:
+        with pytest.raises(ConcurrentCancelledError):
+            wrapper._submitted.result(timeout=5)  # type: ignore[attr-defined]
+        assert native_cancelled_event.wait(timeout=5)
+        assert address_released.wait(timeout=5)
+        assert native_cancelled == 1
+        assert discarded == [address]
+    finally:
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.parametrize("native_error", [False, True])
 def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
     native_error: bool,
@@ -1660,6 +1795,72 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
         asyncio.run(await_result())
     finally:
         release_terminal_capture.set()
+        channel.sync_close(timeout=5)
+
+
+def test_generated_request_rejects_cancel_after_native_success() -> None:
+    """Metadata capture cannot replace a successful request with cancellation."""
+
+    terminal_capture_started = Event()
+    release_terminal_capture = Event()
+    results: list[Disk] = []
+    errors: list[BaseException] = []
+
+    class CompletedCall:
+        def __await__(self):
+            async def result() -> Disk:
+                return Disk()
+
+            return result().__await__()
+
+        async def code(self) -> grpc.StatusCode:
+            terminal_capture_started.set()
+            await asyncio.to_thread(release_terminal_capture.wait)
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            return ""
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="late-cancel"),
+        Disk,
+    )
+
+    def send(timeout: float | None) -> None:
+        request._call = CompletedCall()  # type: ignore[assignment]
+
+    request._send = send  # type: ignore[method-assign]
+
+    def wait_for_result() -> None:
+        try:
+            results.append(asyncio.run(request._await_result()))
+        except BaseException as error:
+            errors.append(error)
+
+    waiter = Thread(target=wait_for_result)
+    waiter.start()
+    try:
+        assert terminal_capture_started.wait(timeout=5)
+        assert not request.cancel()
+        release_terminal_capture.set()
+        waiter.join(timeout=5)
+        assert not waiter.is_alive()
+        assert errors == []
+        assert len(results) == 1
+        assert isinstance(results[0], Disk)
+    finally:
+        release_terminal_capture.set()
+        waiter.join(timeout=5)
         channel.sync_close(timeout=5)
 
 

@@ -889,7 +889,10 @@ class AsyncRuntime:
         """Bridge a future from another event loop.
 
         The bridge copies completion to a concurrent future. Cancellation of
-        the bridge is sent to the source loop.
+        the bridge is sent to the source loop. Every source operation,
+        including terminal-state inspection, runs on that owning loop. The
+        owner must therefore remain running even when the source is already
+        complete; otherwise the bridge fails promptly without inspecting it.
 
         :param source: Future to bridge.
         :param owner_loop: Event loop that owns ``source``.
@@ -923,25 +926,34 @@ class AsyncRuntime:
         def forward_cancellation(completed: Future[T]) -> None:
             """Send bridge cancellation to the source loop."""
 
-            if completed.cancelled() and not source.done():
+            if completed.cancelled():
                 try:
-                    owner_loop.call_soon_threadsafe(source.cancel)
+                    owner_loop.call_soon_threadsafe(cancel_on_owner)
                 except RuntimeError:
                     pass
 
-        bridged.add_done_callback(forward_cancellation)
-        if source.done():
-            copy_result(source)
-        elif not owner_loop.is_running():
-            if source.done():
-                copy_result(source)
+        def cancel_on_owner() -> None:
+            """Cancel the source only from its owning event loop."""
+
+            if not source.done():
+                source.cancel()
+
+        def attach_on_owner() -> None:
+            """Attach completion handling only from the owning event loop."""
+
+            if bridged.cancelled():
+                cancel_on_owner()
             else:
-                bridged.set_exception(
-                    RuntimeError("foreign future owner event loop is not running")
-                )
+                source.add_done_callback(copy_result)
+
+        bridged.add_done_callback(forward_cancellation)
+        if not owner_loop.is_running():
+            bridged.set_exception(
+                RuntimeError("foreign future owner event loop is not running")
+            )
         else:
             try:
-                owner_loop.call_soon_threadsafe(source.add_done_callback, copy_result)
+                owner_loop.call_soon_threadsafe(attach_on_owner)
             except RuntimeError as error:
                 bridged.set_exception(error)
         return CrossLoopAwaitable._for_runtime(

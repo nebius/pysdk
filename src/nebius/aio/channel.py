@@ -295,6 +295,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._terminal_lock = RLock()
         self._terminal: dict[str, Any] = {}
         self._native_terminal = False
+        self._cancel_requested = False
         self._address_channel: AddressChannel | None = None
         self._released = False
         self._submitted = channel.run_async(self._invoke())
@@ -338,15 +339,21 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         try:
             if self._address is None:
                 if self._address_resolver is None:
-                    self._address_channel = self._channel.get_channel_by_method(
-                        self._method
-                    )
+                    address_channel = self._channel.get_channel_by_method(self._method)
                 else:
                     address = self._address_resolver()
-                    self._address_channel = self._channel.get_channel_by_addr(address)
+                    address_channel = self._channel.get_channel_by_addr(address)
             else:
-                self._address_channel = self._channel.get_channel_by_addr(self._address)
-            transport = self._address_channel.channel
+                address_channel = self._channel.get_channel_by_addr(self._address)
+            with self._terminal_lock:
+                publish_address = not self._cancel_requested
+                if publish_address:
+                    self._address_channel = address_channel
+            if not publish_address:
+                self._channel.release_channel(address_channel, discard=True)
+                self._released = True
+                raise CancelledError
+            transport = address_channel.channel
             call = cast(
                 UnaryUnaryCall[Req, Res],
                 transport.unary_unary(
@@ -362,7 +369,13 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     compression=self._compression,
                 ),
             )
-            self._call = call
+            with self._terminal_lock:
+                publish_call = not self._cancel_requested
+                if publish_call:
+                    self._call = call
+            if not publish_call:
+                call.cancel()
+                raise CancelledError
             self._call_ready.set()
             try:
                 result = await call
@@ -483,6 +496,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         with self._terminal_lock:
             if self._native_terminal:
                 return False
+            self._cancel_requested = True
             # Keep the terminal check and concurrent-future cancellation in
             # one critical section. ``Future.cancel`` runs callbacks inline;
             # the reentrant lock lets the pre-start callback publish status.

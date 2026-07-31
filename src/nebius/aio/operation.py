@@ -675,7 +675,11 @@ class Operation(Generic[OperationPb]):
         """Return the underlying operation protobuf object.
 
         Use this to access version-specific fields that are not exposed by the
-        normalized wrapper.
+        normalized wrapper. The returned object preserves the existing mutable
+        compatibility surface; mutating it concurrently bypasses this wrapper's
+        snapshot and locking guarantees. Callers must serialize such mutation.
+
+        :return: Current mutable operation protobuf object.
         """
         return self._operation_snapshot()
 

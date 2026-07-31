@@ -269,7 +269,9 @@ dedicated daemon loop thread and a private daemon executor with at most two
 workers. Executor workers are daemon threads and start lazily when work is
 submitted. SDK request, authentication, renewal, streaming, asynchronous
 metric results, and cleanup work runs there. Returned SDK awaitables can be
-awaited from any external asyncio loop.
+awaited from any external asyncio loop. Reuse long-lived SDK instances instead
+of constructing one per request, because every default instance owns its loop
+thread and can start its configured executor workers.
 
 Use an asynchronous context when possible. If no asynchronous event loop is
 running, you can use the SDK synchronously:
@@ -325,6 +327,12 @@ explicit synchronous calls to a regular application thread.
 A caller-supplied asynchronous iterator for a client-streaming request is
 consumed on the SDK loop. The iterator must be loop-neutral. An iterator that
 contains state bound to another event loop is not supported.
+
+An explicit `asyncio.Future` returned by custom SDK work is bridged through
+its owning loop. That loop must remain running until the bridge has inspected
+and copied the result, even if the Future is already complete. If its owner is
+stopped, the SDK fails promptly instead of reading non-thread-safe Future state
+from another thread.
 
 A unary streaming request and its authentication options become fixed when
 the stream wrapper is created. Each explicit client-streaming `write()` copies
