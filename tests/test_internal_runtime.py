@@ -1263,6 +1263,26 @@ def test_runtime_pre_start_cancellation_reaches_cross_loop_handle() -> None:
     assert source_finalized.wait(timeout=5)
 
 
+def test_runtime_rejects_resubmitting_current_handle() -> None:
+    """A child wrapper cannot hide a pending self-await cycle."""
+
+    channel = Channel(credentials=NoCredentials())
+    holder: Future[CrossLoopAwaitable[int]] = Future()
+
+    async def parent() -> int:
+        own_handle = await asyncio.wrap_future(holder)
+        with pytest.raises(RuntimeError, match="submit its own submission handle"):
+            channel.run_async(own_handle)
+        return 42
+
+    submitted = channel.run_async(parent())
+    holder.set_result(submitted)
+    try:
+        assert submitted.result(timeout=5) == 42
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_context_submission_binding_isolated_for_sdks_sharing_loop() -> None:
     """Nested and concurrent SDK tasks keep runtime-specific ContextVars."""
 

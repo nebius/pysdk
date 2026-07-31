@@ -93,6 +93,44 @@ def test_idle_channel_is_owned_by_the_internal_loop_until_close() -> None:
     assert address_channel.channel.get_state() == grpc.ChannelConnectivity.SHUTDOWN
 
 
+def test_constructor_snapshots_mutable_channel_configuration() -> None:
+    """Caller mutation cannot race SDK-loop option and interceptor reads."""
+
+    global_options = [("global", "before")]
+    address_values = [("address", "before")]
+    address_options = {"snapshot.example:443": address_values}
+    first_interceptor = object()
+    later_interceptor = object()
+    address_interceptor_values = [first_interceptor]
+    address_interceptors = {
+        "snapshot.example:443": address_interceptor_values,
+    }
+    channel = Channel(
+        credentials=NoCredentials(),
+        options=global_options,
+        address_options=address_options,
+        address_interceptors=address_interceptors,  # type: ignore[arg-type]
+    )
+    global_options.append(("global", "after"))
+    address_values.append(("address", "after"))
+    address_options.clear()
+    address_interceptor_values.append(later_interceptor)
+    address_interceptors.clear()
+    try:
+        effective_options = channel.get_address_options("snapshot.example:443")
+        assert ("global", "before") in effective_options
+        assert ("address", "before") in effective_options
+        assert ("global", "after") not in effective_options
+        assert ("address", "after") not in effective_options
+        effective_interceptors = channel.get_address_interceptors(
+            "snapshot.example:443"
+        )
+        assert first_interceptor in effective_interceptors
+        assert later_interceptor not in effective_interceptors
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_direct_pool_release_rejects_active_external_loop() -> None:
     """Synchronous release helpers must not block an asyncio loop."""
 
@@ -486,6 +524,37 @@ def test_foreign_loop_stopping_after_close_dispatch_does_not_hang(
     finally:
         if owner_thread.is_alive():
             _stop_event_loop(owner_loop, owner_thread)
+
+
+def test_foreign_transport_close_accepts_general_owner_loop_awaitable() -> None:
+    """Custom close awaitables are created and awaited on their owning loop."""
+
+    owner_loop, owner_thread = _start_event_loop()
+    invoked_loops: list[asyncio.AbstractEventLoop] = []
+
+    class Transport:
+        def close(self, grace: float | None = None):
+            current_loop = asyncio.get_running_loop()
+            invoked_loops.append(current_loop)
+            completion = current_loop.create_future()
+            current_loop.call_soon(completion.set_result, None)
+            return completion
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "foreign-awaitable.example:443",
+        owner_loop,
+    )
+    try:
+        channel.run_async(channel._close_address_channel(address, None)).result(
+            timeout=5
+        )
+        assert invoked_loops == [owner_loop]
+        assert address._is_closed_by_sdk()
+    finally:
+        channel.sync_close(timeout=5)
+        _stop_event_loop(owner_loop, owner_thread)
 
 
 def test_channel_close_does_not_duplicate_a_scheduled_transport_close(

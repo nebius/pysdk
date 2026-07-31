@@ -1067,7 +1067,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     :param options:
         Global channel options passed to gRPC when creating address
         channels. This should follow the ``ChannelArgumentType``
-        shape (sequence of key/value tuples).
+        shape (sequence of key/value tuples). The constructor copies the
+        sequence; later caller mutations do not change channel behavior.
     :type options: optional list of tuple[str, Any]
 
     :param interceptors:
@@ -1081,13 +1082,15 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         Optional mapping from a resolved address to per-address channel
         options. Each value must follow the ``ChannelArgumentType``
         shape (sequence of key/value tuples). If omitted
-        an empty mapping is used.
+        an empty mapping is used. The constructor copies the mapping and each
+        option sequence before SDK work can read them on another thread.
     :type address_options: optional mapping address -> list of ``tuple[str, Any]``
 
     :param address_interceptors:
         Optional mapping from a resolved address to a sequence of
         per-address interceptors. Per-address interceptors are invoked
-        in addition to the global interceptors.
+        in addition to the global interceptors. The constructor copies the
+        mapping and each interceptor sequence.
     :type address_interceptors: optional mapping address ->
         Sequence[ClientInterceptor]
 
@@ -1374,18 +1377,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         if interceptors is None:
             interceptors = []
-        self._global_options = options or []
+        self._global_options = list(options or ())
         self._global_interceptors: list[ClientInterceptor] = [
             IdempotencyKeyInterceptor()
         ]
         self._global_interceptors.extend(interceptors)
 
-        if address_options is None:
-            address_options = dict[str, ChannelArgumentType]()
-        if address_interceptors is None:
-            address_interceptors = dict[str, Sequence[ClientInterceptor]]()
-        self._address_options = address_options
-        self._address_interceptors = address_interceptors
+        self._address_options = {
+            address: list(address_values)
+            for address, address_values in (address_options or {}).items()
+        }
+        self._address_interceptors = {
+            address: tuple(address_values)
+            for address, address_values in (address_interceptors or {}).items()
+        }
 
         self._global_interceptors_inner: list[ClientInterceptor] = []
 
@@ -2545,7 +2550,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     "Unable to close channel because its owner event loop is stopped"
                 )
                 return
-            close_coro = chan.channel.close(grace)
+
+            async def close_on_owner() -> None:
+                """Create and await the native close on its owning loop."""
+
+                await chan.channel.close(grace)
+
+            close_coro = close_on_owner()
             try:
                 close_future = run_coroutine_threadsafe(
                     close_coro,

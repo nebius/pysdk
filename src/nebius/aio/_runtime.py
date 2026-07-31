@@ -813,6 +813,19 @@ class AsyncRuntime:
                 "an SDK runtime cannot be used after fork; construct SDK "
                 "objects only after the child process starts"
             )
+        binding = _current_submission.get()
+        if (
+            isinstance(awaitable, CrossLoopAwaitable)
+            and binding is not None
+            and binding[0] is self
+            and binding[1] is awaitable
+            and not awaitable.done()
+        ):
+            # Wrapping the current handle would hide direct self-await behind
+            # a child task: the parent would await the child while the child
+            # awaited the parent. Keep ownership with the running submission
+            # and reject without cancelling or disposing its handle.
+            raise RuntimeError("SDK work cannot submit its own submission handle")
         rejection: RuntimeError | None = None
         with self._shutdown_lock:
             if self._shutdown or not self._accepting:
