@@ -39,6 +39,7 @@ class AddressChannel:
     address: str
     channel: GRPCChannel
     event_loop: AbstractEventLoop | None
+    _legacy_close_state_init_lock = Lock()
 
     def __init__(
         self,
@@ -64,14 +65,37 @@ class AddressChannel:
     def _mark_closed_by_sdk(self) -> None:
         """Record that SDK lifecycle management closed this transport."""
 
-        with self._close_state_lock:
+        close_state_lock = self._ensure_close_state()
+        with close_state_lock:
             self._closed_by_sdk = True
 
     def _is_closed_by_sdk(self) -> bool:
         """Return whether SDK lifecycle management closed this transport."""
 
-        with self._close_state_lock:
+        close_state_lock = self._ensure_close_state()
+        with close_state_lock:
             return self._closed_by_sdk
+
+    def _ensure_close_state(self) -> Lock:
+        """Initialize lifecycle state for legacy subclasses that skipped init.
+
+        Older custom wrappers sometimes override :meth:`__init__` without
+        calling this base class. The class lock makes lazy initialization
+        atomic while preserving that compatibility.
+
+        :return: Per-wrapper lock protecting the SDK-close marker.
+        """
+
+        close_state_lock = getattr(self, "_close_state_lock", None)
+        if close_state_lock is not None:
+            return close_state_lock
+        with self._legacy_close_state_init_lock:
+            close_state_lock = getattr(self, "_close_state_lock", None)
+            if close_state_lock is None:
+                close_state_lock = Lock()
+                self._close_state_lock = close_state_lock
+                self._closed_by_sdk = False
+            return close_state_lock
 
 
 class ChannelBase(GRPCChannel):
