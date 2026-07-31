@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 from concurrent.futures import Future, ThreadPoolExecutor
-from threading import Barrier, Event, Thread
+from threading import Barrier, Event, Lock, Thread
 from time import sleep
 
 import grpc
@@ -549,6 +549,120 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
     assert not closer.is_alive()
     assert errors == []
     assert close_calls == [None]
+
+
+def test_release_between_close_boundary_and_snapshot_closes_lease_once(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A release cannot remove the lease before close snapshots ownership."""
+
+    close_boundary = Event()
+    resume_close = Event()
+    close_calls: list[float | None] = []
+    errors: list[BaseException] = []
+
+    class Transport:
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            close_calls.append(grace)
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "close-boundary.example:443",
+        channel._event_loop,
+    )
+    channel._lease_address_channel(address)
+    original_submit = channel._runtime.submit
+
+    def pause_close_submission(awaitable, *, track=True):
+        if not track:
+            close_boundary.set()
+            resume_close.wait(timeout=5)
+        return original_submit(awaitable, track=track)
+
+    monkeypatch.setattr(channel._runtime, "submit", pause_close_submission)
+
+    def close() -> None:
+        try:
+            channel.sync_close(timeout=5)
+        except BaseException as error:
+            errors.append(error)
+
+    closer = Thread(target=close)
+    closer.start()
+    assert close_boundary.wait(timeout=5)
+    try:
+        channel.release_channel(address)
+        with channel._channel_pool_lock:
+            assert channel._leased_channels.get(id(address)) is address
+    finally:
+        resume_close.set()
+        closer.join(timeout=5)
+
+    assert not closer.is_alive()
+    assert errors == []
+    assert close_calls == [None]
+    with channel._channel_pool_lock:
+        assert channel._leased_channels == {}
+
+
+def test_concurrent_foreign_release_schedules_one_close() -> None:
+    """One foreign wrapper has at most one in-flight native close."""
+
+    owner_loop, owner_thread = _start_event_loop()
+    close_started = Event()
+    release_close = Event()
+    close_calls = 0
+    close_lock = Lock()
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            nonlocal close_calls
+            with close_lock:
+                close_calls += 1
+            close_started.set()
+            while not release_close.is_set():
+                await asyncio.sleep(0.001)
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "foreign-close.example:443",
+        owner_loop,
+    )
+    channel.sync_close(timeout=5)
+    barrier = Barrier(3)
+    errors: list[BaseException] = []
+
+    def release() -> None:
+        barrier.wait()
+        try:
+            channel.release_channel(address)
+        except BaseException as error:
+            errors.append(error)
+
+    releasers = [Thread(target=release) for _ in range(2)]
+    for releaser in releasers:
+        releaser.start()
+    barrier.wait()
+    try:
+        assert close_started.wait(timeout=5)
+        sleep(0.05)
+        with close_lock:
+            assert close_calls == 1
+    finally:
+        release_close.set()
+        for releaser in releasers:
+            releaser.join(timeout=5)
+        _stop_event_loop(owner_loop, owner_thread)
+
+    assert errors == []
+    assert all(not releaser.is_alive() for releaser in releasers)
+    with channel._tasks_lock:
+        assert channel._foreign_transport_close_ids == set()
 
 
 def test_generated_requests_complete_from_many_sync_threads() -> None:

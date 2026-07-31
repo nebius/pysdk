@@ -1329,6 +1329,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             int,
             tuple[AddressChannel, ConcurrentFuture[None]],
         ]()
+        self._foreign_transport_close_ids = set[int]()
         self._foreign_close_tasks = set[Task[Any]]()
         self._tasks_lock = Lock()
 
@@ -2395,9 +2396,18 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             return
         with self._channel_pool_lock:
             closed = self._closed
+            if closed:
+                # Before _close_internal takes its snapshot, an actual lease
+                # must remain visible to that snapshot. Afterwards the local
+                # cleanup snapshot already owns it, so removing the registry
+                # entry cannot lose the transport.
+                if self._close_completion is None:
+                    leased = self._leased_channels.get(id(chan))
+                else:
+                    leased = self._leased_channels.pop(id(chan), None)
+            else:
+                leased = None
         if closed:
-            with self._channel_pool_lock:
-                leased = self._leased_channels.pop(id(chan), None)
             already_closed = chan._is_closed_by_sdk()
             if leased is None and not already_closed:
                 self._schedule_address_channel_close(chan, None)
@@ -2458,8 +2468,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if chan is None:
             return
         with self._channel_pool_lock:
-            leased = self._leased_channels.pop(id(chan), None)
             closed = self._closed
+            if closed and self._close_completion is None:
+                leased = self._leased_channels.get(id(chan))
+            else:
+                leased = self._leased_channels.pop(id(chan), None)
         already_closed = chan._is_closed_by_sdk()
         if closed:
             if leased is None and not already_closed:
@@ -2570,6 +2583,18 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     "Unable to close channel because its owner event loop is stopped"
                 )
                 return
+            channel_id = id(chan)
+            with self._tasks_lock:
+                if channel_id in self._foreign_transport_close_ids:
+                    return
+                self._foreign_transport_close_ids.add(channel_id)
+
+            def discard_foreign_reservation(_: object = None) -> None:
+                """Allow retry after this foreign close attempt terminates."""
+
+                with self._tasks_lock:
+                    self._foreign_transport_close_ids.discard(channel_id)
+
             close_coro = close_and_log()
             try:
                 current_loop = get_running_loop()
@@ -2583,12 +2608,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 with self._tasks_lock:
                     self._foreign_close_tasks.add(task)
                 task.add_done_callback(self._discard_foreign_close_task)
+                task.add_done_callback(discard_foreign_reservation)
                 return
             try:
-                run_coroutine_threadsafe(close_coro, owner_loop)
+                close_future = run_coroutine_threadsafe(close_coro, owner_loop)
             except RuntimeError:
                 close_coro.close()
+                discard_foreign_reservation()
                 logger.warning("Unable to close channel after its owner loop stopped")
+            else:
+                close_future.add_done_callback(discard_foreign_reservation)
             return
 
         channel_id = id(chan)
