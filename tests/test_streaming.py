@@ -9,6 +9,7 @@ from nebius.aio.channel import Channel as SDKChannel
 from nebius.aio.channel import NoCredentials
 from nebius.aio.route import Route
 from nebius.aio.stream import StreamRequest
+from nebius.api.nebius.compute.v1 import Disk, GetDiskRequest
 
 
 def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> None:
@@ -51,6 +52,210 @@ def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> No
 
     assert errors == []
     assert sum(results) <= 1
+
+
+def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> None:
+    """Accepted cross-thread cancellation prevents native call creation."""
+
+    resolver_entered = Event()
+    release_resolver = Event()
+    call_factory_used = Event()
+    discarded: list[object] = []
+    errors: list[BaseException] = []
+
+    class Transport:
+        def unary_stream(self, path, serializer, deserializer):
+            call_factory_used.set()
+            raise AssertionError("cancelled stream must not open a transport")
+
+    channel = SDKChannel(credentials=NoCredentials())
+    address = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": channel._event_loop},
+    )()
+
+    def resolve(route):
+        resolver_entered.set()
+        release_resolver.wait(timeout=5)
+        return address
+
+    channel.get_channel_by_route = resolve  # type: ignore[method-assign]
+    channel.release_channel = (  # type: ignore[method-assign]
+        lambda value, *, discard=False: discarded.append(value)
+    )
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="before"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+    )
+
+    def consume() -> None:
+        async def first_response() -> None:
+            await anext(stream.__aiter__())
+
+        try:
+            asyncio.run(first_response())
+        except BaseException as error:
+            errors.append(error)
+
+    thread = Thread(target=consume)
+    thread.start()
+    assert resolver_entered.wait(timeout=5)
+    try:
+        assert stream.cancel()
+    finally:
+        release_resolver.set()
+        thread.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+    assert not thread.is_alive()
+    assert len(errors) == 1
+    assert isinstance(errors[0], asyncio.CancelledError)
+    assert not call_factory_used.is_set()
+    assert discarded == [address]
+
+
+def test_stream_snapshots_unary_request_and_auth_options() -> None:
+    """Stream setup observes values fixed before caller-side mutation."""
+
+    received_requests: list[str] = []
+    received_options: list[str] = []
+    discarded: list[object] = []
+
+    class Authenticator:
+        async def authenticate(self, metadata, timeout, options):
+            received_options.append(options["scope"])
+
+    class Provider:
+        def authenticator(self):
+            return Authenticator()
+
+    class Call:
+        def __aiter__(self):
+            async def responses():
+                yield Disk()
+
+            return responses()
+
+        def cancel(self) -> bool:
+            return True
+
+    class Transport:
+        def unary_stream(self, path, serializer, deserializer):
+            def create(request, **kwargs):
+                received_requests.append(request.id)
+                return Call()
+
+            return create
+
+    channel = SDKChannel(credentials=NoCredentials())
+    address = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": channel._event_loop},
+    )()
+    channel.get_authorization_provider = lambda: Provider()  # type: ignore[method-assign]
+    channel.get_channel_by_route = lambda route: address  # type: ignore[method-assign]
+    channel.release_channel = (  # type: ignore[method-assign]
+        lambda value, *, discard=False: discarded.append(value)
+    )
+    source = GetDiskRequest(id="before")
+    options = {"scope": "before"}
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=source,
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+        auth_options=options,
+    )
+    source.id = "after"
+    options["scope"] = "after"
+
+    async def consume() -> None:
+        async with stream:
+            assert isinstance(await anext(stream.__aiter__()), Disk)
+
+    try:
+        asyncio.run(consume())
+    finally:
+        channel.sync_close(timeout=5)
+
+    assert received_requests == ["before"]
+    assert received_options == ["before"]
+    assert discarded == [address]
+
+
+def test_stream_write_snapshots_request_before_sdk_loop_dispatch() -> None:
+    """Explicit writes cannot observe mutation while the SDK loop is busy."""
+
+    loop_blocked = Event()
+    release_loop = Event()
+    received: list[str] = []
+    discarded: list[object] = []
+
+    class Call:
+        async def write(self, request) -> None:
+            received.append(request.id)
+
+        def cancel(self) -> bool:
+            return True
+
+    call = Call()
+
+    class Transport:
+        def stream_unary(self, path, serializer, deserializer):
+            return lambda **kwargs: call
+
+    channel = SDKChannel(credentials=NoCredentials())
+    address = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": channel._event_loop},
+    )()
+    channel.get_channel_by_route = lambda route: address  # type: ignore[method-assign]
+    channel.release_channel = (  # type: ignore[method-assign]
+        lambda value, *, discard=False: discarded.append(value)
+    )
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert loop_blocked.wait(timeout=5)
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+    )
+    source = GetDiskRequest(id="before")
+
+    async def write_then_mutate() -> None:
+        writing = asyncio.create_task(stream.write(source))
+        await asyncio.sleep(0)
+        source.id = "after"
+        release_loop.set()
+        await writing
+        await stream.aclose()
+
+    try:
+        asyncio.run(write_then_mutate())
+        blocker.result(timeout=5)
+    finally:
+        release_loop.set()
+        channel.sync_close(timeout=5)
+
+    assert received == ["before"]
+    assert discarded == [address]
 
 
 @pytest.mark.parametrize("closes_during_dispatch", [False, True])

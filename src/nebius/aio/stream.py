@@ -25,6 +25,7 @@ from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
+from nebius.aio.request import _snapshot_request_input
 from nebius.aio.route import Route
 from nebius.base.metadata import Metadata
 
@@ -49,6 +50,11 @@ class StreamRequest(Generic[Req, Res]):
     A caller-supplied asynchronous request iterator is consumed on the SDK
     loop. It must not contain state bound to a different event loop. The SDK
     cannot detect hidden loop ownership in an arbitrary iterator.
+
+    A unary request message and authentication options are copied when this
+    wrapper is created. Each explicit :meth:`write` copies a supported message
+    before dispatch to the SDK loop. Unknown custom values keep their previous
+    pass-through behavior and must be safe to share between threads.
     """
 
     def __init__(
@@ -77,14 +83,19 @@ class StreamRequest(Generic[Req, Res]):
             raise TypeError(f"unsupported streaming request option {name!r}")
         self._channel = channel
         self._route = route
-        self._request = request
+        # A request iterator is stateful and cannot be cloned generically. A
+        # unary request, however, must be fixed before it crosses to the SDK
+        # loop so caller-side mutation cannot change what is transmitted.
+        self._request = (
+            request if client_streaming else _snapshot_request_input(request)
+        )
         self._result_class = result_class
         self._client_streaming = client_streaming
         self._server_streaming = server_streaming
         self._metadata = Metadata(metadata)
         self._timeout = timeout
         self._auth_timeout = auth_timeout
-        self._auth_options = auth_options or {}
+        self._auth_options = dict(auth_options or {})
         self._credentials = credentials
         self._compression = compression
         self._wait_for_ready = wait_for_ready
@@ -193,7 +204,11 @@ class StreamRequest(Generic[Req, Res]):
                         self._route.method_name
                     )
                 with self._state_lock:
-                    publish_address = not self._cancelled and not self._released
+                    publish_address = (
+                        not self._cancel_requested
+                        and not self._cancelled
+                        and not self._released
+                    )
                     if publish_address:
                         self._address_channel = address_channel
                 if not publish_address:
@@ -232,7 +247,11 @@ class StreamRequest(Generic[Req, Res]):
                     compression=self._compression,
                 )
                 with self._state_lock:
-                    publish_call = not self._cancelled and not self._released
+                    publish_call = (
+                        not self._cancel_requested
+                        and not self._cancelled
+                        and not self._released
+                    )
                     if publish_call:
                         self._call = call
                 if not publish_call:
@@ -262,7 +281,7 @@ class StreamRequest(Generic[Req, Res]):
 
         self._check_process()
         with self._state_lock:
-            return self._cancelled
+            return self._cancel_requested or self._cancelled
 
     def _is_released(self) -> bool:
         """Return the channel-release state under the state lock."""
@@ -383,7 +402,15 @@ class StreamRequest(Generic[Req, Res]):
         return self._responses()
 
     async def write(self, request: Req) -> None:
-        await self._on_sdk_loop(self._write(request))
+        """Snapshot and write one request on the SDK event loop.
+
+        :param request: Request message to write. Supported mutable protobuf
+            messages are copied before dispatch. Unknown custom values retain
+            their historical pass-through behavior and must be thread-safe.
+        """
+
+        snapshot = _snapshot_request_input(request)
+        await self._on_sdk_loop(self._write(snapshot))
 
     async def _write(self, request: Req) -> None:
         """Write one request on the call owner loop.

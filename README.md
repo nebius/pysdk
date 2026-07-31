@@ -314,13 +314,20 @@ serializer must be immutable or otherwise safe to share between threads.
 
 Generated operation-service factories remain synchronous and may be called
 from asynchronous application code. They defer source-service resolution to
-the SDK loop until the operation RPC starts. Direct synchronous resolver and
-low-level pool helpers still reject active event loops; use a generated client
-or move those explicit synchronous calls to a regular application thread.
+the SDK loop until the first operation RPC starts, then retain that address for
+the returned operation-service adapter. This keeps successive polls for an
+operation on one endpoint. Direct synchronous resolver and low-level pool
+helpers still reject active event loops; use a generated client or move those
+explicit synchronous calls to a regular application thread.
 
 A caller-supplied asynchronous iterator for a client-streaming request is
 consumed on the SDK loop. The iterator must be loop-neutral. An iterator that
 contains state bound to another event loop is not supported.
+
+A unary streaming request and its authentication options become fixed when
+the stream wrapper is created. Each explicit client-streaming `write()` copies
+a supported protobuf message before SDK-loop dispatch. An unknown custom value
+keeps its pass-through behavior and must be safe to share between threads.
 
 `get_channel_by_addr()` and related low-level pool methods still expose
 `AddressChannel.channel` for custom transport compatibility. That field is a

@@ -593,6 +593,24 @@ def test_foreign_loop_future_is_bridged() -> None:
         _stop_loop(loop, thread)
 
 
+def test_pending_future_from_stopped_loop_fails_bridge_promptly() -> None:
+    """A stopped owner loop cannot deliver a pending future's completion."""
+
+    foreign_loop = asyncio.new_event_loop()
+    source = foreign_loop.create_future()
+    channel = Channel(credentials=NoCredentials())
+    try:
+        bridged = channel.run_async(source)
+        with pytest.raises(
+            RuntimeError,
+            match="foreign future owner event loop is not running",
+        ):
+            bridged.result(timeout=5)
+    finally:
+        channel.sync_close(timeout=5)
+        foreign_loop.close()
+
+
 def test_bg_task_bridges_foreign_loop_future() -> None:
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials())

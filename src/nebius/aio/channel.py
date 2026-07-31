@@ -235,7 +235,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         wait_for_ready: bool | None,
         compression: Compression | None,
         address: str | None = None,
-        address_service: str | None = None,
+        address_resolver: Callable[[], str] | None = None,
     ) -> None:
         """Initialize a cross-loop unary call.
 
@@ -251,8 +251,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param compression: Optional gRPC compression setting.
         :param address: Resolved transport address. Use ``None`` to resolve the
             address from ``method``.
-        :param address_service: Optional source service whose address should be
-            resolved when the native call starts.
+        :param address_resolver: Optional SDK-loop callback that resolves a
+            deferred transport address when the native call starts.
 
         Mutable supported protobuf request values are copied before submission.
         Other custom request values are serialized immediately when a serializer
@@ -288,7 +288,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._wait_for_ready = wait_for_ready
         self._compression = compression
         self._address = address
-        self._address_service = address_service
+        self._address_resolver = address_resolver
         self._started_at = monotonic()
         self._call: UnaryUnaryCall[Req, Res] | None = None
         self._call_ready = Event()
@@ -336,14 +336,12 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         discard = False
         try:
             if self._address is None:
-                if self._address_service is None:
+                if self._address_resolver is None:
                     self._address_channel = self._channel.get_channel_by_method(
                         self._method
                     )
                 else:
-                    address = self._channel.get_addr_from_service_name(
-                        self._address_service
-                    )
+                    address = self._address_resolver()
                     self._address_channel = self._channel.get_channel_by_addr(address)
             else:
                 self._address_channel = self._channel.get_channel_by_addr(self._address)
@@ -612,7 +610,7 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
 
 
 class _ServiceAddressChannel:
-    """Resolve operation calls through their source service when invoked."""
+    """Resolve and retain one operation-service address on the SDK loop."""
 
     def __init__(self, channel: "Channel", service_name: str) -> None:
         """Initialize a source-service channel.
@@ -624,6 +622,23 @@ class _ServiceAddressChannel:
 
         self._channel = channel
         self._service_name = service_name
+        self._resolved_address: str | None = None
+
+    def _resolve_address(self) -> str:
+        """Resolve the source address once and reuse it for this adapter.
+
+        Calls reach this method only from the parent channel's SDK event loop,
+        so no additional lock is needed. Failed resolution is not cached and a
+        later operation call may retry it.
+
+        :return: Stable transport address for this operation-service adapter.
+        """
+
+        if self._resolved_address is None:
+            self._resolved_address = self._channel.get_addr_from_service_name(
+                self._service_name
+            )
+        return self._resolved_address
 
     def unary_unary(
         self,
@@ -640,7 +655,7 @@ class _ServiceAddressChannel:
         """
 
         channel = self._channel
-        service_name = self._service_name
+        address_resolver = self._resolve_address
 
         class ServiceAddressCallable(UnaryUnaryMultiCallable[Any, Any]):
             """Create cross-loop calls resolved from one source service."""
@@ -678,7 +693,7 @@ class _ServiceAddressChannel:
                     wait_for_ready,
                     compression,
                     None,
-                    service_name,
+                    address_resolver,
                 )
 
         return ServiceAddressCallable()
@@ -1842,9 +1857,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         Long-running operations are associated with their source service. This
         method returns an ``OperationServiceStub`` that resolves the generated
-        stub's source service on the SDK event loop when its first call starts.
+        stub's source service on the SDK event loop when its first call starts,
+        then reuses that address for the lifetime of the returned adapter.
         Deferring resolution keeps this synchronous factory safe to call from
-        asynchronous application code without blocking either event loop.
+        asynchronous application code without blocking either event loop;
+        retaining it keeps every poll for one operation on the same endpoint.
 
         :param service_stub_class: Generated gRPC service stub class (the SDK service
             descriptor type).
@@ -2285,11 +2302,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """Close a pooled transport on its owner loop when that loop is running."""
         owner_loop = getattr(chan, "event_loop", None)
         current_loop = get_running_loop()
-        if (
-            owner_loop is not None
-            and owner_loop is not current_loop
-            and owner_loop.is_running()
-        ):
+        if owner_loop is not None and owner_loop is not current_loop:
+            if not owner_loop.is_running():
+                logger.warning(
+                    "Unable to close channel because its owner event loop is stopped"
+                )
+                return
             close_coro = chan.channel.close(grace)
             try:
                 close_future = run_coroutine_threadsafe(
@@ -2297,13 +2315,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     owner_loop,
                 )
             except RuntimeError:
-                try:
-                    await close_coro
-                except RuntimeError as error:
-                    logger.warning(
-                        "Unable to close channel after its owner loop stopped",
-                        exc_info=error,
-                    )
+                close = getattr(close_coro, "close", None)
+                if callable(close):
+                    close()
+                logger.warning("Unable to close channel after its owner loop stopped")
             else:
                 await wrap_future(close_future)
             return
@@ -2334,6 +2349,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         owner_loop = getattr(chan, "event_loop", None)
         if owner_loop is not None and owner_loop is not self._event_loop:
+            if not owner_loop.is_running():
+                logger.warning(
+                    "Unable to close channel because its owner event loop is stopped"
+                )
+                return
             close_coro = close_and_log()
             try:
                 current_loop = get_running_loop()

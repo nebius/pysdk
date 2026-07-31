@@ -593,9 +593,18 @@ class AsyncRuntime:
                     finally:
                         started.set_exception(error)
                     return
-                started.set_result(None)
                 try:
+                    # Publish readiness from a loop callback, not merely from
+                    # the thread that is about to enter ``run_forever``. This
+                    # guarantees that constructor return and immediate
+                    # cross-thread submission cannot race loop startup.
+                    self._loop.call_soon(started.set_result, None)
                     self._loop.run_forever()
+                except BaseException as error:
+                    if not started.done():
+                        started.set_exception(error)
+                    else:
+                        self._record_shutdown_failure(error)
                 finally:
                     try:
                         self._cancel_remaining_tasks()
@@ -923,6 +932,10 @@ class AsyncRuntime:
         bridged.add_done_callback(forward_cancellation)
         if source.done():
             copy_result(source)
+        elif not owner_loop.is_running():
+            bridged.set_exception(
+                RuntimeError("foreign future owner event loop is not running")
+            )
         else:
             try:
                 owner_loop.call_soon_threadsafe(source.add_done_callback, copy_result)

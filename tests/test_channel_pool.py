@@ -17,6 +17,7 @@ from nebius.api.nebius.common.v1 import (
 )
 from nebius.api.nebius.compute.v1 import Disk, DiskServiceClient, GetDiskRequest
 from nebius.base.options import INSECURE
+from nebius.base.resolver import Resolver
 
 
 def _start_event_loop() -> tuple[asyncio.AbstractEventLoop, Thread]:
@@ -327,6 +328,77 @@ async def test_operation_service_factory_defers_and_executes_resolution() -> Non
     finally:
         await channel.close()
         server.stop(None).wait()
+
+
+@pytest.mark.asyncio
+async def test_operation_service_adapter_retains_first_resolved_address() -> None:
+    """Successive operation calls stay on the adapter's first endpoint."""
+
+    class AlternatingResolver(Resolver):
+        def __init__(self, first_address: str) -> None:
+            self._first_address = first_address
+            self.calls = 0
+
+        def resolve(self, service_id: str) -> str:
+            self.calls += 1
+            if self.calls == 1:
+                return self._first_address
+            return "127.0.0.1:1"
+
+    class MockOperationService:
+        def Get(  # noqa: N802
+            self,
+            request: GetOperationRequest,
+            context: grpc.ServicerContext,
+        ) -> Operation:
+            return Operation(id=request.id)
+
+    server = grpc.server(ThreadPoolExecutor(max_workers=1))
+    add_service(server, OperationServiceClient, MockOperationService())
+    port = server.add_insecure_port("127.0.0.1:0")
+    server.start()
+    resolver = AlternatingResolver(f"localhost:{port}")
+    channel = Channel(
+        resolver=resolver,
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+
+    try:
+        transport = channel.get_corresponding_operation_service(DiskServiceClient)
+        first = await transport.Get(GetOperationRequest(id="first"))
+        second = await transport.Get(GetOperationRequest(id="second"))
+        assert first.id == "first"
+        assert second.id == "second"
+        assert resolver.calls == 1
+    finally:
+        await channel.close()
+        server.stop(None).wait()
+
+
+def test_stopped_foreign_loop_transport_close_is_not_queued(caplog) -> None:
+    """Discard reports an unreachable owner loop instead of queuing forever."""
+
+    close_called = Event()
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            close_called.set()
+
+    owner_loop = asyncio.new_event_loop()
+    channel = Channel(credentials=NoCredentials())
+    address_channel = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "127.0.0.1:1",
+        owner_loop,
+    )
+    try:
+        channel.discard_channel(address_channel)
+        assert not close_called.is_set()
+        assert "owner event loop is stopped" in caplog.text
+    finally:
+        channel.sync_close(timeout=5)
+        owner_loop.close()
 
 
 def test_generated_requests_complete_from_many_sync_threads() -> None:
