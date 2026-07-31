@@ -473,6 +473,41 @@ def test_legacy_stream_cancel_stopped_dispatch_is_retryable(
     assert len(owner_loop.callbacks) == 1
 
 
+def test_stream_cancel_rolls_back_synchronous_cancelled_submission() -> None:
+    """A submitter cancellation must close its coroutine and remain retryable."""
+
+    submitted = []
+
+    class CancellingChannel:
+        def run_async(self, awaitable):
+            submitted.append(awaitable)
+            raise asyncio.CancelledError()
+
+    class Result:
+        @classmethod
+        def FromString(cls, data):  # noqa: N802
+            return cls()
+
+    stream = StreamRequest(
+        channel=CancellingChannel(),
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=Result,
+        client_streaming=False,
+        server_streaming=True,
+    )
+
+    with pytest.raises(asyncio.CancelledError):
+        stream.cancel()
+    assert not stream._cancel_requested
+    assert submitted[0].cr_frame is None
+
+    with pytest.raises(asyncio.CancelledError):
+        stream.cancel()
+    assert not stream._cancel_requested
+    assert submitted[1].cr_frame is None
+
+
 def test_legacy_stream_rejects_a_second_loop_before_write_lock() -> None:
     write_entered = Event()
     release_write = Event()

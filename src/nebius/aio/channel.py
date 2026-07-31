@@ -21,6 +21,7 @@ from asyncio import (
     get_running_loop,
     run_coroutine_threadsafe,
     shield,
+    sleep,
     wrap_future,
 )
 from collections.abc import Awaitable, Callable, Coroutine, Generator, Mapping, Sequence
@@ -2419,6 +2420,24 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     close()
                 logger.warning("Unable to close channel after its owner loop stopped")
             else:
+                # A foreign loop can stop after accepting the callback but
+                # before running or finishing it. Poll its liveness so a
+                # custom transport cannot strand SDK shutdown indefinitely.
+                while not close_future.done():
+                    if not owner_loop.is_running():
+                        close_future.cancel()
+                        logger.warning(
+                            "Unable to finish channel close because its owner "
+                            "event loop stopped"
+                        )
+                        return
+                    await sleep(0.01)
+                if close_future.cancelled():
+                    logger.warning(
+                        "Unable to finish channel close because its owner "
+                        "event loop stopped or cancelled the close"
+                    )
+                    return
                 await wrap_future(close_future)
                 chan._mark_closed_by_sdk()
             return

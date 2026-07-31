@@ -29,6 +29,11 @@ def _start_event_loop() -> tuple[asyncio.AbstractEventLoop, Thread]:
         asyncio.set_event_loop(loop)
         ready.set_result(loop)
         loop.run_forever()
+        pending = asyncio.all_tasks(loop)
+        for task in pending:
+            task.cancel()
+        if pending:
+            loop.run_until_complete(asyncio.gather(*pending, return_exceptions=True))
         loop.close()
 
     thread = Thread(target=run, daemon=True)
@@ -425,6 +430,58 @@ def test_stopped_foreign_loop_transport_close_is_not_queued(caplog) -> None:
     finally:
         channel.sync_close(timeout=5)
         owner_loop.close()
+
+
+def test_foreign_loop_stopping_after_close_dispatch_does_not_hang(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """Shutdown detects a foreign owner that stops after accepting close."""
+
+    import nebius.aio.channel as channel_module
+
+    close_called = Event()
+
+    class Transport:
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            close_called.set()
+
+    owner_loop, owner_thread = _start_event_loop()
+
+    class ForeignChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(  # type: ignore[arg-type]
+                Transport(),
+                addr,
+                owner_loop,
+            )
+
+    channel = ForeignChannel(credentials=NoCredentials())
+    channel.get_channel_by_addr("127.0.0.1:1")
+    original_dispatch = channel_module.run_coroutine_threadsafe
+
+    def dispatch_then_stop(coro, loop):
+        future = original_dispatch(coro, loop)
+        loop.call_soon_threadsafe(loop.stop)
+        return future
+
+    monkeypatch.setattr(
+        channel_module,
+        "run_coroutine_threadsafe",
+        dispatch_then_stop,
+    )
+    try:
+        channel.sync_close(timeout=5)
+        owner_thread.join(timeout=5)
+        assert not owner_thread.is_alive()
+        assert not close_called.is_set()
+        assert "owner event loop stopped" in caplog.text
+    finally:
+        if owner_thread.is_alive():
+            _stop_event_loop(owner_loop, owner_thread)
 
 
 def test_channel_close_does_not_duplicate_a_scheduled_transport_close(

@@ -510,13 +510,17 @@ class StreamRequest(Generic[Req, Res]):
             closing = self._aclose()
             try:
                 scheduled = submit(closing)
-            except Exception:
+            except BaseException as error:
                 closing.close()
                 with self._state_lock:
                     self._cancel_requested = False
-                get_state = getattr(self._channel, "get_state", None)
-                if callable(get_state) and get_state() == ChannelConnectivity.SHUTDOWN:
-                    return False
+                if isinstance(error, Exception):
+                    get_state = getattr(self._channel, "get_state", None)
+                    if (
+                        callable(get_state)
+                        and get_state() == ChannelConnectivity.SHUTDOWN
+                    ):
+                        return False
                 raise
             # SDK channels return an already-scheduled Future-like handle.
             # Constant and other legacy adapters can instead return the same
