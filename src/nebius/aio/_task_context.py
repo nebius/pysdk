@@ -145,20 +145,23 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
             current_loop = asyncio.get_running_loop()
         except RuntimeError:
             current_loop = None
-        callback: Callable[[], object]
-        if awaitable.done():
-            if awaitable.cancelled():
-                return True
-            callback = awaitable.exception
-        else:
-            callback = awaitable.cancel
+
+        def dispose_on_owner() -> None:
+            """Inspect and dispose the Future only on its owning loop."""
+
+            if awaitable.done():
+                if not awaitable.cancelled():
+                    awaitable.exception()
+            else:
+                awaitable.cancel()
+
         if current_loop is owner_loop:
-            callback()
+            dispose_on_owner()
             return True
         if not owner_loop.is_running():
             return False
         try:
-            owner_loop.call_soon_threadsafe(callback)
+            owner_loop.call_soon_threadsafe(dispose_on_owner)
         except RuntimeError:
             return False
         return True

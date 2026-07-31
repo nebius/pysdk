@@ -19,6 +19,7 @@ import pytest
 
 import nebius.aio._runtime as runtime_module
 from nebius.aio._runtime import AsyncRuntime, DaemonThreadPoolExecutor
+from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.authorization.authorization import Authenticator, Provider
 from nebius.aio.base import AddressChannel
 from nebius.aio.channel import Channel, LoopError, NoCredentials
@@ -876,6 +877,56 @@ def test_foreign_future_is_inspected_only_on_its_owner_loop() -> None:
         _stop_loop(loop, thread)
 
 
+def test_foreign_future_disposal_decides_on_owner_loop_after_completion() -> None:
+    """Disposal observes a racing terminal exception on the Future's loop."""
+
+    loop, thread = _start_loop()
+    callback_started = Event()
+    allow_completion = Event()
+    exception_observed = Event()
+
+    class StrictFuture(asyncio.Future[int]):
+        def _check_owner(self) -> None:
+            assert asyncio.get_running_loop() is self.get_loop()
+
+        def done(self) -> bool:
+            self._check_owner()
+            return super().done()
+
+        def cancelled(self) -> bool:
+            self._check_owner()
+            return super().cancelled()
+
+        def exception(self) -> BaseException | None:
+            self._check_owner()
+            exception_observed.set()
+            return super().exception()
+
+        def cancel(self, msg: object = None) -> bool:
+            self._check_owner()
+            return super().cancel(msg)
+
+    async def create_future() -> StrictFuture:
+        return StrictFuture()
+
+    source = asyncio.run_coroutine_threadsafe(create_future(), loop).result(timeout=5)
+
+    def complete_before_disposal_callback() -> None:
+        callback_started.set()
+        assert allow_completion.wait(timeout=5)
+        source.set_exception(RuntimeError("terminal before disposal"))
+
+    loop.call_soon_threadsafe(complete_before_disposal_callback)
+    assert callback_started.wait(timeout=5)
+    try:
+        assert dispose_unstarted_awaitable(source)
+        allow_completion.set()
+        assert exception_observed.wait(timeout=5)
+    finally:
+        allow_completion.set()
+        _stop_loop(loop, thread)
+
+
 def test_bg_task_bridges_foreign_loop_future() -> None:
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials())
@@ -1305,6 +1356,122 @@ async def test_authentication_retry_reopens_request_cancellation() -> None:
     with pytest.raises(asyncio.CancelledError):
         await pending
     assert retry_count == 2
+
+
+@pytest.mark.asyncio
+async def test_authentication_retry_releases_and_reacquires_transport() -> None:
+    """An auth retry must not reuse a transport returned to the pool."""
+
+    from nebius.aio.service_error import RequestError as ServiceRequestError
+    from nebius.aio.service_error import RequestStatusExtended
+
+    class RetryAuthenticator(Authenticator):
+        async def authenticate(
+            self,
+            metadata: Metadata,
+            timeout: float | None = None,
+            options: dict[str, str] | None = None,
+        ) -> None:
+            return None
+
+        def can_retry(
+            self,
+            err: Exception,
+            options: dict[str, str] | None = None,
+        ) -> bool:
+            return True
+
+    class RetryProvider(Provider):
+        def authenticator(self) -> Authenticator:
+            return RetryAuthenticator()
+
+    first = AddressChannel(object(), "first")  # type: ignore[arg-type]
+    second = AddressChannel(object(), "second")  # type: ignore[arg-type]
+
+    class LeaseChannel:
+        def __init__(self) -> None:
+            self.leased: list[AddressChannel] = []
+            self.released: list[tuple[AddressChannel | None, bool]] = []
+
+        def get_authorization_provider(self) -> Provider:
+            return RetryProvider()
+
+        def get_channel_by_method(self, method: str) -> AddressChannel:
+            channel = (first, second)[len(self.leased)]
+            self.leased.append(channel)
+            return channel
+
+        def release_channel(
+            self,
+            channel: AddressChannel | None,
+            *,
+            discard: bool = False,
+        ) -> None:
+            self.released.append((channel, discard))
+
+    channel = LeaseChannel()
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="auth-retry-lease"),
+        Disk,
+        retries=0,
+    )
+    attempt = 0
+
+    class AttemptCall:
+        def __init__(self, error: BaseException | None) -> None:
+            self.error = error
+
+        def __await__(self):
+            async def result() -> Disk:
+                if self.error is not None:
+                    raise self.error
+                return Disk()
+
+            return result().__await__()
+
+        async def code(self) -> grpc.StatusCode:
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            return ""
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+    authentication_error = ServiceRequestError(
+        RequestStatusExtended(
+            code=grpc.StatusCode.UNAUTHENTICATED,
+            message="expired credential",
+            details=[],
+            service_errors=[],
+            request_id="",
+            trace_id="",
+        )
+    )
+
+    def send(timeout: float | None) -> None:
+        nonlocal attempt
+        if request._grpc_channel is None:
+            request._grpc_channel = channel.get_channel_by_method("test")
+        attempt += 1
+        request._call = AttemptCall(  # type: ignore[assignment]
+            authentication_error if attempt == 1 else None
+        )
+
+    request._send = send  # type: ignore[method-assign]
+
+    result = await request._request_with_authorization_loop()
+
+    assert isinstance(result, Disk)
+    assert channel.leased == [first, second]
+    assert channel.released == [(first, False), (second, False)]
+    assert request._grpc_channel is None
 
 
 def test_async_metric_callback_is_owned_and_cancelled_by_runtime() -> None:

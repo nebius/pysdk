@@ -355,6 +355,25 @@ class Request(Generic[Req, Res]):
                 "creating any SDK objects"
             )
 
+    def _release_grpc_channel(self, *, discard: bool = False) -> None:
+        """Release and forget the request's current transport lease.
+
+        Clearing the reference before invoking channel code prevents an outer
+        authorization retry from reusing a wrapper that has already returned
+        to the shared pool. It also ensures a custom release failure cannot
+        leave this request claiming a lease whose pool state is unknown.
+
+        :param discard: Whether the transport must be discarded instead of
+            returned for reuse.
+        """
+
+        grpc_channel, self._grpc_channel = self._grpc_channel, None
+        release_address_channel(
+            self._channel,
+            grpc_channel,
+            discard=discard,
+        )
+
     def __repr__(self) -> str:
         """Return a short representation including service, method and status."""
         return (
@@ -539,11 +558,7 @@ class Request(Generic[Req, Res]):
         if owner_loop is not None and owner_loop is not get_running_loop():
             incompatible = self._grpc_channel
             self._grpc_channel = None
-            release_address_channel(
-                self._channel,
-                incompatible,
-                discard=True,
-            )
+            release_address_channel(self._channel, incompatible, discard=True)
             raise RequestError(
                 "grpc_channel_override belongs to a different event loop"
             )
@@ -886,12 +901,7 @@ class Request(Generic[Req, Res]):
                             self._cancelled = False
                     return await self._complete_authoritative_success(ret)
                 except CancelledError as e:
-                    release_address_channel(
-                        self._channel,
-                        self._grpc_channel,
-                        discard=True,
-                    )
-                    self._grpc_channel = None
+                    self._release_grpc_channel(discard=True)
                     raise e
                 except AioRpcError as e:
                     # A native RPC error is authoritative while its SDK error
@@ -946,12 +956,7 @@ class Request(Generic[Req, Res]):
                     if retry and terminal_attempt and not cancelled_during_decision:
                         self._native_terminal = False
                 if cancelled_during_decision:
-                    release_address_channel(
-                        self._channel,
-                        self._grpc_channel,
-                        discard=True,
-                    )
-                    self._grpc_channel = None
+                    self._release_grpc_channel(discard=True)
                     raise RequestIsCancelledError() from e
                 if retry:
                     # A custom terminal accessor can fail after the native
@@ -965,13 +970,9 @@ class Request(Generic[Req, Res]):
                     continue
                 if deadline is not None and deadline <= time():
                     if isinstance(e, RequestError) and e.status.request_id == "":
-                        release_address_channel(
-                            self._channel,
-                            self._grpc_channel,
-                            discard=True,
-                        )
-                        self._grpc_channel = None
-                release_address_channel(self._channel, self._grpc_channel)
+                        self._release_grpc_channel(discard=True)
+                        raise e
+                self._release_grpc_channel()
                 raise e
         raise RequestIsCancelledError()
 
@@ -1004,8 +1005,7 @@ class Request(Generic[Req, Res]):
                 )
             else:
                 response = cast(Res, result)
-            release_address_channel(self._channel, self._grpc_channel)
-            self._grpc_channel = None
+            self._release_grpc_channel()
             return response
 
         completion = ensure_future(complete())
