@@ -1,6 +1,7 @@
 # type: ignore
 from __future__ import annotations
 
+import asyncio
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -288,3 +289,60 @@ async def test_operation_progress_tracker_mlflow_cluster_operation() -> None:
     finally:
         if channel is not None:
             await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_concurrent_operation_updates_are_serialized() -> None:
+    """A late pending response cannot overwrite a terminal update."""
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.google.rpc import Status
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-1"),
+    )
+    first_entered = asyncio.Event()
+    release_first = asyncio.Event()
+    second_started = asyncio.Event()
+    pending = OperationMessage(id="op-1")
+    terminal = OperationMessage(id="op-1", status=Status(code=0))
+
+    class Response:
+        def __init__(self, value: OperationMessage) -> None:
+            self._operation = value
+
+    class Service:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def get(self, request, **kwargs):
+            self.calls += 1
+            call = self.calls
+
+            async def result() -> Response:
+                if call == 1:
+                    first_entered.set()
+                    await release_first.wait()
+                    return Response(pending)
+                second_started.set()
+                return Response(terminal)
+
+            return result()
+
+    operation._service = Service()
+    try:
+        first = asyncio.create_task(operation._update_internal())
+        await first_entered.wait()
+        second = asyncio.create_task(operation._update_internal())
+        await asyncio.sleep(0)
+        assert not second_started.is_set()
+        release_first.set()
+        await asyncio.gather(first, second)
+        assert operation.done()
+    finally:
+        await channel.close()

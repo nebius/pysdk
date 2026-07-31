@@ -87,6 +87,7 @@ from nebius.aio.metrics import (
     record_config_metric,
 )
 from nebius.aio.operation_service import OperationServiceTransportStub
+from nebius.aio.request import _snapshot_request_input
 from nebius.aio.route import Route
 from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
@@ -170,10 +171,18 @@ def _shutdown_runtime_on_init_failure(
             if finalizer is not None:
                 finalizer.detach()
             if runtime is not None:
-                if runtime.event_loop.is_running():
-                    runtime.shutdown_async()._result()
-                else:
-                    runtime.shutdown()
+                try:
+                    if runtime.event_loop.is_running():
+                        shutdown = runtime.shutdown_async()
+                        if not runtime.in_event_loop():
+                            shutdown._result()
+                    else:
+                        runtime.shutdown()
+                except BaseException as cleanup_error:
+                    logger.error(
+                        "Failed to roll back partial SDK runtime",
+                        exc_info=cleanup_error,
+                    )
             raise
 
     return cast(Callable[Concatenate[C, P], None], guarded)
@@ -226,6 +235,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         wait_for_ready: bool | None,
         compression: Compression | None,
         address: str | None = None,
+        address_service: str | None = None,
     ) -> None:
         """Initialize a cross-loop unary call.
 
@@ -241,19 +251,44 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param compression: Optional gRPC compression setting.
         :param address: Resolved transport address. Use ``None`` to resolve the
             address from ``method``.
+        :param address_service: Optional source service whose address should be
+            resolved when the native call starts.
+
+        Mutable supported protobuf request values are copied before submission.
+        Other custom request values are serialized immediately when a serializer
+        is supplied. Metadata is copied to an independent gRPC metadata object.
+        These snapshots prevent a caller from changing native-call inputs while
+        the SDK loop is waiting to create the call. A custom request value
+        without a serializer is assumed to be immutable or otherwise safe to
+        share between threads.
         """
 
         self._channel = channel
         self._method = method
-        self._request = request
-        self._request_serializer = request_serializer
+        self._request: Any
+        self._request_serializer: SerializingFunction | None
+        request_snapshot = _snapshot_request_input(request)
+        if request_serializer is None:
+            self._request = (
+                bytes(request_snapshot)
+                if isinstance(request_snapshot, (bytearray, memoryview))
+                else request_snapshot
+            )
+            self._request_serializer = None
+        elif request_snapshot is not request:
+            self._request = request_snapshot
+            self._request_serializer = request_serializer
+        else:
+            self._request = request_serializer(request)
+            self._request_serializer = None
         self._response_deserializer = response_deserializer
         self._timeout = timeout
-        self._metadata = metadata
+        self._metadata = None if metadata is None else GrpcMetadata(*metadata)
         self._credentials = credentials
         self._wait_for_ready = wait_for_ready
         self._compression = compression
         self._address = address
+        self._address_service = address_service
         self._started_at = monotonic()
         self._call: UnaryUnaryCall[Req, Res] | None = None
         self._call_ready = Event()
@@ -287,6 +322,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     "trailing_metadata": GrpcMetadata(),
                     "code": StatusCode.CANCELLED,
                     "details": "Locally cancelled by application!",
+                    "debug_error_string": "",
                 }
             )
         try:
@@ -300,9 +336,15 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         discard = False
         try:
             if self._address is None:
-                self._address_channel = self._channel.get_channel_by_method(
-                    self._method
-                )
+                if self._address_service is None:
+                    self._address_channel = self._channel.get_channel_by_method(
+                        self._method
+                    )
+                else:
+                    address = self._channel.get_addr_from_service_name(
+                        self._address_service
+                    )
+                    self._address_channel = self._channel.get_channel_by_addr(address)
             else:
                 self._address_channel = self._channel.get_channel_by_addr(self._address)
             transport = self._address_channel.channel
@@ -315,7 +357,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 )(
                     self._request,
                     timeout=self.time_remaining(),
-                    metadata=self._metadata,  # type: ignore[arg-type]
+                    metadata=self._metadata,
                     credentials=self._credentials,
                     wait_for_ready=self._wait_for_ready,
                     compression=self._compression,
@@ -329,8 +371,20 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         except CancelledError:
             discard = True
             raise
-        except Exception:
+        except Exception as error:
             discard = True
+            debug_error_string = getattr(error, "debug_error_string", None)
+            if callable(debug_error_string):
+                try:
+                    debug_details = debug_error_string()
+                except Exception as debug_error:
+                    logger.debug(
+                        "Unable to read gRPC debug error details",
+                        exc_info=debug_error,
+                    )
+                else:
+                    with self._terminal_lock:
+                        self._terminal["debug_error_string"] = debug_details
             failed_call = self._call
             if failed_call is not None:
                 # A new cancellation must propagate instead of being hidden by
@@ -465,6 +519,19 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         return await self._public_call_result("details")
 
+    def debug_error_string(self) -> str:
+        """Return cached native diagnostic details when grpc provides them.
+
+        Async gRPC call objects do not currently define this method, while
+        :class:`grpc.aio.AioRpcError` does. The cross-loop wrapper exposes the
+        diagnostic for compatibility with callers that inspect both shapes.
+
+        :return: Native debug details after a failed call, or an empty string.
+        """
+
+        with self._terminal_lock:
+            return cast(str, self._terminal.get("debug_error_string", ""))
+
     async def wait_for_connection(self) -> None:
         """Wait until the native call has a connection."""
 
@@ -544,18 +611,19 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         )
 
 
-class _FixedAddressChannel:
-    """Keep operation calls on one resolved address."""
+class _ServiceAddressChannel:
+    """Resolve operation calls through their source service when invoked."""
 
-    def __init__(self, channel: "Channel", address: str) -> None:
-        """Initialize a fixed-address channel.
+    def __init__(self, channel: "Channel", service_name: str) -> None:
+        """Initialize a source-service channel.
 
         :param channel: SDK channel that owns the transport pool.
-        :param address: Resolved transport address.
+        :param service_name: Source service used for deferred address
+            resolution.
         """
 
         self._channel = channel
-        self._address = address
+        self._service_name = service_name
 
     def unary_unary(
         self,
@@ -563,7 +631,7 @@ class _FixedAddressChannel:
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
     ) -> UnaryUnaryMultiCallable[Any, Any]:
-        """Return a unary callable for the fixed address.
+        """Return a unary callable routed through the source service.
 
         :param method: Fully qualified gRPC method name.
         :param request_serializer: Optional request serializer.
@@ -572,10 +640,10 @@ class _FixedAddressChannel:
         """
 
         channel = self._channel
-        address = self._address
+        service_name = self._service_name
 
-        class FixedAddressCallable(UnaryUnaryMultiCallable[Any, Any]):
-            """Create cross-loop calls for one method and address."""
+        class ServiceAddressCallable(UnaryUnaryMultiCallable[Any, Any]):
+            """Create cross-loop calls resolved from one source service."""
 
             def __call__(
                 self,
@@ -609,10 +677,11 @@ class _FixedAddressChannel:
                     credentials,
                     wait_for_ready,
                     compression,
-                    address,
+                    None,
+                    service_name,
                 )
 
-        return FixedAddressCallable()
+        return ServiceAddressCallable()
 
 
 class NoCredentials:
@@ -1772,9 +1841,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         generated service stub.
 
         Long-running operations are associated with their source service. This
-        method resolves the address for the generated stub class. It returns
-        an ``OperationServiceStub`` on the transport channel for that
-        address.
+        method returns an ``OperationServiceStub`` that resolves the generated
+        stub's source service on the SDK event loop when its first call starts.
+        Deferring resolution keeps this synchronous factory safe to call from
+        asynchronous application code without blocking either event loop.
 
         :param service_stub_class: Generated gRPC service stub class (the SDK service
             descriptor type).
@@ -1783,10 +1853,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :rtype: ``OperationServiceStub``
         """
 
-        addr = self.get_addr_from_stub(service_stub_class)
+        service_name = from_stub_class(service_stub_class)
         registry = self._registry_for_service(service_stub_class)
         return OperationServiceTransportStub(
-            cast(Any, _FixedAddressChannel(self, addr)),
+            cast(Any, _ServiceAddressChannel(self, service_name)),
             registry,
         )
 
@@ -1802,10 +1872,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         to interoperate with legacy server implementations.
         """
 
-        addr = self.get_addr_from_stub(service_stub_class)
+        service_name = from_stub_class(service_stub_class)
         registry = self._registry_for_service(service_stub_class)
         return OperationServiceTransportStub(
-            cast(Any, _FixedAddressChannel(self, addr)),
+            cast(Any, _ServiceAddressChannel(self, service_name)),
             registry,
             alpha=True,
         )

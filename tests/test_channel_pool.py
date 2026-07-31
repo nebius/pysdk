@@ -10,6 +10,11 @@ from grpc_service import add_service
 
 from nebius.aio.base import AddressChannel
 from nebius.aio.channel import Channel, ChannelClosedError, NoCredentials
+from nebius.api.nebius.common.v1 import (
+    GetOperationRequest,
+    Operation,
+    OperationServiceClient,
+)
 from nebius.api.nebius.compute.v1 import Disk, DiskServiceClient, GetDiskRequest
 from nebius.base.options import INSECURE
 
@@ -166,6 +171,7 @@ def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None
             timeout=5
         )
         assert result.metadata.id == "cross-loop"
+        assert call.debug_error_string() == ""
 
         channel.sync_close(timeout=5)
 
@@ -196,6 +202,130 @@ def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None
             channel.sync_close(timeout=5)
         _stop_event_loop(loop_a, thread_a)
         _stop_event_loop(loop_b, thread_b)
+        server.stop(None).wait()
+
+
+def test_low_level_unary_call_snapshots_request_and_metadata() -> None:
+    observed: list[tuple[str, str]] = []
+
+    class MockDiskService:
+        def Get(  # noqa: N802
+            self,
+            request: GetDiskRequest,
+            context: grpc.ServicerContext,
+        ) -> Disk:
+            metadata = dict(context.invocation_metadata())
+            observed.append((request.id, metadata["x-scope"]))
+            return Disk()
+
+    server = grpc.server(ThreadPoolExecutor(max_workers=1))
+    add_service(server, DiskServiceClient, MockDiskService())
+    port = server.add_insecure_port("127.0.0.1:0")
+    server.start()
+    channel = Channel(
+        domain=f"localhost:{port}",
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+    loop_entered = Event()
+    unblock_loop = Event()
+
+    async def block_sdk_loop() -> None:
+        loop_entered.set()
+        unblock_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert loop_entered.wait(timeout=5)
+    request = GetDiskRequest(id="before")
+    metadata = [("x-scope", "before")]
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(request, metadata=metadata)
+    request.id = "after"
+    metadata[0] = ("x-scope", "after")
+
+    async def await_call() -> Disk:
+        return await call
+
+    try:
+        unblock_loop.set()
+        blocker.result(timeout=5)
+        asyncio.run(await_call())
+        assert observed == [("before", "before")]
+    finally:
+        unblock_loop.set()
+        channel.sync_close(timeout=5)
+        server.stop(None).wait()
+
+
+def test_low_level_unary_call_caches_debug_error_string() -> None:
+    class MockDiskService:
+        def Get(  # noqa: N802
+            self,
+            request: GetDiskRequest,
+            context: grpc.ServicerContext,
+        ) -> Disk:
+            context.abort(grpc.StatusCode.INTERNAL, "boom")
+
+    server = grpc.server(ThreadPoolExecutor(max_workers=1))
+    add_service(server, DiskServiceClient, MockDiskService())
+    port = server.add_insecure_port("127.0.0.1:0")
+    server.start()
+    channel = Channel(
+        domain=f"localhost:{port}",
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="failure"))
+
+    async def await_call() -> Disk:
+        return await call
+
+    try:
+        with pytest.raises(grpc.aio.AioRpcError) as raised:
+            asyncio.run(await_call())
+        native_debug = raised.value.debug_error_string()
+        assert native_debug
+        assert call.debug_error_string() == native_debug
+    finally:
+        channel.sync_close(timeout=5)
+        server.stop(None).wait()
+
+
+@pytest.mark.asyncio
+async def test_operation_service_factory_defers_and_executes_resolution() -> None:
+    """An async caller can create and invoke a source-routed operation stub."""
+
+    class MockOperationService:
+        def Get(  # noqa: N802
+            self,
+            request: GetOperationRequest,
+            context: grpc.ServicerContext,
+        ) -> Operation:
+            return Operation(id=request.id)
+
+    server = grpc.server(ThreadPoolExecutor(max_workers=1))
+    add_service(server, OperationServiceClient, MockOperationService())
+    port = server.add_insecure_port("127.0.0.1:0")
+    server.start()
+    channel = Channel(
+        domain=f"localhost:{port}",
+        options=[(INSECURE, True)],
+        credentials=NoCredentials(),
+    )
+
+    try:
+        transport = channel.get_corresponding_operation_service(DiskServiceClient)
+        response = await transport.Get(GetOperationRequest(id="deferred-resolution"))
+        assert response.id == "deferred-resolution"
+    finally:
+        await channel.close()
         server.stop(None).wait()
 
 

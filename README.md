@@ -265,10 +265,11 @@ asyncio.run(my_call())
 ```
 
 Each SDK instance uses one internal asyncio loop. By default it starts a
-dedicated daemon loop thread and a private daemon executor with two workers.
-SDK request, authentication, renewal, streaming, asynchronous metric results,
-and cleanup work runs there. Returned SDK awaitables can be awaited from any
-external asyncio loop.
+dedicated daemon loop thread and a private daemon executor with at most two
+workers. Executor workers are daemon threads and start lazily when work is
+submitted. SDK request, authentication, renewal, streaming, asynchronous
+metric results, and cleanup work runs there. Returned SDK awaitables can be
+awaited from any external asyncio loop.
 
 Use an asynchronous context when possible. If no asynchronous event loop is
 running, you can use the SDK synchronously:
@@ -305,6 +306,17 @@ Custom resolvers, interceptors, asynchronous metrics callbacks, and generated
 request options now execute or become fixed on the internal SDK loop. Configure
 a request before its first await or `.wait()` call; submission freezes its
 mutable options.
+
+Low-level `Channel.unary_unary()` calls snapshot metadata and supported
+protobuf request messages when the call wrapper is created. Custom request
+values with a serializer are serialized immediately. A custom value without a
+serializer must be immutable or otherwise safe to share between threads.
+
+Generated operation-service factories remain synchronous and may be called
+from asynchronous application code. They defer source-service resolution to
+the SDK loop until the operation RPC starts. Direct synchronous resolver and
+low-level pool helpers still reject active event loops; use a generated client
+or move those explicit synchronous calls to a regular application thread.
 
 A caller-supplied asynchronous iterator for a client-streaming request is
 consumed on the SDK loop. The iterator must be loop-neutral. An iterator that

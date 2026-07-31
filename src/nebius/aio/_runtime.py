@@ -102,11 +102,11 @@ class _WorkItem:
 
 
 class DaemonThreadPoolExecutor(ThreadPoolExecutor):
-    """Run functions in a fixed set of daemon threads.
+    """Run functions in a bounded set of daemon threads.
 
     :mod:`asyncio` requires a :class:`ThreadPoolExecutor` as its default
-    executor. This class provides that interface and starts all worker threads
-    as daemon threads. It starts the workers during initialization.
+    executor. This class provides that interface and creates daemon workers
+    lazily as work is submitted, up to the configured maximum.
     """
 
     def __init__(
@@ -114,7 +114,7 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
         max_workers: int,
         thread_name_prefix: str = "nebius-sdk",
     ) -> None:
-        """Initialize the executor and start its worker threads.
+        """Initialize the executor without eagerly starting workers.
 
         :param max_workers: Number of worker threads.
         :param thread_name_prefix: Prefix for each worker thread name.
@@ -130,18 +130,6 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
         super().__init__(max_workers, thread_name_prefix=thread_name_prefix)
         self._work_queue: Queue[_WorkItem | None] = Queue()  # type: ignore[assignment]
         self._threads: set[Thread] = set()
-        try:
-            for index in range(max_workers):
-                thread = Thread(
-                    name=f"{thread_name_prefix}_{index}",
-                    target=self._worker,
-                    daemon=True,
-                )
-                thread.start()
-                self._threads.add(thread)
-        except BaseException:
-            self.shutdown(wait=True, cancel_futures=True)
-            raise
 
     def _worker(self) -> None:
         """Run queued work until the queue contains a stop marker."""
@@ -172,6 +160,14 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
         with self._shutdown_lock:
             if self._shutdown:
                 raise RuntimeError("cannot schedule new futures after shutdown")
+            if len(self._threads) < self._max_workers:
+                thread = Thread(
+                    name=f"{self._thread_name_prefix}_{len(self._threads)}",
+                    target=self._worker,
+                    daemon=True,
+                )
+                thread.start()
+                self._threads.add(thread)
             future: Future[T] = Future()
             self._work_queue.put(_WorkItem(future, fn, args, kwargs))
             return future
@@ -564,6 +560,7 @@ class AsyncRuntime:
         self._shutdown_lock = Lock()
         self._accepting = True
         self._shutdown = False
+        self._shutdown_failure: BaseException | None = None
         self._shutdown_complete = Future[None]()
         self._shutdown_prepare_lock = Lock()
         self._shutdown_preparing = False
@@ -602,8 +599,13 @@ class AsyncRuntime:
                 finally:
                     try:
                         self._cancel_remaining_tasks()
+                    except BaseException as error:
+                        self._record_shutdown_failure(error)
                     finally:
-                        self._loop.close()
+                        try:
+                            self._loop.close()
+                        except BaseException as error:
+                            self._record_shutdown_failure(error)
 
             self._loop_thread = Thread(
                 name="nebius-sdk-loop",
@@ -1103,7 +1105,7 @@ class AsyncRuntime:
                 return
             self._finish_owned_shutdown()
             return
-        self._shutdown_complete.set_result(None)
+        self._complete_shutdown()
 
     def shutdown_async(self) -> CrossLoopAwaitable[None]:
         """Start runtime shutdown without blocking the caller.
@@ -1193,7 +1195,8 @@ class AsyncRuntime:
                 await self._loop.shutdown_asyncgens()
                 await self._loop.shutdown_default_executor()
             self.shutdown()
-        except BaseException:
+        except BaseException as error:
+            self._record_shutdown_failure(error)
             self._start_shutdown_thread()
 
     def _start_shutdown_thread(self) -> None:
@@ -1214,14 +1217,39 @@ class AsyncRuntime:
     def _finish_owned_shutdown(self) -> None:
         """Join the owned loop thread and stop the owned executor."""
 
-        loop_thread = self._loop_thread
-        if loop_thread is not None and loop_thread is not current_thread():
-            loop_thread.join()
-        executor = self._executor
-        if executor is not None:
-            executor.shutdown(wait=True, cancel_futures=True)
         try:
-            self._shutdown_complete.set_result(None)
+            loop_thread = self._loop_thread
+            if loop_thread is not None and loop_thread is not current_thread():
+                loop_thread.join()
+            executor = self._executor
+            if executor is not None:
+                executor.shutdown(wait=True, cancel_futures=True)
+        except BaseException as error:
+            self._record_shutdown_failure(error)
+        self._complete_shutdown()
+
+    def _record_shutdown_failure(self, error: BaseException) -> None:
+        """Retain and log the first graceful-shutdown failure.
+
+        :param error: Failure raised while draining runtime resources.
+        """
+
+        with self._shutdown_lock:
+            if self._shutdown_failure is not None:
+                return
+            self._shutdown_failure = error
+        logger.error("SDK runtime shutdown failed", exc_info=error)
+
+    def _complete_shutdown(self) -> None:
+        """Publish the retained shutdown result exactly once."""
+
+        with self._shutdown_lock:
+            error = self._shutdown_failure
+        try:
+            if error is None:
+                self._shutdown_complete.set_result(None)
+            else:
+                self._shutdown_complete.set_exception(error)
         except InvalidStateError:
             pass
 

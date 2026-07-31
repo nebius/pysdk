@@ -24,7 +24,7 @@ from nebius.aio.operation import Operation
 from nebius.aio.request import Request
 from nebius.aio.stream import StreamRequest
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
-from nebius.api.nebius.compute.v1 import Disk, GetDiskRequest
+from nebius.api.nebius.compute.v1 import Disk, DiskServiceClient, GetDiskRequest
 from nebius.api.nebius.iam.v1 import ExchangeTokenRequest
 from nebius.base.metadata import Metadata
 from nebius.base.service_account.service_account import TokenRequester
@@ -53,6 +53,16 @@ def _stop_loop(loop: asyncio.AbstractEventLoop, thread: Thread) -> None:
 
 def test_owned_runtime_threads_are_daemons_and_stop_on_close() -> None:
     channel = Channel(credentials=NoCredentials(), executor_max_workers=3)
+    workers_ready = Barrier(4)
+
+    async def start_workers() -> None:
+        loop = asyncio.get_running_loop()
+        await asyncio.gather(
+            *(loop.run_in_executor(None, workers_ready.wait) for _ in range(3))
+        )
+
+    submitted = channel.run_async(start_workers())
+    workers_ready.wait(timeout=5)
     runtime_threads = [
         thread
         for thread in enumerate_threads()
@@ -62,10 +72,27 @@ def test_owned_runtime_threads_are_daemons_and_stop_on_close() -> None:
 
     assert len([t for t in runtime_threads if "worker" in t.name]) == 3
     assert all(thread.daemon for thread in runtime_threads)
+    submitted.result(timeout=5)
 
     channel.sync_close(timeout=5)
 
     assert all(not thread.is_alive() for thread in runtime_threads)
+
+
+def test_owned_runtime_starts_executor_workers_lazily() -> None:
+    """An unused SDK owns a pool but does not consume worker threads."""
+
+    before = set(enumerate_threads())
+    channel = Channel(credentials=NoCredentials(), executor_max_workers=3)
+    try:
+        created_workers = [
+            thread
+            for thread in set(enumerate_threads()) - before
+            if thread.name.startswith("nebius-sdk-worker_")
+        ]
+        assert created_workers == []
+    finally:
+        channel.sync_close(timeout=5)
 
 
 def test_runtime_startup_failure_is_reported_and_workers_stop(monkeypatch) -> None:
@@ -93,8 +120,8 @@ def test_runtime_startup_failure_is_reported_and_workers_stop(monkeypatch) -> No
     assert leaked == []
 
 
-def test_executor_partial_start_failure_stops_started_workers(monkeypatch) -> None:
-    """A failed worker start must not leak workers that already started."""
+def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
+    """A failed lazy worker start must not leak an earlier worker."""
 
     original_start = Thread.start
     worker_starts = 0
@@ -109,8 +136,13 @@ def test_executor_partial_start_failure_stops_started_workers(monkeypatch) -> No
 
     monkeypatch.setattr(Thread, "start", fail_second_worker)
     before = set(enumerate_threads())
-    with pytest.raises(RuntimeError, match="worker start failed"):
-        DaemonThreadPoolExecutor(3, "nebius-test-worker")
+    executor = DaemonThreadPoolExecutor(3, "nebius-test-worker")
+    try:
+        assert executor.submit(lambda: 1).result(timeout=5) == 1
+        with pytest.raises(RuntimeError, match="worker start failed"):
+            executor.submit(lambda: 2)
+    finally:
+        executor.shutdown(wait=True, cancel_futures=True)
 
     leaked = [
         thread
@@ -201,6 +233,85 @@ def test_failed_channel_constructor_uses_graceful_async_shutdown(monkeypatch) ->
         Channel(credentials=NoCredentials(), parent_id="")
 
     assert called.is_set()
+
+
+@pytest.mark.asyncio
+async def test_failed_channel_constructor_does_not_block_borrowed_loop(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Borrowed-loop rollback schedules cleanup without waiting on itself."""
+
+    shutdowns = []
+    original_shutdown_async = AsyncRuntime.shutdown_async
+
+    def observed_shutdown_async(self: AsyncRuntime):
+        shutdown = original_shutdown_async(self)
+        shutdowns.append(shutdown)
+        return shutdown
+
+    monkeypatch.setattr(AsyncRuntime, "shutdown_async", observed_shutdown_async)
+
+    with pytest.raises(Exception, match="Parent id is empty"):
+        Channel(
+            credentials=NoCredentials(),
+            event_loop=asyncio.get_running_loop(),
+            parent_id="",
+        )
+
+    assert len(shutdowns) == 1
+    await asyncio.wait_for(shutdowns[0], timeout=1)
+    await asyncio.sleep(0)
+
+
+def test_shutdown_async_reports_async_generator_cleanup_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Graceful cleanup failures survive best-effort runtime teardown."""
+
+    runtime = AsyncRuntime(None, 2)
+    runtime_threads = [runtime._loop_thread]
+
+    async def fail_shutdown_asyncgens() -> None:
+        raise RuntimeError("async generator shutdown failed")
+
+    monkeypatch.setattr(
+        runtime.event_loop,
+        "shutdown_asyncgens",
+        fail_shutdown_asyncgens,
+    )
+
+    with pytest.raises(RuntimeError, match="async generator shutdown failed"):
+        runtime.shutdown_async().result(timeout=5)
+    assert all(thread is None or not thread.is_alive() for thread in runtime_threads)
+
+
+def test_shutdown_async_reports_executor_cleanup_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """An executor shutdown failure is reported after fallback cleanup."""
+
+    runtime = AsyncRuntime(None, 2)
+    executor = runtime._executor
+    assert executor is not None
+    original_shutdown = executor.shutdown
+    calls = 0
+
+    def fail_once(
+        wait: bool = True,
+        *,
+        cancel_futures: bool = False,
+    ) -> None:
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            raise RuntimeError("executor shutdown failed")
+        original_shutdown(wait=wait, cancel_futures=cancel_futures)
+
+    monkeypatch.setattr(executor, "shutdown", fail_once)
+
+    with pytest.raises(RuntimeError, match="executor shutdown failed"):
+        runtime.shutdown_async().result(timeout=5)
+    assert calls >= 2
 
 
 @pytest.mark.skipif(not hasattr(os, "fork"), reason="requires os.fork")
@@ -1197,6 +1308,7 @@ def test_low_level_prestart_cancel_publishes_terminal_status() -> None:
         Disk.FromString,
     )(GetDiskRequest(id="cancel-before-start"))
     assert call.cancel()
+    assert call.debug_error_string() == ""
     release_loop.set()
 
     async def terminal_status() -> None:
@@ -1493,6 +1605,20 @@ def test_sync_sdk_calls_fail_fast_from_owned_executor_worker() -> None:
         assert all("executor worker" in str(error) for error in errors)
     finally:
         channel.sync_close(timeout=5)
+
+
+@pytest.mark.asyncio
+async def test_operation_service_factories_do_not_block_async_callers() -> None:
+    """Synchronous client factories defer source-address resolution."""
+
+    channel = Channel(credentials=NoCredentials())
+    try:
+        transport = channel.get_corresponding_operation_service(DiskServiceClient)
+        assert callable(transport.Get)
+        client = DiskServiceClient(channel)
+        assert client.operation_service() is client.operation_service()
+    finally:
+        await channel.close()
 
 
 def test_cross_loop_handles_fail_fast_from_owned_executor_worker() -> None:

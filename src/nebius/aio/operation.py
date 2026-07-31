@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import importlib
 import os
+from asyncio import Lock as AsyncLock
 from asyncio import sleep
 from collections.abc import Sequence
 from datetime import datetime, timedelta
@@ -294,6 +295,7 @@ class Operation(Generic[OperationPb]):
         self._get_request_obj = get_type
         self._operation = operation
         self._state_lock = Lock()
+        self._update_lock = AsyncLock()
         self._process_id = os.getpid()
 
     def _check_process(self) -> None:
@@ -414,18 +416,24 @@ class Operation(Generic[OperationPb]):
     ) -> None:
         """Fetch and store one operation update on the SDK event loop.
 
+        Updates are serialized for this operation. A pending response therefore
+        cannot arrive after a newer terminal response and regress the stored
+        operation state. Once a terminal response is stored, later queued
+        updates return without making another request.
+
         :param kwargs: Request options for the operation service.
         """
 
-        if self.done():
-            return
+        async with self._update_lock:
+            if self.done():
+                return
 
-        req = self._service.get(
-            self._get_request_obj(id=self.id),
-            **kwargs,
-        )
-        new_op = await req
-        self._set_new_operation(cast(OperationPb, new_op._operation))
+            req = self._service.get(
+                self._get_request_obj(id=self.id),
+                **kwargs,
+            )
+            new_op = await req
+            self._set_new_operation(cast(OperationPb, new_op._operation))
 
     def sync_wait(
         self,
