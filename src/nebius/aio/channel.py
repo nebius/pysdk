@@ -691,9 +691,18 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             return cast(str, self._terminal.get("debug_error_string", ""))
 
     async def wait_for_connection(self) -> None:
-        """Wait until the native call has a connection."""
+        """Wait until the native call has a connection.
 
-        await self._channel.run_async(self._call_result("wait_for_connection"))
+        If channel close rejects a late accessor submission, wait for the
+        authoritative call owner. Successful completion proves that a
+        connection existed; its native error is otherwise propagated.
+        """
+
+        try:
+            await self._channel.run_async(self._call_result("wait_for_connection"))
+        except ChannelClosedError:
+            await shield(wrap_future(self._terminal_ready))
+            await self._submitted._wait_shielded()
 
 
 class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore[unused-ignore,misc]
@@ -1950,10 +1959,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 # thread can submit work after close has started.
                 with self._channel_pool_lock:
                     self._closed = True
-                closing = self._runtime.submit(
-                    self._close_internal(grace),
-                    track=False,
-                )
+                close_work = self._close_internal(grace)
+                try:
+                    closing = self._runtime.submit(
+                        close_work,
+                        track=False,
+                    )
+                except BaseException as error:
+                    # Cache the failed close attempt so public close methods
+                    # enter their normal error path and still wait for runtime
+                    # finalization. AsyncRuntime.submit owns disposal of work
+                    # it rejects.
+                    failed = ConcurrentFuture[None]()
+                    failed.set_exception(error)
+                    closing = CrossLoopAwaitable(failed, self._event_loop)
                 self._runtime.begin_close()
                 self._close_handle = closing
             return closing

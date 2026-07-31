@@ -207,6 +207,10 @@ def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None
 
         channel.sync_close(timeout=5)
 
+        asyncio.run_coroutine_threadsafe(
+            call.wait_for_connection(),
+            loop_b,
+        ).result(timeout=5)
         assert (
             asyncio.run_coroutine_threadsafe(call.code(), loop_b).result(timeout=5)
             == grpc.StatusCode.OK

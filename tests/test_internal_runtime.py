@@ -1992,6 +1992,32 @@ def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
         channel._runtime._shutdown_complete.result(timeout=5)
 
 
+def test_failed_first_close_submission_still_finalizes_runtime(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A failed cleanup dispatch is cached and followed by runtime shutdown."""
+
+    channel = Channel(credentials=NoCredentials())
+    original_submit = channel._runtime.submit
+
+    def reject_close(awaitable, *, track=True):
+        if not track:
+            close = getattr(awaitable, "close", None)
+            if callable(close):
+                close()
+            raise RuntimeError("close dispatch failed")
+        return original_submit(awaitable, track=track)
+
+    monkeypatch.setattr(channel._runtime, "submit", reject_close)
+    with pytest.raises(RuntimeError, match="close dispatch failed"):
+        channel.sync_close(timeout=5)
+    assert channel._closed
+    assert channel._runtime._shutdown_complete.done()
+
+    with pytest.raises(RuntimeError, match="close dispatch failed"):
+        channel.sync_close(timeout=5)
+
+
 def test_sync_close_timeout_covers_blocked_executor_shutdown() -> None:
     channel = Channel(credentials=NoCredentials())
     worker_started = Event()

@@ -146,6 +146,49 @@ def test_stream_unary_native_completion_wins_before_wrapper_resumes() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_terminal_server_stream_cancel_still_releases_lease() -> None:
+    """Native terminal state rejects cancellation but not lease cleanup."""
+
+    released = Event()
+    release_calls: list[tuple[object | None, bool]] = []
+    native_cancel_calls = 0
+
+    class NativeCall:
+        def cancel(self) -> bool:
+            nonlocal native_cancel_calls
+            native_cancel_calls += 1
+            return False
+
+    channel = SDKChannel(credentials=NoCredentials())
+    address = object()
+
+    def release(value: object | None, *, discard: bool = False) -> None:
+        release_calls.append((value, discard))
+        released.set()
+
+    channel.release_channel = release  # type: ignore[method-assign]
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="terminal"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+        grpc_channel_override=address,  # type: ignore[arg-type]
+    )
+    stream._call = NativeCall()
+    with stream._state_lock:
+        stream._native_terminal = True
+    try:
+        assert not stream.cancel()
+        assert released.wait(timeout=5)
+        assert release_calls == [(address, True)]
+        assert native_cancel_calls == 1
+        assert stream._released
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> None:
     """Accepted cross-thread cancellation prevents native call creation."""
 

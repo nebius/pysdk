@@ -573,14 +573,18 @@ class StreamRequest(Generic[Req, Res]):
 
         self._check_process()
         with self._state_lock:
-            if (
-                self._cancel_requested
-                or self._cancelled
-                or self._native_terminal
-                or self._released
-            ):
+            if self._cancel_requested or self._cancelled or self._released:
+                return False
+            native_terminal = self._native_terminal
+            # A terminal stream-unary call still has one authoritative result
+            # owner that releases its lease after wrapper finalization. A
+            # server stream can instead be terminal while buffered responses
+            # leave its iterator and lease open; cancel() must clean that
+            # lease even though native cancellation is no longer accepted.
+            if native_terminal and not self._server_streaming:
                 return False
             self._cancel_requested = True
+            cancellation_accepted = not native_terminal
         submit = getattr(self._channel, "run_async", None)
         if callable(submit):
             closing = self._aclose()
@@ -608,7 +612,7 @@ class StreamRequest(Generic[Req, Res]):
                     observe = getattr(scheduled, "add_done_callback", None)
                 if callable(observe):
                     observe(self._cancel_submission_finished)
-                return True
+                return cancellation_accepted
             dispose = getattr(scheduled, "close", None)
             if callable(dispose):
                 dispose()
@@ -622,14 +626,14 @@ class StreamRequest(Generic[Req, Res]):
             current_loop = None
         if owner_loop is None or owner_loop is current_loop:
             self._abort()
-            return True
+            return cancellation_accepted
         if owner_loop.is_running():
             try:
                 owner_loop.call_soon_threadsafe(self._abort)
             except RuntimeError:
                 pass
             else:
-                return True
+                return cancellation_accepted
         with self._state_lock:
             if not self._cancelled and not self._released:
                 self._cancel_requested = False
