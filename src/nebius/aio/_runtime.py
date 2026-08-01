@@ -743,6 +743,7 @@ class AsyncRuntime:
             asyncio.Task[Any],
             CrossLoopAwaitable[Any],
         ] = {}
+        self._task_cancellation_requested: set[asyncio.Task[Any]] = set()
         if self._owned:
             started = Future[None]()
 
@@ -1022,7 +1023,10 @@ class AsyncRuntime:
                 dispose_unstarted_awaitable(rejected_work)
             elif current_task is not None:
                 try:
-                    event_loop.call_soon_threadsafe(current_task.cancel)
+                    event_loop.call_soon_threadsafe(
+                        self._cancel_task_once,
+                        current_task,
+                    )
                 except RuntimeError:
                     # Final loop cleanup also cancels remaining tasks. If the
                     # loop is already closed, no callback can be dispatched.
@@ -1112,7 +1116,7 @@ class AsyncRuntime:
                 cancel_now = future.cancelled()
             created_task.add_done_callback(copy_outcome)
             if cancel_now:
-                created_task.cancel()
+                self._cancel_task_once(created_task)
 
         future.add_done_callback(forward_cancellation)
         try:
@@ -1187,14 +1191,34 @@ class AsyncRuntime:
         with self._shutdown_lock:
             self._accepting = False
 
+    def _cancel_task_once(self, task: asyncio.Task[Any]) -> None:
+        """Request cancellation through one SDK-loop-owned task edge.
+
+        A public handle cancellation and runtime shutdown can race to cancel
+        the same task. Recording the request on the SDK loop prevents the
+        later edge from injecting another ``CancelledError`` while the task
+        is executing an asynchronous finalizer. Runtime shutdown deliberately
+        does not cancel the public concurrent future here: a native RPC that
+        is already terminal can still absorb task cancellation and publish
+        its authoritative result.
+
+        :param task: SDK-loop task to cancel.
+        """
+
+        if task.done() or task in self._task_cancellation_requested:
+            return
+        self._task_cancellation_requested.add(task)
+        task.cancel()
+
     async def cancel_submissions(self) -> None:
         """Cancel tracked work once and wait for task finalizers.
 
         This method does not cancel protected internal close callers. It
-        cancels active SDK work through its authoritative submission handle;
-        raw tasks without a handle are cancelled directly. Cancelling every
-        handle before tasks resume prevents parent-to-child propagation from
-        injecting a second cancellation into an asynchronous finalizer.
+        cancels active SDK work through one private task-cancellation edge.
+        Recording every request before tasks resume prevents parent-to-child
+        propagation from injecting a second cancellation into an asynchronous
+        finalizer. Public handles remain pending until their task publishes an
+        outcome, which preserves native RPC results that won the close race.
         """
 
         current = asyncio.current_task(self._loop)
@@ -1204,16 +1228,13 @@ class AsyncRuntime:
             - ({current} if current is not None else set())
         )
         for task in tasks:
-            submitted = self._task_submissions.get(task)
-            if submitted is None:
-                task.cancel()
-            elif not submitted.cancelled():
-                submitted.cancel()
+            self._cancel_task_once(task)
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
 
-        # Handle cancellation forwards exactly once to active tasks. Let those
-        # callbacks publish before cancelling submissions that never started.
+        # Let active task outcomes publish before cancelling submissions that
+        # never started. Their public handles are not cancellation markers for
+        # runtime-initiated shutdown because native completion may have won.
         await asyncio.sleep(0)
         with self._submissions_lock:
             submissions = list(self._submissions - self._protected_submissions)
@@ -1385,6 +1406,7 @@ class AsyncRuntime:
                 self._active_tasks.discard(task)
                 self._protected_tasks.discard(task)
                 self._task_submissions.pop(task, None)
+                self._task_cancellation_requested.discard(task)
 
     def bridge_awaitable(self, awaitable: Awaitable[T]) -> Awaitable[T]:
         """Bridge an asyncio future when another loop owns it.
