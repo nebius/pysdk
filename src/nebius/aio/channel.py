@@ -141,6 +141,51 @@ T = TypeVar("T")
 P = ParamSpec("P")
 C = TypeVar("C")
 
+_detached_foreign_close_tasks = set[Task[Any]]()
+_detached_foreign_close_tasks_lock = Lock()
+
+
+def _reset_detached_foreign_close_tasks_after_fork() -> None:
+    """Drop parent-process task and lock state in a forked child.
+
+    Event-loop tasks cannot be transferred across ``fork``. Replacing both
+    objects also prevents a child from observing a lock held by a vanished
+    parent thread.
+    """
+
+    global _detached_foreign_close_tasks
+    global _detached_foreign_close_tasks_lock
+    _detached_foreign_close_tasks = set()
+    _detached_foreign_close_tasks_lock = Lock()
+
+
+if hasattr(os, "register_at_fork"):
+    os.register_at_fork(after_in_child=_reset_detached_foreign_close_tasks_after_fork)
+
+
+def _retain_detached_foreign_close_task(task: Task[Any]) -> None:
+    """Retain foreign-loop cleanup without retaining its parent channel.
+
+    A caller-owned event loop keeps only weak references to tasks. The SDK
+    therefore retains each fire-and-forget transport close until completion.
+    This module-level tracker is deliberately limited to detached cleanup: it
+    contains no per-SDK scheduler or bridge state, and its lock permits
+    independent SDK instances and owner-loop threads to use it concurrently.
+
+    :param task: Foreign-loop transport-close task to retain.
+    """
+
+    with _detached_foreign_close_tasks_lock:
+        _detached_foreign_close_tasks.add(task)
+
+    def discard(completed: Task[Any]) -> None:
+        """Release a completed detached transport close."""
+
+        with _detached_foreign_close_tasks_lock:
+            _detached_foreign_close_tasks.discard(completed)
+
+    task.add_done_callback(discard)
+
 
 def _finalize_runtime(runtime: AsyncRuntime, process_id: int) -> None:
     """Shut down a runtime only in the process that created it.
@@ -1470,7 +1515,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             int,
             tuple[AddressChannel, ConcurrentFuture[None]],
         ]()
-        self._foreign_close_tasks = set[Task[Any]]()
         self._tasks_lock = Lock()
 
         self._resolver: Resolver = Conventional()
@@ -2905,9 +2949,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     close_coro,
                     name=f"Channel transport close for {chan.address}",
                 )
-                with self._tasks_lock:
-                    self._foreign_close_tasks.add(task)
-                task.add_done_callback(self._discard_foreign_close_task)
+                _retain_detached_foreign_close_task(task)
                 return
             try:
                 run_coroutine_threadsafe(close_coro, owner_loop)
@@ -2956,9 +2998,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     fallback,
                     name=f"Channel transport close for {chan.address}",
                 )
-                with self._tasks_lock:
-                    self._foreign_close_tasks.add(task)
-                task.add_done_callback(self._discard_foreign_close_task)
+                _retain_detached_foreign_close_task(task)
             else:
                 fallback.close()
                 logger.warning(
@@ -2999,12 +3039,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 pass
 
         scheduled._add_internal_done_callback(settle_rejected_submission)
-
-    def _discard_foreign_close_task(self, task: Task[Any]) -> None:
-        """Release a completed fire-and-forget foreign-loop close task."""
-
-        with self._tasks_lock:
-            self._foreign_close_tasks.discard(task)
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
         """Dispose of an :class:`AddressChannel` by scheduling its close.

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import asyncio
+import gc
 from concurrent.futures import Future, ThreadPoolExecutor
 from threading import Barrier, Event, Lock, Thread
 from time import monotonic, sleep
+from weakref import ref
 
 import grpc
 import pytest
@@ -554,6 +556,60 @@ def test_foreign_transport_close_accepts_general_owner_loop_awaitable() -> None:
         assert address._is_closed_by_sdk()
     finally:
         channel.sync_close(timeout=5)
+        _stop_event_loop(owner_loop, owner_thread)
+
+
+def test_detached_foreign_close_does_not_retain_parent_channel() -> None:
+    """A hung caller-owned close retains its transport, not the whole SDK."""
+
+    owner_loop, owner_thread = _start_event_loop()
+    close_started = Event()
+    release_close = Event()
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            close_started.set()
+            while not release_close.is_set():
+                await asyncio.sleep(0.001)
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "detached-close.example:443",
+        owner_loop,
+    )
+    scheduled = Future[None]()
+    channel_holder = [channel]
+    address_holder = [address]
+
+    def schedule_on_owner() -> None:
+        try:
+            channel_holder[0]._schedule_address_channel_close(
+                address_holder[0],
+                None,
+            )
+        except BaseException as error:
+            scheduled.set_exception(error)
+        else:
+            scheduled.set_result(None)
+
+    channel_reference = ref(channel)
+    owner_loop.call_soon_threadsafe(schedule_on_owner)
+    scheduled.result(timeout=5)
+    assert close_started.wait(timeout=5)
+    channel_holder.clear()
+    address_holder.clear()
+    del schedule_on_owner
+    del address
+    del channel
+    try:
+        deadline = monotonic() + 5
+        while channel_reference() is not None:
+            gc.collect()
+            assert monotonic() < deadline
+            sleep(0.01)
+    finally:
+        release_close.set()
         _stop_event_loop(owner_loop, owner_thread)
 
 

@@ -504,6 +504,33 @@ def test_rejected_stream_cancel_restores_retryable_state() -> None:
     assert not stream._cancel_requested
 
 
+def test_rejected_stream_cancel_preserves_submission_error() -> None:
+    """A secondary legacy state failure must not mask dispatch rejection."""
+
+    rejection = RuntimeError("cancellation submission rejected")
+
+    class BrokenChannel:
+        def run_async(self, awaitable: object) -> None:
+            raise rejection
+
+        def get_state(self):
+            raise ValueError("state unavailable")
+
+    stream = StreamRequest(
+        channel=BrokenChannel(),
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=object,
+        client_streaming=False,
+        server_streaming=True,
+    )
+
+    with pytest.raises(RuntimeError, match="submission rejected") as raised:
+        stream.cancel()
+    assert raised.value is rejection
+    assert not stream._cancel_requested
+
+
 def test_stream_snapshots_unary_request_and_auth_options() -> None:
     """Stream setup observes values fixed before caller-side mutation."""
 

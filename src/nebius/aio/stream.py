@@ -735,10 +735,18 @@ class StreamRequest(Generic[Req, Res]):
                     self._cancel_requested = False
                 if isinstance(error, Exception):
                     get_state = getattr(self._channel, "get_state", None)
-                    if (
-                        callable(get_state)
-                        and get_state() == ChannelConnectivity.SHUTDOWN
-                    ):
+                    try:
+                        closed = callable(get_state) and (
+                            get_state() == ChannelConnectivity.SHUTDOWN
+                        )
+                    except BaseException as state_error:
+                        logger.debug(
+                            "Unable to inspect channel state after stream "
+                            "cancellation submission rejection",
+                            exc_info=state_error,
+                        )
+                        closed = False
+                    if closed:
                         return False
                 raise
             # SDK channels return an already-scheduled Future-like handle.

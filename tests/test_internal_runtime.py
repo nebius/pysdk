@@ -563,6 +563,63 @@ def test_owned_runtime_shutdown_reports_finalizer_start_failure(
     assert not loop_thread.is_alive()
 
 
+def test_finalizer_start_failure_still_stops_owned_executor(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A failed finalizer start still closes executor admission and workers."""
+
+    runtime = AsyncRuntime(None, 1)
+    worker_started = Event()
+    release_worker = Event()
+    queued_ran = Event()
+
+    def block_worker() -> None:
+        worker_started.set()
+        release_worker.wait(timeout=5)
+
+    async def start_executor_work() -> None:
+        loop = asyncio.get_running_loop()
+        loop.run_in_executor(None, block_worker)
+        loop.run_in_executor(None, queued_ran.set)
+
+    asyncio.run_coroutine_threadsafe(
+        start_executor_work(),
+        runtime.event_loop,
+    ).result(timeout=5)
+    assert worker_started.wait(timeout=5)
+    executor = runtime._executor
+    assert executor is not None
+    workers = list(executor._threads)
+    original_start = Thread.start
+
+    def fail_shutdown_finalizer(thread: Thread) -> None:
+        if thread.name == "nebius-sdk-shutdown":
+            raise RuntimeError("shutdown finalizer start failed")
+        original_start(thread)
+
+    monkeypatch.setattr(Thread, "start", fail_shutdown_finalizer)
+
+    async def shutdown_on_sdk_loop() -> None:
+        runtime.shutdown()
+
+    asyncio.run_coroutine_threadsafe(
+        shutdown_on_sdk_loop(),
+        runtime.event_loop,
+    )
+    try:
+        with pytest.raises(RuntimeError, match="shutdown finalizer start failed"):
+            runtime._shutdown_complete.result(timeout=5)
+        with pytest.raises(RuntimeError, match="cannot schedule new futures"):
+            executor.submit(queued_ran.set)
+    finally:
+        release_worker.set()
+        for worker in workers:
+            worker.join(timeout=5)
+
+    assert all(not worker.is_alive() for worker in workers)
+    assert not queued_ran.is_set()
+
+
 def test_owned_runtime_recovers_unexecuted_shutdown_dispatch(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

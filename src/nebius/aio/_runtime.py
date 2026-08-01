@@ -1546,10 +1546,18 @@ class AsyncRuntime:
                     finalizer.start()
                 except BaseException as error:
                     # Joining from the event-loop thread is impossible. Its
-                    # normal ``run`` finalizer closes the loop; expose the
-                    # inability to finish the executor join instead of
-                    # leaving shutdown waiters blocked forever.
+                    # normal ``run`` finalizer closes the loop. Still publish
+                    # the executor's shutdown boundary so it rejects new work,
+                    # cancels queued work, and lets running workers exit after
+                    # their current call returns. Waiting here would deadlock
+                    # if one of those calls depends on this loop.
                     self._record_shutdown_failure(error)
+                    executor = self._executor
+                    if executor is not None:
+                        try:
+                            executor.shutdown(wait=False, cancel_futures=True)
+                        except BaseException as executor_error:
+                            self._record_shutdown_failure(executor_error)
                     self._complete_shutdown()
                 return
             self._finish_owned_shutdown()
