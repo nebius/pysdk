@@ -340,6 +340,13 @@ stateless implementation is possible only when that implementation explicitly
 supports concurrent calls and independent `close()` calls. The SDK cannot
 detect hidden loop ownership or mutable state in a custom object.
 
+The SDK closes native coroutine objects and dispatches `asyncio.Future`
+cleanup to the Future's owner loop when submitted work is rejected before it
+starts. It does not invoke an arbitrary custom awaitable's `close()` method on
+an unknown cancellation or shutdown thread. An opaque awaitable that needs
+pre-start cleanup must provide its own thread-safe cancellation behavior; the
+SDK cannot infer hidden loop affinity.
+
 Supported mutable request payloads become fixed when the request wrapper is
 created, so generated reset-mask metadata remains consistent with the payload.
 Configure metadata, timeouts, credentials, and authentication options before

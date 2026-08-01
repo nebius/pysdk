@@ -145,15 +145,17 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
     loop because the unstarted wrapper owns its observation. Retrieving the
     exception does not prevent later awaits from raising it. A concurrent
     future and an SDK cross-loop handle provide thread-safe cancellation.
-    Coroutine-like objects instead use ``close()`` so Python does not report
+    Native coroutine objects instead use ``close()`` so Python does not report
     that they were never awaited.
 
-    Custom awaitables with neither ``close()`` nor the private SDK
-    ``_cancel_unstarted_threadsafe`` hook cannot be disposed safely because
-    their hidden loop ownership is unknown. A foreign asyncio owner loop must
-    remain running through dispatch, as required by the cross-loop contract.
-    Exceptions raised by custom disposal hooks are suppressed so cleanup does
-    not replace the lifecycle or submission error that caused disposal.
+    A custom awaitable is never closed implicitly on an arbitrary submission,
+    cancellation, or shutdown thread. It must provide the private SDK
+    ``_cancel_unstarted_threadsafe`` hook when it supports thread-safe
+    disposal. Otherwise its hidden loop ownership is unknown and disposal is
+    skipped. A foreign asyncio owner loop must remain running through dispatch,
+    as required by the cross-loop contract. Exceptions raised by custom
+    disposal hooks are suppressed so cleanup does not replace the lifecycle
+    or submission error that caused disposal.
 
     :param awaitable: Never-started caller work to release.
     :return: ``True`` when disposal completed or was accepted for dispatch;
@@ -197,10 +199,9 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
             # already being reported. A custom hook must not replace that
             # primary lifecycle or submission failure.
             return False
-    close = getattr(awaitable, "close", None)
-    if callable(close):
+    if inspect.iscoroutine(awaitable):
         try:
-            close()
+            awaitable.close()
         except Exception:
             return False
         return True

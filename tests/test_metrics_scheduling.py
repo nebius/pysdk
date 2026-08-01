@@ -145,8 +145,8 @@ def test_sync_metric_task_uses_default_for_invalid_timeout(
     assert monotonic() - start < 0.5
 
 
-def test_sdk_metric_cancelled_before_start_closes_inner_awaitable() -> None:
-    """Pre-start cancellation closes the user awaitable exactly once."""
+def test_sdk_metric_cancelled_before_start_uses_threadsafe_disposal_hook() -> None:
+    """Pre-start cancellation uses the explicit thread-safe cleanup hook."""
 
     probe = _ScheduledProbe()
 
@@ -157,8 +157,9 @@ def test_sdk_metric_cancelled_before_start_closes_inner_awaitable() -> None:
         def __await__(self):
             return asyncio.sleep(0).__await__()
 
-        def close(self) -> None:
+        def _cancel_unstarted_threadsafe(self) -> bool:
             self.close_calls += 1
+            return True
 
     awaitable = Awaitable()
     token = task_scheduler.set(probe.schedule)

@@ -37,7 +37,7 @@ from concurrent.futures import (
 from contextvars import Context, ContextVar, copy_context
 from logging import getLogger
 from queue import Empty, Queue
-from threading import Lock, Thread, current_thread
+from threading import Lock, Thread, current_thread, local
 from types import TracebackType
 from typing import Any, Generic, TypeVar, cast
 
@@ -50,6 +50,14 @@ from ._task_context import (
 
 T = TypeVar("T")
 logger = getLogger(__name__)
+_sdk_executor_worker = local()
+
+
+def _in_sdk_executor_thread() -> bool:
+    """Return whether the current thread belongs to any SDK executor."""
+
+    return bool(getattr(_sdk_executor_worker, "active", False))
+
 
 _current_submission: ContextVar[
     tuple["AsyncRuntime", "CrossLoopAwaitable[Any]"] | None
@@ -138,23 +146,28 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
     def _worker(self) -> None:
         """Run queued work until the queue contains a stop marker."""
 
-        while True:
-            work_item = self._work_queue.get()
-            if work_item is None:
-                return
-            try:
-                work_item.run()
-            except BaseException as error:
-                # Concurrent Future callbacks run inline when a work item
-                # publishes its result. One callback must not permanently
-                # remove a daemon worker from this bounded executor.
-                logger.critical(
-                    "Unhandled exception in SDK executor completion callback",
-                    exc_info=error,
-                )
-            finally:
-                del work_item
-                self._idle_semaphore.release()
+        previous = getattr(_sdk_executor_worker, "active", False)
+        _sdk_executor_worker.active = True
+        try:
+            while True:
+                work_item = self._work_queue.get()
+                if work_item is None:
+                    return
+                try:
+                    work_item.run()
+                except BaseException as error:
+                    # Concurrent Future callbacks run inline when a work item
+                    # publishes its result. One callback must not permanently
+                    # remove a daemon worker from this bounded executor.
+                    logger.critical(
+                        "Unhandled exception in SDK executor completion callback",
+                        exc_info=error,
+                    )
+                finally:
+                    del work_item
+                    self._idle_semaphore.release()
+        finally:
+            _sdk_executor_worker.active = previous
 
     def submit(
         self,
@@ -431,14 +444,13 @@ class CrossLoopAwaitable(Generic[T]):
         return self._future.exception(timeout)
 
     def _reject_executor_wait(self) -> None:
-        """Reject a pending wait from a worker in the owned finite pool."""
+        """Reject a pending wait from a worker in any SDK finite pool."""
 
-        if self._future.done() or self._executor is None:
+        if self._future.done():
             return
-        executor = self._executor()
-        if executor is not None and executor.owns_thread(current_thread()):
+        if _in_sdk_executor_thread():
             raise RuntimeError(
-                "cannot wait for pending SDK work from its executor worker"
+                "cannot wait for pending SDK work from an SDK executor worker"
             )
 
     def _reject_blocking_async_wait(self) -> None:
@@ -796,10 +808,9 @@ class AsyncRuntime:
             return False
 
     def in_executor_thread(self) -> bool:
-        """Return whether the caller is an owned executor worker."""
+        """Return whether the caller runs on any SDK-owned executor."""
 
-        executor = self._executor
-        return executor is not None and executor.owns_thread(current_thread())
+        return _in_sdk_executor_thread()
 
     def submit(
         self,

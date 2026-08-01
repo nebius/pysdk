@@ -917,8 +917,49 @@ def test_concurrent_foreign_release_schedules_one_close() -> None:
 
     assert errors == []
     assert all(not releaser.is_alive() for releaser in releasers)
-    with channel._tasks_lock:
-        assert channel._foreign_transport_closes == {}
+
+
+def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A caller loop may strand dispatch without leaking an SDK reservation."""
+
+    owner_loop, owner_thread = _start_event_loop()
+    accepted: list[object] = []
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    def strand_dispatch(coro: object, loop: asyncio.AbstractEventLoop) -> Future:
+        assert loop is owner_loop
+        accepted.append(coro)
+        return Future()
+
+    monkeypatch.setattr(
+        "nebius.aio.channel.run_coroutine_threadsafe",
+        strand_dispatch,
+    )
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "stranded-close.example:443",
+        owner_loop,
+    )
+    try:
+        channel._schedule_address_channel_close(address, None)
+        owner_loop.call_soon_threadsafe(owner_loop.stop)
+        owner_thread.join(timeout=5)
+        assert not owner_thread.is_alive()
+        assert len(accepted) == 1
+    finally:
+        for coro in accepted:
+            close = getattr(coro, "close", None)
+            if callable(close):
+                close()
+        channel.sync_close(timeout=5)
+        if owner_thread.is_alive():
+            _stop_event_loop(owner_loop, owner_thread)
 
 
 def test_generated_requests_complete_from_many_sync_threads() -> None:

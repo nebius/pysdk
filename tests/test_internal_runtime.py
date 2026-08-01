@@ -1036,6 +1036,39 @@ def test_rejected_executor_sync_wait_preserves_running_handle() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_sdk_executor_rejects_synchronous_wait_on_another_sdk() -> None:
+    """A worker cannot form a finite-pool wait cycle with another SDK."""
+
+    first = Channel(credentials=NoCredentials(), executor_max_workers=1)
+    second = Channel(credentials=NoCredentials(), executor_max_workers=1)
+
+    def call_second() -> None:
+        second.run_sync(asyncio.sleep(0))
+
+    async def invoke_first_worker() -> None:
+        await asyncio.get_running_loop().run_in_executor(None, call_second)
+
+    pending = second.run_async(asyncio.Event().wait())
+
+    def wait_for_second_handle() -> None:
+        pending.result()
+
+    async def invoke_handle_wait() -> None:
+        await asyncio.get_running_loop().run_in_executor(None, wait_for_second_handle)
+
+    try:
+        submitted = first.run_async(invoke_first_worker())
+        with pytest.raises(LoopError, match="SDK.*executor worker"):
+            submitted.result(timeout=5)
+        submitted = first.run_async(invoke_handle_wait())
+        with pytest.raises(RuntimeError, match="SDK executor worker"):
+            submitted.result(timeout=5)
+    finally:
+        pending.cancel()
+        first.sync_close(timeout=5)
+        second.sync_close(timeout=5)
+
+
 def test_run_sync_is_safe_from_many_threads() -> None:
     channel = Channel(credentials=NoCredentials())
     barrier = Barrier(11)
@@ -1274,6 +1307,27 @@ def test_foreign_future_disposal_decides_on_owner_loop_after_completion() -> Non
         _stop_loop(loop, thread)
 
 
+def test_unstarted_custom_awaitable_is_not_closed_on_unknown_thread() -> None:
+    """Opaque awaitables need an explicit thread-safe disposal hook."""
+
+    class Awaitable:
+        def __init__(self) -> None:
+            self.close_calls = 0
+
+        def __await__(self):
+            async def result() -> None:
+                return None
+
+            return result().__await__()
+
+        def close(self) -> None:
+            self.close_calls += 1
+
+    awaitable = Awaitable()
+    assert not dispose_unstarted_awaitable(awaitable)
+    assert awaitable.close_calls == 0
+
+
 def test_bg_task_bridges_foreign_loop_future() -> None:
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials())
@@ -1487,10 +1541,10 @@ def test_runtime_rejects_resubmitting_current_handle() -> None:
         channel.sync_close(timeout=5)
 
 
-def test_submission_failure_disposes_reentrant_awaitable_outside_locks(
+def test_submission_failure_runs_threadsafe_disposal_hook_outside_locks(
     monkeypatch,
 ) -> None:
-    """A custom close hook may safely re-enter channel state on rejection."""
+    """A thread-safe disposal hook may re-enter channel state on rejection."""
 
     channel = Channel(credentials=NoCredentials())
     original_submit = channel._event_loop.call_soon_threadsafe
@@ -1503,8 +1557,9 @@ def test_submission_failure_disposes_reentrant_awaitable_outside_locks(
 
             return result().__await__()
 
-        def close(self) -> None:
+        def _cancel_unstarted_threadsafe(self) -> bool:
             closed.append(channel.get_state())
+            return True
 
     def reject_dispatch(*args, **kwargs):
         raise RuntimeError("dispatch failed")

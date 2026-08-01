@@ -1387,7 +1387,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             int,
             tuple[AddressChannel, ConcurrentFuture[None]],
         ]()
-        self._foreign_transport_closes = dict[int, AddressChannel]()
         self._foreign_close_tasks = set[Task[Any]]()
         self._tasks_lock = Lock()
 
@@ -1850,7 +1849,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param timeout: Optional maximum wait time in seconds.
         :return: The awaitable's result.
         :raises LoopError: If the caller runs in any asynchronous context or
-            is one of the SDK's owned executor workers.
+            is any SDK-owned executor worker.
         :raises TimeoutError: If the time limit expires.
         """
 
@@ -1858,7 +1857,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if self._runtime.in_executor_thread():
             close_rejected_sync_awaitable(awaitable)
             raise LoopError(
-                "Cannot synchronously call the SDK from its executor worker; "
+                "Cannot synchronously call the SDK from an SDK executor worker; "
                 "return to the caller or use asynchronous SDK work."
             )
         try:
@@ -1897,7 +1896,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._check_process()
         if self._runtime.in_executor_thread():
             raise LoopError(
-                "Cannot synchronously close the SDK from its executor worker; "
+                "Cannot synchronously close the SDK from an SDK executor worker; "
                 "initiate shutdown outside the SDK executor."
             )
         if self._runtime.in_event_loop():
@@ -1964,7 +1963,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._check_process()
         if self._runtime.in_executor_thread():
             raise LoopError(
-                "Cannot close the SDK from its executor worker; initiate and "
+                "Cannot close the SDK from an SDK executor worker; initiate and "
                 "await close from outside the SDK executor."
             )
         current_submission = self._runtime.protect_current_submission()
@@ -2736,24 +2735,22 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     "Unable to close channel because its owner event loop is stopped"
                 )
                 return
-            channel_id = id(chan)
-            with self._tasks_lock:
-                if self._foreign_transport_closes.get(channel_id) is chan:
-                    return
-                # Retain object identity, not only its raw ID. A stranded
-                # caller-loop close can otherwise leave an ID reservation that
-                # suppresses an unrelated transport after CPython reuses it.
-                self._foreign_transport_closes[channel_id] = chan
 
-            def discard_foreign_reservation(_: object = None) -> None:
-                """Allow retry after this foreign close attempt terminates."""
+            async def close_foreign_and_log() -> None:
+                """Close without retaining the parent channel on a caller loop."""
 
-                with self._tasks_lock:
-                    current = self._foreign_transport_closes.get(channel_id)
-                    if current is chan:
-                        self._foreign_transport_closes.pop(channel_id, None)
+                try:
+                    await chan.channel.close(grace)
+                    chan._mark_closed_by_sdk()
+                except CancelledError:
+                    pass
+                except Exception as error:
+                    logger.error(
+                        "Unhandled exception while closing address channel",
+                        exc_info=error,
+                    )
 
-            close_coro = close_and_log()
+            close_coro = close_foreign_and_log()
             try:
                 current_loop = get_running_loop()
             except RuntimeError:
@@ -2766,16 +2763,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 with self._tasks_lock:
                     self._foreign_close_tasks.add(task)
                 task.add_done_callback(self._discard_foreign_close_task)
-                task.add_done_callback(discard_foreign_reservation)
                 return
             try:
-                close_future = run_coroutine_threadsafe(close_coro, owner_loop)
+                run_coroutine_threadsafe(close_coro, owner_loop)
             except RuntimeError:
                 close_coro.close()
-                discard_foreign_reservation()
                 logger.warning("Unable to close channel after its owner loop stopped")
-            else:
-                close_future.add_done_callback(discard_foreign_reservation)
             return
 
         channel_id = id(chan)
