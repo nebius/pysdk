@@ -1073,6 +1073,68 @@ def test_legacy_stream_rejects_a_second_loop_before_write_lock() -> None:
     assert discarded == [address]
 
 
+def test_constant_legacy_stream_disposes_nested_wrong_loop_operation() -> None:
+    """Wrong-loop rejection disposes work below Constant's outer wrapper."""
+
+    entered = Event()
+    resume = Event()
+    errors: list[BaseException] = []
+    disposed = Event()
+
+    class LegacyChannel:
+        def parent_id(self):
+            return None
+
+        def get_authorization_provider(self):
+            return None
+
+    class RejectedOperation:
+        def __await__(self):
+            raise AssertionError("wrong-loop work must not start")
+            yield
+
+        def _cancel_unstarted_threadsafe(self) -> bool:
+            disposed.set()
+            return True
+
+    class Result:
+        @classmethod
+        def FromString(cls, data):  # noqa: N802
+            return cls()
+
+    stream = StreamRequest(
+        channel=Constant("acme.Service.Watch", LegacyChannel()),  # type: ignore[arg-type]
+        route=Route("acme.Service", "Watch"),
+        request=object(),
+        result_class=Result,
+        client_streaming=False,
+        server_streaming=True,
+    )
+
+    async def hold_owner_loop() -> None:
+        entered.set()
+        await asyncio.to_thread(resume.wait)
+
+    def first_loop() -> None:
+        try:
+            asyncio.run(stream._on_sdk_loop(hold_owner_loop()))
+        except BaseException as error:
+            errors.append(error)
+
+    thread = Thread(target=first_loop)
+    thread.start()
+    assert entered.wait(timeout=5)
+    try:
+        with pytest.raises(RuntimeError, match="different event loop"):
+            asyncio.run(stream._on_sdk_loop(RejectedOperation()))
+        assert disposed.wait(timeout=5)
+    finally:
+        resume.set()
+        thread.join(timeout=5)
+    assert not thread.is_alive()
+    assert errors == []
+
+
 @pytest.mark.asyncio
 async def test_cancel_during_authentication_never_opens_transport() -> None:
     entered = asyncio.Event()

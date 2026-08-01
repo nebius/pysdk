@@ -3017,7 +3017,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 except RuntimeError:
                     fallback.close()
                     fallback = close_and_log()
-            if current_loop is not None:
+            if current_loop is fallback_loop:
                 task = create_task(
                     fallback,
                     name=f"Channel transport close for {chan.address}",
@@ -3026,7 +3026,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             else:
                 fallback.close()
                 logger.warning(
-                    "Unable to schedule channel close without a running " "event loop"
+                    "Unable to close channel because its owner event loop is stopped"
                 )
                 completion.set_result(None)
             return

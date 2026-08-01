@@ -3617,6 +3617,77 @@ def test_stream_task_start_failure_releases_explicit_override() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_later_stream_task_start_failure_keeps_active_transport() -> None:
+    """Rejecting one later operation does not release the active stream."""
+
+    channel = Channel(credentials=NoCredentials())
+    rejection = RuntimeError("later stream task rejected")
+    release_calls: list[tuple[object | None, bool]] = []
+
+    class Call:
+        cancelled = False
+
+        async def write(self, request: object) -> None:
+            return None
+
+        def cancel(self) -> bool:
+            self.cancelled = True
+            return True
+
+    call = Call()
+
+    class Transport:
+        def stream_unary(self, path, serializer, deserializer):
+            return lambda **kwargs: call
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    override = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "active-stream-start-rejection.example:443",
+        channel._event_loop,
+    )
+
+    def release(value: object | None, *, discard: bool = False) -> None:
+        release_calls.append((value, discard))
+
+    channel.release_channel = release  # type: ignore[method-assign]
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        grpc_channel_override=override,
+    )
+
+    def reject_once(loop, coroutine, **kwargs):
+        loop.set_task_factory(None)
+        raise rejection
+
+    async def install() -> None:
+        asyncio.get_running_loop().set_task_factory(reject_once)
+
+    try:
+        asyncio.run(stream.write(GetDiskRequest(id="first")))
+        assert stream._call is call
+        channel.run_async(install()).result(timeout=5)
+        with pytest.raises(RuntimeError) as raised:
+            asyncio.run(stream.write(GetDiskRequest(id="rejected")))
+        assert raised.value is rejection
+        assert release_calls == []
+        assert stream._call is call
+        assert not stream._released
+        assert not call.cancelled
+        asyncio.run(stream.aclose())
+        assert release_calls == [(override, True)]
+        assert call.cancelled
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_low_level_prestart_cancel_publishes_terminal_status() -> None:
     channel = Channel(credentials=NoCredentials())
     loop_blocked = Event()

@@ -776,6 +776,35 @@ def test_rejected_transport_close_task_does_not_strand_shutdown(
     assert "Transport close submission failed before cleanup ran" in caplog.text
 
 
+def test_stopped_owner_loop_transport_is_not_closed_on_caller_loop(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """Post-shutdown cleanup never moves a close to an unrelated loop."""
+
+    close_loops: list[asyncio.AbstractEventLoop] = []
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            close_loops.append(asyncio.get_running_loop())
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "stopped-owner-loop.example:443",
+        channel._event_loop,
+    )
+    channel.sync_close(timeout=5)
+
+    async def release_after_shutdown() -> None:
+        channel._schedule_address_channel_close(address, None)
+
+    asyncio.run(release_after_shutdown())
+    assert close_loops == []
+    with channel._tasks_lock:
+        assert channel._transport_closes == {}
+    assert "owner event loop is stopped" in caplog.text
+
+
 def test_close_snapshot_retires_transport_before_native_close() -> None:
     """A stale release cannot duplicate a snapshotted transport close."""
 

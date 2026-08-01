@@ -127,6 +127,7 @@ class StreamRequest(Generic[Req, Res]):
         self._call: Any = None
         self._response_iterator: AsyncIterator[Res] | None = None
         self._start_error: BaseException | None = None
+        self._start_entered = False
         self._start_lock = Lock()
         self._read_lock = Lock()
         self._write_lock = Lock()
@@ -262,6 +263,7 @@ class StreamRequest(Generic[Req, Res]):
                 self._owner_loop = current_loop
             elif self._owner_loop is not current_loop:
                 raise RuntimeError("stream work belongs to a different event loop")
+            self._start_entered = True
             current_call = self._call
         if current_call is not None:
             return current_call
@@ -518,8 +520,8 @@ class StreamRequest(Generic[Req, Res]):
         prestart_cleanup_done = False
         submitted_work: Awaitable[T] | None = None
 
-        def cleanup_if_unstarted(*, release: bool) -> None:
-            """Dispose unstarted work and optionally release its lease."""
+        def cleanup_if_unstarted(*, release_unopened_stream: bool) -> None:
+            """Dispose rejected work and release only an unopened stream."""
 
             nonlocal prestart_cleanup_done
             with submission_state_lock:
@@ -527,7 +529,14 @@ class StreamRequest(Generic[Req, Res]):
                     return
                 prestart_cleanup_done = True
             dispose_unstarted_awaitable(awaitable)
-            if not release:
+            if not release_unopened_stream:
+                return
+            # Rejection means only this submitted wrapper did not start. A
+            # different operation may already own the stream lifecycle. Do
+            # not release that operation's live transport from this callback.
+            with self._state_lock:
+                stream_started = self._start_entered
+            if stream_started:
                 return
             try:
                 self._release(discard=True)
@@ -552,7 +561,7 @@ class StreamRequest(Generic[Req, Res]):
                 operation = submit(submitted_work)
             except BaseException:
                 dispose_unstarted_awaitable(submitted_work)
-                cleanup_if_unstarted(release=True)
+                cleanup_if_unstarted(release_unopened_stream=True)
                 raise
         else:
             operation = awaitable
@@ -571,6 +580,10 @@ class StreamRequest(Generic[Req, Res]):
                     self._owner_loop = current_loop
                 elif self._owner_loop is not current_loop:
                     dispose_unstarted_awaitable(operation)
+                    # A legacy Constant returns ``submitted_work`` itself.
+                    # Closing that outer coroutine does not enter it, so its
+                    # captured inner stream operation needs separate cleanup.
+                    cleanup_if_unstarted(release_unopened_stream=False)
                     raise RuntimeError("stream work belongs to a different event loop")
         try:
             if not enforce_deadline:
@@ -614,10 +627,10 @@ class StreamRequest(Generic[Req, Res]):
             # publishes cancellation before releasing the lease. Dispose only
             # this operation here so release completion cannot race ahead of
             # the stream's terminal cancellation state.
-            cleanup_if_unstarted(release=False)
+            cleanup_if_unstarted(release_unopened_stream=False)
             raise
         except BaseException:
-            cleanup_if_unstarted(release=True)
+            cleanup_if_unstarted(release_unopened_stream=True)
             raise
 
     async def _result(self) -> Res:
