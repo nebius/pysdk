@@ -561,7 +561,10 @@ class StreamRequest(Generic[Req, Res]):
                 from nebius.aio.channel import ChannelClosedError
 
                 try:
-                    await submit(self._aclose())
+                    await self._on_sdk_loop(
+                        self._aclose(),
+                        enforce_deadline=False,
+                    )
                 except ChannelClosedError:
                     # Channel shutdown already owns every snapshotted lease.
                     pass

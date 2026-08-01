@@ -2839,6 +2839,40 @@ def test_supplied_loop_close_cancels_and_drains_submissions() -> None:
         _stop_loop(loop, thread)
 
 
+def test_close_cancels_nested_submission_finalizer_once() -> None:
+    """Parent cancellation cannot recancel a child's async finalizer."""
+
+    loop, thread = _start_loop()
+    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    child_started = Event()
+    child_finalized = Event()
+    finalizer_steps: list[int] = []
+
+    async def child() -> None:
+        child_started.set()
+        try:
+            await asyncio.Event().wait()
+        finally:
+            for step in range(3):
+                await asyncio.sleep(0)
+                finalizer_steps.append(step)
+            child_finalized.set()
+
+    async def parent() -> None:
+        await channel.run_async(child())
+
+    parent_submission = channel.run_async(parent())
+    try:
+        assert child_started.wait(timeout=5)
+        channel.sync_close(timeout=5)
+        assert parent_submission.cancelled()
+        assert child_finalized.wait(timeout=5)
+        assert finalizer_steps == [0, 1, 2]
+        assert loop.is_running()
+    finally:
+        _stop_loop(loop, thread)
+
+
 def test_close_does_not_recancel_a_task_already_in_its_finalizer() -> None:
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials(), event_loop=loop)

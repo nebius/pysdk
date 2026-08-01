@@ -1190,10 +1190,11 @@ class AsyncRuntime:
     async def cancel_submissions(self) -> None:
         """Cancel tracked work once and wait for task finalizers.
 
-        This method does not cancel protected internal close callers. It first
-        cancels active asyncio tasks. It then cancels submissions that did not
-        start. This order prevents a second cancellation from interrupting an
-        asynchronous finalizer.
+        This method does not cancel protected internal close callers. It
+        cancels active SDK work through its authoritative submission handle;
+        raw tasks without a handle are cancelled directly. Cancelling every
+        handle before tasks resume prevents parent-to-child propagation from
+        injecting a second cancellation into an asynchronous finalizer.
         """
 
         current = asyncio.current_task(self._loop)
@@ -1204,15 +1205,15 @@ class AsyncRuntime:
         )
         for task in tasks:
             submitted = self._task_submissions.get(task)
-            if submitted is None or not submitted.cancelled():
+            if submitted is None:
                 task.cancel()
+            elif not submitted.cancelled():
+                submitted.cancel()
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
 
-        # Task cancellation propagates to its concurrent Future. Let those
-        # callbacks publish before cancelling submissions that never started;
-        # cancelling both representations can inject a second CancelledError
-        # into an async finalizer.
+        # Handle cancellation forwards exactly once to active tasks. Let those
+        # callbacks publish before cancelling submissions that never started.
         await asyncio.sleep(0)
         with self._submissions_lock:
             submissions = list(self._submissions - self._protected_submissions)

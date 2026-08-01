@@ -1381,6 +1381,71 @@ async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable()
     assert release_calls == 2
 
 
+@pytest.mark.asyncio
+async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
+    """Iterator finalization uses rejection-safe cleanup admission."""
+
+    submissions = 0
+    releases: list[tuple[object, bool]] = []
+
+    class Call:
+        def __aiter__(self):
+            async def responses():
+                yield Disk()
+                await asyncio.Event().wait()
+
+            return responses()
+
+        def cancel(self) -> bool:
+            return True
+
+    class Transport:
+        def unary_stream(self, *args: object, **kwargs: object):
+            return lambda *call_args, **call_kwargs: Call()
+
+    class Address:
+        channel = Transport()
+
+    address = Address()
+
+    class Channel:
+        def get_authorization_provider(self) -> None:
+            return None
+
+        def get_channel_by_route(self, route: object) -> Address:
+            return address
+
+        def run_async(self, awaitable):
+            nonlocal submissions
+            submissions += 1
+            if submissions > 1:
+                raise RuntimeError("cleanup submission rejected")
+            return awaitable
+
+        def release_channel(
+            self,
+            released: object,
+            *,
+            discard: bool = False,
+        ) -> None:
+            releases.append((released, discard))
+
+    stream = StreamRequest(
+        channel=Channel(),
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="rejected-iterator-cleanup"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+    )
+    responses = stream.__aiter__()
+    assert isinstance(await anext(responses), Disk)
+    with pytest.raises(RuntimeError, match="cleanup submission rejected"):
+        await responses.aclose()
+    assert releases == [(address, True)]
+    assert stream._released
+
+
 def test_failed_async_stream_cancel_release_can_be_retried() -> None:
     """A scheduled cancellation observes cleanup failure and permits retry."""
 
