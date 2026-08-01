@@ -1871,11 +1871,11 @@ def test_unexpected_transport_close_submission_failure_is_not_retained(
     original_submit = channel._runtime.submit
 
     def reject(awaitable: object, *, track: bool = True) -> None:
-        raise ValueError("unexpected rejection")
+        raise ValueError("The test rejected the close task unexpectedly.")
 
     monkeypatch.setattr(channel._runtime, "submit", reject)
     try:
-        with pytest.raises(ValueError, match="unexpected rejection"):
+        with pytest.raises(ValueError, match="rejected the close task unexpectedly"):
             channel._schedule_address_channel_close(address, None)
         assert id(address) not in channel._transport_closes
     finally:

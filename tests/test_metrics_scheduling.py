@@ -223,7 +223,7 @@ def test_sdk_metric_fatal_scheduler_failure_disposes_and_propagates() -> None:
             self.close_calls += 1
             return True
 
-    failure = KeyboardInterrupt("fatal scheduler failure")
+    failure = KeyboardInterrupt("The metric scheduler failed with a fatal error.")
 
     def fail(awaitable):
         wrapped.append(awaitable)
@@ -287,7 +287,7 @@ def test_sdk_metric_pre_start_cancellation_reaches_foreign_future() -> None:
                 if source.cancelled():
                     return
                 await asyncio.sleep(0.01)
-            raise AssertionError("foreign Future was not cancelled")
+            raise AssertionError("The SDK did not cancel the foreign Future.")
 
         asyncio.run_coroutine_threadsafe(
             wait_until_cancelled(),

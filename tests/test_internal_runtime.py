@@ -171,11 +171,11 @@ def test_runtime_startup_failure_is_reported_and_workers_stop(monkeypatch) -> No
         loop: asyncio.BaseEventLoop,
         executor: object,
     ) -> None:
-        raise RuntimeError("setup failed")
+        raise RuntimeError("The test runtime setup failed.")
 
     monkeypatch.setattr(asyncio.BaseEventLoop, "set_default_executor", fail_setup)
     before = set(enumerate_threads())
-    with pytest.raises(RuntimeError, match="setup failed"):
+    with pytest.raises(RuntimeError, match="runtime setup failed"):
         AsyncRuntime(None, 2)
     monkeypatch.setattr(asyncio.BaseEventLoop, "set_default_executor", original)
 
@@ -198,7 +198,7 @@ def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
         if thread.name.startswith("nebius-test-worker_"):
             worker_starts += 1
             if worker_starts == 2:
-                raise RuntimeError("worker start failed")
+                raise RuntimeError("The test worker did not start.")
         original_start(thread)
 
     monkeypatch.setattr(Thread, "start", fail_second_worker)
@@ -215,7 +215,7 @@ def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
     try:
         first = executor.submit(block_first_worker)
         assert first_started.wait(timeout=5)
-        with pytest.raises(RuntimeError, match="worker start failed"):
+        with pytest.raises(RuntimeError, match="worker did not start"):
             executor.submit(lambda: 2)
         release_first.set()
         assert first.result(timeout=5) == 1
@@ -258,7 +258,7 @@ def test_executor_survives_base_exception_from_completion_callback() -> None:
 
     def fail_callback(_: Future[int]) -> None:
         callback_ran.set()
-        raise SystemExit("callback failed")
+        raise SystemExit("The test callback failed.")
 
     try:
         first = executor.submit(first_work)
@@ -313,7 +313,7 @@ def test_executor_construction_failure_closes_new_event_loop(monkeypatch) -> Non
         return loop
 
     def fail_executor(*args: object, **kwargs: object) -> object:
-        raise RuntimeError("executor construction failed")
+        raise RuntimeError("The test executor construction failed.")
 
     monkeypatch.setattr(asyncio, "new_event_loop", capture_loop)
     monkeypatch.setattr(runtime_module, "DaemonThreadPoolExecutor", fail_executor)
@@ -332,12 +332,12 @@ def test_loop_thread_start_failure_stops_executor_workers(monkeypatch) -> None:
 
     def fail_loop_thread(thread: Thread) -> None:
         if thread.name == "nebius-sdk-loop":
-            raise RuntimeError("loop start failed")
+            raise RuntimeError("The test event loop did not start.")
         original_start(thread)
 
     monkeypatch.setattr(Thread, "start", fail_loop_thread)
     before = set(enumerate_threads())
-    with pytest.raises(RuntimeError, match="loop start failed"):
+    with pytest.raises(RuntimeError, match="event loop did not start"):
         AsyncRuntime(None, 2)
 
     leaked = [
@@ -445,7 +445,7 @@ def test_shutdown_async_reports_async_generator_cleanup_failure(
     runtime_threads = [runtime._loop_thread]
 
     async def fail_shutdown_asyncgens() -> None:
-        raise RuntimeError("async generator shutdown failed")
+        raise RuntimeError("The asynchronous generator did not shut down.")
 
     monkeypatch.setattr(
         runtime.event_loop,
@@ -453,7 +453,7 @@ def test_shutdown_async_reports_async_generator_cleanup_failure(
         fail_shutdown_asyncgens,
     )
 
-    with pytest.raises(RuntimeError, match="async generator shutdown failed"):
+    with pytest.raises(RuntimeError, match="generator did not shut down"):
         runtime.shutdown_async().result(timeout=5)
     assert all(thread is None or not thread.is_alive() for thread in runtime_threads)
 
@@ -477,12 +477,12 @@ def test_shutdown_async_reports_executor_cleanup_failure(
         nonlocal calls
         calls += 1
         if calls == 1:
-            raise RuntimeError("executor shutdown failed")
+            raise RuntimeError("The test executor did not shut down.")
         original_shutdown(wait=wait, cancel_futures=cancel_futures)
 
     monkeypatch.setattr(executor, "shutdown", fail_once)
 
-    with pytest.raises(RuntimeError, match="executor shutdown failed"):
+    with pytest.raises(RuntimeError, match="executor did not shut down"):
         runtime.shutdown_async().result(timeout=5)
     assert calls >= 2
 
@@ -519,7 +519,7 @@ def test_owned_runtime_shutdown_handles_loop_stop_race(
         original_call(callback, *args)  # type: ignore[arg-type]
         loop_thread.join(timeout=5)
         assert not loop_thread.is_alive()
-        raise RuntimeError("event loop is closed")
+        raise RuntimeError("The event loop is closed.")
 
     monkeypatch.setattr(
         runtime.event_loop,
@@ -542,7 +542,7 @@ def test_owned_runtime_shutdown_reports_finalizer_start_failure(
 
     def fail_shutdown_finalizer(thread: Thread) -> None:
         if thread.name == "nebius-sdk-shutdown":
-            raise RuntimeError("shutdown finalizer start failed")
+            raise RuntimeError("The shutdown finalizer did not start.")
         original_start(thread)
 
     monkeypatch.setattr(Thread, "start", fail_shutdown_finalizer)
@@ -556,7 +556,7 @@ def test_owned_runtime_shutdown_reports_finalizer_start_failure(
         runtime.event_loop,
     )
     assert shutdown_called.wait(timeout=5)
-    with pytest.raises(RuntimeError, match="shutdown finalizer start failed"):
+    with pytest.raises(RuntimeError, match="shutdown finalizer did not start"):
         runtime._shutdown_complete.result(timeout=5)
     loop_thread = runtime._loop_thread
     assert loop_thread is not None
@@ -595,7 +595,7 @@ def test_finalizer_start_failure_still_stops_owned_executor(
 
     def fail_shutdown_finalizer(thread: Thread) -> None:
         if thread.name == "nebius-sdk-shutdown":
-            raise RuntimeError("shutdown finalizer start failed")
+            raise RuntimeError("The shutdown finalizer did not start.")
         original_start(thread)
 
     monkeypatch.setattr(Thread, "start", fail_shutdown_finalizer)
@@ -608,7 +608,7 @@ def test_finalizer_start_failure_still_stops_owned_executor(
         runtime.event_loop,
     )
     try:
-        with pytest.raises(RuntimeError, match="shutdown finalizer start failed"):
+        with pytest.raises(RuntimeError, match="shutdown finalizer did not start"):
             runtime._shutdown_complete.result(timeout=5)
         with pytest.raises(RuntimeError, match="cannot schedule new work"):
             executor.submit(queued_ran.set)
@@ -859,7 +859,7 @@ def test_cancelled_shielded_wait_observes_late_wrapper_exception() -> None:
             waiter.cancel()
             with pytest.raises(asyncio.CancelledError):
                 await waiter
-            source.set_exception(RuntimeError("late failure"))
+            source.set_exception(RuntimeError("The foreign work failed late."))
             await asyncio.sleep(0)
             gc.collect()
             await asyncio.sleep(0)
@@ -1594,7 +1594,7 @@ def test_foreign_future_disposal_decides_on_owner_loop_after_completion() -> Non
     def complete_before_disposal_callback() -> None:
         callback_started.set()
         assert allow_completion.wait(timeout=5)
-        source.set_exception(RuntimeError("terminal before disposal"))
+        source.set_exception(RuntimeError("The work finished before disposal."))
 
     loop.call_soon_threadsafe(complete_before_disposal_callback)
     assert callback_started.wait(timeout=5)
@@ -1675,7 +1675,7 @@ def test_bg_task_start_failure_disposes_caller_awaitable() -> None:
     """Accepted background work is disposed if task creation later fails."""
 
     channel = Channel(credentials=NoCredentials())
-    rejection = RuntimeError("background task rejected")
+    rejection = RuntimeError("The test rejected the background task.")
     disposed = Event()
 
     class Awaitable:
@@ -1732,7 +1732,7 @@ def test_bg_task_pre_start_cancellation_reaches_foreign_future() -> None:
                 if source.cancelled():
                     return
                 await asyncio.sleep(0.01)
-            raise AssertionError("foreign Future was not cancelled")
+            raise AssertionError("The SDK did not cancel the foreign Future.")
 
         asyncio.run_coroutine_threadsafe(
             wait_until_cancelled(),
@@ -1758,7 +1758,7 @@ def test_bg_task_pre_start_disposal_consumes_foreign_future_exception() -> None:
 
     async def create_failed_future() -> asyncio.Future[None]:
         future = asyncio.get_running_loop().create_future()
-        future.set_exception(ValueError("boom"))
+        future.set_exception(ValueError("The test future failed."))
         return future
 
     async def block_sdk_loop() -> None:
@@ -1895,7 +1895,7 @@ def test_submission_failure_runs_threadsafe_disposal_hook_outside_locks(
             return True
 
     def reject_dispatch(*args, **kwargs):
-        raise RuntimeError("dispatch failed")
+        raise RuntimeError("The test dispatch failed.")
 
     monkeypatch.setattr(
         channel._event_loop,
@@ -1903,7 +1903,7 @@ def test_submission_failure_runs_threadsafe_disposal_hook_outside_locks(
         reject_dispatch,
     )
     try:
-        with pytest.raises(RuntimeError, match="dispatch failed"):
+        with pytest.raises(RuntimeError, match="test dispatch failed"):
             channel.run_async(ReentrantAwaitable())  # type: ignore[arg-type]
         assert closed == [grpc.ChannelConnectivity.READY]
     finally:
@@ -2023,8 +2023,8 @@ def test_channel_close_preserves_cleanup_and_shutdown_failures(
     """A runtime-shutdown error is chained behind the primary close error."""
 
     channel = Channel(credentials=NoCredentials())
-    close_error = RuntimeError("channel cleanup failed")
-    shutdown_error = RuntimeError("runtime shutdown failed")
+    close_error = RuntimeError("The channel cleanup failed.")
+    shutdown_error = RuntimeError("The runtime shutdown failed.")
     close_future: Future[None] = Future()
     close_future.set_exception(close_error)
     shutdown_future: Future[None] = Future()
@@ -2061,7 +2061,9 @@ def test_sync_close_preserves_terminal_timeout_error_identity(
     """Completed cleanup timeouts are not mistaken for wait expiration."""
 
     channel = Channel(credentials=NoCredentials())
-    terminal_error = TimeoutError(f"{timeout_phase} failed with timeout")
+    terminal_error = TimeoutError(
+        f"The {timeout_phase} phase failed because its time limit expired."
+    )
     close_future: Future[None] = Future()
     shutdown_future: Future[None] = Future()
     if timeout_phase == "cleanup":
@@ -2139,7 +2141,7 @@ def test_public_authorization_provider_dispatches_to_internal_loop() -> None:
         asyncio.run(authenticator.authenticate(Metadata()))
 
         async def retry() -> bool:
-            return authenticator.can_retry(RuntimeError("test"))
+            return authenticator.can_retry(RuntimeError("The test request failed."))
 
         assert channel.run_sync(retry(), timeout=5) is False
         assert calls == [id(channel._event_loop)] * 3
@@ -2268,7 +2270,7 @@ async def test_request_releases_override_when_authenticator_setup_fails() -> Non
 
     class FailingProvider:
         def authenticator(self) -> object:
-            raise RuntimeError("authenticator setup failed")
+            raise RuntimeError("The authenticator setup failed.")
 
     class LegacyChannel:
         def get_authorization_provider(self) -> FailingProvider:
@@ -2827,7 +2829,7 @@ def test_sync_token_options_are_snapshotted_before_run_sync() -> None:
 async def test_token_fetch_preserves_receiver_timeout_error() -> None:
     """A receiver's own TimeoutError is not rewritten as dispatch expiry."""
 
-    application_error = TimeoutError("receiver timeout")
+    application_error = TimeoutError("The token receiver timed out.")
 
     class Receiver(TokenReceiver):
         async def _fetch(self, timeout=None, options=None):
@@ -2842,7 +2844,7 @@ async def test_token_fetch_preserves_receiver_timeout_error() -> None:
 
     channel = Channel(credentials=Bearer())
     try:
-        with pytest.raises(TimeoutError, match="receiver timeout") as raised:
+        with pytest.raises(TimeoutError, match="token receiver timed out") as raised:
             await channel.get_token(5)
         assert raised.value is application_error
     finally:
@@ -2903,7 +2905,7 @@ async def test_authentication_retry_reopens_request_cancellation() -> None:
             raise ServiceRequestError(
                 RequestStatusExtended(
                     code=grpc.StatusCode.UNAUTHENTICATED,
-                    message="expired credential",
+                    message="The credential expired.",
                     details=[],
                     service_errors=[],
                     request_id="",
@@ -2912,7 +2914,7 @@ async def test_authentication_retry_reopens_request_cancellation() -> None:
             )
         second_attempt.set()
         await asyncio.Event().wait()
-        raise AssertionError("cancelled authentication retry returned")
+        raise AssertionError("The canceled authentication retry returned.")
 
     request._retry_loop = retry_loop  # type: ignore[method-assign]
     pending = asyncio.create_task(request._request_with_authorization_loop())
@@ -3025,7 +3027,7 @@ async def test_authentication_retry_transport_ownership(use_override: bool) -> N
     authentication_error = ServiceRequestError(
         RequestStatusExtended(
             code=grpc.StatusCode.UNAUTHENTICATED,
-            message="expired credential",
+            message="The credential expired.",
             details=[],
             service_errors=[],
             request_id="",
@@ -3160,7 +3162,7 @@ def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
 async def test_rejected_request_submission_discards_explicit_override() -> None:
     """A scheduler rejection cannot strand a request-owned transport lease."""
 
-    rejection = ChannelClosedError("rejected")
+    rejection = ChannelClosedError("The test channel rejected the submission.")
     override = object.__new__(AddressChannel)
     released: list[tuple[object | None, bool]] = []
 
@@ -3227,7 +3229,7 @@ def test_failed_first_close_submission_still_finalizes_runtime(
             close = getattr(awaitable, "close", None)
             if callable(close):
                 close()
-            raise RuntimeError("close dispatch failed")
+            raise RuntimeError("The close dispatch failed.")
         return original_submit(awaitable, track=track)
 
     monkeypatch.setattr(channel._runtime, "submit", reject_close)
@@ -3462,7 +3464,7 @@ def test_repeated_failed_internal_close_still_starts_shutdown() -> None:
     """A completed close failure cannot retain a protected internal caller."""
 
     channel = Channel(credentials=NoCredentials())
-    close_error = RuntimeError("cached channel cleanup failed")
+    close_error = RuntimeError("The cached channel cleanup failed.")
     close_future: Future[None] = Future()
     close_future.set_exception(close_error)
     channel._close_completion = close_future
@@ -3586,10 +3588,10 @@ def test_run_sync_preserves_runtime_error_from_awaitable() -> None:
     channel = Channel(credentials=NoCredentials())
 
     async def fail() -> None:
-        raise RuntimeError("boom")
+        raise RuntimeError("The test callable failed.")
 
     try:
-        with pytest.raises(RuntimeError, match="boom"):
+        with pytest.raises(RuntimeError, match="test callable failed"):
             channel.run_sync(fail(), timeout=5)
     finally:
         channel.sync_close(timeout=5)
@@ -3599,13 +3601,13 @@ def test_run_sync_preserves_timeout_error_from_completed_awaitable() -> None:
     """An application's TimeoutError is not mistaken for a wait deadline."""
 
     channel = Channel(credentials=NoCredentials())
-    application_error = TimeoutError("application timeout")
+    application_error = TimeoutError("The application task timed out.")
 
     async def fail() -> None:
         raise application_error
 
     try:
-        with pytest.raises(TimeoutError, match="application timeout") as raised:
+        with pytest.raises(TimeoutError, match="application task timed out") as raised:
             channel.run_sync(fail(), timeout=5)
         assert raised.value is application_error
     finally:
@@ -3699,7 +3701,7 @@ def test_constructor_config_metrics_run_on_internal_loop_and_are_drained(
 def test_deferred_credential_channel_future_is_bridged_from_foreign_loop() -> None:
     class Requester(TokenRequester):
         def get_exchange_token_request(self) -> ExchangeTokenRequest:
-            raise AssertionError("request creation is not expected")
+            raise AssertionError("The test must not create a request.")
 
     foreign_loop, foreign_thread = _start_loop()
     sdk_channel = Channel(credentials=NoCredentials())
@@ -3851,7 +3853,7 @@ def test_request_task_start_failure_releases_explicit_override() -> None:
     """An asynchronously rejected request releases its pre-leased transport."""
 
     channel = Channel(credentials=NoCredentials())
-    rejection = RuntimeError("request task rejected")
+    rejection = RuntimeError("The test rejected the request task.")
     released = Event()
     release_calls: list[tuple[object | None, bool]] = []
 
@@ -3955,7 +3957,7 @@ def test_stream_task_start_failure_releases_explicit_override() -> None:
     """An asynchronously rejected stream operation releases its lease."""
 
     channel = Channel(credentials=NoCredentials())
-    rejection = RuntimeError("stream task rejected")
+    rejection = RuntimeError("The test rejected the stream task.")
     released = Event()
 
     class Transport:
@@ -4001,7 +4003,7 @@ def test_later_stream_task_start_failure_keeps_active_transport() -> None:
     """Rejecting one later operation does not release the active stream."""
 
     channel = Channel(credentials=NoCredentials())
-    rejection = RuntimeError("later stream task rejected")
+    rejection = RuntimeError("The test rejected the later stream task.")
     release_calls: list[tuple[object | None, bool]] = []
 
     class Call:
@@ -4352,7 +4354,7 @@ def test_low_level_sync_terminal_accessor_failure_preserves_success() -> None:
             return grpc.StatusCode.OK
 
         def details(self) -> str:
-            raise RuntimeError("details unavailable")
+            raise RuntimeError("The native status details are not available.")
 
     class Transport:
         def unary_unary(self, *args: object, **kwargs: object):
@@ -4410,7 +4412,7 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
             return True
 
         def debug_error_string(self) -> str:
-            return "remote cancellation"
+            return "The remote service canceled the RPC."
 
         def __await__(self):
             async def result() -> Disk:
@@ -4420,8 +4422,8 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
                     grpc.StatusCode.CANCELLED,
                     (),
                     (),
-                    "cancelled remotely",
-                    "remote cancellation",
+                    "The remote service canceled the RPC.",
+                    "The remote service canceled the RPC.",
                 )
 
             return result().__await__()
@@ -4436,7 +4438,7 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
             return grpc.StatusCode.CANCELLED
 
         async def details(self) -> str:
-            return "cancelled remotely"
+            return "The remote service canceled the RPC."
 
     native_call = RemoteCancelledCall()
 
@@ -4478,13 +4480,13 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
         assert callback_called.wait(timeout=5)
         assert len(observations) == 1
         assert observations[0][:2] == (True, True)
-        assert observations[0][2] in ("", "remote cancellation")
+        assert observations[0][2] in ("", "The remote service canceled the RPC.")
         assert call.done()
         assert call.cancelled()
         release_result.set()
         with pytest.raises(grpc.aio.AioRpcError):
             call._submitted.result(timeout=5)
-        assert call.debug_error_string() == "remote cancellation"
+        assert call.debug_error_string() == "The remote service canceled the RPC."
     finally:
         release_result.set()
         channel.sync_close(timeout=5)
@@ -4514,12 +4516,12 @@ def test_low_level_terminal_precedes_blocking_fatal_diagnostics() -> None:
             self.callback(self)
 
         def cancelled(self) -> bool:
-            raise DiagnosticFailure("cancelled diagnostic failed")
+            raise DiagnosticFailure("The cancellation diagnostic failed.")
 
         def debug_error_string(self) -> str:
             debug_started.set()
             release_debug.wait(timeout=5)
-            raise DiagnosticFailure("debug diagnostic failed")
+            raise DiagnosticFailure("The debug diagnostic failed.")
 
         def __await__(self):
             async def result() -> Disk:
@@ -4788,7 +4790,7 @@ def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
     class Transport:
         def unary_unary(self, *args: object, **kwargs: object):
             call_factory_used.set()
-            raise AssertionError("cancelled unary call must not open transport")
+            raise AssertionError("A canceled unary call must not open a transport.")
 
     channel = Channel(credentials=NoCredentials())
     address = AddressChannel(Transport(), "test-address")  # type: ignore[arg-type]
@@ -4827,7 +4829,7 @@ def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
 def test_low_level_accessors_preserve_setup_failure_after_close() -> None:
     """Late accessors retain the call submission's authoritative failure."""
 
-    setup_error = RuntimeError("route resolution failed")
+    setup_error = RuntimeError("The route resolution failed.")
     channel = Channel(credentials=NoCredentials())
 
     def fail_resolution(method: str) -> AddressChannel:
@@ -4927,7 +4929,7 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
         def __await__(self):
             async def result() -> Disk:
                 if native_error:
-                    raise RuntimeError("native RPC failed")
+                    raise RuntimeError("The native RPC failed.")
                 return Disk()
 
             return result().__await__()
@@ -5383,8 +5385,8 @@ def test_generated_request_rejects_cancel_after_native_error() -> None:
                     grpc.StatusCode.INVALID_ARGUMENT,
                     (),
                     (),
-                    "invalid request",
-                    "debug details",
+                    "The request is invalid.",
+                    "The native call returned debug details.",
                 )
 
             return result().__await__()
@@ -5428,7 +5430,7 @@ def test_generated_request_rejects_cancel_after_native_error() -> None:
         assert not waiter.is_alive()
         assert len(errors) == 1
         assert not isinstance(errors[0], asyncio.CancelledError)
-        assert "invalid request" in str(errors[0])
+        assert "The request is invalid." in str(errors[0])
     finally:
         release_translation.set()
         waiter.join(timeout=5)
@@ -5449,8 +5451,8 @@ def test_generated_done_state_includes_remote_cancellation() -> None:
                     grpc.StatusCode.CANCELLED,
                     (),
                     (),
-                    "cancelled remotely",
-                    "remote cancellation",
+                    "The remote service canceled the RPC.",
+                    "The remote service canceled the RPC.",
                 )
 
             return result().__await__()
@@ -5519,7 +5521,7 @@ def test_generated_request_accepts_cancel_while_deciding_to_retry(
                     from nebius.api.nebius.common.v1 import ServiceError
                     from nebius.base._service_error import trailing_metadata_of_errors
 
-                    details = "structured retryable failure"
+                    details = "The service returned a structured retryable failure."
                     service_error = ServiceError(
                         service="example.service",
                         code="retry requested",
@@ -5535,14 +5537,14 @@ def test_generated_request_accepts_cancel_while_deciding_to_retry(
                         (),
                         trailing_metadata,
                         details,
-                        "debug details",
+                        "The native call returned debug details.",
                     )
                 raise grpc.aio.AioRpcError(
                     grpc.StatusCode.UNAVAILABLE,
                     (),
                     (),
-                    "retryable failure",
-                    "debug details",
+                    "The service returned a retryable failure.",
+                    "The native call returned debug details.",
                 )
 
             return result().__await__()
@@ -5659,7 +5661,7 @@ async def test_cancel_during_authorization_retry_decision_stops_retry() -> None:
         raise ServiceRequestError(
             RequestStatusExtended(
                 code=grpc.StatusCode.UNAUTHENTICATED,
-                message="expired credential",
+                message="The credential expired.",
                 details=[],
                 service_errors=[],
                 request_id="",
@@ -5865,7 +5867,7 @@ def test_custom_copy_from_payload_retains_pass_through_compatibility() -> None:
             self.value = value
 
         def CopyFrom(self, other: object) -> None:  # noqa: N802
-            raise AssertionError("custom CopyFrom must not be used")
+            raise AssertionError("The SDK must not use the custom CopyFrom method.")
 
         def SerializeToString(self) -> bytes:  # noqa: N802
             return self.value.encode()
@@ -5931,7 +5933,10 @@ def test_legacy_constant_request_memoizes_a_reusable_task() -> None:
 @pytest.mark.parametrize("hook_name", ["close", "_cancel_unstarted_threadsafe"])
 @pytest.mark.parametrize(
     "cleanup_error",
-    [ValueError("cleanup failed"), KeyboardInterrupt("fatal cleanup failed")],
+    [
+        ValueError("The test cleanup failed."),
+        KeyboardInterrupt("The test cleanup failed with a fatal error."),
+    ],
 )
 def test_failed_unstarted_disposal_preserves_submission_error(
     hook_name: str,

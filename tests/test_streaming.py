@@ -222,7 +222,7 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
     class Transport:
         def unary_stream(self, path, serializer, deserializer):
             call_factory_used.set()
-            raise AssertionError("cancelled stream must not open a transport")
+            raise AssertionError("A canceled stream must not open a transport.")
 
     channel = SDKChannel(credentials=NoCredentials())
     address = type(
@@ -304,7 +304,7 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
     class Transport:
         def stream_unary(self, *args, **kwargs):
             call_factory_used.set()
-            raise AssertionError("expired stream must not open a native RPC")
+            raise AssertionError("An expired stream must not open a native RPC.")
 
     address = type(
         "Address",
@@ -489,7 +489,7 @@ def test_rejected_stream_cancel_restores_retryable_state() -> None:
 
     class ClosedChannel:
         def run_async(self, awaitable: object) -> None:
-            raise RuntimeError("closed")
+            raise RuntimeError("The test channel is closed.")
 
         def get_state(self):
             return grpc.ChannelConnectivity.SHUTDOWN
@@ -510,14 +510,14 @@ def test_rejected_stream_cancel_restores_retryable_state() -> None:
 def test_rejected_stream_cancel_preserves_submission_error() -> None:
     """A secondary legacy state failure must not mask dispatch rejection."""
 
-    rejection = RuntimeError("cancellation submission rejected")
+    rejection = RuntimeError("The test rejected the cancellation submission.")
 
     class BrokenChannel:
         def run_async(self, awaitable: object) -> None:
             raise rejection
 
         def get_state(self):
-            raise ValueError("state unavailable")
+            raise ValueError("The native stream state is not available.")
 
     stream = StreamRequest(
         channel=BrokenChannel(),
@@ -528,7 +528,9 @@ def test_rejected_stream_cancel_preserves_submission_error() -> None:
         server_streaming=True,
     )
 
-    with pytest.raises(RuntimeError, match="submission rejected") as raised:
+    with pytest.raises(
+        RuntimeError, match="rejected the cancellation submission"
+    ) as raised:
         stream.cancel()
     assert raised.value is rejection
     assert not stream._cancel_requested
@@ -867,7 +869,7 @@ def test_prestart_stream_operation_cancellation_discards_override(
     class Transport:
         def stream_unary(self, *args: object) -> object:
             opened.set()
-            raise AssertionError("cancelled queued stream must not start")
+            raise AssertionError("A canceled queued stream must not start.")
 
     channel = SDKChannel(credentials=NoCredentials())
     override = type(
@@ -947,7 +949,7 @@ def test_legacy_stream_cancel_stopped_dispatch_is_retryable(
 
         def call_soon_threadsafe(self, callback) -> None:
             if self.fail_dispatch:
-                raise RuntimeError("event loop is closed")
+                raise RuntimeError("The event loop is closed.")
             self.callbacks.append(callback)
 
     stream = StreamRequest(
@@ -1093,7 +1095,7 @@ def test_constant_legacy_stream_disposes_nested_wrong_loop_operation() -> None:
 
     class RejectedOperation:
         def __await__(self):
-            raise AssertionError("wrong-loop work must not start")
+            raise AssertionError("Work on the wrong event loop must not start.")
             yield
 
         def _cancel_unstarted_threadsafe(self) -> bool:
@@ -1160,7 +1162,7 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
 
         def get_channel_by_route(self, route):
             opened.append(route)
-            raise AssertionError("cancelled stream must not resolve a channel")
+            raise AssertionError("A canceled stream must not resolve a channel.")
 
         def discard_channel(self, address):
             released.append((address, True))
@@ -1195,7 +1197,7 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
 async def test_rejected_stream_submission_discards_explicit_override() -> None:
     """A scheduler rejection cannot strand a stream-owned transport lease."""
 
-    rejection = RuntimeError("submission rejected")
+    rejection = RuntimeError("The test rejected the stream submission.")
     override = object()
     released: list[tuple[object | None, bool]] = []
 
@@ -1235,7 +1237,7 @@ def test_rejected_stream_cancel_discards_explicit_override() -> None:
             return None
 
         def run_async(self, awaitable):
-            raise RuntimeError("closed")
+            raise RuntimeError("The test channel is closed.")
 
         def get_state(self):
             return grpc.ChannelConnectivity.SHUTDOWN
@@ -1529,7 +1531,7 @@ def test_failed_stream_release_can_be_retried() -> None:
             nonlocal release_calls, successful_releases
             release_calls += 1
             if release_calls == 1:
-                raise RuntimeError("release failed")
+                raise RuntimeError("The test rejected the transport release.")
             successful_releases += 1
 
     class Call:
@@ -1548,7 +1550,7 @@ def test_failed_stream_release_can_be_retried() -> None:
     stream._address_channel = address  # type: ignore[assignment]
     stream._call = Call()
 
-    with pytest.raises(RuntimeError, match="release failed"):
+    with pytest.raises(RuntimeError, match="rejected the transport release"):
         stream._release()
     assert not stream._released
 
@@ -1600,7 +1602,7 @@ async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable()
             nonlocal release_calls
             release_calls += 1
             if release_calls == 1:
-                raise RuntimeError("release failed")
+                raise RuntimeError("The test rejected the transport release.")
 
     stream = StreamRequest(
         channel=Channel(),
@@ -1613,7 +1615,7 @@ async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable()
     responses = stream.__aiter__()
     await anext(responses)
 
-    with pytest.raises(RuntimeError, match="release failed"):
+    with pytest.raises(RuntimeError, match="rejected the transport release"):
         await responses.aclose()
     assert not stream._released
 
@@ -1660,7 +1662,7 @@ async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
             nonlocal submissions
             submissions += 1
             if submissions > 1:
-                raise RuntimeError("cleanup submission rejected")
+                raise RuntimeError("The test rejected the cleanup submission.")
             return awaitable
 
         def release_channel(
@@ -1681,7 +1683,7 @@ async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
     )
     responses = stream.__aiter__()
     assert isinstance(await anext(responses), Disk)
-    with pytest.raises(RuntimeError, match="cleanup submission rejected"):
+    with pytest.raises(RuntimeError, match="rejected the cleanup submission"):
         await responses.aclose()
     assert releases == [(address, True)]
     assert stream._released
@@ -1692,7 +1694,7 @@ def test_rejected_stream_close_aborts_only_on_owner_loop() -> None:
     """Rejected external cleanup cannot mutate asyncio state off-loop."""
 
     channel = SDKChannel(credentials=NoCredentials())
-    rejection = RuntimeError("stream close submission rejected")
+    rejection = RuntimeError("The test rejected the stream close submission.")
     released = Event()
     abort_loops: list[asyncio.AbstractEventLoop] = []
     release_loops: list[asyncio.AbstractEventLoop] = []
@@ -1761,7 +1763,7 @@ def test_failed_async_stream_cancel_release_can_be_retried() -> None:
         release_calls += 1
         if release_calls == 1:
             first_release.set()
-            raise RuntimeError("release failed")
+            raise RuntimeError("The test rejected the transport release.")
         successful_release.set()
 
     channel.release_channel = release  # type: ignore[method-assign]

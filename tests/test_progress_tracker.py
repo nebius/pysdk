@@ -456,7 +456,7 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
     class Service:
         def get(self, request, **kwargs):
             request_started.set()
-            raise AssertionError("expired update must not issue an RPC")
+            raise AssertionError("An expired update must not issue an RPC.")
 
     operation._service = Service()
 
@@ -582,7 +582,7 @@ async def test_operation_disposes_coroutine_on_submission_rejection(
         channel,
         OperationMessage(id="rejected-submission"),
     )
-    rejection = RuntimeError("submission rejected")
+    rejection = RuntimeError("The test rejected the operation submission.")
     rejected = []
     original_submit = channel.run_async
 
@@ -637,7 +637,7 @@ def test_operation_sync_update_uses_applicable_queue_deadline(
     class Service:
         def get(self, request, **kwargs):
             request_started.set()
-            raise AssertionError("expired sync update must not issue an RPC")
+            raise AssertionError("An expired synchronous update must not issue an RPC.")
 
     operation._service = Service()
 
@@ -923,7 +923,7 @@ async def test_operation_update_preserves_service_timeout_error() -> None:
         channel,
         OperationMessage(id="op-update-application-timeout"),
     )
-    application_error = TimeoutError("service timeout")
+    application_error = TimeoutError("The operation service timed out.")
 
     class Service:
         def get(self, request, **kwargs):
@@ -934,7 +934,7 @@ async def test_operation_update_preserves_service_timeout_error() -> None:
 
     operation._service = Service()
     try:
-        with pytest.raises(TimeoutError, match="service timeout") as raised:
+        with pytest.raises(TimeoutError, match="operation service timed out") as raised:
             await operation.update(timeout=5, auth_timeout=5)
         assert raised.value is application_error
     finally:
@@ -983,7 +983,7 @@ async def test_unfinished_operation_rejects_invalid_poll_interval(
 
     class Service:
         def get(self, request, **kwargs):
-            raise AssertionError("invalid interval must fail before polling")
+            raise AssertionError("An invalid interval must fail before polling.")
 
     operation._service = Service()
     try:

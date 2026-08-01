@@ -99,10 +99,12 @@ class StreamRequest(Generic[Req, Res]):
         **unsupported: object,
     ) -> None:
         if not (client_streaming or server_streaming):
-            raise ValueError("StreamRequest requires a streaming RPC shape")
+            raise ValueError("A StreamRequest object requires a streaming RPC shape.")
         if unsupported:
             name = min(unsupported)
-            raise TypeError(f"unsupported streaming request option {name!r}")
+            raise TypeError(
+                f"The SDK does not support the streaming request option {name!r}."
+            )
         self._channel = channel
         self._route = route
         # A request iterator is stateful and cannot be cloned generically. A
@@ -297,7 +299,7 @@ class StreamRequest(Generic[Req, Res]):
                 except BaseException as release_error:
                     logger.warning(
                         "The SDK could not release the stream transport after "
-                        "setup failed.",
+                        "the stream setup failed.",
                         exc_info=release_error,
                     )
                 raise
