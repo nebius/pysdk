@@ -1198,6 +1198,21 @@ class AsyncRuntime:
         self._protected_tasks.discard(task)
         self._protected_cancelling_tasks.discard(task)
 
+    def mark_current_task_cancelling(self) -> None:
+        """Record cancellation delivered after close protection began.
+
+        Python 3.10 does not expose :meth:`asyncio.Task.cancelling`. A task can
+        therefore receive cancellation after :meth:`protect_current_submission`
+        first inspected it without leaving any public cancellation counter.
+        Close catches that cancellation while it is visible and calls this
+        method so shutdown does not interrupt the task's asynchronous
+        finalizer with a second cancellation.
+        """
+
+        task = asyncio.current_task() if self.in_event_loop() else None
+        if task is not None and task in self._protected_tasks:
+            self._protected_cancelling_tasks.add(task)
+
     def mark_current_submission_close_returning(self) -> None:
         """Mark that the current internal caller can return from close."""
 
@@ -1743,6 +1758,7 @@ class AsyncRuntime:
                 cancelling = getattr(task, "cancelling", None)
                 already_cancelling = (
                     task in self._protected_cancelling_tasks
+                    or task in self._task_cancellation_requested
                     or callable(cancelling)
                     and cancelling() > 0
                 )
@@ -1751,7 +1767,7 @@ class AsyncRuntime:
                     and not already_cancelling
                     and (submitted is None or not submitted.cancelled())
                 ):
-                    task.cancel()
+                    self._cancel_task_once(task)
             if protected_tasks:
                 await asyncio.gather(
                     *protected_tasks,

@@ -17,6 +17,7 @@ from asyncio import (
     Future,
     Task,
     create_task,
+    current_task,
     ensure_future,
     gather,
     get_event_loop,
@@ -2196,6 +2197,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         try:
             await shield(closing)
         except BaseException as close_error:
+            if isinstance(close_error, CancelledError):
+                # On Python 3.10 a Task has no ``cancelling()`` counter.
+                # Cancellation can arrive after the task was protected at
+                # method entry, so record it while the exception is visible.
+                # Runtime shutdown must not inject a second cancellation into
+                # the caller's asynchronous finalizer.
+                self._runtime.mark_current_task_cancelling()
             if current_submission is None and closing.done():
                 try:
                     await shield(self._runtime.shutdown_async())
@@ -2370,7 +2378,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 with self._tasks_lock:
                     completion.set_exception(error)
 
-        self._close_task = create_task(cleanup(), name="Channel.close cleanup")
+        # Cleanup already runs in the runtime-protected close submission.
+        # Keeping it in that task removes a second task-factory boundary that
+        # could otherwise fail after the channel state was snapshotted and
+        # leave ``completion`` pending forever.
+        self._close_task = current_task()
+        await cleanup()
         await shield(wrap_future(completion))
 
     def get_corresponding_operation_service(

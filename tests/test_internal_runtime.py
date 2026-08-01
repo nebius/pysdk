@@ -1097,6 +1097,34 @@ def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
         _stop_loop(loop, thread)
 
 
+def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
+    """Close cleanup cannot be stranded by a second task-factory rejection."""
+
+    loop, thread = _start_loop()
+    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    factory_installed = Event()
+
+    def reject_while_cleanup_pending(loop, coroutine, **kwargs):
+        completion = channel._close_completion
+        if completion is not None and not completion.done():
+            raise RuntimeError("nested close cleanup task rejected")
+        return asyncio.Task(coroutine, loop=loop, **kwargs)
+
+    def install_factory() -> None:
+        loop.set_task_factory(reject_while_cleanup_pending)
+        factory_installed.set()
+
+    loop.call_soon_threadsafe(install_factory)
+    assert factory_installed.wait(timeout=5)
+    try:
+        channel.sync_close(timeout=5)
+        assert channel._close_completion is not None
+        assert channel._close_completion.done()
+        assert channel._close_completion.result(timeout=0) is None
+    finally:
+        _stop_loop(loop, thread)
+
+
 def test_borrowed_shutdown_watcher_start_failure_falls_back(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -3342,6 +3370,60 @@ def test_raw_child_close_does_not_receive_second_cancellation() -> None:
         assert not recancelled.is_set()
         assert parent_submission.cancelled()
     finally:
+        channel._runtime.shutdown_async().result(timeout=5)
+
+
+def test_raw_child_cancelled_after_close_protection_is_not_recancelled() -> None:
+    """Late cancellation is retained without ``Task.cancelling()`` support."""
+
+    class BlockingGraceful:
+        def __init__(self) -> None:
+            self.started = Event()
+            self.release = Event()
+
+        async def close(self, grace: float | None = None) -> None:
+            self.started.set()
+            while not self.release.is_set():
+                await asyncio.sleep(0)
+
+    channel = Channel(credentials=NoCredentials())
+    graceful = BlockingGraceful()
+    channel._gracefuls.add(graceful)
+    child_ready: Future[asyncio.Task[None]] = Future()
+    finalizer_started = Event()
+    finalized = Event()
+    recancelled = Event()
+
+    async def child() -> None:
+        try:
+            await channel.close()
+        finally:
+            finalizer_started.set()
+            try:
+                await asyncio.sleep(0.05)
+                finalized.set()
+            except asyncio.CancelledError:
+                recancelled.set()
+                raise
+
+    async def parent() -> None:
+        child_task = asyncio.create_task(child())
+        child_ready.set_result(child_task)
+        await asyncio.Event().wait()
+
+    parent_submission = channel.run_async(parent())
+    child_task = child_ready.result(timeout=5)
+    try:
+        assert graceful.started.wait(timeout=5)
+        channel._event_loop.call_soon_threadsafe(child_task.cancel)
+        assert finalizer_started.wait(timeout=5)
+        graceful.release.set()
+        channel._runtime._shutdown_complete.result(timeout=5)
+        assert finalized.wait(timeout=5)
+        assert not recancelled.is_set()
+        assert parent_submission.cancelled()
+    finally:
+        graceful.release.set()
         channel._runtime.shutdown_async().result(timeout=5)
 
 
