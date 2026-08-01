@@ -22,9 +22,9 @@ context when code creates the task. The child task therefore keeps the same
 runtime helpers after its parent continues or resets its own values.
 
 Creating a coroutine object does not copy the current context. A coroutine
-uses the context of the task that eventually runs it. Code that needs to
-retain the current bindings must create a task while the bindings are active,
-or must submit the coroutine through the active scheduler.
+uses the context of the task that runs it. To retain the current bindings,
+create a task while the bindings are active. You can also submit the coroutine
+through the active scheduler.
 
 The runtime resets both variables in a ``finally`` block when submitted work
 ends. Synchronous SDK callbacks use the same set-and-reset procedure. The
@@ -123,8 +123,8 @@ def close_rejected_sync_awaitable(awaitable: Awaitable[Any]) -> bool:
     block safely. The adapter owns disposal of a coroutine object created only
     for that rejected call, so closing it prevents an unawaited-coroutine
     warning. It does not own an already scheduled Future, Task, concurrent
-    future, cross-loop handle, or opaque custom awaitable; those values may be
-    shared with other waiters and must remain untouched.
+    future, cross-loop handle, or opaque custom awaitable. Other waiters can
+    share these values, so the adapter must not change them.
 
     :param awaitable: Input rejected before a synchronous wait starts.
     :return: ``True`` when a native coroutine object was closed.

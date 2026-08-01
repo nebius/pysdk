@@ -136,7 +136,7 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
         """
 
         if max_workers <= 0:
-            raise ValueError("max_workers must be greater than 0")
+            raise ValueError("The max_workers value must be greater than zero.")
         # ThreadPoolExecutor.__init__ establishes its private invariants but
         # does not start threads. We replace only the queue and worker creation
         # needed to guarantee daemon threads; inherited asyncio checks still
@@ -162,7 +162,7 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
                     # publishes its result. One callback must not permanently
                     # remove a daemon worker from this bounded executor.
                     logger.critical(
-                        "Unhandled exception in SDK executor completion callback",
+                        "The SDK executor callback raised an unhandled exception.",
                         exc_info=error,
                     )
                 finally:
@@ -189,7 +189,9 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
 
         with self._shutdown_lock:
             if self._shutdown:
-                raise RuntimeError("cannot schedule new futures after shutdown")
+                raise RuntimeError(
+                    "The executor cannot schedule new work after shutdown starts."
+                )
             has_idle_worker = self._idle_semaphore.acquire(blocking=False)
             if not has_idle_worker and len(self._threads) < self._max_workers:
                 thread = Thread(
@@ -328,11 +330,11 @@ class CrossLoopAwaitable(Generic[T]):
     it accepts the request. The SDK coroutine can still be running its
     asynchronous ``finally`` block; SDK close drains that finalization.
 
-    This object is awaitable but is not an :class:`asyncio.Future` or
+    This object is awaitable. It is not an :class:`asyncio.Future` or
     :class:`asyncio.Task`. Functions such as :func:`asyncio.gather` accept it.
-    Wrap it with :func:`asyncio.ensure_future` before giving it to
-    :func:`asyncio.wait`. Task-only naming, coroutine-inspection, and callback
-    removal methods are not available.
+    Before you give it to :func:`asyncio.wait`, wrap it with
+    :func:`asyncio.ensure_future`. It does not have task-only naming,
+    coroutine-inspection, or callback-removal methods.
 
     A public completion callback uses the running event loop that registers
     it. The loop must stay running until delivery. The SDK does not move the
@@ -399,8 +401,8 @@ class CrossLoopAwaitable(Generic[T]):
 
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "an SDK awaitable cannot be used after fork; construct SDK "
-                "objects only after the child process starts"
+                "You cannot use an SDK awaitable after a fork. Create SDK "
+                "objects after the child process starts."
             )
 
     @property
@@ -515,7 +517,7 @@ class CrossLoopAwaitable(Generic[T]):
             return
         if _in_sdk_executor_thread():
             raise RuntimeError(
-                "cannot wait for pending SDK work from an SDK executor worker"
+                "An SDK executor worker cannot wait for pending SDK work."
             )
 
     def _reject_blocking_async_wait(self) -> None:
@@ -529,8 +531,8 @@ class CrossLoopAwaitable(Generic[T]):
         except RuntimeError:
             return
         raise RuntimeError(
-            "cannot synchronously wait for pending SDK work from an asyncio "
-            "event loop; await it instead"
+            "An event loop cannot wait synchronously for pending SDK work. "
+            "Await the work instead."
         )
 
     def add_done_callback(
@@ -561,7 +563,7 @@ class CrossLoopAwaitable(Generic[T]):
         except RuntimeError:
             callback_loop = self._event_loop
         if callback_loop.is_closed() or not callback_loop.is_running():
-            raise RuntimeError("callback event loop is not running")
+            raise RuntimeError("The callback event loop is not running.")
         callback_context = copy_context() if context is None else context
         state: dict[str, Any] = {
             "callback": callback,
@@ -579,8 +581,8 @@ class CrossLoopAwaitable(Generic[T]):
                 return
             if not retained_loop.is_running():
                 logger.warning(
-                    "SDK completion callback was not run because its "
-                    "registration loop is not running"
+                    "The SDK did not run the completion callback because its "
+                    "registration loop is not running."
                 )
                 return
             try:
@@ -594,8 +596,8 @@ class CrossLoopAwaitable(Generic[T]):
                 # closes. Do not run loop-affine user code on the completion
                 # thread.
                 logger.warning(
-                    "SDK completion callback was not run because its "
-                    "registration loop is not running"
+                    "The SDK did not run the completion callback because its "
+                    "registration loop is not running."
                 )
 
         self._future.add_done_callback(schedule)
@@ -656,7 +658,7 @@ class CrossLoopAwaitable(Generic[T]):
         self._check_process()
         binding = _current_submission.get()
         if binding is not None and binding[1] is self and not self._future.done():
-            raise RuntimeError("SDK work cannot await its own submission handle")
+            raise RuntimeError("SDK work cannot await its own submission handle.")
         self._reject_executor_wait()
         loop = asyncio.get_running_loop()
         relay: asyncio.Future[T] = loop.create_future()
@@ -688,10 +690,9 @@ class AsyncRuntime:
     An owned runtime starts one daemon event-loop thread and an independent
     daemon executor. A borrowed runtime uses an event loop that the caller
     supplies. Shutdown does not stop a borrowed loop or manage its default
-    executor. Consequently, callers must not occupy every worker of that
-    executor with synchronous SDK waits: internal or extension code on the
-    borrowed loop may need the same executor, and arbitrary executor worker
-    threads cannot be identified reliably by the SDK.
+    executor. Do not occupy every worker of that executor with synchronous SDK
+    waits. Internal or extension code on the borrowed loop can need the same
+    executor. The SDK cannot reliably identify all executor worker threads.
     """
 
     def __init__(
@@ -712,7 +713,9 @@ class AsyncRuntime:
         self._owned = event_loop is None
         self._process_id = os.getpid()
         if self._owned and executor_max_workers <= 0:
-            raise ValueError("executor_max_workers must be greater than 0")
+            raise ValueError(
+                "The executor_max_workers value must be greater than zero."
+            )
         self._loop = event_loop or asyncio.new_event_loop()
         try:
             self._executor = (
@@ -759,7 +762,7 @@ class AsyncRuntime:
                     asyncio.set_event_loop(self._loop)
                     executor = self._executor
                     if executor is None:
-                        raise RuntimeError("owned SDK runtime has no executor")
+                        raise RuntimeError("The owned SDK runtime has no executor.")
                     self._loop.set_default_executor(executor)
                 except BaseException as error:
                     try:
@@ -833,7 +836,7 @@ class AsyncRuntime:
                 raise
         else:
             if not self._loop.is_running():
-                raise ValueError("a supplied event loop must already be running")
+                raise ValueError("A supplied event loop must already be running.")
 
     @property
     def event_loop(self) -> asyncio.AbstractEventLoop:
@@ -883,8 +886,8 @@ class AsyncRuntime:
         if os.getpid() != self._process_id:
             dispose_unstarted_awaitable(awaitable)
             raise RuntimeError(
-                "an SDK runtime cannot be used after fork; construct SDK "
-                "objects only after the child process starts"
+                "You cannot use an SDK runtime after a fork. Create SDK objects "
+                "after the child process starts."
             )
         self._reject_self_submission(awaitable)
         try:
@@ -919,7 +922,7 @@ class AsyncRuntime:
             # its handle to B, then awaits B). Keep ownership with the running
             # submission and reject without cancelling or disposing its
             # handle.
-            raise RuntimeError("SDK work cannot submit its own submission handle")
+            raise RuntimeError("SDK work cannot submit its own submission handle.")
 
     def _submit_without_disposal(
         self,
@@ -942,9 +945,12 @@ class AsyncRuntime:
         rejection: RuntimeError | None = None
         with self._shutdown_lock:
             if self._shutdown or not self._accepting:
-                rejection = RuntimeError("SDK runtime is closing or closed")
+                rejection = RuntimeError(
+                    "The SDK runtime cannot accept work because it is closing "
+                    "or closed."
+                )
             elif not self._loop.is_running():
-                rejection = RuntimeError("SDK event loop is not running")
+                rejection = RuntimeError("The SDK event loop is not running.")
             elif isinstance(awaitable, asyncio.Future):
                 owner_loop = awaitable.get_loop()
                 if owner_loop is not self._loop:
@@ -1235,10 +1241,9 @@ class AsyncRuntime:
         A public handle cancellation and runtime shutdown can race to cancel
         the same task. Recording the request on the SDK loop prevents the
         later edge from injecting another ``CancelledError`` while the task
-        is executing an asynchronous finalizer. Runtime shutdown deliberately
-        does not cancel the public concurrent future here: a native RPC that
-        is already terminal can still absorb task cancellation and publish
-        its authoritative result.
+        is executing an asynchronous finalizer. Runtime shutdown does not
+        cancel the public concurrent future here. A terminal native RPC can
+        still absorb task cancellation and publish its result.
 
         :param task: SDK-loop task to cancel.
         """
@@ -1376,7 +1381,9 @@ class AsyncRuntime:
         bridged.add_done_callback(forward_cancellation)
         if not owner_loop.is_running():
             bridged.set_exception(
-                RuntimeError("foreign future owner event loop is not running")
+                RuntimeError(
+                    "The event loop that owns the foreign Future is not running."
+                )
             )
         else:
             try:
@@ -1499,14 +1506,18 @@ class AsyncRuntime:
 
         if self.in_executor_thread():
             close_rejected_sync_awaitable(awaitable)
-            raise RuntimeError("cannot synchronously wait from an SDK executor worker")
+            raise RuntimeError(
+                "An SDK executor worker cannot wait synchronously for SDK work."
+            )
         try:
             current = asyncio.get_running_loop()
         except RuntimeError:
             current = None
         if current is self._loop:
             close_rejected_sync_awaitable(awaitable)
-            raise RuntimeError("cannot synchronously wait on the SDK event loop")
+            raise RuntimeError(
+                "The SDK event loop cannot wait synchronously for SDK work."
+            )
         submitted = (
             awaitable
             if isinstance(awaitable, CrossLoopAwaitable)
@@ -1529,7 +1540,7 @@ class AsyncRuntime:
                 if terminal_error is error:
                     raise
             submitted_handle.cancel()
-            raise TimeoutError("Awaitable timed out") from None
+            raise TimeoutError("The awaitable timed out.") from None
 
     def shutdown(self) -> None:
         """Stop this runtime and release owned resources.
@@ -1852,7 +1863,7 @@ class AsyncRuntime:
             if self._shutdown_failure is not None:
                 return
             self._shutdown_failure = error
-        logger.error("SDK runtime shutdown failed", exc_info=error)
+        logger.error("The SDK runtime could not shut down.", exc_info=error)
 
     def _complete_shutdown(self) -> None:
         """Publish the retained shutdown result exactly once."""

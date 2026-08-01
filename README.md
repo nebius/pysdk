@@ -24,6 +24,160 @@ If you have a ZIP archive or a Git checkout, install the SDK from its directory:
 pip install ./path/to/your/pysdk
 ```
 
+### Migration from 0.4.x to 0.5.x
+
+Version 0.5.0 runs all SDK asynchronous work on one internal event loop per SDK
+instance. By default, each SDK instance owns this loop and its daemon thread.
+It also owns a daemon executor with a maximum of two worker threads. You can
+set the maximum with `executor_max_workers`.
+
+Some 0.4.x workflows do not work in 0.5.0. Use these replacements:
+
+| 0.4.x workflow | 0.5.x behavior | Required change |
+| --- | --- | --- |
+| Treat `Channel.bg_task()` as an `asyncio.Task`. | The method returns a reusable `CrossLoopAwaitable`. | Await it directly. Before you pass it to `asyncio.wait()`, wrap it with `asyncio.ensure_future()`. |
+| Call `run_sync()` or `sync_close()` from an asynchronous call stack. | The SDK rejects the call from every active caller loop. | Await the SDK handle. You can also move the complete synchronous call to `asyncio.to_thread()`. |
+| Give the SDK a stopped `event_loop`. | A supplied loop must already run. The caller continues to own it. | Start the loop in its owner thread. Keep it running until SDK close is complete. |
+
+#### Runtime ownership and shutdown
+
+You can give an already-running `event_loop` to `SDK`. The SDK does not stop
+or reconfigure this loop during `SDK.close()`. The caller must keep the loop
+responsive until SDK close is complete.
+
+The caller also owns the supplied loop's default executor. Do not fill this
+executor with synchronous SDK waits. SDK work or custom extensions can need
+the same executor. Await SDK handles, or use independent executors with enough
+capacity.
+
+An owned executor starts worker threads only when it receives work. Shutdown
+waits for submitted executor work. A function that does not return can delay
+shutdown without a time limit. The function must stop cooperatively because
+Python cannot safely stop a running thread.
+
+Fork the process before you create SDK or gRPC objects. Create separate SDK
+objects after each child process starts. The SDK rejects an object that a
+child process inherits from its parent. Event-loop threads, gRPC state, and
+locks cannot move safely to the child.
+
+Do not call synchronous helpers from an asynchronous call stack. Await the SDK
+handle instead. For a synchronous low-level pool method, use
+`asyncio.to_thread()`. Application threads can call synchronous helpers at the
+same time if the SDK loop stays responsive. Do not call these helpers from an
+SDK executor worker.
+
+When SDK work calls `close()` on the internal loop, the code immediately after
+`await close()` can finish. Shutdown cancels that code if it waits again.
+
+#### Custom extensions and data
+
+The SDK loop runs custom resolvers, interceptors, authorization providers,
+token bearers, and asynchronous metrics callbacks. The SDK fixes request
+options before submission. Custom callback and credential objects must be
+thread-safe and loop-neutral.
+
+Do not store application-loop objects in a custom callback or credential
+object. These objects include asyncio locks, events, queues, tasks, and client
+sessions. Thread-local application state does not move to the SDK thread. Use
+a `ContextVar` when the SDK work needs application context.
+
+Use one stateful authorization provider or token bearer for one SDK. Do not
+share it between SDK instances that use different loops. You can share an
+immutable implementation only if it supports concurrent calls and independent
+`close()` calls. The SDK cannot detect hidden loop ownership or mutable state.
+
+The SDK closes a rejected native coroutine. It sends cleanup for a rejected
+`asyncio.Future` to the Future's owner loop. The SDK does not call `close()` on
+an unknown custom awaitable from a cancellation or shutdown thread. Such an
+awaitable must provide thread-safe cleanup for work that does not start.
+
+Supported mutable request messages become fixed when the request wrapper is
+created. This rule keeps generated reset-mask metadata consistent with the
+message. Set metadata, timeouts, credentials, and authentication options
+before the first await or `.wait()` call. Submission fixes these options.
+
+`Channel.run_async()` is a new optional custom-channel method. The built-in
+channel uses it to schedule work immediately and return a cross-loop handle.
+The minimum custom-channel protocol did not change. A legacy custom channel
+can omit this method and use its local-awaitable fallback.
+
+The fallback does not make a legacy channel cross-loop. If an operation or
+stream first uses a contended asyncio lock on one caller loop, continue to use
+that object on the same loop. Implement `run_async()` to support cross-loop
+scheduling.
+
+#### RPC and stream behavior
+
+Low-level `Channel.unary_unary()` calls copy metadata and supported request
+messages when the call wrapper is created. The SDK serializes a custom request
+immediately when a serializer exists. Without a serializer, the custom value
+must be immutable or safe to share between threads.
+
+After a native unary call ends, its metadata and status awaitables must finish
+promptly. Shutdown drains these awaitables to preserve the RPC result. A
+custom transport that leaves an accessor pending can delay final shutdown.
+`sync_close(timeout=...)` limits the caller's wait, but it cannot stop custom
+transport code safely.
+
+Channel cleanup is best effort for compatibility. The SDK logs each resource
+cleanup failure after it tries to close all resources. These failures do not
+make `close()` fail. In contrast, `close()` and `sync_close()` report failures
+from runtime finalization.
+
+Generated operation-service factories remain synchronous. You can call them
+from asynchronous application code. They resolve the source service on the
+SDK loop when the first operation RPC starts. They then keep that address for
+the operation-service adapter. This behavior keeps all polls for one operation
+on one endpoint.
+
+Direct synchronous resolver and pool helpers still reject active event loops.
+Use a generated client. You can also move an explicit synchronous call to an
+application thread.
+
+The SDK loop consumes a caller-supplied asynchronous iterator for a client
+stream. The iterator must be loop-neutral. The SDK does not support an
+iterator with state that belongs to another event loop.
+
+The SDK bridges an explicit `asyncio.Future` through its owner loop. The owner
+loop must stay running until the bridge copies the result. This rule also
+applies when the Future is already complete. If the owner loop stops, the
+bridge fails without reading the Future from another thread.
+
+A unary streaming request and its authentication options become fixed when
+the SDK creates the stream wrapper. Each client-streaming `write()` copies a
+supported request message before SDK-loop dispatch. An unknown custom value
+is not copied and must be safe to share between threads.
+
+Low-level pool methods still expose `AddressChannel.channel` for custom
+transport compatibility. This field is a native `grpc.aio.Channel` that
+belongs to the SDK loop. Do not call it from an external loop. Use a generated
+client or `Channel.unary_unary()` for cross-loop calls.
+
+`get_authorization_provider()` still returns the configured provider object.
+Generated requests dispatch it on the SDK loop. Code that calls the provider
+directly is responsible for correct loop and thread use.
+
+#### Cross-loop handles
+
+`Channel.bg_task()` now returns a cross-loop SDK handle. It does not return an
+`asyncio.Task`. Await the handle directly. Wrap it with
+`asyncio.ensure_future()` before you pass it to `asyncio.wait()`. Task-only
+inspection, naming, and callback-removal methods are not available.
+
+Pending `result()` and `exception()` calls can block an application thread.
+They reject active event loops and SDK executor workers. Asynchronous code
+must await the handle. A handle cannot await itself.
+
+All direct waiters share cancellation. The handle can report cancellation
+before an asynchronous finalizer is complete. The `cancel(msg)` method accepts
+and ignores the message. After cancellation, `result()` and `exception()`
+raise `concurrent.futures.CancelledError`.
+
+Completion callbacks run on the event loop that registered them. This loop
+must run until it delivers the callback. Registration on a stopped or closed
+loop raises `RuntimeError`. If the loop stops later, the SDK logs a warning.
+It does not move the callback to another thread.
+
 ### Migration from 0.3.x to 0.4.x
 
 Version 0.4.0 replaces the provider-backed generated API layer. The new layer
@@ -264,35 +418,16 @@ async def my_call():
 asyncio.run(my_call())
 ```
 
-Each SDK instance uses one internal asyncio loop. By default it starts a
-dedicated daemon loop thread and a private daemon executor with at most two
-workers. Executor workers are daemon threads and start lazily when work is
-submitted. SDK request, authentication, renewal, streaming, asynchronous
-metric results, and cleanup work runs there. Returned SDK awaitables can be
-awaited from any external asyncio loop. Reuse long-lived SDK instances instead
-of constructing one per request, because every default instance owns its loop
-thread and can start its configured executor workers.
+Each SDK instance uses one internal asyncio event loop. By default, the SDK
+starts a daemon thread for this loop. It also creates a private daemon executor
+with a maximum of two workers. The executor starts workers only when the SDK
+submits work.
 
-### Internal-loop migration notes
-
-This release intentionally changes a few loop-affine compatibility surfaces
-so that SDK-owned work cannot escape onto an application loop:
-
-| Previous use | Internal-loop behavior | Migration |
-| --- | --- | --- |
-| Treating `Channel.bg_task()` as an `asyncio.Task` | It returns a reusable `CrossLoopAwaitable` | Await it directly; wrap it with `asyncio.ensure_future()` before `asyncio.wait()`; Task-only inspection and callback removal are unavailable. |
-| Calling `run_sync()` or `sync_close()` from an async call stack | Every active caller loop is rejected, including one separate from the SDK loop | Await the SDK handle, or move the whole synchronous call to `asyncio.to_thread()`. |
-| Supplying a stopped `event_loop` for the SDK to drive | A supplied loop must already be running and remains caller-owned | Start and keep the loop running in its owner thread until SDK close completes. |
-
-`Channel.run_async()` is a new submission capability used by the built-in
-channel. It schedules work immediately and returns a reusable cross-loop
-handle. The minimal custom-channel protocol is deliberately unchanged:
-legacy implementations without `run_async()` retain their local-awaitable
-fallback instead of being forced to implement the new runtime. That fallback
-does not make a legacy channel cross-loop: an operation or stream whose
-asyncio lock first becomes contended on one caller loop must continue to be
-used on that loop. Implement `run_async()` to gain the built-in channel's
-cross-loop scheduling contract.
+The internal loop runs requests, authentication, token renewal, streaming,
+asynchronous metric callbacks, and cleanup. You can await an SDK awaitable from
+any external asyncio loop. Reuse SDK instances. Do not create an SDK instance
+for each request because each default instance owns a loop thread and an
+executor.
 
 Use an asynchronous context when possible. If no asynchronous event loop is
 running, you can use the SDK synchronously:
@@ -305,127 +440,8 @@ finally:
     sdk.sync_close()
 ```
 
-Do not call synchronous helpers from an asynchronous call stack. Await the SDK
-handle instead. For a synchronous low-level pool method, use
-`asyncio.to_thread()`. Synchronous helpers are safe to call concurrently from
-regular application threads while the SDK event loop remains responsive. Do
-not call them from SDK-owned executor workers.
-
-Advanced callers may pass an already-running `event_loop` to `SDK`. That loop
-remains caller-owned and is not stopped or reconfigured by `SDK.close()`.
-The caller must keep it running and responsive until SDK close completes.
-The supplied loop's default executor also remains caller-owned. Do not occupy
-all of its workers with blocking synchronous SDK calls: SDK work or custom
-extensions running on that loop may need the same executor and no library can
-detect every caller-owned executor thread. Await SDK handles instead, or make
-sure synchronous callers and SDK dependencies use independent executors with
-enough capacity.
-Use `executor_max_workers` to change the owned executor size from its default
-of two workers. Shutdown waits for submitted executor work to finish, so an
-arbitrary caller function that never returns can delay shutdown indefinitely.
-Such functions must terminate cooperatively; Python cannot safely force-stop a
-running thread.
-
-Fork before you create SDK or gRPC objects. Create separate SDK objects after
-each child process starts. An SDK object inherited from the parent fails fast
-in the child because event-loop threads, gRPC state, and locks cannot be
-transferred safely.
-
-Custom resolvers, interceptors, authorization providers, token bearers,
-asynchronous metrics callbacks, and generated request options now execute or
-become fixed on the internal SDK loop. Custom callback and credential objects
-must be thread-safe and loop-neutral. They must not contain an asyncio lock,
-event, queue, task, client session, or other state that belongs to an
-application loop. Thread-local application state does not move to the SDK
-thread. Use `ContextVar` state when context propagation is required.
-
-Treat a custom authorization provider or token bearer as owned by one SDK.
-Do not attach the same stateful instance to SDKs that use different internal
-loops. Create one credential object per SDK instead. Sharing an immutable,
-stateless implementation is possible only when that implementation explicitly
-supports concurrent calls and independent `close()` calls. The SDK cannot
-detect hidden loop ownership or mutable state in a custom object.
-
-The SDK closes native coroutine objects and dispatches `asyncio.Future`
-cleanup to the Future's owner loop when submitted work is rejected before it
-starts. It does not invoke an arbitrary custom awaitable's `close()` method on
-an unknown cancellation or shutdown thread. An opaque awaitable that needs
-pre-start cleanup must provide its own thread-safe cancellation behavior; the
-SDK cannot infer hidden loop affinity.
-
-Supported mutable request payloads become fixed when the request wrapper is
-created, so generated reset-mask metadata remains consistent with the payload.
-Configure metadata, timeouts, credentials, and authentication options before
-the first await or `.wait()` call; submission freezes those options.
-
-Low-level `Channel.unary_unary()` calls snapshot metadata and supported
-protobuf request messages when the call wrapper is created. Custom request
-values with a serializer are serialized immediately. A custom value without a
-serializer must be immutable or otherwise safe to share between threads.
-After a native unary call becomes terminal, its `initial_metadata()`,
-`trailing_metadata()`, `code()`, and `details()` awaitables must finish
-promptly. Shutdown drains those accessors to preserve the authoritative RPC
-result despite cancellation. A custom transport that leaves one pending can
-therefore delay final runtime termination; `sync_close(timeout=...)` bounds
-the caller's wait but cannot safely terminate arbitrary transport code.
-
-Channel resource cleanup remains best-effort for compatibility: failures from
-an individual transport, token bearer, or registered graceful resource are
-logged after all resources have been given a chance to close. They do not make
-`close()` fail. Failures in the SDK runtime's own finalization are different
-and are propagated by `close()` and `sync_close()`.
-
-Generated operation-service factories remain synchronous and may be called
-from asynchronous application code. They defer source-service resolution to
-the SDK loop until the first operation RPC starts, then retain that address for
-the returned operation-service adapter. This keeps successive polls for an
-operation on one endpoint. Direct synchronous resolver and low-level pool
-helpers still reject active event loops; use a generated client or move those
-explicit synchronous calls to a regular application thread.
-
-A caller-supplied asynchronous iterator for a client-streaming request is
-consumed on the SDK loop. The iterator must be loop-neutral. An iterator that
-contains state bound to another event loop is not supported.
-
-An explicit `asyncio.Future` returned by custom SDK work is bridged through
-its owning loop. That loop must remain running until the bridge has inspected
-and copied the result, even if the Future is already complete. If its owner is
-stopped, the SDK fails promptly instead of reading non-thread-safe Future state
-from another thread.
-
-A unary streaming request and its authentication options become fixed when
-the stream wrapper is created. Each explicit client-streaming `write()` copies
-a supported protobuf message before SDK-loop dispatch. An unknown custom value
-keeps its pass-through behavior and must be safe to share between threads.
-
-`get_channel_by_addr()` and related low-level pool methods still expose
-`AddressChannel.channel` for custom transport compatibility. That field is a
-native `grpc.aio.Channel` owned by the SDK loop and must not be invoked from an
-external loop. Use generated clients or `Channel.unary_unary()` when a call
-must be awaited from arbitrary loops. Likewise,
-`get_authorization_provider()` preserves the configured provider object for
-identity and extension compatibility; generated SDK requests dispatch it
-internally, but manual direct use remains the caller's responsibility.
-
-When SDK work calls `close()` on the internal loop, the code immediately after
-`await close()` can finish. If that code waits again, shutdown cancels it.
-
-`Channel.bg_task()` now returns a cross-loop SDK handle instead of an
-`asyncio.Task`. Await it directly, or wrap it with `asyncio.ensure_future()`
-before passing it to `asyncio.wait()`. Task-only inspection and naming methods
-are not available. Its pending `result()` and `exception()` methods may block
-on regular application threads. They reject active event loops and SDK-owned
-executor workers. Async code must await the handle. A handle cannot await
-itself. Cancellation is shared by all direct waiters and becomes visible before
-an asynchronous finalizer necessarily finishes. `cancel(msg)` accepts but
-ignores the message. A cancelled `result()` or `exception()` raises
-`concurrent.futures.CancelledError`.
-
-Completion callbacks run asynchronously on the event loop that registered
-them. That loop must stay running until callback delivery. Registration on a
-stopped or closed loop raises `RuntimeError`. If the loop stops after
-registration, the SDK logs a warning and does not run the callback on another
-thread.
+Do not call synchronous helpers from asynchronous code. Await the SDK handle
+instead. The 0.5 migration section describes the other loop and thread rules.
 
 If you do not close the SDK, unterminated tasks can cause errors.
 

@@ -137,7 +137,7 @@ def _validate_timeout(value: float | None, name: str) -> float | None:
     """
 
     if value is not None and not isfinite(value):
-        raise ValueError(f"{name} must be finite or None")
+        raise ValueError(f"The {name} value must be finite or None.")
     return value
 
 
@@ -424,8 +424,8 @@ class Request(Generic[Req, Res]):
 
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "an SDK request cannot be used after fork; fork before "
-                "creating any SDK objects"
+                "You cannot use an SDK request after a fork. Create SDK objects "
+                "after the child process starts."
             )
 
     def _claim_await(self) -> None:
@@ -433,7 +433,7 @@ class Request(Generic[Req, Res]):
 
         with self._future_lock:
             if self._awaited:
-                raise RuntimeError("cannot await the finished coroutine")
+                raise RuntimeError("You cannot await this completed request again.")
             self._awaited = True
 
     def _release_grpc_channel(self, *, discard: bool = False) -> None:
@@ -652,7 +652,7 @@ class Request(Generic[Req, Res]):
             self._grpc_channel = None
             release_address_channel(self._channel, incompatible, discard=True)
             raise RequestError(
-                "grpc_channel_override belongs to a different event loop"
+                "The grpc_channel_override value belongs to a different event " "loop."
             )
         self._call = self._grpc_channel.channel.unary_unary(  # type: ignore
             "/" + s_name + "/" + self._method,
@@ -1125,7 +1125,7 @@ class Request(Generic[Req, Res]):
             attempt += 1
             timeout = None if deadline is None else deadline - monotonic()
             if timeout is not None and timeout <= 0:
-                raise TimeoutError("request timed out before RPC dispatch")
+                raise TimeoutError("The request timed out before RPC dispatch.")
 
             if self._per_retry_timeout is not None and (
                 timeout is None or timeout > self._per_retry_timeout
@@ -1300,15 +1300,18 @@ class Request(Generic[Req, Res]):
         """Copy terminal state without allowing SDK close to erase success.
 
         The native response is already authoritative when this method starts.
-        Runtime shutdown may cancel the parent submission, so final metadata,
-        error conversion, wrapping, and transport release run in a shielded
-        child task that the parent drains before returning.
+        Runtime shutdown can cancel the parent submission. A shielded child
+        task processes final metadata, converts errors, wraps the result, and
+        releases the transport. The parent waits for this task before it
+        returns.
 
         :param result: Native response value.
         :return: Native or wrapped response value.
         """
 
         async def complete() -> Res:
+            """Copy the native result and release its transport."""
+
             if self._call is None:
                 raise RequestSentNoCallError()
             code = await self._call.code()
@@ -1354,7 +1357,8 @@ class Request(Generic[Req, Res]):
                     )
                 except BaseException as release_error:
                     log.warning(
-                        "Failed to release a request transport after setup failed",
+                        "The SDK could not release the request transport after "
+                        "setup failed.",
                         exc_info=release_error,
                     )
             raise
@@ -1593,8 +1597,8 @@ class Request(Generic[Req, Res]):
                         )
                     except BaseException as release_error:
                         log.warning(
-                            "Failed to release request transport after task "
-                            "start rejection",
+                            "The SDK could not release the request transport "
+                            "after it rejected the task start.",
                             exc_info=release_error,
                         )
 
@@ -1623,12 +1627,13 @@ class Request(Generic[Req, Res]):
                 )
             except BaseException as release_error:
                 log.warning(
-                    "Failed to release request transport after submission rejection",
+                    "The SDK could not release the request transport after it "
+                    "rejected the submission.",
                     exc_info=release_error,
                 )
         if submission_error is not None:
             raise submission_error.with_traceback(submission_traceback)
-        raise RuntimeError("request submission failed without an exception")
+        raise RuntimeError("The request submission failed, but no error was available.")
 
     async def _await_result(self) -> Res:
         """Await the request's shared submission and return its result."""
@@ -1652,7 +1657,7 @@ class Request(Generic[Req, Res]):
             remaining = deadline - monotonic()
             if remaining <= 0:
                 self.cancel()
-                raise TimeoutError("Request timed out before SDK-loop dispatch")
+                raise TimeoutError("The request timed out before SDK-loop dispatch.")
             waiter = ensure_future(wait_shared())
             try:
                 return await wait_for(waiter, timeout=remaining)
@@ -1662,7 +1667,7 @@ class Request(Generic[Req, Res]):
                     if terminal_error is error:
                         raise
                 self.cancel()
-                raise TimeoutError("Request timed out") from None
+                raise TimeoutError("The request timed out.") from None
         except CancelledError:
             # Shield prevents asyncio from cancelling the shared future
             # directly. Route propagation through the request state machine,

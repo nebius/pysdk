@@ -63,7 +63,10 @@ def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> No
 def test_stream_rejects_non_finite_timeouts(value: float, parameter: str) -> None:
     """Stream deadlines require a portable finite value or ``None``."""
 
-    with pytest.raises(ValueError, match=f"{parameter} must be finite or None"):
+    with pytest.raises(
+        ValueError,
+        match=f"The {parameter} value must be finite or None",
+    ):
         StreamRequest(
             channel=object(),
             route=Route("acme.Service", "Watch"),
@@ -325,7 +328,7 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
         grpc_channel_override=address,  # type: ignore[arg-type]
     )
     try:
-        with pytest.raises(TimeoutError, match="Stream timed out"):
+        with pytest.raises(TimeoutError, match="stream timed out"):
             await stream.done_writing()
         release_loop.set()
         await blocker

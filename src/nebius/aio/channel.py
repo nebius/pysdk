@@ -171,9 +171,9 @@ def _retain_detached_foreign_close(handle: Any) -> None:
     cross-thread dispatch returns a concurrent Future whose lifetime should
     likewise cover the close. The SDK therefore retains either handle until
     completion.
-    This module-level tracker is deliberately limited to detached cleanup: it
-    contains no per-SDK scheduler or bridge state, and its lock permits
-    independent SDK instances and owner-loop threads to use it concurrently.
+    This module-level tracker contains only detached cleanup. It does not
+    contain per-SDK scheduler or bridge state. Its lock lets independent SDK
+    instances and owner-loop threads use it at the same time.
 
     :param handle: Foreign-loop transport-close task or Future to retain.
     """
@@ -239,7 +239,8 @@ def _shutdown_runtime_on_init_failure(
                         runtime.shutdown()
                 except BaseException as cleanup_error:
                     logger.error(
-                        "Failed to roll back partial SDK runtime",
+                        "The SDK could not roll back the partially initialized "
+                        "runtime.",
                         exc_info=cleanup_error,
                     )
             raise
@@ -555,7 +556,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 native_cancelled = bool(cancelled())
             except BaseException as error:
                 logger.debug(
-                    "Unable to read native gRPC cancellation state",
+                    "The SDK could not read the native gRPC cancellation state.",
                     exc_info=error,
                 )
         with self._terminal_lock:
@@ -573,7 +574,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 debug_result = debug_error_string()
             except BaseException as error:
                 logger.debug(
-                    "Unable to read native gRPC debug details at completion",
+                    "The SDK could not read the native gRPC debug details at "
+                    "completion.",
                     exc_info=error,
                 )
             else:
@@ -593,6 +595,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     if pending_debug is not None:
 
                         def observe_debug_failure(future: Future[Any]) -> None:
+                            """Retrieve an exception from the debug accessor."""
+
                             if not future.cancelled():
                                 future.exception()
 
@@ -683,7 +687,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             return result if isinstance(result, str) else None
         except BaseException as error:
             logger.debug(
-                "Unable to read asynchronous gRPC debug error details",
+                "The SDK could not read the asynchronous gRPC debug error " "details.",
                 exc_info=error,
             )
             return None
@@ -694,10 +698,10 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
     ) -> None:
         """Finish terminal capture after native completion despite SDK close.
 
-        Runtime shutdown cancels ordinary submissions directly. Once the
-        native call is terminal, that cancellation must not replace its result
-        or error while metadata is copied, so capture continues in a shielded
-        child task and is drained before this submission finishes.
+        Runtime shutdown cancels ordinary submissions directly. After the
+        native call ends, that cancellation must not replace its result or
+        error. A shielded child task copies the metadata. This submission waits
+        for the child task before it finishes.
 
         :param call: Authoritatively completed native call.
         """
@@ -722,7 +726,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         call = self._call
         if call is None:
             await self._submitted
-            raise RuntimeError("gRPC call was not created")
+            raise RuntimeError("The SDK did not create the gRPC call.")
         accessor = ensure_future(getattr(call, method)())
         try:
             return await shield(accessor)
@@ -731,6 +735,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             # a custom/native accessor that can share terminal-capture state
             # with the authoritative RPC wrapper.
             def observe_abandoned(future: Future[Any]) -> None:
+                """Retrieve an exception from the abandoned accessor."""
+
                 if not future.cancelled():
                     future.exception()
 
@@ -762,7 +768,9 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             # creation failed. Preserve that authoritative submission error
             # instead of replacing it with the later lifecycle rejection.
             await self._submitted._wait_shielded()
-            raise RuntimeError(f"gRPC accessor {method!r} produced no terminal value")
+            raise RuntimeError(
+                f"The gRPC accessor {method!r} did not return a terminal value."
+            )
 
     def __await__(self) -> Generator[Any, None, Res]:
         """Return an iterator that waits for the RPC result."""
@@ -773,9 +781,9 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         """Wait without bypassing terminal-aware cancellation.
 
         Cancellation of one external asyncio task first cancels only its
-        shield wrapper. The explicit call to :meth:`cancel` then propagates
-        cancellation while the native RPC is active, but rejects it after a
-        native result or error has become authoritative.
+        shield wrapper. The explicit call to :meth:`cancel` then sends the
+        cancellation to an active native RPC. It rejects cancellation after
+        the native result or error becomes final.
 
         :return: Native RPC result.
         """
@@ -789,9 +797,9 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
     def cancel(self) -> bool:
         """Request cancellation of the RPC.
 
-        Cancellation is no longer accepted after the native RPC reaches a
-        terminal state, even when the wrapper is still copying terminal
-        metadata on the SDK loop.
+        The method rejects cancellation after the native RPC ends. This rule
+        also applies while the wrapper copies terminal metadata on the SDK
+        loop.
 
         :return: ``True`` if the active submission accepted cancellation.
         """
@@ -1778,7 +1786,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         remaining = deadline - monotonic()
         if remaining <= 0:
             submitted.cancel()
-            raise TimeoutError("Token fetch timed out before SDK-loop dispatch")
+            raise TimeoutError("The token fetch timed out before SDK-loop dispatch.")
         waiter = ensure_future(submitted)
         try:
             return await wait_for(waiter, timeout=remaining)
@@ -1788,7 +1796,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 if terminal_error is error:
                     raise
             submitted.cancel()
-            raise TimeoutError("Token fetch timed out") from None
+            raise TimeoutError("The token fetch timed out.") from None
 
     async def _get_token_internal(
         self,
@@ -1808,7 +1816,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             raise SDKError("Token bearer is not set")
         timeout = None if deadline is None else deadline - monotonic()
         if timeout is not None and timeout <= 0:
-            raise TimeoutError("Token fetch timed out before receiver dispatch")
+            raise TimeoutError("The token fetch timed out before receiver dispatch.")
         receiver = self._token_bearer.receiver()
         return await receiver.fetch(
             timeout=timeout,
@@ -1882,8 +1890,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if awaitable is not None:
             dispose_unstarted_awaitable(awaitable)
         raise RuntimeError(
-            "an SDK channel cannot be used after fork; construct SDK objects "
-            "only after the child process starts"
+            "You cannot use an SDK channel after a fork. Create SDK objects "
+            "after the child process starts."
         )
 
     def run_async(self, awaitable: Awaitable[T]) -> CrossLoopAwaitable[T]:
@@ -1903,7 +1911,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         rejection: ChannelClosedError | None = None
         with self._channel_pool_lock:
             if self._closed:
-                rejection = ChannelClosedError("Channel is closed")
+                rejection = ChannelClosedError("The channel is closed.")
             else:
                 # Keep channel-close admission atomic with runtime admission,
                 # but defer caller-controlled disposal until this lock is no
@@ -1918,7 +1926,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if failure is not None:
             raise failure
         if rejection is None:  # pragma: no cover - admission is exhaustive
-            raise RuntimeError("SDK submission failed without a reason")
+            raise RuntimeError("The SDK submission failed, but no error was available.")
         raise rejection
 
     def _run_sdk_callable(
@@ -1974,7 +1982,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             except CancelledError:
                 pass
             except Exception as e:
-                logger.error("Unhandled exception in Channel.bg_task", exc_info=e)
+                logger.error(
+                    "Channel.bg_task raised an unhandled exception.",
+                    exc_info=e,
+                )
 
         wrapped = wrapper()
         try:
@@ -2040,8 +2051,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if self._runtime.in_executor_thread():
             close_rejected_sync_awaitable(awaitable)
             raise LoopError(
-                "Cannot synchronously call the SDK from an SDK executor worker; "
-                "return to the caller or use asynchronous SDK work."
+                "An SDK executor worker cannot call the SDK synchronously. "
+                "Return to the caller, or use asynchronous SDK work."
             )
         try:
             current_loop = get_running_loop()
@@ -2051,12 +2062,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             close_rejected_sync_awaitable(awaitable)
             if current_loop is self._event_loop:
                 raise LoopError(
-                    "Synchronous SDK calls are not allowed on the SDK event loop; "
-                    "await the SDK handle instead."
+                    "Code on the SDK event loop cannot call the SDK "
+                    "synchronously. Await the SDK handle instead."
                 )
             raise LoopError(
-                "Synchronous SDK calls are not allowed inside an async context; "
-                "await the SDK handle or move the synchronous call to "
+                "Code in an asynchronous context cannot call the SDK "
+                "synchronously. Await the SDK handle, or use "
                 "asyncio.to_thread()."
             )
 
@@ -2082,13 +2093,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         _validate_timeout(timeout, "timeout")
         if self._runtime.in_executor_thread():
             raise LoopError(
-                "Cannot synchronously close the SDK from an SDK executor worker; "
-                "initiate shutdown outside the SDK executor."
+                "An SDK executor worker cannot close the SDK synchronously. "
+                "Start shutdown outside the SDK executor."
             )
         if self._runtime.in_event_loop():
             raise LoopError(
-                "Cannot synchronously close the SDK from its event loop; "
-                "await close() instead."
+                "The SDK event loop cannot close the SDK synchronously. "
+                "Await close() instead."
             )
         try:
             current_loop = get_running_loop()
@@ -2096,8 +2107,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             current_loop = None
         if current_loop is not None:
             raise LoopError(
-                "Cannot synchronously close the SDK from an async context; "
-                "await close() instead."
+                "An asynchronous context cannot close the SDK synchronously. "
+                "Await close() instead."
             )
 
         deadline = None if timeout is None else monotonic() + timeout
@@ -2143,7 +2154,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             closing._add_internal_done_callback(
                 lambda _: self._runtime.shutdown_async()
             )
-            raise TimeoutError("SDK shutdown timed out") from None
+            raise TimeoutError("SDK shutdown timed out.") from None
         except BaseException as close_error:
             shutdown = self._runtime.shutdown_async()
             try:
@@ -2158,7 +2169,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         except ConcurrentTimeoutError as shutdown_error:
             if is_terminal_timeout(shutdown, shutdown_error):
                 raise
-            raise TimeoutError("SDK shutdown timed out") from None
+            raise TimeoutError("SDK shutdown timed out.") from None
 
     async def close(self, grace: float | None = None) -> None:
         """Gracefully close the channel and all associated background work.
@@ -2180,8 +2191,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._check_process()
         if self._runtime.in_executor_thread():
             raise LoopError(
-                "Cannot close the SDK from an SDK executor worker; initiate and "
-                "await close from outside the SDK executor."
+                "An SDK executor worker cannot close the SDK. Start and await "
+                "close() outside the SDK executor."
             )
         current_submission = self._runtime.protect_current_submission()
         closing = self._get_close_handle(grace)
@@ -2336,7 +2347,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                         CancelledError,
                     ):
                         logger.error(
-                            "Error while graceful shutdown",
+                            "A resource raised an error during graceful shutdown.",
                             exc_info=ret,
                         )
                 with self._channel_pool_lock:
@@ -2628,14 +2639,14 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._check_process()
         with self._channel_pool_lock:
             if self._closed:
-                raise ChannelClosedError("Channel closed")
+                raise ChannelClosedError("The channel is closed.")
         if not self._runtime.in_event_loop():
             try:
                 return self.run_sync(self._get_channel_by_addr(addr))
             except (RuntimeError, ConcurrentCancelledError):
                 with self._channel_pool_lock:
                     if self._closed:
-                        raise ChannelClosedError("Channel closed") from None
+                        raise ChannelClosedError("The channel is closed.") from None
                 raise
         return self._get_channel_by_addr_internal(addr)
 
@@ -2756,7 +2767,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             if leased is None and not already_retired:
                 self._schedule_address_channel_close(chan, None)
             if raise_if_closed:
-                raise ChannelClosedError("Channel closed")
+                raise ChannelClosedError("The channel is closed.")
             return
         if self._runtime.in_event_loop():
             self._release_address_channel(
@@ -2778,7 +2789,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 if not self._closed:
                     raise
             if raise_if_closed:
-                raise ChannelClosedError("Channel closed") from None
+                raise ChannelClosedError("The channel is closed.") from None
 
     async def _release_address_channel_async(
         self,
@@ -2864,7 +2875,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if owner_loop is not None and owner_loop is not current_loop:
             if not owner_loop.is_running():
                 logger.warning(
-                    "Unable to close channel because its owner event loop is stopped"
+                    "The SDK cannot close the channel because its owner event "
+                    "loop stopped."
                 )
                 return
 
@@ -2883,7 +2895,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 close = getattr(close_coro, "close", None)
                 if callable(close):
                     close()
-                logger.warning("Unable to close channel after its owner loop stopped")
+                logger.warning(
+                    "The SDK could not close the channel after its owner loop "
+                    "stopped."
+                )
             else:
                 # A foreign loop can stop after accepting the callback but
                 # before running or finishing it. Poll its liveness so a
@@ -2892,15 +2907,15 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     if not owner_loop.is_running():
                         close_future.cancel()
                         logger.warning(
-                            "Unable to finish channel close because its owner "
-                            "event loop stopped"
+                            "The SDK could not finish the channel close because "
+                            "its owner event loop stopped."
                         )
                         return
                     await sleep(0.01)
                 if close_future.cancelled():
                     logger.warning(
-                        "Unable to finish channel close because its owner "
-                        "event loop stopped or cancelled the close"
+                        "The SDK could not finish the channel close. Its owner "
+                        "event loop stopped or cancelled the close."
                     )
                     return
                 await wrap_future(close_future)
@@ -2946,7 +2961,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 pass
             except Exception as e:
                 logger.error(
-                    "Unhandled exception while closing address channel",
+                    "The address channel raised an unhandled exception during "
+                    "close.",
                     exc_info=e,
                 )
             finally:
@@ -2957,7 +2973,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if owner_loop is not None and owner_loop is not self._event_loop:
             if not owner_loop.is_running():
                 logger.warning(
-                    "Unable to close channel because its owner event loop is stopped"
+                    "The SDK cannot close the channel because its owner event "
+                    "loop stopped."
                 )
                 return
 
@@ -2971,7 +2988,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     pass
                 except Exception as error:
                     logger.error(
-                        "Unhandled exception while closing address channel",
+                        "The address channel raised an unhandled exception during "
+                        "close.",
                         exc_info=error,
                     )
 
@@ -2991,7 +3009,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 close_future = run_coroutine_threadsafe(close_coro, owner_loop)
             except RuntimeError:
                 close_coro.close()
-                logger.warning("Unable to close channel after its owner loop stopped")
+                logger.warning(
+                    "The SDK could not close the channel after its owner loop "
+                    "stopped."
+                )
             else:
                 _retain_detached_foreign_close(close_future)
             return
@@ -3041,7 +3062,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             else:
                 fallback.close()
                 logger.warning(
-                    "Unable to close channel because its owner event loop is stopped"
+                    "The SDK cannot close the channel because its owner event "
+                    "loop stopped."
                 )
                 completion.set_result(None)
             return
@@ -3072,7 +3094,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 error = cancelled
             if error is not None:
                 logger.error(
-                    "Transport close submission failed before cleanup ran",
+                    "The transport close submission failed before cleanup ran.",
                     exc_info=error,
                 )
             try:

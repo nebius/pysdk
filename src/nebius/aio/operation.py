@@ -318,8 +318,8 @@ class Operation(Generic[OperationPb]):
 
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "an SDK operation cannot be used after fork; construct SDK "
-                "objects only after the child process starts"
+                "You cannot use an SDK operation after a fork. Create SDK "
+                "objects after the child process starts."
             )
 
     def _operation_snapshot(self) -> OperationPb:
@@ -482,7 +482,9 @@ class Operation(Generic[OperationPb]):
             cancel = getattr(submitted, "cancel", None)
             if callable(cancel):
                 cancel()
-            raise TimeoutError("Operation update timed out before SDK-loop dispatch")
+            raise TimeoutError(
+                "The operation update timed out before SDK-loop dispatch."
+            )
         waiter = ensure_future(submitted)
         try:
             await wait_for(waiter, timeout=remaining)
@@ -494,7 +496,7 @@ class Operation(Generic[OperationPb]):
             cancel = getattr(submitted, "cancel", None)
             if callable(cancel):
                 cancel()
-            raise TimeoutError("Operation update timed out") from None
+            raise TimeoutError("The operation update timed out.") from None
 
     async def _update_internal(
         self,
@@ -525,14 +527,15 @@ class Operation(Generic[OperationPb]):
                 request_timeout = request_deadline - monotonic()
                 if request_timeout <= 0:
                     raise TimeoutError(
-                        "Operation update timed out before request dispatch"
+                        "The operation update timed out before request dispatch."
                     )
                 kwargs["timeout"] = request_timeout
             if authorization_deadline is not None:
                 authorization_timeout = authorization_deadline - monotonic()
                 if authorization_timeout <= 0:
                     raise TimeoutError(
-                        "Operation update authorization timed out before dispatch"
+                        "The operation update authorization timed out before "
+                        "dispatch."
                     )
                 kwargs["auth_timeout"] = authorization_timeout
 
@@ -690,7 +693,9 @@ class Operation(Generic[OperationPb]):
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
         if not isfinite(interval) or interval <= 0:
-            raise ValueError("interval must be a finite positive number of seconds")
+            raise ValueError(
+                "The interval value must be a finite positive number of seconds."
+            )
         metadata = kwargs.get("metadata")
         if metadata is not None:
             kwargs["metadata"] = Metadata(metadata)
@@ -717,7 +722,7 @@ class Operation(Generic[OperationPb]):
             await submitted
             return
         if deadline is None:  # pragma: no cover - narrowed by ``timeout`` above
-            raise RuntimeError("finite operation timeout has no deadline")
+            raise RuntimeError("The finite operation timeout has no deadline.")
         completed = getattr(submitted, "done", None)
         if callable(completed) and completed():
             # A terminal submission wins even if result publication consumed
@@ -731,7 +736,7 @@ class Operation(Generic[OperationPb]):
             # wait when the caller-side deadline expires.
             await wait_for(submitted, timeout=remaining)
         except (TimeoutError, AsyncTimeoutError) as error:
-            raise TimeoutError("Operation wait timeout") from error
+            raise TimeoutError("The operation wait timed out.") from error
 
     async def _wait_internal(
         self,
@@ -801,11 +806,11 @@ class Operation(Generic[OperationPb]):
                     remaining = deadline - monotonic()
                     if remaining <= 0:
                         update.close()
-                        raise TimeoutError("Operation wait timeout")
+                        raise TimeoutError("The operation wait timed out.")
                     await wait_for(update, timeout=remaining)
             except Exception as e:  # noqa: S110
                 if deadline is not None and monotonic() >= deadline:
-                    raise TimeoutError("Operation wait timeout") from e
+                    raise TimeoutError("The operation wait timed out.") from e
                 if not _is_ignorable(e):
                     raise
 
@@ -815,12 +820,12 @@ class Operation(Generic[OperationPb]):
             if deadline is not None:
                 remaining = deadline - monotonic()
                 if remaining <= 0:
-                    raise TimeoutError("Operation wait timeout")
+                    raise TimeoutError("The operation wait timed out.")
                 await sleep(min(interval, remaining))
             else:
                 await sleep(interval)
             if deadline is not None and monotonic() >= deadline:
-                raise TimeoutError("Operation wait timeout")
+                raise TimeoutError("The operation wait timed out.")
             await _safe_update()
 
     def _set_new_operation(self, operation: OperationPb) -> None:
@@ -835,7 +840,7 @@ class Operation(Generic[OperationPb]):
             if isinstance(operation, self._operation.__class__):
                 self._operation = operation
                 return
-        raise SDKError(f"Operation type {type(operation)} not supported.")
+        raise SDKError(f"The SDK does not support operation type {type(operation)}.")
 
     @property
     def id(self) -> str:

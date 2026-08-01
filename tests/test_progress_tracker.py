@@ -376,7 +376,7 @@ async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
     assert await asyncio.to_thread(lock_held.wait, 5)
     started = monotonic()
     try:
-        with pytest.raises(TimeoutError, match="Operation wait timeout"):
+        with pytest.raises(TimeoutError, match="operation wait timed out"):
             await operation.wait(timeout=0.05)
         assert monotonic() - started < 0.5
     finally:
@@ -414,7 +414,7 @@ async def test_operation_wait_timeout_includes_synchronous_admission_delay() -> 
     operation._wait_internal = pending_wait  # type: ignore[method-assign]
     channel.run_async = delayed_submission  # type: ignore[method-assign]
     try:
-        with pytest.raises(TimeoutError, match="Operation wait timeout"):
+        with pytest.raises(TimeoutError, match="operation wait timed out"):
             await operation.wait(timeout=0.01)
         assert not wait_started.is_set()
     finally:
@@ -467,7 +467,7 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
     blocker = channel.run_async(block_sdk_loop())
     assert await asyncio.to_thread(loop_blocked.wait, 5)
     try:
-        with pytest.raises(TimeoutError, match="Operation update timed out"):
+        with pytest.raises(TimeoutError, match="operation update timed out"):
             await operation.update(timeout=timeout, auth_timeout=auth_timeout)
         release_loop.set()
         await blocker
@@ -524,7 +524,10 @@ async def test_operation_update_rejects_non_finite_timeouts(
         OperationMessage(id="invalid-timeout"),
     )
     try:
-        with pytest.raises(ValueError, match=f"{parameter} must be finite or None"):
+        with pytest.raises(
+            ValueError,
+            match=f"The {parameter} value must be finite or None",
+        ):
             await operation.update(**{parameter: value})
     finally:
         await channel.close()
@@ -546,9 +549,15 @@ async def test_operation_wait_rejects_non_finite_timeout(value: float) -> None:
         OperationMessage(id="invalid-wait-timeout"),
     )
     try:
-        with pytest.raises(ValueError, match="timeout must be finite or None"):
+        with pytest.raises(
+            ValueError,
+            match="The timeout value must be finite or None",
+        ):
             await operation.wait(timeout=value)
-        with pytest.raises(ValueError, match="timeout must be finite or None"):
+        with pytest.raises(
+            ValueError,
+            match="The timeout value must be finite or None",
+        ):
             operation.sync_wait(timeout=value)
     finally:
         await channel.close()

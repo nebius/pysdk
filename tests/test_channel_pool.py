@@ -143,12 +143,12 @@ def test_direct_pool_release_rejects_active_external_loop() -> None:
 
     async def exercise() -> None:
         returned = await _checkout(channel, "127.0.0.1:1")
-        with pytest.raises(LoopError, match="not allowed inside an async context"):
+        with pytest.raises(LoopError, match="asynchronous context cannot"):
             channel.return_channel(returned)
         await asyncio.to_thread(channel.return_channel, returned)
 
         discarded = await _checkout(channel, "127.0.0.1:2")
-        with pytest.raises(LoopError, match="not allowed inside an async context"):
+        with pytest.raises(LoopError, match="asynchronous context cannot"):
             channel.discard_channel(discarded)
         await asyncio.to_thread(channel.discard_channel, discarded)
 
@@ -470,7 +470,7 @@ def test_stopped_foreign_loop_transport_close_is_not_queued(caplog) -> None:
     try:
         channel.discard_channel(address_channel)
         assert not close_called.is_set()
-        assert "owner event loop is stopped" in caplog.text
+        assert "owner event loop stopped" in caplog.text
     finally:
         channel.sync_close(timeout=5)
         owner_loop.close()
@@ -773,7 +773,7 @@ def test_rejected_transport_close_task_does_not_strand_shutdown(
     channel.sync_close(timeout=5)
     assert channel._runtime._shutdown_complete.done()
     assert not close_called.is_set()
-    assert "Transport close submission failed before cleanup ran" in caplog.text
+    assert "transport close submission failed before cleanup ran" in caplog.text
 
 
 def test_stopped_owner_loop_transport_is_not_closed_on_caller_loop(
@@ -802,7 +802,7 @@ def test_stopped_owner_loop_transport_is_not_closed_on_caller_loop(
     assert close_loops == []
     with channel._tasks_lock:
         assert channel._transport_closes == {}
-    assert "owner event loop is stopped" in caplog.text
+    assert "owner event loop stopped" in caplog.text
 
 
 def test_close_snapshot_retires_transport_before_native_close() -> None:

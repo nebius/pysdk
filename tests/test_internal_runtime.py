@@ -610,7 +610,7 @@ def test_finalizer_start_failure_still_stops_owned_executor(
     try:
         with pytest.raises(RuntimeError, match="shutdown finalizer start failed"):
             runtime._shutdown_complete.result(timeout=5)
-        with pytest.raises(RuntimeError, match="cannot schedule new futures"):
+        with pytest.raises(RuntimeError, match="cannot schedule new work"):
             executor.submit(queued_ran.set)
     finally:
         release_worker.set()
@@ -792,12 +792,12 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
         waited, status = os.waitpid(child, 0)
         assert waited == child
         assert os.waitstatus_to_exitcode(status) == 0
-        assert outcome.count("channel cannot be used after fork") >= 3
-        assert "awaitable cannot be used after fork" in outcome
-        assert "request cannot be used after fork" in outcome
-        assert outcome.count("awaitable cannot be used after fork") >= 3
-        assert "stream cannot be used after fork" in outcome
-        assert "operation cannot be used after fork" in outcome
+        assert outcome.count("SDK channel after a fork") >= 3
+        assert "SDK awaitable after a fork" in outcome
+        assert "SDK request after a fork" in outcome
+        assert outcome.count("SDK awaitable after a fork") >= 3
+        assert "SDK stream after a fork" in outcome
+        assert "SDK operation after a fork" in outcome
     finally:
         os.close(read_fd)
         channel.sync_close(timeout=5)
@@ -1010,9 +1010,9 @@ def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
     submitted = channel.run_async(pending())
 
     async def inspect() -> None:
-        with pytest.raises(RuntimeError, match="await it instead"):
+        with pytest.raises(RuntimeError, match="Await the work instead"):
             submitted.result()
-        with pytest.raises(RuntimeError, match="await it instead"):
+        with pytest.raises(RuntimeError, match="Await the work instead"):
             submitted.exception()
 
     try:
@@ -1195,10 +1195,10 @@ async def test_rejected_sync_wait_preserves_running_cross_loop_handle() -> None:
     assert await asyncio.to_thread(started.wait, 5)
     fresh = asyncio.sleep(0)
     try:
-        with pytest.raises(LoopError, match="async context"):
+        with pytest.raises(LoopError, match="asynchronous context"):
             channel.run_sync(submitted)
         assert not submitted.cancelled()
-        with pytest.raises(LoopError, match="async context"):
+        with pytest.raises(LoopError, match="asynchronous context"):
             channel.run_sync(fresh)
         assert inspect.getcoroutinestate(fresh) is inspect.CORO_CLOSED
         release.set()
@@ -1403,7 +1403,7 @@ def test_pending_future_from_stopped_loop_fails_bridge_promptly() -> None:
         bridged = channel.run_async(source)
         with pytest.raises(
             RuntimeError,
-            match="foreign future owner event loop is not running",
+            match="event loop that owns the foreign Future is not running",
         ):
             bridged.result(timeout=5)
     finally:
@@ -1421,7 +1421,7 @@ def test_completed_foreign_future_from_stopped_loop_fails_without_inspection() -
     try:
         with pytest.raises(
             RuntimeError,
-            match="foreign future owner event loop is not running",
+            match="event loop that owns the foreign Future is not running",
         ):
             channel.run_async(source).result(timeout=5)
     finally:
@@ -2079,13 +2079,13 @@ def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
     request._request_with_authorization_loop = result  # type: ignore[method-assign]
     try:
         assert isinstance(request.wait(), Disk)
-        with pytest.raises(RuntimeError, match="cannot await the finished coroutine"):
+        with pytest.raises(RuntimeError, match="cannot await this completed request"):
             request.wait()
 
         async def await_again() -> None:
             await request
 
-        with pytest.raises(RuntimeError, match="cannot await the finished coroutine"):
+        with pytest.raises(RuntimeError, match="cannot await this completed request"):
             asyncio.run(await_again())
         assert rpc_count == 1
     finally:
@@ -2409,7 +2409,7 @@ async def test_async_request_timeout_includes_sdk_loop_queueing(
     request._send = lambda timeout: rpc_started.set()  # type: ignore[method-assign]
     started = monotonic()
     try:
-        with pytest.raises(TimeoutError, match="Request timed out"):
+        with pytest.raises(TimeoutError, match="request timed out"):
             await request
         assert monotonic() - started < 0.5
         release_loop.set()
@@ -2625,7 +2625,7 @@ async def test_token_timeout_includes_sdk_loop_queueing() -> None:
     blocker = channel.run_async(block_sdk_loop())
     assert await asyncio.to_thread(loop_blocked.wait, 5)
     try:
-        with pytest.raises(TimeoutError, match="Token fetch timed out"):
+        with pytest.raises(TimeoutError, match="token fetch timed out"):
             await channel.get_token(0.05)
         release_loop.set()
         await blocker
@@ -3002,7 +3002,7 @@ def test_sync_close_from_internal_loop_raises_without_deadlock(
     channel = Channel(credentials=NoCredentials(), event_loop=loop)
 
     async def attempt() -> None:
-        with pytest.raises(LoopError, match="await close"):
+        with pytest.raises(LoopError, match="Await close"):
             channel.sync_close(timeout=0.1)
 
     try:
@@ -3502,7 +3502,7 @@ def test_run_sync_translates_expired_wait_and_cancels_work() -> None:
             finalized.set()
 
     try:
-        with pytest.raises(TimeoutError, match="Awaitable timed out"):
+        with pytest.raises(TimeoutError, match="awaitable timed out"):
             channel.run_sync(block(), timeout=0.05)
         assert started.is_set()
         assert finalized.wait(timeout=5)
@@ -3523,7 +3523,7 @@ def test_run_sync_keeps_deadline_classification_during_completion_race() -> None
 
     handle = DeadlineRace(future, channel._event_loop)
     try:
-        with pytest.raises(TimeoutError, match="Awaitable timed out"):
+        with pytest.raises(TimeoutError, match="awaitable timed out"):
             channel.run_sync(handle, timeout=0.01)
         assert handle.result() == 42
     finally:
@@ -5402,7 +5402,10 @@ def test_request_inputs_are_snapshotted_at_first_submission() -> None:
 def test_request_rejects_non_finite_timeouts(value: float, parameter: str) -> None:
     """Request deadlines require a portable finite value or ``None``."""
 
-    with pytest.raises(ValueError, match=f"{parameter} must be finite or None"):
+    with pytest.raises(
+        ValueError,
+        match=f"The {parameter} value must be finite or None",
+    ):
         Request(
             object(),  # type: ignore[arg-type]
             "nebius.compute.v1.DiskService",
@@ -5420,7 +5423,10 @@ async def test_channel_rejects_non_finite_token_timeout(value: float) -> None:
 
     channel = Channel(credentials=NoCredentials())
     try:
-        with pytest.raises(ValueError, match="timeout must be finite or None"):
+        with pytest.raises(
+            ValueError,
+            match="The timeout value must be finite or None",
+        ):
             await channel.get_token(value)
     finally:
         await channel.close()
@@ -5433,7 +5439,10 @@ def test_low_level_call_rejects_non_finite_timeout(value: float) -> None:
     channel = Channel(credentials=NoCredentials())
     unary = channel.unary_unary("/acme.Service/Get")
     try:
-        with pytest.raises(ValueError, match="timeout must be finite or None"):
+        with pytest.raises(
+            ValueError,
+            match="The timeout value must be finite or None",
+        ):
             unary(GetDiskRequest(id="invalid-timeout"), timeout=value)
     finally:
         channel.sync_close(timeout=5)
@@ -5795,7 +5804,7 @@ def test_borrowed_loop_sync_close_from_external_async_loop_is_rejected() -> None
     channel = Channel(credentials=NoCredentials(), event_loop=sdk_loop)
 
     async def close_from_external_loop() -> None:
-        with pytest.raises(LoopError, match="await close"):
+        with pytest.raises(LoopError, match="Await close"):
             channel.sync_close(timeout=5)
 
     try:
@@ -5812,7 +5821,7 @@ def test_sync_resolver_dispatch_from_external_async_loop_is_rejected() -> None:
     async def run() -> None:
         channel = Channel(credentials=NoCredentials())
         try:
-            with pytest.raises(LoopError, match="async context"):
+            with pytest.raises(LoopError, match="asynchronous context"):
                 channel.get_addr_from_service_name("example.Service")
         finally:
             await channel.close()
@@ -5823,7 +5832,7 @@ def test_sync_resolver_dispatch_from_external_async_loop_is_rejected() -> None:
 def test_sync_close_from_external_async_context_preserves_loop_error() -> None:
     async def run() -> None:
         channel = Channel(credentials=NoCredentials())
-        with pytest.raises(LoopError, match="await close"):
+        with pytest.raises(LoopError, match="Await close"):
             channel.sync_close(timeout=0.1)
         await channel.close()
 

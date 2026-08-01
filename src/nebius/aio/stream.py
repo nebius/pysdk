@@ -151,15 +151,17 @@ class StreamRequest(Generic[Req, Res]):
 
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "an SDK stream cannot be used after fork; construct SDK "
-                "objects only after the child process starts"
+                "You cannot use an SDK stream after a fork. Create SDK objects "
+                "after the child process starts."
             )
 
     @staticmethod
     def _serialize(message: object) -> bytes:
         serializer = getattr(message, "SerializeToString", None)
         if not callable(serializer):
-            raise TypeError(f"unsupported streaming message type {type(message)}")
+            raise TypeError(
+                f"The SDK does not support streaming message type {type(message)}."
+            )
         return cast(bytes, serializer(deterministic=True))
 
     async def _authenticate(self) -> None:
@@ -184,7 +186,7 @@ class StreamRequest(Generic[Req, Res]):
         self._pause_request_deadline_for_authorization()
         timeout = self._remaining_deadline()
         if timeout is not None and timeout <= 0:
-            raise TimeoutError("stream authorization timed out before dispatch")
+            raise TimeoutError("The stream authorization timed out before dispatch.")
         auth = provider.authenticator()
         authenticating = ensure_future(
             bridge_awaitable(
@@ -216,7 +218,7 @@ class StreamRequest(Generic[Req, Res]):
         if authenticating not in done:
             authenticating.cancel()
             await gather(authenticating, cancelled, return_exceptions=True)
-            raise TimeoutError("stream authorization timed out")
+            raise TimeoutError("The stream authorization timed out.")
         await gather(cancelled, return_exceptions=True)
         await authenticating
         self._resume_request_deadline_after_authorization()
@@ -262,7 +264,7 @@ class StreamRequest(Generic[Req, Res]):
             if self._owner_loop is None:
                 self._owner_loop = current_loop
             elif self._owner_loop is not current_loop:
-                raise RuntimeError("stream work belongs to a different event loop")
+                raise RuntimeError("The stream work belongs to a different event loop.")
             self._start_entered = True
             current_call = self._call
         if current_call is not None:
@@ -292,7 +294,8 @@ class StreamRequest(Generic[Req, Res]):
                     self._release(discard=isinstance(error, CancelledError))
                 except BaseException as release_error:
                     logger.warning(
-                        "Failed to release a stream transport after setup failed",
+                        "The SDK could not release the stream transport after "
+                        "setup failed.",
                         exc_info=release_error,
                     )
                 raise
@@ -326,7 +329,8 @@ class StreamRequest(Generic[Req, Res]):
                 owner_loop = getattr(address_channel, "event_loop", None)
                 if owner_loop is not None and owner_loop is not current_loop:
                     raise RuntimeError(
-                        "grpc_channel_override belongs to a different event loop"
+                        "The grpc_channel_override value belongs to a different "
+                        "event loop."
                     )
                 shape = (
                     "stream_stream"
@@ -343,7 +347,7 @@ class StreamRequest(Generic[Req, Res]):
                 )
                 timeout = self._remaining_deadline()
                 if timeout is not None and timeout <= 0:
-                    raise TimeoutError("stream timed out before RPC dispatch")
+                    raise TimeoutError("The stream timed out before RPC dispatch.")
                 call = multi(
                     *arguments,
                     timeout=timeout,
@@ -422,7 +426,7 @@ class StreamRequest(Generic[Req, Res]):
             if not self._released:
                 self._cancel_requested = False
                 self._cancelled = False
-        logger.warning("Asynchronous stream cancellation failed", exc_info=error)
+        logger.warning("Asynchronous stream cancellation failed.", exc_info=error)
 
     def _is_released(self) -> bool:
         """Return the channel-release state under the state lock."""
@@ -448,9 +452,9 @@ class StreamRequest(Generic[Req, Res]):
 
         The first caller-side operation fixes monotonic request and
         applicable authorization deadlines under the state lock. Later
-        operations reuse those deadlines, so concurrent reads and writes
-        cannot each obtain a fresh budget and SDK-loop queueing is charged to
-        the same native RPC lifetime. Before authentication completes, only
+        operations reuse those deadlines. Concurrent reads and writes cannot
+        each obtain a new budget. SDK-loop queueing uses the same native RPC
+        lifetime. Before authentication completes, only
         its overall authorization deadline is exposed to caller-side waiting;
         request timeout is paused during authentication and resumes for native
         stream work.
@@ -554,7 +558,8 @@ class StreamRequest(Generic[Req, Res]):
                         self._abort()
                     except BaseException as abort_error:
                         logger.warning(
-                            "Failed to abort stream after close task start rejection",
+                            "The SDK could not abort the stream after it rejected "
+                            "the close task start.",
                             exc_info=abort_error,
                         )
 
@@ -576,7 +581,8 @@ class StreamRequest(Generic[Req, Res]):
                 self._release(discard=True)
             except BaseException as release_error:
                 logger.warning(
-                    "Failed to release stream transport after task start rejection",
+                    "The SDK could not release the stream transport after it "
+                    "rejected the task start.",
                     exc_info=release_error,
                 )
 
@@ -618,7 +624,9 @@ class StreamRequest(Generic[Req, Res]):
                     # Closing that outer coroutine does not enter it, so its
                     # captured inner stream operation needs separate cleanup.
                     cleanup_if_unstarted(release_unopened_stream=False)
-                    raise RuntimeError("stream work belongs to a different event loop")
+                    raise RuntimeError(
+                        "The stream work belongs to a different event loop."
+                    )
         try:
             if not enforce_deadline:
                 return cast(T, await operation)
@@ -629,7 +637,7 @@ class StreamRequest(Generic[Req, Res]):
             if remaining is not None and remaining <= 0:
                 dispose_unstarted_awaitable(operation)
                 self.cancel()
-                raise TimeoutError("Stream timed out before SDK-loop dispatch")
+                raise TimeoutError("The stream timed out before SDK-loop dispatch.")
             # Once a legacy loop-local coroutine starts, its internal state
             # machine must own the deadline. In particular, authentication
             # pauses the request clock, which a fixed caller-side wait cannot
@@ -645,7 +653,7 @@ class StreamRequest(Generic[Req, Res]):
                     if terminal_error is error:
                         raise
                 self.cancel()
-                raise TimeoutError("Stream timed out") from None
+                raise TimeoutError("The stream timed out.") from None
         except CancelledError:
             # The runtime may cancel a queued submission before its wrapper
             # coroutine starts. Establish cancellation and queue transport
@@ -654,7 +662,7 @@ class StreamRequest(Generic[Req, Res]):
                 self.cancel()
             except BaseException as cleanup_error:
                 logger.warning(
-                    "Failed to schedule stream cleanup after cancellation",
+                    "The SDK could not schedule stream cleanup after " "cancellation.",
                     exc_info=cleanup_error,
                 )
             # ``cancel`` schedules the authoritative SDK-loop abort, which
@@ -786,9 +794,12 @@ class StreamRequest(Generic[Req, Res]):
 
         async with self._write_lock:
             if not self._client_streaming:
-                raise TypeError("RPC does not accept a client stream")
+                raise TypeError("The RPC does not accept a client stream.")
             if self._request is not None:
-                raise TypeError("cannot mix a request iterator with write()")
+                raise TypeError(
+                    "You cannot use a request iterator and write() for the same "
+                    "stream."
+                )
             call = await self._start()
             try:
                 await call.write(request)
@@ -807,9 +818,9 @@ class StreamRequest(Generic[Req, Res]):
 
         async with self._write_lock:
             if not self._client_streaming:
-                raise TypeError("RPC does not accept a client stream")
+                raise TypeError("The RPC does not accept a client stream.")
             if self._request is not None:
-                raise TypeError("request iterators finish their own writes")
+                raise TypeError("A request iterator finishes its own writes.")
             call = await self._start()
             try:
                 await call.done_writing()
@@ -885,8 +896,8 @@ class StreamRequest(Generic[Req, Res]):
                     self._release(discard=True)
                 except BaseException as release_error:
                     logger.warning(
-                        "Failed to release stream transport after cancellation "
-                        "submission rejection",
+                        "The SDK could not release the stream transport after it "
+                        "rejected the cancellation submission.",
                         exc_info=release_error,
                     )
                 with self._state_lock:
@@ -899,8 +910,8 @@ class StreamRequest(Generic[Req, Res]):
                         )
                     except BaseException as state_error:
                         logger.debug(
-                            "Unable to inspect channel state after stream "
-                            "cancellation submission rejection",
+                            "The SDK could not inspect the channel state after it "
+                            "rejected the stream cancellation submission.",
                             exc_info=state_error,
                         )
                         closed = False
