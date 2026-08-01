@@ -546,18 +546,22 @@ class StreamRequest(Generic[Req, Res]):
                     dispose_unstarted_awaitable(operation)
                     raise RuntimeError("stream work belongs to a different event loop")
         try:
-            if not enforce_deadline or legacy_local_operation:
+            if not enforce_deadline:
                 return cast(T, await operation)
             # ``run_async`` normally performs only a short, synchronized
             # admission. Recompute from the absolute deadline nevertheless so
             # its elapsed time cannot grant the operation a fresh timeout.
             remaining = self._remaining_deadline()
-            if remaining is None:
-                return cast(T, await operation)
-            if remaining <= 0:
+            if remaining is not None and remaining <= 0:
                 dispose_unstarted_awaitable(operation)
                 self.cancel()
                 raise TimeoutError("Stream timed out before SDK-loop dispatch")
+            # Once a legacy loop-local coroutine starts, its internal state
+            # machine must own the deadline. In particular, authentication
+            # pauses the request clock, which a fixed caller-side wait cannot
+            # observe. Synchronous admission delay above is still charged.
+            if legacy_local_operation or remaining is None:
+                return cast(T, await operation)
             waiter = ensure_future(operation)
             try:
                 return cast(T, await wait_for(waiter, timeout=remaining))
