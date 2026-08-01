@@ -651,6 +651,94 @@ def test_operation_sync_update_uses_applicable_queue_deadline(
         channel.sync_close(timeout=5)
 
 
+@pytest.mark.parametrize("method", ("sync_update", "sync_wait"))
+def test_sync_operation_options_are_snapshotted_before_run_sync(method: str) -> None:
+    """Sync operation calls fix nested options on the caller thread."""
+
+    from threading import Event, Thread
+
+    from nebius.aio.authorization.options import OPTION_TYPE, Types
+    from nebius.aio.channel import Channel
+    from nebius.aio.operation import Operation
+    from nebius.aio.token.static import Bearer as StaticBearer
+    from nebius.api.google.rpc import Status
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=StaticBearer("token"))
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id=f"{method}-snapshot"),
+    )
+    run_sync_entered = Event()
+    release_run_sync = Event()
+    received: list[tuple[list[tuple[str, str]], dict[str, str]]] = []
+    run_timeouts: list[float | None] = []
+    errors: list[BaseException] = []
+
+    class Response:
+        def __init__(self) -> None:
+            self._operation = OperationMessage(
+                id=f"{method}-snapshot",
+                status=Status(code=0),
+            )
+
+    class Service:
+        def get(self, request, **kwargs):
+            received.append((list(kwargs["metadata"]), dict(kwargs["auth_options"])))
+
+            async def result() -> Response:
+                return Response()
+
+            return result()
+
+    operation._service = Service()
+    original_run_sync = channel.run_sync
+
+    def pause_run_sync(awaitable, timeout=None):
+        run_timeouts.append(timeout)
+        run_sync_entered.set()
+        release_run_sync.wait(timeout=5)
+        return original_run_sync(awaitable, timeout)
+
+    channel.run_sync = pause_run_sync  # type: ignore[method-assign]
+    metadata = [("x-scope", "before")]
+    auth_options = {OPTION_TYPE: Types.DISABLE}
+
+    def invoke() -> None:
+        try:
+            call = getattr(operation, method)
+            arguments = {
+                "timeout": 5,
+                "metadata": metadata,
+                "auth_options": auth_options,
+            }
+            if method == "sync_update":
+                arguments["auth_timeout"] = 9
+            else:
+                arguments["interval"] = 0.01
+            call(**arguments)
+        except BaseException as error:
+            errors.append(error)
+
+    thread = Thread(target=invoke)
+    thread.start()
+    assert run_sync_entered.wait(timeout=5)
+    metadata[0] = ("x-scope", "after")
+    auth_options[OPTION_TYPE] = Types.DEFAULT
+    release_run_sync.set()
+    thread.join(timeout=5)
+    try:
+        assert not thread.is_alive()
+        assert errors == []
+        assert received == [([("x-scope", "before")], {OPTION_TYPE: Types.DISABLE})]
+        assert run_timeouts == [5.2]
+    finally:
+        release_run_sync.set()
+        channel.run_sync = original_run_sync  # type: ignore[method-assign]
+        channel.sync_close(timeout=5)
+
+
 def test_authorized_sync_operation_request_timeout_is_not_outer_deadline() -> None:
     """A synchronous authorized update retains its independent request clock."""
 

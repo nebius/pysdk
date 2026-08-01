@@ -2628,6 +2628,61 @@ async def test_token_options_are_snapshotted_before_sdk_loop_dispatch() -> None:
         await channel.close()
 
 
+def test_sync_token_options_are_snapshotted_before_run_sync() -> None:
+    """A sync token call fixes mutable options on the caller thread."""
+
+    run_sync_entered = Event()
+    release_run_sync = Event()
+    received: list[dict[str, str] | None] = []
+    errors: list[BaseException] = []
+    results: list[Token] = []
+
+    class Receiver(TokenReceiver):
+        async def _fetch(self, timeout=None, options=None):
+            received.append(options)
+            return Token("sync-snapshot-token")
+
+        def can_retry(self, err, options=None):
+            return False
+
+    class Bearer(TokenBearer):
+        def receiver(self):
+            return Receiver()
+
+    channel = Channel(credentials=Bearer())
+    original_run_sync = channel.run_sync
+
+    def pause_run_sync(awaitable, timeout=None):
+        run_sync_entered.set()
+        release_run_sync.wait(timeout=5)
+        return original_run_sync(awaitable, timeout)
+
+    channel.run_sync = pause_run_sync  # type: ignore[method-assign]
+    options = {"scope": "before"}
+
+    def fetch() -> None:
+        try:
+            results.append(channel.get_token_sync(5, options))
+        except BaseException as error:
+            errors.append(error)
+
+    thread = Thread(target=fetch)
+    thread.start()
+    assert run_sync_entered.wait(timeout=5)
+    options["scope"] = "after"
+    release_run_sync.set()
+    thread.join(timeout=5)
+    try:
+        assert not thread.is_alive()
+        assert errors == []
+        assert [token.token for token in results] == ["sync-snapshot-token"]
+        assert received == [{"scope": "before"}]
+    finally:
+        release_run_sync.set()
+        channel.run_sync = original_run_sync  # type: ignore[method-assign]
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.asyncio
 async def test_token_fetch_preserves_receiver_timeout_error() -> None:
     """A receiver's own TimeoutError is not rewritten as dispatch expiry."""

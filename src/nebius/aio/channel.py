@@ -1818,7 +1818,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         A small grace period is added to the supplied timeout to allow the
         internal token bearer shutdown logic to complete during immediate
-        handoff.
+        handoff. The method copies ``options`` before it dispatches work, so a
+        later caller-side change does not affect the token request.
 
         :param timeout: Maximum time in seconds to wait for a token; may be
             ``None`` to wait indefinitely.
@@ -1832,11 +1833,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             supplied timeout.
         """
 
+        _validate_timeout(timeout, "timeout")
+        options_snapshot = None if options is None else dict(options)
         timeout_sync = timeout
         if timeout_sync is not None:
             timeout_sync += 0.2  # 200 ms for graceful shutdown
         return self.run_sync(
-            self.get_token(timeout, options),
+            self.get_token(timeout, options_snapshot),
             timeout_sync,
         )
 

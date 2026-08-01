@@ -489,13 +489,15 @@ def _schedule_metric_awaitable(
         wrapped = run()
         try:
             scheduled = scheduler(wrapped)
-        except (CancelledError, Exception):
+        except BaseException as error:
             wrapped.close()
             with state_lock:
                 closed_before_start = True
                 should_close = not started
             if should_close:
                 dispose_unstarted_awaitable(awaitable)
+            if not isinstance(error, (CancelledError, Exception)):
+                raise
         else:
             add_done_callback = getattr(
                 scheduled,

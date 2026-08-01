@@ -207,6 +207,41 @@ def test_sdk_metric_start_failure_uses_threadsafe_disposal_hook() -> None:
     probe.awaitable.close()
 
 
+def test_sdk_metric_fatal_scheduler_failure_disposes_and_propagates() -> None:
+    """Fatal scheduler failure still disposes fresh metric work exactly once."""
+
+    wrapped = []
+
+    class Awaitable:
+        def __init__(self) -> None:
+            self.close_calls = 0
+
+        def __await__(self):
+            return asyncio.sleep(0).__await__()
+
+        def _cancel_unstarted_threadsafe(self) -> bool:
+            self.close_calls += 1
+            return True
+
+    failure = KeyboardInterrupt("fatal scheduler failure")
+
+    def fail(awaitable):
+        wrapped.append(awaitable)
+        raise failure
+
+    awaitable = Awaitable()
+    token = task_scheduler.set(fail)
+    try:
+        with pytest.raises(KeyboardInterrupt) as raised:
+            metrics_module._schedule_metric_awaitable(awaitable)
+        assert raised.value is failure
+    finally:
+        task_scheduler.reset(token)
+    assert awaitable.close_calls == 1
+    assert len(wrapped) == 1
+    assert wrapped[0].cr_frame is None
+
+
 def test_sdk_metric_pre_start_cancellation_reaches_foreign_future() -> None:
     ready: Future[asyncio.AbstractEventLoop] = Future()
 

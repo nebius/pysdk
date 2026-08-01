@@ -563,6 +563,12 @@ class Operation(Generic[OperationPb]):
         self._check_process()
         if self.done():
             return
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
         _validate_timeout(timeout, "timeout")
         run_timeout = None if timeout is None else timeout + 0.2
         return self._channel.run_sync(
@@ -588,7 +594,8 @@ class Operation(Generic[OperationPb]):
         whole authorized flow; otherwise the request budget bounds SDK-loop
         queueing. Legacy channels whose provider is discoverable only on
         their owner loop enforce both clocks internally. A small safety margin
-        accommodates scheduling overhead.
+        accommodates scheduling overhead. Mutable metadata and authorization
+        options are copied before the method dispatches work.
 
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
@@ -596,6 +603,12 @@ class Operation(Generic[OperationPb]):
             infinite. Use ``None`` for an unlimited timeout.
         """
         self._check_process()
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
         timeout_option = kwargs.get("timeout", Unset)
         timeout = (
             DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
