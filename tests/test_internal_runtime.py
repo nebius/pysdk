@@ -1048,6 +1048,29 @@ def test_borrowed_loop_stop_after_shutdown_dispatch_completes() -> None:
     runtime.shutdown_async().result(timeout=5)
 
 
+def test_repeated_shutdown_does_not_block_borrowed_owner_loop() -> None:
+    """Owner-loop re-entry cannot wait on its pending shutdown completion."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    returned = Event()
+    with runtime._shutdown_lock:
+        # Model the interval after another shutdown caller publishes admission
+        # but before that caller publishes its terminal result.
+        runtime._shutdown = True
+
+    def repeat_shutdown() -> None:
+        runtime.shutdown()
+        returned.set()
+
+    loop.call_soon_threadsafe(repeat_shutdown)
+    try:
+        assert returned.wait(timeout=1)
+    finally:
+        runtime._complete_shutdown()
+        _stop_loop(loop, thread)
+
+
 def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
     """A rejecting custom task factory cannot strand shutdown completion."""
 

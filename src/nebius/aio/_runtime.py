@@ -1535,6 +1535,12 @@ class AsyncRuntime:
                 executor is None or not executor.owns_thread(current_thread())
             )
         if already_shutdown:
+            # A borrowed loop has no SDK loop-thread marker. It still cannot
+            # block on completion that may require its own callbacks. This
+            # matches the existing non-blocking repeat behavior on an owned
+            # SDK loop.
+            if self.in_event_loop():
+                return
             if should_wait:
                 completion.result()
             return
