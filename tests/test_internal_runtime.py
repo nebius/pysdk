@@ -3138,8 +3138,15 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
     native_started = Event()
     terminal_capture_started = Event()
     transport_closed = Event()
+    debug_accessors_created = 0
 
     class BlockingCall:
+        def __init__(self) -> None:
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            self.callback = callback
+
         def __await__(self):
             async def result() -> Disk:
                 native_started.set()
@@ -3158,10 +3165,23 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         code = _terminal
         details = _terminal
 
+        def debug_error_string(self):
+            nonlocal debug_accessors_created
+            debug_accessors_created += 1
+
+            async def debug_details() -> str:
+                return "late diagnostics"
+
+            return debug_details()
+
+    blocking_call: BlockingCall | None = None
+
     class BlockingTransport:
         def unary_unary(self, *args: object, **kwargs: object):
             def invoke(*call_args: object, **call_kwargs: object) -> BlockingCall:
-                return BlockingCall()
+                nonlocal blocking_call
+                blocking_call = BlockingCall()
+                return blocking_call
 
             return invoke
 
@@ -3187,6 +3207,11 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         assert transport_closed.wait(timeout=5)
         assert not terminal_capture_started.is_set()
         channel.sync_close(timeout=5)
+        assert blocking_call is not None
+        assert blocking_call.callback is not None
+        blocking_call.callback(blocking_call)
+        assert debug_accessors_created == 0
+        assert call._pending_debug_result is None
 
         async def terminal_status() -> None:
             assert await call.code() == grpc.StatusCode.CANCELLED
@@ -4682,6 +4707,27 @@ def test_submission_cannot_await_its_own_cross_loop_handle() -> None:
             handle.result(timeout=5)
     finally:
         channel.sync_close(timeout=5)
+
+
+def test_submission_cannot_wrap_its_own_handle_on_another_runtime() -> None:
+    """Cross-runtime wrapping cannot turn self-await into an A-B-A cycle."""
+
+    channel_a = Channel(credentials=NoCredentials())
+    channel_b = Channel(credentials=NoCredentials())
+    holder: Future[object] = Future()
+
+    async def await_wrapped_self() -> None:
+        own_handle = await asyncio.wrap_future(holder)
+        await channel_b.run_async(own_handle)  # type: ignore[arg-type]
+
+    handle = channel_a.run_async(await_wrapped_self())
+    holder.set_result(handle)
+    try:
+        with pytest.raises(RuntimeError, match="own submission"):
+            handle.result(timeout=5)
+    finally:
+        channel_a.sync_close(timeout=5)
+        channel_b.sync_close(timeout=5)
 
 
 def test_inherited_child_context_can_await_completed_parent_handle() -> None:

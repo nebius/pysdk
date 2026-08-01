@@ -902,14 +902,15 @@ class AsyncRuntime:
         if (
             isinstance(awaitable, CrossLoopAwaitable)
             and binding is not None
-            and binding[0] is self
             and binding[1] is awaitable
             and not awaitable.done()
         ):
             # Wrapping the current handle would hide direct self-await behind
             # a child task: the parent would await the child while the child
-            # awaited the parent. Keep ownership with the running submission
-            # and reject without cancelling or disposing its handle.
+            # awaited the parent. This is also true across runtimes (A submits
+            # its handle to B, then awaits B). Keep ownership with the running
+            # submission and reject without cancelling or disposing its
+            # handle.
             raise RuntimeError("SDK work cannot submit its own submission handle")
 
     def _submit_without_disposal(

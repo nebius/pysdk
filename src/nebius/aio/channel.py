@@ -305,6 +305,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._terminal_lock = RLock()
         self._terminal: dict[str, Any] = {}
         self._pending_debug_result: Awaitable[Any] | None = None
+        self._terminal_capture_closed = False
         self._rpc_done: ConcurrentFuture[None] = ConcurrentFuture()
         self._terminal_ready: ConcurrentFuture[None] = ConcurrentFuture()
         self._native_terminal = False
@@ -469,6 +470,12 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     )
                     self._released = True
             finally:
+                with self._terminal_lock:
+                    self._terminal_capture_closed = True
+                    abandoned_debug = self._pending_debug_result
+                    self._pending_debug_result = None
+                if abandoned_debug is not None:
+                    dispose_unstarted_awaitable(abandoned_debug)
                 self._publish_rpc_done()
                 self._publish_terminal_ready()
 
@@ -486,8 +493,11 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     exc_info=error,
                 )
         debug_details: str | None = None
+        abandoned_debug: Awaitable[Any] | None = None
         debug_error_string = getattr(completed, "debug_error_string", None)
-        if callable(debug_error_string):
+        with self._terminal_lock:
+            capture_closed = self._terminal_capture_closed
+        if callable(debug_error_string) and not capture_closed:
             try:
                 debug_result = debug_error_string()
             except Exception as error:
@@ -499,8 +509,29 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 if isinstance(debug_result, str):
                     debug_details = debug_result
                 elif isawaitable(debug_result):
-                    with self._terminal_lock:
-                        self._pending_debug_result = debug_result
+                    # Calling an asynchronous accessor creates a coroutine.
+                    # Turn it into a loop-owned task immediately so wrapper
+                    # cancellation cannot abandon an unstarted coroutine.
+                    # The terminal-capture path still awaits the same task.
+                    try:
+                        pending_debug = ensure_future(debug_result)
+                    except BaseException:
+                        dispose_unstarted_awaitable(debug_result)
+                        pending_debug = None
+
+                    if pending_debug is not None:
+
+                        def observe_debug_failure(future: Future[Any]) -> None:
+                            if not future.cancelled():
+                                future.exception()
+
+                        pending_debug.add_done_callback(observe_debug_failure)
+                        with self._terminal_lock:
+                            if self._terminal_capture_closed:
+                                abandoned_debug = pending_debug
+                            else:
+                                abandoned_debug = self._pending_debug_result
+                                self._pending_debug_result = pending_debug
                 else:
                     dispose_unstarted_awaitable(debug_result)
         with self._terminal_lock:
@@ -508,6 +539,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             self._native_cancelled = native_cancelled
             if debug_details is not None:
                 self._terminal["debug_error_string"] = debug_details
+        if abandoned_debug is not None:
+            dispose_unstarted_awaitable(abandoned_debug)
         self._publish_rpc_done()
 
     async def _capture_terminal(self, call: UnaryUnaryCall[Req, Res]) -> None:
