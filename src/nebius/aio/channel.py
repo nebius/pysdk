@@ -34,6 +34,7 @@ from concurrent.futures import Future as ConcurrentFuture
 from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from contextlib import suppress
 from functools import wraps
+from inspect import isawaitable
 from logging import getLogger
 from pathlib import Path
 from threading import Lock, RLock
@@ -174,7 +175,7 @@ def _shutdown_runtime_on_init_failure(
 
         try:
             initializer(instance, *args, **kwargs)
-        except Exception:
+        except BaseException:
             runtime = getattr(instance, "_runtime", None)
             finalizer = getattr(instance, "_runtime_finalizer", None)
             if finalizer is not None:
@@ -303,6 +304,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._call_ready = Event()
         self._terminal_lock = RLock()
         self._terminal: dict[str, Any] = {}
+        self._pending_debug_result: Awaitable[Any] | None = None
         self._rpc_done: ConcurrentFuture[None] = ConcurrentFuture()
         self._terminal_ready: ConcurrentFuture[None] = ConcurrentFuture()
         self._native_terminal = False
@@ -445,18 +447,10 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             raise
         except Exception as error:
             discard = True
-            debug_error_string = getattr(error, "debug_error_string", None)
-            if callable(debug_error_string):
-                try:
-                    debug_details = debug_error_string()
-                except Exception as debug_error:
-                    logger.debug(
-                        "Unable to read gRPC debug error details",
-                        exc_info=debug_error,
-                    )
-                else:
-                    with self._terminal_lock:
-                        self._terminal["debug_error_string"] = debug_details
+            debug_details = await self._read_debug_error_string(error)
+            if debug_details is not None:
+                with self._terminal_lock:
+                    self._terminal["debug_error_string"] = debug_details
             failed_call = self._call
             if failed_call is not None:
                 with suppress(Exception):
@@ -504,10 +498,10 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             else:
                 if isinstance(debug_result, str):
                     debug_details = debug_result
+                elif isawaitable(debug_result):
+                    with self._terminal_lock:
+                        self._pending_debug_result = debug_result
                 else:
-                    # grpc interceptors can expose this as an async accessor.
-                    # Terminal capture owns the authoritative asynchronous
-                    # read; do not leak the probe coroutine created here.
                     dispose_unstarted_awaitable(debug_result)
         with self._terminal_lock:
             self._native_terminal = True
@@ -533,9 +527,55 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             return_exceptions=True,
         )
         with self._terminal_lock:
+            pending_debug = self._pending_debug_result
+            self._pending_debug_result = None
+            debug_already_captured = "debug_error_string" in self._terminal
+        debug_details = (
+            await self._read_debug_error_string(call, pending_debug)
+            if pending_debug is not None or not debug_already_captured
+            else None
+        )
+        with self._terminal_lock:
             for name, value in zip(names, values):
                 if not isinstance(value, BaseException):
                     self._terminal[name] = value
+            if debug_details is not None:
+                self._terminal["debug_error_string"] = debug_details
+
+    async def _read_debug_error_string(
+        self,
+        source: object,
+        pending: Awaitable[Any] | None = None,
+    ) -> str | None:
+        """Read optional synchronous or asynchronous native diagnostics.
+
+        Diagnostic accessor failures must not replace the authoritative RPC
+        result. A pending accessor captured by the native done callback is
+        awaited exactly once on the SDK loop.
+
+        :param source: Native call or error that exposes the accessor.
+        :param pending: Awaitable already created by the native done callback.
+        :return: Debug string, or ``None`` when it is unavailable.
+        """
+
+        try:
+            result: Any
+            if pending is not None:
+                result = await pending
+            else:
+                debug_error_string = getattr(source, "debug_error_string", None)
+                if not callable(debug_error_string):
+                    return None
+                result = debug_error_string()
+                if isawaitable(result):
+                    result = await result
+            return result if isinstance(result, str) else None
+        except BaseException as error:
+            logger.debug(
+                "Unable to read asynchronous gRPC debug error details",
+                exc_info=error,
+            )
+            return None
 
     async def _capture_authoritative_terminal(
         self,

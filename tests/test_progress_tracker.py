@@ -466,6 +466,70 @@ async def test_operation_update_rejects_non_finite_timeouts(
         await channel.close()
 
 
+@pytest.mark.asyncio
+@pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
+async def test_operation_wait_rejects_non_finite_timeout(value: float) -> None:
+    """Overall async wait deadlines require a finite value or ``None``."""
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="invalid-wait-timeout"),
+    )
+    try:
+        with pytest.raises(ValueError, match="timeout must be finite or None"):
+            await operation.wait(timeout=value)
+        with pytest.raises(ValueError, match="timeout must be finite or None"):
+            operation.sync_wait(timeout=value)
+    finally:
+        await channel.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("method", ("update", "wait"))
+async def test_operation_disposes_coroutine_on_submission_rejection(
+    method: str,
+) -> None:
+    """An optional scheduler rejection cannot retain an unstarted coroutine."""
+
+    from inspect import CORO_CLOSED, getcoroutinestate
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="rejected-submission"),
+    )
+    rejection = RuntimeError("submission rejected")
+    rejected = []
+    original_submit = channel.run_async
+
+    def reject(awaitable):
+        rejected.append(awaitable)
+        raise rejection
+
+    channel.run_async = reject  # type: ignore[method-assign]
+    try:
+        operation_call = getattr(operation, method)
+        with pytest.raises(RuntimeError) as raised:
+            await operation_call()
+        assert raised.value is rejection
+        assert len(rejected) == 1
+        assert getcoroutinestate(rejected[0]) == CORO_CLOSED
+    finally:
+        channel.run_async = original_submit  # type: ignore[method-assign]
+        await channel.close()
+
+
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
     ((0.01, 5, False), (5, 0.01, True), (0.01, None, False)),

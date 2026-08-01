@@ -24,6 +24,7 @@ from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
 from grpc import StatusCode
 from typing_extensions import Unpack
 
+from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.request import (
     DEFAULT_AUTH_TIMEOUT,
@@ -456,7 +457,11 @@ class Operation(Generic[OperationPb]):
             authorization_deadline=authorization_deadline,
             **kwargs,
         )
-        submitted = submit(update) if callable(submit) else update
+        try:
+            submitted = submit(update) if callable(submit) else update
+        except BaseException:
+            dispose_unstarted_awaitable(update)
+            raise
         deadlines = [
             deadline
             for deadline in (request_deadline, authorization_deadline)
@@ -550,6 +555,9 @@ class Operation(Generic[OperationPb]):
         See :meth:`wait` for parameter details.
         """
         self._check_process()
+        if self.done():
+            return
+        _validate_timeout(timeout, "timeout")
         run_timeout = None if timeout is None else timeout + 0.2
         return self._channel.run_sync(
             self.wait(
@@ -650,8 +658,9 @@ class Operation(Generic[OperationPb]):
             before polling is submitted to the SDK event loop.
 
         :raises TimeoutError: when the overall timeout is exceeded
-        :raises ValueError: when an unfinished operation receives a
-            non-positive or non-finite polling interval
+        :raises ValueError: When an unfinished operation receives a
+            non-positive/non-finite polling interval or a non-finite overall
+            timeout. Use ``None`` for an unlimited timeout.
         """
         self._check_process()
         # Preserve the historical terminal fast path. In particular,
@@ -659,6 +668,7 @@ class Operation(Generic[OperationPb]):
         # even when that coroutine would immediately observe terminal state.
         if self.done():
             return
+        _validate_timeout(timeout, "timeout")
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
         if not isfinite(interval) or interval <= 0:
@@ -680,7 +690,11 @@ class Operation(Generic[OperationPb]):
             poll_retries=poll_retries,
             **kwargs,
         )
-        submitted = submit(wait) if callable(submit) else wait
+        try:
+            submitted = submit(wait) if callable(submit) else wait
+        except BaseException:
+            dispose_unstarted_awaitable(wait)
+            raise
         if timeout is None:
             await submitted
             return

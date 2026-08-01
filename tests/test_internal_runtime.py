@@ -383,6 +383,30 @@ def test_failed_channel_constructor_uses_graceful_async_shutdown(monkeypatch) ->
     assert called.is_set()
 
 
+def test_channel_constructor_base_exception_stops_its_runtime() -> None:
+    """Constructor interruption eagerly rolls back an acquired runtime."""
+
+    class ConstructorAbort(BaseException):
+        pass
+
+    class ConfigReader:
+        def endpoint(self) -> str:
+            raise ConstructorAbort
+
+    before = set(enumerate_threads())
+    with pytest.raises(ConstructorAbort):
+        Channel(
+            credentials=NoCredentials(),
+            config_reader=ConfigReader(),  # type: ignore[arg-type]
+        )
+    leaked = [
+        thread
+        for thread in set(enumerate_threads()) - before
+        if thread.name.startswith("nebius-sdk-") and thread.is_alive()
+    ]
+    assert leaked == []
+
+
 @pytest.mark.asyncio
 async def test_failed_channel_constructor_does_not_block_borrowed_loop(
     monkeypatch: pytest.MonkeyPatch,
@@ -805,6 +829,25 @@ def test_cancelled_shielded_wait_does_not_retain_caller_loop() -> None:
     assert caller_loop_ref[0]() is None
     source.set_result(1)
     owner_loop.close()
+
+
+@pytest.mark.asyncio
+async def test_cancelled_shielded_waits_do_not_accumulate_callbacks() -> None:
+    """Cancelled waiters leave one bounded concurrent completion callback."""
+
+    source: Future[int] = Future()
+    handle = CrossLoopAwaitable(source, asyncio.get_running_loop())
+    callback_count = len(source._done_callbacks)
+    for _ in range(100):
+        waiter = asyncio.create_task(handle._wait_shielded())
+        await asyncio.sleep(0)
+        waiter.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await waiter
+        assert handle._waiters == {}
+        assert len(source._done_callbacks) == callback_count
+    source.set_result(42)
+    assert await handle == 42
 
 
 @pytest.mark.asyncio
@@ -3352,6 +3395,78 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
     finally:
         release_result.set()
         channel.sync_close(timeout=5)
+
+
+@pytest.mark.asyncio
+async def test_low_level_call_captures_async_debug_error_string() -> None:
+    """An intercepted asynchronous debug accessor is awaited exactly once."""
+
+    debug_reads = 0
+
+    class NativeCall:
+        def __init__(self) -> None:
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            self.callback = callback
+
+        def __await__(self):
+            async def result() -> Disk:
+                assert self.callback is not None
+                self.callback(self)
+                return Disk()
+
+            return result().__await__()
+
+        def cancelled(self) -> bool:
+            return False
+
+        async def debug_error_string(self) -> str:
+            nonlocal debug_reads
+            debug_reads += 1
+            await asyncio.sleep(0)
+            return "async diagnostics"
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+        async def code(self) -> grpc.StatusCode:
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            return ""
+
+    native_call = NativeCall()
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            return lambda *call_args, **call_kwargs: native_call
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    class TestChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
+
+    channel = TestChannel(credentials=NoCredentials())
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="async-debug"))
+    try:
+        assert isinstance(await call, Disk)
+        assert call.debug_error_string() == "async diagnostics"
+        assert debug_reads == 1
+    finally:
+        await channel.close()
 
 
 def test_low_level_cancel_during_resolution_never_opens_transport() -> None:

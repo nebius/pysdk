@@ -266,6 +266,50 @@ class DaemonThreadPoolExecutor(ThreadPoolExecutor):
         self.shutdown(wait=True)
 
 
+def _publish_cross_loop_waiter(
+    source: Future[T],
+    loop_ref: weakref.ReferenceType[asyncio.AbstractEventLoop],
+    relay_ref: weakref.ReferenceType[asyncio.Future[T]],
+) -> None:
+    """Publish one concurrent result to a weakly retained asyncio waiter.
+
+    :param source: Authoritative concurrent completion.
+    :param loop_ref: Weak reference to the waiter's event loop.
+    :param relay_ref: Weak reference to the waiter's relay future.
+    """
+
+    def publish() -> None:
+        """Copy the result on the relay's owner loop."""
+
+        relay = relay_ref()
+        if relay is None or relay.done():
+            if not source.cancelled():
+                source.exception()
+            return
+        if source.cancelled():
+            relay.cancel()
+            return
+        error = source.exception()
+        if error is not None:
+            relay.set_exception(error)
+        else:
+            relay.set_result(source.result())
+
+    loop = loop_ref()
+    if loop is None:
+        if not source.cancelled():
+            source.exception()
+        return
+    try:
+        loop.call_soon_threadsafe(publish)
+    except RuntimeError:
+        # A caller-owned loop can close after its waiter is cancelled.
+        # Consume only diagnostic state; the shared result remains available
+        # to other loops and synchronous readers.
+        if not source.cancelled():
+            source.exception()
+
+
 class CrossLoopAwaitable(Generic[T]):
     """Provide loop-independent access to a concurrent future.
 
@@ -313,6 +357,30 @@ class CrossLoopAwaitable(Generic[T]):
         self._process_id = os.getpid()
         self._future = future
         self._event_loop = event_loop
+        self._waiters_lock = Lock()
+        self._waiters: dict[
+            object,
+            tuple[
+                weakref.ReferenceType[asyncio.AbstractEventLoop],
+                weakref.ReferenceType[asyncio.Future[T]],
+            ],
+        ] = {}
+        waiters_lock = self._waiters_lock
+        waiters = self._waiters
+
+        def publish_waiters(source: Future[T]) -> None:
+            """Detach and publish every waiter through its owner loop."""
+
+            with waiters_lock:
+                destinations = list(waiters.values())
+                waiters.clear()
+            for loop_ref, relay_ref in destinations:
+                _publish_cross_loop_waiter(source, loop_ref, relay_ref)
+
+        # One callback serves every asyncio waiter. Cancelled waiters remove
+        # themselves from the registry instead of accumulating callbacks on a
+        # long-lived concurrent future.
+        self._future.add_done_callback(publish_waiters)
 
     @classmethod
     def _for_runtime(
@@ -592,41 +660,18 @@ class CrossLoopAwaitable(Generic[T]):
         relay: asyncio.Future[T] = loop.create_future()
         loop_ref = weakref.ref(loop)
         relay_ref = weakref.ref(relay)
-
-        def complete(source: Future[T]) -> None:
-            """Publish shared completion without retaining an abandoned loop."""
-
-            def publish() -> None:
-                current_relay = relay_ref()
-                if current_relay is None or current_relay.done():
-                    if not source.cancelled():
-                        source.exception()
-                    return
-                if source.cancelled():
-                    current_relay.cancel()
-                    return
-                error = source.exception()
-                if error is not None:
-                    current_relay.set_exception(error)
-                else:
-                    current_relay.set_result(source.result())
-
-            current_loop = loop_ref()
-            if current_loop is None:
-                if not source.cancelled():
-                    source.exception()
-                return
-            try:
-                current_loop.call_soon_threadsafe(publish)
-            except RuntimeError:
-                # A caller-owned loop can close after its waiter is cancelled.
-                # Consume only diagnostic state; the shared result remains
-                # available to other loops and synchronous readers.
-                if not source.cancelled():
-                    source.exception()
-
-        self._future.add_done_callback(complete)
-        return await relay
+        waiter_id = object()
+        with self._waiters_lock:
+            completed = self._future.done()
+            if not completed:
+                self._waiters[waiter_id] = (loop_ref, relay_ref)
+        if completed:
+            _publish_cross_loop_waiter(self._future, loop_ref, relay_ref)
+        try:
+            return await relay
+        finally:
+            with self._waiters_lock:
+                self._waiters.pop(waiter_id, None)
 
     def __await__(self) -> Generator[Any, None, T]:
         """Return an iterator that waits for the submitted work."""
