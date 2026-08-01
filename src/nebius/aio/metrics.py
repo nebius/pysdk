@@ -29,6 +29,7 @@ change request or authentication behavior.
 
 from __future__ import annotations
 
+import os
 from asyncio import (
     CancelledError,
     Task,
@@ -463,6 +464,19 @@ def _metric_attribute_value(metrics: object, name: str) -> object | None:
 # (reported in #94 via SkyPilot).
 _metric_tasks: set[Task[None]] = set()
 _metric_tasks_lock = Lock()
+
+
+def _reset_metric_tasks_after_fork() -> None:
+    """Drop inherited fallback tasks and replace a possibly locked lock."""
+
+    global _metric_tasks
+    global _metric_tasks_lock
+    _metric_tasks = set()
+    _metric_tasks_lock = Lock()
+
+
+if hasattr(os, "register_at_fork"):
+    os.register_at_fork(after_in_child=_reset_metric_tasks_after_fork)
 
 
 def _schedule_metric_awaitable(

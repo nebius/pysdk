@@ -4185,6 +4185,107 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_low_level_terminal_precedes_blocking_fatal_diagnostics() -> None:
+    """Optional native diagnostics cannot delay authoritative completion."""
+
+    native_waiting = Event()
+    release_result = Event()
+    debug_started = Event()
+    release_debug = Event()
+    publish_errors: list[BaseException] = []
+
+    class DiagnosticFailure(BaseException):
+        pass
+
+    class NativeCall:
+        def __init__(self) -> None:
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            self.callback = callback
+
+        def publish_completion(self) -> None:
+            assert self.callback is not None
+            self.callback(self)
+
+        def cancelled(self) -> bool:
+            raise DiagnosticFailure("cancelled diagnostic failed")
+
+        def debug_error_string(self) -> str:
+            debug_started.set()
+            release_debug.wait(timeout=5)
+            raise DiagnosticFailure("debug diagnostic failed")
+
+        def __await__(self):
+            async def result() -> Disk:
+                native_waiting.set()
+                await asyncio.to_thread(release_result.wait)
+                return Disk()
+
+            return result().__await__()
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+        async def code(self) -> grpc.StatusCode:
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            return ""
+
+    native_call = NativeCall()
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            return lambda *call_args, **call_kwargs: native_call
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    class TestChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
+
+    channel = TestChannel(credentials=NoCredentials())
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="blocking-fatal-diagnostics"))
+
+    def publish() -> None:
+        try:
+            native_call.publish_completion()
+        except BaseException as error:
+            publish_errors.append(error)
+
+    publisher = Thread(target=publish)
+    try:
+        assert native_waiting.wait(timeout=5)
+        publisher.start()
+        assert debug_started.wait(timeout=5)
+        assert call.done()
+        assert call.cancel() is False
+        release_debug.set()
+        publisher.join(timeout=5)
+        assert not publisher.is_alive()
+        assert publish_errors == []
+        release_result.set()
+        assert isinstance(call._submitted.result(timeout=5), Disk)
+    finally:
+        release_debug.set()
+        release_result.set()
+        if publisher.ident is not None:
+            publisher.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.asyncio
 async def test_low_level_call_captures_async_debug_error_string() -> None:
     """An intercepted asynchronous debug accessor is awaited exactly once."""

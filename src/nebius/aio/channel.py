@@ -541,25 +541,36 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
     def _mark_native_terminal(self, completed: object) -> None:
         """Publish native call completion before the wrapper task resumes."""
 
+        # Native terminality is authoritative before any optional diagnostic
+        # accessor runs. A slow or failing custom accessor must not leave a
+        # window in which another thread can still cancel the completed RPC.
+        with self._terminal_lock:
+            self._native_terminal = True
+            capture_closed = self._terminal_capture_closed
         native_cancelled = False
         cancelled = getattr(completed, "cancelled", None)
         if callable(cancelled):
             try:
                 native_cancelled = bool(cancelled())
-            except Exception as error:
+            except BaseException as error:
                 logger.debug(
                     "Unable to read native gRPC cancellation state",
                     exc_info=error,
                 )
+        with self._terminal_lock:
+            self._native_cancelled = native_cancelled
+        # Public completion includes synchronous cancellation state but does
+        # not wait for optional debug details. Callbacks registered on the SDK
+        # loop still run after this callback returns and therefore observe
+        # immediately available synchronous details.
+        self._publish_rpc_done()
         debug_details: str | None = None
         abandoned_debug: Awaitable[Any] | None = None
         debug_error_string = getattr(completed, "debug_error_string", None)
-        with self._terminal_lock:
-            capture_closed = self._terminal_capture_closed
         if callable(debug_error_string) and not capture_closed:
             try:
                 debug_result = debug_error_string()
-            except Exception as error:
+            except BaseException as error:
                 logger.debug(
                     "Unable to read native gRPC debug details at completion",
                     exc_info=error,
@@ -594,13 +605,10 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                 else:
                     dispose_unstarted_awaitable(debug_result)
         with self._terminal_lock:
-            self._native_terminal = True
-            self._native_cancelled = native_cancelled
             if debug_details is not None:
                 self._terminal["debug_error_string"] = debug_details
         if abandoned_debug is not None:
             dispose_unstarted_awaitable(abandoned_debug)
-        self._publish_rpc_done()
 
     async def _capture_terminal(self, call: UnaryUnaryCall[Req, Res]) -> None:
         """Cache terminal metadata and status values.

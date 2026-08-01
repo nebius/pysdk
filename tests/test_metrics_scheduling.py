@@ -242,6 +242,22 @@ def test_sdk_metric_fatal_scheduler_failure_disposes_and_propagates() -> None:
     assert wrapped[0].cr_frame is None
 
 
+def test_metric_fallback_tracking_resets_after_fork() -> None:
+    """A child replaces inherited task state and a possibly held lock."""
+
+    inherited_lock = metrics_module._metric_tasks_lock
+    inherited_lock.acquire()
+    try:
+        metrics_module._metric_tasks = {object()}  # type: ignore[assignment]
+        metrics_module._reset_metric_tasks_after_fork()
+        assert metrics_module._metric_tasks == set()
+        assert metrics_module._metric_tasks_lock is not inherited_lock
+        assert metrics_module._metric_tasks_lock.acquire(blocking=False)
+        metrics_module._metric_tasks_lock.release()
+    finally:
+        inherited_lock.release()
+
+
 def test_sdk_metric_pre_start_cancellation_reaches_foreign_future() -> None:
     ready: Future[asyncio.AbstractEventLoop] = Future()
 
