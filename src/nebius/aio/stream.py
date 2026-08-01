@@ -546,12 +546,10 @@ class StreamRequest(Generic[Req, Res]):
             if stream_started:
                 if not terminate_on_rejection:
                     return
-                self._cancel_event.set()
-                try:
-                    current_loop = get_running_loop()
-                except RuntimeError:
-                    current_loop = None
-                if current_loop is owner_loop:
+
+                def abort_after_rejection() -> None:
+                    """Abort on the stream owner loop without masking rejection."""
+
                     try:
                         self._abort()
                     except BaseException as abort_error:
@@ -559,7 +557,21 @@ class StreamRequest(Generic[Req, Res]):
                             "Failed to abort stream after close task start rejection",
                             exc_info=abort_error,
                         )
+
+                try:
+                    current_loop = get_running_loop()
+                except RuntimeError:
+                    current_loop = None
+                if current_loop is owner_loop:
+                    abort_after_rejection()
                     return
+                if owner_loop is not None and owner_loop.is_running():
+                    try:
+                        owner_loop.call_soon_threadsafe(abort_after_rejection)
+                    except RuntimeError:
+                        pass
+                    else:
+                        return
             try:
                 self._release(discard=True)
             except BaseException as release_error:

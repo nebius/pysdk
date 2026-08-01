@@ -3333,6 +3333,36 @@ def test_internal_close_does_not_recancel_an_externally_cancelled_finalizer() ->
         channel._runtime.shutdown_async().result(timeout=5)
 
 
+def test_repeated_failed_internal_close_still_starts_shutdown() -> None:
+    """A completed close failure cannot retain a protected internal caller."""
+
+    channel = Channel(credentials=NoCredentials())
+    close_error = RuntimeError("cached channel cleanup failed")
+    close_future: Future[None] = Future()
+    close_future.set_exception(close_error)
+    channel._close_completion = close_future
+    channel._close_handle = CrossLoopAwaitable(close_future, channel._event_loop)
+    channel._closed = True
+    caught = Event()
+
+    async def repeat_close() -> None:
+        try:
+            await channel.close()
+        except RuntimeError as error:
+            assert error is close_error
+            caught.set()
+        await asyncio.Event().wait()
+
+    submitted = channel._runtime.submit(repeat_close())
+    try:
+        with pytest.raises(ConcurrentCancelledError):
+            submitted.result(timeout=5)
+        assert caught.is_set()
+        channel._runtime._shutdown_complete.result(timeout=5)
+    finally:
+        channel._runtime.shutdown_async().result(timeout=5)
+
+
 def test_raw_child_close_does_not_receive_second_cancellation() -> None:
     """Shutdown preserves a cancelling inherited child's async finalizer."""
 

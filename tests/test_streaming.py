@@ -1667,6 +1667,60 @@ async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
     assert stream._cancelled
 
 
+def test_rejected_stream_close_aborts_only_on_owner_loop() -> None:
+    """Rejected external cleanup cannot mutate asyncio state off-loop."""
+
+    channel = SDKChannel(credentials=NoCredentials())
+    rejection = RuntimeError("stream close submission rejected")
+    released = Event()
+    abort_loops: list[asyncio.AbstractEventLoop] = []
+    release_loops: list[asyncio.AbstractEventLoop] = []
+    address = object()
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="rejected-external-cleanup"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+    )
+    stream._owner_loop = channel._event_loop
+    stream._start_entered = True
+    stream._address_channel = address  # type: ignore[assignment]
+    original_abort = stream._abort
+    original_run_async = channel.run_async
+    original_release = channel.release_channel
+
+    def abort() -> None:
+        abort_loops.append(asyncio.get_running_loop())
+        original_abort()
+
+    def reject(awaitable: object) -> None:
+        raise rejection
+
+    def release(value: object, *, discard: bool = False) -> None:
+        assert value is address
+        assert discard
+        release_loops.append(asyncio.get_running_loop())
+        released.set()
+
+    stream._abort = abort  # type: ignore[method-assign]
+    channel.run_async = reject  # type: ignore[method-assign]
+    channel.release_channel = release  # type: ignore[method-assign]
+    try:
+        with pytest.raises(RuntimeError) as raised:
+            asyncio.run(stream.aclose())
+        assert raised.value is rejection
+        assert released.wait(timeout=5)
+        assert abort_loops == [channel._event_loop]
+        assert release_loops == [channel._event_loop]
+        assert stream._cancel_event.is_set()
+    finally:
+        channel.run_async = original_run_async  # type: ignore[method-assign]
+        channel.release_channel = original_release  # type: ignore[method-assign]
+        channel.sync_close(timeout=5)
+
+
 def test_failed_async_stream_cancel_release_can_be_retried() -> None:
     """A scheduled cancellation observes cleanup failure and permits retry."""
 

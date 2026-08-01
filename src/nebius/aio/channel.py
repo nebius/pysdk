@@ -2184,15 +2184,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 "await close from outside the SDK executor."
             )
         current_submission = self._runtime.protect_current_submission()
-        completion = self._close_completion
-        if completion is not None and completion.done():
-            await shield(wrap_future(completion))
-            if current_submission is None:
-                await shield(self._runtime.shutdown_async())
-            else:
-                self._shutdown_after_internal_caller(current_submission)
-                self._runtime.mark_current_submission_close_returning()
-            return
         closing = self._get_close_handle(grace)
         try:
             await shield(closing)
