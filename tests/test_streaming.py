@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from concurrent.futures import Future
 from threading import Barrier, Event, Thread
+from time import sleep
 
 import grpc
 import pytest
@@ -333,6 +334,50 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
     finally:
         release_loop.set()
         await channel.close()
+
+
+@pytest.mark.asyncio
+async def test_stream_timeout_includes_synchronous_submission_delay() -> None:
+    """Admission elapsed time is subtracted from the absolute deadline."""
+
+    submissions = 0
+    work_started = False
+
+    class Channel:
+        def get_authorization_provider(self) -> None:
+            return None
+
+        def run_async(self, awaitable):
+            nonlocal submissions
+            submissions += 1
+            if submissions == 1:
+                sleep(0.05)
+            return awaitable
+
+        def release_channel(
+            self,
+            released: object,
+            *,
+            discard: bool = False,
+        ) -> None:
+            pass
+
+    async def work() -> None:
+        nonlocal work_started
+        work_started = True
+
+    stream = StreamRequest(
+        channel=Channel(),
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        timeout=0.01,
+    )
+    with pytest.raises(TimeoutError, match="before SDK-loop dispatch"):
+        await stream._on_sdk_loop(work())
+    assert not work_started
 
 
 def test_legacy_constant_stream_cancel_runs_on_owner_loop() -> None:

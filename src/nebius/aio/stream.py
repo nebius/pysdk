@@ -453,7 +453,7 @@ class StreamRequest(Generic[Req, Res]):
         """
 
         self._check_process()
-        remaining = self._remaining_deadline(initialize=enforce_deadline)
+        self._remaining_deadline(initialize=enforce_deadline)
         submit = getattr(self._channel, "run_async", None)
         if callable(submit):
             try:
@@ -479,7 +479,13 @@ class StreamRequest(Generic[Req, Res]):
                     raise RuntimeError("stream work belongs to a different event loop")
             operation = awaitable
         try:
-            if remaining is None or not enforce_deadline:
+            if not enforce_deadline:
+                return cast(T, await operation)
+            # ``run_async`` normally performs only a short, synchronized
+            # admission. Recompute from the absolute deadline nevertheless so
+            # its elapsed time cannot grant the operation a fresh timeout.
+            remaining = self._remaining_deadline()
+            if remaining is None:
                 return cast(T, await operation)
             if remaining <= 0:
                 dispose_unstarted_awaitable(operation)
@@ -691,8 +697,9 @@ class StreamRequest(Generic[Req, Res]):
         execute it. A later asynchronous cleanup failure is logged and makes
         cancellation retryable when the transport was not released.
 
-        :return: ``True`` if cancellation was applied or accepted for dispatch;
-            otherwise ``False``.
+        :return: ``True`` if native cancellation was applied or accepted for
+            dispatch; otherwise ``False``. A terminal server stream returns
+            ``False`` even when its remaining lease cleanup was scheduled.
         """
 
         self._check_process()

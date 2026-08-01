@@ -624,6 +624,53 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
     assert close_calls == [None]
 
 
+def test_close_snapshot_retires_transport_before_native_close() -> None:
+    """A stale release cannot duplicate a snapshotted transport close."""
+
+    close_started = Event()
+    release_close = Event()
+    close_calls = 0
+    errors: list[BaseException] = []
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            nonlocal close_calls
+            close_calls += 1
+            close_started.set()
+            while not release_close.is_set():
+                await asyncio.sleep(0.001)
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "snapshot-retirement.example:443",
+        channel._event_loop,
+    )
+    with channel._channel_pool_lock:
+        channel._free_channels.setdefault(address.address, []).append(address)
+
+    def close() -> None:
+        try:
+            channel.sync_close(timeout=5)
+        except BaseException as error:
+            errors.append(error)
+
+    closer = Thread(target=close)
+    closer.start()
+    try:
+        assert close_started.wait(timeout=5)
+        channel.release_channel(address)
+        sleep(0.05)
+        assert close_calls == 1
+    finally:
+        release_close.set()
+        closer.join(timeout=5)
+
+    assert not closer.is_alive()
+    assert errors == []
+    assert address._is_closed_by_sdk()
+
+
 def test_transport_in_flight_close_cannot_be_returned_to_pool() -> None:
     """A duplicate return cannot resurrect a transport being discarded."""
 

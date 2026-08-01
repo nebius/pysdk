@@ -2180,6 +2180,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     for chan in chans
                 }
                 channels.update(self._leased_channels)
+                for channel in channels.values():
+                    # Publish retirement while the pool snapshot is locked.
+                    # A stale duplicate release cannot schedule a second
+                    # native close before this cleanup finishes.
+                    channel._retire_by_sdk()
                 self._free_channels.clear()
                 gracefuls = list(self._gracefuls)
                 with self._tasks_lock:
@@ -2626,8 +2631,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             else:
                 leased = None
         if closed:
-            already_closed = chan._is_closed_by_sdk()
-            if leased is None and not already_closed:
+            already_retired = chan._is_retired_by_sdk()
+            if leased is None and not already_retired:
                 self._schedule_address_channel_close(chan, None)
             if raise_if_closed:
                 raise ChannelClosedError("Channel closed")
