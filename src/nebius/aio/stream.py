@@ -502,6 +502,7 @@ class StreamRequest(Generic[Req, Res]):
         awaitable: Awaitable[T],
         *,
         enforce_deadline: bool = True,
+        terminate_on_rejection: bool = False,
     ) -> T:
         """Run an awaitable on the SDK loop when the channel supports dispatch.
 
@@ -509,6 +510,9 @@ class StreamRequest(Generic[Req, Res]):
         :param enforce_deadline: Apply the stream's caller-side deadline. Close
             cleanup disables this limit so an expired stream can release its
             transport.
+        :param terminate_on_rejection: Mark an active stream terminal and
+            discard its lease when close cleanup cannot start. Ordinary
+            operation rejection leaves an existing stream active.
         :return: Result of the stream work.
         """
 
@@ -536,8 +540,26 @@ class StreamRequest(Generic[Req, Res]):
             # not release that operation's live transport from this callback.
             with self._state_lock:
                 stream_started = self._start_entered
+                owner_loop = self._owner_loop
+                if stream_started and terminate_on_rejection:
+                    self._cancelled = True
             if stream_started:
-                return
+                if not terminate_on_rejection:
+                    return
+                self._cancel_event.set()
+                try:
+                    current_loop = get_running_loop()
+                except RuntimeError:
+                    current_loop = None
+                if current_loop is owner_loop:
+                    try:
+                        self._abort()
+                    except BaseException as abort_error:
+                        logger.warning(
+                            "Failed to abort stream after close task start rejection",
+                            exc_info=abort_error,
+                        )
+                    return
             try:
                 self._release(discard=True)
             except BaseException as release_error:
@@ -689,6 +711,7 @@ class StreamRequest(Generic[Req, Res]):
                     await self._on_sdk_loop(
                         self._aclose(),
                         enforce_deadline=False,
+                        terminate_on_rejection=True,
                     )
                 except ChannelClosedError:
                     # Channel shutdown already owns every snapshotted lease.
@@ -784,7 +807,11 @@ class StreamRequest(Generic[Req, Res]):
 
     async def aclose(self) -> None:
         """Cancel the native call and discard its address channel."""
-        await self._on_sdk_loop(self._aclose(), enforce_deadline=False)
+        await self._on_sdk_loop(
+            self._aclose(),
+            enforce_deadline=False,
+            terminate_on_rejection=True,
+        )
 
     async def _aclose(self) -> None:
         """Abort the native call and release its leased channel."""

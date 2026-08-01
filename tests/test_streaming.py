@@ -1664,6 +1664,7 @@ async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
         await responses.aclose()
     assert releases == [(address, True)]
     assert stream._released
+    assert stream._cancelled
 
 
 def test_failed_async_stream_cancel_release_can_be_retried() -> None:
