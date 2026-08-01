@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 from concurrent.futures import Future, ThreadPoolExecutor
 from threading import Barrier, Event, Lock, Thread
-from time import sleep
+from time import monotonic, sleep
 
 import grpc
 import pytest
@@ -622,6 +622,54 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
     assert not closer.is_alive()
     assert errors == []
     assert close_calls == [None]
+
+
+def test_rejected_transport_close_task_does_not_strand_shutdown(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """Asynchronous task-start rejection settles transport lifecycle state."""
+
+    task_rejected = Event()
+    close_called = Event()
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            close_called.set()
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "rejected-close-task.example:443",
+        channel._event_loop,
+    )
+
+    def reject_once(
+        loop: asyncio.AbstractEventLoop,
+        coroutine: object,
+        **kwargs: object,
+    ) -> None:
+        loop.set_task_factory(None)
+        task_rejected.set()
+        raise RuntimeError("transport close task rejected")
+
+    async def install_task_factory() -> None:
+        asyncio.get_running_loop().set_task_factory(reject_once)  # type: ignore[arg-type]
+
+    channel.run_async(install_task_factory()).result(timeout=5)
+    channel._schedule_address_channel_close(address, None)
+    assert task_rejected.wait(timeout=5)
+    deadline = monotonic() + 5
+    while True:
+        with channel._tasks_lock:
+            if not channel._transport_closes:
+                break
+        assert monotonic() < deadline
+        sleep(0.01)
+
+    channel.sync_close(timeout=5)
+    assert channel._runtime._shutdown_complete.done()
+    assert not close_called.is_set()
+    assert "Transport close submission failed before cleanup ran" in caplog.text
 
 
 def test_close_snapshot_retires_transport_before_native_close() -> None:

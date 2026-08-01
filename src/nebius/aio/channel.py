@@ -31,6 +31,7 @@ from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Awaitable, Callable, Coroutine, Generator, Mapping, Sequence
 from concurrent.futures import CancelledError as ConcurrentCancelledError
 from concurrent.futures import Future as ConcurrentFuture
+from concurrent.futures import InvalidStateError as ConcurrentInvalidStateError
 from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from contextlib import suppress
 from functools import wraps
@@ -2922,7 +2923,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         completion.add_done_callback(discard)
         close_coro = close_and_log()
         try:
-            self._runtime.submit(close_coro, track=False)
+            scheduled = self._runtime.submit(close_coro, track=False)
         except RuntimeError:
             close_coro.close()
             owner_loop = getattr(chan, "event_loop", None)
@@ -2954,6 +2955,39 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 )
                 completion.set_result(None)
             return
+
+        def settle_rejected_submission(
+            completed: CrossLoopAwaitable[None],
+        ) -> None:
+            """Release lifecycle completion if the close wrapper never ran.
+
+            A runtime submission can be accepted and then fail when its event
+            loop rejects task creation. In that case ``close_and_log`` never
+            reaches its ``finally`` block, so the authoritative submission
+            handle must settle the parallel transport-close completion.
+
+            :param completed: Authoritative runtime submission handle.
+            """
+
+            if completion.done():
+                return
+            try:
+                error = completed.exception(timeout=0)
+            except ConcurrentCancelledError as cancelled:
+                error = cancelled
+            if error is not None:
+                logger.error(
+                    "Transport close submission failed before cleanup ran",
+                    exc_info=error,
+                )
+            try:
+                completion.set_result(None)
+            except ConcurrentInvalidStateError:
+                # ``close_and_log`` can publish completion between the check
+                # and this setter when task completion callbacks race.
+                pass
+
+        scheduled._add_internal_done_callback(settle_rejected_submission)
 
     def _discard_foreign_close_task(self, task: Task[Any]) -> None:
         """Release a completed fire-and-forget foreign-loop close task."""
