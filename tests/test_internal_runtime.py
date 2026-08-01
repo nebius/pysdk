@@ -3701,6 +3701,41 @@ def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_low_level_accessors_preserve_setup_failure_after_close() -> None:
+    """Late accessors retain the call submission's authoritative failure."""
+
+    setup_error = RuntimeError("route resolution failed")
+    channel = Channel(credentials=NoCredentials())
+
+    def fail_resolution(method: str) -> AddressChannel:
+        raise setup_error
+
+    channel.get_channel_by_method = fail_resolution  # type: ignore[method-assign]
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="failed-before-native-call"))
+
+    async def observe(awaitable: object) -> object:
+        return await awaitable  # type: ignore[misc]
+
+    with pytest.raises(RuntimeError) as raised:
+        asyncio.run(observe(call))
+    assert raised.value is setup_error
+    channel.sync_close(timeout=5)
+
+    for accessor in (
+        call.initial_metadata,
+        call.trailing_metadata,
+        call.code,
+        call.details,
+    ):
+        with pytest.raises(RuntimeError) as raised:
+            asyncio.run(observe(accessor()))
+        assert raised.value is setup_error
+
+
 def test_low_level_reentrant_cancel_discards_unpublished_call() -> None:
     """Cancellation inside call creation cancels the unpublished native call."""
 

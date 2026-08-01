@@ -698,11 +698,20 @@ class Operation(Generic[OperationPb]):
         if timeout is None:
             await submitted
             return
+        if deadline is None:  # pragma: no cover - narrowed by ``timeout`` above
+            raise RuntimeError("finite operation timeout has no deadline")
+        completed = getattr(submitted, "done", None)
+        if callable(completed) and completed():
+            # A terminal submission wins even if result publication consumed
+            # the final fraction of the caller-side budget.
+            await submitted
+            return
+        remaining = max(0.0, deadline - monotonic())
         try:
             # Bound dispatch to the SDK loop as well as polling performed on
             # it. ``wait_for`` propagates cancellation to the one submitted
             # wait when the caller-side deadline expires.
-            await wait_for(submitted, timeout=max(timeout, 0))
+            await wait_for(submitted, timeout=remaining)
         except (TimeoutError, AsyncTimeoutError) as error:
             raise TimeoutError("Operation wait timeout") from error
 

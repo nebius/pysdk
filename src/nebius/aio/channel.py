@@ -681,7 +681,11 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             with self._terminal_lock:
                 if method in self._terminal:
                     return self._terminal[method]
-            raise
+            # No native value exists when resolution, serialization, or call
+            # creation failed. Preserve that authoritative submission error
+            # instead of replacing it with the later lifecycle rejection.
+            await self._submitted._wait_shielded()
+            raise RuntimeError(f"gRPC accessor {method!r} produced no terminal value")
 
     def __await__(self) -> Generator[Any, None, Res]:
         """Return an iterator that waits for the RPC result."""

@@ -385,6 +385,44 @@ async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
 
 
 @pytest.mark.asyncio
+async def test_operation_wait_timeout_includes_synchronous_admission_delay() -> None:
+    """Expired admission time cannot grant polling a fresh timeout."""
+
+    from threading import Event
+    from time import sleep
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-admission-timeout"),
+    )
+    wait_started = Event()
+
+    async def pending_wait(**kwargs: object) -> None:
+        wait_started.set()
+        await asyncio.Event().wait()
+
+    def delayed_submission(awaitable: object):
+        sleep(0.05)
+        return awaitable
+
+    operation._wait_internal = pending_wait  # type: ignore[method-assign]
+    channel.run_async = delayed_submission  # type: ignore[method-assign]
+    try:
+        with pytest.raises(TimeoutError, match="Operation wait timeout"):
+            await operation.wait(timeout=0.01)
+        assert not wait_started.is_set()
+    finally:
+        del channel.run_async
+        await channel.close()
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
     ((0.05, 5, False), (5, 0.05, True)),
