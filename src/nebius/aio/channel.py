@@ -2022,10 +2022,37 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 return None
             return max(0.0, deadline - monotonic())
 
+        def is_terminal_timeout(
+            handle: CrossLoopAwaitable[Any],
+            error: ConcurrentTimeoutError,
+        ) -> bool:
+            """Distinguish a stored cleanup error from wait expiration.
+
+            :param handle: Close or shutdown handle being read.
+            :param error: Timeout exception raised by ``Future.result``.
+            :return: ``True`` only when ``error`` is the handle's own stored
+                exception.
+            """
+
+            if not handle.done():
+                return False
+            try:
+                terminal_error = handle.exception(timeout=0)
+            except ConcurrentCancelledError:
+                return False
+            return terminal_error is error
+
         closing = self._get_close_handle(None)
         try:
             closing._result(remaining())
-        except ConcurrentTimeoutError:
+        except ConcurrentTimeoutError as close_error:
+            if is_terminal_timeout(closing, close_error):
+                shutdown = self._runtime.shutdown_async()
+                try:
+                    shutdown._result(remaining())
+                except BaseException as shutdown_error:
+                    raise close_error from shutdown_error
+                raise
             closing._add_internal_done_callback(
                 lambda _: self._runtime.shutdown_async()
             )
@@ -2041,7 +2068,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         shutdown = self._runtime.shutdown_async()
         try:
             shutdown._result(remaining())
-        except ConcurrentTimeoutError:
+        except ConcurrentTimeoutError as shutdown_error:
+            if is_terminal_timeout(shutdown, shutdown_error):
+                raise
             raise TimeoutError("SDK shutdown timed out") from None
 
     async def close(self, grace: float | None = None) -> None:

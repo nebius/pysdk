@@ -1822,6 +1822,43 @@ def test_channel_close_preserves_cleanup_and_shutdown_failures(
         channel.sync_close(timeout=5)
 
 
+@pytest.mark.parametrize("timeout_phase", ["cleanup", "shutdown"])
+def test_sync_close_preserves_terminal_timeout_error_identity(
+    monkeypatch: pytest.MonkeyPatch,
+    timeout_phase: str,
+) -> None:
+    """Completed cleanup timeouts are not mistaken for wait expiration."""
+
+    channel = Channel(credentials=NoCredentials())
+    terminal_error = TimeoutError(f"{timeout_phase} failed with timeout")
+    close_future: Future[None] = Future()
+    shutdown_future: Future[None] = Future()
+    if timeout_phase == "cleanup":
+        close_future.set_exception(terminal_error)
+        shutdown_future.set_result(None)
+    else:
+        close_future.set_result(None)
+        shutdown_future.set_exception(terminal_error)
+    close_handle = CrossLoopAwaitable(close_future, channel._event_loop)
+    shutdown_handle = CrossLoopAwaitable(shutdown_future, channel._event_loop)
+    original_get_close_handle = channel._get_close_handle
+    original_shutdown_async = channel._runtime.shutdown_async
+    monkeypatch.setattr(channel, "_get_close_handle", lambda grace: close_handle)
+    monkeypatch.setattr(channel._runtime, "shutdown_async", lambda: shutdown_handle)
+    try:
+        with pytest.raises(TimeoutError) as raised:
+            channel.sync_close(timeout=5)
+        assert raised.value is terminal_error
+    finally:
+        monkeypatch.setattr(channel, "_get_close_handle", original_get_close_handle)
+        monkeypatch.setattr(
+            channel._runtime,
+            "shutdown_async",
+            original_shutdown_async,
+        )
+        channel.sync_close(timeout=5)
+
+
 def test_supplied_loop_is_not_stopped_or_reconfigured() -> None:
     loop, thread = _start_loop()
     original_executor = getattr(loop, "_default_executor", None)
