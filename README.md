@@ -314,6 +314,12 @@ not call them from SDK-owned executor workers.
 Advanced callers may pass an already-running `event_loop` to `SDK`. That loop
 remains caller-owned and is not stopped or reconfigured by `SDK.close()`.
 The caller must keep it running and responsive until SDK close completes.
+The supplied loop's default executor also remains caller-owned. Do not occupy
+all of its workers with blocking synchronous SDK calls: SDK work or custom
+extensions running on that loop may need the same executor and no library can
+detect every caller-owned executor thread. Await SDK handles instead, or make
+sure synchronous callers and SDK dependencies use independent executors with
+enough capacity.
 Use `executor_max_workers` to change the owned executor size from its default
 of two workers. Shutdown waits for submitted executor work to finish, so an
 arbitrary caller function that never returns can delay shutdown indefinitely.
@@ -362,6 +368,12 @@ promptly. Shutdown drains those accessors to preserve the authoritative RPC
 result despite cancellation. A custom transport that leaves one pending can
 therefore delay final runtime termination; `sync_close(timeout=...)` bounds
 the caller's wait but cannot safely terminate arbitrary transport code.
+
+Channel resource cleanup remains best-effort for compatibility: failures from
+an individual transport, token bearer, or registered graceful resource are
+logged after all resources have been given a chance to close. They do not make
+`close()` fail. Failures in the SDK runtime's own finalization are different
+and are propagated by `close()` and `sync_close()`.
 
 Generated operation-service factories remain synchronous and may be called
 from asynchronous application code. They defer source-service resolution to

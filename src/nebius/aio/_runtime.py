@@ -686,7 +686,11 @@ class AsyncRuntime:
 
     An owned runtime starts one daemon event-loop thread and an independent
     daemon executor. A borrowed runtime uses an event loop that the caller
-    supplies. Shutdown does not stop a borrowed loop.
+    supplies. Shutdown does not stop a borrowed loop or manage its default
+    executor. Consequently, callers must not occupy every worker of that
+    executor with synchronous SDK waits: internal or extension code on the
+    borrowed loop may need the same executor, and arbitrary executor worker
+    threads cannot be identified reliably by the SDK.
     """
 
     def __init__(

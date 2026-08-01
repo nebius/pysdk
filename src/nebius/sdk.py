@@ -99,7 +99,10 @@ class SDK(Channel):
               sdk.sync_close()
 
     To use a caller-owned loop, pass an already-running ``event_loop``. Closing
-    the SDK does not stop or reconfigure a supplied loop.
+    the SDK does not stop or reconfigure a supplied loop or its default
+    executor. Do not fill that executor with synchronous SDK waits: custom SDK
+    work on the supplied loop may need an executor worker, and the SDK cannot
+    reliably identify threads owned by an arbitrary caller executor.
 
     Authentication and ``auth_timeout``
     -----------------------------------

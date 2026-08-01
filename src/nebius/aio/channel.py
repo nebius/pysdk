@@ -1128,7 +1128,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
       a private daemon executor. All SDK asynchronous work uses that loop.
     - Awaitable SDK handles bridge their internal result into any caller loop.
     - A supplied ``event_loop`` must already be running. The caller owns it,
-      and closing the channel does not stop or reconfigure it.
+      and closing the channel does not stop or reconfigure it. Its default
+      executor is caller-owned too; do not occupy every worker with blocking
+      synchronous SDK calls because SDK extensions may need that executor.
     - Initialization connects token bearers, authorization providers, the
       idempotency interceptor, and a resolver.
     - Public methods include ``get_token``, ``get_token_sync``, ``run_sync``,
@@ -1307,8 +1309,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         Optional already-running asyncio event loop used for all SDK work.
         The caller retains ownership: :meth:`close` does not stop the loop or
         replace its default executor. The caller must keep it running and
-        responsive until close completes. If omitted, the Channel eagerly
-        starts and owns a dedicated daemon loop thread.
+        responsive until close completes. Do not fill its default executor
+        with synchronous SDK waits; work running on the loop may need the same
+        executor, and the SDK cannot reliably identify arbitrary caller-owned
+        executor threads. If omitted, the Channel eagerly starts and owns a
+        dedicated daemon loop thread.
     :type event_loop: optional :class:`AbstractEventLoop`
 
     :param executor_max_workers:
@@ -2084,7 +2089,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         The channel stops supplying address channels. It closes pooled gRPC
         channels and registered ``GracefulInterface`` objects, such as token
         bearers. It cancels tasks from :meth:`bg_task` and logs shutdown
-        exceptions.
+        exceptions. For compatibility, individual resource-close failures are
+        best-effort and logged after all cleanup has been attempted; failures
+        of the SDK runtime's own finalization are propagated.
 
         :param grace: Optional per-transport grace period passed to underlying
             channel close methods.
@@ -2254,7 +2261,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                         CancelledError,
                     ):
                         logger.error(
-                            f"Error while graceful shutdown: {ret}",
+                            "Error while graceful shutdown",
                             exc_info=ret,
                         )
                 with self._channel_pool_lock:
