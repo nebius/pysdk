@@ -3021,6 +3021,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 )
                 completion.set_result(None)
             return
+        except BaseException:
+            close_coro.close()
+            if not completion.done():
+                completion.set_result(None)
+            raise
 
         def settle_rejected_submission(
             completed: CrossLoopAwaitable[None],

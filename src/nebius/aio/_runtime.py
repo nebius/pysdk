@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+import sys
 import weakref
 from collections.abc import Awaitable, Callable, Generator
 from concurrent.futures import (
@@ -743,6 +744,7 @@ class AsyncRuntime:
         self._close_returning_submissions: set[CrossLoopAwaitable[Any]] = set()
         self._active_tasks: set[asyncio.Task[Any]] = set()
         self._protected_tasks: set[asyncio.Task[Any]] = set()
+        self._protected_cancelling_tasks: set[asyncio.Task[Any]] = set()
         self._task_submissions: dict[
             asyncio.Task[Any],
             CrossLoopAwaitable[Any],
@@ -1171,13 +1173,30 @@ class AsyncRuntime:
             if task is not None:
                 first_protection = task not in self._protected_tasks
                 self._protected_tasks.add(task)
+                cancelling = getattr(task, "cancelling", None)
+                if (
+                    isinstance(sys.exc_info()[1], asyncio.CancelledError)
+                    or callable(cancelling)
+                    and cancelling() > 0
+                ):
+                    # Python 3.10 has no Task.cancelling(). Capture the active
+                    # CancelledError while a raw child enters close so runtime
+                    # shutdown cannot inject a second cancellation into that
+                    # child's asynchronous finalizer.
+                    self._protected_cancelling_tasks.add(task)
                 if first_protection and task not in self._task_submissions:
                     # A raw child task can inherit the current submission
                     # context without passing through ``_run_awaitable``.
                     # It is not covered by that wrapper's ``finally`` block,
                     # so discard its temporary protection when it completes.
-                    task.add_done_callback(self._protected_tasks.discard)
+                    task.add_done_callback(self._discard_protected_task)
         return submitted
+
+    def _discard_protected_task(self, task: asyncio.Task[Any]) -> None:
+        """Forget protection and captured cancellation state for one task."""
+
+        self._protected_tasks.discard(task)
+        self._protected_cancelling_tasks.discard(task)
 
     def mark_current_submission_close_returning(self) -> None:
         """Mark that the current internal caller can return from close."""
@@ -1409,6 +1428,7 @@ class AsyncRuntime:
             if task is not None:
                 self._active_tasks.discard(task)
                 self._protected_tasks.discard(task)
+                self._protected_cancelling_tasks.discard(task)
                 self._task_submissions.pop(task, None)
                 self._task_cancellation_requested.discard(task)
 
@@ -1715,7 +1735,11 @@ class AsyncRuntime:
             for task in protected_tasks:
                 submitted = self._task_submissions.get(task)
                 cancelling = getattr(task, "cancelling", None)
-                already_cancelling = callable(cancelling) and cancelling() > 0
+                already_cancelling = (
+                    task in self._protected_cancelling_tasks
+                    or callable(cancelling)
+                    and cancelling() > 0
+                )
                 if (
                     not task.done()
                     and not already_cancelling

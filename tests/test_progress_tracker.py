@@ -479,6 +479,32 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
 
 
 @pytest.mark.asyncio
+async def test_authorized_operation_request_timeout_is_not_an_outer_deadline() -> None:
+    """An authorized update may authenticate longer than its request budget."""
+
+    from nebius.aio.channel import Channel
+    from nebius.aio.operation import Operation
+    from nebius.aio.token.static import Bearer as StaticBearer
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=StaticBearer("token"))
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-independent-auth-clock"),
+    )
+
+    async def slow_authorized_update(**kwargs: object) -> None:
+        await asyncio.sleep(0.08)
+
+    operation._update_internal = slow_authorized_update  # type: ignore[method-assign]
+    try:
+        await operation.update(timeout=0.02, auth_timeout=0.5)
+    finally:
+        await channel.close()
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
 @pytest.mark.parametrize("parameter", ("timeout", "auth_timeout"))
 async def test_operation_update_rejects_non_finite_timeouts(
@@ -573,12 +599,12 @@ async def test_operation_disposes_coroutine_on_submission_rejection(
     ((0.01, 5, False), (5, 0.01, True), (0.01, None, False)),
     ids=("request-timeout", "authorization-timeout", "unlimited-auth"),
 )
-def test_operation_sync_update_uses_shorter_queue_deadline(
+def test_operation_sync_update_uses_applicable_queue_deadline(
     timeout: float,
     auth_timeout: float | None,
     authorization_enabled: bool,
 ) -> None:
-    """Synchronous update cannot outwait its shorter dispatch budget."""
+    """Synchronous update uses the request or authorization outer budget."""
 
     from threading import Event
     from time import monotonic
@@ -622,6 +648,31 @@ def test_operation_sync_update_uses_shorter_queue_deadline(
         assert not request_started.wait(timeout=0.05)
     finally:
         release_loop.set()
+        channel.sync_close(timeout=5)
+
+
+def test_authorized_sync_operation_request_timeout_is_not_outer_deadline() -> None:
+    """A synchronous authorized update retains its independent request clock."""
+
+    from nebius.aio.channel import Channel
+    from nebius.aio.operation import Operation
+    from nebius.aio.token.static import Bearer as StaticBearer
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=StaticBearer("token"))
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="op-sync-independent-auth-clock"),
+    )
+
+    async def slow_authorized_update(**kwargs: object) -> None:
+        await asyncio.sleep(0.08)
+
+    operation._update_internal = slow_authorized_update  # type: ignore[method-assign]
+    try:
+        operation.sync_update(timeout=0.02, auth_timeout=0.5)
+    finally:
         channel.sync_close(timeout=5)
 
 

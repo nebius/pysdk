@@ -94,26 +94,29 @@ def _snapshot_request_input(value: T) -> T:
 def _authorization_deadline_applies(
     channel: Channel,
     auth_options: dict[str, str],
-) -> bool:
-    """Return whether an authorization budget applies to one RPC.
+) -> bool | None:
+    """Return whether an authorization budget applies to one RPC, if known.
 
     Authorization timeout is not a second request timeout. It limits the full
     authorized flow, including re-authentication and request work, but must not
     shorten an unauthenticated request or one that explicitly disables
     authorization. Built-in channels expose a caller-safe probe of the
     provider fixed during construction; actual authentication still runs on
-    the SDK event loop. Legacy channels without that probe enforce their auth
-    timeout inside the authorization loop, as before.
+    the SDK event loop. Legacy channels without that probe return ``None``:
+    callers must not guess that they are unauthenticated or impose either
+    deadline outside their owner loop. Those channels enforce both clocks
+    inside the request authorization and retry state machine, as before.
 
     :param channel: Channel that owns the RPC.
     :param auth_options: Snapshotted authorization options for the RPC.
-    :return: ``True`` when the RPC will use an authorization provider.
+    :return: ``True`` when authorization applies, ``False`` when it does not,
+        or ``None`` when only the channel's owner loop can determine it.
     """
 
     if auth_options.get(OPTION_TYPE) == Types.DISABLE:
         return False
     provider_probe = getattr(channel, "_has_authorization_provider", None)
-    return bool(provider_probe()) if callable(provider_probe) else False
+    return bool(provider_probe()) if callable(provider_probe) else None
 
 
 def _validate_timeout(value: float | None, name: str) -> float | None:
@@ -755,8 +758,8 @@ class Request(Generic[Req, Res]):
         Request timeout excludes authentication, so it is the outer wait only
         when authorization does not apply. Before submission this method makes
         the same choice when the channel exposes the caller-safe provider
-        probe. Legacy channels enforce their auth timeout inside the
-        authorization loop. A small grace period lets the internal timeout
+        probe. Legacy channels enforce both independent clocks inside their
+        request state machine. A small grace period lets the internal timeout
         path publish its structured error and finish cancellation before the
         outer blocking wait expires.
 
@@ -775,6 +778,8 @@ class Request(Generic[Req, Res]):
                     self._channel,
                     self._auth_options,
                 )
+                if authorization_applies is None:
+                    return None
                 limit = self._auth_timeout if authorization_applies else self._timeout
                 if limit is None:
                     return None
@@ -1503,7 +1508,7 @@ class Request(Generic[Req, Res]):
                 )
                 self._authorization_deadline = (
                     None
-                    if self._auth_timeout is None or not authorization_applies
+                    if self._auth_timeout is None or authorization_applies is not True
                     else submitted_monotonic + max(self._auth_timeout, 0)
                 )
                 # Authorization timeout is the outer budget for auth plus the
@@ -1512,7 +1517,9 @@ class Request(Generic[Req, Res]):
                 # authorization applies; the request state machine enforces
                 # its independent clock after authentication.
                 submission_limit = (
-                    self._auth_timeout if authorization_applies else self._timeout
+                    self._auth_timeout
+                    if authorization_applies is True
+                    else self._timeout if authorization_applies is False else None
                 )
                 self._submission_deadline = (
                     None

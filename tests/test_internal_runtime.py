@@ -2436,6 +2436,55 @@ async def test_request_timeout_excludes_slow_authentication() -> None:
 
 
 @pytest.mark.asyncio
+async def test_legacy_request_does_not_guess_provider_before_authentication() -> None:
+    """A legacy provider discovered in-loop does not activate the request clock."""
+
+    class SlowAuthenticator:
+        async def authenticate(
+            self,
+            metadata: Metadata,
+            timeout: float | None = None,
+            options: dict[str, str] | None = None,
+        ) -> None:
+            await asyncio.sleep(0.08)
+
+        def can_retry(
+            self,
+            err: Exception,
+            options: dict[str, str] | None = None,
+        ) -> bool:
+            return False
+
+    class SlowProvider:
+        def authenticator(self) -> SlowAuthenticator:
+            return SlowAuthenticator()
+
+    class LegacyChannel:
+        def get_authorization_provider(self) -> SlowProvider:
+            return SlowProvider()
+
+    request: Request[GetDiskRequest, Disk] = Request(
+        LegacyChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="legacy-independent-auth-clock"),
+        Disk,
+        timeout=0.02,
+        auth_timeout=0.5,
+    )
+
+    async def finish_after_authentication(
+        outer_deadline: float | None = None,
+        *,
+        defer_unauthenticated_release: bool = False,
+    ) -> Disk:
+        return Disk()
+
+    request._retry_loop = finish_after_authentication  # type: ignore[method-assign]
+    assert isinstance(await request, Disk)
+
+
+@pytest.mark.asyncio
 async def test_token_timeout_includes_sdk_loop_queueing() -> None:
     """A token deadline expires without starting a late receiver fetch."""
 

@@ -448,7 +448,7 @@ class Operation(Generic[OperationPb]):
         request_deadline = None if timeout is None else submitted_at + max(timeout, 0)
         authorization_deadline = (
             None
-            if auth_timeout is None or not authorization_applies
+            if auth_timeout is None or authorization_applies is not True
             else submitted_at + max(auth_timeout, 0)
         )
         submit = getattr(self._channel, "run_async", None)
@@ -462,16 +462,22 @@ class Operation(Generic[OperationPb]):
         except BaseException:
             dispose_unstarted_awaitable(update)
             raise
-        deadlines = [
-            deadline
-            for deadline in (request_deadline, authorization_deadline)
-            if deadline is not None
-        ]
+        # Authorization and request clocks are independent. An applicable
+        # authorization deadline bounds the whole flow; the generated request
+        # pauses its request clock while authenticating. For a legacy channel
+        # whose provider is only discoverable on its owner loop, avoid an
+        # incorrect caller-side deadline and let its request state machine
+        # enforce both limits.
+        caller_deadline = (
+            authorization_deadline
+            if authorization_applies is True
+            else request_deadline if authorization_applies is False else None
+        )
         done = getattr(submitted, "done", None)
-        if not deadlines or (callable(done) and done()):
+        if caller_deadline is None or (callable(done) and done()):
             await submitted
             return
-        remaining = min(deadlines) - monotonic()
+        remaining = caller_deadline - monotonic()
         if remaining <= 0:
             cancel = getattr(submitted, "cancel", None)
             if callable(cancel):
@@ -578,9 +584,11 @@ class Operation(Generic[OperationPb]):
         """Synchronously perform a single update of the operation state.
 
         This wraps the coroutine :meth:`update` and runs it via the channel's
-        synchronous runner. The request budget and, when authorization is
-        active, the authorization budget bound SDK-loop queueing, with a small
-        safety margin for scheduling overhead.
+        synchronous runner. An applicable authorization budget bounds the
+        whole authorized flow; otherwise the request budget bounds SDK-loop
+        queueing. Legacy channels whose provider is discoverable only on
+        their owner loop enforce both clocks internally. A small safety margin
+        accommodates scheduling overhead.
 
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
@@ -604,15 +612,12 @@ class Operation(Generic[OperationPb]):
             self._channel,
             cast(dict[str, str], kwargs.get("auth_options") or {}),
         )
-        limits = [
-            value
-            for value in (
-                timeout,
-                auth_timeout if authorization_applies else None,
-            )
-            if value is not None
-        ]
-        run_timeout = None if not limits else max(0.0, min(limits)) + 0.2
+        run_limit = (
+            auth_timeout
+            if authorization_applies is True
+            else timeout if authorization_applies is False else None
+        )
+        run_timeout = None if run_limit is None else max(0.0, run_limit) + 0.2
         return self._channel.run_sync(
             self.update(
                 **kwargs,

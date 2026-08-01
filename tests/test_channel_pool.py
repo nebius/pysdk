@@ -1161,6 +1161,36 @@ def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
             _stop_event_loop(owner_loop, owner_thread)
 
 
+def test_unexpected_transport_close_submission_failure_is_not_retained(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A non-runtime rejection settles the transport lifecycle reservation."""
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "rejected-close.example:443",
+        channel._event_loop,
+    )
+    original_submit = channel._runtime.submit
+
+    def reject(awaitable: object, *, track: bool = True) -> None:
+        raise ValueError("unexpected rejection")
+
+    monkeypatch.setattr(channel._runtime, "submit", reject)
+    try:
+        with pytest.raises(ValueError, match="unexpected rejection"):
+            channel._schedule_address_channel_close(address, None)
+        assert id(address) not in channel._transport_closes
+    finally:
+        monkeypatch.setattr(channel._runtime, "submit", original_submit)
+        channel.sync_close(timeout=5)
+
+
 def test_generated_requests_complete_from_many_sync_threads() -> None:
     class MockDiskService:
         def Get(  # noqa: N802
