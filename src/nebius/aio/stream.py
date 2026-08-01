@@ -518,8 +518,8 @@ class StreamRequest(Generic[Req, Res]):
         prestart_cleanup_done = False
         submitted_work: Awaitable[T] | None = None
 
-        def release_if_unstarted() -> None:
-            """Release work and its lease after asynchronous start rejection."""
+        def cleanup_if_unstarted(*, release: bool) -> None:
+            """Dispose unstarted work and optionally release its lease."""
 
             nonlocal prestart_cleanup_done
             with submission_state_lock:
@@ -527,6 +527,8 @@ class StreamRequest(Generic[Req, Res]):
                     return
                 prestart_cleanup_done = True
             dispose_unstarted_awaitable(awaitable)
+            if not release:
+                return
             try:
                 self._release(discard=True)
             except BaseException as release_error:
@@ -550,7 +552,7 @@ class StreamRequest(Generic[Req, Res]):
                 operation = submit(submitted_work)
             except BaseException:
                 dispose_unstarted_awaitable(submitted_work)
-                release_if_unstarted()
+                cleanup_if_unstarted(release=True)
                 raise
         else:
             operation = awaitable
@@ -608,10 +610,14 @@ class StreamRequest(Generic[Req, Res]):
                     "Failed to schedule stream cleanup after cancellation",
                     exc_info=cleanup_error,
                 )
-            release_if_unstarted()
+            # ``cancel`` schedules the authoritative SDK-loop abort, which
+            # publishes cancellation before releasing the lease. Dispose only
+            # this operation here so release completion cannot race ahead of
+            # the stream's terminal cancellation state.
+            cleanup_if_unstarted(release=False)
             raise
         except BaseException:
-            release_if_unstarted()
+            cleanup_if_unstarted(release=True)
             raise
 
     async def _result(self) -> Res:
