@@ -1495,6 +1495,11 @@ class Request(Generic[Req, Res]):
         submission_traceback = None
         rejected_channel: AddressChannel | None = None
         coroutine: Awaitable[Res] | None = None
+        request_work: Awaitable[Res] | None = None
+        new_submission: Awaitable[Res] | None = None
+        submission_state_lock = RLock()
+        submission_started = False
+        prestart_cleanup_done = False
         with self._future_lock:
             if self._future is None:
                 self._input_metadata = Metadata(self._input_metadata)
@@ -1529,7 +1534,17 @@ class Request(Generic[Req, Res]):
                     if submission_limit is None
                     else submitted_monotonic + max(submission_limit, 0)
                 )
-                coroutine = self._request_with_authorization_loop()
+                request_work = self._request_with_authorization_loop()
+
+                async def start_request() -> Res:
+                    """Publish startup before entering request lifecycle work."""
+
+                    nonlocal submission_started
+                    with submission_state_lock:
+                        submission_started = True
+                    return await cast(Awaitable[Res], request_work)
+
+                coroutine = start_request()
                 try:
                     submit = getattr(self._channel, "run_async", None)
                     candidate = submit(coroutine) if callable(submit) else coroutine
@@ -1547,9 +1562,48 @@ class Request(Generic[Req, Res]):
                     rejected_channel, self._grpc_channel = self._grpc_channel, None
                 else:
                     self._future = submitted
-                    return self._future
+                    new_submission = submitted
             else:
                 return self._future
+
+        if new_submission is not None:
+
+            def release_if_unstarted(completed: object) -> None:
+                """Release caller work and an override after start rejection."""
+
+                nonlocal prestart_cleanup_done
+                with submission_state_lock:
+                    if submission_started or prestart_cleanup_done:
+                        return
+                    prestart_cleanup_done = True
+                dispose_unstarted_awaitable(cast(Awaitable[Res], request_work))
+                channel_to_release: AddressChannel | None = None
+                with self._future_lock:
+                    if self._grpc_channel is self._grpc_channel_override:
+                        channel_to_release, self._grpc_channel = (
+                            self._grpc_channel,
+                            None,
+                        )
+                if channel_to_release is not None:
+                    try:
+                        release_address_channel(
+                            self._channel,
+                            channel_to_release,
+                            discard=True,
+                        )
+                    except BaseException as release_error:
+                        log.warning(
+                            "Failed to release request transport after task "
+                            "start rejection",
+                            exc_info=release_error,
+                        )
+
+            observe = getattr(new_submission, "_add_internal_done_callback", None)
+            if not callable(observe):
+                observe = getattr(new_submission, "add_done_callback", None)
+            if callable(observe):
+                observe(release_if_unstarted)
+            return new_submission
 
         # Submission rejection means the coroutine's normal ``finally`` block
         # never ran. Dispose native coroutine state and relinquish an explicit
@@ -1558,6 +1612,8 @@ class Request(Generic[Req, Res]):
         # scheduler's authoritative rejection.
         if coroutine is not None:
             dispose_unstarted_awaitable(coroutine)
+        if request_work is not None:
+            dispose_unstarted_awaitable(request_work)
         if rejected_channel is not None:
             try:
                 release_address_channel(

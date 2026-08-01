@@ -31,6 +31,7 @@ from nebius.aio.cli_config import Config
 from nebius.aio.constant_channel import Constant
 from nebius.aio.operation import Operation
 from nebius.aio.request import Request
+from nebius.aio.route import Route
 from nebius.aio.stream import StreamRequest
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
 from nebius.aio.token.token import Bearer as TokenBearer
@@ -1527,6 +1528,39 @@ def test_bg_task_pre_start_cancellation_closes_caller_coroutine() -> None:
     finally:
         unblock_loop.set()
         blocker.result(timeout=5)
+        channel.sync_close(timeout=5)
+
+
+def test_bg_task_start_failure_disposes_caller_awaitable() -> None:
+    """Accepted background work is disposed if task creation later fails."""
+
+    channel = Channel(credentials=NoCredentials())
+    rejection = RuntimeError("background task rejected")
+    disposed = Event()
+
+    class Awaitable:
+        def __await__(self):
+            return asyncio.sleep(0).__await__()
+
+        def _cancel_unstarted_threadsafe(self) -> bool:
+            disposed.set()
+            return True
+
+    def reject_once(loop, coroutine, **kwargs):
+        loop.set_task_factory(None)
+        raise rejection
+
+    async def install() -> None:
+        asyncio.get_running_loop().set_task_factory(reject_once)
+
+    channel.run_async(install()).result(timeout=5)
+    try:
+        submitted = channel.bg_task(Awaitable())
+        with pytest.raises(RuntimeError) as raised:
+            submitted.result(timeout=5)
+        assert raised.value is rejection
+        assert disposed.wait(timeout=5)
+    finally:
         channel.sync_close(timeout=5)
 
 
@@ -3444,6 +3478,142 @@ def test_low_level_deadline_includes_internal_queue_delay() -> None:
         assert 0 < timeouts[0] < 0.45
     finally:
         release.set()
+        channel.sync_close(timeout=5)
+
+
+def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
+    """An accepted call whose task is rejected settles every public gate."""
+
+    channel = Channel(credentials=NoCredentials())
+    rejection = RuntimeError("low-level call task rejected")
+
+    def reject_once(loop, coroutine, **kwargs):
+        loop.set_task_factory(None)
+        raise rejection
+
+    async def install() -> None:
+        asyncio.get_running_loop().set_task_factory(reject_once)
+
+    channel.run_async(install()).result(timeout=5)
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda request: request.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="rejected-before-call"))
+
+    async def await_call() -> Disk:
+        return await call
+
+    try:
+        with pytest.raises(RuntimeError) as raised:
+            asyncio.run(await_call())
+        assert raised.value is rejection
+        assert call.done()
+        with pytest.raises(RuntimeError) as accessor_error:
+            asyncio.run(call.initial_metadata())
+        assert accessor_error.value is rejection
+    finally:
+        channel.sync_close(timeout=5)
+
+
+def test_request_task_start_failure_releases_explicit_override() -> None:
+    """An asynchronously rejected request releases its pre-leased transport."""
+
+    channel = Channel(credentials=NoCredentials())
+    rejection = RuntimeError("request task rejected")
+    released = Event()
+    release_calls: list[tuple[object | None, bool]] = []
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    override = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "request-start-rejection.example:443",
+        channel._event_loop,
+    )
+
+    def release(value: object | None, *, discard: bool = False) -> None:
+        release_calls.append((value, discard))
+        released.set()
+
+    channel.release_channel = release  # type: ignore[method-assign]
+
+    def reject_once(loop, coroutine, **kwargs):
+        loop.set_task_factory(None)
+        raise rejection
+
+    async def install() -> None:
+        asyncio.get_running_loop().set_task_factory(reject_once)
+
+    channel.run_async(install()).result(timeout=5)
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="rejected-before-request"),
+        Disk,
+        grpc_channel_override=override,
+    )
+    try:
+        with pytest.raises(RuntimeError) as raised:
+            asyncio.run(request._await_result())
+        assert raised.value is rejection
+        assert released.wait(timeout=5)
+        assert release_calls == [(override, True)]
+    finally:
+        channel.sync_close(timeout=5)
+
+
+def test_stream_task_start_failure_releases_explicit_override() -> None:
+    """An asynchronously rejected stream operation releases its lease."""
+
+    channel = Channel(credentials=NoCredentials())
+    rejection = RuntimeError("stream task rejected")
+    released = Event()
+    release_calls: list[tuple[object | None, bool]] = []
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    override = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "stream-start-rejection.example:443",
+        channel._event_loop,
+    )
+
+    def release(value: object | None, *, discard: bool = False) -> None:
+        release_calls.append((value, discard))
+        released.set()
+
+    channel.release_channel = release  # type: ignore[method-assign]
+
+    def reject_once(loop, coroutine, **kwargs):
+        loop.set_task_factory(None)
+        raise rejection
+
+    async def install() -> None:
+        asyncio.get_running_loop().set_task_factory(reject_once)
+
+    channel.run_async(install()).result(timeout=5)
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        grpc_channel_override=override,
+    )
+    try:
+        with pytest.raises(RuntimeError) as raised:
+            asyncio.run(stream.done_writing())
+        assert raised.value is rejection
+        assert released.wait(timeout=5)
+        assert release_calls == [(override, True)]
+    finally:
         channel.sync_close(timeout=5)
 
 

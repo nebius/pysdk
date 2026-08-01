@@ -365,17 +365,28 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._submitted._add_internal_done_callback(self._submission_finished)
 
     def _submission_finished(self, submitted: CrossLoopAwaitable[Res]) -> None:
-        """Publish terminal state when cancellation prevents call creation.
+        """Publish terminal state when submission ends before call creation.
 
-        Cancellation can arrive through an external task awaiting this call,
-        not only through :meth:`cancel`. In either case the SDK coroutine may
-        never start, so no ``finally`` block can signal ``_call_ready``.
+        Cancellation or asynchronous task-creation failure can end an accepted
+        submission before its SDK coroutine starts. No ``finally`` block can
+        then signal the call and terminal gates.
 
         :param submitted: Completed SDK submission.
         """
 
-        if submitted.cancelled() and self._call is None:
+        with self._terminal_lock:
+            call_was_never_created = self._call is None
+        if not call_was_never_created:
+            return
+        if submitted.cancelled():
             self._publish_prestart_cancellation()
+            return
+        try:
+            submitted.event_loop.call_soon_threadsafe(self._call_ready.set)
+        except RuntimeError:
+            pass
+        self._publish_rpc_done()
+        self._publish_terminal_ready()
 
     def _publish_prestart_cancellation(self) -> None:
         """Cache the standard local-cancellation status and wake waiters."""
@@ -1965,19 +1976,17 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 dispose_unstarted_awaitable(coro)
             raise
 
-        def close_cancelled(completed: CrossLoopAwaitable[None]) -> None:
-            """Close caller work when cancellation prevents wrapper startup."""
+        def close_unstarted(completed: CrossLoopAwaitable[None]) -> None:
+            """Close caller work whenever the wrapper never starts."""
 
             nonlocal closed_before_start
-            if not completed.cancelled():
-                return
             with state_lock:
-                if started:
+                if started or closed_before_start:
                     return
                 closed_before_start = True
             dispose_unstarted_awaitable(coro)
 
-        ret._add_internal_done_callback(close_cancelled)
+        ret._add_internal_done_callback(close_unstarted)
         with self._tasks_lock:
             self._tasks.add(ret)
         ret._add_internal_done_callback(self._discard_background_task)

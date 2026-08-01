@@ -506,20 +506,17 @@ def _schedule_metric_awaitable(
                 add_done_callback = getattr(scheduled, "add_done_callback", None)
             if callable(add_done_callback):
 
-                def close_cancelled(completed: object) -> None:
-                    """Close a callback coroutine cancelled before it starts."""
+                def close_unstarted(completed: object) -> None:
+                    """Close callback work whenever its wrapper never starts."""
 
                     nonlocal closed_before_start
-                    cancelled = getattr(completed, "cancelled", None)
-                    if not callable(cancelled) or not cancelled():
-                        return
                     with state_lock:
-                        if started:
+                        if started or closed_before_start:
                             return
                         closed_before_start = True
                     dispose_unstarted_awaitable(awaitable)
 
-                add_done_callback(close_cancelled)
+                add_done_callback(close_unstarted)
         return
     try:
         get_running_loop()

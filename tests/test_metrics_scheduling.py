@@ -32,6 +32,12 @@ class _ScheduledProbe:
         for callback in self.callbacks:
             callback(self)
 
+    def fail(self) -> None:
+        """Complete exceptionally without reporting cancellation."""
+
+        for callback in self.callbacks:
+            callback(self)
+
 
 @pytest.mark.asyncio
 async def test_scheduled_metric_task_is_referenced_until_done() -> None:
@@ -166,6 +172,34 @@ def test_sdk_metric_cancelled_before_start_uses_threadsafe_disposal_hook() -> No
     try:
         metrics_module._schedule_metric_awaitable(awaitable)
         probe.cancel()
+    finally:
+        task_scheduler.reset(token)
+    assert awaitable.close_calls == 1
+    assert probe.awaitable is not None
+    probe.awaitable.close()
+
+
+def test_sdk_metric_start_failure_uses_threadsafe_disposal_hook() -> None:
+    """Exceptional scheduler completion also disposes unstarted callback work."""
+
+    probe = _ScheduledProbe()
+
+    class Awaitable:
+        def __init__(self) -> None:
+            self.close_calls = 0
+
+        def __await__(self):
+            return asyncio.sleep(0).__await__()
+
+        def _cancel_unstarted_threadsafe(self) -> bool:
+            self.close_calls += 1
+            return True
+
+    awaitable = Awaitable()
+    token = task_scheduler.set(probe.schedule)
+    try:
+        metrics_module._schedule_metric_awaitable(awaitable)
+        probe.fail()
     finally:
         task_scheduler.reset(token)
     assert awaitable.close_calls == 1

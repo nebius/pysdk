@@ -513,19 +513,44 @@ class StreamRequest(Generic[Req, Res]):
         self._check_process()
         self._remaining_deadline(initialize=enforce_deadline)
         submit = getattr(self._channel, "run_async", None)
-        if callable(submit):
+        submission_state_lock = ThreadLock()
+        submission_started = not callable(submit)
+        prestart_cleanup_done = False
+        submitted_work: Awaitable[T] | None = None
+
+        def release_if_unstarted() -> None:
+            """Release work and its lease after asynchronous start rejection."""
+
+            nonlocal prestart_cleanup_done
+            with submission_state_lock:
+                if submission_started or prestart_cleanup_done:
+                    return
+                prestart_cleanup_done = True
+            dispose_unstarted_awaitable(awaitable)
             try:
-                operation = submit(awaitable)
+                self._release(discard=True)
+            except BaseException as release_error:
+                logger.warning(
+                    "Failed to release stream transport after task start rejection",
+                    exc_info=release_error,
+                )
+
+        if callable(submit):
+
+            async def start_operation() -> T:
+                """Publish startup before entering stream lifecycle work."""
+
+                nonlocal submission_started
+                with submission_state_lock:
+                    submission_started = True
+                return await awaitable
+
+            submitted_work = start_operation()
+            try:
+                operation = submit(submitted_work)
             except BaseException:
-                dispose_unstarted_awaitable(awaitable)
-                try:
-                    self._release(discard=True)
-                except BaseException as release_error:
-                    logger.warning(
-                        "Failed to release stream transport after submission "
-                        "rejection",
-                        exc_info=release_error,
-                    )
+                dispose_unstarted_awaitable(submitted_work)
+                release_if_unstarted()
                 raise
         else:
             operation = awaitable
@@ -583,6 +608,10 @@ class StreamRequest(Generic[Req, Res]):
                     "Failed to schedule stream cleanup after cancellation",
                     exc_info=cleanup_error,
                 )
+            release_if_unstarted()
+            raise
+        except BaseException:
+            release_if_unstarted()
             raise
 
     async def _result(self) -> Res:
