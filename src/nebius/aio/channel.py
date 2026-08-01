@@ -39,7 +39,8 @@ from functools import wraps
 from inspect import isawaitable
 from logging import getLogger
 from pathlib import Path
-from threading import Lock, RLock
+from threading import Event as ThreadEvent
+from threading import Lock, RLock, Thread
 from time import monotonic
 from typing import Any, Concatenate, ParamSpec, TextIO, TypeVar, cast
 from weakref import WeakSet, finalize, ref
@@ -145,6 +146,12 @@ C = TypeVar("C")
 _detached_foreign_close_handles = WeakSet[Any]()
 _detached_foreign_close_tasks_lock = Lock()
 _DETACHED_FOREIGN_CLOSE_RETENTION_SECONDS = 3600.0
+_transport_close_watch_lock = Lock()
+_transport_close_watch_event = ThreadEvent()
+_transport_close_watch_entries: list[
+    tuple[Callable[[], AbstractEventLoop | None], ConcurrentFuture[None]]
+] = []
+_transport_close_watch_thread: Thread | None = None
 
 
 def _reset_detached_foreign_close_tasks_after_fork() -> None:
@@ -157,8 +164,16 @@ def _reset_detached_foreign_close_tasks_after_fork() -> None:
 
     global _detached_foreign_close_handles
     global _detached_foreign_close_tasks_lock
+    global _transport_close_watch_entries
+    global _transport_close_watch_event
+    global _transport_close_watch_lock
+    global _transport_close_watch_thread
     _detached_foreign_close_handles = WeakSet()
     _detached_foreign_close_tasks_lock = Lock()
+    _transport_close_watch_entries = []
+    _transport_close_watch_event = ThreadEvent()
+    _transport_close_watch_lock = Lock()
+    _transport_close_watch_thread = None
 
 
 if hasattr(os, "register_at_fork"):
@@ -266,6 +281,137 @@ def _start_detached_foreign_close(
         return False
     _retain_detached_foreign_close(task, owner_loop)
     return True
+
+
+def _schedule_detached_close_factory(
+    factory: Callable[[], Coroutine[Any, Any, None]],
+    owner_loop: AbstractEventLoop,
+    name: str,
+    completion: ConcurrentFuture[None] | None = None,
+) -> bool:
+    """Create detached close work only after its owner loop executes.
+
+    A loop can accept a thread-safe callback and stop before it executes that
+    callback. The callback retains the factory instead of a coroutine, so loop
+    closure cannot discard unawaited close work. The detached task settles an
+    optional SDK reservation after it starts or rejects the close work.
+
+    :param factory: Function that creates close work on the owner loop.
+    :param owner_loop: Event loop that owns the close work.
+    :param name: Diagnostic task name.
+    :param completion: Optional SDK lifecycle reservation.
+    :return: ``True`` if the loop accepted or started the close work.
+    """
+
+    def create_and_start() -> bool:
+        """Create and start close work on its owner loop."""
+
+        try:
+            close_coro = factory()
+        except BaseException as error:
+            logger.error(
+                "The SDK could not create the transport close work.",
+                exc_info=error,
+            )
+            if completion is not None:
+                try:
+                    completion.set_result(None)
+                except ConcurrentInvalidStateError:
+                    pass
+            return False
+        return _start_detached_foreign_close(close_coro, owner_loop, name, completion)
+
+    def start() -> None:
+        """Run the close factory from a thread-safe loop callback."""
+
+        create_and_start()
+
+    try:
+        current_loop = get_running_loop()
+    except RuntimeError:
+        current_loop = None
+    if current_loop is owner_loop:
+        return create_and_start()
+    try:
+        owner_loop.call_soon_threadsafe(start)
+    except RuntimeError:
+        if completion is not None:
+            try:
+                completion.set_result(None)
+            except ConcurrentInvalidStateError:
+                pass
+        return False
+    if completion is not None:
+        _watch_transport_close(owner_loop, completion)
+    return True
+
+
+def _watch_transport_close(
+    owner_loop: AbstractEventLoop,
+    completion: ConcurrentFuture[None],
+) -> None:
+    """Use one daemon monitor for all close callbacks on stopped loops.
+
+    :param owner_loop: Loop that accepted the close callback.
+    :param completion: SDK lifecycle reservation to release if the loop stops.
+    """
+
+    global _transport_close_watch_thread
+    start_thread = False
+    with _transport_close_watch_lock:
+        _transport_close_watch_entries.append((ref(owner_loop), completion))
+        if _transport_close_watch_thread is None:
+            start_thread = True
+            _transport_close_watch_thread = Thread(
+                name="nebius-sdk-transport-close-watch",
+                target=_monitor_transport_closes,
+                daemon=True,
+            )
+        thread = _transport_close_watch_thread
+    _transport_close_watch_event.set()
+    if not start_thread:
+        return
+    try:
+        thread.start()
+    except RuntimeError as error:
+        logger.error(
+            "The SDK could not monitor the transport close callbacks.",
+            exc_info=error,
+        )
+        with _transport_close_watch_lock:
+            pending = list(_transport_close_watch_entries)
+            _transport_close_watch_entries.clear()
+            _transport_close_watch_thread = None
+        for _, pending_completion in pending:
+            try:
+                pending_completion.set_result(None)
+            except ConcurrentInvalidStateError:
+                pass
+
+
+def _monitor_transport_closes() -> None:
+    """Release close reservations when their owner loops stop."""
+
+    global _transport_close_watch_thread
+    while True:
+        _transport_close_watch_event.wait(0.01)
+        _transport_close_watch_event.clear()
+        with _transport_close_watch_lock:
+            _transport_close_watch_entries[:] = [
+                entry for entry in _transport_close_watch_entries if not entry[1].done()
+            ]
+            if not _transport_close_watch_entries:
+                _transport_close_watch_thread = None
+                return
+            entries = list(_transport_close_watch_entries)
+        for loop_reference, completion in entries:
+            loop = loop_reference()
+            if loop is not None and loop.is_running():
+                continue
+            try:
+                completion.set_result(None)
+            except ConcurrentInvalidStateError:
+                pass
 
 
 def _finalize_runtime(runtime: AsyncRuntime, process_id: int) -> None:
@@ -477,7 +623,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     "initial_metadata": GrpcMetadata(),
                     "trailing_metadata": GrpcMetadata(),
                     "code": StatusCode.CANCELLED,
-                    "details": "Locally cancelled by application!",
+                    "details": "The application canceled the RPC.",
                     "debug_error_string": "",
                 }
             )
@@ -580,7 +726,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                         "initial_metadata": GrpcMetadata(),
                         "trailing_metadata": GrpcMetadata(),
                         "code": StatusCode.CANCELLED,
-                        "details": ("Locally cancelled by application or SDK shutdown"),
+                        "details": "The application or the SDK canceled the RPC.",
                         "debug_error_string": "",
                     }
                 )
@@ -784,7 +930,24 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param call: Authoritatively completed native call.
         """
 
-        capture = create_task(self._capture_terminal(call))
+        capture_work = self._capture_terminal(call)
+        try:
+            capture = create_task(capture_work)
+        except BaseException as error:
+            # A caller-owned loop can reject task creation through its custom
+            # task factory. The native result is already authoritative. Use a
+            # direct Task so the factory cannot replace that result or leave
+            # the terminal-capture coroutine unobserved.
+            dispose_unstarted_awaitable(capture_work)
+            logger.debug(
+                "The event-loop task factory rejected terminal capture. The "
+                "SDK will bypass the factory.",
+                exc_info=error,
+            )
+            capture = Task(
+                self._capture_terminal(call),
+                loop=get_running_loop(),
+            )
         try:
             await shield(capture)
         except CancelledError:
@@ -1901,7 +2064,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         """
 
         if self._token_bearer is None:
-            raise SDKError("Token bearer is not set")
+            raise SDKError("The SDK has no token bearer.")
         timeout = None if deadline is None else deadline - monotonic()
         if timeout is not None and timeout <= 0:
             raise TimeoutError("The token fetch timed out before receiver dispatch.")
@@ -2242,7 +2405,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             closing._add_internal_done_callback(
                 lambda _: self._runtime.shutdown_async()
             )
-            raise TimeoutError("SDK shutdown timed out.") from None
+            raise TimeoutError(
+                "The SDK did not shut down before the time limit."
+            ) from None
         except BaseException as close_error:
             shutdown = self._runtime.shutdown_async()
             try:
@@ -2257,7 +2422,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         except ConcurrentTimeoutError as shutdown_error:
             if is_terminal_timeout(shutdown, shutdown_error):
                 raise
-            raise TimeoutError("SDK shutdown timed out.") from None
+            raise TimeoutError(
+                "The SDK did not shut down before the time limit."
+            ) from None
 
     async def close(self, grace: float | None = None) -> None:
         """Gracefully close the channel and all associated background work.
@@ -2268,6 +2435,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         exceptions. For compatibility, individual resource-close failures are
         best-effort and logged after all cleanup has been attempted; failures
         of the SDK runtime's own finalization are propagated.
+
+        A custom transport can belong to a different caller-owned event loop.
+        This method retires that transport and schedules its close on the owner
+        loop, but it does not wait for that loop. Keep the owner loop running
+        and able to process callbacks until the transport close finishes.
 
         :param grace: Optional per-transport grace period passed to underlying
             channel close methods.
@@ -2417,27 +2589,51 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             try:
                 self._runtime.begin_close()
                 await self._runtime.cancel_submissions()
-                awaits = list[Coroutine[Any, Any, Any]]()
+                resources = list[tuple[str, Coroutine[Any, Any, Any]]]()
                 for chan in channels.values():
-                    awaits.append(self._close_address_channel(chan, grace))
+                    owner_loop = getattr(chan, "event_loop", None)
+                    if owner_loop is not None and owner_loop is not self._event_loop:
+                        # A caller-owned loop can remain nominally running
+                        # while blocked in synchronous code. Dispatch its
+                        # transport close without making SDK shutdown wait for
+                        # that loop to resume.
+                        self._schedule_address_channel_close(
+                            chan,
+                            grace,
+                            already_retired=True,
+                        )
+                    else:
+                        resources.append(
+                            (
+                                type(chan.channel).__name__,
+                                self._close_address_channel(chan, grace),
+                            )
+                        )
                 for graceful in gracefuls:
-                    awaits.append(graceful.close(grace))
+                    resources.append((type(graceful).__name__, graceful.close(grace)))
                 for task in tasks:
                     task.cancel()
                 rets = await gather(
-                    *awaits,
+                    *(awaitable for _, awaitable in resources),
                     *tasks,
                     return_exceptions=True,
                 )
-                for ret in rets:
+                for index, ret in enumerate(rets):
                     if isinstance(ret, BaseException) and not isinstance(
                         ret,
                         CancelledError,
                     ):
-                        logger.error(
-                            "A resource raised an error during graceful shutdown.",
-                            exc_info=ret,
-                        )
+                        if index < len(resources):
+                            logger.error(
+                                "The SDK could not close the %s resource.",
+                                resources[index][0],
+                                exc_info=ret,
+                            )
+                        else:
+                            logger.error(
+                                "An SDK background task failed during shutdown.",
+                                exc_info=ret,
+                            )
                 with self._channel_pool_lock:
                     for channel_id, address_channel in channels.items():
                         if self._leased_channels.get(channel_id) is address_channel:
@@ -2818,6 +3014,70 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             raise_if_closed=False,
         )
 
+    def _release_channel_soon(
+        self,
+        chan: AddressChannel | None,
+        *,
+        discard: bool = False,
+    ) -> None:
+        """Schedule transport release without blocking the caller thread.
+
+        :param chan: Address channel to release. Use ``None`` for no action.
+        :param discard: Close the channel instead of returning it to the pool.
+        """
+
+        if chan is None:
+            return
+        state_lock = Lock()
+        started = False
+
+        async def release() -> None:
+            """Release the transport on the SDK event loop."""
+
+            nonlocal started
+            with state_lock:
+                started = True
+            self._release_address_channel(
+                chan,
+                discard=discard,
+                raise_if_closed=False,
+            )
+
+        work = release()
+        try:
+            submitted = self._runtime.submit(work, track=False)
+        except RuntimeError:
+            work.close()
+            self._schedule_address_channel_close(chan, None)
+            return
+
+        def finish_release(completed: CrossLoopAwaitable[None]) -> None:
+            """Observe release failure and close work that did not finish."""
+
+            with state_lock:
+                did_start = started
+            error: BaseException | None = None
+            try:
+                error = completed.exception(timeout=0)
+            except ConcurrentCancelledError as cancelled:
+                error = cancelled
+            if did_start and error is None:
+                return
+            if error is not None:
+                logger.error(
+                    "The SDK could not release the transport.",
+                    exc_info=error,
+                )
+            if chan._is_closed_by_sdk():
+                return
+            self._schedule_address_channel_close(
+                chan,
+                None,
+                already_retired=chan._is_retired_by_sdk(),
+            )
+
+        submitted._add_internal_done_callback(finish_release)
+
     def _release_channel_on_sdk_loop(
         self,
         chan: AddressChannel | None,
@@ -2935,14 +3195,56 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             and getattr(chan, "event_loop", None) is self._event_loop
             and chan.channel.get_state() != ChannelConnectivity.SHUTDOWN
         )
+        pooled_lease: AddressChannel | None = None
+        if reusable:
+            try:
+                candidate = chan._new_lease()
+                valid_candidate = (
+                    candidate is not chan
+                    and candidate.channel is chan.channel
+                    and candidate.address == chan.address
+                    and getattr(candidate, "event_loop", None) is self._event_loop
+                    and not candidate._is_retired_by_sdk()
+                )
+                if not valid_candidate:
+                    raise ValueError(
+                        "The address channel created an invalid pool lease."
+                    )
+                pooled_lease = candidate
+            except BaseException as error:
+                logger.error(
+                    "The SDK could not create a new transport lease.",
+                    exc_info=error,
+                )
+                reusable = False
         with self._channel_pool_lock:
             closed = self._closed
-            if not closed and reusable and not chan._is_retired_by_sdk():
+            candidate_already_tracked = pooled_lease is not None and (
+                id(pooled_lease) in self._leased_channels
+                or any(
+                    pooled_lease is existing
+                    for leases in self._free_channels.values()
+                    for existing in leases
+                )
+            )
+            if candidate_already_tracked:
+                reusable = False
+                logger.error(
+                    "The transport lease factory returned a lease that the SDK "
+                    "already tracks."
+                )
+            if (
+                not closed
+                and reusable
+                and pooled_lease is not None
+                and not chan._is_retired_by_sdk()
+            ):
                 chans = self._free_channels.setdefault(chan.address, [])
                 if any(pooled is chan for pooled in chans):
                     return
                 if len(chans) < self._max_free_channels_per_address:
-                    chans.append(chan)
+                    chan._retire_by_sdk()
+                    chans.append(pooled_lease)
                     return
         self._schedule_address_channel_close(
             chan,
@@ -3049,8 +3351,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 pass
             except Exception as e:
                 logger.error(
-                    "The address channel raised an unhandled exception during "
-                    "close.",
+                    "The SDK could not close the address channel.",
                     exc_info=e,
                 )
             finally:
@@ -3076,33 +3377,19 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     pass
                 except Exception as error:
                     logger.error(
-                        "The address channel raised an unhandled exception during "
-                        "close.",
+                        "The SDK could not close the address channel.",
                         exc_info=error,
                     )
 
-            close_coro = close_foreign_and_log()
-            try:
-                current_loop = get_running_loop()
-            except RuntimeError:
-                current_loop = None
-            if owner_loop is current_loop:
-                _start_detached_foreign_close(
-                    close_coro,
-                    cast(AbstractEventLoop, owner_loop),
-                    f"Channel transport close for {chan.address}",
-                )
-                return
-            try:
-                close_future = run_coroutine_threadsafe(close_coro, owner_loop)
-            except RuntimeError:
-                close_coro.close()
+            if not _schedule_detached_close_factory(
+                close_foreign_and_log,
+                cast(AbstractEventLoop, owner_loop),
+                "Channel transport close",
+            ):
                 logger.warning(
                     "The SDK could not close the channel after its owner loop "
                     "stopped."
                 )
-            else:
-                _retain_detached_foreign_close(close_future, owner_loop)
             return
 
         channel_id = id(chan)
@@ -3131,29 +3418,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 current_loop = get_running_loop()
             except RuntimeError:
                 current_loop = None
-            fallback = close_and_log()
             fallback_loop = cast(AbstractEventLoop, owner_loop or self._event_loop)
-            if fallback_loop is not current_loop and fallback_loop.is_running():
-                try:
-                    close_future = run_coroutine_threadsafe(fallback, fallback_loop)
-                    _retain_detached_foreign_close(close_future, fallback_loop)
-                    return
-                except RuntimeError:
-                    fallback.close()
-                    fallback = close_and_log()
-            if current_loop is fallback_loop:
-                _start_detached_foreign_close(
-                    fallback,
-                    fallback_loop,
-                    f"Channel transport close for {chan.address}",
-                    completion,
-                )
-            else:
-                fallback.close()
+            if fallback_loop.is_running() and _schedule_detached_close_factory(
+                close_and_log,
+                fallback_loop,
+                "Channel transport close",
+                completion,
+            ):
+                return
+            if current_loop is not fallback_loop:
                 logger.warning(
                     "The SDK cannot close the channel because its owner event "
                     "loop stopped."
                 )
+            if not completion.done():
                 completion.set_result(None)
             return
         except BaseException:

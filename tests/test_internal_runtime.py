@@ -1012,6 +1012,57 @@ def test_completed_callback_rejects_closed_sdk_loop() -> None:
         submitted.add_done_callback(lambda _: None)
 
 
+def test_runtime_tracks_submission_before_task_can_start(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Runtime tracking is visible before submitted work can call close."""
+
+    channel = Channel(credentials=NoCredentials())
+    tracking_entered = Event()
+    release_tracking = Event()
+    task_started = Event()
+    submitted: Future[CrossLoopAwaitable[int]] = Future()
+    original_track = channel._runtime._track_submission
+
+    def delayed_track(handle: CrossLoopAwaitable[object]) -> None:
+        """Hold tracking so the test can inspect task-start ordering."""
+
+        tracking_entered.set()
+        assert release_tracking.wait(timeout=5)
+        original_track(handle)
+
+    monkeypatch.setattr(channel._runtime, "_track_submission", delayed_track)
+
+    async def work() -> int:
+        """Report task entry and return a value."""
+
+        task_started.set()
+        return 42
+
+    def submit() -> None:
+        """Submit work while the tracking hook is blocked."""
+
+        try:
+            submitted.set_result(channel.run_async(work()))
+        except BaseException as error:
+            submitted.set_exception(error)
+
+    thread = Thread(target=submit)
+    try:
+        thread.start()
+        assert tracking_entered.wait(timeout=5)
+        assert not task_started.wait(timeout=0.05)
+        release_tracking.set()
+        thread.join(timeout=5)
+        assert not thread.is_alive()
+        assert submitted.result(timeout=5).result(timeout=5) == 42
+    finally:
+        release_tracking.set()
+        if thread.is_alive():
+            thread.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
 def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
     """A synchronous pending-result read in async code fails promptly."""
 
@@ -1019,6 +1070,8 @@ def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
     release = Event()
 
     async def pending() -> int:
+        """Wait until the test permits the submission to finish."""
+
         while not release.is_set():
             await asyncio.sleep(0)
         return 42
@@ -1026,6 +1079,8 @@ def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
     submitted = channel.run_async(pending())
 
     async def inspect() -> None:
+        """Verify that synchronous inspection cannot block this loop."""
+
         with pytest.raises(RuntimeError, match="Await the work instead"):
             submitted.result()
         with pytest.raises(RuntimeError, match="Await the work instead"):
@@ -1076,6 +1131,8 @@ def test_repeated_shutdown_does_not_block_borrowed_owner_loop() -> None:
         runtime._shutdown = True
 
     def repeat_shutdown() -> None:
+        """Repeat shutdown from the borrowed owner loop."""
+
         runtime.shutdown()
         returned.set()
 
@@ -1095,18 +1152,22 @@ def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
     factory_installed = Event()
 
     def reject_task(loop: object, coroutine: object, **kwargs: object) -> None:
-        raise RuntimeError("shutdown task rejected")
+        """Reject creation of the runtime shutdown task."""
+
+        raise RuntimeError("The test rejected the shutdown task.")
 
     def install_factory() -> None:
+        """Install the rejecting factory on the borrowed loop."""
+
         loop.set_task_factory(reject_task)  # type: ignore[arg-type]
         factory_installed.set()
 
     loop.call_soon_threadsafe(install_factory)
     assert factory_installed.wait(timeout=5)
     try:
-        with pytest.raises(RuntimeError, match="shutdown task rejected"):
+        with pytest.raises(RuntimeError, match="The test rejected the shutdown task"):
             runtime.shutdown_async().result(timeout=5)
-        with pytest.raises(RuntimeError, match="shutdown task rejected"):
+        with pytest.raises(RuntimeError, match="The test rejected the shutdown task"):
             runtime.shutdown_async().result(timeout=5)
         assert loop.is_running()
     finally:
@@ -1121,12 +1182,16 @@ def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
     factory_installed = Event()
 
     def reject_while_cleanup_pending(loop, coroutine, **kwargs):
+        """Reject a nested task while channel cleanup is pending."""
+
         completion = channel._close_completion
         if completion is not None and not completion.done():
-            raise RuntimeError("nested close cleanup task rejected")
+            raise RuntimeError("The test rejected the nested cleanup task.")
         return asyncio.Task(coroutine, loop=loop, **kwargs)
 
     def install_factory() -> None:
+        """Install the conditional task factory on the borrowed loop."""
+
         loop.set_task_factory(reject_while_cleanup_pending)
         factory_installed.set()
 
@@ -1150,7 +1215,9 @@ def test_borrowed_shutdown_watcher_start_failure_falls_back(
     runtime = AsyncRuntime(loop, 2)
 
     def reject_thread_start(self: Thread) -> None:
-        raise RuntimeError("thread start rejected")
+        """Reject creation of the borrowed-loop watcher thread."""
+
+        raise RuntimeError("The test rejected the watcher thread start.")
 
     monkeypatch.setattr(runtime_module.Thread, "start", reject_thread_start)
     try:
@@ -1162,11 +1229,15 @@ def test_borrowed_shutdown_watcher_start_failure_falls_back(
 
 
 def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
+    """Two external loops can await one SDK submission handle."""
+
     channel = Channel(credentials=NoCredentials())
     started = Event()
     release = Event()
 
     async def work() -> int:
+        """Return the SDK loop identity after both waiters start."""
+
         started.set()
         while not release.is_set():
             await asyncio.sleep(0)
@@ -1177,6 +1248,8 @@ def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
     loop_b, thread_b = _start_loop()
 
     async def wait_for_result() -> int:
+        """Await the shared result from an external loop."""
+
         return await submitted
 
     try:
@@ -1789,7 +1862,7 @@ def test_runtime_rejects_resubmitting_current_handle() -> None:
 
     async def parent() -> int:
         own_handle = await asyncio.wrap_future(holder)
-        with pytest.raises(RuntimeError, match="submit its own submission handle"):
+        with pytest.raises(RuntimeError, match="submit its own SDK submission handle"):
             channel.run_async(own_handle)
         return 42
 
@@ -2095,13 +2168,13 @@ def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
     request._request_with_authorization_loop = result  # type: ignore[method-assign]
     try:
         assert isinstance(request.wait(), Disk)
-        with pytest.raises(RuntimeError, match="cannot await this completed request"):
+        with pytest.raises(RuntimeError, match="cannot await the same request"):
             request.wait()
 
         async def await_again() -> None:
             await request
 
-        with pytest.raises(RuntimeError, match="cannot await this completed request"):
+        with pytest.raises(RuntimeError, match="cannot await the same request"):
             asyncio.run(await_again())
         assert rpc_count == 1
     finally:
@@ -2389,8 +2462,8 @@ def test_synchronous_unlimited_request_ignores_inapplicable_auth_timeout(
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
-    ((0.05, 5, False), (5, 0.05, True)),
-    ids=("request-timeout", "authorization-timeout"),
+    ((0.05, 5, False), (5, 0.05, True), (0.05, 5, True)),
+    ids=("request-timeout", "authorization-timeout", "authorized-dispatch"),
 )
 async def test_async_request_timeout_includes_sdk_loop_queueing(
     timeout: float,
@@ -3048,7 +3121,7 @@ def test_sync_close_timeout_still_finishes_runtime_shutdown() -> None:
         *channel._runtime._executor._threads,
     ]
 
-    with pytest.raises(TimeoutError, match="shutdown timed out"):
+    with pytest.raises(TimeoutError, match="did not shut down"):
         channel.sync_close(timeout=0.05)
     assert graceful.started.wait(timeout=5)
     graceful.release.set()
@@ -3073,7 +3146,7 @@ def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
     channel.run_async(block_loop())
     assert loop_blocked.wait(timeout=5)
     try:
-        with pytest.raises(TimeoutError, match="shutdown timed out"):
+        with pytest.raises(TimeoutError, match="did not shut down"):
             channel.sync_close(timeout=0.05)
         rejected = asyncio.sleep(0)
         with pytest.raises(ChannelClosedError, match="closed"):
@@ -3183,7 +3256,7 @@ def test_sync_close_timeout_covers_blocked_executor_shutdown() -> None:
     assert worker_started.wait(timeout=5)
 
     try:
-        with pytest.raises(TimeoutError, match="shutdown timed out"):
+        with pytest.raises(TimeoutError, match="did not shut down"):
             channel.sync_close(timeout=0.05)
     finally:
         release_worker.set()
@@ -3796,7 +3869,7 @@ def test_request_task_start_failure_releases_explicit_override() -> None:
         release_calls.append((value, discard))
         released.set()
 
-    channel.release_channel = release  # type: ignore[method-assign]
+    channel._release_channel_soon = release  # type: ignore[method-assign]
 
     def reject_once(loop, coroutine, **kwargs):
         loop.set_task_factory(None)
@@ -3824,29 +3897,78 @@ def test_request_task_start_failure_releases_explicit_override() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_request_start_rejection_closes_unleased_override_from_async_loop() -> None:
+    """Async pre-start cleanup closes an unleased explicit transport."""
+
+    channel = Channel(credentials=NoCredentials())
+    rejection = RuntimeError("The test rejected the request task.")
+    closed = Event()
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            """Record transport cleanup on the SDK event loop."""
+
+            closed.set()
+
+    override = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "request-async-cleanup.example:443",
+        channel._event_loop,
+    )
+
+    def reject_once(loop, coroutine, **kwargs):
+        """Reject one request task after the SDK accepts it."""
+
+        loop.set_task_factory(None)
+        raise rejection
+
+    async def install() -> None:
+        """Install the one-shot task factory on the SDK loop."""
+
+        asyncio.get_running_loop().set_task_factory(reject_once)
+
+    async def run_request() -> None:
+        """Submit the request from a separate active event loop."""
+
+        request: Request[GetDiskRequest, Disk] = Request(
+            channel,
+            "nebius.compute.v1.DiskService",
+            "Get",
+            GetDiskRequest(id="async-rejected-request"),
+            Disk,
+            grpc_channel_override=override,
+        )
+        with pytest.raises(RuntimeError) as raised:
+            await request._await_result()
+        assert raised.value is rejection
+
+    channel.run_async(install()).result(timeout=5)
+    try:
+        asyncio.run(run_request())
+        assert closed.wait(timeout=5)
+        assert override._is_closed_by_sdk()
+    finally:
+        channel.sync_close(timeout=5)
+
+
 def test_stream_task_start_failure_releases_explicit_override() -> None:
     """An asynchronously rejected stream operation releases its lease."""
 
     channel = Channel(credentials=NoCredentials())
     rejection = RuntimeError("stream task rejected")
     released = Event()
-    release_calls: list[tuple[object | None, bool]] = []
 
     class Transport:
         async def close(self, grace: float | None = None) -> None:
-            return None
+            """Record cleanup of the rejected stream transport."""
+
+            released.set()
 
     override = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "stream-start-rejection.example:443",
         channel._event_loop,
     )
-
-    def release(value: object | None, *, discard: bool = False) -> None:
-        release_calls.append((value, discard))
-        released.set()
-
-    channel.release_channel = release  # type: ignore[method-assign]
 
     def reject_once(loop, coroutine, **kwargs):
         loop.set_task_factory(None)
@@ -3870,7 +3992,7 @@ def test_stream_task_start_failure_releases_explicit_override() -> None:
             asyncio.run(stream.done_writing())
         assert raised.value is rejection
         assert released.wait(timeout=5)
-        assert release_calls == [(override, True)]
+        assert override._is_closed_by_sdk()
     finally:
         channel.sync_close(timeout=5)
 
@@ -4354,12 +4476,15 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
         assert native_waiting.wait(timeout=5)
         native_call.publish_completion()
         assert callback_called.wait(timeout=5)
-        assert observations == [(True, True, "remote cancellation")]
+        assert len(observations) == 1
+        assert observations[0][:2] == (True, True)
+        assert observations[0][2] in ("", "remote cancellation")
         assert call.done()
         assert call.cancelled()
         release_result.set()
         with pytest.raises(grpc.aio.AioRpcError):
             call._submitted.result(timeout=5)
+        assert call.debug_error_string() == "remote cancellation"
     finally:
         release_result.set()
         channel.sync_close(timeout=5)
@@ -4463,6 +4588,119 @@ def test_low_level_terminal_precedes_blocking_fatal_diagnostics() -> None:
         release_result.set()
         if publisher.ident is not None:
             publisher.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
+def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> None:
+    """Task-factory rejection cannot replace a completed native result."""
+
+    caplog.set_level("DEBUG")
+    native_result = Disk()
+
+    class NativeCall:
+        """Return a result before the SDK starts terminal capture."""
+
+        def __init__(self) -> None:
+            """Create a native call without a completion callback."""
+
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            """Store the native completion callback."""
+
+            self.callback = callback
+
+        def __await__(self):
+            """Complete the call and reject the next task creation."""
+
+            async def result() -> Disk:
+                """Publish completion and return the native response."""
+
+                assert self.callback is not None
+                self.callback(self)
+
+                def reject_once(loop, coroutine, **kwargs):
+                    """Reject terminal capture and restore the default factory."""
+
+                    loop.set_task_factory(None)
+                    raise RuntimeError("The test rejected terminal capture.")
+
+                asyncio.get_running_loop().set_task_factory(reject_once)
+                return native_result
+
+            return result().__await__()
+
+        def cancelled(self) -> bool:
+            """Report that the native call was not canceled."""
+
+            return False
+
+        def debug_error_string(self) -> str:
+            """Return an empty optional diagnostic."""
+
+            return ""
+
+        async def initial_metadata(self) -> tuple[()]:
+            """Return empty initial metadata."""
+
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            """Return empty trailing metadata."""
+
+            return ()
+
+        async def code(self) -> grpc.StatusCode:
+            """Return the successful native status."""
+
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            """Return empty native status details."""
+
+            return ""
+
+    native_call = NativeCall()
+
+    class Transport:
+        """Create the controlled native call."""
+
+        def unary_unary(self, *args: object, **kwargs: object):
+            """Return a callable that provides the controlled call."""
+
+            return lambda *call_args, **call_kwargs: native_call
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            """Report a reusable transport state."""
+
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            """Close the test transport."""
+
+            return None
+
+    class TestChannel(Channel):
+        """Create address wrappers for the controlled transport."""
+
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            """Create one wrapper owned by the SDK loop."""
+
+            return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
+
+    channel = TestChannel(credentials=NoCredentials())
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda value: value.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="terminal-capture-rejection"))
+    try:
+        response = call._submitted.result(timeout=5)
+        assert response is native_result
+        assert call.done()
+        assert asyncio.run(call.code()) is grpc.StatusCode.OK
+        assert "The event-loop task factory rejected terminal capture." in caplog.text
+    finally:
         channel.sync_close(timeout=5)
 
 
@@ -4838,6 +5076,91 @@ def test_generated_request_ignores_stale_attempt_completion_callback() -> None:
         assert not request._native_attempt_terminal
         assert request.cancel()
         assert current_submission.cancelled()
+    finally:
+        channel.sync_close(timeout=5)
+
+
+def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
+    """Task-factory rejection cannot replace a generated request result."""
+
+    caplog.set_level("DEBUG")
+    native_result = Disk()
+
+    class CompletedCall:
+        """Return a successful response before completion processing."""
+
+        def __init__(self) -> None:
+            """Create a native call without a completion callback."""
+
+            self.callback = None
+
+        def add_done_callback(self, callback) -> None:
+            """Store the native completion callback."""
+
+            self.callback = callback
+
+        def __await__(self):
+            """Complete the call and reject the next task creation."""
+
+            async def result() -> Disk:
+                """Publish completion and return the native response."""
+
+                assert self.callback is not None
+                self.callback(self)
+
+                def reject_once(loop, coroutine, **kwargs):
+                    """Reject request completion and restore the default factory."""
+
+                    loop.set_task_factory(None)
+                    raise RuntimeError("The test rejected request completion.")
+
+                asyncio.get_running_loop().set_task_factory(reject_once)
+                return native_result
+
+            return result().__await__()
+
+        async def code(self) -> grpc.StatusCode:
+            """Return the successful native status."""
+
+            return grpc.StatusCode.OK
+
+        async def details(self) -> str:
+            """Return empty native status details."""
+
+            return ""
+
+        async def initial_metadata(self) -> tuple[()]:
+            """Return empty initial metadata."""
+
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            """Return empty trailing metadata."""
+
+            return ()
+
+    completed_call = CompletedCall()
+    channel = Channel(credentials=NoCredentials())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="request-completion-rejection"),
+        Disk,
+    )
+
+    def send(timeout: float | None) -> None:
+        """Install the controlled native call on the request."""
+
+        request._call = completed_call  # type: ignore[assignment]
+        completed_call.add_done_callback(request._mark_native_attempt_terminal)
+
+    request._send = send  # type: ignore[method-assign]
+    try:
+        response = request.wait()
+        assert response is native_result
+        assert request.done()
+        assert "The event-loop task factory rejected request completion." in caplog.text
     finally:
         channel.sync_close(timeout=5)
 
@@ -5798,7 +6121,7 @@ def test_submission_cannot_await_its_own_cross_loop_handle() -> None:
     handle = channel.run_async(await_self())
     holder.set_result(handle)
     try:
-        with pytest.raises(RuntimeError, match="own submission"):
+        with pytest.raises(RuntimeError, match="own SDK submission"):
             handle.result(timeout=5)
     finally:
         channel.sync_close(timeout=5)
@@ -5818,7 +6141,7 @@ def test_submission_cannot_wrap_its_own_handle_on_another_runtime() -> None:
     handle = channel_a.run_async(await_wrapped_self())
     holder.set_result(handle)
     try:
-        with pytest.raises(RuntimeError, match="own submission"):
+        with pytest.raises(RuntimeError, match="own SDK submission"):
             handle.result(timeout=5)
     finally:
         channel_a.sync_close(timeout=5)
@@ -5907,36 +6230,125 @@ def test_sync_close_from_external_async_context_preserves_loop_error() -> None:
     asyncio.run(run())
 
 
-def test_external_close_does_not_cancel_concurrent_internal_close_result() -> None:
+class _BlockingCloseResource:
+    """Keep channel cleanup active until a close-race test releases it."""
+
+    def __init__(self) -> None:
+        """Create the cleanup synchronization events."""
+
+        self.started = Event()
+        self.release = Event()
+
+    async def close(self, grace: float | None = None) -> None:
+        """Report cleanup entry and wait for the test to release it."""
+
+        self.started.set()
+        while not self.release.is_set():
+            await asyncio.sleep(0)
+
+
+def _observe_external_close_join(
+    channel: Channel,
+    monkeypatch: pytest.MonkeyPatch,
+) -> Event:
+    """Return an event that reports an external caller joining close."""
+
+    joined = Event()
+    original_get_close_handle = channel._get_close_handle
+
+    def observe_close_handle(grace: float | None) -> CrossLoopAwaitable[None]:
+        """Report an external caller after it gets the shared close handle."""
+
+        closing = original_get_close_handle(grace)
+        if not channel._runtime.in_event_loop():
+            joined.set()
+        return closing
+
+    monkeypatch.setattr(
+        channel,
+        "_get_close_handle",
+        observe_close_handle,
+    )
+    return joined
+
+
+def test_external_close_does_not_cancel_concurrent_internal_close_result(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """An external close preserves a protected internal close result."""
+
     async def run_once() -> None:
+        """Run one synchronized close race."""
+
         channel = Channel(credentials=NoCredentials())
-        entered = Event()
+        resource = _BlockingCloseResource()
+        channel._gracefuls.add(resource)
+        external_joined = _observe_external_close_join(channel, monkeypatch)
 
         async def internal() -> int:
-            entered.set()
+            """Close from the SDK loop and publish a result."""
+
             await channel.close()
             return 42
 
         submitted = channel.run_async(internal())
-        await asyncio.to_thread(entered.wait, 5)
-        await channel.close()
+        external_close: asyncio.Task[None] | None = None
+        try:
+            assert await asyncio.to_thread(resource.started.wait, 5)
+            external_close = asyncio.create_task(channel.close())
+            assert await asyncio.to_thread(external_joined.wait, 5)
+        finally:
+            resource.release.set()
+            if external_close is None:
+                await channel.close()
+            else:
+                await external_close
         assert submitted.result(timeout=5) == 42
 
     for _ in range(20):
         asyncio.run(run_once())
 
 
-def test_sync_close_does_not_cancel_concurrent_internal_close_result() -> None:
+def test_sync_close_does_not_cancel_concurrent_internal_close_result(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A synchronous close preserves a protected internal close result."""
+
     for _ in range(20):
         channel = Channel(credentials=NoCredentials())
-        entered = Event()
+        resource = _BlockingCloseResource()
+        channel._gracefuls.add(resource)
+        external_joined = _observe_external_close_join(channel, monkeypatch)
+        close_errors: list[BaseException] = []
 
         async def internal() -> int:
-            entered.set()
+            """Close from the SDK loop and publish a result."""
+
             await channel.close()
             return 42
 
+        def close_externally() -> None:
+            """Join close synchronously and retain an unexpected error."""
+
+            try:
+                channel.sync_close(timeout=5)
+            except BaseException as error:
+                close_errors.append(error)
+
         submitted = channel.run_async(internal())
-        assert entered.wait(timeout=5)
-        channel.sync_close(timeout=5)
+        close_thread: Thread | None = None
+        try:
+            assert resource.started.wait(timeout=5)
+            close_thread = Thread(target=close_externally)
+            close_thread.start()
+            assert external_joined.wait(timeout=5)
+        finally:
+            resource.release.set()
+            if close_thread is None:
+                channel.sync_close(timeout=5)
+            else:
+                close_thread.join(timeout=5)
+        assert close_thread is not None
+        assert not close_thread.is_alive()
+        assert close_errors == []
         assert submitted.result(timeout=5) == 42

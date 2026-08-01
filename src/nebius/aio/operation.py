@@ -11,10 +11,19 @@ from __future__ import annotations
 
 import importlib
 import os
+from asyncio import (
+    FIRST_COMPLETED,
+    ensure_future,
+    shield,
+    sleep,
+    wait,
+    wait_for,
+    wrap_future,
+)
 from asyncio import Lock as AsyncLock
 from asyncio import TimeoutError as AsyncTimeoutError
-from asyncio import ensure_future, sleep, wait_for
 from collections.abc import Sequence
+from concurrent.futures import Future as ConcurrentFuture
 from datetime import datetime, timedelta
 from math import isfinite
 from threading import Lock
@@ -452,16 +461,46 @@ class Operation(Generic[OperationPb]):
             else submitted_at + max(auth_timeout, 0)
         )
         submit = getattr(self._channel, "run_async", None)
-        update = self._update_internal(
+        dispatch_started: ConcurrentFuture[None] = ConcurrentFuture()
+        dispatch_state_lock = Lock()
+        update_started = False
+        update_work = self._update_internal(
             request_deadline=request_deadline,
             authorization_deadline=authorization_deadline,
             **kwargs,
         )
+
+        async def start_update() -> None:
+            """Publish SDK-loop dispatch before the update starts."""
+
+            nonlocal update_started
+            with dispatch_state_lock:
+                update_started = True
+            if not dispatch_started.done():
+                dispatch_started.set_result(None)
+            await update_work
+
+        update = start_update()
         try:
             submitted = submit(update) if callable(submit) else update
         except BaseException:
             dispose_unstarted_awaitable(update)
+            dispose_unstarted_awaitable(update_work)
             raise
+
+        def dispose_update_if_unstarted(_: object) -> None:
+            """Dispose update work if its dispatch wrapper did not start."""
+
+            with dispatch_state_lock:
+                if update_started:
+                    return
+            dispose_unstarted_awaitable(update_work)
+
+        observe = getattr(submitted, "_add_internal_done_callback", None)
+        if not callable(observe):
+            observe = getattr(submitted, "add_done_callback", None)
+        if callable(observe):
+            observe(dispose_update_if_unstarted)
         # Authorization and request clocks are independent. An applicable
         # authorization deadline bounds the whole flow; the generated request
         # pauses its request clock while authenticating. For a legacy channel
@@ -474,19 +513,53 @@ class Operation(Generic[OperationPb]):
             else request_deadline if authorization_applies is False else None
         )
         done = getattr(submitted, "done", None)
-        if caller_deadline is None or (callable(done) and done()):
+        dispatch_limits = [
+            deadline
+            for deadline in (request_deadline, authorization_deadline)
+            if deadline is not None
+        ]
+        dispatch_deadline = (
+            min(dispatch_limits) if authorization_applies is True else None
+        )
+        if (caller_deadline is None and dispatch_deadline is None) or (
+            callable(done) and done()
+        ):
             await submitted
             return
-        remaining = caller_deadline - monotonic()
-        if remaining <= 0:
-            cancel = getattr(submitted, "cancel", None)
-            if callable(cancel):
-                cancel()
-            raise TimeoutError(
-                "The operation update timed out before SDK-loop dispatch."
-            )
         waiter = ensure_future(submitted)
         try:
+            if dispatch_deadline is not None and not dispatch_started.done():
+                remaining = dispatch_deadline - monotonic()
+                if remaining > 0:
+                    started_waiter = ensure_future(
+                        shield(wrap_future(dispatch_started))
+                    )
+                    completed, _ = await wait(
+                        (waiter, started_waiter),
+                        timeout=remaining,
+                        return_when=FIRST_COMPLETED,
+                    )
+                    started_waiter.cancel()
+                    if waiter in completed:
+                        await waiter
+                        return
+                if not dispatch_started.done():
+                    waiter.cancel()
+                    cancel = getattr(submitted, "cancel", None)
+                    if callable(cancel):
+                        cancel()
+                    raise TimeoutError(
+                        "The operation update timed out before SDK-loop dispatch."
+                    )
+            if caller_deadline is None:
+                await waiter
+                return
+            remaining = caller_deadline - monotonic()
+            if remaining <= 0:
+                cancel = getattr(submitted, "cancel", None)
+                if callable(cancel):
+                    cancel()
+                raise TimeoutError("The operation update timed out.")
             await wait_for(waiter, timeout=remaining)
         except (TimeoutError, AsyncTimeoutError) as error:
             if waiter.done() and not waiter.cancelled():

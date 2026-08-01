@@ -14,9 +14,11 @@ from asyncio import (
     shield,
     wait,
     wait_for,
+    wrap_future,
 )
 from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import AsyncIterator, Awaitable, Callable, Generator
+from concurrent.futures import Future as ConcurrentFuture
 from logging import getLogger
 from threading import Lock as ThreadLock
 from time import monotonic
@@ -397,6 +399,30 @@ class StreamRequest(Generic[Req, Res]):
                     self._released = False
             raise
 
+    def _release_soon(self, *, discard: bool = False) -> None:
+        """Release transport state without blocking an active caller loop."""
+
+        with self._state_lock:
+            if self._released or self._address_channel is None:
+                return
+            address_channel = self._address_channel
+            self._released = True
+        release_soon = getattr(self._channel, "_release_channel_soon", None)
+        if callable(release_soon):
+            release_soon(address_channel, discard=discard)
+            return
+        try:
+            release_address_channel(
+                self._channel,
+                address_channel,
+                discard=discard,
+            )
+        except BaseException:
+            with self._state_lock:
+                if self._address_channel is address_channel:
+                    self._released = False
+            raise
+
     def _is_cancelled(self) -> bool:
         """Return the cancellation state under the state lock."""
 
@@ -426,7 +452,7 @@ class StreamRequest(Generic[Req, Res]):
             if not self._released:
                 self._cancel_requested = False
                 self._cancelled = False
-        logger.warning("Asynchronous stream cancellation failed.", exc_info=error)
+        logger.warning("The SDK could not cancel the stream.", exc_info=error)
 
     def _is_released(self) -> bool:
         """Return the channel-release state under the state lock."""
@@ -501,6 +527,21 @@ class StreamRequest(Generic[Req, Res]):
                 ]
         return None if not deadlines else min(deadlines) - now
 
+    def _remaining_dispatch_deadline(self) -> float | None:
+        """Return the request/authentication budget before SDK-loop dispatch."""
+
+        now = monotonic()
+        with self._state_lock:
+            deadlines = [
+                deadline
+                for deadline in (
+                    self._request_deadline,
+                    self._authorization_deadline,
+                )
+                if deadline is not None
+            ]
+        return None if not deadlines else min(deadlines) - now
+
     async def _on_sdk_loop(
         self,
         awaitable: Awaitable[T],
@@ -522,11 +563,15 @@ class StreamRequest(Generic[Req, Res]):
 
         self._check_process()
         self._remaining_deadline(initialize=enforce_deadline)
+        dispatch_remaining = (
+            self._remaining_dispatch_deadline() if enforce_deadline else None
+        )
         submit = getattr(self._channel, "run_async", None)
         submission_state_lock = ThreadLock()
         submission_started = not callable(submit)
         prestart_cleanup_done = False
         submitted_work: Awaitable[T] | None = None
+        dispatch_started: ConcurrentFuture[None] = ConcurrentFuture()
 
         def cleanup_if_unstarted(*, release_unopened_stream: bool) -> None:
             """Dispose rejected work and release only an unopened stream."""
@@ -578,7 +623,7 @@ class StreamRequest(Generic[Req, Res]):
                     else:
                         return
             try:
-                self._release(discard=True)
+                self._release_soon(discard=True)
             except BaseException as release_error:
                 logger.warning(
                     "The SDK could not release the stream transport after it "
@@ -594,6 +639,16 @@ class StreamRequest(Generic[Req, Res]):
                 nonlocal submission_started
                 with submission_state_lock:
                     submission_started = True
+                dispatch_deadline = self._remaining_dispatch_deadline()
+                if dispatch_deadline is not None and dispatch_deadline <= 0:
+                    dispose_unstarted_awaitable(awaitable)
+                    with self._state_lock:
+                        self._cancel_requested = True
+                        self._cancelled = True
+                    self._release(discard=True)
+                    raise TimeoutError("The stream timed out before SDK-loop dispatch.")
+                if not dispatch_started.done():
+                    dispatch_started.set_result(None)
                 return await awaitable
 
             submitted_work = start_operation()
@@ -633,8 +688,8 @@ class StreamRequest(Generic[Req, Res]):
             # ``run_async`` normally performs only a short, synchronized
             # admission. Recompute from the absolute deadline nevertheless so
             # its elapsed time cannot grant the operation a fresh timeout.
-            remaining = self._remaining_deadline()
-            if remaining is not None and remaining <= 0:
+            dispatch_remaining = self._remaining_dispatch_deadline()
+            if dispatch_remaining is not None and dispatch_remaining <= 0:
                 dispose_unstarted_awaitable(operation)
                 self.cancel()
                 raise TimeoutError("The stream timed out before SDK-loop dispatch.")
@@ -642,10 +697,34 @@ class StreamRequest(Generic[Req, Res]):
             # machine must own the deadline. In particular, authentication
             # pauses the request clock, which a fixed caller-side wait cannot
             # observe. Synchronous admission delay above is still charged.
-            if legacy_local_operation or remaining is None:
+            if legacy_local_operation:
                 return cast(T, await operation)
             waiter = ensure_future(operation)
             try:
+                if dispatch_remaining is not None and not dispatch_started.done():
+                    started_waiter = ensure_future(
+                        shield(wrap_future(dispatch_started))
+                    )
+                    completed, _ = await wait(
+                        (waiter, started_waiter),
+                        timeout=dispatch_remaining,
+                        return_when=FIRST_COMPLETED,
+                    )
+                    started_waiter.cancel()
+                    if waiter in completed:
+                        return cast(T, await waiter)
+                    if not dispatch_started.done():
+                        waiter.cancel()
+                        self.cancel()
+                        raise TimeoutError(
+                            "The stream timed out before SDK-loop dispatch."
+                        )
+                remaining = self._remaining_deadline()
+                if remaining is None:
+                    return cast(T, await waiter)
+                if remaining <= 0:
+                    self.cancel()
+                    raise TimeoutError("The stream timed out.")
                 return cast(T, await wait_for(waiter, timeout=remaining))
             except (TimeoutError, AsyncTimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():

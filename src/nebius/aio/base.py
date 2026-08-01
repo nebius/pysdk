@@ -11,6 +11,7 @@ This module exposes two small helper classes:
 """
 
 from asyncio import AbstractEventLoop, get_event_loop, get_running_loop
+from copy import copy
 from threading import Lock
 
 from grpc.aio import Channel as GRPCChannel
@@ -73,6 +74,22 @@ class AddressChannel:
         with close_state_lock:
             self._retired_by_sdk = True
             self._closed_by_sdk = True
+
+    def _new_lease(self) -> "AddressChannel":
+        """Create a fresh wrapper for another lease of this transport.
+
+        A fresh wrapper prevents an old holder from releasing a later lease.
+        Custom wrappers can override this method when they must preserve
+        additional wrapper state.
+
+        :return: New wrapper for the same native channel and owner loop.
+        """
+
+        lease = copy(self)
+        lease._close_state_lock = Lock()
+        lease._retired_by_sdk = False
+        lease._closed_by_sdk = False
+        return lease
 
     def _retire_by_sdk(self) -> bool:
         """Atomically reserve this transport for SDK-managed closure.

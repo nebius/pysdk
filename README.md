@@ -91,6 +91,10 @@ The SDK closes a rejected native coroutine. It sends cleanup for a rejected
 an unknown custom awaitable from a cancellation or shutdown thread. Such an
 awaitable must provide thread-safe cleanup for work that does not start.
 
+When a custom transport belongs to a different caller-owned event loop, the
+SDK schedules cleanup on that loop and does not wait for it during shutdown.
+Keep that loop running and able to process callbacks until cleanup finishes.
+
 Supported mutable request messages become fixed when the request wrapper is
 created. This rule keeps generated reset-mask metadata consistent with the
 message. Set metadata, timeouts, credentials, and authentication options
@@ -152,6 +156,11 @@ Low-level pool methods still expose `AddressChannel.channel` for custom
 transport compatibility. This field is a native `grpc.aio.Channel` that
 belongs to the SDK loop. Do not call it from an external loop. Use a generated
 client or `Channel.unary_unary()` for cross-loop calls.
+
+Each `AddressChannel` wrapper represents one pool lease. Release the wrapper
+only once. A later checkout can return a new wrapper for the same native
+channel. Custom wrappers can override `_new_lease()` to copy required wrapper
+state.
 
 `get_authorization_provider()` still returns the configured provider object.
 Generated requests dispatch it on the SDK loop. Code that calls the provider

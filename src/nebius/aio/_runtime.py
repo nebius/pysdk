@@ -658,7 +658,7 @@ class CrossLoopAwaitable(Generic[T]):
         self._check_process()
         binding = _current_submission.get()
         if binding is not None and binding[1] is self and not self._future.done():
-            raise RuntimeError("SDK work cannot await its own submission handle.")
+            raise RuntimeError("A task cannot await its own SDK submission handle.")
         self._reject_executor_wait()
         loop = asyncio.get_running_loop()
         relay: asyncio.Future[T] = loop.create_future()
@@ -922,7 +922,7 @@ class AsyncRuntime:
             # its handle to B, then awaits B). Keep ownership with the running
             # submission and reject without cancelling or disposing its
             # handle.
-            raise RuntimeError("SDK work cannot submit its own submission handle.")
+            raise RuntimeError("A task cannot submit its own SDK submission handle.")
 
     def _submit_without_disposal(
         self,
@@ -955,18 +955,20 @@ class AsyncRuntime:
                 owner_loop = awaitable.get_loop()
                 if owner_loop is not self._loop:
                     submitted = self._bridge_foreign_future(awaitable, owner_loop)
+                    if track:
+                        self._track_submission(submitted)
                 else:
                     submitted = self._submit_to_loop(
                         awaitable,
                         protect_task=not track,
+                        track=track,
                     )
             elif rejection is None:
                 submitted = self._submit_to_loop(
                     awaitable,
                     protect_task=not track,
+                    track=track,
                 )
-            if rejection is None and track:
-                self._track_submission(submitted)
         if rejection is not None:
             raise rejection
         return submitted
@@ -976,12 +978,15 @@ class AsyncRuntime:
         awaitable: Awaitable[T],
         *,
         protect_task: bool = False,
+        track: bool = True,
     ) -> CrossLoopAwaitable[T]:
         """Schedule an awaitable on the SDK event loop.
 
         :param awaitable: Work to schedule.
         :param protect_task: Protect the asyncio task from normal submission
             cancellation.
+        :param track: Add the public handle to runtime tracking before the
+            task can start.
         :return: Cross-loop awaitable for the result.
         """
 
@@ -1131,6 +1136,12 @@ class AsyncRuntime:
                 self._cancel_task_once(created_task)
 
         future.add_done_callback(forward_cancellation)
+        if track:
+            # A separate SDK-loop thread can run the dispatch callback before
+            # this thread returns from ``call_soon_threadsafe``. Track the
+            # handle first so a task that immediately calls ``close()`` can
+            # protect its submission from close-time cancellation.
+            self._track_submission(submitted)
         try:
             event_loop.call_soon_threadsafe(start_on_loop)
         except BaseException:

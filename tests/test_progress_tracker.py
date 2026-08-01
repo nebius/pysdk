@@ -425,8 +425,8 @@ async def test_operation_wait_timeout_includes_synchronous_admission_delay() -> 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
-    ((0.05, 5, False), (5, 0.05, True)),
-    ids=("request-timeout", "authorization-timeout"),
+    ((0.05, 5, False), (5, 0.05, True), (0.05, 5, True)),
+    ids=("request-timeout", "authorization-timeout", "authorized-dispatch"),
 )
 async def test_operation_update_timeout_includes_sdk_loop_queueing(
     timeout: float,

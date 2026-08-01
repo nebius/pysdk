@@ -278,8 +278,8 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
-    ((0.05, 5, False), (5, 0.05, True)),
-    ids=("request-timeout", "authorization-timeout"),
+    ((0.05, 5, False), (5, 0.05, True), (0.05, 5, True)),
+    ids=("request-timeout", "authorization-timeout", "authorized-dispatch"),
 )
 async def test_stream_timeout_includes_sdk_loop_queueing(
     timeout: float,
@@ -311,7 +311,7 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
         (),
         {"channel": Transport(), "event_loop": channel._event_loop},
     )()
-    channel.release_channel = (  # type: ignore[method-assign]
+    channel._release_channel_soon = (  # type: ignore[method-assign]
         lambda value, *, discard=False: released.set()
     )
     blocker = channel.run_async(block_sdk_loop())
@@ -1258,29 +1258,47 @@ def test_rejected_stream_cancel_discards_explicit_override() -> None:
 
 @pytest.mark.asyncio
 async def test_reentrant_resolver_cancellation_discards_unpublished_address() -> None:
+    """A resolver-side cancellation discards its unpublished transport."""
+
     cancelled: list[bool] = []
     discarded: list[object] = []
 
     class Transport:
+        """Reject native call creation after reentrant cancellation."""
+
         def unary_stream(self, path, serializer, deserializer):
-            raise AssertionError("cancelled stream must not create a call")
+            """Reject creation of a native call for a canceled stream."""
+
+            raise AssertionError("A canceled stream must not create a call.")
 
     class Address:
+        """Provide the test transport to the stream."""
+
         channel = Transport()
 
     address = Address()
 
     class Channel:
+        """Cancel during resolution and record transport cleanup."""
+
         def get_channel_by_route(self, route):
+            """Cancel reentrantly before returning the resolved transport."""
+
             cancelled.append(stream.cancel())
             return address
 
         def discard_channel(self, value):
+            """Record cleanup of the unpublished transport."""
+
             discarded.append(value)
 
     class Result:
+        """Provide the response decoder required by the stream."""
+
         @classmethod
         def FromString(cls, data):  # noqa: N802
+            """Create a test result from serialized data."""
+
             return cls()
 
     stream = StreamRequest(

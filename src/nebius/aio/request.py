@@ -17,9 +17,20 @@ that do not affect behavior.
 """
 
 import os
-from asyncio import CancelledError, ensure_future, get_running_loop, shield, wait_for
+from asyncio import (
+    FIRST_COMPLETED,
+    CancelledError,
+    Task,
+    ensure_future,
+    get_running_loop,
+    shield,
+    wait,
+    wait_for,
+    wrap_future,
+)
 from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Awaitable, Callable, Generator, Iterable
+from concurrent.futures import Future as ConcurrentFuture
 from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from logging import getLogger
 from math import isfinite
@@ -418,6 +429,8 @@ class Request(Generic[Req, Res]):
         self._request_deadline_paused = False
         self._authorization_deadline: float | None = None
         self._submission_deadline: float | None = None
+        self._dispatch_deadline: float | None = None
+        self._dispatch_started: ConcurrentFuture[None] | None = None
 
     def _check_process(self) -> None:
         """Reject a request inherited by a child process before locking."""
@@ -433,7 +446,7 @@ class Request(Generic[Req, Res]):
 
         with self._future_lock:
             if self._awaited:
-                raise RuntimeError("You cannot await this completed request again.")
+                raise RuntimeError("You cannot await the same request more than once.")
             self._awaited = True
 
     def _release_grpc_channel(self, *, discard: bool = False) -> None:
@@ -1251,8 +1264,9 @@ class Request(Generic[Req, Res]):
                     # response was received. Retrying reopens cancellation
                     # until the next native attempt becomes terminal.
                     log.error(
-                        f"request attempt {attempt} for {self} failed with {e} "
-                        + "but will be retried",
+                        "The SDK request attempt %d failed. The SDK will retry "
+                        "the request.",
+                        attempt,
                         exc_info=exc_info(),
                     )
                     continue
@@ -1331,7 +1345,19 @@ class Request(Generic[Req, Res]):
             self._release_grpc_channel()
             return response
 
-        completion = ensure_future(complete())
+        completion_work = complete()
+        try:
+            completion = ensure_future(completion_work)
+        except BaseException as error:
+            # A custom task factory cannot replace an authoritative native
+            # response or abandon the rejected coroutine.
+            dispose_unstarted_awaitable(completion_work)
+            log.debug(
+                "The event-loop task factory rejected request completion. The "
+                "SDK will bypass the factory.",
+                exc_info=error,
+            )
+            completion = Task(complete(), loop=get_running_loop())
         try:
             return await shield(completion)
         except CancelledError:
@@ -1402,7 +1428,7 @@ class Request(Generic[Req, Res]):
             timeout = None if deadline is None else (deadline - monotonic())
             if timeout is not None and timeout <= 0:
                 self._release_grpc_channel()
-                raise TimeoutError("authorization timed out")
+                raise TimeoutError("The request authorization timed out.")
             # Perform authentication: use a gRPC Metadata, then copy back auth header
             # to the internal Metadata used when sending the request
             auth_md = Metadata(self._input_metadata)
@@ -1538,6 +1564,19 @@ class Request(Generic[Req, Res]):
                     if submission_limit is None
                     else submitted_monotonic + max(submission_limit, 0)
                 )
+                dispatch_limits = [
+                    deadline
+                    for deadline in (
+                        self._request_deadline,
+                        self._authorization_deadline,
+                    )
+                    if deadline is not None
+                ]
+                self._dispatch_deadline = (
+                    min(dispatch_limits) if authorization_applies is True else None
+                )
+                dispatch_started: ConcurrentFuture[None] = ConcurrentFuture()
+                self._dispatch_started = dispatch_started
                 request_work = self._request_with_authorization_loop()
 
                 async def start_request() -> Res:
@@ -1546,6 +1585,20 @@ class Request(Generic[Req, Res]):
                     nonlocal submission_started
                     with submission_state_lock:
                         submission_started = True
+                    dispatch_deadline = self._dispatch_deadline
+                    if (
+                        dispatch_deadline is not None
+                        and monotonic() >= dispatch_deadline
+                    ):
+                        dispose_unstarted_awaitable(request_work)
+                        with self._future_lock:
+                            self._cancelled = True
+                        self._release_grpc_channel(discard=True)
+                        raise TimeoutError(
+                            "The request timed out before SDK-loop dispatch."
+                        )
+                    if not dispatch_started.done():
+                        dispatch_started.set_result(None)
                     return await cast(Awaitable[Res], request_work)
 
                 coroutine = start_request()
@@ -1590,11 +1643,17 @@ class Request(Generic[Req, Res]):
                         )
                 if channel_to_release is not None:
                     try:
-                        release_address_channel(
-                            self._channel,
-                            channel_to_release,
-                            discard=True,
+                        release_soon = getattr(
+                            self._channel, "_release_channel_soon", None
                         )
+                        if callable(release_soon):
+                            release_soon(channel_to_release, discard=True)
+                        else:
+                            release_address_channel(
+                                self._channel,
+                                channel_to_release,
+                                discard=True,
+                            )
                     except BaseException as release_error:
                         log.warning(
                             "The SDK could not release the request transport "
@@ -1652,14 +1711,42 @@ class Request(Generic[Req, Res]):
             done = getattr(future, "done", None)
             already_done = bool(done()) if callable(done) else False
             deadline = self._submission_deadline
-            if deadline is None or already_done:
+            dispatch_deadline = self._dispatch_deadline
+            dispatch_started = self._dispatch_started
+            if (deadline is None and dispatch_deadline is None) or already_done:
                 return await wait_shared()
-            remaining = deadline - monotonic()
-            if remaining <= 0:
-                self.cancel()
-                raise TimeoutError("The request timed out before SDK-loop dispatch.")
             waiter = ensure_future(wait_shared())
             try:
+                if (
+                    dispatch_deadline is not None
+                    and dispatch_started is not None
+                    and not dispatch_started.done()
+                ):
+                    remaining = dispatch_deadline - monotonic()
+                    if remaining > 0:
+                        started_waiter = ensure_future(
+                            shield(wrap_future(dispatch_started))
+                        )
+                        completed, _ = await wait(
+                            (waiter, started_waiter),
+                            timeout=remaining,
+                            return_when=FIRST_COMPLETED,
+                        )
+                        started_waiter.cancel()
+                        if waiter in completed:
+                            return await waiter
+                    if not dispatch_started.done():
+                        waiter.cancel()
+                        self.cancel()
+                        raise TimeoutError(
+                            "The request timed out before SDK-loop dispatch."
+                        )
+                if deadline is None:
+                    return await waiter
+                remaining = deadline - monotonic()
+                if remaining <= 0:
+                    self.cancel()
+                    raise TimeoutError("The request timed out.")
                 return await wait_for(waiter, timeout=remaining)
             except (TimeoutError, AsyncTimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
