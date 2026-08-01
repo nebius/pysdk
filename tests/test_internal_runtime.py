@@ -687,9 +687,24 @@ def test_cancelled_shutdown_waiter_does_not_poison_shared_completion() -> None:
 
 
 @pytest.mark.skipif(not hasattr(os, "fork"), reason="requires os.fork")
-def test_runtime_rejects_use_after_fork_without_hanging() -> None:
+def test_runtime_rejects_use_after_fork_without_hanging(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """A child must create its own SDK instead of using inherited threads."""
 
+    from nebius.aio.channel import _CrossLoopUnaryUnaryCall
+
+    async def invoke_without_transport(self: _CrossLoopUnaryUnaryCall) -> Disk:
+        """Keep the wrapper pending without opening a native transport."""
+
+        await asyncio.Event().wait()
+        raise AssertionError("The pending call unexpectedly resumed.")
+
+    monkeypatch.setattr(
+        _CrossLoopUnaryUnaryCall,
+        "_invoke",
+        invoke_without_transport,
+    )
     channel = Channel(credentials=NoCredentials())
     submitted = channel.run_async(asyncio.Event().wait())
     request = Request(
@@ -704,6 +719,7 @@ def test_runtime_rejects_use_after_fork_without_hanging() -> None:
         lambda value: value.SerializeToString(),
         Disk.FromString,
     )(GetDiskRequest(id="forked-low-level"))
+    assert isinstance(low_level_call, _CrossLoopUnaryUnaryCall)
     stream = object.__new__(StreamRequest)
     stream._process_id = os.getpid()
     stream._state_lock = Lock()
