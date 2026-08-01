@@ -2103,6 +2103,35 @@ def test_synchronous_request_wait_uses_remaining_submission_deadline() -> None:
         channel.sync_close(timeout=5)
 
 
+@pytest.mark.parametrize("disable_explicitly", (False, True))
+def test_synchronous_unlimited_request_ignores_inapplicable_auth_timeout(
+    disable_explicitly: bool,
+) -> None:
+    """An irrelevant auth budget cannot cap an unlimited blocking wait."""
+
+    from nebius.aio.authorization.options import OPTION_TYPE, Types
+
+    class ProbeChannel:
+        def _has_authorization_provider(self) -> bool:
+            return disable_explicitly
+
+    request: Request[GetDiskRequest, Disk] = Request(
+        ProbeChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="sync-unlimited-auth-budget"),
+        Disk,
+        timeout=None,
+        auth_timeout=0.01,
+        auth_options={OPTION_TYPE: Types.DISABLE} if disable_explicitly else None,
+    )
+    assert request._sync_wait_timeout() is None
+    with request._future_lock:
+        request._future = object()  # type: ignore[assignment]
+        request._submission_deadline = None
+    assert request._sync_wait_timeout() is None
+
+
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),

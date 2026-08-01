@@ -163,6 +163,18 @@ class StreamRequest(Generic[Req, Res]):
         provider = provider_getter() if callable(provider_getter) else None
         if provider is None or self._auth_options.get(OPTION_TYPE) == Types.DISABLE:
             return
+        # Legacy channels do not expose the caller-safe provider probe used to
+        # start an auth deadline before dispatch. Once provider discovery has
+        # run on the stream owner loop, restore their historical auth timeout
+        # without shortening streams that are unauthenticated or disabled.
+        with self._state_lock:
+            if not self._authorization_deadline_enabled:
+                self._authorization_deadline_enabled = True
+                if self._auth_timeout is not None:
+                    self._authorization_deadline = monotonic() + max(
+                        self._auth_timeout,
+                        0,
+                    )
         timeout = self._remaining_deadline()
         if timeout is not None and timeout <= 0:
             raise TimeoutError("stream authorization timed out before dispatch")

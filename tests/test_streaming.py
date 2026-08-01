@@ -389,6 +389,53 @@ def test_legacy_constant_stream_cancel_runs_on_owner_loop() -> None:
         assert not thread.is_alive()
 
 
+@pytest.mark.asyncio
+async def test_legacy_stream_discovers_and_enforces_auth_timeout() -> None:
+    """Provider discovery restores the legacy in-loop auth budget."""
+
+    auth_started = asyncio.Event()
+    auth_cancelled = asyncio.Event()
+    released: list[object] = []
+
+    class Authenticator:
+        async def authenticate(self, metadata, timeout, options) -> None:
+            auth_started.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                auth_cancelled.set()
+
+    class Provider:
+        def authenticator(self) -> Authenticator:
+            return Authenticator()
+
+    class LegacyChannel:
+        def get_authorization_provider(self) -> Provider:
+            return Provider()
+
+        def return_channel(self, address: object) -> None:
+            released.append(address)
+
+    address = object()
+    stream = StreamRequest(
+        channel=LegacyChannel(),
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="legacy-auth-timeout"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+        timeout=None,
+        auth_timeout=0.01,
+        grpc_channel_override=address,
+    )
+
+    with pytest.raises(TimeoutError, match="stream authorization timed out"):
+        await anext(stream.__aiter__())
+    assert auth_started.is_set()
+    assert auth_cancelled.is_set()
+    assert released == [address]
+
+
 def test_rejected_stream_cancel_restores_retryable_state() -> None:
     """A rejected SDK dispatch must not retain an accepted-cancel marker."""
 

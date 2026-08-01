@@ -750,11 +750,13 @@ class Request(Generic[Req, Res]):
 
         Request and applicable authorization deadlines start when built-in
         runtime work is submitted. Once that boundary exists, this method
-        returns its remaining monotonic budget. Before submission (including
-        legacy channels), it derives the same minimum from the configured
-        timeout values. A small grace period lets the internal timeout path
-        publish its structured error and finish cancellation before the outer
-        blocking wait expires.
+        returns its remaining monotonic budget, including an explicit
+        unlimited state. Before submission it derives the same minimum from
+        the request timeout and an authorization timeout only when the channel
+        exposes the caller-safe provider probe. Legacy channels enforce their
+        auth timeout inside the authorization loop. A small grace period lets
+        the internal timeout path publish its structured error and finish
+        cancellation before the outer blocking wait expires.
 
         :return: Remaining synchronous wait in seconds, or ``None`` when both
             request and authorization budgets are unlimited.
@@ -762,12 +764,21 @@ class Request(Generic[Req, Res]):
 
         with self._future_lock:
             deadline = self._submission_deadline
-            if deadline is not None:
+            if self._future is not None:
+                if deadline is None:
+                    return None
                 budget = max(0.0, deadline - monotonic())
             else:
+                authorization_applies = _authorization_deadline_applies(
+                    self._channel,
+                    self._auth_options,
+                )
                 limits = [
                     value
-                    for value in (self._timeout, self._auth_timeout)
+                    for value in (
+                        self._timeout,
+                        self._auth_timeout if authorization_applies else None,
+                    )
                     if value is not None
                 ]
                 if not limits:
