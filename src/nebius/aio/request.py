@@ -22,6 +22,7 @@ from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from concurrent.futures import TimeoutError as ConcurrentTimeoutError
 from logging import getLogger
+from math import isfinite
 from sys import exc_info
 from threading import RLock
 from time import monotonic
@@ -34,6 +35,7 @@ from grpc.aio import Metadata as GrpcMetadata
 from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 
 from nebius.aio._runtime import CrossLoopAwaitable
+from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.abc import ClientChannelInterface as Channel
 from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
@@ -86,6 +88,50 @@ def _snapshot_request_input(value: T) -> T:
         copied_copy_from = cast(Callable[[T], None], copied.CopyFrom)
         copied_copy_from(value)
         return cast(T, copied)
+    return value
+
+
+def _authorization_deadline_applies(
+    channel: Channel,
+    auth_options: dict[str, str],
+) -> bool:
+    """Return whether an authorization budget applies to one RPC.
+
+    Authorization timeout is not a second request timeout. Historically it
+    limits only the authentication/re-authentication flow, so it must not
+    shorten an unauthenticated request or a request that explicitly disables
+    authorization. Built-in channels expose a caller-safe probe of the provider
+    fixed during construction; actual authentication still runs on the SDK
+    event loop. Legacy channels without that probe enforce their auth timeout
+    inside the authorization loop, as before.
+
+    :param channel: Channel that owns the RPC.
+    :param auth_options: Snapshotted authorization options for the RPC.
+    :return: ``True`` when the RPC will use an authorization provider.
+    """
+
+    if auth_options.get(OPTION_TYPE) == Types.DISABLE:
+        return False
+    provider_probe = getattr(channel, "_has_authorization_provider", None)
+    return bool(provider_probe()) if callable(provider_probe) else False
+
+
+def _validate_timeout(value: float | None, name: str) -> float | None:
+    """Validate one optional public timeout value.
+
+    ``None`` is the documented unlimited form. Non-finite floats do not define
+    a portable deadline for asyncio, concurrent futures, gRPC, and monotonic
+    arithmetic, so callers must use ``None`` instead of positive infinity.
+    Negative finite values retain their established immediate-timeout meaning.
+
+    :param value: Timeout in seconds or ``None``.
+    :param name: Parameter name used in the error message.
+    :return: ``value`` unchanged.
+    :raises ValueError: If ``value`` is NaN or infinite.
+    """
+
+    if value is not None and not isfinite(value):
+        raise ValueError(f"{name} must be finite or None")
     return value
 
 
@@ -212,6 +258,8 @@ class Request(Generic[Req, Res]):
         individually. You can pass `None` for infinite timeout. Default is
         :data:`DEFAULT_PER_RETRY_TIMEOUT`.
     :type per_retry_timeout: optional `float` or `None`
+    :raises ValueError: If a timeout value is NaN or infinite. Use ``None`` for
+        an unlimited timeout.
 
     Example::
 
@@ -324,6 +372,9 @@ class Request(Generic[Req, Res]):
             if not isinstance(auth_timeout, UnsetType)
             else DEFAULT_AUTH_TIMEOUT
         )
+        _validate_timeout(self._timeout, "timeout")
+        _validate_timeout(self._per_retry_timeout, "per_retry_timeout")
+        _validate_timeout(self._auth_timeout, "auth_timeout")
         self._credentials = credentials
         self._compression = compression
         # Requests historically asked gRPC to wait for channel readiness.
@@ -489,6 +540,7 @@ class Request(Generic[Req, Res]):
     @timeout.setter
     def timeout(self, timeout: float | None) -> None:
         self._check_process()
+        _validate_timeout(timeout, "timeout")
         with self._future_lock:
             if self._future is not None:
                 raise RequestIsSentError()
@@ -626,12 +678,13 @@ class Request(Generic[Req, Res]):
     def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
         """Run an awaitable synchronously using the channel's sync runner.
 
-        Bound the synchronous wait by the shorter request or authorization
-        budget. For a request that has already been submitted, use the
-        remaining absolute submission deadline rather than granting a fresh
-        timeout. If the runner raises :class:`TimeoutError`, convert it to
-        :class:`RequestError` with ``DEADLINE_EXCEEDED``. Callers can then
-        inspect all timeout failures in the same way.
+        Bound the synchronous wait by the request budget and, when the request
+        uses authorization, its authorization budget. For a request that has
+        already been submitted, use the remaining absolute submission deadline
+        rather than granting a fresh timeout. If the runner raises
+        :class:`TimeoutError`, convert it to :class:`RequestError` with
+        ``DEADLINE_EXCEEDED``. Callers can then inspect all timeout failures in
+        the same way.
 
         :param func: awaitable to execute
         :returns: result of the awaitable
@@ -695,13 +748,13 @@ class Request(Generic[Req, Res]):
     def _sync_wait_timeout(self) -> float | None:
         """Return the bounded wait used by synchronous request adapters.
 
-        Request and authorization deadlines both start when built-in runtime
-        work is submitted. Once that boundary exists, this method returns its
-        remaining monotonic budget. Before submission (including legacy
-        channels), it derives the same minimum from the configured timeout
-        values. A small grace period lets the internal timeout path publish
-        its structured error and finish cancellation before the outer blocking
-        wait expires.
+        Request and applicable authorization deadlines start when built-in
+        runtime work is submitted. Once that boundary exists, this method
+        returns its remaining monotonic budget. Before submission (including
+        legacy channels), it derives the same minimum from the configured
+        timeout values. A small grace period lets the internal timeout path
+        publish its structured error and finish cancellation before the outer
+        blocking wait expires.
 
         :return: Remaining synchronous wait in seconds, or ``None`` when both
             request and authorization budgets are unlimited.
@@ -1380,11 +1433,19 @@ class Request(Generic[Req, Res]):
         """
 
         self._check_process()
+        submission_error: BaseException | None = None
+        submission_traceback = None
+        rejected_channel: AddressChannel | None = None
+        coroutine: Awaitable[Res] | None = None
         with self._future_lock:
             if self._future is None:
                 self._input_metadata = Metadata(self._input_metadata)
                 self._auth_options = dict(self._auth_options)
                 submitted_monotonic = monotonic()
+                authorization_applies = _authorization_deadline_applies(
+                    self._channel,
+                    self._auth_options,
+                )
                 self._request_deadline = (
                     None
                     if self._timeout is None
@@ -1392,12 +1453,15 @@ class Request(Generic[Req, Res]):
                 )
                 self._authorization_deadline = (
                     None
-                    if self._auth_timeout is None
+                    if self._auth_timeout is None or not authorization_applies
                     else submitted_monotonic + max(self._auth_timeout, 0)
                 )
                 deadline_limits = [
                     value
-                    for value in (self._timeout, self._auth_timeout)
+                    for value in (
+                        self._timeout,
+                        self._auth_timeout if authorization_applies else None,
+                    )
                     if value is not None
                 ]
                 self._submission_deadline = (
@@ -1406,18 +1470,49 @@ class Request(Generic[Req, Res]):
                     else submitted_monotonic + max(min(deadline_limits), 0)
                 )
                 coroutine = self._request_with_authorization_loop()
-                submit = getattr(self._channel, "run_async", None)
-                candidate = submit(coroutine) if callable(submit) else coroutine
-                # SDK channels return a reusable cross-loop handle. A legacy
-                # adapter can return the original one-shot coroutine; schedule
-                # that fallback before memoizing it for status/metadata reads.
-                submitted = (
-                    candidate
-                    if callable(getattr(candidate, "done", None))
-                    else ensure_future(candidate)
+                try:
+                    submit = getattr(self._channel, "run_async", None)
+                    candidate = submit(coroutine) if callable(submit) else coroutine
+                    # SDK channels return a reusable cross-loop handle. A legacy
+                    # adapter can return the original one-shot coroutine; schedule
+                    # that fallback before memoizing it for status/metadata reads.
+                    submitted = (
+                        candidate
+                        if callable(getattr(candidate, "done", None))
+                        else ensure_future(candidate)
+                    )
+                except BaseException as error:
+                    submission_error = error
+                    submission_traceback = error.__traceback__
+                    rejected_channel, self._grpc_channel = self._grpc_channel, None
+                else:
+                    self._future = submitted
+                    return self._future
+            else:
+                return self._future
+
+        # Submission rejection means the coroutine's normal ``finally`` block
+        # never ran. Dispose native coroutine state and relinquish an explicit
+        # transport override outside ``_future_lock`` so custom release hooks
+        # cannot create a lock-order cycle. Cleanup must not replace the
+        # scheduler's authoritative rejection.
+        if coroutine is not None:
+            dispose_unstarted_awaitable(coroutine)
+        if rejected_channel is not None:
+            try:
+                release_address_channel(
+                    self._channel,
+                    rejected_channel,
+                    discard=True,
                 )
-                self._future = submitted
-            return self._future
+            except BaseException as release_error:
+                log.warning(
+                    "Failed to release request transport after submission rejection",
+                    exc_info=release_error,
+                )
+        if submission_error is not None:
+            raise submission_error.with_traceback(submission_traceback)
+        raise RuntimeError("request submission failed without an exception")
 
     async def _await_result(self) -> Res:
         """Await the request's shared submission and return its result."""

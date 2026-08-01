@@ -386,13 +386,14 @@ async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    ("timeout", "auth_timeout"),
-    ((0.05, 5), (5, 0.05)),
+    ("timeout", "auth_timeout", "authorization_enabled"),
+    ((0.05, 5, False), (5, 0.05, True)),
     ids=("request-timeout", "authorization-timeout"),
 )
 async def test_operation_update_timeout_includes_sdk_loop_queueing(
     timeout: float,
     auth_timeout: float,
+    authorization_enabled: bool,
 ) -> None:
     """Direct update budgets expire before a late service request starts."""
 
@@ -400,9 +401,11 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
 
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
+    from nebius.aio.token.static import Bearer as StaticBearer
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
+    channel = Channel(credentials=credentials)
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -437,14 +440,41 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
         await channel.close()
 
 
+@pytest.mark.asyncio
+@pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
+@pytest.mark.parametrize("parameter", ("timeout", "auth_timeout"))
+async def test_operation_update_rejects_non_finite_timeouts(
+    value: float,
+    parameter: str,
+) -> None:
+    """Operation update deadlines require a finite value or ``None``."""
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id="invalid-timeout"),
+    )
+    try:
+        with pytest.raises(ValueError, match=f"{parameter} must be finite or None"):
+            await operation.update(**{parameter: value})
+    finally:
+        await channel.close()
+
+
 @pytest.mark.parametrize(
-    ("timeout", "auth_timeout"),
-    ((0.01, 5), (5, 0.01), (0.01, None)),
+    ("timeout", "auth_timeout", "authorization_enabled"),
+    ((0.01, 5, False), (5, 0.01, True), (0.01, None, False)),
     ids=("request-timeout", "authorization-timeout", "unlimited-auth"),
 )
 def test_operation_sync_update_uses_shorter_queue_deadline(
     timeout: float,
     auth_timeout: float | None,
+    authorization_enabled: bool,
 ) -> None:
     """Synchronous update cannot outwait its shorter dispatch budget."""
 
@@ -453,9 +483,11 @@ def test_operation_sync_update_uses_shorter_queue_deadline(
 
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
+    from nebius.aio.token.static import Bearer as StaticBearer
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
+    channel = Channel(credentials=credentials)
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,

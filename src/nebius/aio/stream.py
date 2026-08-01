@@ -30,7 +30,11 @@ from nebius.aio.abc import release_address_channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
-from nebius.aio.request import _snapshot_request_input
+from nebius.aio.request import (
+    _authorization_deadline_applies,
+    _snapshot_request_input,
+    _validate_timeout,
+)
 from nebius.aio.route import Route
 from nebius.base.metadata import Metadata
 
@@ -65,7 +69,12 @@ class StreamRequest(Generic[Req, Res]):
 
     Timeout budgets start with the first stream operation. They include time
     waiting for SDK-loop dispatch, authentication, and the native RPC rather
-    than starting only after a queued operation reaches the internal loop.
+    than starting only after a queued operation reaches the internal loop. The
+    authorization budget applies only when a provider is active and
+    authorization is not explicitly disabled.
+
+    :raises ValueError: If ``timeout`` or ``auth_timeout`` is NaN or infinite.
+        Use ``None`` for an unlimited timeout.
     """
 
     def __init__(
@@ -104,9 +113,13 @@ class StreamRequest(Generic[Req, Res]):
         self._client_streaming = client_streaming
         self._server_streaming = server_streaming
         self._metadata = Metadata(metadata)
-        self._timeout = timeout
-        self._auth_timeout = auth_timeout
+        self._timeout = _validate_timeout(timeout, "timeout")
+        self._auth_timeout = _validate_timeout(auth_timeout, "auth_timeout")
         self._auth_options = dict(auth_options or {})
+        self._authorization_deadline_enabled = _authorization_deadline_applies(
+            channel,
+            self._auth_options,
+        )
         self._credentials = credentials
         self._compression = compression
         self._wait_for_ready = wait_for_ready
@@ -378,10 +391,10 @@ class StreamRequest(Generic[Req, Res]):
         """Return the shared stream deadline remaining in seconds.
 
         The first caller-side operation fixes monotonic request and
-        authorization deadlines under the state lock. Later operations reuse
-        those deadlines, so concurrent reads and writes cannot each obtain a
-        fresh budget and SDK-loop queueing is charged to the same native RPC
-        lifetime.
+        applicable authorization deadlines under the state lock. Later
+        operations reuse those deadlines, so concurrent reads and writes
+        cannot each obtain a fresh budget and SDK-loop queueing is charged to
+        the same native RPC lifetime.
 
         :param initialize: Start the deadlines when no prior stream operation
             has done so. Cleanup calls leave this false because they must be
@@ -399,7 +412,10 @@ class StreamRequest(Generic[Req, Res]):
                 )
                 self._authorization_deadline = (
                     None
-                    if self._auth_timeout is None
+                    if (
+                        self._auth_timeout is None
+                        or not self._authorization_deadline_enabled
+                    )
                     else now + max(self._auth_timeout, 0)
                 )
             deadlines = [
@@ -428,7 +444,19 @@ class StreamRequest(Generic[Req, Res]):
         remaining = self._remaining_deadline(initialize=enforce_deadline)
         submit = getattr(self._channel, "run_async", None)
         if callable(submit):
-            operation = submit(awaitable)
+            try:
+                operation = submit(awaitable)
+            except BaseException:
+                dispose_unstarted_awaitable(awaitable)
+                try:
+                    self._release(discard=True)
+                except BaseException as release_error:
+                    logger.warning(
+                        "Failed to release stream transport after submission "
+                        "rejection",
+                        exc_info=release_error,
+                    )
+                raise
         else:
             current_loop = get_running_loop()
             with self._state_lock:
@@ -673,6 +701,14 @@ class StreamRequest(Generic[Req, Res]):
                 scheduled = submit(closing)
             except BaseException as error:
                 closing.close()
+                try:
+                    self._release(discard=True)
+                except BaseException as release_error:
+                    logger.warning(
+                        "Failed to release stream transport after cancellation "
+                        "submission rejection",
+                        exc_info=release_error,
+                    )
                 with self._state_lock:
                     self._cancel_requested = False
                 if isinstance(error, Exception):

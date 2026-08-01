@@ -1966,13 +1966,14 @@ async def test_request_releases_override_when_authentication_is_cancelled() -> N
 
 
 @pytest.mark.parametrize(
-    ("timeout", "auth_timeout"),
-    ((0.01, 5), (5, 0.01), (0.01, None)),
+    ("timeout", "auth_timeout", "authorization_enabled"),
+    ((0.01, 5, False), (5, 0.01, True), (0.01, None, False)),
     ids=("request-timeout", "authorization-timeout", "unlimited-auth"),
 )
 def test_synchronous_request_timeout_cancels_before_delayed_start(
     timeout: float,
     auth_timeout: float | None,
+    authorization_enabled: bool,
 ) -> None:
     """A direct cross-loop wait timeout cannot leave the RPC queued."""
 
@@ -1981,7 +1982,10 @@ def test_synchronous_request_timeout_cancels_before_delayed_start(
     loop_blocked = Event()
     release_loop = Event()
     rpc_started = Event()
-    channel = Channel(credentials=NoCredentials())
+    from nebius.aio.token.static import Bearer as StaticBearer
+
+    credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
+    channel = Channel(credentials=credentials)
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -2058,20 +2062,24 @@ def test_synchronous_request_wait_uses_remaining_submission_deadline() -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    ("timeout", "auth_timeout"),
-    ((0.05, 5), (5, 0.05)),
+    ("timeout", "auth_timeout", "authorization_enabled"),
+    ((0.05, 5, False), (5, 0.05, True)),
     ids=("request-timeout", "authorization-timeout"),
 )
 async def test_async_request_timeout_includes_sdk_loop_queueing(
     timeout: float,
     auth_timeout: float,
+    authorization_enabled: bool,
 ) -> None:
     """An async deadline expires even while the SDK loop cannot dispatch."""
 
     loop_blocked = Event()
     release_loop = Event()
     rpc_started = Event()
-    channel = Channel(credentials=NoCredentials())
+    from nebius.aio.token.static import Bearer as StaticBearer
+
+    credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
+    channel = Channel(credentials=credentials)
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -2101,6 +2109,50 @@ async def test_async_request_timeout_includes_sdk_loop_queueing(
         assert request.cancelled()
     finally:
         release_loop.set()
+        await channel.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("disable_explicitly", (False, True))
+async def test_async_request_auth_timeout_only_applies_when_authorizing(
+    disable_explicitly: bool,
+) -> None:
+    """An auth-only budget cannot shorten an unauthenticated request."""
+
+    from nebius.aio.authorization.options import OPTION_TYPE, Types
+    from nebius.aio.token.static import Bearer as StaticBearer
+
+    loop_blocked = Event()
+    release_loop = Event()
+    credentials = StaticBearer("token") if disable_explicitly else NoCredentials()
+    channel = Channel(credentials=credentials)
+
+    async def block_sdk_loop() -> None:
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="auth-timeout-not-request-timeout"),
+        Disk,
+        timeout=1,
+        auth_timeout=0.02,
+        auth_options={OPTION_TYPE: Types.DISABLE} if disable_explicitly else None,
+    )
+    pending = asyncio.create_task(request._await_result())
+    try:
+        await asyncio.sleep(0.08)
+        assert not pending.done()
+        pending.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await pending
+    finally:
+        release_loop.set()
+        await blocker
         await channel.close()
 
 
@@ -2518,6 +2570,64 @@ def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
     finally:
         release_loop.set()
         channel._runtime._shutdown_complete.result(timeout=5)
+
+
+@pytest.mark.asyncio
+async def test_rejected_request_submission_discards_explicit_override() -> None:
+    """A scheduler rejection cannot strand a request-owned transport lease."""
+
+    rejection = ChannelClosedError("rejected")
+    override = object.__new__(AddressChannel)
+    released: list[tuple[object | None, bool]] = []
+
+    class RejectingChannel:
+        def get_authorization_provider(self) -> None:
+            return None
+
+        def run_async(self, awaitable: object) -> None:
+            raise rejection
+
+        def release_channel(
+            self,
+            address: object | None,
+            *,
+            discard: bool = False,
+        ) -> None:
+            released.append((address, discard))
+
+    request: Request[GetDiskRequest, Disk] = Request(
+        RejectingChannel(),  # type: ignore[arg-type]
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="rejected-submission"),
+        Disk,
+        grpc_channel_override=override,
+    )
+    with pytest.raises(ChannelClosedError) as raised:
+        await request
+    assert raised.value is rejection
+    assert released == [(override, True)]
+
+
+def test_raw_inherited_protected_task_is_discarded_when_done() -> None:
+    """Borrowed-loop context inheritance cannot retain a completed raw task."""
+
+    runtime = AsyncRuntime(None, 2)
+
+    async def parent() -> asyncio.Task[None]:
+        async def child() -> None:
+            assert runtime.protect_current_submission() is not None
+
+        raw_child = asyncio.create_task(child())
+        await raw_child
+        await asyncio.sleep(0)
+        return raw_child
+
+    try:
+        raw_child = runtime.submit(parent()).result(timeout=5)
+        assert raw_child not in runtime._protected_tasks
+    finally:
+        runtime.shutdown()
 
 
 def test_failed_first_close_submission_still_finalizes_runtime(
@@ -4133,6 +4243,48 @@ def test_request_inputs_are_snapshotted_at_first_submission() -> None:
         assert asyncio.run(submit_then_mutate()) == ("before", "before", "before")
     finally:
         release_loop.set()
+        channel.sync_close(timeout=5)
+
+
+@pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
+@pytest.mark.parametrize("parameter", ("timeout", "per_retry_timeout", "auth_timeout"))
+def test_request_rejects_non_finite_timeouts(value: float, parameter: str) -> None:
+    """Request deadlines require a portable finite value or ``None``."""
+
+    with pytest.raises(ValueError, match=f"{parameter} must be finite or None"):
+        Request(
+            object(),  # type: ignore[arg-type]
+            "nebius.compute.v1.DiskService",
+            "Get",
+            GetDiskRequest(id="invalid-timeout"),
+            Disk,
+            **{parameter: value},
+        )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
+async def test_channel_rejects_non_finite_token_timeout(value: float) -> None:
+    """Token dispatch rejects deadlines unsupported by asyncio and gRPC."""
+
+    channel = Channel(credentials=NoCredentials())
+    try:
+        with pytest.raises(ValueError, match="timeout must be finite or None"):
+            await channel.get_token(value)
+    finally:
+        await channel.close()
+
+
+@pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
+def test_low_level_call_rejects_non_finite_timeout(value: float) -> None:
+    """Low-level cross-loop calls validate timeouts before submission."""
+
+    channel = Channel(credentials=NoCredentials())
+    unary = channel.unary_unary("/acme.Service/Get")
+    try:
+        with pytest.raises(ValueError, match="timeout must be finite or None"):
+            unary(GetDiskRequest(id="invalid-timeout"), timeout=value)
+    finally:
         channel.sync_close(timeout=5)
 
 

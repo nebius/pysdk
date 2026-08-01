@@ -313,21 +313,16 @@ class CrossLoopAwaitable(Generic[T]):
         self._process_id = os.getpid()
         self._future = future
         self._event_loop = event_loop
-        self._executor: weakref.ReferenceType[DaemonThreadPoolExecutor] | None = None
 
     @classmethod
     def _for_runtime(
         cls,
         future: Future[T],
         event_loop: asyncio.AbstractEventLoop,
-        executor: DaemonThreadPoolExecutor | None,
     ) -> CrossLoopAwaitable[T]:
-        """Create a handle that can detect waits from its owned executor."""
+        """Create a handle associated with an SDK event loop."""
 
-        ret = cls(future, event_loop)
-        if executor is not None:
-            ret._executor = weakref.ref(executor)
-        return ret
+        return cls(future, event_loop)
 
     def _check_process(self) -> None:
         """Reject a handle inherited by a child process before locking."""
@@ -935,7 +930,6 @@ class AsyncRuntime:
         submitted = CrossLoopAwaitable._for_runtime(
             future,
             event_loop,
-            self._executor,
         )
         state_lock = Lock()
         task: asyncio.Task[T] | None = None
@@ -1120,7 +1114,14 @@ class AsyncRuntime:
                 if submitted in self._submissions:
                     self._protected_submissions.add(submitted)
             if task is not None:
+                first_protection = task not in self._protected_tasks
                 self._protected_tasks.add(task)
+                if first_protection and task not in self._task_submissions:
+                    # A raw child task can inherit the current submission
+                    # context without passing through ``_run_awaitable``.
+                    # It is not covered by that wrapper's ``finally`` block,
+                    # so discard its temporary protection when it completes.
+                    task.add_done_callback(self._protected_tasks.discard)
         return submitted
 
     def mark_current_submission_close_returning(self) -> None:
@@ -1278,7 +1279,6 @@ class AsyncRuntime:
         return CrossLoopAwaitable._for_runtime(
             bridged,
             self._loop,
-            self._executor,
         )
 
     async def _run_awaitable(
@@ -1536,7 +1536,6 @@ class AsyncRuntime:
         return CrossLoopAwaitable._for_runtime(
             completion,
             self._loop,
-            self._executor,
         )
 
     def _start_shutdown_preparation_on_loop(self) -> None:

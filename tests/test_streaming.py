@@ -57,6 +57,23 @@ def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> No
     assert sum(results) <= 1
 
 
+@pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
+@pytest.mark.parametrize("parameter", ("timeout", "auth_timeout"))
+def test_stream_rejects_non_finite_timeouts(value: float, parameter: str) -> None:
+    """Stream deadlines require a portable finite value or ``None``."""
+
+    with pytest.raises(ValueError, match=f"{parameter} must be finite or None"):
+        StreamRequest(
+            channel=object(),
+            route=Route("acme.Service", "Watch"),
+            request=object(),
+            result_class=object,
+            client_streaming=False,
+            server_streaming=True,
+            **{parameter: value},
+        )
+
+
 def test_stream_unary_native_completion_wins_before_wrapper_resumes() -> None:
     """SDK shutdown cannot replace a completed stream-unary response."""
 
@@ -256,13 +273,14 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    ("timeout", "auth_timeout"),
-    ((0.05, 5), (5, 0.05)),
+    ("timeout", "auth_timeout", "authorization_enabled"),
+    ((0.05, 5, False), (5, 0.05, True)),
     ids=("request-timeout", "authorization-timeout"),
 )
 async def test_stream_timeout_includes_sdk_loop_queueing(
     timeout: float,
     auth_timeout: float,
+    authorization_enabled: bool,
 ) -> None:
     """A queued stream operation expires before opening a native RPC."""
 
@@ -270,7 +288,10 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
     release_loop = Event()
     released = Event()
     call_factory_used = Event()
-    channel = SDKChannel(credentials=NoCredentials())
+    from nebius.aio.token.static import Bearer as StaticBearer
+
+    credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
+    channel = SDKChannel(credentials=credentials)
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -897,6 +918,71 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
     with pytest.raises(asyncio.CancelledError):
         await asyncio.wait_for(pending, 0.1)
     assert opened == []
+    assert released == [(override, True)]
+
+
+@pytest.mark.asyncio
+async def test_rejected_stream_submission_discards_explicit_override() -> None:
+    """A scheduler rejection cannot strand a stream-owned transport lease."""
+
+    rejection = RuntimeError("submission rejected")
+    override = object()
+    released: list[tuple[object | None, bool]] = []
+
+    class RejectingChannel:
+        def get_authorization_provider(self):
+            return None
+
+        def run_async(self, awaitable):
+            raise rejection
+
+        def release_channel(self, address, *, discard=False):
+            released.append((address, discard))
+
+    stream = StreamRequest(
+        channel=RejectingChannel(),
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        grpc_channel_override=override,  # type: ignore[arg-type]
+    )
+    with pytest.raises(RuntimeError) as raised:
+        await stream.done_writing()
+    assert raised.value is rejection
+    assert released == [(override, True)]
+
+
+def test_rejected_stream_cancel_discards_explicit_override() -> None:
+    """Rejected cancellation still releases a stream-owned transport lease."""
+
+    override = object()
+    released: list[tuple[object | None, bool]] = []
+
+    class ClosedChannel:
+        def get_authorization_provider(self):
+            return None
+
+        def run_async(self, awaitable):
+            raise RuntimeError("closed")
+
+        def get_state(self):
+            return grpc.ChannelConnectivity.SHUTDOWN
+
+        def release_channel(self, address, *, discard=False):
+            released.append((address, discard))
+
+    stream = StreamRequest(
+        channel=ClosedChannel(),
+        route=Route("acme.Service", "Upload"),
+        request=None,
+        result_class=Disk,
+        client_streaming=True,
+        server_streaming=False,
+        grpc_channel_override=override,  # type: ignore[arg-type]
+    )
+    assert not stream.cancel()
     assert released == [(override, True)]
 
 

@@ -25,7 +25,12 @@ from grpc import StatusCode
 from typing_extensions import Unpack
 
 from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT
+from nebius.aio.request import (
+    DEFAULT_AUTH_TIMEOUT,
+    DEFAULT_TIMEOUT,
+    _authorization_deadline_applies,
+    _validate_timeout,
+)
 from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
@@ -410,6 +415,8 @@ class Operation(Generic[OperationPb]):
 
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        :raises ValueError: If ``timeout`` or ``auth_timeout`` is NaN or
+            infinite. Use ``None`` for an unlimited timeout.
         """
         self._check_process()
         if self.done():
@@ -430,10 +437,18 @@ class Operation(Generic[OperationPb]):
             if isinstance(auth_timeout_option, UnsetType)
             else auth_timeout_option
         )
+        _validate_timeout(timeout, "timeout")
+        _validate_timeout(auth_timeout, "auth_timeout")
+        authorization_applies = _authorization_deadline_applies(
+            self._channel,
+            cast(dict[str, str], kwargs.get("auth_options") or {}),
+        )
         submitted_at = monotonic()
         request_deadline = None if timeout is None else submitted_at + max(timeout, 0)
         authorization_deadline = (
-            None if auth_timeout is None else submitted_at + max(auth_timeout, 0)
+            None
+            if auth_timeout is None or not authorization_applies
+            else submitted_at + max(auth_timeout, 0)
         )
         submit = getattr(self._channel, "run_async", None)
         update = self._update_internal(
@@ -555,11 +570,14 @@ class Operation(Generic[OperationPb]):
         """Synchronously perform a single update of the operation state.
 
         This wraps the coroutine :meth:`update` and runs it via the channel's
-        synchronous runner. The shorter request or authorization budget bounds
-        SDK-loop queueing, with a small safety margin for scheduling overhead.
+        synchronous runner. The request budget and, when authorization is
+        active, the authorization budget bound SDK-loop queueing, with a small
+        safety margin for scheduling overhead.
 
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        :raises ValueError: If ``timeout`` or ``auth_timeout`` is NaN or
+            infinite. Use ``None`` for an unlimited timeout.
         """
         self._check_process()
         timeout_option = kwargs.get("timeout", Unset)
@@ -572,7 +590,20 @@ class Operation(Generic[OperationPb]):
             if isinstance(auth_timeout_option, UnsetType)
             else auth_timeout_option
         )
-        limits = [value for value in (timeout, auth_timeout) if value is not None]
+        _validate_timeout(timeout, "timeout")
+        _validate_timeout(auth_timeout, "auth_timeout")
+        authorization_applies = _authorization_deadline_applies(
+            self._channel,
+            cast(dict[str, str], kwargs.get("auth_options") or {}),
+        )
+        limits = [
+            value
+            for value in (
+                timeout,
+                auth_timeout if authorization_applies else None,
+            )
+            if value is not None
+        ]
         run_timeout = None if not limits else max(0.0, min(limits)) + 0.2
         return self._channel.run_sync(
             self.update(

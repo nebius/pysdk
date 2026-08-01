@@ -92,7 +92,7 @@ from nebius.aio.metrics import (
     record_config_metric,
 )
 from nebius.aio.operation_service import OperationServiceTransportStub
-from nebius.aio.request import _snapshot_request_input
+from nebius.aio.request import _snapshot_request_input, _validate_timeout
 from nebius.aio.route import Route
 from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
@@ -174,7 +174,7 @@ def _shutdown_runtime_on_init_failure(
 
         try:
             initializer(instance, *args, **kwargs)
-        except BaseException:
+        except Exception:
             runtime = getattr(instance, "_runtime", None)
             finalizer = getattr(instance, "_runtime_finalizer", None)
             if finalizer is not None:
@@ -274,6 +274,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         self._channel = channel
         self._method = method
+        self._timeout = _validate_timeout(timeout, "timeout")
         self._request: Any
         self._request_serializer: SerializingFunction | None
         request_snapshot = _snapshot_request_input(request)
@@ -291,7 +292,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             self._request = request_serializer(request)
             self._request_serializer = None
         self._response_deserializer = response_deserializer
-        self._timeout = timeout
         self._metadata = None if metadata is None else GrpcMetadata(*metadata)
         self._credentials = credentials
         self._wait_for_ready = wait_for_ready
@@ -1561,6 +1561,19 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         provider = self._authorization_provider
         return provider
 
+    def _has_authorization_provider(self) -> bool:
+        """Return whether requests use this channel's fixed auth provider.
+
+        The query is safe from caller threads because the provider reference is
+        fixed during channel construction. It lets cross-loop wrappers decide
+        whether an authorization-only deadline applies without constructing an
+        authenticator or running authorization work outside the SDK loop.
+
+        :return: ``True`` when the channel has an authorization provider.
+        """
+
+        return self._authorization_provider is not None
+
     def _get_runtime_authorization_provider(
         self,
     ) -> AuthorizationProvider | None:
@@ -1592,9 +1605,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :type options: optional ``dict[str, str]``
         :return: A :class:`Token` instance containing the access token.
         :rtype: :class:`Token`
+        :raises ValueError: If ``timeout`` is NaN or infinite. Use ``None`` for
+            an unlimited timeout.
         :raises SDKError: If no token bearer was configured on the channel.
         """
 
+        _validate_timeout(timeout, "timeout")
         options_snapshot = None if options is None else dict(options)
         deadline = None if timeout is None else monotonic() + max(timeout, 0)
         submitted = self.run_async(self._get_token_internal(deadline, options_snapshot))
@@ -1850,10 +1866,17 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :return: The awaitable's result.
         :raises LoopError: If the caller runs in any asynchronous context or
             is any SDK-owned executor worker.
+        :raises ValueError: If ``timeout`` is NaN or infinite. Use ``None`` for
+            an unlimited timeout.
         :raises TimeoutError: If the time limit expires.
         """
 
         self._check_process(awaitable)
+        try:
+            _validate_timeout(timeout, "timeout")
+        except BaseException:
+            close_rejected_sync_awaitable(awaitable)
+            raise
         if self._runtime.in_executor_thread():
             close_rejected_sync_awaitable(awaitable)
             raise LoopError(
@@ -1889,11 +1912,14 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :type timeout: optional float
         :raises LoopError: If called from the SDK event loop, an asynchronous
             context, or an SDK-owned executor worker.
+        :raises ValueError: If ``timeout`` is NaN or infinite. Use ``None`` for
+            an unlimited timeout.
         :raises TimeoutError: If the shutdown did not complete within the
             supplied timeout.
         """
 
         self._check_process()
+        _validate_timeout(timeout, "timeout")
         if self._runtime.in_executor_thread():
             raise LoopError(
                 "Cannot synchronously close the SDK from an SDK executor worker; "
