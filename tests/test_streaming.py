@@ -643,6 +643,52 @@ def test_stream_request_timeout_excludes_slow_authentication() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_legacy_constant_stream_preserves_independent_auth_clock() -> None:
+    """A pass-through Constant does not time authentication as request work."""
+
+    class Authenticator:
+        async def authenticate(self, metadata, timeout, options) -> None:
+            await asyncio.sleep(0.08)
+
+        def can_retry(self, err, options=None) -> bool:
+            return False
+
+    class Provider:
+        def authenticator(self) -> Authenticator:
+            return Authenticator()
+
+    class LegacySource:
+        def parent_id(self) -> None:
+            return None
+
+        def get_authorization_provider(self) -> Provider:
+            return Provider()
+
+    channel = Constant(
+        "acme.Service.Watch",
+        LegacySource(),  # type: ignore[arg-type]
+    )
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="legacy-independent-stream-auth-clock"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+        timeout=0.02,
+        auth_timeout=0.5,
+    )
+
+    async def authenticate() -> float:
+        await stream._on_sdk_loop(stream._authenticate())
+        deadline = stream._request_deadline
+        assert deadline is not None
+        return deadline - monotonic()
+
+    remaining = asyncio.run(authenticate())
+    assert 0 < remaining <= 0.02
+
+
 def test_sdk_stream_bridges_foreign_loop_authenticator_future() -> None:
     """Streaming auth accepts a Future owned by another running loop."""
 

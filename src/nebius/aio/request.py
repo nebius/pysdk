@@ -116,7 +116,10 @@ def _authorization_deadline_applies(
     if auth_options.get(OPTION_TYPE) == Types.DISABLE:
         return False
     provider_probe = getattr(channel, "_has_authorization_provider", None)
-    return bool(provider_probe()) if callable(provider_probe) else None
+    if not callable(provider_probe):
+        return None
+    result = provider_probe()
+    return None if result is None else bool(result)
 
 
 def _validate_timeout(value: float | None, name: str) -> float | None:

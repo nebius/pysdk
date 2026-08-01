@@ -92,18 +92,22 @@ class Constant(ClientChannelInterface):
         """
         return self._source.get_authorization_provider()
 
-    def _has_authorization_provider(self) -> bool:
+    def _has_authorization_provider(self) -> bool | None:
         """Return whether the source has a fixed authorization provider.
 
         Legacy sources do not expose the private caller-safe probe. Their auth
         timeout remains enforced by the request's authorization loop instead
         of by a speculative caller-side dispatch deadline.
 
-        :return: ``True`` when the source reports a fixed provider.
+        :return: ``True`` or ``False`` when the source can answer safely, or
+            ``None`` when provider discovery belongs to its owner loop.
         """
 
         provider_probe = getattr(self._source, "_has_authorization_provider", None)
-        return bool(provider_probe()) if callable(provider_probe) else False
+        if not callable(provider_probe):
+            return None
+        result = provider_probe()
+        return None if result is None else bool(result)
 
     def get_channel_by_method(self, method_name: str) -> AddressChannel:
         """Resolve an address channel by method name.

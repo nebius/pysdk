@@ -2460,11 +2460,18 @@ async def test_legacy_request_does_not_guess_provider_before_authentication() ->
             return SlowAuthenticator()
 
     class LegacyChannel:
+        def parent_id(self) -> None:
+            return None
+
         def get_authorization_provider(self) -> SlowProvider:
             return SlowProvider()
 
-    request: Request[GetDiskRequest, Disk] = Request(
+    channel = Constant(
+        "nebius.compute.v1.DiskService.Get",
         LegacyChannel(),  # type: ignore[arg-type]
+    )
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
         "nebius.compute.v1.DiskService",
         "Get",
         GetDiskRequest(id="legacy-independent-auth-clock"),
@@ -2482,6 +2489,26 @@ async def test_legacy_request_does_not_guess_provider_before_authentication() ->
 
     request._retry_loop = finish_after_authentication  # type: ignore[method-assign]
     assert isinstance(await request, Disk)
+
+
+@pytest.mark.parametrize("provider_state", (True, False, None))
+def test_constant_preserves_authorization_provider_probe_state(
+    provider_state: bool | None,
+) -> None:
+    """Constant forwards definite and unknown provider capability states."""
+
+    class Source:
+        def parent_id(self) -> None:
+            return None
+
+        def _has_authorization_provider(self) -> bool | None:
+            return provider_state
+
+    channel = Constant(
+        "nebius.compute.v1.DiskService.Get",
+        Source(),  # type: ignore[arg-type]
+    )
+    assert channel._has_authorization_provider() is provider_state
 
 
 @pytest.mark.asyncio

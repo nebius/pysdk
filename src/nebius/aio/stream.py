@@ -513,7 +513,6 @@ class StreamRequest(Generic[Req, Res]):
         self._check_process()
         self._remaining_deadline(initialize=enforce_deadline)
         submit = getattr(self._channel, "run_async", None)
-        legacy_local_operation = not callable(submit)
         if callable(submit):
             try:
                 operation = submit(awaitable)
@@ -529,14 +528,23 @@ class StreamRequest(Generic[Req, Res]):
                     )
                 raise
         else:
+            operation = awaitable
+
+        # Built-in channels return a reusable submission handle. A legacy
+        # adapter may expose ``run_async`` while returning a loop-local
+        # one-shot awaitable unchanged. Bind all such work to its first caller
+        # loop and let the in-loop stream state machine enforce its changing
+        # request/auth deadlines; a fixed outer wait would keep charging the
+        # request clock while authentication has paused it.
+        legacy_local_operation = not callable(getattr(operation, "done", None))
+        if legacy_local_operation:
             current_loop = get_running_loop()
             with self._state_lock:
                 if self._owner_loop is None:
                     self._owner_loop = current_loop
                 elif self._owner_loop is not current_loop:
-                    dispose_unstarted_awaitable(awaitable)
+                    dispose_unstarted_awaitable(operation)
                     raise RuntimeError("stream work belongs to a different event loop")
-            operation = awaitable
         try:
             if not enforce_deadline or legacy_local_operation:
                 return cast(T, await operation)
