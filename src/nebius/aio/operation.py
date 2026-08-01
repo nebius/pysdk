@@ -13,7 +13,9 @@ import importlib
 import os
 from asyncio import (
     FIRST_COMPLETED,
+    CancelledError,
     ensure_future,
+    gather,
     shield,
     sleep,
     wait,
@@ -534,12 +536,15 @@ class Operation(Generic[OperationPb]):
                     started_waiter = ensure_future(
                         shield(wrap_future(dispatch_started))
                     )
-                    completed, _ = await wait(
-                        (waiter, started_waiter),
-                        timeout=remaining,
-                        return_when=FIRST_COMPLETED,
-                    )
-                    started_waiter.cancel()
+                    try:
+                        completed, _ = await wait(
+                            (waiter, started_waiter),
+                            timeout=remaining,
+                            return_when=FIRST_COMPLETED,
+                        )
+                    finally:
+                        started_waiter.cancel()
+                        await gather(started_waiter, return_exceptions=True)
                     if waiter in completed:
                         await waiter
                         return
@@ -561,6 +566,13 @@ class Operation(Generic[OperationPb]):
                     cancel()
                 raise TimeoutError("The operation update timed out.")
             await wait_for(waiter, timeout=remaining)
+        except CancelledError:
+            cancel = getattr(submitted, "cancel", None)
+            if callable(cancel):
+                cancel()
+            waiter.cancel()
+            await gather(waiter, return_exceptions=True)
+            raise
         except (TimeoutError, AsyncTimeoutError) as error:
             if waiter.done() and not waiter.cancelled():
                 terminal_error = waiter.exception()

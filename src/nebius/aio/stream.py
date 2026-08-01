@@ -707,12 +707,15 @@ class StreamRequest(Generic[Req, Res]):
                     started_waiter = ensure_future(
                         shield(wrap_future(dispatch_started))
                     )
-                    completed, _ = await wait(
-                        (waiter, started_waiter),
-                        timeout=dispatch_remaining,
-                        return_when=FIRST_COMPLETED,
-                    )
-                    started_waiter.cancel()
+                    try:
+                        completed, _ = await wait(
+                            (waiter, started_waiter),
+                            timeout=dispatch_remaining,
+                            return_when=FIRST_COMPLETED,
+                        )
+                    finally:
+                        started_waiter.cancel()
+                        await gather(started_waiter, return_exceptions=True)
                     if waiter in completed:
                         return cast(T, await waiter)
                     if not dispatch_started.done():
@@ -721,6 +724,13 @@ class StreamRequest(Generic[Req, Res]):
                         raise TimeoutError(
                             "The stream timed out before SDK-loop dispatch."
                         )
+                with self._state_lock:
+                    authorization_unknown = (
+                        self._authorization_deadline_enabled is None
+                        and not self._authentication_finished
+                    )
+                if authorization_unknown:
+                    return cast(T, await waiter)
                 remaining = self._remaining_deadline()
                 if remaining is None:
                     return cast(T, await waiter)
@@ -728,6 +738,11 @@ class StreamRequest(Generic[Req, Res]):
                     self.cancel()
                     raise TimeoutError("The stream timed out.")
                 return cast(T, await wait_for(waiter, timeout=remaining))
+            except CancelledError:
+                self.cancel()
+                waiter.cancel()
+                await gather(waiter, return_exceptions=True)
+                raise
             except (TimeoutError, AsyncTimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
                     terminal_error = waiter.exception()

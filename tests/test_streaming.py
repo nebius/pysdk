@@ -787,6 +787,104 @@ def test_sdk_stream_bridges_foreign_loop_authenticator_future() -> None:
         assert not auth_thread.is_alive()
 
 
+def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> None:
+    """An unknown legacy provider keeps request and auth clocks independent."""
+
+    class SlowAuthenticator:
+        """Authenticate for longer than the request budget."""
+
+        async def authenticate(self, metadata, timeout, options) -> None:
+            """Finish within the separate authorization budget."""
+
+            await asyncio.sleep(0.08)
+
+    class Provider:
+        """Provide the slow test authenticator."""
+
+        def authenticator(self) -> SlowAuthenticator:
+            """Create the slow test authenticator."""
+
+            return SlowAuthenticator()
+
+    class Call:
+        """Yield one response after authentication."""
+
+        def __aiter__(self):
+            """Create the response iterator."""
+
+            async def responses():
+                """Yield one test response."""
+
+                yield Disk()
+
+            return responses()
+
+        def cancel(self) -> bool:
+            """Accept native stream cancellation."""
+
+            return True
+
+    class Transport:
+        """Create the test server stream."""
+
+        def unary_stream(self, path, serializer, deserializer):
+            """Return a callable that creates the test stream."""
+
+            return lambda request, **kwargs: Call()
+
+    owner = SDKChannel(credentials=NoCredentials())
+    address = type(
+        "Address",
+        (),
+        {"channel": Transport(), "event_loop": owner._event_loop},
+    )()
+
+    class FutureLikeLegacyChannel:
+        """Expose Future-like dispatch without a provider-state probe."""
+
+        def run_async(self, awaitable):
+            """Submit work through the hidden owner SDK."""
+
+            return owner.run_async(awaitable)
+
+        def get_authorization_provider(self) -> Provider:
+            """Return a provider that the caller cannot probe safely."""
+
+            return Provider()
+
+        def get_channel_by_route(self, route):
+            """Return the owner-loop transport wrapper."""
+
+            return address
+
+        def release_channel(self, value, *, discard=False) -> None:
+            """Accept release of the test transport."""
+
+            return None
+
+    stream = StreamRequest(
+        channel=FutureLikeLegacyChannel(),
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="legacy-independent-auth-clock"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+        timeout=0.02,
+        auth_timeout=0.5,
+    )
+
+    async def consume() -> None:
+        """Read the response after slow authentication finishes."""
+
+        async with stream:
+            assert isinstance(await anext(stream.__aiter__()), Disk)
+
+    try:
+        asyncio.run(consume())
+    finally:
+        owner.sync_close(timeout=5)
+
+
 def test_stream_write_snapshots_request_before_sdk_loop_dispatch() -> None:
     """Explicit writes cannot observe mutation while the SDK loop is busy."""
 

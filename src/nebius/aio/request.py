@@ -22,6 +22,7 @@ from asyncio import (
     CancelledError,
     Task,
     ensure_future,
+    gather,
     get_running_loop,
     shield,
     wait,
@@ -1727,12 +1728,15 @@ class Request(Generic[Req, Res]):
                         started_waiter = ensure_future(
                             shield(wrap_future(dispatch_started))
                         )
-                        completed, _ = await wait(
-                            (waiter, started_waiter),
-                            timeout=remaining,
-                            return_when=FIRST_COMPLETED,
-                        )
-                        started_waiter.cancel()
+                        try:
+                            completed, _ = await wait(
+                                (waiter, started_waiter),
+                                timeout=remaining,
+                                return_when=FIRST_COMPLETED,
+                            )
+                        finally:
+                            started_waiter.cancel()
+                            await gather(started_waiter, return_exceptions=True)
                         if waiter in completed:
                             return await waiter
                     if not dispatch_started.done():
@@ -1748,6 +1752,11 @@ class Request(Generic[Req, Res]):
                     self.cancel()
                     raise TimeoutError("The request timed out.")
                 return await wait_for(waiter, timeout=remaining)
+            except CancelledError:
+                self.cancel()
+                waiter.cancel()
+                await gather(waiter, return_exceptions=True)
+                raise
             except (TimeoutError, AsyncTimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
                     terminal_error = waiter.exception()

@@ -139,6 +139,11 @@ class AddressChannel:
         except AttributeError:
             pass
         else:
+            with close_state_lock:
+                if not hasattr(self, "_retired_by_sdk"):
+                    self._retired_by_sdk = False
+                if not hasattr(self, "_closed_by_sdk"):
+                    self._closed_by_sdk = False
             return close_state_lock
         with self._legacy_close_state_init_lock:
             try:

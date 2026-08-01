@@ -1094,6 +1094,75 @@ def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
         channel.sync_close(timeout=5)
 
 
+@pytest.mark.asyncio
+@pytest.mark.parametrize("work_kind", ("request", "operation", "stream"))
+async def test_dispatch_gate_waiter_is_drained_after_cancellation(
+    work_kind: str,
+) -> None:
+    """Cancellation does not leave a dispatch-start waiter on the caller loop."""
+
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    loop_blocked = Event()
+    release_loop = Event()
+
+    async def block_sdk_loop() -> None:
+        """Block SDK-loop dispatch until the cancellation check finishes."""
+
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    blocker = channel.run_async(block_sdk_loop())
+    assert await asyncio.to_thread(loop_blocked.wait, 5)
+    baseline = asyncio.all_tasks()
+    if work_kind == "request":
+        request: Request[GetDiskRequest, Disk] = Request(
+            channel,
+            "nebius.compute.v1.DiskService",
+            "Get",
+            GetDiskRequest(id="cancel-dispatch-waiter"),
+            Disk,
+            timeout=1,
+        )
+        pending = asyncio.create_task(request._await_result())
+    elif work_kind == "operation":
+        operation = Operation(
+            ".nebius.common.v1.OperationService.Get",
+            channel,
+            OperationMessage(id="cancel-dispatch-waiter"),
+        )
+        pending = asyncio.create_task(operation.update(timeout=1))
+    else:
+        stream = StreamRequest(
+            channel=channel,
+            route=Route("acme.Service", "Watch"),
+            request=GetDiskRequest(id="cancel-dispatch-waiter"),
+            result_class=Disk,
+            client_streaming=False,
+            server_streaming=True,
+            timeout=1,
+        )
+        pending = asyncio.create_task(stream._on_sdk_loop(asyncio.sleep(0)))
+
+    try:
+        await asyncio.sleep(0)
+        pending.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await pending
+        await asyncio.sleep(0)
+        leaked = [
+            task
+            for task in asyncio.all_tasks() - baseline
+            if not task.done() and task is not asyncio.current_task()
+        ]
+        assert leaked == []
+    finally:
+        release_loop.set()
+        await asyncio.to_thread(blocker.result, 5)
+        await channel.close()
+
+
 def test_stopped_borrowed_loop_rejects_submission_promptly() -> None:
     """The caller must keep a supplied loop running until SDK close."""
 

@@ -146,6 +146,18 @@ def test_failed_lease_factory_closes_untracked_transport(caplog) -> None:
         channel.sync_close(timeout=5)
 
 
+def test_legacy_address_channel_with_only_lifecycle_lock_is_safe() -> None:
+    """Lazy lifecycle setup fills fields that a legacy subclass omitted."""
+
+    address = object.__new__(AddressChannel)
+    address._close_state_lock = Lock()
+
+    assert not address._is_retired_by_sdk()
+    assert not address._is_closed_by_sdk()
+    assert address._retire_by_sdk()
+    assert address._is_retired_by_sdk()
+
+
 def test_lease_factory_cannot_reuse_a_tracked_wrapper(caplog) -> None:
     """A lease factory cannot put a tracked wrapper in the free pool."""
 

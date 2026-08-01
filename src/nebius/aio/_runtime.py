@@ -745,6 +745,7 @@ class AsyncRuntime:
         self._submissions: set[CrossLoopAwaitable[Any]] = set()
         self._protected_submissions: set[CrossLoopAwaitable[Any]] = set()
         self._close_returning_submissions: set[CrossLoopAwaitable[Any]] = set()
+        self._protected_state_changed = asyncio.Event()
         self._active_tasks: set[asyncio.Task[Any]] = set()
         self._protected_tasks: set[asyncio.Task[Any]] = set()
         self._protected_cancelling_tasks: set[asyncio.Task[Any]] = set()
@@ -1172,6 +1173,15 @@ class AsyncRuntime:
             self._submissions.discard(submitted)
             self._protected_submissions.discard(submitted)
             self._close_returning_submissions.discard(submitted)
+        self._notify_protected_state_change()
+
+    def _notify_protected_state_change(self) -> None:
+        """Wake SDK-loop shutdown after protected submission state changes."""
+
+        try:
+            self._loop.call_soon_threadsafe(self._protected_state_changed.set)
+        except RuntimeError:
+            pass
 
     def protect_current_submission(self) -> CrossLoopAwaitable[Any] | None:
         """Protect the current internal close caller from normal cancellation.
@@ -1187,6 +1197,7 @@ class AsyncRuntime:
             with self._submissions_lock:
                 if submitted in self._submissions:
                     self._protected_submissions.add(submitted)
+            self._notify_protected_state_change()
             if task is not None:
                 first_protection = task not in self._protected_tasks
                 self._protected_tasks.add(task)
@@ -1214,6 +1225,7 @@ class AsyncRuntime:
 
         self._protected_tasks.discard(task)
         self._protected_cancelling_tasks.discard(task)
+        self._notify_protected_state_change()
 
     def mark_current_task_cancelling(self) -> None:
         """Record cancellation delivered after close protection began.
@@ -1245,6 +1257,7 @@ class AsyncRuntime:
             with self._submissions_lock:
                 if submitted in self._protected_submissions:
                     self._close_returning_submissions.add(submitted)
+            self._notify_protected_state_change()
         task = asyncio.current_task(self._loop) if self.in_event_loop() else None
         if task is not None and task in self._protected_tasks:
             self._loop.call_soon(self._cancel_returning_task, task)
@@ -1786,6 +1799,7 @@ class AsyncRuntime:
 
         try:
             while True:
+                self._protected_state_changed.clear()
                 with self._submissions_lock:
                     waiting = [
                         submitted
@@ -1795,10 +1809,7 @@ class AsyncRuntime:
                     ]
                 if not waiting:
                     break
-                # A protected external caller may remain active for an
-                # arbitrary interval. Yield with a bounded delay instead of
-                # continuously spinning the SDK loop while it finishes.
-                await asyncio.sleep(0.001)
+                await self._protected_state_changed.wait()
 
             # Each returning caller scheduled its own next-turn cancellation.
             # Gathering lets an immediate return publish normally and drains
@@ -1814,14 +1825,12 @@ class AsyncRuntime:
             # publication are separate callbacks. Keep the loop alive until
             # each protected concurrent result is observably complete.
             while True:
+                self._protected_state_changed.clear()
                 with self._submissions_lock:
                     protected = list(self._protected_submissions)
                 if all(submitted.done() for submitted in protected):
                     break
-                # Task completion and concurrent-future publication normally
-                # differ by one loop turn. A short delay also bounds CPU use
-                # if a non-standard future publishes more slowly.
-                await asyncio.sleep(0.001)
+                await self._protected_state_changed.wait()
 
             # Tracked tasks can have asynchronous finalizers that continue
             # after cancellation becomes visible on their concurrent result.
