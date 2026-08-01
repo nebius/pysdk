@@ -3281,20 +3281,55 @@ def test_close_does_not_recancel_a_task_already_in_its_finalizer() -> None:
         _stop_loop(loop, thread)
 
 
-def test_internal_close_caller_completes_before_runtime_stops() -> None:
+def test_internal_close_caller_completes_before_runtime_stops(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     channel = Channel(credentials=NoCredentials())
+    callback_ran = Event()
+    original_cancel_returning = channel._runtime._cancel_returning_task
+
+    def observe_cancel_returning(task: asyncio.Task[object]) -> None:
+        """Record the next-turn callback before applying its normal check."""
+
+        callback_ran.set()
+        original_cancel_returning(task)
+
+    monkeypatch.setattr(
+        channel._runtime,
+        "_cancel_returning_task",
+        observe_cancel_returning,
+    )
 
     async def close_from_internal_loop() -> int:
         await channel.close()
+        assert not callback_ran.is_set()
         return 42
 
     assert channel.run_async(close_from_internal_loop()).result(timeout=5) == 42
+    assert callback_ran.wait(timeout=5)
 
 
-def test_internal_close_stops_continuation_on_its_next_await() -> None:
+def test_internal_close_stops_continuation_on_its_next_await(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     channel = Channel(credentials=NoCredentials())
     close_returned = Event()
+    callback_ran = Event()
     finalized = Event()
+    original_cancel_returning = channel._runtime._cancel_returning_task
+
+    def observe_cancel_returning(task: asyncio.Task[object]) -> None:
+        """Prove the callback runs only after close returns to its caller."""
+
+        assert close_returned.is_set()
+        callback_ran.set()
+        original_cancel_returning(task)
+
+    monkeypatch.setattr(
+        channel._runtime,
+        "_cancel_returning_task",
+        observe_cancel_returning,
+    )
 
     async def close_then_block() -> None:
         try:
@@ -3308,6 +3343,7 @@ def test_internal_close_stops_continuation_on_its_next_await() -> None:
     with pytest.raises(ConcurrentCancelledError):
         submitted.result(timeout=5)
     assert close_returned.wait(timeout=5)
+    assert callback_ran.wait(timeout=5)
     assert finalized.wait(timeout=5)
 
 
@@ -3691,26 +3727,41 @@ def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
     """An accepted call whose task is rejected settles every public gate."""
 
     channel = Channel(credentials=NoCredentials())
-    rejection = RuntimeError("low-level call task rejected")
+    rejection = RuntimeError("The SDK rejected the low-level call task.")
+    factory_installed = Event()
+    release_installer = Event()
 
     def reject_once(loop, coroutine, **kwargs):
+        """Reject the first task that starts after factory installation."""
+
         loop.set_task_factory(None)
         raise rejection
 
     async def install() -> None:
+        """Install the factory and hold the SDK loop for target submission."""
+
         asyncio.get_running_loop().set_task_factory(reject_once)
+        factory_installed.set()
+        release_installer.wait(timeout=5)
 
-    channel.run_async(install()).result(timeout=5)
-    call = channel.unary_unary(
-        "/nebius.compute.v1.DiskService/Get",
-        lambda request: request.SerializeToString(),
-        Disk.FromString,
-    )(GetDiskRequest(id="rejected-before-call"))
-
-    async def await_call() -> Disk:
-        return await call
-
+    # Let constructor work finish before the one-shot task factory is active.
+    channel.run_async(asyncio.sleep(0)).result(timeout=5)
+    installer = channel.run_async(install())
     try:
+        assert factory_installed.wait(timeout=5)
+        call = channel.unary_unary(
+            "/nebius.compute.v1.DiskService/Get",
+            lambda request: request.SerializeToString(),
+            Disk.FromString,
+        )(GetDiskRequest(id="rejected-before-call"))
+        release_installer.set()
+        installer.result(timeout=5)
+
+        async def await_call() -> Disk:
+            """Wait for the rejected low-level call."""
+
+            return await call
+
         with pytest.raises(RuntimeError) as raised:
             asyncio.run(await_call())
         assert raised.value is rejection
@@ -3719,6 +3770,7 @@ def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
             asyncio.run(call.initial_metadata())
         assert accessor_error.value is rejection
     finally:
+        release_installer.set()
         channel.sync_close(timeout=5)
 
 

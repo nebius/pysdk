@@ -42,7 +42,7 @@ from pathlib import Path
 from threading import Lock, RLock
 from time import monotonic
 from typing import Any, Concatenate, ParamSpec, TextIO, TypeVar, cast
-from weakref import finalize
+from weakref import WeakSet, finalize, ref
 
 from google.protobuf.message import Message
 from grpc import (
@@ -142,8 +142,9 @@ T = TypeVar("T")
 P = ParamSpec("P")
 C = TypeVar("C")
 
-_detached_foreign_close_handles = set[Any]()
+_detached_foreign_close_handles = WeakSet[Any]()
 _detached_foreign_close_tasks_lock = Lock()
+_DETACHED_FOREIGN_CLOSE_RETENTION_SECONDS = 3600.0
 
 
 def _reset_detached_foreign_close_tasks_after_fork() -> None:
@@ -156,7 +157,7 @@ def _reset_detached_foreign_close_tasks_after_fork() -> None:
 
     global _detached_foreign_close_handles
     global _detached_foreign_close_tasks_lock
-    _detached_foreign_close_handles = set()
+    _detached_foreign_close_handles = WeakSet()
     _detached_foreign_close_tasks_lock = Lock()
 
 
@@ -164,30 +165,107 @@ if hasattr(os, "register_at_fork"):
     os.register_at_fork(after_in_child=_reset_detached_foreign_close_tasks_after_fork)
 
 
-def _retain_detached_foreign_close(handle: Any) -> None:
+def _retain_detached_foreign_close(
+    handle: Any,
+    owner_loop: AbstractEventLoop,
+) -> None:
     """Retain foreign-loop cleanup without retaining its parent channel.
 
-    A caller-owned event loop keeps only weak references to tasks, and a
-    cross-thread dispatch returns a concurrent Future whose lifetime should
-    likewise cover the close. The SDK therefore retains either handle until
-    completion.
-    This module-level tracker contains only detached cleanup. It does not
-    contain per-SDK scheduler or bridge state. Its lock lets independent SDK
-    instances and owner-loop threads use it at the same time.
+    A caller-owned event loop keeps only weak references to tasks. A
+    cross-thread dispatch returns a concurrent Future. The SDK retains either
+    handle until completion.
+    A callback in the owner loop's public scheduling queue retains the handle.
+    It renews a long timer while the close is pending. The module-level weak
+    set is only for diagnostics and tests. As a result, the retention cycle
+    has no process-global strong reference. If the application drops a stopped
+    loop, its pending close state can be collected with it. This design does
+    not add private attributes to the loop, so it also supports fixed-slot
+    loop types.
+
+    The registry contains only detached cleanup. It does not contain per-SDK
+    scheduler or bridge state. Its lock lets independent SDK instances and
+    owner-loop threads use it at the same time.
 
     :param handle: Foreign-loop transport-close task or Future to retain.
+    :param owner_loop: Event loop that owns the close operation.
     """
 
     with _detached_foreign_close_tasks_lock:
         _detached_foreign_close_handles.add(handle)
+    loop_ref = ref(owner_loop)
+    retention: dict[str, Any] = {}
+
+    def retain_on_owner_loop() -> None:
+        """Renew owner-loop retention while detached close work is pending."""
+
+        retained_loop = loop_ref()
+        if handle.done() or retained_loop is None or retained_loop.is_closed():
+            retention.clear()
+            return
+        retention["timer"] = retained_loop.call_later(
+            _DETACHED_FOREIGN_CLOSE_RETENTION_SECONDS,
+            retain_on_owner_loop,
+        )
 
     def discard(completed: Any) -> None:
         """Release a completed detached transport close."""
 
         with _detached_foreign_close_tasks_lock:
             _detached_foreign_close_handles.discard(completed)
+        timer = retention.pop("timer", None)
+        retained_loop = loop_ref()
+        if timer is None or retained_loop is None or retained_loop.is_closed():
+            retention.clear()
+            return
+        try:
+            retained_loop.call_soon_threadsafe(timer.cancel)
+        except RuntimeError:
+            retention.clear()
 
     handle.add_done_callback(discard)
+    try:
+        owner_loop.call_soon_threadsafe(retain_on_owner_loop)
+    except RuntimeError:
+        # The loop closed after it accepted the transport close. It cannot run
+        # that close, so no loop-owned retention callback can make progress.
+        pass
+
+
+def _start_detached_foreign_close(
+    close_coro: Coroutine[Any, Any, None],
+    owner_loop: AbstractEventLoop,
+    name: str,
+    completion: ConcurrentFuture[None] | None = None,
+) -> bool:
+    """Start and retain detached close work on the current owner loop.
+
+    A custom task factory can reject task creation. This helper closes the
+    rejected coroutine and settles an optional SDK lifecycle reservation, so
+    the rejection cannot strand shutdown.
+
+    :param close_coro: Transport-close coroutine to start.
+    :param owner_loop: Running loop that owns ``close_coro``.
+    :param name: Diagnostic task name.
+    :param completion: Optional SDK lifecycle reservation to settle on failure.
+    :return: ``True`` if task creation succeeded.
+    """
+
+    try:
+        task = create_task(close_coro, name=name)
+    except BaseException as error:
+        dispose_unstarted_awaitable(close_coro)
+        logger.error(
+            "The SDK could not start the transport close task.",
+            exc_info=error,
+        )
+        if completion is not None:
+            try:
+                completion.set_result(None)
+            except ConcurrentInvalidStateError:
+                pass
+        return False
+    _retain_detached_foreign_close(task, owner_loop)
+    return True
 
 
 def _finalize_runtime(runtime: AsyncRuntime, process_id: int) -> None:
@@ -778,21 +856,31 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         return self._await_submitted().__await__()
 
     async def _await_submitted(self) -> Res:
-        """Wait without bypassing terminal-aware cancellation.
+        """Wait for the result and its published terminal state.
 
-        Cancellation of one external asyncio task first cancels only its
-        shield wrapper. The explicit call to :meth:`cancel` then sends the
-        cancellation to an active native RPC. It rejects cancellation after
-        the native result or error becomes final.
+        If an external asyncio task is canceled, its shield wrapper is
+        canceled first. The explicit call to :meth:`cancel` then sends the
+        cancellation to an active native RPC. The method rejects cancellation
+        after the native result or error becomes final.
+
+        If the SDK cannot start a task, the submitted future can complete
+        before its completion callback publishes the call state. The terminal
+        wait keeps :meth:`done` and the result accessors consistent when this
+        method returns or raises that error.
 
         :return: Native RPC result.
         """
 
         try:
-            return await self._submitted._wait_shielded()
+            result = await self._submitted._wait_shielded()
         except CancelledError:
             self.cancel()
             raise
+        except BaseException:
+            await shield(wrap_future(self._terminal_ready))
+            raise
+        await shield(wrap_future(self._terminal_ready))
+        return result
 
     def cancel(self) -> bool:
         """Request cancellation of the RPC.
@@ -2613,7 +2701,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 self._leased_channels[id(chan)] = chan
                 return chan
         self._schedule_address_channel_close(chan, None)
-        raise ChannelClosedError("Channel closed")
+        raise ChannelClosedError("The channel is closed.")
 
     def get_channel_by_addr(self, addr: str) -> AddressChannel:
         """Request an :class:`AddressChannel` for the given resolved address.
@@ -2675,7 +2763,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             chan: AddressChannel | None = None
             with self._channel_pool_lock:
                 if self._closed:
-                    raise ChannelClosedError("Channel closed")
+                    raise ChannelClosedError("The channel is closed.")
                 chans = self._free_channels.setdefault(addr, [])
                 for index in range(len(chans) - 1, -1, -1):
                     if getattr(chans[index], "event_loop", None) is current_loop:
@@ -2839,7 +2927,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             if leased is None and not already_retired:
                 self._schedule_address_channel_close(chan, None)
             if raise_if_closed:
-                raise ChannelClosedError("Channel closed")
+                raise ChannelClosedError("The channel is closed.")
             return
         reusable = (
             not discard
@@ -2862,7 +2950,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             already_retired=reserved_for_close,
         )
         if closed and raise_if_closed:
-            raise ChannelClosedError("Channel closed")
+            raise ChannelClosedError("The channel is closed.")
 
     async def _close_address_channel(
         self,
@@ -2938,19 +3026,19 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         allowed to make SDK shutdown depend on a caller-owned loop.
         """
 
-        if not already_retired:
-            with self._channel_pool_lock:
+        with self._channel_pool_lock:
+            if not already_retired:
                 if not chan._retire_by_sdk():
                     return
-                # A direct caller may still hold a wrapper after returning it.
-                # Remove any duplicate pool entry atomically with retirement.
-                pooled = self._free_channels.get(chan.address)
-                if pooled is not None:
-                    pooled[:] = [
-                        candidate for candidate in pooled if candidate is not chan
-                    ]
-                    if not pooled:
-                        self._free_channels.pop(chan.address, None)
+            # A direct caller may still hold a wrapper after returning it.
+            # Remove any duplicate pool entry atomically with retirement. The
+            # caller can retire the wrapper before entering this method, so
+            # removal must not depend on this method winning retirement.
+            pooled = self._free_channels.get(chan.address)
+            if pooled is not None:
+                pooled[:] = [candidate for candidate in pooled if candidate is not chan]
+                if not pooled:
+                    self._free_channels.pop(chan.address, None)
 
         completion: ConcurrentFuture[None] | None = None
 
@@ -2999,11 +3087,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             except RuntimeError:
                 current_loop = None
             if owner_loop is current_loop:
-                task = create_task(
+                _start_detached_foreign_close(
                     close_coro,
-                    name=f"Channel transport close for {chan.address}",
+                    cast(AbstractEventLoop, owner_loop),
+                    f"Channel transport close for {chan.address}",
                 )
-                _retain_detached_foreign_close(task)
                 return
             try:
                 close_future = run_coroutine_threadsafe(close_coro, owner_loop)
@@ -3014,7 +3102,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     "stopped."
                 )
             else:
-                _retain_detached_foreign_close(close_future)
+                _retain_detached_foreign_close(close_future, owner_loop)
             return
 
         channel_id = id(chan)
@@ -3044,21 +3132,22 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             except RuntimeError:
                 current_loop = None
             fallback = close_and_log()
-            fallback_loop = owner_loop or self._event_loop
+            fallback_loop = cast(AbstractEventLoop, owner_loop or self._event_loop)
             if fallback_loop is not current_loop and fallback_loop.is_running():
                 try:
                     close_future = run_coroutine_threadsafe(fallback, fallback_loop)
-                    _retain_detached_foreign_close(close_future)
+                    _retain_detached_foreign_close(close_future, fallback_loop)
                     return
                 except RuntimeError:
                     fallback.close()
                     fallback = close_and_log()
             if current_loop is fallback_loop:
-                task = create_task(
+                _start_detached_foreign_close(
                     fallback,
-                    name=f"Channel transport close for {chan.address}",
+                    fallback_loop,
+                    f"Channel transport close for {chan.address}",
+                    completion,
                 )
-                _retain_detached_foreign_close(task)
             else:
                 fallback.close()
                 logger.warning(

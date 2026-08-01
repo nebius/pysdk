@@ -1220,7 +1220,13 @@ class AsyncRuntime:
             self._protected_cancelling_tasks.add(task)
 
     def mark_current_submission_close_returning(self) -> None:
-        """Mark that the current internal caller can return from close."""
+        """Mark an internal close caller and limit its continuation.
+
+        The caller can finish its current task step after ``close()`` returns.
+        A callback on the next loop turn cancels it only if it yielded again.
+        This explicit scheduling avoids depending on ready-queue ordering
+        between the caller and runtime shutdown.
+        """
 
         binding = _current_submission.get()
         submitted = binding[1] if binding is not None and binding[0] is self else None
@@ -1228,6 +1234,29 @@ class AsyncRuntime:
             with self._submissions_lock:
                 if submitted in self._protected_submissions:
                     self._close_returning_submissions.add(submitted)
+        task = asyncio.current_task(self._loop) if self.in_event_loop() else None
+        if task is not None and task in self._protected_tasks:
+            self._loop.call_soon(self._cancel_returning_task, task)
+
+    def _cancel_returning_task(self, task: asyncio.Task[Any]) -> None:
+        """Cancel a close caller only if it yielded after close returned.
+
+        :param task: Protected SDK-loop task that returned from ``close()``.
+        """
+
+        if task.done() or task not in self._protected_tasks:
+            return
+        submitted = self._task_submissions.get(task)
+        cancelling = getattr(task, "cancelling", None)
+        already_cancelling = (
+            task in self._protected_cancelling_tasks
+            or task in self._task_cancellation_requested
+            or callable(cancelling)
+            and cancelling() > 0
+        )
+        if already_cancelling or submitted is not None and submitted.cancelled():
+            return
+        self._cancel_task_once(task)
 
     def begin_close(self) -> None:
         """Reject new runtime submissions."""
@@ -1760,25 +1789,10 @@ class AsyncRuntime:
                 # continuously spinning the SDK loop while it finishes.
                 await asyncio.sleep(0.001)
 
-            # Let protected callers execute the immediate continuation after
-            # ``await close()``. A caller that yields again is post-close work.
-            await asyncio.sleep(0)
+            # Each returning caller scheduled its own next-turn cancellation.
+            # Gathering lets an immediate return publish normally and drains
+            # a continuation that yielded and received that cancellation.
             protected_tasks = list(self._protected_tasks)
-            for task in protected_tasks:
-                submitted = self._task_submissions.get(task)
-                cancelling = getattr(task, "cancelling", None)
-                already_cancelling = (
-                    task in self._protected_cancelling_tasks
-                    or task in self._task_cancellation_requested
-                    or callable(cancelling)
-                    and cancelling() > 0
-                )
-                if (
-                    not task.done()
-                    and not already_cancelling
-                    and (submitted is None or not submitted.cancelled())
-                ):
-                    self._cancel_task_once(task)
             if protected_tasks:
                 await asyncio.gather(
                     *protected_tasks,
