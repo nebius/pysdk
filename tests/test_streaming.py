@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 from concurrent.futures import Future
 from threading import Barrier, Event, Thread
-from time import sleep
+from time import monotonic, sleep
 
 import grpc
 import pytest
@@ -601,6 +601,46 @@ def test_stream_snapshots_unary_request_and_auth_options() -> None:
     assert received_requests == ["before"]
     assert received_options == ["before"]
     assert discarded == [address]
+
+
+def test_stream_request_timeout_excludes_slow_authentication() -> None:
+    """Stream auth uses its own budget before request timeout resumes."""
+
+    class Authenticator:
+        async def authenticate(self, metadata, timeout, options) -> None:
+            await asyncio.sleep(0.08)
+
+        def can_retry(self, err, options=None) -> bool:
+            return False
+
+    class Provider:
+        def authenticator(self) -> Authenticator:
+            return Authenticator()
+
+    channel = SDKChannel(credentials=NoCredentials())
+    channel._authorization_provider = Provider()  # type: ignore[assignment]
+    stream = StreamRequest(
+        channel=channel,
+        route=Route("acme.Service", "Watch"),
+        request=GetDiskRequest(id="independent-stream-auth-clock"),
+        result_class=Disk,
+        client_streaming=False,
+        server_streaming=True,
+        timeout=0.05,
+        auth_timeout=0.5,
+    )
+
+    async def authenticate() -> float:
+        await stream._on_sdk_loop(stream._authenticate())
+        deadline = stream._request_deadline
+        assert deadline is not None
+        return deadline - monotonic()
+
+    try:
+        remaining = asyncio.run(authenticate())
+        assert 0 < remaining <= 0.05
+    finally:
+        channel.sync_close(timeout=5)
 
 
 def test_sdk_stream_bridges_foreign_loop_authenticator_future() -> None:

@@ -613,6 +613,54 @@ def test_detached_foreign_close_does_not_retain_parent_channel() -> None:
         _stop_event_loop(owner_loop, owner_thread)
 
 
+def test_cross_thread_foreign_close_handle_is_retained_until_completion() -> None:
+    """The concurrent dispatch handle owns a detached foreign close."""
+
+    import nebius.aio.channel as channel_module
+
+    owner_loop, owner_thread = _start_event_loop()
+    close_started = Event()
+    release_close = Event()
+    close_finished = Event()
+
+    class Transport:
+        async def close(self, grace: float | None = None) -> None:
+            close_started.set()
+            while not release_close.is_set():
+                await asyncio.sleep(0.001)
+            close_finished.set()
+
+    channel = Channel(credentials=NoCredentials())
+    address = AddressChannel(  # type: ignore[arg-type]
+        Transport(),
+        "cross-thread-close.example:443",
+        owner_loop,
+    )
+    with channel_module._detached_foreign_close_tasks_lock:
+        baseline = len(channel_module._detached_foreign_close_handles)
+    try:
+        channel._schedule_address_channel_close(address, None)
+        assert close_started.wait(timeout=5)
+        with channel_module._detached_foreign_close_tasks_lock:
+            assert len(channel_module._detached_foreign_close_handles) == baseline + 1
+        gc.collect()
+        assert not close_finished.is_set()
+        release_close.set()
+        assert close_finished.wait(timeout=5)
+        deadline = monotonic() + 5
+        while True:
+            with channel_module._detached_foreign_close_tasks_lock:
+                retained = len(channel_module._detached_foreign_close_handles)
+            if retained == baseline:
+                break
+            assert monotonic() < deadline
+            sleep(0.01)
+    finally:
+        release_close.set()
+        channel.sync_close(timeout=5)
+        _stop_event_loop(owner_loop, owner_thread)
+
+
 def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

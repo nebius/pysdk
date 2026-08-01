@@ -2382,6 +2382,60 @@ async def test_async_request_auth_timeout_only_applies_when_authorizing(
 
 
 @pytest.mark.asyncio
+async def test_request_timeout_excludes_slow_authentication() -> None:
+    """Authentication consumes auth budget but not request-only budget."""
+
+    class SlowAuthenticator(Authenticator):
+        async def authenticate(
+            self,
+            metadata: Metadata,
+            timeout: float | None = None,
+            options: dict[str, str] | None = None,
+        ) -> None:
+            await asyncio.sleep(0.08)
+
+        def can_retry(
+            self,
+            err: Exception,
+            options: dict[str, str] | None = None,
+        ) -> bool:
+            return False
+
+    class SlowProvider(Provider):
+        def authenticator(self) -> Authenticator:
+            return SlowAuthenticator()
+
+    channel = Channel(credentials=SlowProvider())
+    request: Request[GetDiskRequest, Disk] = Request(
+        channel,
+        "nebius.compute.v1.DiskService",
+        "Get",
+        GetDiskRequest(id="independent-auth-clock"),
+        Disk,
+        timeout=0.05,
+        auth_timeout=0.5,
+    )
+    remaining: list[float] = []
+
+    async def observe_request_budget(
+        outer_deadline: float | None = None,
+        *,
+        defer_unauthenticated_release: bool = False,
+    ) -> Disk:
+        assert outer_deadline is not None
+        assert request._request_deadline is not None
+        remaining.append(request._request_deadline - monotonic())
+        return Disk()
+
+    request._retry_loop = observe_request_budget  # type: ignore[method-assign]
+    try:
+        assert isinstance(await request, Disk)
+        assert remaining and 0 < remaining[0] <= 0.05
+    finally:
+        await channel.close()
+
+
+@pytest.mark.asyncio
 async def test_token_timeout_includes_sdk_loop_queueing() -> None:
     """A token deadline expires without starting a late receiver fetch."""
 
@@ -3063,6 +3117,46 @@ def test_internal_close_does_not_recancel_an_externally_cancelled_finalizer() ->
         channel._runtime.shutdown_async().result(timeout=5)
 
 
+def test_raw_child_close_does_not_receive_second_cancellation() -> None:
+    """Shutdown preserves a cancelling inherited child's async finalizer."""
+
+    channel = Channel(credentials=NoCredentials())
+    child_ready: Future[asyncio.Task[None]] = Future()
+    finalizer_started = Event()
+    finalized = Event()
+    recancelled = Event()
+
+    async def child() -> None:
+        try:
+            await asyncio.Event().wait()
+        finally:
+            finalizer_started.set()
+            try:
+                await channel.close()
+                await asyncio.sleep(0.05)
+                finalized.set()
+            except asyncio.CancelledError:
+                recancelled.set()
+                raise
+
+    async def parent() -> None:
+        child_task = asyncio.create_task(child())
+        child_ready.set_result(child_task)
+        await asyncio.Event().wait()
+
+    parent_submission = channel.run_async(parent())
+    child_task = child_ready.result(timeout=5)
+    channel._event_loop.call_soon_threadsafe(child_task.cancel)
+    try:
+        assert finalizer_started.wait(timeout=5)
+        channel._runtime._shutdown_complete.result(timeout=5)
+        assert finalized.wait(timeout=5)
+        assert not recancelled.is_set()
+        assert parent_submission.cancelled()
+    finally:
+        channel._runtime.shutdown_async().result(timeout=5)
+
+
 def test_run_sync_preserves_runtime_error_from_awaitable() -> None:
     channel = Channel(credentials=NoCredentials())
 
@@ -3535,6 +3629,64 @@ def test_low_level_native_completion_wins_before_wrapper_resumes(
         release_result.set()
         if closer is not None:
             closer.join(timeout=5)
+        channel.sync_close(timeout=5)
+
+
+def test_low_level_sync_terminal_accessor_failure_preserves_success() -> None:
+    """A throwing accessor invocation cannot replace the native RPC result."""
+
+    class CompletedCall:
+        def __await__(self):
+            async def result() -> Disk:
+                return Disk()
+
+            return result().__await__()
+
+        def add_done_callback(self, callback) -> None:
+            callback(self)
+
+        async def initial_metadata(self) -> tuple[()]:
+            return ()
+
+        async def trailing_metadata(self) -> tuple[()]:
+            return ()
+
+        async def code(self) -> grpc.StatusCode:
+            return grpc.StatusCode.OK
+
+        def details(self) -> str:
+            raise RuntimeError("details unavailable")
+
+    class Transport:
+        def unary_unary(self, *args: object, **kwargs: object):
+            return lambda *call_args, **call_kwargs: CompletedCall()
+
+        def get_state(self) -> grpc.ChannelConnectivity:
+            return grpc.ChannelConnectivity.READY
+
+        async def close(self, grace: float | None = None) -> None:
+            return None
+
+    class TestChannel(Channel):
+        def create_address_channel(self, addr: str) -> AddressChannel:
+            return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
+
+    channel = TestChannel(credentials=NoCredentials())
+    call = channel.unary_unary(
+        "/nebius.compute.v1.DiskService/Get",
+        lambda request: request.SerializeToString(),
+        Disk.FromString,
+    )(GetDiskRequest(id="sync-accessor-failure"))
+    try:
+        assert isinstance(call._submitted.result(timeout=5), Disk)
+
+        async def read_cached_status() -> None:
+            assert await call.code() == grpc.StatusCode.OK
+            assert await call.initial_metadata() == ()
+            assert await call.trailing_metadata() == ()
+
+        asyncio.run(read_cached_status())
+    finally:
         channel.sync_close(timeout=5)
 
 

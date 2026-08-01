@@ -654,8 +654,9 @@ await real_operation.wait()
 
 SDK requests have an internal retry layer and two request timeouts:
 
-- Overall request timeout: Limits the complete request, including SDK-loop
-  dispatch and all retries.
+- Overall request timeout: Limits SDK-loop dispatch plus native request and
+  retry work. Authentication uses its independent clock and does not consume
+  this request-only budget.
 - Per-retry timeout: Limits each retry attempt. If you do not set this value,
   it uses the overall request timeout.
 
@@ -702,6 +703,9 @@ Notes:
 - `auth_timeout` starts when the request is submitted, before it waits for the
   SDK loop. It limits the authorized request `timeout`, which limits each
   `per_retry_timeout`.
+- The request clock charges SDK-loop queueing once, pauses while credentials
+  are acquired or renewed, and resumes for native RPC and retry work. Streaming
+  calls use the same independent-clock rule during initial authentication.
 - Individual token-exchange attempts can have shorter deadlines.
   `auth_timeout` limits their total time.
 

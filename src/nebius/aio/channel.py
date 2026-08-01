@@ -141,7 +141,7 @@ T = TypeVar("T")
 P = ParamSpec("P")
 C = TypeVar("C")
 
-_detached_foreign_close_tasks = set[Task[Any]]()
+_detached_foreign_close_handles = set[Any]()
 _detached_foreign_close_tasks_lock = Lock()
 
 
@@ -153,9 +153,9 @@ def _reset_detached_foreign_close_tasks_after_fork() -> None:
     parent thread.
     """
 
-    global _detached_foreign_close_tasks
+    global _detached_foreign_close_handles
     global _detached_foreign_close_tasks_lock
-    _detached_foreign_close_tasks = set()
+    _detached_foreign_close_handles = set()
     _detached_foreign_close_tasks_lock = Lock()
 
 
@@ -163,28 +163,30 @@ if hasattr(os, "register_at_fork"):
     os.register_at_fork(after_in_child=_reset_detached_foreign_close_tasks_after_fork)
 
 
-def _retain_detached_foreign_close_task(task: Task[Any]) -> None:
+def _retain_detached_foreign_close(handle: Any) -> None:
     """Retain foreign-loop cleanup without retaining its parent channel.
 
-    A caller-owned event loop keeps only weak references to tasks. The SDK
-    therefore retains each fire-and-forget transport close until completion.
+    A caller-owned event loop keeps only weak references to tasks, and a
+    cross-thread dispatch returns a concurrent Future whose lifetime should
+    likewise cover the close. The SDK therefore retains either handle until
+    completion.
     This module-level tracker is deliberately limited to detached cleanup: it
     contains no per-SDK scheduler or bridge state, and its lock permits
     independent SDK instances and owner-loop threads to use it concurrently.
 
-    :param task: Foreign-loop transport-close task to retain.
+    :param handle: Foreign-loop transport-close task or Future to retain.
     """
 
     with _detached_foreign_close_tasks_lock:
-        _detached_foreign_close_tasks.add(task)
+        _detached_foreign_close_handles.add(handle)
 
-    def discard(completed: Task[Any]) -> None:
+    def discard(completed: Any) -> None:
         """Release a completed detached transport close."""
 
         with _detached_foreign_close_tasks_lock:
-            _detached_foreign_close_tasks.discard(completed)
+            _detached_foreign_close_handles.discard(completed)
 
-    task.add_done_callback(discard)
+    handle.add_done_callback(discard)
 
 
 def _finalize_runtime(runtime: AsyncRuntime, process_id: int) -> None:
@@ -601,8 +603,18 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             "code",
             "details",
         )
+
+        async def read_accessor(name: str) -> Any:
+            """Normalize synchronous and asynchronous accessor failures."""
+
+            try:
+                pending = getattr(call, name)()
+            except BaseException as error:
+                return error
+            return await pending
+
         values = await gather(
-            *(getattr(call, name)() for name in names),
+            *(read_accessor(name) for name in names),
             return_exceptions=True,
         )
         with self._terminal_lock:
@@ -2949,13 +2961,15 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     close_coro,
                     name=f"Channel transport close for {chan.address}",
                 )
-                _retain_detached_foreign_close_task(task)
+                _retain_detached_foreign_close(task)
                 return
             try:
-                run_coroutine_threadsafe(close_coro, owner_loop)
+                close_future = run_coroutine_threadsafe(close_coro, owner_loop)
             except RuntimeError:
                 close_coro.close()
                 logger.warning("Unable to close channel after its owner loop stopped")
+            else:
+                _retain_detached_foreign_close(close_future)
             return
 
         channel_id = id(chan)
@@ -2988,7 +3002,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             fallback_loop = owner_loop or self._event_loop
             if fallback_loop is not current_loop and fallback_loop.is_running():
                 try:
-                    run_coroutine_threadsafe(fallback, fallback_loop)
+                    close_future = run_coroutine_threadsafe(fallback, fallback_loop)
+                    _retain_detached_foreign_close(close_future)
                     return
                 except RuntimeError:
                     fallback.close()
@@ -2998,7 +3013,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     fallback,
                     name=f"Channel transport close for {chan.address}",
                 )
-                _retain_detached_foreign_close_task(task)
+                _retain_detached_foreign_close(task)
             else:
                 fallback.close()
                 logger.warning(

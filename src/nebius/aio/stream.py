@@ -139,7 +139,10 @@ class StreamRequest(Generic[Req, Res]):
         self._owner_loop: Any = None
         self._deadlines_started = False
         self._request_deadline: float | None = None
+        self._request_timeout_remaining: float | None = None
+        self._request_deadline_paused = False
         self._authorization_deadline: float | None = None
+        self._authentication_finished = False
         self._process_id = os.getpid()
 
     def _check_process(self) -> None:
@@ -162,6 +165,8 @@ class StreamRequest(Generic[Req, Res]):
         provider_getter = getattr(self._channel, "get_authorization_provider", None)
         provider = provider_getter() if callable(provider_getter) else None
         if provider is None or self._auth_options.get(OPTION_TYPE) == Types.DISABLE:
+            with self._state_lock:
+                self._authentication_finished = True
             return
         # Legacy channels do not expose the caller-safe provider probe used to
         # start an auth deadline before dispatch. Once provider discovery has
@@ -175,6 +180,7 @@ class StreamRequest(Generic[Req, Res]):
                         self._auth_timeout,
                         0,
                     )
+        self._pause_request_deadline_for_authorization()
         timeout = self._remaining_deadline()
         if timeout is not None and timeout <= 0:
             raise TimeoutError("stream authorization timed out before dispatch")
@@ -212,6 +218,42 @@ class StreamRequest(Generic[Req, Res]):
             raise TimeoutError("stream authorization timed out")
         await gather(cancelled, return_exceptions=True)
         await authenticating
+        self._resume_request_deadline_after_authorization()
+
+    def _pause_request_deadline_for_authorization(self) -> None:
+        """Pause the request-only stream clock during authentication.
+
+        Queueing before stream startup is already charged. The retained
+        request budget resumes only after authentication succeeds, while the
+        authorization deadline continues to bound authentication plus the
+        native stream lifetime.
+        """
+
+        now = monotonic()
+        with self._state_lock:
+            if self._timeout is None or self._request_deadline_paused:
+                return
+            deadline = self._request_deadline
+            self._request_timeout_remaining = (
+                max(0.0, self._timeout)
+                if deadline is None
+                else max(0.0, deadline - now)
+            )
+            self._request_deadline = None
+            self._request_deadline_paused = True
+
+    def _resume_request_deadline_after_authorization(self) -> None:
+        """Resume request timeout and publish completed authentication."""
+
+        now = monotonic()
+        with self._state_lock:
+            if self._timeout is not None and self._request_deadline_paused:
+                remaining = self._request_timeout_remaining
+                if remaining is None:
+                    remaining = max(0.0, self._timeout)
+                self._request_deadline = now + remaining
+                self._request_deadline_paused = False
+            self._authentication_finished = True
 
     async def _start(self) -> Any:
         current_loop = get_running_loop()
@@ -400,13 +442,16 @@ class StreamRequest(Generic[Req, Res]):
             self._release(discard=True)
 
     def _remaining_deadline(self, *, initialize: bool = False) -> float | None:
-        """Return the shared stream deadline remaining in seconds.
+        """Return the applicable stream deadline remaining in seconds.
 
         The first caller-side operation fixes monotonic request and
         applicable authorization deadlines under the state lock. Later
         operations reuse those deadlines, so concurrent reads and writes
         cannot each obtain a fresh budget and SDK-loop queueing is charged to
-        the same native RPC lifetime.
+        the same native RPC lifetime. Before authentication completes, only
+        its overall authorization deadline is exposed to caller-side waiting;
+        request timeout is paused during authentication and resumes for native
+        stream work.
 
         :param initialize: Start the deadlines when no prior stream operation
             has done so. Cleanup calls leave this false because they must be
@@ -430,11 +475,24 @@ class StreamRequest(Generic[Req, Res]):
                     )
                     else now + max(self._auth_timeout, 0)
                 )
-            deadlines = [
-                deadline
-                for deadline in (self._request_deadline, self._authorization_deadline)
-                if deadline is not None
-            ]
+            if (
+                self._authorization_deadline_enabled
+                and not self._authentication_finished
+            ):
+                deadlines = (
+                    []
+                    if self._authorization_deadline is None
+                    else [self._authorization_deadline]
+                )
+            else:
+                deadlines = [
+                    deadline
+                    for deadline in (
+                        self._request_deadline,
+                        self._authorization_deadline,
+                    )
+                    if deadline is not None
+                ]
         return None if not deadlines else min(deadlines) - now
 
     async def _on_sdk_loop(
@@ -455,6 +513,7 @@ class StreamRequest(Generic[Req, Res]):
         self._check_process()
         self._remaining_deadline(initialize=enforce_deadline)
         submit = getattr(self._channel, "run_async", None)
+        legacy_local_operation = not callable(submit)
         if callable(submit):
             try:
                 operation = submit(awaitable)
@@ -479,7 +538,7 @@ class StreamRequest(Generic[Req, Res]):
                     raise RuntimeError("stream work belongs to a different event loop")
             operation = awaitable
         try:
-            if not enforce_deadline:
+            if not enforce_deadline or legacy_local_operation:
                 return cast(T, await operation)
             # ``run_async`` normally performs only a short, synchronized
             # admission. Recompute from the absolute deadline nevertheless so

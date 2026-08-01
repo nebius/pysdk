@@ -1714,7 +1714,13 @@ class AsyncRuntime:
             protected_tasks = list(self._protected_tasks)
             for task in protected_tasks:
                 submitted = self._task_submissions.get(task)
-                if not task.done() and (submitted is None or not submitted.cancelled()):
+                cancelling = getattr(task, "cancelling", None)
+                already_cancelling = callable(cancelling) and cancelling() > 0
+                if (
+                    not task.done()
+                    and not already_cancelling
+                    and (submitted is None or not submitted.cancelled())
+                ):
                     task.cancel()
             if protected_tasks:
                 await asyncio.gather(

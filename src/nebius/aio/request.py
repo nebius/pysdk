@@ -97,13 +97,13 @@ def _authorization_deadline_applies(
 ) -> bool:
     """Return whether an authorization budget applies to one RPC.
 
-    Authorization timeout is not a second request timeout. Historically it
-    limits only the authentication/re-authentication flow, so it must not
-    shorten an unauthenticated request or a request that explicitly disables
-    authorization. Built-in channels expose a caller-safe probe of the provider
-    fixed during construction; actual authentication still runs on the SDK
-    event loop. Legacy channels without that probe enforce their auth timeout
-    inside the authorization loop, as before.
+    Authorization timeout is not a second request timeout. It limits the full
+    authorized flow, including re-authentication and request work, but must not
+    shorten an unauthenticated request or one that explicitly disables
+    authorization. Built-in channels expose a caller-safe probe of the
+    provider fixed during construction; actual authentication still runs on
+    the SDK event loop. Legacy channels without that probe enforce their auth
+    timeout inside the authorization loop, as before.
 
     :param channel: Channel that owns the RPC.
     :param auth_options: Snapshotted authorization options for the RPC.
@@ -408,6 +408,8 @@ class Request(Generic[Req, Res]):
         self._native_attempt_terminal = False
         self._cancel_after_terminal_attempt = False
         self._request_deadline: float | None = None
+        self._request_timeout_remaining: float | None = None
+        self._request_deadline_paused = False
         self._authorization_deadline: float | None = None
         self._submission_deadline: float | None = None
 
@@ -748,15 +750,15 @@ class Request(Generic[Req, Res]):
     def _sync_wait_timeout(self) -> float | None:
         """Return the bounded wait used by synchronous request adapters.
 
-        Request and applicable authorization deadlines start when built-in
-        runtime work is submitted. Once that boundary exists, this method
-        returns its remaining monotonic budget, including an explicit
-        unlimited state. Before submission it derives the same minimum from
-        the request timeout and an authorization timeout only when the channel
-        exposes the caller-safe provider probe. Legacy channels enforce their
-        auth timeout inside the authorization loop. A small grace period lets
-        the internal timeout path publish its structured error and finish
-        cancellation before the outer blocking wait expires.
+        Applicable authorization deadlines start when built-in runtime work
+        is submitted and bound the full authentication-plus-request process.
+        Request timeout excludes authentication, so it is the outer wait only
+        when authorization does not apply. Before submission this method makes
+        the same choice when the channel exposes the caller-safe provider
+        probe. Legacy channels enforce their auth timeout inside the
+        authorization loop. A small grace period lets the internal timeout
+        path publish its structured error and finish cancellation before the
+        outer blocking wait expires.
 
         :return: Remaining synchronous wait in seconds, or ``None`` when both
             request and authorization budgets are unlimited.
@@ -773,17 +775,10 @@ class Request(Generic[Req, Res]):
                     self._channel,
                     self._auth_options,
                 )
-                limits = [
-                    value
-                    for value in (
-                        self._timeout,
-                        self._auth_timeout if authorization_applies else None,
-                    )
-                    if value is not None
-                ]
-                if not limits:
+                limit = self._auth_timeout if authorization_applies else self._timeout
+                if limit is None:
                     return None
-                budget = max(0.0, min(limits))
+                budget = max(0.0, limit)
         return budget + 0.2
 
     def wait(self) -> Res:
@@ -1262,6 +1257,37 @@ class Request(Generic[Req, Res]):
                 raise e
         raise RequestIsCancelledError()
 
+    def _pause_request_deadline(self) -> None:
+        """Pause the request-only clock while authorization runs.
+
+        SDK-loop queueing is charged before the first pause. Native RPC work,
+        retry classification, and backoff consume the retained budget; time
+        spent authenticating does not. The authorization deadline separately
+        caps authentication plus all request attempts.
+        """
+
+        if self._timeout is None or self._request_deadline_paused:
+            return
+        deadline = self._request_deadline
+        self._request_timeout_remaining = (
+            max(0.0, self._timeout)
+            if deadline is None
+            else max(0.0, deadline - monotonic())
+        )
+        self._request_deadline = None
+        self._request_deadline_paused = True
+
+    def _resume_request_deadline(self) -> None:
+        """Resume the request-only clock for native RPC and retry work."""
+
+        if self._timeout is None or not self._request_deadline_paused:
+            return
+        remaining = self._request_timeout_remaining
+        if remaining is None:
+            remaining = max(0.0, self._timeout)
+        self._request_deadline = monotonic() + remaining
+        self._request_deadline_paused = False
+
     async def _complete_authoritative_success(self, result: Any) -> Res:
         """Copy terminal state without allowing SDK close to erase success.
 
@@ -1351,6 +1377,10 @@ class Request(Generic[Req, Res]):
         if provider is None or auth_type == Types.DISABLE:
             return await self._retry_loop()
 
+        # Preserve the established independent clocks: queueing has already
+        # consumed request budget, but authentication itself consumes only the
+        # overall authorization budget.
+        self._pause_request_deadline()
         deadline = self._authorization_deadline
         if deadline is None and self._auth_timeout is not None:
             deadline = monotonic() + self._auth_timeout
@@ -1387,11 +1417,20 @@ class Request(Generic[Req, Res]):
             self._input_metadata = auth_md
 
             # Run the request retry loop; map UNAUTHENTICATED to re-auth attempts
+            async def run_request_attempts() -> Res:
+                """Run RPC work while the independent request clock advances."""
+
+                self._resume_request_deadline()
+                try:
+                    return await self._retry_loop(
+                        outer_deadline=deadline,
+                        defer_unauthenticated_release=True,
+                    )
+                finally:
+                    self._pause_request_deadline()
+
             try:
-                return await self._retry_loop(
-                    outer_deadline=deadline,
-                    defer_unauthenticated_release=True,
-                )
+                return await run_request_attempts()
             except Exception as e:  # noqa: BLE001
                 # Only retry auth on UNAUTHENTICATED codes
                 from .service_error import RequestError as ServiceRequestError
@@ -1467,18 +1506,18 @@ class Request(Generic[Req, Res]):
                     if self._auth_timeout is None or not authorization_applies
                     else submitted_monotonic + max(self._auth_timeout, 0)
                 )
-                deadline_limits = [
-                    value
-                    for value in (
-                        self._timeout,
-                        self._auth_timeout if authorization_applies else None,
-                    )
-                    if value is not None
-                ]
+                # Authorization timeout is the outer budget for auth plus the
+                # request, while request timeout excludes authentication. A
+                # caller-side wait therefore uses the auth deadline whenever
+                # authorization applies; the request state machine enforces
+                # its independent clock after authentication.
+                submission_limit = (
+                    self._auth_timeout if authorization_applies else self._timeout
+                )
                 self._submission_deadline = (
                     None
-                    if not deadline_limits
-                    else submitted_monotonic + max(min(deadline_limits), 0)
+                    if submission_limit is None
+                    else submitted_monotonic + max(submission_limit, 0)
                 )
                 coroutine = self._request_with_authorization_loop()
                 try:
