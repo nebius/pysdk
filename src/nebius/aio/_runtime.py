@@ -1622,8 +1622,9 @@ class AsyncRuntime:
         except RuntimeError:
             # Resource exhaustion must not turn a supplied-loop stop race into
             # an unfinishable close. Synchronous fallback is idempotent.
-            if not self._loop.is_running():
-                self._start_shutdown_thread()
+            with self._shutdown_prepare_lock:
+                self._shutdown_dispatch_abandoned = True
+            self._start_shutdown_thread()
 
     def _start_shutdown_preparation_on_loop(self) -> None:
         """Create graceful-shutdown work after dispatch reaches the loop.
@@ -1637,7 +1638,15 @@ class AsyncRuntime:
         with self._shutdown_prepare_lock:
             if self._shutdown_dispatch_abandoned:
                 return
-        self._loop.create_task(self._prepare_shutdown())
+        preparation = self._prepare_shutdown()
+        try:
+            self._loop.create_task(preparation)
+        except BaseException as error:
+            dispose_unstarted_awaitable(preparation)
+            with self._shutdown_prepare_lock:
+                self._shutdown_dispatch_abandoned = True
+            self._record_shutdown_failure(error)
+            self._start_shutdown_thread()
 
     async def _prepare_shutdown(self) -> None:
         """Drain protected close callers and start final shutdown.

@@ -990,6 +990,52 @@ def test_borrowed_loop_stop_after_shutdown_dispatch_completes() -> None:
     runtime.shutdown_async().result(timeout=5)
 
 
+def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
+    """A rejecting custom task factory cannot strand shutdown completion."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    factory_installed = Event()
+
+    def reject_task(loop: object, coroutine: object, **kwargs: object) -> None:
+        raise RuntimeError("shutdown task rejected")
+
+    def install_factory() -> None:
+        loop.set_task_factory(reject_task)  # type: ignore[arg-type]
+        factory_installed.set()
+
+    loop.call_soon_threadsafe(install_factory)
+    assert factory_installed.wait(timeout=5)
+    try:
+        with pytest.raises(RuntimeError, match="shutdown task rejected"):
+            runtime.shutdown_async().result(timeout=5)
+        with pytest.raises(RuntimeError, match="shutdown task rejected"):
+            runtime.shutdown_async().result(timeout=5)
+        assert loop.is_running()
+    finally:
+        _stop_loop(loop, thread)
+
+
+def test_borrowed_shutdown_watcher_start_failure_falls_back(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Watcher resource failure cannot leave borrowed shutdown pending."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+
+    def reject_thread_start(self: Thread) -> None:
+        raise RuntimeError("thread start rejected")
+
+    monkeypatch.setattr(runtime_module.Thread, "start", reject_thread_start)
+    try:
+        runtime.shutdown_async().result(timeout=5)
+        runtime.shutdown_async().result(timeout=5)
+        assert loop.is_running()
+    finally:
+        _stop_loop(loop, thread)
+
+
 def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
     channel = Channel(credentials=NoCredentials())
     started = Event()
