@@ -661,6 +661,57 @@ def test_operation_sync_update_uses_applicable_queue_deadline(
 
 
 @pytest.mark.parametrize("method", ("sync_update", "sync_wait"))
+def test_sync_operation_deadline_starts_before_run_sync_dispatch(method: str) -> None:
+    """A sync operation timeout includes delay before SDK-loop dispatch."""
+
+    from time import sleep
+
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+
+    channel = Channel(credentials=NoCredentials())
+    operation = Operation(
+        ".nebius.common.v1.OperationService.Get",
+        channel,
+        OperationMessage(id=f"{method}-delayed-dispatch"),
+    )
+    request_started = False
+
+    class Service:
+        """Record an unexpected operation service call."""
+
+        def get(self, request, **kwargs):
+            """Reject an RPC that starts after the caller deadline."""
+
+            nonlocal request_started
+            request_started = True
+            raise AssertionError("An expired operation must not issue an RPC.")
+
+    operation._service = Service()
+    original_run_sync = channel.run_sync
+
+    def delay_run_sync(awaitable, timeout=None):
+        """Delay SDK dispatch without consuming its cleanup allowance."""
+
+        sleep(0.05)
+        return original_run_sync(awaitable, timeout)
+
+    channel.run_sync = delay_run_sync  # type: ignore[method-assign]
+    try:
+        call = getattr(operation, method)
+        arguments = {"timeout": 0.02}
+        if method == "sync_wait":
+            arguments["interval"] = 0.01
+        with pytest.raises(TimeoutError):
+            call(**arguments)
+        assert not request_started
+    finally:
+        channel.run_sync = original_run_sync  # type: ignore[method-assign]
+        channel.sync_close(timeout=5)
+
+
+@pytest.mark.parametrize("method", ("sync_update", "sync_wait"))
 def test_sync_operation_options_are_snapshotted_before_run_sync(method: str) -> None:
     """Sync operation calls fix nested options on the caller thread."""
 

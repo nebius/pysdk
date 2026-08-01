@@ -431,6 +431,21 @@ class Operation(Generic[OperationPb]):
             infinite. Use ``None`` for an unlimited timeout.
         """
         self._check_process()
+        await self._update_from_submission(monotonic(), **kwargs)
+
+    async def _update_from_submission(
+        self,
+        submitted_at: float,
+        **kwargs: Unpack[RequestKwargs],
+    ) -> None:
+        """Submit one update with a caller-captured monotonic start time.
+
+        :param submitted_at: Monotonic time when the caller submitted the
+            update. Request and authorization deadlines include all later
+            dispatch delay.
+        :param kwargs: Additional request options for the operation service.
+        """
+
         if self.done():
             return
         metadata = kwargs.get("metadata")
@@ -455,7 +470,6 @@ class Operation(Generic[OperationPb]):
             self._channel,
             cast(dict[str, str], kwargs.get("auth_options") or {}),
         )
-        submitted_at = monotonic()
         request_deadline = None if timeout is None else submitted_at + max(timeout, 0)
         authorization_deadline = (
             None
@@ -658,9 +672,11 @@ class Operation(Generic[OperationPb]):
         if auth_options is not None:
             kwargs["auth_options"] = dict(auth_options)
         _validate_timeout(timeout, "timeout")
+        submitted_at = monotonic()
         run_timeout = None if timeout is None else timeout + 0.2
         return self._channel.run_sync(
-            self.wait(
+            self._wait_from_submission(
+                submitted_at,
                 interval=interval,
                 timeout=timeout,
                 poll_iteration_timeout=poll_iteration_timeout,
@@ -719,8 +735,10 @@ class Operation(Generic[OperationPb]):
             else timeout if authorization_applies is False else None
         )
         run_timeout = None if run_limit is None else max(0.0, run_limit) + 0.2
+        submitted_at = monotonic()
         return self._channel.run_sync(
-            self.update(
+            self._update_from_submission(
+                submitted_at,
                 **kwargs,
             ),
             run_timeout,
@@ -769,6 +787,38 @@ class Operation(Generic[OperationPb]):
             timeout. Use ``None`` for an unlimited timeout.
         """
         self._check_process()
+        await self._wait_from_submission(
+            monotonic(),
+            interval=interval,
+            timeout=timeout,
+            poll_iteration_timeout=poll_iteration_timeout,
+            poll_per_retry_timeout=poll_per_retry_timeout,
+            poll_retries=poll_retries,
+            **kwargs,
+        )
+
+    async def _wait_from_submission(
+        self,
+        submitted_at: float,
+        interval: float | timedelta = 1,
+        timeout: float | None = None,
+        poll_iteration_timeout: float | UnsetType | None = Unset,
+        poll_per_retry_timeout: float | UnsetType | None = Unset,
+        poll_retries: int | None = None,
+        **kwargs: Unpack[RequestKwargsForOperation],
+    ) -> None:
+        """Submit polling with a caller-captured monotonic start time.
+
+        :param submitted_at: Monotonic time when the caller submitted the
+            wait. The overall timeout includes all later dispatch delay.
+        :param interval: Positive delay between polling attempts.
+        :param timeout: Overall wait limit, or ``None`` for no limit.
+        :param poll_iteration_timeout: Limit for one polling request.
+        :param poll_per_retry_timeout: Limit for each retry.
+        :param poll_retries: Retry count for each polling request.
+        :param kwargs: Additional request options for the operation service.
+        """
+
         # Preserve the historical terminal fast path. In particular,
         # asyncio.wait_for(..., 0) cannot start a newly submitted coroutine,
         # even when that coroutine would immediately observe terminal state.
@@ -787,7 +837,7 @@ class Operation(Generic[OperationPb]):
         auth_options = kwargs.get("auth_options")
         if auth_options is not None:
             kwargs["auth_options"] = dict(auth_options)
-        deadline = None if timeout is None else monotonic() + max(timeout, 0)
+        deadline = None if timeout is None else submitted_at + max(timeout, 0)
         submit = getattr(self._channel, "run_async", None)
         wait = self._wait_internal(
             interval=interval,

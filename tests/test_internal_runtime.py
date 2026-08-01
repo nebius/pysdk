@@ -2894,6 +2894,54 @@ def test_sync_token_options_are_snapshotted_before_run_sync() -> None:
         channel.sync_close(timeout=5)
 
 
+def test_sync_token_deadline_starts_before_run_sync_dispatch() -> None:
+    """A sync token timeout cannot become work time after delayed dispatch."""
+
+    from time import sleep
+
+    fetch_started = Event()
+
+    class Receiver(TokenReceiver):
+        """Record an unexpected token receiver call."""
+
+        async def _fetch(self, timeout=None, options=None):
+            """Return a token only if the SDK incorrectly starts the fetch."""
+
+            fetch_started.set()
+            return Token("late-sync-token")
+
+        def can_retry(self, err, options=None):
+            """Disable retries for this deadline test."""
+
+            return False
+
+    class Bearer(TokenBearer):
+        """Create the observable receiver."""
+
+        def receiver(self):
+            """Return a receiver that records fetch calls."""
+
+            return Receiver()
+
+    channel = Channel(credentials=Bearer())
+    original_run_sync = channel.run_sync
+
+    def delay_run_sync(awaitable, timeout=None):
+        """Delay SDK dispatch without consuming its cleanup allowance."""
+
+        sleep(0.05)
+        return original_run_sync(awaitable, timeout)
+
+    channel.run_sync = delay_run_sync  # type: ignore[method-assign]
+    try:
+        with pytest.raises(TimeoutError, match="token fetch timed out"):
+            channel.get_token_sync(0.02)
+        assert not fetch_started.is_set()
+    finally:
+        channel.run_sync = original_run_sync  # type: ignore[method-assign]
+        channel.sync_close(timeout=5)
+
+
 @pytest.mark.asyncio
 async def test_token_fetch_preserves_receiver_timeout_error() -> None:
     """A receiver's own TimeoutError is not rewritten as dispatch expiry."""

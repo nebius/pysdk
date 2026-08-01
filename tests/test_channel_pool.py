@@ -731,8 +731,8 @@ def test_close_log_identifies_each_failing_resource_type(
     class FirstResource:
         """Fail the first test cleanup."""
 
-        async def close(self, grace: float | None = None) -> None:
-            """Raise the first cleanup error."""
+        def close(self, grace: float | None = None) -> None:
+            """Raise before the first cleanup returns an awaitable."""
 
             raise RuntimeError("The first test resource rejected the close request.")
 
@@ -748,7 +748,7 @@ def test_close_log_identifies_each_failing_resource_type(
     channel._gracefuls.update((FirstResource(), SecondResource()))
     channel.sync_close(timeout=5)
 
-    assert "could not close the FirstResource resource" in caplog.text
+    assert "could not start closing the FirstResource resource" in caplog.text
     assert "could not close the SecondResource resource" in caplog.text
 
 

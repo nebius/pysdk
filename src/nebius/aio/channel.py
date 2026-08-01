@@ -2031,7 +2031,24 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         _validate_timeout(timeout, "timeout")
         options_snapshot = None if options is None else dict(options)
         deadline = None if timeout is None else monotonic() + max(timeout, 0)
-        submitted = self.run_async(self._get_token_internal(deadline, options_snapshot))
+        return await self._get_token_with_deadline(deadline, options_snapshot)
+
+    async def _get_token_with_deadline(
+        self,
+        deadline: float | None,
+        options: dict[str, str] | None,
+    ) -> Token:
+        """Fetch a token within a deadline captured on the caller thread.
+
+        :param deadline: Absolute monotonic deadline that includes dispatch to
+            the SDK loop, or ``None`` for no limit.
+        :param options: Snapshot of the token receiver settings.
+        :return: Authorization token.
+        :raises TimeoutError: If dispatch or token retrieval exceeds the
+            deadline.
+        """
+
+        submitted = self.run_async(self._get_token_internal(deadline, options))
         if deadline is None or submitted.done():
             return await submitted
         remaining = deadline - monotonic()
@@ -2103,11 +2120,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         _validate_timeout(timeout, "timeout")
         options_snapshot = None if options is None else dict(options)
+        deadline = None if timeout is None else monotonic() + max(timeout, 0)
         timeout_sync = timeout
         if timeout_sync is not None:
             timeout_sync += 0.2  # 200 ms for graceful shutdown
         return self.run_sync(
-            self.get_token(timeout, options_snapshot),
+            self._get_token_with_deadline(deadline, options_snapshot),
             timeout_sync,
         )
 
@@ -2589,7 +2607,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             try:
                 self._runtime.begin_close()
                 await self._runtime.cancel_submissions()
-                resources = list[tuple[str, Coroutine[Any, Any, Any]]]()
+                resources = list[tuple[str, Awaitable[Any]]]()
                 for chan in channels.values():
                     owner_loop = getattr(chan, "event_loop", None)
                     if owner_loop is not None and owner_loop is not self._event_loop:
@@ -2610,7 +2628,17 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                             )
                         )
                 for graceful in gracefuls:
-                    resources.append((type(graceful).__name__, graceful.close(grace)))
+                    resource_type = type(graceful).__name__
+                    try:
+                        close_work = graceful.close(grace)
+                    except BaseException as error:
+                        logger.error(
+                            "The SDK could not start closing the %s resource.",
+                            resource_type,
+                            exc_info=error,
+                        )
+                    else:
+                        resources.append((resource_type, close_work))
                 for task in tasks:
                     task.cancel()
                 rets = await gather(
@@ -3223,8 +3251,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 id(pooled_lease) in self._leased_channels
                 or any(
                     pooled_lease is existing
-                    for leases in self._free_channels.values()
-                    for existing in leases
+                    for existing in self._free_channels.get(
+                        pooled_lease.address,
+                        (),
+                    )
                 )
             )
             if candidate_already_tracked:
