@@ -977,6 +977,19 @@ def test_stopped_borrowed_loop_rejects_submission_promptly() -> None:
     channel._runtime.shutdown()
 
 
+def test_borrowed_loop_stop_after_shutdown_dispatch_completes() -> None:
+    """An accepted but stranded close callback cannot hang shutdown."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    runtime._start_shutdown_preparation_on_loop = loop.stop  # type: ignore[method-assign]
+    shutting_down = runtime.shutdown_async()
+    thread.join(timeout=5)
+    assert not thread.is_alive()
+    shutting_down.result(timeout=5)
+    runtime.shutdown_async().result(timeout=5)
+
+
 def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
     channel = Channel(credentials=NoCredentials())
     started = Event()

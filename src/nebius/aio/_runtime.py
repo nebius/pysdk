@@ -37,6 +37,7 @@ from concurrent.futures import (
 from contextvars import Context, ContextVar, copy_context
 from logging import getLogger
 from queue import Empty, Queue
+from threading import Event as ThreadEvent
 from threading import Lock, Thread, current_thread, local
 from types import TracebackType
 from typing import Any, Generic, TypeVar, cast
@@ -1553,6 +1554,9 @@ class AsyncRuntime:
                     )
                 except RuntimeError:
                     self._start_shutdown_thread()
+                else:
+                    if not self._owned:
+                        self._start_borrowed_shutdown_watch()
         completion = Future[None]()
 
         def publish_shutdown(source: Future[None]) -> None:
@@ -1583,6 +1587,43 @@ class AsyncRuntime:
             completion,
             self._loop,
         )
+
+    def _start_borrowed_shutdown_watch(self) -> None:
+        """Finish shutdown if a caller-owned loop stops after dispatch.
+
+        A supplied loop remains caller-owned and must stay running until SDK
+        close completes. It can nevertheless stop after accepting the
+        preparation callback. A daemon monitor converts that otherwise
+        permanent pending state into the same synchronous best-effort cleanup
+        used when shutdown begins after the loop has already stopped. The
+        monitor never stops or closes the supplied loop.
+        """
+
+        completed = ThreadEvent()
+        self._shutdown_complete.add_done_callback(lambda _: completed.set())
+
+        def watch() -> None:
+            """Fall back once the borrowed loop can no longer make progress."""
+
+            while not completed.wait(0.01):
+                if self._loop.is_running():
+                    continue
+                with self._shutdown_prepare_lock:
+                    self._shutdown_dispatch_abandoned = True
+                self._start_shutdown_thread()
+                return
+
+        try:
+            Thread(
+                name="nebius-sdk-borrowed-shutdown-watch",
+                target=watch,
+                daemon=True,
+            ).start()
+        except RuntimeError:
+            # Resource exhaustion must not turn a supplied-loop stop race into
+            # an unfinishable close. Synchronous fallback is idempotent.
+            if not self._loop.is_running():
+                self._start_shutdown_thread()
 
     def _start_shutdown_preparation_on_loop(self) -> None:
         """Create graceful-shutdown work after dispatch reaches the loop.
