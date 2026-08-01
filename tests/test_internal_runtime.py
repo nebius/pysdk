@@ -5529,7 +5529,14 @@ def test_legacy_constant_request_memoizes_a_reusable_task() -> None:
 
 
 @pytest.mark.parametrize("hook_name", ["close", "_cancel_unstarted_threadsafe"])
-def test_failed_unstarted_disposal_preserves_submission_error(hook_name: str) -> None:
+@pytest.mark.parametrize(
+    "cleanup_error",
+    [ValueError("cleanup failed"), KeyboardInterrupt("fatal cleanup failed")],
+)
+def test_failed_unstarted_disposal_preserves_submission_error(
+    hook_name: str,
+    cleanup_error: BaseException,
+) -> None:
     """A custom cleanup failure must not mask runtime rejection."""
 
     class CustomAwaitable:
@@ -5540,7 +5547,7 @@ def test_failed_unstarted_disposal_preserves_submission_error(hook_name: str) ->
             return result().__await__()
 
     def fail_disposal() -> None:
-        raise ValueError("cleanup failed")
+        raise cleanup_error
 
     runtime = AsyncRuntime(None, 2)
     runtime.shutdown_async().result(timeout=5)

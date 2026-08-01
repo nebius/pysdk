@@ -194,7 +194,7 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
     if callable(cancel_threadsafe):
         try:
             return bool(cancel_threadsafe())
-        except Exception:
+        except BaseException:
             # Disposal is best-effort and normally runs while another error is
             # already being reported. A custom hook must not replace that
             # primary lifecycle or submission failure.
@@ -202,7 +202,7 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
     if inspect.iscoroutine(awaitable):
         try:
             awaitable.close()
-        except Exception:
+        except BaseException:
             return False
         return True
     return False
