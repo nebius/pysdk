@@ -36,10 +36,18 @@ from concurrent.futures import (
     TimeoutError as FutureTimeoutError,
 )
 from contextvars import Context, ContextVar, copy_context
+from inspect import (
+    CORO_CREATED,
+    getcoroutinestate,
+    isasyncgenfunction,
+    iscoroutine,
+    iscoroutinefunction,
+)
 from logging import getLogger
 from queue import Empty, Queue
 from threading import Event as ThreadEvent
 from threading import Lock, Thread, current_thread, local
+from time import monotonic
 from types import TracebackType
 from typing import Any, Generic, TypeVar, cast
 
@@ -53,6 +61,181 @@ from ._task_context import (
 T = TypeVar("T")
 logger = getLogger(__name__)
 _sdk_executor_worker = local()
+_BORROWED_LOOP_HANDLER_INSTALL_TIMEOUT_SECONDS = 30.0
+"""Maximum wait for a supplied loop to install an SDK exception handler."""
+_BORROWED_LOOP_HANDLER_POLL_SECONDS = 0.1
+"""Interval for checking whether a supplied loop stopped during installation."""
+
+LoopExceptionHandler = Callable[
+    [asyncio.AbstractEventLoop, dict[str, Any]],
+    None,
+]
+"""Synchronous exception handler accepted by an SDK event loop."""
+
+_StoredLoopExceptionHandler = Callable[
+    [asyncio.AbstractEventLoop, dict[str, Any]],
+    object,
+]
+"""Exception-handler shape returned by the asyncio loop API."""
+
+
+def _invoke_loop_exception_handler(
+    handler: _StoredLoopExceptionHandler,
+    loop: asyncio.AbstractEventLoop,
+    context: dict[str, Any],
+) -> None:
+    """Call an SDK handler and report a non-``None`` return value.
+
+    :param handler: Synchronous handler to call.
+    :param loop: Event loop that reported the exception.
+    :param context: Asyncio exception context.
+
+    Static validation cannot identify a synchronous wrapper that returns a
+    coroutine. This invocation boundary closes a native coroutine only when it
+    has not started, before it can produce an unawaited-coroutine warning. It
+    does not change a suspended coroutine, Future, Task, or opaque awaitable
+    because the handler might not own that work. It sends the original context
+    and the contract violation to asyncio's default handler because the SDK
+    cannot know whether an invalid handler processed the original diagnostic.
+    The default handler is used directly to avoid recursively invoking the
+    invalid custom handler.
+    """
+
+    result = handler(loop, context)
+    if result is None:
+        return
+    if iscoroutine(result) and getcoroutinestate(result) == CORO_CREATED:
+        close_rejected_sync_awaitable(result)
+    loop.default_exception_handler(context)
+    loop.default_exception_handler(
+        {
+            "message": "The SDK loop_exception_handler callable returned a value.",
+            "exception": TypeError(
+                "The loop_exception_handler callable must return None."
+            ),
+        }
+    )
+
+
+class _CheckedLoopExceptionHandler:
+    """Enforce the synchronous SDK handler contract at invocation time.
+
+    :param handler: Public handler requested by the SDK caller.
+    """
+
+    def __init__(self, handler: LoopExceptionHandler) -> None:
+        """Store the public handler."""
+
+        self.handler = handler
+
+    def __call__(
+        self,
+        loop: asyncio.AbstractEventLoop,
+        context: dict[str, Any],
+    ) -> None:
+        """Invoke the public handler and validate its return value."""
+
+        _invoke_loop_exception_handler(self.handler, loop, context)
+
+
+class _StagedLoopExceptionHandler:
+    """Identify one borrowed-loop assignment while installation can fail.
+
+    A distinct forwarding callable is installed for every assignment. Its
+    identity prevents an interrupted assignment from mistaking a newer use of
+    the same public handler for its own. A successful installation releases
+    the predecessor, so repeated SDK construction cannot retain old handlers.
+
+    :param handler: Public handler requested by this constructor.
+    :param previous_handler: Handler installed before this constructor.
+    """
+
+    def __init__(
+        self,
+        handler: LoopExceptionHandler,
+        previous_handler: _StoredLoopExceptionHandler | None,
+    ) -> None:
+        """Initialize a pending forwarding assignment."""
+
+        self.handler = handler
+        self._state_lock = Lock()
+        self._state: tuple[str, _StoredLoopExceptionHandler | None] = (
+            "pending",
+            previous_handler,
+        )
+
+    def __call__(
+        self,
+        loop: asyncio.AbstractEventLoop,
+        context: dict[str, Any],
+    ) -> None:
+        """Forward a diagnostic according to the transaction's current state."""
+
+        with self._state_lock:
+            state, _ = self._state
+            rolled_back = state == "rolled_back"
+        if not rolled_back:
+            _invoke_loop_exception_handler(self.handler, loop, context)
+            return
+        target = self.restorable_predecessor()
+        if target is None:
+            loop.default_exception_handler(context)
+            return
+        target(loop, context)
+
+    def commit(self) -> None:
+        """Release rollback state after successful installation."""
+
+        with self._state_lock:
+            self._state = ("committed", None)
+
+    def rollback(self) -> None:
+        """Mark this assignment for removal from a predecessor chain."""
+
+        with self._state_lock:
+            _, previous_handler = self._state
+            self._state = ("rolled_back", previous_handler)
+
+    def restorable_predecessor(self) -> _StoredLoopExceptionHandler | None:
+        """Return the preceding handler without flattening a live proxy."""
+
+        with self._state_lock:
+            _, current = self._state
+        while isinstance(current, _StagedLoopExceptionHandler):
+            with current._state_lock:
+                state, previous_handler = current._state
+            if state != "rolled_back":
+                return current
+            current = previous_handler
+        return current
+
+
+def _validate_loop_exception_handler(handler: object) -> None:
+    """Reject a non-callable or directly recognizable async handler.
+
+    :param handler: Candidate handler supplied by the caller.
+    :raises TypeError: If the handler is not callable or is declared with
+        ``async def``.
+
+    Static inspection cannot identify a synchronous wrapper that returns an
+    asynchronous value. The invocation wrapper closes a newly returned,
+    unstarted native coroutine, leaves other awaitables under their existing
+    ownership, and sends the original context and every non-``None`` return to
+    asyncio's default exception handler.
+    """
+
+    if not callable(handler):
+        raise TypeError("The loop_exception_handler value must be callable.")
+    call = getattr(handler, "__call__", None)
+    if (
+        iscoroutinefunction(handler)
+        or iscoroutinefunction(call)
+        or isasyncgenfunction(handler)
+        or isasyncgenfunction(call)
+    ):
+        raise TypeError(
+            "The loop_exception_handler value must be a synchronous callable."
+        )
 
 
 def _in_sdk_executor_thread() -> bool:
@@ -699,6 +882,7 @@ class AsyncRuntime:
         self,
         event_loop: asyncio.AbstractEventLoop | None,
         executor_max_workers: int,
+        loop_exception_handler: LoopExceptionHandler | None = None,
     ) -> None:
         """Initialize an SDK runtime.
 
@@ -706,10 +890,19 @@ class AsyncRuntime:
             create an owned loop.
         :param executor_max_workers: Number of daemon executor workers for an
             owned loop. A borrowed loop ignores this value.
+        :param loop_exception_handler: Optional asyncio exception handler to
+            install on the SDK event loop. A borrowed loop retains the handler
+            after runtime shutdown because the caller owns that loop.
         :raises ValueError: If a supplied loop is not running, or if an owned
             executor size is not positive.
+        :raises TypeError: If ``loop_exception_handler`` is not a synchronous
+            callable.
+        :raises RuntimeError: If a borrowed loop stops or does not install the
+            exception handler before the time limit.
         """
 
+        if loop_exception_handler is not None:
+            _validate_loop_exception_handler(loop_exception_handler)
         self._owned = event_loop is None
         self._process_id = os.getpid()
         if self._owned and executor_max_workers <= 0:
@@ -765,6 +958,10 @@ class AsyncRuntime:
                     if executor is None:
                         raise RuntimeError("The owned SDK runtime has no executor.")
                     self._loop.set_default_executor(executor)
+                    if loop_exception_handler is not None:
+                        self._loop.set_exception_handler(
+                            _CheckedLoopExceptionHandler(loop_exception_handler)
+                        )
                 except BaseException as error:
                     try:
                         self._loop.close()
@@ -838,6 +1035,160 @@ class AsyncRuntime:
         else:
             if not self._loop.is_running():
                 raise ValueError("A supplied event loop must already be running.")
+            if loop_exception_handler is not None:
+                self.set_borrowed_loop_exception_handler(loop_exception_handler)
+
+    def set_borrowed_loop_exception_handler(
+        self,
+        handler: LoopExceptionHandler,
+    ) -> None:
+        """Install an exception handler on a running caller-owned loop.
+
+        The handler is loop-wide. The runtime does not restore an earlier
+        handler during shutdown because the supplied loop remains under caller
+        ownership and another component may replace the handler later.
+
+        :param handler: Asyncio exception handler to install.
+        :raises TypeError: If ``handler`` is not a synchronous callable.
+        :raises RuntimeError: If the supplied loop stops or does not install
+            the handler before the time limit.
+        """
+
+        _validate_loop_exception_handler(handler)
+
+        def restore(installed_handler: _StagedLoopExceptionHandler) -> None:
+            """Restore the predecessor if this assignment is still active."""
+
+            installed_handler.rollback()
+            try:
+                if self._loop.get_exception_handler() is installed_handler:
+                    self._loop.set_exception_handler(
+                        installed_handler.restorable_predecessor()
+                    )
+            except BaseException as error:
+                logger.error(
+                    "The SDK could not restore the event loop's exception handler.",
+                    exc_info=error,
+                )
+
+        if self.in_event_loop():
+            previous_handler = self._loop.get_exception_handler()
+            installed_handler = _StagedLoopExceptionHandler(
+                handler,
+                previous_handler,
+            )
+            try:
+                self._loop.set_exception_handler(installed_handler)
+            except BaseException:
+                restore(installed_handler)
+                raise
+            installed_handler.commit()
+            return
+
+        configured: Future[_StagedLoopExceptionHandler] = Future()
+        installation_deadline = (
+            monotonic() + _BORROWED_LOOP_HANDLER_INSTALL_TIMEOUT_SECONDS
+        )
+
+        def configure() -> None:
+            """Set the handler on the thread that owns the loop."""
+
+            if not configured.set_running_or_notify_cancel():
+                return
+            installed_handler: _StagedLoopExceptionHandler | None = None
+            try:
+                previous_handler = self._loop.get_exception_handler()
+                installed_handler = _StagedLoopExceptionHandler(
+                    handler,
+                    previous_handler,
+                )
+                self._loop.set_exception_handler(installed_handler)
+            except BaseException as error:
+                if installed_handler is not None:
+                    restore(installed_handler)
+                configured.set_exception(error)
+            else:
+                configured.set_result(installed_handler)
+
+        def cancel_or_restore() -> None:
+            """Prevent or undo an assignment after the caller is interrupted."""
+
+            if configured.cancel():
+                return
+
+            def restore_when_configured(
+                source: Future[_StagedLoopExceptionHandler],
+            ) -> None:
+                """Queue restoration after a claimed assignment completes."""
+
+                try:
+                    installed_handler = source.result()
+                except BaseException:
+                    # The callback failed before it completed the assignment.
+                    return
+                if self.in_event_loop():
+                    restore(installed_handler)
+                    return
+                try:
+                    # Keep restoration on the loop-owner thread. A stopped
+                    # but reusable loop retains this callback for its next run.
+                    self._loop.call_soon_threadsafe(
+                        restore,
+                        installed_handler,
+                    )
+                except RuntimeError:
+                    # A closed loop cannot use or invoke the installed handler.
+                    pass
+
+            configured.add_done_callback(restore_when_configured)
+
+        try:
+            try:
+                self._loop.call_soon_threadsafe(configure)
+            except RuntimeError:
+                if self._loop.is_closed() or not self._loop.is_running():
+                    raise RuntimeError(
+                        "The supplied event loop stopped before the SDK could set "
+                        "its exception handler."
+                    ) from None
+                raise
+            while True:
+                remaining = installation_deadline - monotonic()
+                if remaining <= 0:
+                    raise RuntimeError(
+                        "The supplied event loop did not set the SDK exception "
+                        "handler before the time limit."
+                    )
+                try:
+                    installed_handler = configured.result(
+                        timeout=min(
+                            _BORROWED_LOOP_HANDLER_POLL_SECONDS,
+                            remaining,
+                        )
+                    )
+                    break
+                except FutureTimeoutError as error:
+                    if configured.done():
+                        try:
+                            terminal_error = configured.exception(timeout=0)
+                        except FutureCancelledError:
+                            terminal_error = None
+                        if terminal_error is error:
+                            raise
+                    if self._loop.is_running():
+                        continue
+                    raise RuntimeError(
+                        "The supplied event loop stopped before the SDK could set "
+                        "its exception handler."
+                    ) from None
+        except BaseException:
+            cancel_or_restore()
+            raise
+        # The loop accepted this assignment. Keep commit outside the rollback
+        # region so an asynchronous BaseException at this final instruction
+        # boundary leaves the accepted handler installed instead of restoring
+        # an incomplete predecessor.
+        installed_handler.commit()
 
     @property
     def event_loop(self) -> asyncio.AbstractEventLoop:
@@ -1417,8 +1768,15 @@ class AsyncRuntime:
         def cancel_on_owner(retained_source: asyncio.Future[T]) -> None:
             """Cancel the source only from its owning event loop."""
 
-            if not retained_source.done():
-                retained_source.cancel()
+            if retained_source.done():
+                if not retained_source.cancelled():
+                    # Observation does not prevent another await from reading
+                    # the same result. It only prevents a terminal exception
+                    # from becoming an unhandled-Future diagnostic after the
+                    # cancelled bridge releases its last source reference.
+                    retained_source.exception()
+                return
+            retained_source.cancel()
 
         def attach_on_owner() -> None:
             """Attach completion handling only from the owning event loop."""

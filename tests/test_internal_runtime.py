@@ -12,12 +12,14 @@ from pathlib import Path
 from threading import Barrier, Event, Lock, Thread, current_thread
 from threading import enumerate as enumerate_threads
 from time import monotonic, sleep
+from typing import Any
 from weakref import ref
 
 import grpc
 import pytest
 
 import nebius.aio._runtime as runtime_module
+import nebius.aio.channel as channel_module
 from nebius.aio._runtime import (
     AsyncRuntime,
     CrossLoopAwaitable,
@@ -26,7 +28,13 @@ from nebius.aio._runtime import (
 from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.authorization.authorization import Authenticator, Provider
 from nebius.aio.base import AddressChannel
-from nebius.aio.channel import Channel, ChannelClosedError, LoopError, NoCredentials
+from nebius.aio.channel import (
+    Channel,
+    ChannelClosedError,
+    LoopError,
+    NoCredentials,
+    SDKError,
+)
 from nebius.aio.cli_config import Config
 from nebius.aio.constant_channel import Constant
 from nebius.aio.operation import Operation
@@ -46,6 +54,7 @@ from nebius.api.nebius.compute.v1 import (
 from nebius.api.nebius.iam.v1 import ExchangeTokenRequest
 from nebius.base.metadata import Metadata
 from nebius.base.service_account.service_account import TokenRequester
+from nebius.sdk import SDK
 
 
 def _start_loop() -> tuple[asyncio.AbstractEventLoop, Thread]:
@@ -121,6 +130,1270 @@ def test_owned_runtime_threads_are_daemons_and_stop_on_close() -> None:
     channel.sync_close(timeout=5)
 
     assert all(not thread.is_alive() for thread in runtime_threads)
+
+
+def test_sdk_sets_owned_loop_exception_handler_before_return() -> None:
+    """An owned runtime publishes readiness after installing its handler."""
+
+    reported: Future[tuple[asyncio.AbstractEventLoop, dict[str, object]]] = Future()
+
+    def handler(
+        loop: asyncio.AbstractEventLoop,
+        context: dict[str, Any],
+    ) -> None:
+        """Capture one owned-loop diagnostic."""
+
+        if not reported.done():
+            reported.set_result((loop, context))
+
+    sdk = SDK(
+        credentials=NoCredentials(),
+        loop_exception_handler=handler,
+    )
+    try:
+
+        async def report() -> None:
+            """Publish a diagnostic through the configured loop handler."""
+
+            loop = asyncio.get_running_loop()
+            assert getattr(loop.get_exception_handler(), "handler", None) is handler
+            loop.call_exception_handler({"message": "SDK diagnostic"})
+
+        sdk.run_sync(report(), timeout=5)
+        loop, context = reported.result(timeout=5)
+        assert loop is sdk._event_loop
+        assert context == {"message": "SDK diagnostic"}
+    finally:
+        sdk.sync_close(timeout=5)
+
+
+@pytest.mark.parametrize("supplied_loop", [False, True])
+def test_sdk_reports_awaitable_returned_by_sync_exception_handler(
+    supplied_loop: bool,
+) -> None:
+    """A synchronous wrapper cannot leak its returned coroutine."""
+
+    handler_body_ran = Event()
+    reported: list[dict[str, Any]] = []
+    both_reported = Event()
+
+    async def hidden_async_handler() -> None:
+        """Represent work hidden behind a synchronous wrapper."""
+
+        handler_body_ran.set()
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> Any:
+        """Return an unsupported awaitable from a synchronous function."""
+
+        return hidden_async_handler()
+
+    loop: asyncio.AbstractEventLoop | None = None
+    thread: Thread | None = None
+    if supplied_loop:
+        loop, thread = _start_loop()
+    sdk = SDK(
+        credentials=NoCredentials(),
+        event_loop=loop,
+        loop_exception_handler=handler,
+    )
+    try:
+
+        async def report() -> None:
+            """Capture the validation diagnostic from the loop thread."""
+
+            running = asyncio.get_running_loop()
+
+            def capture(context: dict[str, Any]) -> None:
+                """Store the default-handler diagnostic."""
+
+                reported.append(context)
+                if len(reported) == 2:
+                    both_reported.set()
+
+            running.default_exception_handler = capture  # type: ignore[method-assign]
+            running.call_exception_handler({"message": "SDK diagnostic"})
+
+        sdk.run_sync(report(), timeout=5)
+        assert both_reported.wait(timeout=5)
+        assert reported[0] == {"message": "SDK diagnostic"}
+        context = reported[1]
+        assert context["message"] == (
+            "The SDK loop_exception_handler callable returned a value."
+        )
+        assert isinstance(context["exception"], TypeError)
+        assert str(context["exception"]) == (
+            "The loop_exception_handler callable must return None."
+        )
+        assert not handler_body_ran.is_set()
+    finally:
+        try:
+            sdk.sync_close(timeout=5)
+        finally:
+            if loop is not None and thread is not None:
+                _stop_loop(loop, thread)
+
+
+@pytest.mark.parametrize("supplied_loop", [False, True])
+@pytest.mark.parametrize("returned_kind", ["future", "task"])
+def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
+    supplied_loop: bool,
+    returned_kind: str,
+) -> None:
+    """A contract violation does not transfer ownership of shared work."""
+
+    returned: list[asyncio.Future[Any]] = []
+    reported: list[dict[str, Any]] = []
+    both_reported = Event()
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> Any:
+        """Return loop work that remains owned by the application."""
+
+        return returned[0]
+
+    loop: asyncio.AbstractEventLoop | None = None
+    thread: Thread | None = None
+    if supplied_loop:
+        loop, thread = _start_loop()
+    sdk = SDK(
+        credentials=NoCredentials(),
+        event_loop=loop,
+        loop_exception_handler=handler,
+    )
+    try:
+
+        async def report() -> None:
+            """Return shared work and verify that validation leaves it intact."""
+
+            running = asyncio.get_running_loop()
+            if returned_kind == "future":
+                shared: asyncio.Future[Any] = running.create_future()
+            else:
+                shared = running.create_task(asyncio.sleep(3600))
+            returned.append(shared)
+
+            def capture(context: dict[str, Any]) -> None:
+                """Store the default-handler diagnostic."""
+
+                reported.append(context)
+                if len(reported) == 2:
+                    both_reported.set()
+
+            running.default_exception_handler = capture  # type: ignore[method-assign]
+            running.call_exception_handler({"message": "SDK diagnostic"})
+            await asyncio.sleep(0)
+            assert not shared.done()
+            shared.cancel()
+            if isinstance(shared, asyncio.Task):
+                with pytest.raises(asyncio.CancelledError):
+                    await shared
+
+        sdk.run_sync(report(), timeout=5)
+        assert both_reported.wait(timeout=5)
+        assert reported[0] == {"message": "SDK diagnostic"}
+        context = reported[1]
+        assert context["message"] == (
+            "The SDK loop_exception_handler callable returned a value."
+        )
+        assert isinstance(context["exception"], TypeError)
+    finally:
+        try:
+            sdk.sync_close(timeout=5)
+        finally:
+            if loop is not None and thread is not None:
+                _stop_loop(loop, thread)
+
+
+def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() -> None:
+    """A handler does not transfer ownership of a suspended coroutine."""
+
+    returned: list[Any] = []
+    finalized = Event()
+    both_reported = Event()
+    reported: list[dict[str, Any]] = []
+
+    class SuspendOnce:
+        """Suspend a native coroutine without creating other loop work."""
+
+        def __await__(self) -> Any:
+            """Yield control until the test explicitly closes the coroutine."""
+
+            yield None
+
+    async def suspended() -> None:
+        """Record when the suspended coroutine is explicitly closed."""
+
+        try:
+            await SuspendOnce()
+        finally:
+            finalized.set()
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> Any:
+        """Return application-owned suspended work."""
+
+        return returned[0]
+
+    sdk = SDK(
+        credentials=NoCredentials(),
+        loop_exception_handler=handler,
+    )
+    try:
+
+        async def report() -> None:
+            """Verify handler validation leaves suspended work unchanged."""
+
+            running = asyncio.get_running_loop()
+            coroutine = suspended()
+            coroutine.send(None)
+            returned.append(coroutine)
+
+            def capture(context: dict[str, Any]) -> None:
+                """Store both default-handler diagnostics."""
+
+                reported.append(context)
+                if len(reported) == 2:
+                    both_reported.set()
+
+            running.default_exception_handler = capture  # type: ignore[method-assign]
+            running.call_exception_handler({"message": "SDK diagnostic"})
+            assert inspect.getcoroutinestate(coroutine) == inspect.CORO_SUSPENDED
+            assert not finalized.is_set()
+            coroutine.close()
+            assert finalized.is_set()
+
+        sdk.run_sync(report(), timeout=5)
+        assert both_reported.wait(timeout=5)
+        assert reported[0] == {"message": "SDK diagnostic"}
+        assert reported[1]["message"] == (
+            "The SDK loop_exception_handler callable returned a value."
+        )
+    finally:
+        sdk.sync_close(timeout=5)
+
+
+def test_sdk_rejects_async_loop_exception_handler_before_start() -> None:
+    """An asynchronous handler cannot create an unawaited coroutine."""
+
+    async def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent an unsupported asynchronous exception handler."""
+
+    before = set(enumerate_threads())
+    with pytest.raises(
+        TypeError,
+        match="loop_exception_handler value must be a synchronous callable",
+    ):
+        SDK(
+            credentials=NoCredentials(),
+            loop_exception_handler=handler,  # type: ignore[arg-type]
+        )
+
+    created_runtime_threads = [
+        thread
+        for thread in set(enumerate_threads()) - before
+        if thread.name.startswith("nebius-sdk-")
+    ]
+    assert created_runtime_threads == []
+
+
+def test_sdk_rejects_async_generator_exception_handler_before_start() -> None:
+    """An async-generator handler cannot silently discard diagnostics."""
+
+    async def handler(
+        _: asyncio.AbstractEventLoop,
+        context: dict[str, Any],
+    ) -> Any:
+        """Represent an unsupported async-generator exception handler."""
+
+        yield context
+
+    before = set(enumerate_threads())
+    with pytest.raises(
+        TypeError,
+        match="loop_exception_handler value must be a synchronous callable",
+    ):
+        SDK(
+            credentials=NoCredentials(),
+            loop_exception_handler=handler,  # type: ignore[arg-type]
+        )
+
+    created_runtime_threads = [
+        thread
+        for thread in set(enumerate_threads()) - before
+        if thread.name.startswith("nebius-sdk-")
+    ]
+    assert created_runtime_threads == []
+
+
+def test_sdk_rejects_noncallable_loop_exception_handler_before_start() -> None:
+    """A non-callable handler is rejected before owned threads start."""
+
+    before = set(enumerate_threads())
+    with pytest.raises(
+        TypeError,
+        match="loop_exception_handler value must be callable",
+    ):
+        SDK(
+            credentials=NoCredentials(),
+            loop_exception_handler=object(),  # type: ignore[arg-type]
+        )
+
+    created_runtime_threads = [
+        thread
+        for thread in set(enumerate_threads()) - before
+        if thread.name.startswith("nebius-sdk-")
+    ]
+    assert created_runtime_threads == []
+
+
+def test_sdk_rejects_async_callable_handler_before_supplied_loop_setup(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """An invalid callable object is rejected before runtime construction."""
+
+    class AsyncHandler:
+        """Represent an object with an unsupported asynchronous call method."""
+
+        async def __call__(
+            self,
+            _: asyncio.AbstractEventLoop,
+            __: dict[str, Any],
+        ) -> None:
+            """Handle one loop diagnostic asynchronously."""
+
+    def unexpected_runtime(*_: Any, **__: Any) -> AsyncRuntime:
+        """Fail if validation reaches runtime construction."""
+
+        raise AssertionError("Runtime construction started before validation.")
+
+    loop, thread = _start_loop()
+    monkeypatch.setattr(channel_module, "AsyncRuntime", unexpected_runtime)
+    try:
+        with pytest.raises(
+            TypeError,
+            match="loop_exception_handler value must be a synchronous callable",
+        ):
+            SDK(
+                credentials=NoCredentials(),
+                event_loop=loop,
+                loop_exception_handler=AsyncHandler(),  # type: ignore[arg-type]
+            )
+    finally:
+        _stop_loop(loop, thread)
+
+
+def test_owned_handler_setter_failure_stops_runtime_threads(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Owned-loop startup cleans all resources after handler setter failure."""
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler rejected during owned-loop startup."""
+
+    def fail_setter(_: Any, __: Any) -> None:
+        """Reject the handler during owned-loop setup."""
+
+        raise RuntimeError("The test event loop rejected the exception handler.")
+
+    monkeypatch.setattr(asyncio.BaseEventLoop, "set_exception_handler", fail_setter)
+    before = set(enumerate_threads())
+    with pytest.raises(RuntimeError, match="rejected the exception handler"):
+        SDK(
+            credentials=NoCredentials(),
+            loop_exception_handler=handler,
+        )
+
+    leaked = [
+        thread
+        for thread in set(enumerate_threads()) - before
+        if thread.name.startswith("nebius-sdk-") and thread.is_alive()
+    ]
+    assert leaked == []
+
+
+def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A supplied loop retains the explicitly installed handler after close."""
+
+    loop, thread = _start_loop()
+    handler_threads: list[int | None] = []
+    setter_threads: list[int | None] = []
+
+    def previous_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler that the SDK replaces."""
+
+    configured: Future[None] = Future()
+
+    def configure_previous() -> None:
+        """Install the previous handler on the supplied loop thread."""
+
+        loop.set_exception_handler(previous_handler)
+        configured.set_result(None)
+
+    loop.call_soon_threadsafe(configure_previous)
+    configured.result(timeout=5)
+    original_set_exception_handler = loop.set_exception_handler
+
+    def observed_set_exception_handler(handler: Any) -> None:
+        """Record the thread that installs the SDK handler."""
+
+        setter_threads.append(current_thread().ident)
+        original_set_exception_handler(handler)
+
+    monkeypatch.setattr(loop, "set_exception_handler", observed_set_exception_handler)
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Record the thread that receives a supplied-loop diagnostic."""
+
+        handler_threads.append(current_thread().ident)
+
+    sdk = SDK(
+        credentials=NoCredentials(),
+        event_loop=loop,
+        loop_exception_handler=handler,
+    )
+    try:
+
+        async def report() -> None:
+            """Report a diagnostic through the supplied-loop handler."""
+
+            running = asyncio.get_running_loop()
+            running.call_exception_handler({"message": "SDK diagnostic"})
+
+        sdk.run_sync(report(), timeout=5)
+        assert setter_threads
+        assert set(setter_threads) == {thread.ident}
+        assert handler_threads == [thread.ident]
+    finally:
+        sdk.sync_close(timeout=5)
+
+    try:
+        retained: Future[bool] = Future()
+
+        def inspect_handler() -> None:
+            """Inspect the retained handler on the supplied loop thread."""
+
+            loop.call_exception_handler({"message": "retained SDK diagnostic"})
+            retained.set_result(True)
+
+        loop.call_soon_threadsafe(inspect_handler)
+        assert retained.result(timeout=5)
+        assert handler_threads == [thread.ident, thread.ident]
+    finally:
+        _stop_loop(loop, thread)
+
+
+def test_sdks_sharing_loop_keep_latest_exception_handler_after_close() -> None:
+    """Closing shared-loop SDKs does not restore an older handler."""
+
+    loop, thread = _start_loop()
+    retained_handler = Event()
+
+    def first_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the first SDK's loop handler."""
+
+        raise AssertionError("The loop invoked the replaced SDK handler.")
+
+    def second_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the later SDK's loop handler."""
+
+        retained_handler.set()
+
+    first = SDK(
+        credentials=NoCredentials(),
+        event_loop=loop,
+        loop_exception_handler=first_handler,
+    )
+    second = SDK(
+        credentials=NoCredentials(),
+        event_loop=loop,
+        loop_exception_handler=second_handler,
+    )
+    try:
+        first.sync_close(timeout=5)
+        second.sync_close(timeout=5)
+        retained: Future[bool] = Future()
+
+        def inspect_handler() -> None:
+            """Check the loop-wide last-assignment-wins contract."""
+
+            loop.call_exception_handler({"message": "retained SDK diagnostic"})
+            installed = loop.get_exception_handler()
+            retained.set_result(
+                getattr(installed, "_state", (None, object()))[1] is None
+            )
+
+        loop.call_soon_threadsafe(inspect_handler)
+        assert retained.result(timeout=5)
+        assert retained_handler.is_set()
+    finally:
+        first.sync_close(timeout=5)
+        second.sync_close(timeout=5)
+        _stop_loop(loop, thread)
+
+
+def test_failed_supplied_loop_constructor_does_not_replace_handler(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A failed constructor preserves the handler and finishes async cleanup."""
+
+    loop, thread = _start_loop()
+    shutdowns: list[CrossLoopAwaitable[None]] = []
+    shutdown_started = Event()
+    original_shutdown_async = AsyncRuntime.shutdown_async
+
+    def observed_shutdown_async(
+        runtime: AsyncRuntime,
+    ) -> CrossLoopAwaitable[None]:
+        """Record borrowed-runtime cleanup started by constructor rollback."""
+
+        shutdown = original_shutdown_async(runtime)
+        shutdowns.append(shutdown)
+        shutdown_started.set()
+        return shutdown
+
+    monkeypatch.setattr(AsyncRuntime, "shutdown_async", observed_shutdown_async)
+
+    def previous_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the caller's existing loop handler."""
+
+    def replacement_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler requested by the failed constructor."""
+
+    configured: Future[None] = Future()
+
+    def configure_previous() -> None:
+        """Install the caller's handler on its loop thread."""
+
+        loop.set_exception_handler(previous_handler)
+        configured.set_result(None)
+
+    loop.call_soon_threadsafe(configure_previous)
+    configured.result(timeout=5)
+
+    try:
+        with pytest.raises(SDKError, match="Parent id is empty"):
+            SDK(
+                credentials=NoCredentials(),
+                event_loop=loop,
+                loop_exception_handler=replacement_handler,
+                parent_id="",
+            )
+
+        assert shutdown_started.wait(timeout=5)
+        assert len(shutdowns) == 1
+        shutdowns[0].result(timeout=5)
+
+        retained: Future[bool] = Future()
+
+        def inspect_handler() -> None:
+            """Check the retained handler on the supplied loop thread."""
+
+            retained.set_result(loop.get_exception_handler() is previous_handler)
+
+        loop.call_soon_threadsafe(inspect_handler)
+        assert retained.result(timeout=5)
+    finally:
+        _stop_loop(loop, thread)
+
+
+def test_interrupted_supplied_loop_handler_installation_is_cancelled(
+    monkeypatch,
+) -> None:
+    """An interrupted wait cannot install its queued handler later."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    loop_blocked = Event()
+    release_loop = Event()
+
+    def previous_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the caller's existing loop handler."""
+
+    def replacement_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler from the interrupted installation."""
+
+    def block_loop() -> None:
+        """Install the previous handler and block later callbacks."""
+
+        loop.set_exception_handler(previous_handler)
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    class InterruptedFuture(Future[None]):
+        """Interrupt the thread that waits for handler installation."""
+
+        def result(self, timeout: float | None = None) -> None:
+            """Raise the simulated external interruption."""
+
+            raise KeyboardInterrupt
+
+    loop.call_soon_threadsafe(block_loop)
+    assert loop_blocked.wait(timeout=5)
+    monkeypatch.setattr(runtime_module, "Future", InterruptedFuture)
+
+    try:
+        with pytest.raises(KeyboardInterrupt):
+            runtime.set_borrowed_loop_exception_handler(replacement_handler)
+    finally:
+        release_loop.set()
+        monkeypatch.setattr(runtime_module, "Future", Future)
+
+    retained: Future[bool] = Future()
+
+    def inspect_handler() -> None:
+        """Check the handler after the cancelled callback can run."""
+
+        retained.set_result(loop.get_exception_handler() is previous_handler)
+
+    loop.call_soon_threadsafe(inspect_handler)
+    try:
+        assert retained.result(timeout=5)
+    finally:
+        try:
+            runtime.shutdown()
+        finally:
+            _stop_loop(loop, thread)
+
+
+def test_supplied_loop_handler_setter_timeout_error_is_preserved(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A setter's TimeoutError is not mistaken for a polling timeout."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler rejected by the loop setter."""
+
+    def fail_setter(_: Any) -> None:
+        """Raise the application error that installation must preserve."""
+
+        raise TimeoutError("The loop handler setter failed.")
+
+    monkeypatch.setattr(loop, "set_exception_handler", fail_setter)
+    try:
+        with pytest.raises(TimeoutError, match="loop handler setter failed"):
+            runtime.set_borrowed_loop_exception_handler(handler)
+    finally:
+        try:
+            runtime.shutdown()
+        finally:
+            _stop_loop(loop, thread)
+
+
+def test_supplied_loop_handler_installation_has_a_time_limit(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A blocked supplied loop cannot hang handler installation forever."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    loop_blocked = Event()
+    release_loop = Event()
+
+    def previous_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler installed before the blocked callback."""
+
+    def replacement_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler that must not be installed late."""
+
+    configured: Future[None] = Future()
+
+    def configure_and_block() -> None:
+        """Install the previous handler and block the loop thread."""
+
+        loop.set_exception_handler(previous_handler)
+        configured.set_result(None)
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    loop.call_soon_threadsafe(configure_and_block)
+    configured.result(timeout=5)
+    assert loop_blocked.wait(timeout=5)
+    monkeypatch.setattr(
+        runtime_module,
+        "_BORROWED_LOOP_HANDLER_INSTALL_TIMEOUT_SECONDS",
+        0.05,
+    )
+
+    started = monotonic()
+    try:
+        with pytest.raises(
+            RuntimeError,
+            match="did not set the SDK exception handler before the time limit",
+        ):
+            runtime.set_borrowed_loop_exception_handler(replacement_handler)
+        assert monotonic() - started < 1
+    finally:
+        release_loop.set()
+
+    retained: Future[bool] = Future()
+
+    def inspect_handler() -> None:
+        """Check that the timed-out assignment stayed cancelled."""
+
+        retained.set_result(loop.get_exception_handler() is previous_handler)
+
+    loop.call_soon_threadsafe(inspect_handler)
+    try:
+        assert retained.result(timeout=5)
+    finally:
+        try:
+            runtime.shutdown()
+        finally:
+            _stop_loop(loop, thread)
+
+
+def test_failed_handler_installation_closes_registered_bearer(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Constructor rollback closes resources registered before its last step."""
+
+    loop, thread = _start_loop()
+    close_loops: list[asyncio.AbstractEventLoop] = []
+    closed = Event()
+    runtimes: list[AsyncRuntime] = []
+    original_runtime = AsyncRuntime
+
+    def observed_runtime(*args: Any, **kwargs: Any) -> AsyncRuntime:
+        """Record the runtime that partial-channel cleanup must stop."""
+
+        runtime = original_runtime(*args, **kwargs)
+        runtimes.append(runtime)
+        return runtime
+
+    class Bearer(TokenBearer):
+        """Record cleanup of a credential registered during construction."""
+
+        def receiver(self) -> TokenReceiver:
+            """Reject token use, which this construction test does not need."""
+
+            raise AssertionError("The test bearer receiver was requested.")
+
+        async def close(self, grace: float | None = None) -> None:
+            """Record the loop that closes the partial credential."""
+
+            close_loops.append(asyncio.get_running_loop())
+            closed.set()
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler rejected after bearer registration."""
+
+    original_set_exception_handler = loop.set_exception_handler
+
+    def fail_sdk_handler(candidate: Any) -> None:
+        """Reject only the SDK forwarding handler."""
+
+        if getattr(candidate, "handler", None) is handler:
+            raise RuntimeError("The test loop rejected the SDK exception handler.")
+        original_set_exception_handler(candidate)
+
+    monkeypatch.setattr(loop, "set_exception_handler", fail_sdk_handler)
+    monkeypatch.setattr(channel_module, "AsyncRuntime", observed_runtime)
+    try:
+        with pytest.raises(RuntimeError, match="rejected the SDK exception handler"):
+            SDK(
+                credentials=Bearer(),
+                event_loop=loop,
+                loop_exception_handler=handler,
+            )
+        assert closed.wait(timeout=5)
+        assert close_loops == [loop]
+        assert len(runtimes) == 1
+        runtimes[0]._shutdown_complete.result(timeout=5)
+    finally:
+        _stop_loop(loop, thread)
+
+
+def test_failed_constructor_starts_shutdown_before_borrowed_cleanup_finishes(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A stopped supplied loop cannot strand failed-constructor shutdown."""
+
+    loop, thread = _start_loop()
+    runtimes: list[AsyncRuntime] = []
+    original_runtime = AsyncRuntime
+
+    def observed_runtime(*args: Any, **kwargs: Any) -> AsyncRuntime:
+        """Record the runtime whose loop stops during rollback."""
+
+        runtime = original_runtime(*args, **kwargs)
+        runtimes.append(runtime)
+        return runtime
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler rejected by the supplied loop."""
+
+    original_set_exception_handler = loop.set_exception_handler
+
+    def fail_sdk_handler(candidate: Any) -> None:
+        """Reject only the SDK forwarding handler."""
+
+        if getattr(candidate, "handler", None) is handler:
+            raise RuntimeError("The test loop rejected the SDK exception handler.")
+        original_set_exception_handler(candidate)
+
+    pending_close: Future[None] = Future()
+
+    def stop_before_cleanup(
+        _channel: Channel,
+        _grace: float | None,
+    ) -> CrossLoopAwaitable[None]:
+        """Stop the borrowed loop and return cleanup that cannot complete."""
+
+        loop.call_soon_threadsafe(loop.stop)
+        thread.join(timeout=5)
+        assert not thread.is_alive()
+        return CrossLoopAwaitable(pending_close, loop)
+
+    monkeypatch.setattr(loop, "set_exception_handler", fail_sdk_handler)
+    monkeypatch.setattr(channel_module, "AsyncRuntime", observed_runtime)
+    monkeypatch.setattr(Channel, "_get_close_handle", stop_before_cleanup)
+
+    with pytest.raises(RuntimeError, match="rejected the SDK exception handler"):
+        SDK(
+            credentials=NoCredentials(),
+            event_loop=loop,
+            loop_exception_handler=handler,
+        )
+
+    assert len(runtimes) == 1
+    runtimes[0]._shutdown_complete.result(timeout=5)
+
+
+def test_interrupted_handler_installation_restores_claimed_assignment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Interruption after callback entry restores the prior loop handler."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    setter_entered = Event()
+    release_setter = Event()
+    restoration_finished = Event()
+
+    def previous_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the caller's existing loop handler."""
+
+    def replacement_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the interrupted handler assignment."""
+
+    configured: Future[None] = Future()
+
+    def configure_previous() -> None:
+        """Install the prior handler on its owner thread."""
+
+        loop.set_exception_handler(previous_handler)
+        configured.set_result(None)
+
+    loop.call_soon_threadsafe(configure_previous)
+    configured.result(timeout=5)
+    original_set_exception_handler = loop.set_exception_handler
+
+    def controlled_set_exception_handler(handler: Any) -> None:
+        """Pause the replacement after its future claims callback execution."""
+
+        if getattr(handler, "handler", None) is replacement_handler:
+            setter_entered.set()
+            assert release_setter.wait(timeout=5)
+        original_set_exception_handler(handler)
+        if handler is previous_handler:
+            restoration_finished.set()
+
+    class InterruptedAfterClaimFuture(Future[Any]):
+        """Interrupt only the first wait after the callback claims execution."""
+
+        _first_result = True
+
+        def result(self, timeout: float | None = None) -> Any:
+            """Raise once after the loop callback enters the handler setter."""
+
+            if self._first_result:
+                self._first_result = False
+                assert setter_entered.wait(timeout=5)
+                raise KeyboardInterrupt
+            return super().result(timeout=timeout)
+
+    monkeypatch.setattr(loop, "set_exception_handler", controlled_set_exception_handler)
+    monkeypatch.setattr(runtime_module, "Future", InterruptedAfterClaimFuture)
+    with pytest.raises(KeyboardInterrupt):
+        runtime.set_borrowed_loop_exception_handler(replacement_handler)
+    release_setter.set()
+    assert restoration_finished.wait(timeout=5)
+    monkeypatch.setattr(runtime_module, "Future", Future)
+
+    retained: Future[bool] = Future()
+
+    def inspect_handler() -> None:
+        """Check the guarded restoration after the interrupted assignment."""
+
+        retained.set_result(loop.get_exception_handler() is previous_handler)
+
+    loop.call_soon_threadsafe(inspect_handler)
+    try:
+        assert retained.result(timeout=5)
+    finally:
+        try:
+            runtime.shutdown()
+        finally:
+            _stop_loop(loop, thread)
+
+
+def test_interruption_during_handler_commit_keeps_accepted_assignment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A late interruption cannot erase the handler accepted by the loop."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    replacement_called = Event()
+
+    def previous_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler installed before the accepted assignment."""
+
+    def replacement_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Record use of the assignment accepted before interruption."""
+
+        replacement_called.set()
+
+    configured: Future[None] = Future()
+
+    def configure_previous() -> None:
+        """Install the predecessor on the loop-owner thread."""
+
+        loop.set_exception_handler(previous_handler)
+        configured.set_result(None)
+
+    loop.call_soon_threadsafe(configure_previous)
+    configured.result(timeout=5)
+    original_commit = runtime_module._StagedLoopExceptionHandler.commit
+
+    def interrupt_after_commit(
+        installed_handler: runtime_module._StagedLoopExceptionHandler,
+    ) -> None:
+        """Interrupt after the assignment releases its predecessor."""
+
+        original_commit(installed_handler)
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(
+        runtime_module._StagedLoopExceptionHandler,
+        "commit",
+        interrupt_after_commit,
+    )
+    try:
+        with pytest.raises(KeyboardInterrupt):
+            runtime.set_borrowed_loop_exception_handler(replacement_handler)
+
+        inspected: Future[bool] = Future()
+
+        def inspect_handler() -> None:
+            """Invoke and identify the handler retained after interruption."""
+
+            installed = loop.get_exception_handler()
+            inspected.set_result(
+                getattr(installed, "handler", None) is replacement_handler
+            )
+            loop.call_exception_handler({"message": "SDK diagnostic"})
+
+        loop.call_soon_threadsafe(inspect_handler)
+        assert inspected.result(timeout=5)
+        assert replacement_called.wait(timeout=5)
+    finally:
+        try:
+            runtime.shutdown()
+        finally:
+            _stop_loop(loop, thread)
+
+
+def test_interrupted_sdk_constructor_does_not_wait_for_borrowed_loop(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Constructor rollback does not wait for an unresponsive borrowed loop."""
+
+    loop, thread = _start_loop()
+    runtime = AsyncRuntime(loop, 2)
+    loop_blocked = Event()
+    release_loop = Event()
+    constructor_finished = Event()
+    constructor_errors: list[BaseException] = []
+    shutdowns: list[CrossLoopAwaitable[None]] = []
+    shutdown_started = Event()
+    original_shutdown_async = runtime.shutdown_async
+
+    def replacement_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler from interrupted SDK construction."""
+
+    def block_loop() -> None:
+        """Prevent queued construction callbacks from running."""
+
+        loop_blocked.set()
+        release_loop.wait(timeout=5)
+
+    def existing_runtime(*_: Any, **__: Any) -> AsyncRuntime:
+        """Return the prepared runtime used by the constructor."""
+
+        return runtime
+
+    def interrupt_install(*_: Any, **__: Any) -> None:
+        """Interrupt construction before it can install the handler."""
+
+        raise KeyboardInterrupt
+
+    def observed_shutdown_async() -> CrossLoopAwaitable[None]:
+        """Record cleanup that the failed constructor starts."""
+
+        shutdown = original_shutdown_async()
+        shutdowns.append(shutdown)
+        shutdown_started.set()
+        return shutdown
+
+    def construct() -> None:
+        """Run the interrupted constructor on an observable caller thread."""
+
+        try:
+            SDK(
+                credentials=NoCredentials(),
+                event_loop=loop,
+                loop_exception_handler=replacement_handler,
+            )
+        except KeyboardInterrupt:
+            pass
+        except BaseException as error:
+            constructor_errors.append(error)
+        else:
+            constructor_errors.append(
+                AssertionError("The test constructor did not stop.")
+            )
+        finally:
+            constructor_finished.set()
+
+    loop.call_soon_threadsafe(block_loop)
+    assert loop_blocked.wait(timeout=5)
+    monkeypatch.setattr(channel_module, "AsyncRuntime", existing_runtime)
+    monkeypatch.setattr(
+        runtime,
+        "set_borrowed_loop_exception_handler",
+        interrupt_install,
+    )
+    monkeypatch.setattr(runtime, "shutdown_async", observed_shutdown_async)
+    constructor = Thread(target=construct, daemon=True)
+    constructor.start()
+    try:
+        assert constructor_finished.wait(timeout=0.5)
+        assert constructor_errors == []
+    finally:
+        release_loop.set()
+        constructor.join(timeout=5)
+    assert not constructor.is_alive()
+    try:
+        assert shutdown_started.wait(timeout=5)
+        assert len(shutdowns) == 1
+        shutdowns[0].result(timeout=5)
+    finally:
+        _stop_loop(loop, thread)
+
+
+def test_stopped_supplied_loop_cannot_install_queued_handler(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A cancelled assignment stays cancelled when its loop restarts."""
+
+    ready: Future[asyncio.AbstractEventLoop] = Future()
+    first_run_stopped = Event()
+    restart = Event()
+
+    def run_reusable_loop() -> None:
+        """Run one event loop twice so queued callbacks survive a stop."""
+
+        reusable_loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(reusable_loop)
+        ready.set_result(reusable_loop)
+        reusable_loop.run_forever()
+        first_run_stopped.set()
+        assert restart.wait(timeout=5)
+        reusable_loop.run_forever()
+        reusable_loop.close()
+
+    thread = Thread(target=run_reusable_loop, daemon=True)
+    thread.start()
+    loop = ready.result(timeout=5)
+    runtime = AsyncRuntime(loop, 2)
+    blocker_entered = Event()
+    release_blocker = Event()
+    assignment_queued = Event()
+
+    def previous_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the caller's existing loop handler."""
+
+    def replacement_handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Represent the handler queued immediately before loop stop."""
+
+    def block_then_stop() -> None:
+        """Stop after the setter queues work outside this ready snapshot."""
+
+        loop.set_exception_handler(previous_handler)
+        blocker_entered.set()
+        assert release_blocker.wait(timeout=5)
+        loop.stop()
+
+    original_call_soon_threadsafe = loop.call_soon_threadsafe
+
+    def observe_assignment(callback: Any, *args: Any) -> Any:
+        """Release the stopping callback after assignment enters the queue."""
+
+        handle = original_call_soon_threadsafe(callback, *args)
+        if getattr(callback, "__name__", "") == "configure":
+            assignment_queued.set()
+            release_blocker.set()
+        return handle
+
+    loop.call_soon_threadsafe(block_then_stop)
+    assert blocker_entered.wait(timeout=5)
+    monkeypatch.setattr(loop, "call_soon_threadsafe", observe_assignment)
+    with pytest.raises(
+        RuntimeError,
+        match="supplied event loop stopped before the SDK could set",
+    ):
+        runtime.set_borrowed_loop_exception_handler(replacement_handler)
+    assert assignment_queued.is_set()
+    assert first_run_stopped.wait(timeout=5)
+    monkeypatch.setattr(loop, "call_soon_threadsafe", original_call_soon_threadsafe)
+    restart.set()
+
+    retained: Future[bool] = Future()
+
+    def inspect_handler() -> None:
+        """Check that the callback retained cancellation across restart."""
+
+        retained.set_result(loop.get_exception_handler() is previous_handler)
+
+    loop.call_soon_threadsafe(inspect_handler)
+    try:
+        assert retained.result(timeout=5)
+    finally:
+        try:
+            runtime.shutdown()
+        finally:
+            _stop_loop(loop, thread)
+
+
+def test_sdk_sets_supplied_loop_exception_handler_from_that_loop() -> None:
+    """Handler installation does not block construction on the supplied loop."""
+
+    loop, thread = _start_loop()
+    constructed: Future[SDK] = Future()
+    handled = Event()
+
+    def handler(
+        _: asyncio.AbstractEventLoop,
+        __: dict[str, Any],
+    ) -> None:
+        """Handle diagnostics from the supplied loop."""
+
+        handled.set()
+
+    def construct() -> None:
+        """Construct the SDK on the supplied loop's thread."""
+
+        try:
+            sdk = SDK(
+                credentials=NoCredentials(),
+                event_loop=loop,
+                loop_exception_handler=handler,
+            )
+            loop.call_exception_handler({"message": "SDK diagnostic"})
+        except BaseException as error:
+            constructed.set_exception(error)
+        else:
+            constructed.set_result(sdk)
+
+    loop.call_soon_threadsafe(construct)
+    sdk = constructed.result(timeout=5)
+    try:
+        assert sdk._event_loop is loop
+        assert handled.is_set()
+    finally:
+        try:
+            sdk.sync_close(timeout=5)
+        finally:
+            _stop_loop(loop, thread)
 
 
 def test_owned_runtime_starts_executor_workers_lazily() -> None:
@@ -415,11 +1688,13 @@ async def test_failed_channel_constructor_does_not_block_borrowed_loop(
     """Borrowed-loop rollback schedules cleanup without waiting on itself."""
 
     shutdowns = []
+    shutdown_started = Event()
     original_shutdown_async = AsyncRuntime.shutdown_async
 
     def observed_shutdown_async(self: AsyncRuntime):
         shutdown = original_shutdown_async(self)
         shutdowns.append(shutdown)
+        shutdown_started.set()
         return shutdown
 
     monkeypatch.setattr(AsyncRuntime, "shutdown_async", observed_shutdown_async)
@@ -431,6 +1706,13 @@ async def test_failed_channel_constructor_does_not_block_borrowed_loop(
             parent_id="",
         )
 
+    async def wait_for_shutdown_start() -> None:
+        """Yield until partial-channel resource cleanup starts shutdown."""
+
+        while not shutdown_started.is_set():
+            await asyncio.sleep(0)
+
+    await asyncio.wait_for(wait_for_shutdown_start(), timeout=1)
     assert len(shutdowns) == 1
     await asyncio.wait_for(shutdowns[0], timeout=1)
     await asyncio.sleep(0)
@@ -756,6 +2038,25 @@ def test_runtime_rejects_use_after_fork_without_hanging(
             outcomes.append(str(error))
         else:
             outcomes.append("channel ready: no error")
+        serializer_calls: list[object] = []
+
+        def serialize_inherited_request(value: object) -> bytes:
+            """Record serializer work that occurs before fork rejection."""
+
+            serializer_calls.append(value)
+            return b"serialized"
+
+        try:
+            channel.unary_unary(
+                "/nebius.compute.v1.DiskService/Get",
+                serialize_inherited_request,
+                Disk.FromString,
+            )(object())
+        except RuntimeError as error:
+            outcomes.append(str(error))
+        else:
+            outcomes.append("low-level construction: no error")
+        outcomes.append(f"inherited serializer calls: {len(serializer_calls)}")
         try:
             submitted.done()
         except RuntimeError as error:
@@ -808,7 +2109,8 @@ def test_runtime_rejects_use_after_fork_without_hanging(
         waited, status = os.waitpid(child, 0)
         assert waited == child
         assert os.waitstatus_to_exitcode(status) == 0
-        assert outcome.count("SDK channel after a fork") >= 3
+        assert outcome.count("SDK channel after a fork") >= 4
+        assert "inherited serializer calls: 0" in outcome
         assert "SDK awaitable after a fork" in outcome
         assert "SDK request after a fork" in outcome
         assert outcome.count("SDK awaitable after a fork") >= 3
@@ -1248,6 +2550,18 @@ def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
 
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    resource_closed = Event()
+
+    class Resource:
+        """Record cleanup that must bypass the rejecting task factory."""
+
+        async def close(self, grace: float | None = None) -> None:
+            """Record resource cleanup on the supplied loop."""
+
+            assert asyncio.get_running_loop() is loop
+            resource_closed.set()
+
+    channel._gracefuls.add(Resource())  # type: ignore[arg-type]
     factory_installed = Event()
 
     def reject_while_cleanup_pending(loop, coroutine, **kwargs):
@@ -1271,6 +2585,7 @@ def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
         assert channel._close_completion is not None
         assert channel._close_completion.done()
         assert channel._close_completion.result(timeout=0) is None
+        assert resource_closed.is_set()
     finally:
         _stop_loop(loop, thread)
 
@@ -1622,6 +2937,48 @@ def test_foreign_future_is_inspected_only_on_its_owner_loop() -> None:
         loop.call_soon_threadsafe(source.set_result, 42)
         assert bridged.result(timeout=5) == 42
     finally:
+        channel.sync_close(timeout=5)
+        _stop_loop(loop, thread)
+
+
+def test_cancelled_bridge_observes_completed_foreign_future_exception() -> None:
+    """Bridge cancellation consumes a source error before releasing the source."""
+
+    loop, thread = _start_loop()
+    channel = Channel(credentials=NoCredentials())
+    owner_blocked = Event()
+    release_owner = Event()
+    exception_observed = Event()
+
+    class StrictFuture(asyncio.Future[int]):
+        def exception(self) -> BaseException | None:
+            assert asyncio.get_running_loop() is self.get_loop()
+            exception_observed.set()
+            return super().exception()
+
+    async def create_failed_future() -> StrictFuture:
+        source = StrictFuture()
+        source.set_exception(RuntimeError("The foreign operation failed."))
+        return source
+
+    def block_owner() -> None:
+        owner_blocked.set()
+        release_owner.wait(timeout=5)
+
+    source = asyncio.run_coroutine_threadsafe(
+        create_failed_future(),
+        loop,
+    ).result(timeout=5)
+    loop.call_soon_threadsafe(block_owner)
+    assert owner_blocked.wait(timeout=5)
+    bridged = channel.run_async(source)
+    try:
+        assert bridged.cancel()
+        release_owner.set()
+        assert exception_observed.wait(timeout=5)
+        assert not source._log_traceback
+    finally:
+        release_owner.set()
         channel.sync_close(timeout=5)
         _stop_loop(loop, thread)
 

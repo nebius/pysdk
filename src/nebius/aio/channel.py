@@ -126,7 +126,12 @@ from nebius.base.service_account.service_account import (
 from nebius.base.tls_certificates import get_system_certificates
 from nebius.base.version import version
 
-from ._runtime import AsyncRuntime, CrossLoopAwaitable
+from ._runtime import (
+    AsyncRuntime,
+    CrossLoopAwaitable,
+    LoopExceptionHandler,
+    _validate_loop_exception_handler,
+)
 from ._task_context import (
     bridge_awaitable,
     close_rejected_sync_awaitable,
@@ -434,9 +439,12 @@ def _shutdown_runtime_on_init_failure(
     """Stop a partially constructed channel's runtime before re-raising.
 
     A constructor traceback can retain the incomplete channel, so its weakref
-    finalizer is not a timely resource boundary. This wrapper provides the
-    same eager cleanup for every exception after runtime creation without
-    obscuring the constructor's public signature or documentation.
+    finalizer is not a timely resource boundary. This wrapper starts cleanup
+    for every exception after runtime creation without obscuring the public
+    signature or documentation. It waits for an owned runtime. It only
+    schedules cleanup on a running caller-owned loop, because waiting for an
+    unresponsive borrowed loop would prevent the constructor from propagating
+    an interruption.
 
     :param initializer: Channel initializer to guard.
     :return: Initializer that stops an acquired runtime on failure.
@@ -455,18 +463,42 @@ def _shutdown_runtime_on_init_failure(
                 finalizer.detach()
             if runtime is not None:
                 try:
-                    if runtime.event_loop.is_running():
+                    get_close_handle = getattr(instance, "_get_close_handle", None)
+                    channel_lifecycle_ready = getattr(
+                        instance,
+                        "_channel_lifecycle_ready",
+                        False,
+                    )
+                    if callable(get_close_handle) and channel_lifecycle_ready:
+                        closing = get_close_handle(None)
                         shutdown = runtime.shutdown_async()
-                        if not runtime.in_event_loop():
+                        if runtime.owned and not runtime.in_event_loop():
+                            try:
+                                closing._result()
+                            finally:
+                                shutdown._result()
+                    elif runtime.event_loop.is_running():
+                        shutdown = runtime.shutdown_async()
+                        if runtime.owned and not runtime.in_event_loop():
                             shutdown._result()
                     else:
                         runtime.shutdown()
                 except BaseException as cleanup_error:
                     logger.error(
-                        "The SDK could not roll back the partially initialized "
-                        "runtime.",
+                        "The SDK could not clean up the partially initialized "
+                        "channel.",
                         exc_info=cleanup_error,
                     )
+                    try:
+                        shutdown = runtime.shutdown_async()
+                        if runtime.owned and not runtime.in_event_loop():
+                            shutdown._result()
+                    except BaseException as shutdown_error:
+                        logger.error(
+                            "The SDK could not shut down the runtime after channel "
+                            "cleanup failed.",
+                            exc_info=shutdown_error,
+                        )
             raise
 
     return cast(Callable[Concatenate[C, P], None], guarded)
@@ -526,7 +558,10 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param channel: SDK channel that owns the call.
         :param method: Fully qualified gRPC method name.
         :param request: Request value to send.
-        :param request_serializer: Optional request serializer.
+        :param request_serializer: Optional request serializer. For a custom
+            request value, the SDK calls it synchronously on the thread that
+            constructs the call. It must be thread-safe, loop-neutral, and
+            return promptly.
         :param response_deserializer: Optional response deserializer.
         :param timeout: Optional call timeout in seconds.
         :param metadata: Optional call metadata.
@@ -539,14 +574,15 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             deferred transport address when the native call starts.
 
         Mutable supported protobuf request values are copied before submission.
-        Other custom request values are serialized immediately when a serializer
-        is supplied. Metadata is copied to an independent gRPC metadata object.
-        These snapshots prevent a caller from changing native-call inputs while
-        the SDK loop is waiting to create the call. A custom request value
-        without a serializer is assumed to be immutable or otherwise safe to
-        share between threads.
+        Other custom request values are serialized immediately on the caller
+        thread when a serializer is supplied. Metadata is copied to an
+        independent gRPC metadata object. These snapshots prevent a caller from
+        changing native-call inputs while the SDK loop is waiting to create the
+        call. A custom request value without a serializer is assumed to be
+        immutable or otherwise safe to share between threads.
         """
 
+        channel._check_process()
         self._channel = channel
         self._method = method
         self._timeout = _validate_timeout(timeout, "timeout")
@@ -1652,6 +1688,44 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         dedicated daemon loop thread.
     :type event_loop: optional :class:`AbstractEventLoop`
 
+    :param loop_exception_handler:
+        Optional synchronous asyncio exception handler installed on the SDK
+        event loop. Do not use an ``async def`` function. A synchronous wrapper
+        must also return ``None`` instead of a coroutine or another awaitable.
+        The SDK rejects directly recognizable async functions. If a
+        synchronous handler returns any other value, the SDK closes a newly
+        returned, unstarted native coroutine and reports both the original
+        context and the contract violation through asyncio's default exception
+        handler. It does not change a suspended coroutine, returned Future,
+        Task, or opaque awaitable because the handler might not own that work.
+        The SDK cannot know whether an invalid handler processed the original
+        context, so default reporting can duplicate a diagnostic that the
+        handler already emitted.
+        The loop calls the handler with the loop and an exception context
+        mapping. The handler runs on the loop thread and must return promptly.
+        A blocking handler stops all work on that loop. On a supplied
+        ``event_loop``, the handler receives diagnostics from SDK work and
+        other loop users. It replaces the loop's current handler and remains
+        installed after SDK close. It starts receiving diagnostics after all
+        other SDK initialization succeeds. It does not automatically call
+        asyncio's default handler. A later successful assignment by another
+        SDK or component replaces it. The context can contain sensitive data
+        and objects owned by the event loop. Read loop-owned objects only on
+        that loop. Copy and redact the required immutable fields before another
+        thread processes them. Do not log or export the complete context
+        without checking its contents. The handler can retain objects that it
+        captures until another handler replaces it or the loop closes. Request
+        and operation failures continue through their returned awaitables.
+        The event loop stores an SDK forwarding callable for the handler, so
+        ``get_exception_handler()`` does not have to return the same callable.
+        Handler installation is the final SDK initialization action. If an
+        asynchronous ``BaseException`` arrives after the loop accepts the
+        handler but before the constructor returns, the handler can remain
+        installed even though construction did not return a Channel.
+        Construction from another thread waits up to 30 seconds for a supplied
+        loop to install the handler.
+    :type loop_exception_handler: optional callable
+
     :param executor_max_workers:
         Number of daemon workers in the private default executor attached to
         an SDK-owned loop. Defaults to 2. This setting is ignored when
@@ -1709,6 +1783,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         auth_metrics: AuthMetricsLike = None,
         tls_credentials: ChannelCredentials | None = None,
         event_loop: AbstractEventLoop | None = None,
+        loop_exception_handler: LoopExceptionHandler | None = None,
         executor_max_workers: int = 2,
         max_free_channels_per_address: int = 2,
         parent_id: str | None = None,
@@ -1727,6 +1802,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises SDKError:
             Raised for unsupported credential types or if ``parent_id`` is an
             explicitly empty string.
+        :raises TypeError:
+            Raised if ``loop_exception_handler`` is not a synchronous callable.
+        :raises RuntimeError:
+            Raised if a supplied event loop stops or does not install
+            ``loop_exception_handler`` before the time limit.
 
         Notes
         -----
@@ -1759,10 +1839,19 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         """
 
+        if loop_exception_handler is not None:
+            _validate_loop_exception_handler(loop_exception_handler)
+
         self._metrics = metrics
         self._auth_metrics = metrics if metrics is not None else auth_metrics
         self._process_id = os.getpid()
-        self._runtime = AsyncRuntime(event_loop, executor_max_workers)
+        self._runtime = AsyncRuntime(
+            event_loop,
+            executor_max_workers,
+            loop_exception_handler=(
+                loop_exception_handler if event_loop is None else None
+            ),
+        )
         self._event_loop = self._runtime.event_loop
         self._runtime_finalizer = finalize(
             self,
@@ -1829,6 +1918,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._channel_pool_lock = Lock()
         self._close_completion: ConcurrentFuture[None] | None = None
         self._close_task: Task[None] | None = None
+        self._channel_lifecycle_ready = True
         self._methods = dict[str, str]()
         self._routes = dict[tuple[int, str, str, str], str]()
         self.user_agent = "nebius-python-sdk/" + version
@@ -1951,6 +2041,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             self._authorization_provider = credentials
         elif not isinstance(credentials, NoCredentials):  # type: ignore[unused-ignore]
             raise SDKError(f"credentials type is not supported: {type(credentials)}")
+
+        if event_loop is not None and loop_exception_handler is not None:
+            self._runtime.set_borrowed_loop_exception_handler(loop_exception_handler)
 
     def _configure_metrics_on_config_reader(self, config_reader: ConfigReader) -> None:
         reader = cast(Any, config_reader)
@@ -2641,20 +2734,57 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                         resources.append((resource_type, close_work))
                 for task in tasks:
                     task.cancel()
+                scheduled: list[tuple[str | None, Task[Any]]] = []
+
+                def schedule_cleanup(
+                    awaitable: Awaitable[Any],
+                    resource_type: str | None,
+                ) -> None:
+                    """Schedule cleanup without using the loop's task factory."""
+
+                    async def wait_for_cleanup() -> Any:
+                        """Wait for one resource or background task."""
+
+                        return await awaitable
+
+                    wrapper = wait_for_cleanup()
+                    try:
+                        cleanup_task = Task(wrapper, loop=get_running_loop())
+                    except BaseException as error:
+                        dispose_unstarted_awaitable(wrapper)
+                        dispose_unstarted_awaitable(awaitable)
+                        if resource_type is None:
+                            logger.error(
+                                "The SDK could not wait for a background task "
+                                "during shutdown.",
+                                exc_info=error,
+                            )
+                        else:
+                            logger.error(
+                                "The SDK could not start closing the %s resource.",
+                                resource_type,
+                                exc_info=error,
+                            )
+                        return
+                    scheduled.append((resource_type, cleanup_task))
+
+                for resource_type, awaitable in resources:
+                    schedule_cleanup(awaitable, resource_type)
+                for task in tasks:
+                    schedule_cleanup(task, None)
                 rets = await gather(
-                    *(awaitable for _, awaitable in resources),
-                    *tasks,
+                    *(cleanup_task for _, cleanup_task in scheduled),
                     return_exceptions=True,
                 )
-                for index, ret in enumerate(rets):
+                for (scheduled_resource_type, _), ret in zip(scheduled, rets):
                     if isinstance(ret, BaseException) and not isinstance(
                         ret,
                         CancelledError,
                     ):
-                        if index < len(resources):
+                        if scheduled_resource_type is not None:
                             logger.error(
                                 "The SDK could not close the %s resource.",
-                                resources[index][0],
+                                scheduled_resource_type,
                                 exc_info=ret,
                             )
                         else:

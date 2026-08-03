@@ -104,6 +104,43 @@ class SDK(Channel):
     work on the supplied loop may need an executor worker, and the SDK cannot
     reliably identify threads owned by an arbitrary caller executor.
 
+    Set ``loop_exception_handler`` to a synchronous asyncio exception handler.
+    Do not use an ``async def`` function. A synchronous wrapper must return
+    ``None`` instead of a coroutine or another awaitable. The SDK rejects
+    directly recognizable async functions. If a synchronous handler returns
+    any other value, the SDK closes a newly returned, unstarted native coroutine
+    and reports both the original context and the contract violation through
+    asyncio's default exception handler. It does not change a suspended
+    coroutine, returned Future, Task, or opaque awaitable because the handler
+    might not own that work. The SDK cannot know whether an invalid handler
+    processed the original context, so default reporting can duplicate a
+    diagnostic that the handler already emitted. The loop calls the handler on
+    its thread, and the handler must return promptly.
+    A blocking handler stops all work on that loop. On a supplied loop, the handler
+    receives diagnostics from SDK work and other loop users. After
+    all other SDK initialization succeeds, the handler starts receiving
+    diagnostics. A later loop assignment replaces that handler. The handler
+    remains installed after SDK close. It does not automatically call asyncio's
+    default handler.
+    An exception context can contain sensitive data and objects owned by the
+    event loop. Read these objects only on that loop. Copy and redact the
+    required immutable fields before another thread processes them. Request
+    and operation failures still propagate through their returned awaitables.
+    The handler can retain objects that it captures until another handler
+    replaces it or the loop closes.
+    SDK construction raises ``RuntimeError`` if a supplied loop stops before
+    the SDK installs the handler. If construction fails after the SDK starts
+    to use a caller-supplied loop, the SDK starts cleanup before it propagates
+    the error. Cleanup can continue after the constructor returns.
+    Construction from another thread waits up to 30 seconds for a supplied
+    loop to install the handler.
+    The event loop stores an SDK forwarding callable for the handler.
+    ``loop.get_exception_handler()`` does not have to return the same callable
+    that the caller passed to the SDK. Handler installation is the final SDK
+    initialization action. If an asynchronous ``BaseException`` arrives after
+    the loop accepts the handler but before the constructor returns, the
+    handler can remain installed even though construction did not return an SDK.
+
     Authentication and ``auth_timeout``
     -----------------------------------
 

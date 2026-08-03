@@ -45,6 +45,62 @@ You can give an already-running `event_loop` to `SDK`. The SDK does not stop
 or reconfigure this loop during `SDK.close()`. The caller must keep the loop
 responsive until SDK close is complete.
 
+Set `loop_exception_handler` to a synchronous asyncio exception handler. Do not
+use an `async def` function. A synchronous wrapper must also return `None`
+instead of a coroutine or another awaitable. The SDK rejects directly
+recognizable async functions. If a synchronous handler returns any other value,
+the SDK closes a newly returned, unstarted native coroutine and reports both
+the original context and the contract violation through asyncio's default
+exception handler. It does not change a suspended coroutine, returned Future,
+Task, or opaque awaitable because the handler might not own that work. The SDK
+cannot know whether an invalid handler processed the original context, so
+default reporting can duplicate a diagnostic that the handler already emitted.
+The loop calls the handler on its
+thread, and the handler must return promptly. A blocking handler stops all work
+on that loop. Request and operation failures still propagate through their
+returned awaitables.
+
+With an SDK-owned loop, the handler remains installed until the loop closes.
+On a supplied loop, the handler receives diagnostics from SDK work and other
+loop users. It replaces the loop's current handler and remains installed after
+SDK close. It starts receiving diagnostics after all other SDK initialization
+succeeds. A loop has one exception handler. After construction succeeds, a
+later loop assignment replaces that handler. If you construct the SDK from
+another thread, the constructor waits for the supplied loop to install the
+handler for up to 30 seconds. Keep the loop responsive during SDK construction.
+Construction raises `RuntimeError` if the supplied loop stops or does not
+install the handler before this time limit.
+If construction fails after the SDK starts to use a caller-supplied loop, the
+SDK starts cleanup before it propagates the error. Cleanup can continue after
+the constructor returns.
+
+The event loop stores an SDK forwarding callable for the handler.
+`loop.get_exception_handler()` does not have to return the same callable that
+you passed to the SDK. Handler installation is the final SDK initialization
+action. If an asynchronous `BaseException` arrives after the loop accepts the
+handler but before the constructor returns, the handler can remain installed
+even though the constructor did not return an SDK object.
+
+The custom handler replaces asyncio's current handler. It does not
+automatically preserve default reporting. To keep asyncio's default reporting,
+call the default handler explicitly:
+
+```python
+def report_loop_exception(loop, context):
+    record_redacted_fields(context)
+    loop.default_exception_handler(context)
+
+
+sdk = SDK(loop_exception_handler=report_loop_exception)
+```
+
+An exception context can contain sensitive data and tasks, futures, or handles
+owned by the event loop. Read loop-owned objects only on that loop. Copy and
+redact the required immutable fields before another thread processes them. Do
+not log or export the complete context without checking its contents. The loop
+retains the handler after SDK close. The handler can therefore retain objects
+that it captures until another handler replaces it or the loop closes.
+
 The caller also owns the supplied loop's default executor. Do not fill this
 executor with synchronous SDK waits. SDK work or custom extensions can need
 the same executor. Await SDK handles, or use independent executors with enough
@@ -114,8 +170,10 @@ scheduling.
 
 Low-level `Channel.unary_unary()` calls copy metadata and supported request
 messages when the call wrapper is created. The SDK serializes a custom request
-immediately when a serializer exists. Without a serializer, the custom value
-must be immutable or safe to share between threads.
+immediately on the thread that constructs the call when a serializer exists.
+The serializer must be thread-safe, loop-neutral, and return promptly. Without
+a serializer, the custom value must be immutable or safe to share between
+threads.
 
 After a native unary call ends, its metadata and status awaitables must finish
 promptly. Shutdown drains these awaitables to preserve the RPC result. A
