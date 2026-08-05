@@ -3176,6 +3176,71 @@ class ImageSpec__SourceStorage(Message):
 _NebiusType_nebius_compute_v1_ImageSpec_SourceStorage_05e57275 = ImageSpec__SourceStorage
 
 
+class ImageSpec__UnsupportedPreset(Message):
+    __PROTO_FULL_NAME__ = 'nebius.compute.v1.ImageSpec.UnsupportedPreset'
+    """Fully qualified protobuf message name."""
+    __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
+    __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
+    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.compute.v1.ImageSpec.UnsupportedPreset')
+    """Protobuf message descriptor from the registry."""
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
+
+    def __init__(
+        self,
+        initial_message: _NebiusSerializableMessage | None = None,
+        *,
+        platform: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        preset: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        reason: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
+        if platform is not _NEBIUS_UNSET:
+            values['platform'] = platform
+        if preset is not _NEBIUS_UNSET:
+            values['preset'] = preset
+        if reason is not _NEBIUS_UNSET:
+            values['reason'] = reason
+        super().__init__(initial_message, **values)
+
+    @_NebiusProperty
+    def platform(self) -> _NebiusStr:
+        value = self._get_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PLATFORM, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @platform.setter
+    def platform(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``platform`` field."""
+        self._set_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PLATFORM, value)
+
+    @_NebiusProperty
+    def preset(self) -> _NebiusStr:
+        value = self._get_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PRESET, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @preset.setter
+    def preset(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``preset`` field."""
+        self._set_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PRESET, value)
+
+    @_NebiusProperty
+    def reason(self) -> _NebiusStr:
+        value = self._get_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_REASON, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @reason.setter
+    def reason(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``reason`` field."""
+        self._set_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_REASON, value)
+
+    __PY_TO_PB2__ = {'platform': 'platform', 'preset': 'preset', 'reason': 'reason'}
+    """Mapping from Python member names to protobuf names."""
+_NebiusType_nebius_compute_v1_ImageSpec_UnsupportedPreset_d7cb6bc1 = ImageSpec__UnsupportedPreset
+
+
 class ImageStatus__ImageFamilyDeprecationStatus(Message):
     'Impossible create a disk using image family after the deprecation time, but still possible to create disk using image id.'
     __PROTO_FULL_NAME__ = 'nebius.compute.v1.ImageStatus.ImageFamilyDeprecationStatus'
@@ -3306,6 +3371,7 @@ class ImageSpec(Message):
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
     """Alias for code that expects a protobuf message descriptor."""
     SourceStorage: _NebiusTypeAlias = _NebiusType_nebius_compute_v1_ImageSpec_SourceStorage_05e57275
+    UnsupportedPreset: _NebiusTypeAlias = _NebiusType_nebius_compute_v1_ImageSpec_UnsupportedPreset_d7cb6bc1
     CPUArchitecture: _NebiusTypeAlias = _NebiusType_nebius_compute_v1_ImageSpec_CPUArchitecture_5cc9c792
 
     class __OneOfClass_source__(_NebiusOneOf):
@@ -3361,6 +3427,7 @@ class ImageSpec(Message):
         image_family_human_readable: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         recommended_platforms: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
         unsupported_platforms: _NebiusMapping[_NebiusStr, _NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        unsupported_presets: _NebiusIterable[_NebiusType_nebius_compute_v1_ImageSpec_UnsupportedPreset_d7cb6bc1] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
@@ -3384,6 +3451,8 @@ class ImageSpec(Message):
             values['recommended_platforms'] = recommended_platforms
         if unsupported_platforms is not _NEBIUS_UNSET:
             values['unsupported_platforms'] = unsupported_platforms
+        if unsupported_presets is not _NEBIUS_UNSET:
+            values['unsupported_presets'] = unsupported_presets
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -3492,7 +3561,18 @@ class ImageSpec(Message):
         """Set or clear the generated ``unsupported_platforms`` field."""
         self._set_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PLATFORMS, value)
 
-    __PY_TO_PB2__ = {'description': 'description', 'image_family': 'image_family', 'version': 'version', 'source_disk_id': 'source_disk_id', 'source_storage': 'source_storage', 'source_disk_snapshot_id': 'source_disk_snapshot_id', 'cpu_architecture': 'cpu_architecture', 'image_family_human_readable': 'image_family_human_readable', 'recommended_platforms': 'recommended_platforms', 'unsupported_platforms': 'unsupported_platforms', 'source': 'source', 'SourceStorage': 'SourceStorage', 'UnsupportedPlatformsEntry': 'UnsupportedPlatformsEntry', 'CPUArchitecture': 'CPUArchitecture'}
+    @_NebiusProperty
+    def unsupported_presets(self) -> _NebiusMutableSequence[_NebiusType_nebius_compute_v1_ImageSpec_UnsupportedPreset_d7cb6bc1]:
+        'Platform presets that cannot use this image. Each item includes the reason.'
+        value = self._get_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PRESETS, absent_is_none=False)
+        return _nebius_cast('_NebiusMutableSequence[_NebiusType_nebius_compute_v1_ImageSpec_UnsupportedPreset_d7cb6bc1]', value)
+
+    @unsupported_presets.setter
+    def unsupported_presets(self, value: _NebiusIterable[_NebiusType_nebius_compute_v1_ImageSpec_UnsupportedPreset_d7cb6bc1] | None) -> None:
+        """Set or clear the generated ``unsupported_presets`` field."""
+        self._set_field(_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PRESETS, value)
+
+    __PY_TO_PB2__ = {'description': 'description', 'image_family': 'image_family', 'version': 'version', 'source_disk_id': 'source_disk_id', 'source_storage': 'source_storage', 'source_disk_snapshot_id': 'source_disk_snapshot_id', 'cpu_architecture': 'cpu_architecture', 'image_family_human_readable': 'image_family_human_readable', 'recommended_platforms': 'recommended_platforms', 'unsupported_platforms': 'unsupported_platforms', 'unsupported_presets': 'unsupported_presets', 'source': 'source', 'SourceStorage': 'SourceStorage', 'UnsupportedPlatformsEntry': 'UnsupportedPlatformsEntry', 'UnsupportedPreset': 'UnsupportedPreset', 'CPUArchitecture': 'CPUArchitecture'}
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_compute_v1_ImageSpec_cff0ebef = ImageSpec
 
@@ -4250,6 +4330,11 @@ _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCESTORAGE_BUCKET_NAME = Field('bucket_name', 'b
 _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCESTORAGE_OBJECT_NAME = Field('object_name', 'object_name', 2, STRING, json_name='objectName')
 ImageSpec__SourceStorage.__FIELDS__ = (_NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCESTORAGE_BUCKET_NAME, _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCESTORAGE_OBJECT_NAME)
 
+_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PLATFORM = Field('platform', 'platform', 1, STRING, json_name='platform')
+_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PRESET = Field('preset', 'preset', 2, STRING, json_name='preset')
+_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_REASON = Field('reason', 'reason', 3, STRING, json_name='reason')
+ImageSpec__UnsupportedPreset.__FIELDS__ = (_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PLATFORM, _NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_PRESET, _NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTEDPRESET_REASON)
+
 _NEBIUS_COMPUTE_V1_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS_DEPRECATED_AT = Field('deprecated_at', 'deprecated_at', 1, message_codec(lambda: REGISTRY.message_class('google.protobuf.Timestamp')), json_name='deprecatedAt', to_python=_nebius_timestamp_to_datetime, from_python=lambda value: _nebius_datetime_to_timestamp(value, lambda: REGISTRY.message_class('google.protobuf.Timestamp')))
 _NEBIUS_COMPUTE_V1_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS_MESSAGE = Field('message', 'message', 2, STRING, json_name='message')
 ImageStatus__ImageFamilyDeprecationStatus.__FIELDS__ = (_NEBIUS_COMPUTE_V1_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS_DEPRECATED_AT, _NEBIUS_COMPUTE_V1_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS_MESSAGE)
@@ -4269,7 +4354,8 @@ _NEBIUS_COMPUTE_V1_IMAGESPEC_CPU_ARCHITECTURE = Field('cpu_architecture', 'cpu_a
 _NEBIUS_COMPUTE_V1_IMAGESPEC_IMAGE_FAMILY_HUMAN_READABLE = Field('image_family_human_readable', 'image_family_human_readable', 7, STRING, json_name='imageFamilyHumanReadable')
 _NEBIUS_COMPUTE_V1_IMAGESPEC_RECOMMENDED_PLATFORMS = Field('recommended_platforms', 'recommended_platforms', 8, STRING, repeated=True, json_name='recommendedPlatforms')
 _NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PLATFORMS = Field('unsupported_platforms', 'unsupported_platforms', 9, STRING, json_name='unsupportedPlatforms', map_key_codec=STRING)
-ImageSpec.__FIELDS__ = (_NEBIUS_COMPUTE_V1_IMAGESPEC_DESCRIPTION, _NEBIUS_COMPUTE_V1_IMAGESPEC_IMAGE_FAMILY, _NEBIUS_COMPUTE_V1_IMAGESPEC_VERSION, _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCE_DISK_ID, _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCE_STORAGE, _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCE_DISK_SNAPSHOT_ID, _NEBIUS_COMPUTE_V1_IMAGESPEC_CPU_ARCHITECTURE, _NEBIUS_COMPUTE_V1_IMAGESPEC_IMAGE_FAMILY_HUMAN_READABLE, _NEBIUS_COMPUTE_V1_IMAGESPEC_RECOMMENDED_PLATFORMS, _NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PLATFORMS)
+_NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PRESETS = Field('unsupported_presets', 'unsupported_presets', 13, message_codec(lambda: REGISTRY.message_class('nebius.compute.v1.ImageSpec.UnsupportedPreset')), repeated=True, json_name='unsupportedPresets')
+ImageSpec.__FIELDS__ = (_NEBIUS_COMPUTE_V1_IMAGESPEC_DESCRIPTION, _NEBIUS_COMPUTE_V1_IMAGESPEC_IMAGE_FAMILY, _NEBIUS_COMPUTE_V1_IMAGESPEC_VERSION, _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCE_DISK_ID, _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCE_STORAGE, _NEBIUS_COMPUTE_V1_IMAGESPEC_SOURCE_DISK_SNAPSHOT_ID, _NEBIUS_COMPUTE_V1_IMAGESPEC_CPU_ARCHITECTURE, _NEBIUS_COMPUTE_V1_IMAGESPEC_IMAGE_FAMILY_HUMAN_READABLE, _NEBIUS_COMPUTE_V1_IMAGESPEC_RECOMMENDED_PLATFORMS, _NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PLATFORMS, _NEBIUS_COMPUTE_V1_IMAGESPEC_UNSUPPORTED_PRESETS)
 
 _NEBIUS_COMPUTE_V1_IMAGESTATUS_STATE = Field('state', 'state', 1, enum_codec((0, 1, 2, 3, 4, 5), default=0, closed=False, names={'UNSPECIFIED': 0, 'CREATING': 1, 'READY': 2, 'UPDATING': 3, 'DELETING': 4, 'ERROR': 5}, enum_type=lambda: REGISTRY.enum_class('nebius.compute.v1.ImageStatus.State')), json_name='state')
 _NEBIUS_COMPUTE_V1_IMAGESTATUS_STATE_DESCRIPTION = Field('state_description', 'state_description', 2, STRING, json_name='stateDescription')
@@ -4342,6 +4428,8 @@ ImageStatus__State.__name__ = 'State'
 ImageStatus__State.__qualname__ = 'ImageStatus.State'
 ImageSpec__SourceStorage.__name__ = 'SourceStorage'
 ImageSpec__SourceStorage.__qualname__ = 'ImageSpec.SourceStorage'
+ImageSpec__UnsupportedPreset.__name__ = 'UnsupportedPreset'
+ImageSpec__UnsupportedPreset.__qualname__ = 'ImageSpec.UnsupportedPreset'
 ImageStatus__ImageFamilyDeprecationStatus.__name__ = 'ImageFamilyDeprecationStatus'
 ImageStatus__ImageFamilyDeprecationStatus.__qualname__ = 'ImageStatus.ImageFamilyDeprecationStatus'
 
