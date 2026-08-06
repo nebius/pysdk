@@ -646,6 +646,8 @@ class AuditEventExportStatus(Message):
         state: _NebiusType_nebius_audit_v2_AuditEventExportState_9a85140e | None | _NebiusUnsetType = _NEBIUS_UNSET,
         export_operation_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        started_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        finished_at: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
@@ -655,6 +657,10 @@ class AuditEventExportStatus(Message):
             values['export_operation_id'] = export_operation_id
         if message is not _NEBIUS_UNSET:
             values['message'] = message
+        if started_at is not _NEBIUS_UNSET:
+            values['started_at'] = started_at
+        if finished_at is not _NEBIUS_UNSET:
+            values['finished_at'] = finished_at
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -690,7 +696,29 @@ class AuditEventExportStatus(Message):
         """Set or clear the generated ``message`` field."""
         self._set_field(_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_MESSAGE, value)
 
-    __PY_TO_PB2__ = {'state': 'state', 'export_operation_id': 'export_operation_id', 'message': 'message'}
+    @_NebiusProperty
+    def started_at(self) -> _NebiusDatetime | None:
+        'Timestamp indicating when the export was started.'
+        value = self._get_field(_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_STARTED_AT, absent_is_none=True)
+        return _nebius_cast('_NebiusDatetime | None', value)
+
+    @started_at.setter
+    def started_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``started_at`` field."""
+        self._set_field(_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_STARTED_AT, value)
+
+    @_NebiusProperty
+    def finished_at(self) -> _NebiusDatetime | None:
+        'Timestamp indicating when the export was finished.'
+        value = self._get_field(_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_FINISHED_AT, absent_is_none=True)
+        return _nebius_cast('_NebiusDatetime | None', value)
+
+    @finished_at.setter
+    def finished_at(self, value: _NebiusDatetime | _type_google_protobuf_dfd76a75.Timestamp | None) -> None:
+        """Set or clear the generated ``finished_at`` field."""
+        self._set_field(_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_FINISHED_AT, value)
+
+    __PY_TO_PB2__ = {'state': 'state', 'export_operation_id': 'export_operation_id', 'message': 'message', 'started_at': 'started_at', 'finished_at': 'finished_at'}
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_audit_v2_AuditEventExportStatus_1f4d618f = AuditEventExportStatus
 
@@ -2139,7 +2167,9 @@ AuditEventExportSpec.__FIELDS__ = (_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSPEC_PARAMS,
 _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_STATE = Field('state', 'state', 1, enum_codec((0, 1, 2, 3, 4), default=0, closed=False, names={'AUDIT_EVENT_EXPORT_STATE_UNSPECIFIED': 0, 'AUDIT_EVENT_EXPORT_STATE_RUNNING': 1, 'AUDIT_EVENT_EXPORT_STATE_CANCELED': 2, 'AUDIT_EVENT_EXPORT_STATE_DONE': 3, 'AUDIT_EVENT_EXPORT_STATE_FAILED': 4}, enum_type=lambda: REGISTRY.enum_class('nebius.audit.v2.AuditEventExportState')), json_name='state')
 _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_EXPORT_OPERATION_ID = Field('export_operation_id', 'export_operation_id', 2, STRING, json_name='exportOperationId')
 _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_MESSAGE = Field('message', 'message', 3, STRING, json_name='message')
-AuditEventExportStatus.__FIELDS__ = (_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_STATE, _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_EXPORT_OPERATION_ID, _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_MESSAGE)
+_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_STARTED_AT = Field('started_at', 'started_at', 4, message_codec(lambda: REGISTRY.message_class('google.protobuf.Timestamp')), json_name='startedAt', to_python=_nebius_timestamp_to_datetime, from_python=lambda value: _nebius_datetime_to_timestamp(value, lambda: REGISTRY.message_class('google.protobuf.Timestamp')))
+_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_FINISHED_AT = Field('finished_at', 'finished_at', 5, message_codec(lambda: REGISTRY.message_class('google.protobuf.Timestamp')), json_name='finishedAt', to_python=_nebius_timestamp_to_datetime, from_python=lambda value: _nebius_datetime_to_timestamp(value, lambda: REGISTRY.message_class('google.protobuf.Timestamp')))
+AuditEventExportStatus.__FIELDS__ = (_NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_STATE, _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_EXPORT_OPERATION_ID, _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_MESSAGE, _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_STARTED_AT, _NEBIUS_AUDIT_V2_AUDITEVENTEXPORTSTATUS_FINISHED_AT)
 
 _NEBIUS_AUDIT_V2_BUCKETBYID_ID = Field('id', 'id', 1, STRING, json_name='id')
 BucketById.__FIELDS__ = (_NEBIUS_AUDIT_V2_BUCKETBYID_ID,)
