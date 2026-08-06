@@ -24,6 +24,227 @@ If you have a ZIP archive or a Git checkout, install the SDK from its directory:
 pip install ./path/to/your/pysdk
 ```
 
+### Migration from 0.4.x to 0.5.x
+
+Version 0.5.0 runs all SDK asynchronous work on one internal event loop per SDK
+instance. By default, each SDK instance owns this loop and its daemon thread.
+It also owns a daemon executor with a maximum of two worker threads. You can
+set the maximum with `executor_max_workers`.
+
+Some 0.4.x workflows do not work in 0.5.0. Use these replacements:
+
+| 0.4.x workflow | 0.5.x behavior | Required change |
+| --- | --- | --- |
+| Treat `Channel.bg_task()` as an `asyncio.Task`. | The method returns a reusable `CrossLoopAwaitable`. | Await it directly. Before you pass it to `asyncio.wait()`, wrap it with `asyncio.ensure_future()`. |
+| Call `run_sync()` or `sync_close()` from an asynchronous call stack. | The SDK rejects the call from every active caller loop. | Await the SDK handle. You can also move the complete synchronous call to `asyncio.to_thread()`. |
+| Give the SDK a stopped `event_loop`. | A supplied loop must already run. The caller continues to own it. | Start the loop in its owner thread. Keep it running until SDK close is complete. |
+
+#### Runtime ownership and shutdown
+
+You can give an already-running `event_loop` to `SDK`. The SDK does not stop
+or reconfigure this loop during `SDK.close()`. The caller must keep the loop
+responsive until SDK close is complete.
+
+Set `loop_exception_handler` to a synchronous asyncio exception handler. Do not
+use an `async def` function. A synchronous wrapper must also return `None`
+instead of a coroutine or another awaitable. The SDK rejects directly
+recognizable async functions. If a synchronous handler returns any other value,
+the SDK closes a newly returned, unstarted native coroutine and reports both
+the original context and the contract violation through asyncio's default
+exception handler. It does not change a suspended coroutine, returned Future,
+Task, or opaque awaitable because the handler might not own that work. The SDK
+cannot know whether an invalid handler processed the original context, so
+default reporting can duplicate a diagnostic that the handler already emitted.
+The loop calls the handler on its
+thread, and the handler must return promptly. A blocking handler stops all work
+on that loop. Request and operation failures still propagate through their
+returned awaitables.
+
+With an SDK-owned loop, the handler remains installed until the loop closes.
+On a supplied loop, the handler receives diagnostics from SDK work and other
+loop users. It replaces the loop's current handler and remains installed after
+SDK close. It starts receiving diagnostics after all other SDK initialization
+succeeds. A loop has one exception handler. After construction succeeds, a
+later loop assignment replaces that handler. If you construct the SDK from
+another thread, the constructor waits for the supplied loop to install the
+handler for up to 30 seconds. Keep the loop responsive during SDK construction.
+Construction raises `RuntimeError` if the supplied loop stops or does not
+install the handler before this time limit.
+If construction fails after the SDK starts to use a caller-supplied loop, the
+SDK starts cleanup before it propagates the error. Cleanup can continue after
+the constructor returns.
+
+The event loop stores an SDK forwarding callable for the handler.
+`loop.get_exception_handler()` does not have to return the same callable that
+you passed to the SDK. Handler installation is the final SDK initialization
+action. If an asynchronous `BaseException` arrives after the loop accepts the
+handler but before the constructor returns, the handler can remain installed
+even though the constructor did not return an SDK object.
+
+The custom handler replaces asyncio's current handler. It does not
+automatically preserve default reporting. To keep asyncio's default reporting,
+call the default handler explicitly:
+
+```python
+def report_loop_exception(loop, context):
+    record_redacted_fields(context)
+    loop.default_exception_handler(context)
+
+
+sdk = SDK(loop_exception_handler=report_loop_exception)
+```
+
+An exception context can contain sensitive data and tasks, futures, or handles
+owned by the event loop. Read loop-owned objects only on that loop. Copy and
+redact the required immutable fields before another thread processes them. Do
+not log or export the complete context without checking its contents. The loop
+retains the handler after SDK close. The handler can therefore retain objects
+that it captures until another handler replaces it or the loop closes.
+
+The caller also owns the supplied loop's default executor. Do not fill this
+executor with synchronous SDK waits. SDK work or custom extensions can need
+the same executor. Await SDK handles, or use independent executors with enough
+capacity.
+
+An owned executor starts worker threads only when it receives work. Shutdown
+waits for submitted executor work. A function that does not return can delay
+shutdown without a time limit. The function must stop cooperatively because
+Python cannot safely stop a running thread.
+
+Fork the process before you create SDK or gRPC objects. Create separate SDK
+objects after each child process starts. The SDK rejects an object that a
+child process inherits from its parent. Event-loop threads, gRPC state, and
+locks cannot move safely to the child.
+
+Do not call synchronous helpers from an asynchronous call stack. Await the SDK
+handle instead. For a synchronous low-level pool method, use
+`asyncio.to_thread()`. Application threads can call synchronous helpers at the
+same time if the SDK loop stays responsive. Do not call these helpers from an
+SDK executor worker.
+
+When SDK work calls `close()` on the internal loop, the code immediately after
+`await close()` can finish. Shutdown cancels that code if it waits again.
+
+#### Custom extensions and data
+
+The SDK loop runs custom resolvers, interceptors, authorization providers,
+token bearers, and asynchronous metrics callbacks. The SDK fixes request
+options before submission. Custom callback and credential objects must be
+thread-safe and loop-neutral.
+
+Do not store application-loop objects in a custom callback or credential
+object. These objects include asyncio locks, events, queues, tasks, and client
+sessions. Thread-local application state does not move to the SDK thread. Use
+a `ContextVar` when the SDK work needs application context.
+
+Use one stateful authorization provider or token bearer for one SDK. Do not
+share it between SDK instances that use different loops. You can share an
+immutable implementation only if it supports concurrent calls and independent
+`close()` calls. The SDK cannot detect hidden loop ownership or mutable state.
+
+The SDK closes a rejected native coroutine. It sends cleanup for a rejected
+`asyncio.Future` to the Future's owner loop. The SDK does not call `close()` on
+an unknown custom awaitable from a cancellation or shutdown thread. Such an
+awaitable must provide thread-safe cleanup for work that does not start.
+
+When a custom transport belongs to a different caller-owned event loop, the
+SDK schedules cleanup on that loop and does not wait for it during shutdown.
+Keep that loop running and able to process callbacks until cleanup finishes.
+
+Supported mutable request messages become fixed when the request wrapper is
+created. This rule keeps generated reset-mask metadata consistent with the
+message. Set metadata, timeouts, credentials, and authentication options
+before the first await or `.wait()` call. Submission fixes these options.
+
+`Channel.run_async()` is a new optional custom-channel method. The built-in
+channel uses it to schedule work immediately and return a cross-loop handle.
+The minimum custom-channel protocol did not change. A legacy custom channel
+can omit this method and use its local-awaitable fallback.
+
+The fallback does not make a legacy channel cross-loop. If an operation or
+stream first uses a contended asyncio lock on one caller loop, continue to use
+that object on the same loop. Implement `run_async()` to support cross-loop
+scheduling.
+
+#### RPC and stream behavior
+
+Low-level `Channel.unary_unary()` calls copy metadata and supported request
+messages when the call wrapper is created. The SDK serializes a custom request
+immediately on the thread that constructs the call when a serializer exists.
+The serializer must be thread-safe, loop-neutral, and return promptly. Without
+a serializer, the custom value must be immutable or safe to share between
+threads.
+
+After a native unary call ends, its metadata and status awaitables must finish
+promptly. Shutdown drains these awaitables to preserve the RPC result. A
+custom transport that leaves an accessor pending can delay final shutdown.
+`sync_close(timeout=...)` limits the caller's wait, but it cannot stop custom
+transport code safely.
+
+Channel cleanup is best effort for compatibility. The SDK logs each resource
+cleanup failure after it tries to close all resources. These failures do not
+make `close()` fail. In contrast, `close()` and `sync_close()` report failures
+from runtime finalization.
+
+Generated operation-service factories remain synchronous. You can call them
+from asynchronous application code. They resolve the source service on the
+SDK loop when the first operation RPC starts. They then keep that address for
+the operation-service adapter. This behavior keeps all polls for one operation
+on one endpoint.
+
+Direct synchronous resolver and pool helpers still reject active event loops.
+Use a generated client. You can also move an explicit synchronous call to an
+application thread.
+
+The SDK loop consumes a caller-supplied asynchronous iterator for a client
+stream. The iterator must be loop-neutral. The SDK does not support an
+iterator with state that belongs to another event loop.
+
+The SDK bridges an explicit `asyncio.Future` through its owner loop. The owner
+loop must stay running until the bridge copies the result. This rule also
+applies when the Future is already complete. If the owner loop stops, the
+bridge fails without reading the Future from another thread.
+
+A unary streaming request and its authentication options become fixed when
+the SDK creates the stream wrapper. Each client-streaming `write()` copies a
+supported request message before SDK-loop dispatch. An unknown custom value
+is not copied and must be safe to share between threads.
+
+Low-level pool methods still expose `AddressChannel.channel` for custom
+transport compatibility. This field is a native `grpc.aio.Channel` that
+belongs to the SDK loop. Do not call it from an external loop. Use a generated
+client or `Channel.unary_unary()` for cross-loop calls.
+
+Each `AddressChannel` wrapper represents one pool lease. Release the wrapper
+only once. A later checkout can return a new wrapper for the same native
+channel. Custom wrappers can override `_new_lease()` to copy required wrapper
+state.
+
+`get_authorization_provider()` still returns the configured provider object.
+Generated requests dispatch it on the SDK loop. Code that calls the provider
+directly is responsible for correct loop and thread use.
+
+#### Cross-loop handles
+
+`Channel.bg_task()` now returns a cross-loop SDK handle. It does not return an
+`asyncio.Task`. Await the handle directly. Wrap it with
+`asyncio.ensure_future()` before you pass it to `asyncio.wait()`. Task-only
+inspection, naming, and callback-removal methods are not available.
+
+Pending `result()` and `exception()` calls can block an application thread.
+They reject active event loops and SDK executor workers. Asynchronous code
+must await the handle. A handle cannot await itself.
+
+All direct waiters share cancellation. The handle can report cancellation
+before an asynchronous finalizer is complete. The `cancel(msg)` method accepts
+and ignores the message. After cancellation, `result()` and `exception()`
+raise `concurrent.futures.CancelledError`.
+
+Completion callbacks run on the event loop that registered them. This loop
+must run until it delivers the callback. Registration on a stopped or closed
+loop raises `RuntimeError`. If the loop stops later, the SDK logs a warning.
+It does not move the callback to another thread.
+
 ### Migration from 0.3.x to 0.4.x
 
 Version 0.4.0 replaces the provider-backed generated API layer. The new layer
@@ -264,8 +485,19 @@ async def my_call():
 asyncio.run(my_call())
 ```
 
-The SDK is designed for `asyncio`. Use an asynchronous context when possible.
-If no asynchronous event loop is running, you can use the SDK synchronously:
+Each SDK instance uses one internal asyncio event loop. By default, the SDK
+starts a daemon thread for this loop. It also creates a private daemon executor
+with a maximum of two workers. The executor starts workers only when the SDK
+submits work.
+
+The internal loop runs requests, authentication, token renewal, streaming,
+asynchronous metric callbacks, and cleanup. You can await an SDK awaitable from
+any external asyncio loop. Reuse SDK instances. Do not create an SDK instance
+for each request because each default instance owns a loop thread and an
+executor.
+
+Use an asynchronous context when possible. If no asynchronous event loop is
+running, you can use the SDK synchronously:
 
 ```python
 try:
@@ -275,9 +507,8 @@ finally:
     sdk.sync_close()
 ```
 
-Synchronous calls can hang, even if you set timeouts. They do not work in an
-asynchronous call stack unless the SDK has a separate event loop. A separate
-loop reduces this risk but does not prevent all deadlocks.
+Do not call synchronous helpers from asynchronous code. Await the SDK handle
+instead. The 0.5 migration section describes the other loop and thread rules.
 
 If you do not close the SDK, unterminated tasks can cause errors.
 
@@ -506,7 +737,9 @@ await real_operation.wait()
 
 SDK requests have an internal retry layer and two request timeouts:
 
-- Overall request timeout: Limits the complete request, including all retries.
+- Overall request timeout: Limits SDK-loop dispatch plus native request and
+  retry work. Authentication uses its independent clock and does not consume
+  this request-only budget.
 - Per-retry timeout: Limits each retry attempt. If you do not set this value,
   it uses the overall request timeout.
 
@@ -526,10 +759,10 @@ have the `poll_` prefix.
 
 ###### Authentication timeout (auth_timeout)
 
-The independent `auth_timeout` value limits the complete authentication flow.
-Authentication includes token acquisition or renewal and can retry before and
-during the RPC. This timeout includes internal authentication retries and the
-request inside the authentication loop.
+The independent `auth_timeout` value limits SDK-loop dispatch and the complete
+authentication flow. Authentication includes token acquisition or renewal and
+can retry before and during the RPC. This timeout includes internal
+authentication retries and the request inside the authentication loop.
 
 - Default: 15 minutes (900 seconds)
 - Scope: The authentication loop and its request
@@ -550,8 +783,12 @@ response = await service.get(req, auth_timeout=300.0)  # 5 minutes
 
 Notes:
 
-- `auth_timeout` starts with the request. It limits the authorized request
-  `timeout`, which limits each `per_retry_timeout`.
+- `auth_timeout` starts when the request is submitted, before it waits for the
+  SDK loop. It limits the authorized request `timeout`, which limits each
+  `per_retry_timeout`.
+- The request clock charges SDK-loop queueing once, pauses while credentials
+  are acquired or renewed, and resumes for native RPC and retry work. Streaming
+  calls use the same independent-clock rule during initial authentication.
 - Individual token-exchange attempts can have shorter deadlines.
   `auth_timeout` limits their total time.
 

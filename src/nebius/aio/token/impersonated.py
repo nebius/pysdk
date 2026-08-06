@@ -7,6 +7,7 @@ from typing import cast
 
 from grpc import StatusCode
 
+from nebius.aio._task_context import bridge_awaitable
 from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.metrics import (
@@ -228,7 +229,7 @@ class Bearer(ParentBearer):
     async def _token_exchange_service_stub(self) -> TokenExchangeServiceClient:
         if self._deferred_channel is None:
             raise ValueError("gRPC channel is not set for the bearer.")
-        channel = await self._deferred_channel
+        channel = await bridge_awaitable(self._deferred_channel)
         if not isinstance(channel, ClientChannelInterface):  # type: ignore[unused-ignore]
             raise TypeError(f"Expected ClientChannelInterface, got {type(channel)}.")
         self._svc = TokenExchangeServiceClient(channel)

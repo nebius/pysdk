@@ -46,6 +46,7 @@ from nebius.base.metadata import Metadata as NebiusMetadata
 from nebius.base.service_account.service_account import TokenRequester
 from nebius.base.token_sanitizer import TokenSanitizer
 
+from .._task_context import bridge_awaitable
 from .deferred_channel import DeferredChannel
 from .options import OPTION_MAX_RETRIES
 from .token import Bearer as ParentBearer
@@ -346,7 +347,7 @@ class Bearer(ParentBearer):
     async def _token_exchange_service_stub(self) -> TokenExchangeServiceClient:
         if self._deferred_channel is None:
             raise ValueError("gRPC channel is not set for the bearer.")
-        chan = await self._deferred_channel
+        chan = await bridge_awaitable(self._deferred_channel)
         if not isinstance(chan, ClientChannelInterface):  # type: ignore[unused-ignore]
             raise TypeError(f"Expected ClientChannelInterface, got {type(chan)}.")
         self._svc = TokenExchangeServiceClient(chan)

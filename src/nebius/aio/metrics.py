@@ -29,6 +29,7 @@ change request or authentication behavior.
 
 from __future__ import annotations
 
+import os
 from asyncio import (
     CancelledError,
     Task,
@@ -44,9 +45,15 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from inspect import isawaitable
 from math import isfinite
+from threading import Lock
 from time import monotonic
 from typing import Literal, SupportsFloat, SupportsIndex, cast
 
+from nebius.aio._task_context import (
+    bridge_awaitable,
+    dispose_unstarted_awaitable,
+    task_scheduler,
+)
 from nebius.aio.token.token import Bearer as _TokenBearer
 from nebius.aio.token.token import Receiver as _TokenReceiver
 from nebius.aio.token.token import Token as _Token
@@ -456,6 +463,20 @@ def _metric_attribute_value(metrics: object, name: str) -> object | None:
 # collected mid-execution, producing "Task was destroyed but it is pending!" warnings
 # (reported in #94 via SkyPilot).
 _metric_tasks: set[Task[None]] = set()
+_metric_tasks_lock = Lock()
+
+
+def _reset_metric_tasks_after_fork() -> None:
+    """Drop inherited fallback tasks and replace a possibly locked lock."""
+
+    global _metric_tasks
+    global _metric_tasks_lock
+    _metric_tasks = set()
+    _metric_tasks_lock = Lock()
+
+
+if hasattr(os, "register_at_fork"):
+    os.register_at_fork(after_in_child=_reset_metric_tasks_after_fork)
 
 
 def _schedule_metric_awaitable(
@@ -463,14 +484,77 @@ def _schedule_metric_awaitable(
     timeout: object = DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS,
 ) -> None:
     timeout_seconds = sanitize_metric_callback_timeout_seconds(timeout)
+    scheduler = task_scheduler.get()
+    if scheduler is not None:
+        state_lock = Lock()
+        started = False
+        closed_before_start = False
+
+        async def run() -> None:
+            """Claim and run the callback unless cancellation closed it."""
+
+            nonlocal started
+            with state_lock:
+                if closed_before_start:
+                    return
+                started = True
+            await _swallow_metric_awaitable(awaitable, timeout_seconds)
+
+        wrapped = run()
+        try:
+            scheduled = scheduler(wrapped)
+        except BaseException as error:
+            wrapped.close()
+            with state_lock:
+                closed_before_start = True
+                should_close = not started
+            if should_close:
+                dispose_unstarted_awaitable(awaitable)
+            if not isinstance(error, (CancelledError, Exception)):
+                raise
+        else:
+            add_done_callback = getattr(
+                scheduled,
+                "_add_internal_done_callback",
+                None,
+            )
+            if not callable(add_done_callback):
+                add_done_callback = getattr(scheduled, "add_done_callback", None)
+            if callable(add_done_callback):
+
+                def close_unstarted(completed: object) -> None:
+                    """Close callback work whenever its wrapper never starts."""
+
+                    nonlocal closed_before_start
+                    with state_lock:
+                        if started or closed_before_start:
+                            return
+                        closed_before_start = True
+                    dispose_unstarted_awaitable(awaitable)
+
+                add_done_callback(close_unstarted)
+        return
     try:
         get_running_loop()
     except RuntimeError:
         _run_metric_awaitable(awaitable, timeout_seconds)
         return
     task = create_task(_swallow_metric_awaitable(awaitable, timeout_seconds))
-    _metric_tasks.add(task)
-    task.add_done_callback(_metric_tasks.discard)
+    with _metric_tasks_lock:
+        _metric_tasks.add(task)
+    task.add_done_callback(_discard_metric_task)
+
+
+def _discard_metric_task(task: Task[None]) -> None:
+    """Remove a completed fallback metric task from global tracking.
+
+    This fallback set is used only when no SDK task scheduler is active.
+
+    :param task: Completed metric callback task.
+    """
+
+    with _metric_tasks_lock:
+        _metric_tasks.discard(task)
 
 
 async def _swallow_metric_awaitable(
@@ -478,7 +562,7 @@ async def _swallow_metric_awaitable(
     timeout: float,
 ) -> None:
     try:
-        await wait_for(awaitable, timeout)
+        await wait_for(bridge_awaitable(awaitable), timeout)
     except (CancelledError, Exception):
         return
 
@@ -487,9 +571,7 @@ def _run_metric_awaitable(awaitable: Awaitable[object], timeout: float) -> None:
     try:
         asyncio_run(_swallow_metric_awaitable(awaitable, timeout))
     except (CancelledError, Exception):
-        close = getattr(awaitable, "close", None)
-        if callable(close):
-            close()
+        dispose_unstarted_awaitable(awaitable)
 
 
 def _apply_metrics_setter(

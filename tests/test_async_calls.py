@@ -73,9 +73,8 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
         req.wait()
     except LoopError as e:
         assert (
-            str(e) == "Synchronous call inside async context. Either use async/"
-            "await or provide a safe and separate loop to run at the SDK "
-            "initialization."
+            str(e) == "Code in an asynchronous context cannot call the SDK "
+            "synchronously. Await the SDK handle, or use asyncio.to_thread()."
         )
     finally:
         # Clean up
@@ -153,8 +152,8 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
         req.wait()
     except LoopError as e:
         assert (
-            str(e) == "Provided loop is equal to current thread's loop. Either use "
-            "async/await or provide another loop at the SDK initialization."
+            str(e) == "Code on the SDK event loop cannot call the SDK "
+            "synchronously. Await the SDK handle instead."
         )
     finally:
         # Clean up

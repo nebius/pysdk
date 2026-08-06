@@ -28,6 +28,12 @@ class Authenticator(ABC):
     Subclasses must implement :meth:`authenticate`. They can implement
     :meth:`can_retry` to permit retries after authentication failures. For
     example, permit fewer than three retries after an ``UNAUTHENTICATED`` code.
+
+    The built-in channel calls authenticators on its internal SDK event loop.
+    A custom authenticator must be thread-safe and loop-neutral. It must not
+    retain asyncio state that belongs to an application loop. Thread-local
+    state does not move to the SDK thread; use :class:`contextvars.ContextVar`
+    when context propagation is required.
     """
 
     @abstractmethod
@@ -88,6 +94,11 @@ class Provider(ABC):
     :class:`nebius.base.metadata.Metadata`. After an authentication failure,
     the request layer calls :meth:`Authenticator.can_retry`. If permitted, it
     retries with the same authenticator.
+
+    The built-in channel calls the provider and its authenticators on one SDK
+    event loop. Treat a stateful provider as owned by one SDK. Do not attach
+    one instance to SDKs with different loops unless the implementation is
+    thread-safe, loop-neutral, and explicitly supports concurrent use.
 
     Example
     -------

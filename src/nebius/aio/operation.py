@@ -10,19 +10,42 @@ routes calls to the applicable operation-service client.
 from __future__ import annotations
 
 import importlib
-from asyncio import sleep
+import os
+from asyncio import (
+    FIRST_COMPLETED,
+    CancelledError,
+    ensure_future,
+    gather,
+    shield,
+    sleep,
+    wait,
+    wait_for,
+    wrap_future,
+)
+from asyncio import Lock as AsyncLock
+from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Sequence
+from concurrent.futures import Future as ConcurrentFuture
 from datetime import datetime, timedelta
-from time import time
+from math import isfinite
+from threading import Lock
+from time import monotonic
 from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
 
 from grpc import StatusCode
 from typing_extensions import Unpack
 
+from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.request import DEFAULT_TIMEOUT
+from nebius.aio.request import (
+    DEFAULT_AUTH_TIMEOUT,
+    DEFAULT_TIMEOUT,
+    _authorization_deadline_applies,
+    _validate_timeout,
+)
 from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
 from nebius.base.error import SDKError
+from nebius.base.metadata import Metadata
 from nebius.base.protos.unset import Unset, UnsetType
 from nebius.base.protos.well_known_direct import local_timezone
 
@@ -200,6 +223,12 @@ class Operation(Generic[OperationPb]):
     ``source_method``. The client reuses ``channel`` for network and
     authorization functions.
 
+    Built-in channels schedule polling on the SDK loop, so this wrapper can be
+    used from unrelated caller loops. A legacy custom channel without
+    ``run_async`` keeps the historical local-awaitable fallback. Its update
+    lock becomes bound to the first caller loop that contends for it, and the
+    same wrapper must not then be used concurrently from another loop.
+
     :param source_method: the originating ``service.method`` name used to build a
         constant channel for operation management calls
     :param channel: channel used for network and auth operations
@@ -291,6 +320,25 @@ class Operation(Generic[OperationPb]):
         self._service = service_type(Constant(source_method, channel))
         self._get_request_obj = get_type
         self._operation = operation
+        self._state_lock = Lock()
+        self._update_lock = AsyncLock()
+        self._process_id = os.getpid()
+
+    def _check_process(self) -> None:
+        """Reject an operation inherited across ``fork`` before locking."""
+
+        if os.getpid() != self._process_id:
+            raise RuntimeError(
+                "You cannot use an SDK operation after a fork. Create SDK "
+                "objects after the child process starts."
+            )
+
+    def _operation_snapshot(self) -> OperationPb:
+        """Return the current operation message under the state lock."""
+
+        self._check_process()
+        with self._state_lock:
+            return self._operation
 
     def __repr__(self) -> str:
         """Return a compact string representation useful for debugging."""
@@ -316,7 +364,7 @@ class Operation(Generic[OperationPb]):
 
         :rtype: :class:`RequestStatus` or nothing
         """
-        return self._operation.status
+        return self._operation_snapshot().status
 
     def progress_tracker(self) -> OperationProgressTracker | None:
         """Return an operation progress tracker when available.
@@ -379,16 +427,223 @@ class Operation(Generic[OperationPb]):
 
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        :raises ValueError: If ``timeout`` or ``auth_timeout`` is NaN or
+            infinite. Use ``None`` for an unlimited timeout.
         """
+        self._check_process()
+        await self._update_from_submission(monotonic(), **kwargs)
+
+    async def _update_from_submission(
+        self,
+        submitted_at: float,
+        **kwargs: Unpack[RequestKwargs],
+    ) -> None:
+        """Submit one update with a caller-captured monotonic start time.
+
+        :param submitted_at: Monotonic time when the caller submitted the
+            update. Request and authorization deadlines include all later
+            dispatch delay.
+        :param kwargs: Additional request options for the operation service.
+        """
+
         if self.done():
             return
-
-        req = self._service.get(
-            self._get_request_obj(id=self.id),
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
+        timeout_option = kwargs.get("timeout", Unset)
+        timeout = (
+            DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
+        )
+        auth_timeout_option = kwargs.get("auth_timeout", Unset)
+        auth_timeout = (
+            DEFAULT_AUTH_TIMEOUT
+            if isinstance(auth_timeout_option, UnsetType)
+            else auth_timeout_option
+        )
+        _validate_timeout(timeout, "timeout")
+        _validate_timeout(auth_timeout, "auth_timeout")
+        authorization_applies = _authorization_deadline_applies(
+            self._channel,
+            cast(dict[str, str], kwargs.get("auth_options") or {}),
+        )
+        request_deadline = None if timeout is None else submitted_at + max(timeout, 0)
+        authorization_deadline = (
+            None
+            if auth_timeout is None or authorization_applies is not True
+            else submitted_at + max(auth_timeout, 0)
+        )
+        submit = getattr(self._channel, "run_async", None)
+        dispatch_started: ConcurrentFuture[None] = ConcurrentFuture()
+        dispatch_state_lock = Lock()
+        update_started = False
+        update_work = self._update_internal(
+            request_deadline=request_deadline,
+            authorization_deadline=authorization_deadline,
             **kwargs,
         )
-        new_op = await req
-        self._set_new_operation(cast(OperationPb, new_op._operation))
+
+        async def start_update() -> None:
+            """Publish SDK-loop dispatch before the update starts."""
+
+            nonlocal update_started
+            with dispatch_state_lock:
+                update_started = True
+            if not dispatch_started.done():
+                dispatch_started.set_result(None)
+            await update_work
+
+        update = start_update()
+        try:
+            submitted = submit(update) if callable(submit) else update
+        except BaseException:
+            dispose_unstarted_awaitable(update)
+            dispose_unstarted_awaitable(update_work)
+            raise
+
+        def dispose_update_if_unstarted(_: object) -> None:
+            """Dispose update work if its dispatch wrapper did not start."""
+
+            with dispatch_state_lock:
+                if update_started:
+                    return
+            dispose_unstarted_awaitable(update_work)
+
+        observe = getattr(submitted, "_add_internal_done_callback", None)
+        if not callable(observe):
+            observe = getattr(submitted, "add_done_callback", None)
+        if callable(observe):
+            observe(dispose_update_if_unstarted)
+        # Authorization and request clocks are independent. An applicable
+        # authorization deadline bounds the whole flow; the generated request
+        # pauses its request clock while authenticating. For a legacy channel
+        # whose provider is only discoverable on its owner loop, avoid an
+        # incorrect caller-side deadline and let its request state machine
+        # enforce both limits.
+        caller_deadline = (
+            authorization_deadline
+            if authorization_applies is True
+            else request_deadline if authorization_applies is False else None
+        )
+        done = getattr(submitted, "done", None)
+        dispatch_limits = [
+            deadline
+            for deadline in (request_deadline, authorization_deadline)
+            if deadline is not None
+        ]
+        dispatch_deadline = (
+            min(dispatch_limits) if authorization_applies is True else None
+        )
+        if (caller_deadline is None and dispatch_deadline is None) or (
+            callable(done) and done()
+        ):
+            await submitted
+            return
+        waiter = ensure_future(submitted)
+        try:
+            if dispatch_deadline is not None and not dispatch_started.done():
+                remaining = dispatch_deadline - monotonic()
+                if remaining > 0:
+                    started_waiter = ensure_future(
+                        shield(wrap_future(dispatch_started))
+                    )
+                    try:
+                        completed, _ = await wait(
+                            (waiter, started_waiter),
+                            timeout=remaining,
+                            return_when=FIRST_COMPLETED,
+                        )
+                    finally:
+                        started_waiter.cancel()
+                        await gather(started_waiter, return_exceptions=True)
+                    if waiter in completed:
+                        await waiter
+                        return
+                if not dispatch_started.done():
+                    waiter.cancel()
+                    cancel = getattr(submitted, "cancel", None)
+                    if callable(cancel):
+                        cancel()
+                    raise TimeoutError(
+                        "The operation update timed out before SDK-loop dispatch."
+                    )
+            if caller_deadline is None:
+                await waiter
+                return
+            remaining = caller_deadline - monotonic()
+            if remaining <= 0:
+                cancel = getattr(submitted, "cancel", None)
+                if callable(cancel):
+                    cancel()
+                raise TimeoutError("The operation update timed out.")
+            await wait_for(waiter, timeout=remaining)
+        except CancelledError:
+            cancel = getattr(submitted, "cancel", None)
+            if callable(cancel):
+                cancel()
+            waiter.cancel()
+            await gather(waiter, return_exceptions=True)
+            raise
+        except (TimeoutError, AsyncTimeoutError) as error:
+            if waiter.done() and not waiter.cancelled():
+                terminal_error = waiter.exception()
+                if terminal_error is error:
+                    raise
+            cancel = getattr(submitted, "cancel", None)
+            if callable(cancel):
+                cancel()
+            raise TimeoutError("The operation update timed out.") from None
+
+    async def _update_internal(
+        self,
+        *,
+        request_deadline: float | None = None,
+        authorization_deadline: float | None = None,
+        **kwargs: Unpack[RequestKwargs],
+    ) -> None:
+        """Fetch and store one operation update on the SDK event loop.
+
+        Updates are serialized for this operation. A pending response therefore
+        cannot arrive after a newer terminal response and regress the stored
+        operation state. Once a terminal response is stored, later queued
+        updates return without making another request.
+
+        :param request_deadline: Absolute monotonic request deadline captured
+            before SDK-loop dispatch.
+        :param authorization_deadline: Absolute monotonic authorization
+            deadline captured before SDK-loop dispatch.
+        :param kwargs: Request options for the operation service.
+        """
+
+        async with self._update_lock:
+            if self.done():
+                return
+
+            if request_deadline is not None:
+                request_timeout = request_deadline - monotonic()
+                if request_timeout <= 0:
+                    raise TimeoutError(
+                        "The operation update timed out before request dispatch."
+                    )
+                kwargs["timeout"] = request_timeout
+            if authorization_deadline is not None:
+                authorization_timeout = authorization_deadline - monotonic()
+                if authorization_timeout <= 0:
+                    raise TimeoutError(
+                        "The operation update authorization timed out before "
+                        "dispatch."
+                    )
+                kwargs["auth_timeout"] = authorization_timeout
+
+            req = self._service.get(
+                self._get_request_obj(id=self.id),
+                **kwargs,
+            )
+            new_op = await req
+            self._set_new_operation(cast(OperationPb, new_op._operation))
 
     def sync_wait(
         self,
@@ -407,9 +662,21 @@ class Operation(Generic[OperationPb]):
 
         See :meth:`wait` for parameter details.
         """
+        self._check_process()
+        if self.done():
+            return
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
+        _validate_timeout(timeout, "timeout")
+        submitted_at = monotonic()
         run_timeout = None if timeout is None else timeout + 0.2
         return self._channel.run_sync(
-            self.wait(
+            self._wait_from_submission(
+                submitted_at,
                 interval=interval,
                 timeout=timeout,
                 poll_iteration_timeout=poll_iteration_timeout,
@@ -427,20 +694,51 @@ class Operation(Generic[OperationPb]):
         """Synchronously perform a single update of the operation state.
 
         This wraps the coroutine :meth:`update` and runs it via the channel's
-        synchronous runner. A small safety margin is added to the provided
-        timeout to allow for scheduling overhead.
+        synchronous runner. An applicable authorization budget bounds the
+        whole authorized flow; otherwise the request budget bounds SDK-loop
+        queueing. Legacy channels whose provider is discoverable only on
+        their owner loop enforce both clocks internally. A small safety margin
+        accommodates scheduling overhead. Mutable metadata and authorization
+        options are copied before the method dispatches work.
 
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        :raises ValueError: If ``timeout`` or ``auth_timeout`` is NaN or
+            infinite. Use ``None`` for an unlimited timeout.
         """
-        timeout = kwargs.get("timeout", Unset)
-        run_timeout: float | None = None
-        if isinstance(timeout, (int, float)):
-            run_timeout = timeout + 0.2
-        elif isinstance(timeout, UnsetType):
-            run_timeout = DEFAULT_TIMEOUT + 0.2
+        self._check_process()
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
+        timeout_option = kwargs.get("timeout", Unset)
+        timeout = (
+            DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
+        )
+        auth_timeout_option = kwargs.get("auth_timeout", Unset)
+        auth_timeout = (
+            DEFAULT_AUTH_TIMEOUT
+            if isinstance(auth_timeout_option, UnsetType)
+            else auth_timeout_option
+        )
+        _validate_timeout(timeout, "timeout")
+        _validate_timeout(auth_timeout, "auth_timeout")
+        authorization_applies = _authorization_deadline_applies(
+            self._channel,
+            cast(dict[str, str], kwargs.get("auth_options") or {}),
+        )
+        run_limit = (
+            auth_timeout
+            if authorization_applies is True
+            else timeout if authorization_applies is False else None
+        )
+        run_timeout = None if run_limit is None else max(0.0, run_limit) + 0.2
+        submitted_at = monotonic()
         return self._channel.run_sync(
-            self.update(
+            self._update_from_submission(
+                submitted_at,
                 **kwargs,
             ),
             run_timeout,
@@ -462,7 +760,9 @@ class Operation(Generic[OperationPb]):
         reached. Certain transient errors (deadline exceeded) are treated as
         ignorable and will be retried.
 
-        :param interval: polling interval (seconds or timedelta)
+        :param interval: Positive, finite polling interval (seconds or
+            timedelta). This value is ignored when the operation is already
+            terminal.
         :type interval: `float` or `timedelta`
         :param timeout: overall timeout (seconds) for waiting, or `None` for
             infinite timeout, default infinite.
@@ -478,12 +778,133 @@ class Operation(Generic[OperationPb]):
             the ``retries`` to each :meth:`update` call.
         :param kwargs: additional request keyword arguments
             see :class:`nebius.aio.request_kwargs.RequestKwargsForOperation` for
-            details.
+            details. Mutable metadata and authorization options are copied
+            before polling is submitted to the SDK event loop.
 
         :raises TimeoutError: when the overall timeout is exceeded
+        :raises ValueError: When an unfinished operation receives a
+            non-positive/non-finite polling interval or a non-finite overall
+            timeout. Use ``None`` for an unlimited timeout.
+        """
+        self._check_process()
+        await self._wait_from_submission(
+            monotonic(),
+            interval=interval,
+            timeout=timeout,
+            poll_iteration_timeout=poll_iteration_timeout,
+            poll_per_retry_timeout=poll_per_retry_timeout,
+            poll_retries=poll_retries,
+            **kwargs,
+        )
+
+    async def _wait_from_submission(
+        self,
+        submitted_at: float,
+        interval: float | timedelta = 1,
+        timeout: float | None = None,
+        poll_iteration_timeout: float | UnsetType | None = Unset,
+        poll_per_retry_timeout: float | UnsetType | None = Unset,
+        poll_retries: int | None = None,
+        **kwargs: Unpack[RequestKwargsForOperation],
+    ) -> None:
+        """Submit polling with a caller-captured monotonic start time.
+
+        :param submitted_at: Monotonic time when the caller submitted the
+            wait. The overall timeout includes all later dispatch delay.
+        :param interval: Positive delay between polling attempts.
+        :param timeout: Overall wait limit, or ``None`` for no limit.
+        :param poll_iteration_timeout: Limit for one polling request.
+        :param poll_per_retry_timeout: Limit for each retry.
+        :param poll_retries: Retry count for each polling request.
+        :param kwargs: Additional request options for the operation service.
         """
 
-        start = time()
+        # Preserve the historical terminal fast path. In particular,
+        # asyncio.wait_for(..., 0) cannot start a newly submitted coroutine,
+        # even when that coroutine would immediately observe terminal state.
+        if self.done():
+            return
+        _validate_timeout(timeout, "timeout")
+        if isinstance(interval, timedelta):
+            interval = interval.total_seconds()
+        if not isfinite(interval) or interval <= 0:
+            raise ValueError(
+                "The interval value must be a finite positive number of seconds."
+            )
+        metadata = kwargs.get("metadata")
+        if metadata is not None:
+            kwargs["metadata"] = Metadata(metadata)
+        auth_options = kwargs.get("auth_options")
+        if auth_options is not None:
+            kwargs["auth_options"] = dict(auth_options)
+        deadline = None if timeout is None else submitted_at + max(timeout, 0)
+        submit = getattr(self._channel, "run_async", None)
+        wait = self._wait_internal(
+            interval=interval,
+            timeout=timeout,
+            deadline=deadline,
+            poll_iteration_timeout=poll_iteration_timeout,
+            poll_per_retry_timeout=poll_per_retry_timeout,
+            poll_retries=poll_retries,
+            **kwargs,
+        )
+        try:
+            submitted = submit(wait) if callable(submit) else wait
+        except BaseException:
+            dispose_unstarted_awaitable(wait)
+            raise
+        if timeout is None:
+            await submitted
+            return
+        if deadline is None:  # pragma: no cover - narrowed by ``timeout`` above
+            raise RuntimeError("The finite operation timeout has no deadline.")
+        completed = getattr(submitted, "done", None)
+        if callable(completed) and completed():
+            # A terminal submission wins even if result publication consumed
+            # the final fraction of the caller-side budget.
+            await submitted
+            return
+        remaining = max(0.0, deadline - monotonic())
+        try:
+            # Bound dispatch to the SDK loop as well as polling performed on
+            # it. ``wait_for`` propagates cancellation to the one submitted
+            # wait when the caller-side deadline expires.
+            await wait_for(submitted, timeout=remaining)
+        except (TimeoutError, AsyncTimeoutError) as error:
+            raise TimeoutError("The operation wait timed out.") from error
+
+    async def _wait_internal(
+        self,
+        interval: float | timedelta = 1,
+        timeout: float | None = None,
+        deadline: float | None = None,
+        poll_iteration_timeout: float | UnsetType | None = Unset,
+        poll_per_retry_timeout: float | UnsetType | None = Unset,
+        poll_retries: int | None = None,
+        **kwargs: Unpack[RequestKwargsForOperation],
+    ) -> None:
+        """Poll the operation on the SDK event loop until it is complete.
+
+        A local timeout and a service ``DEADLINE_EXCEEDED`` response are
+        transient for one polling iteration. Other errors stop the wait.
+
+        :param interval: Delay between polling attempts, in seconds or as a
+            time delta.
+        :param timeout: Overall wait limit in seconds. Use ``None`` for no
+            limit.
+        :param deadline: Absolute monotonic deadline captured before dispatch
+            to the SDK loop. This includes runtime queueing and update-lock
+            acquisition in the overall timeout.
+        :param poll_iteration_timeout: Timeout for one update request.
+        :param poll_per_retry_timeout: Timeout for each retry of an update
+            request.
+        :param poll_retries: Retry count for each update request.
+        :param kwargs: Additional request options for the operation service.
+        :raises TimeoutError: If the overall wait limit expires.
+        """
+
+        if deadline is None and timeout is not None:
+            deadline = monotonic() + max(timeout, 0)
         if poll_iteration_timeout is None:
             if timeout is not None:
                 poll_iteration_timeout = min(5, timeout)
@@ -492,6 +913,8 @@ class Operation(Generic[OperationPb]):
         from nebius.aio.service_error import RequestError as ServiceRequestError
 
         def _is_ignorable(err: Exception) -> bool:
+            """Return whether one polling error is transient."""
+
             # TimeoutError raised locally or RequestError with DEADLINE_EXCEEDED
             if isinstance(err, TimeoutError):
                 return True
@@ -503,24 +926,41 @@ class Operation(Generic[OperationPb]):
             return False
 
         async def _safe_update() -> None:
+            """Run one update and ignore only transient polling errors."""
+
             try:
-                await self.update(
+                update = self._update_internal(
                     timeout=poll_iteration_timeout,
                     per_retry_timeout=poll_per_retry_timeout,
                     retries=poll_retries,
                     **kwargs,
                 )
+                if deadline is None:
+                    await update
+                else:
+                    remaining = deadline - monotonic()
+                    if remaining <= 0:
+                        update.close()
+                        raise TimeoutError("The operation wait timed out.")
+                    await wait_for(update, timeout=remaining)
             except Exception as e:  # noqa: S110
+                if deadline is not None and monotonic() >= deadline:
+                    raise TimeoutError("The operation wait timed out.") from e
                 if not _is_ignorable(e):
                     raise
 
         if not self.done():
             await _safe_update()
         while not self.done():
-            current_time = time()
-            if timeout is not None and current_time > timeout + start:
-                raise TimeoutError("Operation wait timeout")
-            await sleep(interval)
+            if deadline is not None:
+                remaining = deadline - monotonic()
+                if remaining <= 0:
+                    raise TimeoutError("The operation wait timed out.")
+                await sleep(min(interval, remaining))
+            else:
+                await sleep(interval)
+            if deadline is not None and monotonic() >= deadline:
+                raise TimeoutError("The operation wait timed out.")
             await _safe_update()
 
     def _set_new_operation(self, operation: OperationPb) -> None:
@@ -530,20 +970,22 @@ class Operation(Generic[OperationPb]):
         protobuf class as the currently wrapped object; otherwise an
         :class:`SDKError` is raised.
         """
-        if isinstance(operation, self._operation.__class__):
-            self._operation = operation
-        else:
-            raise SDKError(f"Operation type {type(operation)} not supported.")
+        self._check_process()
+        with self._state_lock:
+            if isinstance(operation, self._operation.__class__):
+                self._operation = operation
+                return
+        raise SDKError(f"The SDK does not support operation type {type(operation)}.")
 
     @property
     def id(self) -> str:
         """Return the operation identifier (string)."""
-        return self._operation.id
+        return self._operation_snapshot().id
 
     @property
     def description(self) -> str:
         """Return the operation description as provided by the service."""
-        return self._operation.description
+        return self._operation_snapshot().description
 
     @property
     def created_at(self) -> datetime:
@@ -553,7 +995,7 @@ class Operation(Generic[OperationPb]):
         returns the current time in the local timezone.
         :rtype: datetime
         """
-        ca = self._operation.created_at
+        ca = self._operation_snapshot().created_at
         if ca is None:
             return datetime.now(local_timezone)
         return ca
@@ -561,17 +1003,17 @@ class Operation(Generic[OperationPb]):
     @property
     def created_by(self) -> str:
         """Return the identity that created the operation (string)."""
-        return self._operation.created_by
+        return self._operation_snapshot().created_by
 
     @property
     def finished_at(self) -> datetime | None:
         """Return the completion time or ``None`` if the operation is not finished."""
-        return self._operation.finished_at
+        return self._operation_snapshot().finished_at
 
     @property
     def resource_id(self) -> str:
         """Return the resource id associated with the operation."""
-        return self._operation.resource_id
+        return self._operation_snapshot().resource_id
 
     def successful(self) -> bool:
         """Return True when the operation completed successfully."""
@@ -582,9 +1024,13 @@ class Operation(Generic[OperationPb]):
         """Return the underlying operation protobuf object.
 
         Use this to access version-specific fields that are not exposed by the
-        normalized wrapper.
+        normalized wrapper. The returned object preserves the existing mutable
+        compatibility surface; mutating it concurrently bypasses this wrapper's
+        snapshot and locking guarantees. Callers must serialize such mutation.
+
+        :return: Current mutable operation protobuf object.
         """
-        return self._operation
+        return self._operation_snapshot()
 
 
 def _check_presence(message: object, field: str) -> bool:
@@ -617,9 +1063,12 @@ class _ProgressTrackerWrapper:
         self._operation = operation
 
     def _tracker(self) -> object | None:
-        op_proto = getattr(self._operation, "_operation", None)
-        if op_proto is None:
-            return None
+        return self._tracker_from(self._operation._operation_snapshot())
+
+    @staticmethod
+    def _tracker_from(op_proto: object) -> object | None:
+        """Return a tracker from one stable operation snapshot."""
+
         if not _check_presence(op_proto, "progress_tracker"):
             return None
         return getattr(op_proto, "progress_tracker", None)
@@ -649,12 +1098,13 @@ class _ProgressTrackerWrapper:
         return _get_work_done(tracker)
 
     def work_fraction(self) -> float | None:
-        if self._operation.done():
+        operation = self._operation._operation_snapshot()
+        if operation.status is not None:
             return 1.0
-        tracker = self._tracker()
+        tracker = self._tracker_from(operation)
         if tracker is None:
             return None
-        work_done = self.work_done()
+        work_done = _get_work_done(tracker)
         if work_done is None:
             return None
         total = getattr(work_done, "total_tick_count", 0)
@@ -664,21 +1114,23 @@ class _ProgressTrackerWrapper:
         return float(done) / float(total)
 
     def estimated_finished_at(self) -> datetime | None:
-        tracker = self._tracker()
+        operation = self._operation._operation_snapshot()
+        tracker = self._tracker_from(operation)
         if tracker is None:
-            return _get_timestamp(self._operation._operation, "finished_at")
+            return _get_timestamp(operation, "finished_at")
         finished = _get_timestamp(tracker, "finished_at")
         if finished is not None:
             return finished
-        operation_finished = _get_timestamp(self._operation._operation, "finished_at")
+        operation_finished = _get_timestamp(operation, "finished_at")
         if operation_finished is not None:
             return operation_finished
         return _get_timestamp(tracker, "estimated_finished_at")
 
     def time_fraction(self) -> float | None:
-        if self._operation.done():
+        operation = self._operation._operation_snapshot()
+        if operation.status is not None:
             return 1.0
-        tracker = self._tracker()
+        tracker = self._tracker_from(operation)
         if tracker is None:
             return None
         started_at = _get_timestamp(tracker, "started_at")
@@ -745,9 +1197,7 @@ def wrap_progress_tracker(
     """
     if operation is None:
         return None
-    op_proto = getattr(operation, "_operation", None)
-    if op_proto is None:
-        return None
+    op_proto = operation._operation_snapshot()
     if not _check_presence(op_proto, "progress_tracker"):
         return None
     tracker = getattr(op_proto, "progress_tracker", None)

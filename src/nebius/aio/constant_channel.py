@@ -9,7 +9,7 @@ network and authorization functions.
 """
 
 from collections.abc import Awaitable
-from typing import TypeVar
+from typing import TypeVar, cast
 
 from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
@@ -92,6 +92,23 @@ class Constant(ClientChannelInterface):
         """
         return self._source.get_authorization_provider()
 
+    def _has_authorization_provider(self) -> bool | None:
+        """Return whether the source has a fixed authorization provider.
+
+        Legacy sources do not expose the private caller-safe probe. Their auth
+        timeout remains enforced by the request's authorization loop instead
+        of by a speculative caller-side dispatch deadline.
+
+        :return: ``True`` or ``False`` when the source can answer safely, or
+            ``None`` when provider discovery belongs to its owner loop.
+        """
+
+        provider_probe = getattr(self._source, "_has_authorization_provider", None)
+        if not callable(provider_probe):
+            return None
+        result = provider_probe()
+        return None if result is None else bool(result)
+
     def get_channel_by_method(self, method_name: str) -> AddressChannel:
         """Resolve an address channel by method name.
 
@@ -115,3 +132,19 @@ class Constant(ClientChannelInterface):
         :returns: the awaitable result
         """
         return self._source.run_sync(awaitable, timeout)
+
+    def run_async(self, awaitable: Awaitable[T]) -> Awaitable[T]:
+        """Submit an awaitable to the source channel's SDK event loop.
+
+        A legacy source without ``run_async`` returns the original awaitable.
+        Callers that retain the result must schedule a one-shot coroutine on
+        their active loop before memoizing it.
+
+        :param awaitable: Work to submit or return for legacy execution.
+        :return: Source submission handle, or the unchanged awaitable.
+        """
+
+        submit = getattr(self._source, "run_async", None)
+        if callable(submit):
+            return cast(Awaitable[T], submit(awaitable))
+        return awaitable

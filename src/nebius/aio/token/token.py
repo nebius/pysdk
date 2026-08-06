@@ -209,6 +209,10 @@ class Receiver(ABC):
 
     A receiver gets and refreshes a token for one request. A :class:`Bearer`
     supports multiple requests and supplies a receiver for each request.
+
+    The built-in channel calls receivers on its internal SDK event loop. A
+    custom receiver must be thread-safe and loop-neutral. It must not retain
+    asyncio state that belongs to an application loop.
     """
 
     _latest: Token | None
@@ -293,6 +297,12 @@ class Bearer(ABC):
     A Bearer supplies receivers for per-request authenticators. Bearers may
     be composed (wrapping other Bearers) to add behaviour such as caching,
     refreshing, or naming.
+
+    Treat a stateful bearer as owned by one SDK. The built-in channel calls it
+    on that SDK's internal event loop and closes it with the SDK. Do not attach
+    one bearer instance to SDKs with different loops unless the implementation
+    is thread-safe, loop-neutral, and explicitly supports concurrent use and
+    independent close calls.
 
     Example
     -------
