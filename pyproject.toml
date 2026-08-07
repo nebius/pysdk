@@ -36,6 +36,7 @@ dev = [
     "pytest>=8.0",  # For running tests
     "pytest-asyncio>=0.24.0",  # For running async tests
     "pytest-subtests>=0.3.0",  # For subtests in pytest
+    "pytest-timeout>=2.3.1",  # For stopping tests that hang
     "tox>=4.0",     # For testing automation
     "mypy>=1.13",    # For type checking
     "pyright[nodejs]>=1.1.390",  # For installed-wheel type checking
@@ -134,6 +135,8 @@ load-plugins = ["pylint.extensions.mccabe"]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+timeout = 1200
 # log_cli = true
 # log_cli_level = "DEBUG"
 log_cli_format = "%(asctime)s %(levelname)s %(name)s: %(message)s"
@@ -153,6 +156,7 @@ deps = [
     "pytest-cov",
     "pytest-asyncio",
     "pytest-subtests",
+    "pytest-timeout",
     "grpcio",
     "grpcio-status",
     "m2r2",
@@ -179,6 +183,7 @@ deps = [
     "pytest-cov",
     "pytest-asyncio",
     "pytest-subtests",
+    "pytest-timeout",
     "pyyaml==5.1.1",
     "grpcio==1.56.2",
     "protobuf==5.29.1",
