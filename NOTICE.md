@@ -42,6 +42,10 @@ This project uses third-party libraries under the following licenses:
   Licensed under the Apache License, Version 2.0.
   https://github.com/pytest-dev/pytest-asyncio
 
+- **pytest-timeout** (>=2.3.1)
+  Licensed under the MIT License.
+  https://github.com/pytest-dev/pytest-timeout
+
 - **tox** (>=4.0)
   Licensed under the MIT License.
   https://tox.readthedocs.io/
