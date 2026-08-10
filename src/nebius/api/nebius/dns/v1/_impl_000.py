@@ -1324,6 +1324,74 @@ class ZoneStatus(Message):
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_dns_v1_ZoneStatus_5abbd7d5 = ZoneStatus
 
+class ListZonesByNetworkRequest(Message):
+    'Request to list DNS zones in the specified virtual network'
+    __PROTO_FULL_NAME__ = 'nebius.dns.v1.ListZonesByNetworkRequest'
+    """Fully qualified protobuf message name."""
+    __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
+    __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
+    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.dns.v1.ListZonesByNetworkRequest')
+    """Protobuf message descriptor from the registry."""
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
+
+    def __init__(
+        self,
+        initial_message: _NebiusSerializableMessage | None = None,
+        *,
+        network_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        page_size: _NebiusInt | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        page_token: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
+        if network_id is not _NEBIUS_UNSET:
+            values['network_id'] = network_id
+        if page_size is not _NEBIUS_UNSET:
+            values['page_size'] = page_size
+        if page_token is not _NEBIUS_UNSET:
+            values['page_token'] = page_token
+        super().__init__(initial_message, **values)
+
+    @_NebiusProperty
+    def network_id(self) -> _NebiusStr:
+        'Network ID'
+        value = self._get_field(_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_NETWORK_ID, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @network_id.setter
+    def network_id(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``network_id`` field."""
+        self._set_field(_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_NETWORK_ID, value)
+
+    @_NebiusProperty
+    def page_size(self) -> _NebiusInt:
+        'Page size\nIf not specified or set to ``0``, a default page size of ``100`` will be used'
+        value = self._get_field(_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_SIZE, absent_is_none=False)
+        return _nebius_cast('_NebiusInt', value)
+
+    @page_size.setter
+    def page_size(self, value: _NebiusInt | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        self._set_field(_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_SIZE, value)
+
+    @_NebiusProperty
+    def page_token(self) -> _NebiusStr:
+        'An opaque listing continuation token\n\n\n* If not specified or empty, the first page of results will be returned\n* If specified, the next page of results (as identified by the token) will be returned'
+        value = self._get_field(_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_TOKEN, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @page_token.setter
+    def page_token(self, value: _NebiusStr | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        self._set_field(_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_TOKEN, value)
+
+    __PY_TO_PB2__ = {'network_id': 'network_id', 'page_size': 'page_size', 'page_token': 'page_token'}
+    """Mapping from Python member names to protobuf names."""
+_NebiusType_nebius_dns_v1_ListZonesByNetworkRequest_22e347c5 = ListZonesByNetworkRequest
+
 # @@nebius-section:fields@@
 _NEBIUS_DNS_V1_CREATERECORDREQUEST_METADATA = Field('metadata', 'metadata', 1, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ResourceMetadata')), json_name='metadata')
 _NEBIUS_DNS_V1_CREATERECORDREQUEST_SPEC = Field('spec', 'spec', 2, message_codec(lambda: REGISTRY.message_class('nebius.dns.v1.RecordSpec')), json_name='spec')
@@ -1412,6 +1480,11 @@ ZoneSpec.__FIELDS__ = (_NEBIUS_DNS_V1_ZONESPEC_DOMAIN_NAME, _NEBIUS_DNS_V1_ZONES
 _NEBIUS_DNS_V1_ZONESTATUS_RECORD_COUNT = Field('record_count', 'record_count', 20, INT64, json_name='recordCount')
 _NEBIUS_DNS_V1_ZONESTATUS_RECONCILING = Field('reconciling', 'reconciling', 100, BOOL, json_name='reconciling')
 ZoneStatus.__FIELDS__ = (_NEBIUS_DNS_V1_ZONESTATUS_RECORD_COUNT, _NEBIUS_DNS_V1_ZONESTATUS_RECONCILING)
+
+_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_NETWORK_ID = Field('network_id', 'network_id', 1, STRING, json_name='networkId')
+_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
+_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_TOKEN = Field('page_token', 'page_token', 3, STRING, json_name='pageToken')
+ListZonesByNetworkRequest.__FIELDS__ = (_NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_NETWORK_ID, _NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_SIZE, _NEBIUS_DNS_V1_LISTZONESBYNETWORKREQUEST_PAGE_TOKEN)
 
 # @@nebius-section:attachments@@
 RecordSpec__RecordType.__name__ = 'RecordType'
@@ -1588,6 +1661,19 @@ class ZoneServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b88
             **kwargs,
         )
 
+    def list_by_network(
+        self,
+        request: _NebiusType_nebius_dns_v1_ListZonesByNetworkRequest_22e347c5,
+        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
+    ) -> _NebiusRequest[_NebiusType_nebius_dns_v1_ListZonesByNetworkRequest_22e347c5, _NebiusType_nebius_dns_v1_ListZonesResponse_5674fd71]:
+        'Lists DNS zones in the specified virtual network\n\nThe request object is returned without starting the RPC.'
+        return super().request(
+            method='ListByNetwork',
+            request=request,
+            result_pb2_class=REGISTRY.message_class('nebius.dns.v1.ListZonesResponse'),
+            **kwargs,
+        )
+
     def create(
         self,
         request: _NebiusType_nebius_dns_v1_CreateZoneRequest_13df60c8,
@@ -1634,4 +1720,4 @@ class ZoneServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b88
         )
 
 # @@nebius-section:exports@@
-__all__ = ['CreateRecordRequest', 'CreateZoneRequest', 'DeleteRecordRequest', 'DeleteZoneRequest', 'GetRecordRequest', 'GetZoneRequest', 'ListRecordsRequest', 'ListRecordsResponse', 'ListZonesRequest', 'ListZonesResponse', 'Record', 'RecordServiceClient', 'RecordSpec', 'RecordStatus', 'SoaSpec', 'UpdateRecordRequest', 'UpdateZoneRequest', 'VpcZoneScope', 'Zone', 'ZoneServiceClient', 'ZoneSpec', 'ZoneStatus']
+__all__ = ['CreateRecordRequest', 'CreateZoneRequest', 'DeleteRecordRequest', 'DeleteZoneRequest', 'GetRecordRequest', 'GetZoneRequest', 'ListRecordsRequest', 'ListRecordsResponse', 'ListZonesByNetworkRequest', 'ListZonesRequest', 'ListZonesResponse', 'Record', 'RecordServiceClient', 'RecordSpec', 'RecordStatus', 'SoaSpec', 'UpdateRecordRequest', 'UpdateZoneRequest', 'VpcZoneScope', 'Zone', 'ZoneServiceClient', 'ZoneSpec', 'ZoneStatus']
