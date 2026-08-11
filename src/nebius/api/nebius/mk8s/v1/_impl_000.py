@@ -469,7 +469,7 @@ class ControlPlaneSpec(Message):
 
     @_NebiusProperty
     def version(self) -> _NebiusStr:
-        'Desired Kubernetes version of the cluster. For now only acceptable format is\n``<major>.<minor>`` like "1.31". Option for patch version update will be added later.'
+        'Desired Kubernetes version of the cluster. May be lower than the actual cluster version\nif the desired version is no longer supported and the cluster has been automatically updated.\nFor now only acceptable format is ``<major>.<minor>`` like "1.31".\nOption for patch version update will be added later.'
         value = self._get_field(_NEBIUS_MK8S_V1_CONTROLPLANESPEC_VERSION, absent_is_none=False)
         return _nebius_cast('_NebiusStr', value)
 

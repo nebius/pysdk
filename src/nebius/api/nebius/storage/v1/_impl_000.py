@@ -140,6 +140,25 @@ class BucketStatus__SuspensionState(Enum):
     SUSPENDED = 2
 _NebiusType_nebius_storage_v1_BucketStatus_SuspensionState_2e6f21ad = BucketStatus__SuspensionState
 
+class InsecureEndpoint__Mode(Enum):
+    'Defines where the plain HTTP endpoint is available.'
+    __PROTO_FULL_NAME__ = 'nebius.storage.v1.InsecureEndpoint.Mode'
+    """Fully qualified protobuf enum name."""
+    __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
+    __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.storage.v1.InsecureEndpoint.Mode')
+    """Protobuf enum descriptor from the registry."""
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
+    MODE_UNSPECIFIED = 0
+    DISABLED = 1
+    'Plain HTTP access is disabled.'
+    REGION_LOCAL = 2
+    'Plain HTTP access is available only from the same region.'
+    ALL = 3
+    'Plain HTTP access is available from any network.'
+_NebiusType_nebius_storage_v1_InsecureEndpoint_Mode_8ff863f4 = InsecureEndpoint__Mode
+
 class LifecycleAccessFilter__Condition__Method(Enum):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleAccessFilter.Condition.Method'
     """Fully qualified protobuf enum name."""
@@ -502,6 +521,7 @@ class BucketStatus(Message):
         domain_name: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         region: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         anonymous_access_enabled: _NebiusBool | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        insecure_endpoint: _NebiusType_nebius_storage_v1_InsecureEndpoint_24034cc9 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
@@ -521,6 +541,8 @@ class BucketStatus(Message):
             values['region'] = region
         if anonymous_access_enabled is not _NEBIUS_UNSET:
             values['anonymous_access_enabled'] = anonymous_access_enabled
+        if insecure_endpoint is not _NEBIUS_UNSET:
+            values['insecure_endpoint'] = insecure_endpoint
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -608,7 +630,18 @@ class BucketStatus(Message):
         """Set or clear the generated ``anonymous_access_enabled`` field."""
         self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_ANONYMOUS_ACCESS_ENABLED, value)
 
-    __PY_TO_PB2__ = {'counters': 'counters', 'state': 'state', 'suspension_state': 'suspension_state', 'deleted_at': 'deleted_at', 'purge_at': 'purge_at', 'domain_name': 'domain_name', 'region': 'region', 'anonymous_access_enabled': 'anonymous_access_enabled', 'State': 'State', 'SuspensionState': 'SuspensionState'}
+    @_NebiusProperty
+    def insecure_endpoint(self) -> _NebiusType_nebius_storage_v1_InsecureEndpoint_24034cc9:
+        'Insecure endpoint mode shows whether plain HTTP (without TLS) is forbidden, allowed for traffic from the\nsame region or allowed from everywhere.'
+        value = self._get_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_INSECURE_ENDPOINT, absent_is_none=False)
+        return _nebius_cast('_NebiusType_nebius_storage_v1_InsecureEndpoint_24034cc9', value)
+
+    @insecure_endpoint.setter
+    def insecure_endpoint(self, value: _NebiusType_nebius_storage_v1_InsecureEndpoint_24034cc9 | None) -> None:
+        """Set or clear the generated ``insecure_endpoint`` field."""
+        self._set_field(_NEBIUS_STORAGE_V1_BUCKETSTATUS_INSECURE_ENDPOINT, value)
+
+    __PY_TO_PB2__ = {'counters': 'counters', 'state': 'state', 'suspension_state': 'suspension_state', 'deleted_at': 'deleted_at', 'purge_at': 'purge_at', 'domain_name': 'domain_name', 'region': 'region', 'anonymous_access_enabled': 'anonymous_access_enabled', 'insecure_endpoint': 'insecure_endpoint', 'State': 'State', 'SuspensionState': 'SuspensionState'}
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_BucketStatus_df07dd31 = BucketStatus
 
@@ -1748,6 +1781,46 @@ class CORSRule(Message):
     __PY_TO_PB2__ = {'id': 'id', 'allowed_headers': 'allowed_headers', 'allowed_origins': 'allowed_origins', 'allowed_methods': 'allowed_methods', 'expose_headers': 'expose_headers', 'max_age_seconds': 'max_age_seconds', '_id': '_id', '_max_age_seconds': '_max_age_seconds'}
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_storage_v1_CORSRule_262cd997 = CORSRule
+
+class InsecureEndpoint(Message):
+    __PROTO_FULL_NAME__ = 'nebius.storage.v1.InsecureEndpoint'
+    """Fully qualified protobuf message name."""
+    __REGISTRY__ = REGISTRY
+    """Registry for this message and its descriptor."""
+    __EXTENSION_REGISTRY__ = EXTENSIONS
+    """Registry that decodes extensions for this message."""
+    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.storage.v1.InsecureEndpoint')
+    """Protobuf message descriptor from the registry."""
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf message descriptor."""
+    Mode: _NebiusTypeAlias = _NebiusType_nebius_storage_v1_InsecureEndpoint_Mode_8ff863f4
+
+    def __init__(
+        self,
+        initial_message: _NebiusSerializableMessage | None = None,
+        *,
+        mode: _NebiusType_nebius_storage_v1_InsecureEndpoint_Mode_8ff863f4 | None | _NebiusUnsetType = _NEBIUS_UNSET,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
+        if mode is not _NEBIUS_UNSET:
+            values['mode'] = mode
+        super().__init__(initial_message, **values)
+
+    @_NebiusProperty
+    def mode(self) -> _NebiusType_nebius_storage_v1_InsecureEndpoint_Mode_8ff863f4:
+        'Determines where the plain HTTP endpoint is available.'
+        value = self._get_field(_NEBIUS_STORAGE_V1_INSECUREENDPOINT_MODE, absent_is_none=False)
+        return _nebius_cast('_NebiusType_nebius_storage_v1_InsecureEndpoint_Mode_8ff863f4', None if value is None else REGISTRY.enum_class('nebius.storage.v1.InsecureEndpoint.Mode')(value))
+
+    @mode.setter
+    def mode(self, value: _NebiusType_nebius_storage_v1_InsecureEndpoint_Mode_8ff863f4 | None) -> None:
+        """Set or clear the generated ``mode`` field."""
+        self._set_field(_NEBIUS_STORAGE_V1_INSECUREENDPOINT_MODE, value)
+
+    __PY_TO_PB2__ = {'mode': 'mode', 'Mode': 'Mode'}
+    """Mapping from Python member names to protobuf names."""
+_NebiusType_nebius_storage_v1_InsecureEndpoint_24034cc9 = InsecureEndpoint
 
 class LifecycleAccessFilter__Condition(Message):
     __PROTO_FULL_NAME__ = 'nebius.storage.v1.LifecycleAccessFilter.Condition'
@@ -4267,7 +4340,8 @@ _NEBIUS_STORAGE_V1_BUCKETSTATUS_PURGE_AT = Field('purge_at', 'purge_at', 5, mess
 _NEBIUS_STORAGE_V1_BUCKETSTATUS_DOMAIN_NAME = Field('domain_name', 'domain_name', 6, STRING, json_name='domainName')
 _NEBIUS_STORAGE_V1_BUCKETSTATUS_REGION = Field('region', 'region', 8, STRING, json_name='region')
 _NEBIUS_STORAGE_V1_BUCKETSTATUS_ANONYMOUS_ACCESS_ENABLED = Field('anonymous_access_enabled', 'anonymous_access_enabled', 9, BOOL, json_name='anonymousAccessEnabled')
-BucketStatus.__FIELDS__ = (_NEBIUS_STORAGE_V1_BUCKETSTATUS_COUNTERS, _NEBIUS_STORAGE_V1_BUCKETSTATUS_STATE, _NEBIUS_STORAGE_V1_BUCKETSTATUS_SUSPENSION_STATE, _NEBIUS_STORAGE_V1_BUCKETSTATUS_DELETED_AT, _NEBIUS_STORAGE_V1_BUCKETSTATUS_PURGE_AT, _NEBIUS_STORAGE_V1_BUCKETSTATUS_DOMAIN_NAME, _NEBIUS_STORAGE_V1_BUCKETSTATUS_REGION, _NEBIUS_STORAGE_V1_BUCKETSTATUS_ANONYMOUS_ACCESS_ENABLED)
+_NEBIUS_STORAGE_V1_BUCKETSTATUS_INSECURE_ENDPOINT = Field('insecure_endpoint', 'insecure_endpoint', 10, message_codec(lambda: REGISTRY.message_class('nebius.storage.v1.InsecureEndpoint')), json_name='insecureEndpoint')
+BucketStatus.__FIELDS__ = (_NEBIUS_STORAGE_V1_BUCKETSTATUS_COUNTERS, _NEBIUS_STORAGE_V1_BUCKETSTATUS_STATE, _NEBIUS_STORAGE_V1_BUCKETSTATUS_SUSPENSION_STATE, _NEBIUS_STORAGE_V1_BUCKETSTATUS_DELETED_AT, _NEBIUS_STORAGE_V1_BUCKETSTATUS_PURGE_AT, _NEBIUS_STORAGE_V1_BUCKETSTATUS_DOMAIN_NAME, _NEBIUS_STORAGE_V1_BUCKETSTATUS_REGION, _NEBIUS_STORAGE_V1_BUCKETSTATUS_ANONYMOUS_ACCESS_ENABLED, _NEBIUS_STORAGE_V1_BUCKETSTATUS_INSECURE_ENDPOINT)
 
 _NEBIUS_STORAGE_V1_BUCKETCOUNTERS_STORAGE_CLASS = Field('storage_class', 'storage_class', 1, enum_codec((0, 1, 2, 3, 4), default=0, closed=False, names={'STORAGE_CLASS_UNSPECIFIED': 0, 'STANDARD': 1, 'ENHANCED_THROUGHPUT': 2, 'INTELLIGENT': 3, 'FILESYSTEM': 4}, enum_type=lambda: REGISTRY.enum_class('nebius.storage.v1.StorageClass')), json_name='storageClass')
 _NEBIUS_STORAGE_V1_BUCKETCOUNTERS_COUNTERS = Field('counters', 'counters', 2, message_codec(lambda: REGISTRY.message_class('nebius.storage.v1.CurrentBucketCounters')), json_name='counters')
@@ -4346,6 +4420,9 @@ _NEBIUS_STORAGE_V1_CORSRULE_ALLOWED_METHODS = Field('allowed_methods', 'allowed_
 _NEBIUS_STORAGE_V1_CORSRULE_EXPOSE_HEADERS = Field('expose_headers', 'expose_headers', 5, STRING, repeated=True, json_name='exposeHeaders')
 _NEBIUS_STORAGE_V1_CORSRULE_MAX_AGE_SECONDS = Field('max_age_seconds', 'max_age_seconds', 6, INT32, explicit_presence=True, oneof='_max_age_seconds', json_name='maxAgeSeconds')
 CORSRule.__FIELDS__ = (_NEBIUS_STORAGE_V1_CORSRULE_ID, _NEBIUS_STORAGE_V1_CORSRULE_ALLOWED_HEADERS, _NEBIUS_STORAGE_V1_CORSRULE_ALLOWED_ORIGINS, _NEBIUS_STORAGE_V1_CORSRULE_ALLOWED_METHODS, _NEBIUS_STORAGE_V1_CORSRULE_EXPOSE_HEADERS, _NEBIUS_STORAGE_V1_CORSRULE_MAX_AGE_SECONDS)
+
+_NEBIUS_STORAGE_V1_INSECUREENDPOINT_MODE = Field('mode', 'mode', 1, enum_codec((0, 1, 2, 3), default=0, closed=False, names={'MODE_UNSPECIFIED': 0, 'DISABLED': 1, 'REGION_LOCAL': 2, 'ALL': 3}, enum_type=lambda: REGISTRY.enum_class('nebius.storage.v1.InsecureEndpoint.Mode')), json_name='mode')
+InsecureEndpoint.__FIELDS__ = (_NEBIUS_STORAGE_V1_INSECUREENDPOINT_MODE,)
 
 _NEBIUS_STORAGE_V1_LIFECYCLEACCESSFILTER_CONDITION_TYPE = Field('type', 'type', 1, enum_codec((0, 1, 2), default=0, closed=False, names={'TYPE_UNSPECIFIED': 0, 'INCLUDE': 1, 'EXCLUDE': 2}, enum_type=lambda: REGISTRY.enum_class('nebius.storage.v1.LifecycleAccessFilter.Condition.Type')), json_name='type')
 _NEBIUS_STORAGE_V1_LIFECYCLEACCESSFILTER_CONDITION_METHODS = Field('methods', 'methods', 2, enum_codec((0, 1, 2, 3, 4, 5), default=0, closed=False, names={'METHOD_UNSPECIFIED': 0, 'GET_OBJECT': 1, 'HEAD_OBJECT': 2, 'GET_OBJECT_TAGGING': 3, 'COPY_OBJECT': 4, 'UPLOAD_PART_COPY': 5}, enum_type=lambda: REGISTRY.enum_class('nebius.storage.v1.LifecycleAccessFilter.Condition.Method')), repeated=True, packed=True, json_name='methods')
@@ -4516,6 +4593,9 @@ BucketPolicy__Rule__AnonymousAccess.__name__ = 'AnonymousAccess'
 BucketPolicy__Rule__AnonymousAccess.__qualname__ = 'BucketPolicy.Rule.AnonymousAccess'
 BucketPolicy__Rule.__name__ = 'Rule'
 BucketPolicy__Rule.__qualname__ = 'BucketPolicy.Rule'
+
+InsecureEndpoint__Mode.__name__ = 'Mode'
+InsecureEndpoint__Mode.__qualname__ = 'InsecureEndpoint.Mode'
 
 LifecycleAccessFilter__Condition__Method.__name__ = 'Method'
 LifecycleAccessFilter__Condition__Method.__qualname__ = 'LifecycleAccessFilter.Condition.Method'
@@ -4695,4 +4775,4 @@ class BucketServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b
         )
 
 # @@nebius-section:exports@@
-__all__ = ['Bucket', 'BucketCounters', 'BucketPolicy', 'BucketServiceClient', 'BucketSpec', 'BucketStatus', 'CORSConfiguration', 'CORSRule', 'CreateBucketRequest', 'CurrentBucketCounters', 'DeleteBucketRequest', 'GetBucketByNameRequest', 'GetBucketRequest', 'LifecycleAbortIncompleteMultipartUpload', 'LifecycleAccessFilter', 'LifecycleConfiguration', 'LifecycleExpiration', 'LifecycleFilter', 'LifecycleNoncurrentVersionExpiration', 'LifecycleNoncurrentVersionTransition', 'LifecycleRule', 'LifecycleTransition', 'ListBucketsRequest', 'ListBucketsResponse', 'NonCurrentBucketCounters', 'PurgeBucketRequest', 'StorageClass', 'Transfer', 'TransferCredentialsAccessKey', 'TransferCredentialsAnonymous', 'TransferCredentialsAzureStorageAccount', 'TransferDestination', 'TransferError', 'TransferIteration', 'TransferSource', 'TransferSpec', 'TransferStatus', 'UndeleteBucketRequest', 'UpdateBucketRequest', 'VersioningPolicy']
+__all__ = ['Bucket', 'BucketCounters', 'BucketPolicy', 'BucketServiceClient', 'BucketSpec', 'BucketStatus', 'CORSConfiguration', 'CORSRule', 'CreateBucketRequest', 'CurrentBucketCounters', 'DeleteBucketRequest', 'GetBucketByNameRequest', 'GetBucketRequest', 'InsecureEndpoint', 'LifecycleAbortIncompleteMultipartUpload', 'LifecycleAccessFilter', 'LifecycleConfiguration', 'LifecycleExpiration', 'LifecycleFilter', 'LifecycleNoncurrentVersionExpiration', 'LifecycleNoncurrentVersionTransition', 'LifecycleRule', 'LifecycleTransition', 'ListBucketsRequest', 'ListBucketsResponse', 'NonCurrentBucketCounters', 'PurgeBucketRequest', 'StorageClass', 'Transfer', 'TransferCredentialsAccessKey', 'TransferCredentialsAnonymous', 'TransferCredentialsAzureStorageAccount', 'TransferDestination', 'TransferError', 'TransferIteration', 'TransferSource', 'TransferSpec', 'TransferStatus', 'UndeleteBucketRequest', 'UpdateBucketRequest', 'VersioningPolicy']
