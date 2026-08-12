@@ -139,8 +139,7 @@ class Config:
         auth_metrics: AuthMetricsLike = None,
         impersonate_service_account_id: str | None = None,
     ) -> None:
-        """Initialize the config reader, and read the config file, selecting
-        the active profile.
+        """Initialize the config reader and select the active profile.
 
         ``metrics`` receives both configuration metrics and auth metrics for
         credentials created by this reader. ``auth_metrics`` receives only auth

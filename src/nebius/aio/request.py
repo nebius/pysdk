@@ -930,8 +930,7 @@ class Request(Generic[Req, Res]):
         return self.run_sync_with_timeout(self.trace_id())
 
     async def initial_metadata(self) -> Metadata:
-        """Return the initial metadata from the RPC, awaiting the request if
-        necessary.
+        """Return the initial metadata from the RPC.
 
         If the request failed but initial metadata was still produced it will
         be returned. Otherwise a :class:`RequestError` is raised.
@@ -947,8 +946,7 @@ class Request(Generic[Req, Res]):
         raise RequestError("no initial metadata after call finished")
 
     async def trailing_metadata(self) -> Metadata:
-        """Return the trailing metadata from the RPC, awaiting the request if
-        necessary.
+        """Return the trailing metadata from the RPC.
 
         If the request failed but trailing metadata was still produced it will
         be returned. Otherwise a :class:`RequestError` is raised.
@@ -1030,8 +1028,7 @@ class Request(Generic[Req, Res]):
         raise RequestError(self._status) from None
 
     def _convert_request_error(self, err: AioRpcError) -> None:
-        """Attempt to raise a RequestError from an AioRpcError, swallowing
-        any resulting RequestError.
+        """Attempt to raise and swallow a RequestError from an AioRpcError.
 
         This helper is used to set status and other metadata that came with
         the AioRpcError without actually raising the RequestError.

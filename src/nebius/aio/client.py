@@ -137,8 +137,7 @@ OperationService = TypeVar("OperationService", bound=Client)
 
 
 class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
-    """Extension of :class:`Client` for services that manage long-running
-    operations.
+    """Extension of :class:`Client` for services that manage long-running operations.
 
     :meth:`operation_service` creates an operation client when first called.
     It caches this client. A constant channel routes the client to the

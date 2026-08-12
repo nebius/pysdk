@@ -62,8 +62,9 @@ class Resolver(ABC):
 
     @abstractmethod
     def resolve(self, service_id: str) -> str:
-        """Return the resolved address for ``service_id`` or raise
-        :class:`UnknownServiceError` if the resolver does not apply.
+        """Return the resolved address for ``service_id``.
+
+        Raise :class:`UnknownServiceError` if the resolver does not apply.
 
         :param service_id: Logical service identifier to resolve.
         :returns: Address string or template.

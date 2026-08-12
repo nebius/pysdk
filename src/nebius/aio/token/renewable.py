@@ -132,8 +132,7 @@ class IsStoppedError(RenewalError):
 
 
 class Receiver(ParentReceiver):
-    """Per-request receiver that delegates fetching to the parent
-    renewable bearer while accounting for retry attempts.
+    """Per-request receiver that delegates fetching to the renewable bearer.
 
     The receiver tracks the number of fetch attempts for a single
     request. On transient failures it can instruct the parent bearer to

@@ -252,9 +252,7 @@ class Message:
         return is_creds
 
     def __repr__(self) -> str:
-        """Return a human-readable representation of the message, sanitizing sensitive
-        fields.
-        """
+        """Return a representation of the message with sensitive fields sanitized."""
         ret = self.__class__.__name__ + ":\n"
         desc = self.__class__.get_descriptor()
         for el in dir(self):

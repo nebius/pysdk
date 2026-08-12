@@ -107,7 +107,12 @@ indent-width = 4
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "Q", "S", "TD003", "FA100", "PERF401", "D409"]
+select = [
+    "E", "F", "I", "N", "Q", "S", "TD003", "FA100", "PERF401",
+    "D201", "D202", "D205", "D206", "D207", "D208", "D209", "D210",
+    "D214", "D215", "D402", "D405", "D406", "D407", "D408", "D409",
+    "D410", "D411", "D412", "D414", "D418", "D419",
+]
 ignore = [
     "D",
     "ANN101",
@@ -227,7 +232,7 @@ description = "Run linter checks"
 package = "skip"  # Skip installing the package
 deps = ["ruff==0.4.1"]
 commands = [
-    ["ruff","check","--diff","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D409","--target-version","py310","--unfixable","B","src/","tests/","nebius_generator/","scripts/"],
+    ["ruff","check","--diff","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D201,D202,D205,D206,D207,D208,D209,D210,D214,D215,D402,D405,D406,D407,D408,D409,D410,D411,D412,D414,D418,D419","--target-version","py310","--unfixable","B","src/","tests/","nebius_generator/","scripts/"],
     ["ruff","check","src/","tests/","nebius_generator/","scripts/"],
 ]
 
@@ -242,7 +247,7 @@ description = "Apply code formatting and safe lint fixes"
 package = "skip"
 deps = ["ruff==0.4.1"]
 commands = [
-    ["ruff","check","--fix-only","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D409","--target-version","py310","--unfixable","B","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
+    ["ruff","check","--fix-only","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D201,D202,D205,D206,D207,D208,D209,D210,D214,D215,D402,D405,D406,D407,D408,D409,D410,D411,D412,D414,D418,D419","--target-version","py310","--unfixable","B","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
     ["ruff","format","--target-version","py310","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
 ]
 

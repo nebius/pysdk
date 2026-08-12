@@ -37,8 +37,7 @@ class TokenAuthenticator(Authenticator):
         timeout: float | None = None,
         options: dict[str, str] | None = None,
     ) -> None:
-        """Fetch a token from the receiver and set the ``authorization`` metadata
-        header.
+        """Fetch a token and set the ``authorization`` metadata header.
 
         The header is replaced (any existing value is removed) with a
         ``Bearer <token>`` value fetched from the receiver.

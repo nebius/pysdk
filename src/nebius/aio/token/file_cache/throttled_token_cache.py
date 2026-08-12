@@ -80,8 +80,7 @@ class ThrottledTokenCache:
         return await self.refresh()
 
     async def set(self, token: Token) -> None:
-        """Store the token in the underlying cache and update the in-memory
-        cache and throttle expiration.
+        """Store the token and update the in-memory cache and throttle expiration.
 
         If the provided token equals the in-memory cached token no write is performed.
         """

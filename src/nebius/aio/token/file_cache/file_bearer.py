@@ -108,8 +108,7 @@ class PureFileCacheReceiver(ParentReceiver):
 
 
 class PureFileCacheBearer(ParentBearer):
-    """Bearer that exposes a :class:`PureFileCacheReceiver` for a named
-    token.
+    """Bearer that exposes a :class:`PureFileCacheReceiver` for a named token.
 
     Notes
     -----

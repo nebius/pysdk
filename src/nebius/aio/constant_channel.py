@@ -1,5 +1,4 @@
-"""A tiny channel implementation that routes all calls to a single
-service/method combination.
+"""A channel implementation that routes all calls to one service/method combination.
 
 The :class:`Constant` channel wraps an existing
 :class:`ClientChannelInterface`. It resolves all method lookups to one
@@ -85,8 +84,7 @@ class Constant(ClientChannelInterface):
         return self._parent_id
 
     def get_authorization_provider(self) -> AuthorizationProvider | None:
-        """Return the authorization provider used by the underlying source
-        channel (if any).
+        """Return the authorization provider used by the underlying source channel.
 
         :returns: :class:`AuthorizationProvider` or `None`
         """
@@ -122,8 +120,7 @@ class Constant(ClientChannelInterface):
         return self._source.get_channel_by_method(self._method)
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
-        """Synchronously run an awaitable using the source channel's
-        synchronization helper.
+        """Synchronously run an awaitable using the source channel's helper.
 
         :param awaitable: an awaitable to execute
         :param timeout: optional timeout forwarded to the source implementation

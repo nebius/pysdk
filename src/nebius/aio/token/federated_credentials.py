@@ -190,8 +190,7 @@ class FederatedCredentialsBearer(ParentBearer):
         return self._source
 
     def receiver(self) -> "Receiver":
-        """Return a per-request receiver constructed from the underlying renewable
-        bearer.
+        """Return a receiver constructed from the underlying renewable bearer.
 
         :returns: A :class:`Receiver` from the underlying renewable bearer.
         """

@@ -490,8 +490,7 @@ def _shutdown_runtime_on_init_failure(
 
 
 class LoopError(SDKError):
-    """Exception raised when a synchronous helper is used incorrectly with
-    an asyncio event loop.
+    """Exception raised when a synchronous helper conflicts with an asyncio event loop.
 
     A synchronous operation raises this error if its asyncio event loop is
     already running in the current thread. :meth:`Channel.run_sync` is one
@@ -1147,8 +1146,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
 
 class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore[unused-ignore,misc]
-    """A small callable wrapper that binds RPC calls to a Channel-managed
-    address channel.
+    """A small callable wrapper that binds RPC calls to a Channel-managed address.
 
     Instances act as gRPC :class:`UnaryUnaryMultiCallable` objects. They get
     the transport channel from the SDK :class:`Channel` pool. When the RPC is
@@ -1162,8 +1160,7 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
     ) -> None:
-        """Create a callable wrapper that returns requests bound to an
-        :class:`AddressChannel` from the SDK :class:`Channel`.
+        """Create a callable wrapper bound to an SDK :class:`AddressChannel`.
 
         :param channel: The SDK :class:`Channel` instance used to obtain a
             transport channel for the RPC.
@@ -1385,6 +1382,7 @@ def _get_working_loop() -> AbstractEventLoop:
 
 def set_user_agent_option(user_agent: str, options: ChannelArgumentType | None) -> ChannelArgumentType:
     """Set or override the ``grpc.primary_user_agent`` channel option.
+
     This helper appends the provided user-agent string to the ``options``
     sequence, which is passed to gRPC when creating channels. If the
     ``grpc.primary_user_agent`` option is already present in ``options``,
@@ -2686,8 +2684,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
         service_stub_class: type[ServiceStub],
     ) -> OperationServiceTransportStub:
-        """Return an operations service stub for the same address as a
-        generated service stub.
+        """Return an operations service stub for a generated service stub's address.
 
         Long-running operations are associated with their source service. This
         method returns an ``OperationServiceStub`` that resolves the generated
@@ -2714,8 +2711,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
         service_stub_class: type[ServiceStub],
     ) -> OperationServiceTransportStub:
-        """Compatibility helper returning the alpha-version operations
-        service stub for the same address as a generated service stub.
+        """Return an alpha-version operations stub for a generated service's address.
 
         See :meth:`get_corresponding_operation_service` for details. This
         method returns the older alpha operations stub for callers that need
@@ -3587,6 +3583,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     async def __aenter__(self) -> "Channel":
         """Enter the async context manager.
+
         Returns self to allow usage like::
 
             async with channel as chan:
@@ -3598,6 +3595,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         """Exit the async context manager.
+
         Calls close() to gracefully shut down resources.
         """
         await self.close(None)
@@ -3624,6 +3622,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         last_observed_state: ChannelConnectivity,
     ) -> None:
         """Nebius Python SDK channels are always ready unless closed.
+
         This method is provided to satisfy the gRPC Channel interface.
 
         :raises NotImplementedError:

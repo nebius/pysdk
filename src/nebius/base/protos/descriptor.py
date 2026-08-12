@@ -43,9 +43,7 @@ class DescriptorWrap(ABC, Generic[T]):
         self._descriptor: T | None = None
 
     def __call__(self) -> T:
-        """Retrieve the descriptor of the specified type using the fully qualified
-        name.
-        """
+        """Retrieve the descriptor of the specified type by its fully qualified name."""
         if self._descriptor is not None:
             return self._descriptor
         descriptor = self._find_descriptor(self._file_descriptor, self._name)

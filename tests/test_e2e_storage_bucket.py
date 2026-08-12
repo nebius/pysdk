@@ -84,7 +84,10 @@ def _validate_yaml_config(config_file: str) -> bool:
 
 @pytest.mark.asyncio()
 async def test_e2e_storage_bucket_lifecycle() -> None:
-    """End-to-end test for storage bucket lifecycle:
+    """Test the storage bucket lifecycle end to end.
+
+    Steps:
+
     1. Create a storage bucket with specific configuration
     2. Get the bucket by ID
     3. List buckets and verify our bucket is present

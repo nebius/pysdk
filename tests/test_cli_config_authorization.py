@@ -109,8 +109,9 @@ profiles:
 
 @pytest.mark.asyncio()
 async def test_service_account_variants(monkeypatch, tmp_path) -> None:
-    """Service account via inline PEM, credentials file,
-    and federated credentials file.
+    """Test service-account credential variants.
+
+    Cover inline PEM, credentials-file, and federated-credentials-file input.
     """
     import grpc
     import grpc.aio
