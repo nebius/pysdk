@@ -17,10 +17,10 @@ def test_api_namespace_packages_are_discovered(tmp_path: Path) -> None:
     examples.mkdir()
     (root / "__init__.py").write_text('"""SDK."""')
     (version / "__init__.py").write_text(
-        '"""Generated service."""\n\n_NEBIUS_EXPORT_SHARDS = {\'Request\': \'_impl_000\'}\n'
+        '"""Generated service."""\n\n_NEBIUS_EXPORT_SHARDS = {\'Request\': \'_impl_000\'}\n',
     )
     (version / "_impl_000.py").write_text(
-        'class Request:\n    """Request message."""\n\n    class Choice:\n        """Nested choice."""\n'
+        'class Request:\n    """Request message."""\n\n    class Choice:\n        """Nested choice."""\n',
     )
     (examples / "example.py").write_text("EXAMPLE = True\n")
 
@@ -52,7 +52,7 @@ def test_generated_type_aliases_are_public_in_annotations(tmp_path: Path) -> Non
         "    'ServiceClient': '_impl_001',\n"
         "    '_NebiusType_service_Request_deadbeef': '_impl_000',\n"
         "    '_NebiusType_service_Response_deadbeef': '_impl_000',\n"
-        "}\n"
+        "}\n",
     )
     (version / "_impl_000.py").write_text(
         "class RequestMessage:\n"
@@ -61,7 +61,7 @@ def test_generated_type_aliases_are_public_in_annotations(tmp_path: Path) -> Non
         "\n"
         "class ResponseMessage:\n"
         "    pass\n"
-        "_NebiusType_service_Response_deadbeef = ResponseMessage\n"
+        "_NebiusType_service_Response_deadbeef = ResponseMessage\n",
     )
     (version / "_impl_001.py").write_text(
         "import acme.common as _type_acme_common\n"
@@ -95,7 +95,7 @@ def test_generated_type_aliases_are_public_in_annotations(tmp_path: Path) -> Non
         "        _NebiusType_service_Request_deadbeef,\n"
         "        _NebiusType_service_Response_deadbeef,\n"
         "    ]:\n"
-        "        pass\n"
+        "        pass\n",
     )
 
     system = NamespacePackageSystem()
@@ -130,7 +130,7 @@ def test_generated_stub_is_merged_into_dynamic_package(tmp_path: Path) -> None:
         "class ServiceClient:\n"
         "    def call(self, request):\n"
         "        pass\n"
-        "__all__ = ['Request', 'ServiceClient']\n"
+        "__all__ = ['Request', 'ServiceClient']\n",
     )
     (version / "__init__.pyi").write_text(
         "from nebius.base.protos.direct import Message as _Message\n"
@@ -144,7 +144,7 @@ def test_generated_stub_is_merged_into_dynamic_package(tmp_path: Path) -> None:
         "class ServiceClient:\n"
         "    def call(self, request: Request) -> _Request[Request, Request]:\n"
         '        """Call the **service**."""\n'
-        "        ...\n"
+        "        ...\n",
     )
 
     system = NamespacePackageSystem()
@@ -185,7 +185,7 @@ def test_generated_stub_nested_classes_are_published_under_parent(
         "    @property\n"
         "    def nested(self) -> Parent__Nested:\n"
         '        """The nested value."""\n'
-        "        ...\n"
+        "        ...\n",
     )
 
     system = NamespacePackageSystem()

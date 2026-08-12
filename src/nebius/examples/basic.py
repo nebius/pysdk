@@ -47,7 +47,7 @@ if __name__ == "__main__":
                         versioning_policy=VersioningPolicy.DISABLED,
                         max_size_bytes=4096,
                     ),
-                )
+                ),
             )
             ret = await req
             mdi = await req.initial_metadata()

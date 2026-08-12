@@ -8,12 +8,12 @@ The ``tokens`` key contains mappings from :meth:`Token.to_dict`. A mapping can
 contain an ``expires_at`` timestamp. The cache ignores and removes expired
 tokens.
 
-Example
+Example:
 -------
-
     cache = TokenCache()
     await cache.set("my-token", Token("abc", expiration=...))
     tok = await cache.get("my-token")
+
 """
 
 from logging import getLogger
@@ -84,7 +84,7 @@ class TokenCache:
             tokens_strs = data.get("tokens", {})  # type: ignore[unused-ignore]
             if not isinstance(tokens_strs, dict):
                 raise ValueError(
-                    f"Invalid tokens format: {type(tokens_strs)} expected a dictionary."  # type: ignore[unused-ignore]
+                    f"Invalid tokens format: {type(tokens_strs)} expected a dictionary.",  # type: ignore[unused-ignore]
                 )
             tokens = dict[str, Token]()
             for k, v in tokens_strs.items():  # type: ignore[unused-ignore]

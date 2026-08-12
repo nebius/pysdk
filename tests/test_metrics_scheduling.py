@@ -4,7 +4,6 @@ from threading import Thread
 from time import monotonic
 
 import pytest
-
 from nebius.aio import metrics as metrics_module
 from nebius.aio._task_context import task_scheduler
 
@@ -34,12 +33,11 @@ class _ScheduledProbe:
 
     def fail(self) -> None:
         """Complete exceptionally without reporting cancellation."""
-
         for callback in self.callbacks:
             callback(self)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_scheduled_metric_task_is_referenced_until_done() -> None:
     started = asyncio.Event()
     release = asyncio.Event()
@@ -91,7 +89,7 @@ def test_metrics_callbacks_can_be_set_at_creation() -> None:
     assert metrics.callback_timeout_seconds == metrics_module.DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_scheduled_metric_task_uses_sanitized_capped_timeout(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -150,7 +148,6 @@ def test_sync_metric_task_uses_default_for_invalid_timeout(
 
 def test_sdk_metric_cancelled_before_start_uses_threadsafe_disposal_hook() -> None:
     """Pre-start cancellation uses the explicit thread-safe cleanup hook."""
-
     probe = _ScheduledProbe()
 
     class Awaitable:
@@ -178,7 +175,6 @@ def test_sdk_metric_cancelled_before_start_uses_threadsafe_disposal_hook() -> No
 
 def test_sdk_metric_start_failure_uses_threadsafe_disposal_hook() -> None:
     """Exceptional scheduler completion also disposes unstarted callback work."""
-
     probe = _ScheduledProbe()
 
     class Awaitable:
@@ -206,7 +202,6 @@ def test_sdk_metric_start_failure_uses_threadsafe_disposal_hook() -> None:
 
 def test_sdk_metric_fatal_scheduler_failure_disposes_and_propagates() -> None:
     """Fatal scheduler failure still disposes fresh metric work exactly once."""
-
     wrapped = []
 
     class Awaitable:
@@ -241,7 +236,6 @@ def test_sdk_metric_fatal_scheduler_failure_disposes_and_propagates() -> None:
 
 def test_metric_fallback_tracking_resets_after_fork() -> None:
     """A child replaces inherited task state and a possibly held lock."""
-
     inherited_lock = metrics_module._metric_tasks_lock
     inherited_lock.acquire()
     try:
@@ -299,10 +293,9 @@ def test_sdk_metric_pre_start_cancellation_reaches_foreign_future() -> None:
         assert not thread.is_alive()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_active_sdk_metric_cancellation_does_not_force_close() -> None:
     """Active task cancellation owns cleanup of the user awaitable."""
-
     probe = _ScheduledProbe()
     started = asyncio.Event()
     release = asyncio.Event()

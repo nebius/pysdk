@@ -28,7 +28,6 @@ class SyncronizerInterface(Protocol):
         :param timeout: Optional wall-clock timeout in seconds.
         :return: The result of the awaitable.
         """
-
         ...
 
 
@@ -53,40 +52,34 @@ class ClientChannelInterface(Protocol):
             (``'/pkg.Service/Method'``).
         :return: An :class:`AddressChannel` for the resolved address.
         """
-
         ...
 
     def return_channel(self, chan: AddressChannel | None) -> None:
         """Return an :class:`AddressChannel` previously obtained from the
         channel back to the pool for reuse.
         """
-
         ...
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
         """Discard an :class:`AddressChannel`, ensuring the underlying
         transport is closed and not reused.
         """
-
         ...
 
     def get_authorization_provider(self) -> AuthorizationProvider | None:
         """Get the configured :class:`AuthorizationProvider` or ``None``."""
-
         ...
 
     def parent_id(self) -> str | None:
         """Get the default parent id applied to some requests, or
         ``None`` if none was configured.
         """
-
         ...
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
         """Run an awaitable synchronously using the channel's configured
         event loop and return the result.
         """
-
         ...
 
 
@@ -124,5 +117,4 @@ class GracefulInterface(Protocol):
         :param grace: Optional grace period in seconds for the component to
             complete shutdown work.
         """
-
         ...

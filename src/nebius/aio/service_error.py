@@ -26,7 +26,7 @@ _SERVICE_ERROR_NAMES = frozenset(
     {
         "nebius.common.v1.ServiceError",
         "nebius.common.error.v1alpha1.ServiceError",
-    }
+    },
 )
 
 
@@ -267,7 +267,10 @@ class RequestStatusExtended(RequestStatus):
     request_id: str
     trace_id: str
     _original_extended_state: tuple[tuple[StatusCode, str | None, tuple[bytes, ...]], tuple[bytes, ...]] | None = field(
-        default=None, init=False, repr=False, compare=False
+        default=None,
+        init=False,
+        repr=False,
+        compare=False,
     )
 
     def _extended_state(

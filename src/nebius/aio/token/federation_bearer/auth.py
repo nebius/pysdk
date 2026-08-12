@@ -64,8 +64,8 @@ async def open_browser(url: str) -> None:
     if sys.platform.startswith("linux") and is_wsl():
         import subprocess
 
-        subprocess.run(  # noqa: S603
-            ["cmd.exe", "/c", "start", url.replace("&", "^&")],  # noqa: S607
+        subprocess.run(
+            ["cmd.exe", "/c", "start", url.replace("&", "^&")],  # noqa: S603,S607
             check=True,
         )
     else:

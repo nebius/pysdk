@@ -32,11 +32,11 @@ Use in request metadata (reset a field to its default)::
 
 Notes
 -----
-
 - The internal mask format supports wildcards and nesting. Not all masks are
   representable as a single field path.
 - Masks are more granular than standard Google field masks and are not
   directly compatible.
+
 """
 
 from collections.abc import Iterable, Mapping
@@ -94,14 +94,14 @@ class FieldPath(list[FieldKey]):
     :raises ValueError: If ``base`` is not iterable or contains invalid element
         types.
 
-    Example
+    Example:
     -------
-
     Construct a path and build a mask::
 
         path = FieldPath(["spec", "max_size_bytes"])
         mask = path.to_mask()
         assert mask.marshal() == "spec.max_size_bytes"
+
     """
 
     @overload
@@ -328,14 +328,14 @@ class Mask:
     :ivar any: Wildcard sub-mask or ``None``.
     :ivar field_parts: Mapping of field names to nested masks.
 
-    Example
+    Example:
     -------
-
     Build a mask with a wildcard and a specific field::
 
         mask = Mask(any=FieldPath(["spec"]).to_mask())
         mask += FieldPath(["labels"]).to_mask()
         serialized = mask.marshal()
+
     """
 
     def __init__(
@@ -529,9 +529,7 @@ class Mask:
             pending.append((mask, True))
             if mask.any is not None and id(mask.any) not in results:
                 pending.append((mask.any, False))
-            for child in mask.field_parts.values():
-                if id(child) not in results:
-                    pending.append((child, False))
+            pending.extend((child, False) for child in mask.field_parts.values() if id(child) not in results)
         return results[id(self)]
 
     def marshal(self) -> str:

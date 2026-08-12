@@ -11,6 +11,7 @@ Construct the bearer from one of these inputs:
 - A service-account ID with ``private_key`` and ``public_key_id``.
 
 Examples
+--------
 Constructing from an environment/CLI-backed reader (recommended):
 
 >>> from nebius.aio.token.service_account import ServiceAccountBearer
@@ -32,6 +33,7 @@ Constructing from explicit values (private key object required):
 The resulting bearer exposes the :meth:`receiver` method used by the SDK's
 authentication layer. See :mod:`nebius.aio.token.token` for the receiver and
 token abstractions.
+
 """
 
 from datetime import timedelta
@@ -102,9 +104,8 @@ class ServiceAccountBearer(ParentBearer):
         shared across exchange and renewal layers with the bearer metric
         provider label.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from asyncio import Future
@@ -130,6 +131,7 @@ class ServiceAccountBearer(ParentBearer):
 
         # Resolve the future with the newly created SDK
         channel_future.set_result(sdk)
+
     """
 
     def __init__(
@@ -162,7 +164,7 @@ class ServiceAccountBearer(ParentBearer):
         if isinstance(service_account, str):
             if not isinstance(private_key, RSAPrivateKey):
                 raise TypeError(
-                    "Private key must be provided as RSAPrivateKey instance when service_account is a string."
+                    "Private key must be provided as RSAPrivateKey instance when service_account is a string.",
                 )
             if not isinstance(public_key_id, str):
                 raise TypeError("Public key ID must be provided as a string when service_account is a string.")
@@ -171,16 +173,15 @@ class ServiceAccountBearer(ParentBearer):
                 public_key_id=public_key_id,
                 service_account_id=service_account,
             )
-        else:
-            if private_key is not None or public_key_id is not None:
-                raise ValueError(
-                    "Private key and public key ID must not be provided "
-                    "when service_account is a ServiceAccount or ServiceAccountReader "
-                    "instance."
-                )
+        elif private_key is not None or public_key_id is not None:
+            raise ValueError(
+                "Private key and public key ID must not be provided "
+                "when service_account is a ServiceAccount or ServiceAccountReader "
+                "instance.",
+            )
         if not isinstance(service_account, ServiceAccount):  # type: ignore[unused-ignore]
             raise TypeError(
-                f"service_account must be ServiceAccountReader, ServiceAccount or string, got {type(service_account)}"
+                f"service_account must be ServiceAccountReader, ServiceAccount or string, got {type(service_account)}",
             )
         if reader is None:
             reader = ServiceAccountReaderStatic(service_account)
@@ -233,7 +234,6 @@ class ServiceAccountBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to inner bearers."""
-
         self._metrics.set_metrics(metrics)
         self._exchangeable.set_metrics(self._metrics)
         wrapped = self._source.wrapped

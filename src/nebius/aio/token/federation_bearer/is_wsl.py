@@ -1,9 +1,10 @@
 def is_wsl() -> bool:
-    """
-    Check if the current environment is Windows Subsystem for Linux (WSL).
+    """Check if the current environment is Windows Subsystem for Linux (WSL).
 
-    Returns:
+    Returns
+    -------
         bool: True if running in WSL, False otherwise.
+
     """
     try:
         with open("/proc/version") as f:

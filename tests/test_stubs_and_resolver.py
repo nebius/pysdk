@@ -3,20 +3,18 @@ import logging
 
 import pytest
 from grpc_service import add_service
-
 from nebius.aio import request
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_instance() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.compute.v1 import (
         Disk,
@@ -91,14 +89,13 @@ async def test_get_instance() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_instance_timeout_change() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel
     from nebius.aio.token.static import Bearer
     from nebius.api.nebius.compute.v1 import (
@@ -174,14 +171,13 @@ async def test_get_instance_timeout_change() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_error() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
     from nebius.api.nebius.compute.v1 import (
@@ -273,14 +269,13 @@ async def test_get_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_custom_resolver() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.compute.v1 import (
         Disk,

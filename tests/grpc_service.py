@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import Any, cast
 
 import grpc
-
 from nebius.base.protos.reflection import ServiceDescriptor
 from nebius.base.protos.registry import Registry
 

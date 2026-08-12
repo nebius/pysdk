@@ -39,12 +39,12 @@ def _rich_status_from_call(call: RpcError) -> StatusPb | None:
         call_code = call.code()
         if call_code.value[0] != status.code:
             raise ValueError(
-                f"Code in Status proto ({_status_code(status.code)}) doesn't match status code ({call_code})"
+                f"Code in Status proto ({_status_code(status.code)}) doesn't match status code ({call_code})",
             )
         call_details = call.details()
         if call_details != status.message:
             raise ValueError(
-                f"Message in Status proto ({status.message}) doesn't match status details ({call_details})"
+                f"Message in Status proto ({status.message}) doesn't match status details ({call_details})",
             )
         return status
     return None

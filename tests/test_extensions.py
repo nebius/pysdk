@@ -7,7 +7,6 @@ from collections.abc import Callable
 
 from google.protobuf import descriptor_pb2, descriptor_pool, message_factory
 from google.protobuf.wrappers_pb2 import BoolValue, DoubleValue, FloatValue
-
 from nebius.base.protos.codec import (
     BOOL,
     DOUBLE,

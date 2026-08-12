@@ -14,7 +14,6 @@ Grammar overview
 
 Examples
 --------
-
 Parse a simple mask::
 
     from nebius.base.fieldmask_parser import parse
@@ -26,6 +25,7 @@ Parse a nested mask::
 
     mask = parse("spec.(limits,max_size_bytes)")
     assert mask.marshal() == "spec.(limits,max_size_bytes)"
+
 """
 
 import re

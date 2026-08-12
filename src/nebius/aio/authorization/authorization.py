@@ -100,9 +100,8 @@ class Provider(ABC):
     one instance to SDKs with different loops unless the implementation is
     thread-safe, loop-neutral, and explicitly supports concurrent use.
 
-    Example
+    Example:
     -------
-
     Give a provider to the SDK through the ``credentials`` parameter::
 
         from nebius.sdk import SDK

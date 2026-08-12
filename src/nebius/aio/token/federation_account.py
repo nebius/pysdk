@@ -121,9 +121,8 @@ class FederationBearer(ParentBearer):
         shared across interactive federation auth and renewable file-cache
         layers with the bearer metric provider label.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -141,6 +140,7 @@ class FederationBearer(ParentBearer):
             ),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -200,6 +200,5 @@ class FederationBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self._metrics.set_metrics(metrics)
         self._source.set_metrics(self._metrics)

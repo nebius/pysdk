@@ -14,7 +14,6 @@ The primary classes are:
 
 Examples
 --------
-
 Create a bearer with a preconfigured channel::
 
     from nebius.aio.token.exchangeable import Bearer
@@ -258,9 +257,8 @@ class Bearer(ParentBearer):
     :param metrics: Optional auth metrics callbacks used by receivers created
         by this bearer. Callbacks receive this bearer's metric provider label.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from asyncio import Future
@@ -285,6 +283,7 @@ class Bearer(ParentBearer):
 
         # Resolve the future with the newly created SDK
         channel_future.set_result(sdk)
+
     """
 
     def __init__(
@@ -360,5 +359,4 @@ class Bearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks used by subsequently created receivers."""
-
         self._metrics.set_metrics(metrics)

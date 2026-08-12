@@ -1,17 +1,15 @@
 # type: ignore
 import pytest
-
 from nebius.aio import request
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:
     """Verify EnvBearer and FileBearer via Config + SDK on a compute call."""
     import grpc
     import grpc.aio
-
     from nebius.aio.cli_config import Config
     from nebius.api.nebius.compute.v1 import (
         DiskServiceClient,
@@ -22,6 +20,7 @@ async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
+
     from tests.grpc_service import add_service
 
     class Compute:
@@ -77,7 +76,7 @@ profiles:
   test:
     auth-type: service account
     endpoint: some.endpoint
-""".strip()
+""".strip(),
     )
     sdk1 = SDK(
         domain="localhost:0",
@@ -108,17 +107,15 @@ profiles:
     await run_case("filetok", cfg_yaml_file)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_service_account_variants(monkeypatch, tmp_path) -> None:
-    """
-    Service account via inline PEM, credentials file,
+    """Service account via inline PEM, credentials file,
     and federated credentials file.
     """
     import grpc
     import grpc.aio
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
-
     from nebius.aio.cli_config import Config
     from nebius.api.nebius.compute.v1 import (
         DiskServiceClient,
@@ -133,6 +130,7 @@ async def test_service_account_variants(monkeypatch, tmp_path) -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
+
     from tests.grpc_service import add_service
 
     class Compute:
@@ -205,9 +203,9 @@ async def test_service_account_variants(monkeypatch, tmp_path) -> None:
                         "kid": "pk-abc",
                         "iss": "sa-123",
                         "sub": "sa-123",
-                    }
-                }
-            )
+                    },
+                },
+            ),
         )
         cfg_creds = f"""
 default: test
@@ -264,7 +262,7 @@ profiles:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
     """End-to-end federation flow against a local HTTP server, no browser open."""
     import asyncio
@@ -275,7 +273,6 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
     import grpc
     import grpc.aio
     from aiohttp import web
-
     from nebius.aio.cli_config import Config
     from nebius.api.nebius.compute.v1 import (
         DiskServiceClient,
@@ -286,6 +283,7 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
+
     from tests.grpc_service import add_service
 
     code_value = "authcode"
@@ -344,7 +342,7 @@ profiles:
     federation-endpoint: {fed_url}
     federation-id: fid-123
     endpoint: localhost:{port}
-""".strip()
+""".strip(),
             )
 
             out = io.StringIO()

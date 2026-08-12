@@ -10,9 +10,8 @@ refresh task. The implementation exposes two primary classes:
 - :class:`AsynchronousRenewableFileCacheBearer` -- A bearer that wraps an
   existing bearer. Its background refresh loop saves tokens to a file cache.
 
-Example
+Example:
 -------
-
 Create an asynchronous renewable bearer from a named network bearer::
 
         async_bearer = AsynchronousRenewableFileCacheBearer(network_bearer)
@@ -63,9 +62,8 @@ class AsynchronousRenewableFileCacheReceiver(ParentReceiver):
     for actual fetching and renewal coordination. It tracks a small retry
     counter so transient errors can be retried a configurable number of times.
 
-    Example
+    Example:
     -------
-
     Constructing a receiver is normally done via the bearer's
     :meth:`AsynchronousRenewableFileCacheBearer.receiver` method::
 
@@ -74,6 +72,7 @@ class AsynchronousRenewableFileCacheReceiver(ParentReceiver):
     :param bearer: The owning :class:`AsynchronousRenewableFileCacheBearer`.
     :param max_retries: Maximum number of automatic retry attempts before
         giving up.
+
     """
 
     def __init__(
@@ -192,9 +191,8 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
     :param provider: Optional provider label for emitted auth
         metrics. When omitted, the label is inferred from ``source``.
 
-    Example
+    Example:
     -------
-
     Wrap a custom bearer with a name and file cache::
 
         from nebius.sdk import SDK
@@ -223,6 +221,7 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
             credentials=cached_bearer,
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -302,7 +301,6 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self._metrics.provider
 
     def _is_token_fresh(self, token: Token) -> bool:
@@ -509,7 +507,7 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         skip_initial_sleep_refresh = not wait_for_timeout
         while not self._is_stopped.is_set():
             log.debug(
-                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}"
+                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}",
             )
             renew_task = self.bg_task(self._renew_requested.wait())
             sleep_task = self.bg_task(sleep(retry_timeout))
@@ -631,6 +629,5 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self._metrics.set_metrics(metrics)
         self._source = cast(ParentBearer, bind_auth_metrics(self._source, self._metrics))

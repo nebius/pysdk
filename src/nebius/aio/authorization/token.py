@@ -84,9 +84,8 @@ class TokenProvider(Provider):
         receivers for per-request authenticators.
     :type token_provider: :class:`token.Bearer`
 
-    Example
+    Example:
     -------
-
     Give a bearer-backed provider to the SDK through ``credentials``::
 
         from nebius.aio.token.static import EnvBearer

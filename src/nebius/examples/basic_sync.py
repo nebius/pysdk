@@ -33,7 +33,7 @@ if __name__ == "__main__":
             credentials=Bearer(
                 Token(
                     os.environ.get("NEBIUS_IAM_TOKEN", ""),
-                )
+                ),
             ),
             user_agent_prefix="example-application/1.0",
         )
@@ -51,7 +51,7 @@ if __name__ == "__main__":
                         versioning_policy=VersioningPolicy.DISABLED,
                         max_size_bytes=4096,
                     ),
-                )
+                ),
             )
             status = req.current_status()
             print(status)

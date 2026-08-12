@@ -511,7 +511,7 @@ class Reflection:
             message.fields_by_number = MappingProxyType({item.number: item for item in message.fields})
             message.fields_by_camelcase_name = MappingProxyType({item.camelcase_name: item for item in message.fields})
             message.enum_values_by_name = MappingProxyType(
-                {value.name: value for enum in message.enum_types for value in enum.values}
+                {value.name: value for enum in message.enum_types for value in enum.values},
             )
             for field in message.fields:
                 if field._proto.HasField("oneof_index"):

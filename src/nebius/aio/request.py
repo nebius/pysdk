@@ -44,7 +44,6 @@ from google.protobuf.message import Message as ProviderMessage
 from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import AioRpcError
 from grpc.aio import Metadata as GrpcMetadata
-from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 
 from nebius.aio._runtime import CrossLoopAwaitable
 from nebius.aio._task_context import dispose_unstarted_awaitable
@@ -63,6 +62,8 @@ from .request_status import RequestStatus, UnfinishedRequestStatus
 from .route import Route
 
 if TYPE_CHECKING:
+    from grpc.aio import UnaryUnaryCall
+
     from nebius.base.protos.registry import Registry
 
 Req = TypeVar("Req")
@@ -87,7 +88,6 @@ def _snapshot_request_input(value: T) -> T:
     :param value: Request value to snapshot.
     :return: Independent message, or ``value`` for an unknown payload type.
     """
-
     if isinstance(value, LegacyMessage):
         provider_message = value.__pb2_message__
         provider_copy = type(provider_message)()
@@ -124,7 +124,6 @@ def _authorization_deadline_applies(
     :return: ``True`` when authorization applies, ``False`` when it does not,
         or ``None`` when only the channel's owner loop can determine it.
     """
-
     if auth_options.get(OPTION_TYPE) == Types.DISABLE:
         return False
     provider_probe = getattr(channel, "_has_authorization_provider", None)
@@ -147,7 +146,6 @@ def _validate_timeout(value: float | None, name: str) -> float | None:
     :return: ``value`` unchanged.
     :raises ValueError: If ``value`` is NaN or infinite.
     """
-
     if value is not None and not isfinite(value):
         raise ValueError(f"The {name} value must be finite or None.")
     return value
@@ -354,9 +352,7 @@ class Request(Generic[Req, Res]):
         # When adding new parameters, don't forget to add them to RequestKwargs as well,
         # if applicable.
     ) -> None:
-        """
-        Initialize the request with the provided parameters.
-        """
+        """Initialize the request with the provided parameters."""
         self._channel = channel
         self._process_id = os.getpid()
         # Generated update methods derive reset-mask metadata before creating
@@ -393,7 +389,7 @@ class Request(Generic[Req, Res]):
         # Keep that default while making the existing public property complete
         # and ensuring its pre-submission value reaches the native call.
         self._wait_for_ready: bool | None = True
-        self._call: UnaryUnaryCall | None = None  # type: ignore[type-arg,unused-ignore]
+        self._call: UnaryUnaryCall[Any, Any] | None = None
         self._retries = retries
         self._cancelled: bool = False
         from .service_error import RequestError as RSError
@@ -429,15 +425,13 @@ class Request(Generic[Req, Res]):
 
     def _check_process(self) -> None:
         """Reject a request inherited by a child process before locking."""
-
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "You cannot use an SDK request after a fork. Create SDK objects after the child process starts."
+                "You cannot use an SDK request after a fork. Create SDK objects after the child process starts.",
             )
 
     def _claim_await(self) -> None:
         """Claim the request's documented one-shot await operation."""
-
         with self._future_lock:
             if self._awaited:
                 raise RuntimeError("You cannot await the same request more than once.")
@@ -454,7 +448,6 @@ class Request(Generic[Req, Res]):
         :param discard: Whether the transport must be discarded instead of
             returned for reuse.
         """
-
         grpc_channel, self._grpc_channel = self._grpc_channel, None
         release_address_channel(
             self._channel,
@@ -553,7 +546,7 @@ class Request(Generic[Req, Res]):
         _validate_timeout(timeout, "timeout")
         with self._future_lock:
             if self._future is not None:
-                raise RequestIsSentError()
+                raise RequestIsSentError
             self._timeout = timeout
 
     @property
@@ -566,7 +559,7 @@ class Request(Generic[Req, Res]):
         self._check_process()
         with self._future_lock:
             if self._future is not None:
-                raise RequestIsSentError()
+                raise RequestIsSentError
             self._credentials = credentials
 
     @property
@@ -579,7 +572,7 @@ class Request(Generic[Req, Res]):
         self._check_process()
         with self._future_lock:
             if self._future is not None:
-                raise RequestIsSentError()
+                raise RequestIsSentError
             self._wait_for_ready = wait_for_ready
 
     @property
@@ -592,7 +585,7 @@ class Request(Generic[Req, Res]):
         self._check_process()
         with self._future_lock:
             if self._future is not None:
-                raise RequestIsSentError()
+                raise RequestIsSentError
             self._compression = compression
 
     def _send(self, timeout: float | None) -> None:
@@ -626,7 +619,7 @@ class Request(Generic[Req, Res]):
         if not callable(serializer):
             raise RequestError(f"Unsupported request type {type(req)}")
         if self._cancelled:
-            raise RequestIsCancelledError()
+            raise RequestIsCancelledError
         channel_parent_id = self._channel.parent_id()
         if channel_parent_id is not None:
             if self._method == "List" or self._method == "GetByName":
@@ -652,7 +645,7 @@ class Request(Generic[Req, Res]):
             self._grpc_channel = None
             release_address_channel(self._channel, incompatible, discard=True)
             raise RequestError("The grpc_channel_override value belongs to a different event loop.")
-        self._call = self._grpc_channel.channel.unary_unary(  # type: ignore
+        self._call = self._grpc_channel.channel.unary_unary(
             "/" + s_name + "/" + self._method,
             serializer,
             self._result_pb2_class.FromString,
@@ -676,7 +669,6 @@ class Request(Generic[Req, Res]):
         recorded but does not cancel the wrapper task and erase a native
         success.
         """
-
         with self._future_lock:
             if completed is self._call and not self._native_terminal:
                 self._native_attempt_terminal = True
@@ -697,8 +689,9 @@ class Request(Generic[Req, Res]):
         :raises RequestError: when execution times out or the request fails
         """
         direct_submission: CrossLoopAwaitable[Any] | None = None
+        func_identity: object = func
         try:
-            if cast(Any, func) is self:
+            if func_identity is self:
                 try:
                     get_running_loop()
                 except RuntimeError:
@@ -708,12 +701,9 @@ class Request(Generic[Req, Res]):
                 runtime = getattr(self._channel, "_runtime", None)
                 in_executor_thread = runtime.in_executor_thread() if runtime is not None else False
                 if caller_loop_running or in_executor_thread:
-                    return cast(
-                        T,
-                        self._channel.run_sync(
-                            func,
-                            timeout=self._sync_wait_timeout(),
-                        ),
+                    return self._channel.run_sync(
+                        func,
+                        timeout=self._sync_wait_timeout(),
                     )
                 # Only the built-in runtime is known to return a reusable
                 # cross-loop handle before the channel's synchronous runner
@@ -765,7 +755,6 @@ class Request(Generic[Req, Res]):
         :return: Remaining synchronous wait in seconds, or ``None`` when both
             request and authorization budgets are unlimited.
         """
-
         with self._future_lock:
             deadline = self._submission_deadline
             if self._future is not None:
@@ -847,7 +836,6 @@ class Request(Generic[Req, Res]):
         :param error: Native RPC error containing optional rich status data.
         :return: Whether its structured status requests a call retry.
         """
-
         try:
             from .request_status import rpc_status_from_call
             from .service_error import RequestStatusExtended
@@ -878,7 +866,6 @@ class Request(Generic[Req, Res]):
         :param retry: Whether authentication and the RPC would be retried.
         :return: Whether a queued cancellation prevents that retry.
         """
-
         with self._future_lock:
             cancelled_retry = retry and self._retry_decision_pending and self._cancelled
             self._retry_decision_pending = False
@@ -951,7 +938,7 @@ class Request(Generic[Req, Res]):
         """
         try:
             await self._await_result()
-        except Exception as e:  # noqa: S110
+        except Exception as e:
             if self._initial_metadata is not None:
                 return self._initial_metadata
             raise e
@@ -968,7 +955,7 @@ class Request(Generic[Req, Res]):
         """
         try:
             await self._await_result()
-        except Exception as e:  # noqa: S110
+        except Exception as e:
             if self._trailing_metadata is not None:
                 return self._trailing_metadata
             raise e
@@ -994,7 +981,7 @@ class Request(Generic[Req, Res]):
         """
         try:
             await self._await_result()
-        except Exception as e:  # noqa: S110
+        except Exception as e:
             if self._status is not None:
                 return self._status
             raise e
@@ -1066,10 +1053,9 @@ class Request(Generic[Req, Res]):
         :return: Native response value.
         :raises RequestSentNoCallError: If no native call is active.
         """
-
         call = self._call
         if call is None:
-            raise RequestSentNoCallError()
+            raise RequestSentNoCallError
         try:
             return cast(Res, await call)
         except CancelledError:
@@ -1140,7 +1126,7 @@ class Request(Generic[Req, Res]):
                 try:
                     self._send(timeout)
                     if self._call is None:
-                        raise RequestSentNoCallError()
+                        raise RequestSentNoCallError
                     ret = await self._await_native_call()
                     # A successful native response is authoritative even
                     # while status and metadata are still being copied. The
@@ -1229,7 +1215,7 @@ class Request(Generic[Req, Res]):
                         self._native_code = None
                 if cancelled_during_decision:
                     self._release_grpc_channel(discard=True)
-                    raise RequestIsCancelledError() from e
+                    raise RequestIsCancelledError from e
                 if retry:
                     # A custom terminal accessor can fail after the native
                     # response was received. Retrying reopens cancellation
@@ -1247,7 +1233,7 @@ class Request(Generic[Req, Res]):
                 if not deferred_unauthenticated:
                     self._release_grpc_channel()
                 raise e
-        raise RequestIsCancelledError()
+        raise RequestIsCancelledError
 
     def _pause_request_deadline(self) -> None:
         """Pause the request-only clock while authorization runs.
@@ -1257,7 +1243,6 @@ class Request(Generic[Req, Res]):
         spent authenticating does not. The authorization deadline separately
         caps authentication plus all request attempts.
         """
-
         if self._timeout is None or self._request_deadline_paused:
             return
         deadline = self._request_deadline
@@ -1269,7 +1254,6 @@ class Request(Generic[Req, Res]):
 
     def _resume_request_deadline(self) -> None:
         """Resume the request-only clock for native RPC and retry work."""
-
         if self._timeout is None or not self._request_deadline_paused:
             return
         remaining = self._request_timeout_remaining
@@ -1293,14 +1277,13 @@ class Request(Generic[Req, Res]):
 
         async def complete() -> Res:
             """Copy the native result and release its transport."""
-
             if self._call is None:
-                raise RequestSentNoCallError()
+                raise RequestSentNoCallError
             code = await self._call.code()
             msg = await self._call.details()
             mdi = await self._call.initial_metadata()
             mdt = await self._call.trailing_metadata()
-            error = AioRpcError(code, mdi, mdt, msg, None)  # type: ignore
+            error = AioRpcError(code, mdi, mdt, msg, None)
             self._convert_request_error(error)
             if self._result_wrapper is not None:
                 response = self._result_wrapper(
@@ -1394,7 +1377,7 @@ class Request(Generic[Req, Res]):
             auth_md = Metadata(self._input_metadata)
             try:
                 await wait_for(auth.authenticate(auth_md, timeout, self._auth_options), timeout)
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:
                 # If authentication itself failed (e.g., token refresh timeout),
                 # retry if authenticator allows and we are within deadline.
                 if deadline is not None and deadline <= monotonic():
@@ -1415,7 +1398,6 @@ class Request(Generic[Req, Res]):
             # Run the request retry loop; map UNAUTHENTICATED to re-auth attempts
             async def run_request_attempts() -> Res:
                 """Run RPC work while the independent request clock advances."""
-
                 self._resume_request_deadline()
                 try:
                     return await self._retry_loop(
@@ -1460,7 +1442,7 @@ class Request(Generic[Req, Res]):
                     raise
                 if self._resolve_authorization_retry(True):
                     self._release_grpc_channel(discard=True)
-                    raise RequestIsCancelledError() from e
+                    raise RequestIsCancelledError from e
                 if self._grpc_channel_override is None:
                     self._release_grpc_channel()
                 # loop continues to re-authenticate and retry
@@ -1474,7 +1456,6 @@ class Request(Generic[Req, Res]):
 
         :return: Shared request awaitable.
         """
-
         self._check_process()
         submission_error: BaseException | None = None
         submission_traceback = None
@@ -1530,7 +1511,6 @@ class Request(Generic[Req, Res]):
 
                 async def start_request() -> Res:
                     """Publish startup before entering request lifecycle work."""
-
                     nonlocal submission_started
                     with submission_state_lock:
                         submission_started = True
@@ -1567,7 +1547,6 @@ class Request(Generic[Req, Res]):
 
             def release_if_unstarted(completed: object) -> None:
                 """Release caller work and an override after start rejection."""
-
                 nonlocal prestart_cleanup_done
                 with submission_state_lock:
                     if submission_started or prestart_cleanup_done:
@@ -1632,12 +1611,10 @@ class Request(Generic[Req, Res]):
 
     async def _await_result(self) -> Res:
         """Await the request's shared submission and return its result."""
-
         future = self._ensure_submitted()
 
         async def wait_shared() -> Res:
             """Wait without propagating one waiter cancellation directly."""
-
             shielded_wait = getattr(future, "_wait_shielded", None)
             if callable(shielded_wait):
                 return cast(Res, await shielded_wait())

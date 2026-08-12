@@ -15,11 +15,11 @@ import grpc.aio
 import pytest
 from google.protobuf import descriptor_pool, json_format, message_factory
 from google.rpc import code_pb2
-
 from nebius.aio.channel import Channel, NoCredentials
 from nebius.base.fieldmask import Mask
 from nebius.base.options import INSECURE
 from nebius.base.resolver import Constant
+
 from nebius_generator.main import generate
 from tests.generator.synthetic_service import (
     MAP_KEY_TYPES,
@@ -76,11 +76,11 @@ def _reference_type(request: Any) -> tuple[type[Any], descriptor_pool.Descriptor
 
 
 def _map_key(type_: int, index: int) -> object:
-    from google.protobuf.descriptor_pb2 import FieldDescriptorProto as F
+    from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 
-    if type_ == F.TYPE_STRING:
+    if type_ == FieldDescriptorProto.TYPE_STRING:
         return f"key-{index}"
-    if type_ == F.TYPE_BOOL:
+    if type_ == FieldDescriptorProto.TYPE_BOOL:
         return True
     return index + 1
 
@@ -147,7 +147,7 @@ def _populated_reference(reference_type: type[Any]) -> Any:
     return message
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_generated_all_types_service_end_to_end(tmp_path: Path) -> None:
     namespace = "synthetic_test_sdk"
     request = synthetic_request(namespace)

@@ -7,7 +7,6 @@ from collections.abc import Callable
 import pytest
 from google.protobuf import descriptor_pb2, descriptor_pool, message_factory
 from google.protobuf.message import DecodeError, Message
-
 from nebius.base.protos.wire import (
     WIRE_END_GROUP,
     WIRE_FIXED32,
@@ -178,7 +177,7 @@ def test_unknown_group_is_preserved_as_one_raw_chunk() -> None:
             b"\x01\x02\x03\x04",
             _tag(11, WIRE_END_GROUP),
             _tag(10, WIRE_END_GROUP),
-        )
+        ),
     )
     reader = BinaryReader(raw)
     field_number, wire_type, start = reader.read_tag()
@@ -287,7 +286,7 @@ def test_group_depth_and_input_size_limits() -> None:
             _tag(2, WIRE_START_GROUP),
             _tag(2, WIRE_END_GROUP),
             _tag(1, WIRE_END_GROUP),
-        )
+        ),
     )
     reader = BinaryReader(nested, max_depth=1)
     field_number, wire_type, start = reader.read_tag()

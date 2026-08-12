@@ -202,7 +202,7 @@ class Options:
     cache_dir: str | None = None
 
     @classmethod
-    def parse(cls, parameter: str) -> "Options":
+    def parse(cls, parameter: str) -> Options:
         values: dict[str, str] = {}
         for item in filter(None, parameter.split(",")):
             key, separator, value = item.partition("=")
@@ -319,7 +319,7 @@ class Graph:
         self.files = MappingProxyType(files)
         self.annotations = Annotations(files)
         self._source_comments = MappingProxyType(
-            {name: MappingProxyType(self._comments_for_file(file)) for name, file in files.items()}
+            {name: MappingProxyType(self._comments_for_file(file)) for name, file in files.items()},
         )
         self.requested = frozenset(request.file_to_generate)
         (
@@ -361,7 +361,7 @@ class Graph:
     ) -> str:
         return self._python_names[("oneof", f"{message.full_name}.{oneof.name}")]
 
-    def batch_view(self, source_files: frozenset[str]) -> "Graph":
+    def batch_view(self, source_files: frozenset[str]) -> Graph:
         """Return the owned models plus compact type signatures needed by a worker."""
         view = object.__new__(Graph)
         view.options = self.options
@@ -1105,7 +1105,7 @@ class Graph:
                 if other_python_name is not None and other_python_name != python_name:
                     raise GeneratorError(
                         f"Python oneof collision {message.full_name}.{python_name}: "
-                        f"generated from {proto_name} and protobuf oneof {python_name}"
+                        f"generated from {proto_name} and protobuf oneof {python_name}",
                     )
             child_names = {
                 self.messages[f"{message.full_name}.{item.name}"].python_qualname.rsplit(".", 1)[-1]
@@ -1121,7 +1121,7 @@ class Graph:
                 if previous is not None:
                     raise GeneratorError(
                         f"Python scoped extension collision {message.full_name}."
-                        f"{item.python_name}: {previous} and {item.full_name}"
+                        f"{item.python_name}: {previous} and {item.full_name}",
                     )
                 extension_owners[item.python_name] = item.full_name
             extension_names = set(extension_owners)
@@ -1140,7 +1140,7 @@ class Graph:
                 previous = generated_oneof_owners.get(name)
                 if previous is not None:
                     raise GeneratorError(
-                        f"Python oneof helper collision {message.full_name}.{name}: {previous} and {owner}"
+                        f"Python oneof helper collision {message.full_name}.{name}: {previous} and {owner}",
                     )
                 generated_oneof_owners[name] = owner
 

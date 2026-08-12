@@ -24,6 +24,7 @@ Use an environment variable::
     bearer = EnvBearer()  # reads NEBIUS_IAM_TOKEN by default
     receiver = bearer.receiver()
     token = await receiver.fetch()
+
 """
 
 import os
@@ -112,9 +113,8 @@ class Bearer(ParentBearer):
     :type token: :class:`Token` or `str`
     :raises SDKError: When an empty token string is provided.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -124,6 +124,7 @@ class Bearer(ParentBearer):
             credentials=Bearer("my-static-token"),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(self, token: Token | str) -> None:
@@ -152,9 +153,8 @@ class EnvBearer(Bearer):
     :raises NoTokenInEnvError: When the environment variable is not set or
         empty.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         import os
@@ -166,6 +166,7 @@ class EnvBearer(Bearer):
             credentials=EnvBearer(),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(self, env_var_name: str = TOKEN_ENV) -> None:

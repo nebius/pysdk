@@ -11,10 +11,9 @@ from typing import Any
 from weakref import ref
 
 import grpc
+import nebius.aio.channel as channel_module
 import pytest
 from grpc_service import add_service
-
-import nebius.aio.channel as channel_module
 from nebius.aio.base import AddressChannel
 from nebius.aio.channel import Channel, ChannelClosedError, LoopError, NoCredentials
 from nebius.api.nebius.common.v1 import (
@@ -55,7 +54,6 @@ def _stop_event_loop(loop: asyncio.AbstractEventLoop, thread: Thread) -> None:
 
 async def _checkout(channel: Channel, address: str) -> AddressChannel:
     """Use the explicit async boundary for low-level pool test access."""
-
     return await asyncio.to_thread(channel.get_channel_by_addr, address)
 
 
@@ -81,7 +79,6 @@ def test_pooled_channels_are_reused_through_the_internal_loop() -> None:
 
 def test_stale_wrapper_cannot_release_a_reused_transport() -> None:
     """A stale wrapper cannot reclaim or close the current transport lease."""
-
     channel = Channel(
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -104,30 +101,25 @@ def test_stale_wrapper_cannot_release_a_reused_transport() -> None:
 
 def test_failed_lease_factory_closes_untracked_transport(caplog) -> None:
     """A failed fresh-lease factory closes the removed native transport."""
-
     closed = Event()
 
     class Transport:
         def get_state(self) -> grpc.ChannelConnectivity:
             """Report a reusable native transport."""
-
             return grpc.ChannelConnectivity.READY
 
         async def close(self, grace: float | None = None) -> None:
             """Record deterministic cleanup after lease creation fails."""
-
             closed.set()
 
     class BrokenLease(AddressChannel):
         def _new_lease(self) -> AddressChannel:
             """Reject creation of a new wrapper generation."""
-
             raise RuntimeError("The test rejected the new transport lease.")
 
     class TestChannel(Channel):
         def create_address_channel(self, addr: str) -> AddressChannel:
             """Create a wrapper with a failing lease factory."""
-
             return BrokenLease(Transport(), addr, self._event_loop)  # type: ignore[arg-type]
 
     channel = TestChannel(credentials=NoCredentials())
@@ -145,7 +137,6 @@ def test_failed_lease_factory_closes_untracked_transport(caplog) -> None:
 
 def test_legacy_address_channel_with_only_lifecycle_lock_is_safe() -> None:
     """Lazy lifecycle setup fills fields that a legacy subclass omitted."""
-
     address = object.__new__(AddressChannel)
     address._close_state_lock = Lock()
 
@@ -157,18 +148,15 @@ def test_legacy_address_channel_with_only_lifecycle_lock_is_safe() -> None:
 
 def test_lease_factory_cannot_reuse_a_tracked_wrapper(caplog) -> None:
     """A lease factory cannot put a tracked wrapper in the free pool."""
-
     closed = Event()
 
     class Transport:
         def get_state(self) -> grpc.ChannelConnectivity:
             """Report a reusable native transport."""
-
             return grpc.ChannelConnectivity.READY
 
         async def close(self, grace: float | None = None) -> None:
             """Record cleanup of the wrapper that the pool removed."""
-
             closed.set()
 
     transport = Transport()
@@ -182,7 +170,6 @@ def test_lease_factory_cannot_reuse_a_tracked_wrapper(caplog) -> None:
     class ReusedLease(AddressChannel):
         def _new_lease(self) -> AddressChannel:
             """Return a wrapper that another caller already owns."""
-
             return tracked
 
     returned = ReusedLease(  # type: ignore[arg-type]
@@ -226,7 +213,6 @@ def test_idle_channel_is_owned_by_the_internal_loop_until_close() -> None:
 
 def test_constructor_snapshots_mutable_channel_configuration() -> None:
     """Caller mutation cannot race SDK-loop option and interceptor reads."""
-
     global_options = [("global", "before")]
     address_values = [("address", "before")]
     address_options = {"snapshot.example:443": address_values}
@@ -262,7 +248,6 @@ def test_constructor_snapshots_mutable_channel_configuration() -> None:
 
 def test_direct_pool_release_rejects_active_external_loop() -> None:
     """Synchronous release helpers must not block an asyncio loop."""
-
     channel = Channel(
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -483,7 +468,7 @@ def test_low_level_unary_call_caches_debug_error_string() -> None:
         server.stop(None).wait()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_service_factory_defers_and_executes_resolution() -> None:
     """An async caller can create and invoke a source-routed operation stub."""
 
@@ -514,7 +499,7 @@ async def test_operation_service_factory_defers_and_executes_resolution() -> Non
         server.stop(None).wait()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_service_adapter_retains_first_resolved_address() -> None:
     """Successive operation calls stay on the adapter's first endpoint."""
 
@@ -562,7 +547,6 @@ async def test_operation_service_adapter_retains_first_resolved_address() -> Non
 
 def test_stopped_foreign_loop_transport_close_is_not_queued(caplog) -> None:
     """Discard reports an unreachable owner loop instead of queuing forever."""
-
     close_called = Event()
 
     class Transport:
@@ -589,7 +573,6 @@ def test_foreign_loop_stopping_after_close_dispatch_does_not_hang(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Shutdown detaches a foreign close before its owner loop stops."""
-
     close_called = Event()
     accepted: list[tuple[object, tuple[object, ...]]] = []
 
@@ -616,7 +599,6 @@ def test_foreign_loop_stopping_after_close_dispatch_does_not_hang(
 
     def accept_then_stop(callback: object, *args: object) -> object:
         """Accept but strand the close factory, then stop the owner loop."""
-
         accepted.append((callback, args))
         return original_schedule(owner_loop.stop)
 
@@ -639,7 +621,6 @@ def test_foreign_loop_stopping_after_close_dispatch_does_not_hang(
 
 def test_blocked_foreign_loop_transport_does_not_block_sdk_close() -> None:
     """SDK close does not wait for a blocked caller-owned transport loop."""
-
     owner_loop, owner_thread = _start_event_loop()
     loop_blocked = Event()
     release_loop = Event()
@@ -647,7 +628,6 @@ def test_blocked_foreign_loop_transport_does_not_block_sdk_close() -> None:
 
     def block_owner_loop() -> None:
         """Block the owner loop until SDK close has returned."""
-
         loop_blocked.set()
         release_loop.wait(timeout=5)
 
@@ -656,12 +636,10 @@ def test_blocked_foreign_loop_transport_does_not_block_sdk_close() -> None:
 
         def get_state(self) -> grpc.ChannelConnectivity:
             """Return a reusable transport state."""
-
             return grpc.ChannelConnectivity.READY
 
         async def close(self, grace: float | None = None) -> None:
             """Report that the deferred transport close ran."""
-
             close_called.set()
 
     class ForeignChannel(Channel):
@@ -669,7 +647,6 @@ def test_blocked_foreign_loop_transport_does_not_block_sdk_close() -> None:
 
         def create_address_channel(self, addr: str) -> AddressChannel:
             """Create one foreign-loop address channel."""
-
             return AddressChannel(  # type: ignore[arg-type]
                 Transport(),
                 addr,
@@ -704,7 +681,6 @@ def test_close_log_identifies_each_failing_resource_type(
 
         def close(self, grace: float | None = None) -> None:
             """Raise before the first cleanup returns an awaitable."""
-
             raise RuntimeError("The first test resource rejected the close request.")
 
     class SecondResource:
@@ -712,7 +688,6 @@ def test_close_log_identifies_each_failing_resource_type(
 
         async def close(self, grace: float | None = None) -> None:
             """Raise the second cleanup error."""
-
             raise RuntimeError("The second test resource rejected the close request.")
 
     channel = Channel(credentials=NoCredentials())
@@ -725,7 +700,6 @@ def test_close_log_identifies_each_failing_resource_type(
 
 def test_foreign_transport_close_accepts_general_owner_loop_awaitable() -> None:
     """Custom close awaitables are created and awaited on their owning loop."""
-
     owner_loop, owner_thread = _start_event_loop()
     invoked_loops: list[asyncio.AbstractEventLoop] = []
 
@@ -734,7 +708,6 @@ def test_foreign_transport_close_accepts_general_owner_loop_awaitable() -> None:
 
         def close(self, grace: float | None = None):
             """Create an observable close future on the current loop."""
-
             current_loop = asyncio.get_running_loop()
             invoked_loops.append(current_loop)
             completion = current_loop.create_future()
@@ -758,7 +731,6 @@ def test_foreign_transport_close_accepts_general_owner_loop_awaitable() -> None:
 
 def test_detached_foreign_close_does_not_retain_parent_channel() -> None:
     """A hung caller-owned close retains its transport, not the whole SDK."""
-
     owner_loop, owner_thread = _start_event_loop()
     close_started = Event()
     release_close = Event()
@@ -768,7 +740,6 @@ def test_detached_foreign_close_does_not_retain_parent_channel() -> None:
 
         async def close(self, grace: float | None = None) -> None:
             """Wait for the test to permit transport closure."""
-
             close_started.set()
             while not release_close.is_set():
                 await asyncio.sleep(0.001)
@@ -785,7 +756,6 @@ def test_detached_foreign_close_does_not_retain_parent_channel() -> None:
 
     def schedule_on_owner() -> None:
         """Schedule transport cleanup from its owner loop."""
-
         try:
             channel_holder[0]._schedule_address_channel_close(
                 address_holder[0],
@@ -818,7 +788,6 @@ def test_detached_foreign_close_does_not_retain_parent_channel() -> None:
 
 def test_cross_thread_foreign_close_handle_is_retained_until_completion() -> None:
     """The concurrent dispatch handle owns a detached foreign close."""
-
     import nebius.aio.channel as channel_module
 
     owner_loop, owner_thread = _start_event_loop()
@@ -831,7 +800,6 @@ def test_cross_thread_foreign_close_handle_is_retained_until_completion() -> Non
 
         async def close(self, grace: float | None = None) -> None:
             """Wait until the test permits detached cleanup to finish."""
-
             close_started.set()
             while not release_close.is_set():
                 await asyncio.sleep(0.001)
@@ -872,7 +840,6 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Shutdown awaits the published close instead of starting another one."""
-
     submit_blocked = Event()
     release_submit = Event()
     close_calls: list[float | None] = []
@@ -883,7 +850,6 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
 
         async def close(self, grace: float | None = None) -> None:
             """Record the grace value and keep cleanup briefly active."""
-
             close_calls.append(grace)
             await asyncio.sleep(0.05)
 
@@ -898,7 +864,6 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
 
     def pause_first_submission(awaitable, *, track=True):
         """Pause the first close submission at its publication boundary."""
-
         nonlocal first_submission
         pause = first_submission
         first_submission = False
@@ -917,7 +882,6 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
 
     def close() -> None:
         """Close the channel and record an unexpected failure."""
-
         try:
             channel.sync_close(timeout=5)
         except BaseException as error:
@@ -947,7 +911,6 @@ def test_rejected_transport_close_task_does_not_strand_shutdown(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """Asynchronous task-start rejection settles transport lifecycle state."""
-
     task_rejected = Event()
     close_called = Event()
 
@@ -956,7 +919,6 @@ def test_rejected_transport_close_task_does_not_strand_shutdown(
 
         async def close(self, grace: float | None = None) -> None:
             """Record native transport cleanup."""
-
             close_called.set()
 
     channel = Channel(credentials=NoCredentials())
@@ -972,14 +934,12 @@ def test_rejected_transport_close_task_does_not_strand_shutdown(
         **kwargs: object,
     ) -> None:
         """Reject one transport close task and restore the default factory."""
-
         loop.set_task_factory(None)
         task_rejected.set()
         raise RuntimeError("The test rejected the transport close task.")
 
     async def install_task_factory() -> None:
         """Install the rejecting task factory on the SDK loop."""
-
         asyncio.get_running_loop().set_task_factory(reject_once)  # type: ignore[arg-type]
 
     channel.run_async(install_task_factory()).result(timeout=5)
@@ -1003,7 +963,6 @@ def test_stopped_owner_loop_transport_is_not_closed_on_caller_loop(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """Post-shutdown cleanup never moves a close to an unrelated loop."""
-
     close_loops: list[asyncio.AbstractEventLoop] = []
 
     class Transport:
@@ -1030,7 +989,6 @@ def test_stopped_owner_loop_transport_is_not_closed_on_caller_loop(
 
 def test_close_snapshot_retires_transport_before_native_close() -> None:
     """A stale release cannot duplicate a snapshotted transport close."""
-
     close_started = Event()
     release_close = Event()
     close_calls = 0
@@ -1077,7 +1035,6 @@ def test_close_snapshot_retires_transport_before_native_close() -> None:
 
 def test_transport_in_flight_close_cannot_be_returned_to_pool() -> None:
     """A duplicate return cannot resurrect a transport being discarded."""
-
     close_started = Event()
     release_close = Event()
 
@@ -1114,24 +1071,20 @@ def test_transport_in_flight_close_cannot_be_returned_to_pool() -> None:
 
 def test_stale_returned_wrapper_cannot_discard_free_transport() -> None:
     """Discarding a stale wrapper does not close the reusable transport."""
-
     release_close = Event()
     created: list[AddressChannel] = []
 
     class Transport:
         def __init__(self) -> None:
             """Create a transport with an observable close boundary."""
-
             self.close_started = Event()
 
         def get_state(self) -> grpc.ChannelConnectivity:
             """Report a reusable state until the test releases close."""
-
             return grpc.ChannelConnectivity.READY
 
         async def close(self, grace: float | None = None) -> None:
             """Keep native close in flight until the test releases it."""
-
             self.close_started.set()
             while not release_close.is_set():
                 await asyncio.sleep(0.001)
@@ -1139,7 +1092,6 @@ def test_stale_returned_wrapper_cannot_discard_free_transport() -> None:
     class RecordingChannel(Channel):
         def create_address_channel(self, addr: str) -> AddressChannel:
             """Create and record one wrapper for each pool miss."""
-
             wrapper = AddressChannel(
                 Transport(),  # type: ignore[arg-type]
                 addr,
@@ -1171,7 +1123,6 @@ def test_transport_retirement_wins_return_publication_race(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Retirement published between return checks prevents pool insertion."""
-
     return_checked = Event()
     resume_return = Event()
     release_close = Event()
@@ -1240,7 +1191,6 @@ def test_close_drains_transport_registered_after_cleanup_snapshot(
     borrowed_loop: bool,
 ) -> None:
     """Close completion includes transport closes published during cleanup."""
-
     supplied_loop: asyncio.AbstractEventLoop | None = None
     supplied_thread: Thread | None = None
     if borrowed_loop:
@@ -1311,7 +1261,6 @@ def test_release_between_close_boundary_and_snapshot_closes_lease_once(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A release cannot remove the lease before close snapshots ownership."""
-
     close_boundary = Event()
     resume_close = Event()
     close_calls: list[float | None] = []
@@ -1367,7 +1316,6 @@ def test_release_between_close_boundary_and_snapshot_closes_lease_once(
 
 def test_concurrent_foreign_release_schedules_one_close() -> None:
     """One foreign wrapper has at most one in-flight native close."""
-
     owner_loop, owner_thread = _start_event_loop()
     close_started = Event()
     release_close = Event()
@@ -1423,7 +1371,6 @@ def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A stranded close factory has no coroutine or process-global root."""
-
     owner_loop, owner_thread = _start_event_loop()
     owner_loop_holder = [owner_loop]
     accepted: list[tuple[object, tuple[object, ...]]] = []
@@ -1437,7 +1384,6 @@ def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
 
     def strand_dispatch(callback: object, *args: object) -> None:
         """Accept the callback without running its close factory."""
-
         assert owner_loop_holder
         accepted.append((callback, args))
 
@@ -1487,18 +1433,15 @@ def test_foreign_close_task_factory_rejection_disposes_coroutine(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """A foreign owner-loop task rejection disposes detached close work."""
-
     rejected: list[object] = []
 
     class Transport:
         async def close(self, grace: float | None = None) -> None:
             """Provide close work that the test task factory rejects."""
-
-            return None
+            return
 
     def reject_task(coro: object, *, name: str) -> None:
         """Reject and record the detached close coroutine."""
-
         rejected.append(coro)
         raise RuntimeError("The test rejected the transport close task.")
 
@@ -1507,7 +1450,6 @@ def test_foreign_close_task_factory_rejection_disposes_coroutine(
 
     async def discard_on_owner_loop() -> AddressChannel:
         """Discard a foreign transport from its current owner loop."""
-
         owner_loop = asyncio.get_running_loop()
         address = AddressChannel(  # type: ignore[arg-type]
             Transport(),
@@ -1529,14 +1471,12 @@ def test_foreign_close_task_factory_rejection_disposes_coroutine(
 
 def test_stopped_foreign_loop_releases_real_detached_task() -> None:
     """A stopped owner loop does not root a real detached close task globally."""
-
     ready = Future[asyncio.AbstractEventLoop]()
     ready_holder = [ready]
     close_started = Event()
 
     def run_owner_loop() -> None:
         """Run an owner loop that stops without draining pending tasks."""
-
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         ready_holder[0].set_result(loop)
@@ -1549,7 +1489,6 @@ def test_stopped_foreign_loop_releases_real_detached_task() -> None:
     class Transport:
         async def close(self, grace: float | None = None) -> None:
             """Keep a real close task pending until its stopped loop is dropped."""
-
             close_started.set()
             await asyncio.Event().wait()
 
@@ -1602,12 +1541,10 @@ def test_detached_close_retention_supports_fixed_slot_loop() -> None:
 
         def __init__(self) -> None:
             """Create an active timer."""
-
             self.cancelled = False
 
         def cancel(self) -> None:
             """Record timer cancellation."""
-
             self.cancelled = True
 
     class FixedSlotLoop:
@@ -1617,25 +1554,21 @@ def test_detached_close_retention_supports_fixed_slot_loop() -> None:
 
         def __init__(self) -> None:
             """Create an empty thread-safe callback queue."""
-
             self.callbacks: list[tuple[object, tuple[object, ...]]] = []
             self.timers: list[tuple[float, object, Timer]] = []
 
         def call_soon_threadsafe(self, callback, *args):
             """Retain a callback as a real loop ready queue would."""
-
             self.callbacks.append((callback, args))
 
         def call_later(self, delay: float, callback) -> Timer:
             """Retain a timer callback and return its handle."""
-
             timer = Timer()
             self.timers.append((delay, callback, timer))
             return timer
 
         def is_closed(self) -> bool:
             """Report that the synthetic owner loop is open."""
-
             return False
 
     loop = FixedSlotLoop()
@@ -1669,14 +1602,12 @@ def test_fallback_close_task_factory_rejection_settles_reservation(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """A fallback task rejection settles its transport-close reservation."""
-
     rejected: list[object] = []
 
     class Transport:
         async def close(self, grace: float | None = None) -> None:
             """Provide close work that the test task factory rejects."""
-
-            return None
+            return
 
     channel = Channel(credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
@@ -1687,12 +1618,10 @@ def test_fallback_close_task_factory_rejection_settles_reservation(
 
     def reject_submission(awaitable: object, *, track: bool = True) -> None:
         """Reject the primary runtime close submission."""
-
         raise RuntimeError("The test rejected the transport close submission.")
 
     def reject_task(coro: object, *, name: str) -> None:
         """Reject and record the fallback close coroutine."""
-
         rejected.append(coro)
         raise RuntimeError("The test rejected the fallback close task.")
 
@@ -1702,7 +1631,6 @@ def test_fallback_close_task_factory_rejection_settles_reservation(
 
     async def discard_on_sdk_loop() -> None:
         """Enter the same-loop fallback close path."""
-
         channel._schedule_address_channel_close(address, None)
 
     try:
@@ -1720,7 +1648,6 @@ def test_stopped_loop_releases_stranded_close_factory_reservation(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A stopped owner loop releases a queued close reservation."""
-
     accepted: list[tuple[object, tuple[object, ...]]] = []
     owner_loop, owner_thread = _start_event_loop()
     original_schedule = owner_loop.call_soon_threadsafe
@@ -1729,12 +1656,10 @@ def test_stopped_loop_releases_stranded_close_factory_reservation(
 
     def strand_dispatch(callback: object, *args: object) -> None:
         """Accept the fallback callback without running its factory."""
-
         accepted.append((callback, args))
 
     def close_factory() -> Coroutine[Any, Any, None]:
         """Create close work only if the stranded callback executes."""
-
         raise AssertionError("The stranded factory must not execute.")
 
     monkeypatch.setattr(owner_loop, "call_soon_threadsafe", strand_dispatch)
@@ -1765,12 +1690,10 @@ def test_detached_close_factory_failure_settles_completion(caplog) -> None:
 
     async def run() -> Future[None]:
         """Call the failing factory on its owner loop."""
-
         completion: Future[None] = Future()
 
         def fail_factory() -> Coroutine[Any, Any, None]:
             """Fail before the factory can create close work."""
-
             raise RuntimeError("The test could not create close work.")
 
         assert not channel_module._schedule_detached_close_factory(
@@ -1791,7 +1714,6 @@ def test_async_release_failure_is_observed_and_retries_close(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """A started asynchronous release reports failure and retries cleanup."""
-
     channel = Channel(credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         object(),
@@ -1804,12 +1726,10 @@ def test_async_release_failure_is_observed_and_retries_close(
 
     def fail_release(*args: object, **kwargs: object) -> None:
         """Fail after the asynchronous release task starts."""
-
         raise RuntimeError("The test rejected the transport release.")
 
     def record_retry(*args: object, **kwargs: object) -> None:
         """Record the ownership-aware close retry."""
-
         retried.set()
 
     monkeypatch.setattr(channel, "_release_address_channel", fail_release)
@@ -2265,7 +2185,6 @@ def test_release_after_close_preserves_direct_api_behavior() -> None:
 @pytest.mark.parametrize("borrowed", [False, True])
 def test_close_drains_scheduled_unpooled_transport(borrowed: bool) -> None:
     """SDK close waits for retained transport cleanup on its own loop."""
-
     started = Event()
     release = Event()
     close_entered = Event()
@@ -2315,7 +2234,6 @@ def test_close_drains_scheduled_unpooled_transport(borrowed: bool) -> None:
 
 def test_get_close_dispatch_race_raises_channel_closed() -> None:
     """A close that wins after the pool check keeps the pool exception type."""
-
     channel = Channel(credentials=NoCredentials())
     entered = Event()
     resume = Event()
@@ -2349,7 +2267,6 @@ def test_get_close_dispatch_race_raises_channel_closed() -> None:
 
 def test_return_close_dispatch_race_raises_channel_closed() -> None:
     """Direct return preserves ChannelClosedError when close wins dispatch."""
-
     channel = Channel(
         options=[(INSECURE, True)],
         credentials=NoCredentials(),

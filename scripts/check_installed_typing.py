@@ -54,8 +54,8 @@ def _run(module: str, *arguments: str) -> subprocess.CompletedProcess[str]:
     environment = environ.copy()
     for name in ("MYPYPATH", "PYTHONPATH", "PYRIGHT_PYTHONPATH"):
         environment.pop(name, None)
-    return subprocess.run(  # noqa: S603 - checker modules and arguments are fixed
-        [sys.executable, "-m", module, *arguments],
+    return subprocess.run(
+        [sys.executable, "-m", module, *arguments],  # noqa: S603 - fixed checker invocation
         check=False,
         capture_output=True,
         text=True,
@@ -70,7 +70,7 @@ def _check_wheel_contents() -> None:
     if runtime_version != installed_distribution.version:
         raise RuntimeError(
             "SDK runtime version does not match package metadata: "
-            f"{runtime_version!r} != {installed_distribution.version!r}"
+            f"{runtime_version!r} != {installed_distribution.version!r}",
         )
 
     files = installed_distribution.files
@@ -140,8 +140,8 @@ def main() -> None:
                     "extraPaths": [str(site_packages)],
                     "pythonVersion": python_version,
                     "typeCheckingMode": "strict",
-                }
-            )
+                },
+            ),
         )
 
         mypy_arguments = ("--strict", "--no-incremental")

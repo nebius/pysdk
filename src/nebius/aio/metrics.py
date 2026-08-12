@@ -149,7 +149,6 @@ class _AuthMetricsCell:
 
 def sanitize_metric_callback_timeout_seconds(value: object) -> float:
     """Return a finite metric callback timeout bounded to SDK limits."""
-
     if value is None:
         return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
     if not isinstance(value, (str, SupportsFloat, SupportsIndex)):
@@ -166,13 +165,11 @@ def sanitize_metric_callback_timeout_seconds(value: object) -> float:
 
 def metric_start() -> float:
     """Return a monotonic start timestamp for metric duration measurement."""
-
     return monotonic()
 
 
 def metric_duration_seconds(start: float) -> float:
     """Return elapsed seconds since ``start``."""
-
     return monotonic() - start
 
 
@@ -186,7 +183,6 @@ class AuthMetricsRecorder:
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Replace callbacks, sharing callback state with recorders when given."""
-
         if isinstance(metrics, AuthMetricsRecorder):
             self._cell = metrics._cell
             return
@@ -194,7 +190,6 @@ class AuthMetricsRecorder:
 
     def token_acquire(self, result: MetricResult, duration_seconds: float, attempt: int) -> None:
         """Emit a token acquisition event."""
-
         emit_metric(
             self._cell.metrics,
             ("token_acquire", "tokenAcquire"),
@@ -218,14 +213,12 @@ class AuthMetricsRecorder:
         ``start`` must come from :func:`metric_start`. When ``token`` is
         provided for a successful acquisition, its lifetime is emitted too.
         """
-
         self.token_acquire(result, metric_duration_seconds(start), attempt)
         if result == METRIC_RESULT_SUCCESS and token is not None:
             self.token_lifetime(token)
 
     def token_lifetime(self, token: object) -> None:
         """Emit token lifetime when the token has an aware expiration timestamp."""
-
         expiration = getattr(token, "expiration", None)
         if not isinstance(expiration, datetime):
             return
@@ -248,7 +241,6 @@ class AuthMetricsRecorder:
         background: bool = True,
     ) -> None:
         """Emit a token refresh event."""
-
         emit_metric(
             self._cell.metrics,
             ("token_refresh", "tokenRefresh"),
@@ -262,7 +254,6 @@ class AuthMetricsRecorder:
 
     def cache_hit(self) -> None:
         """Emit a cache hit event."""
-
         emit_metric(
             self._cell.metrics,
             ("cache_hit", "cacheHit"),
@@ -271,7 +262,6 @@ class AuthMetricsRecorder:
 
     def cache_miss(self, result: MetricResult) -> None:
         """Emit a cache miss event."""
-
         emit_metric(
             self._cell.metrics,
             ("cache_miss", "cacheMiss"),
@@ -280,7 +270,6 @@ class AuthMetricsRecorder:
 
     def cache_store(self, result: MetricResult) -> None:
         """Emit a cache store event."""
-
         emit_metric(
             self._cell.metrics,
             ("cache_store", "cacheStore"),
@@ -289,7 +278,6 @@ class AuthMetricsRecorder:
 
     def cache_refresh(self, result: MetricResult) -> None:
         """Emit a cache refresh event."""
-
         emit_metric(
             self._cell.metrics,
             ("cache_refresh", "cacheRefresh"),
@@ -298,7 +286,6 @@ class AuthMetricsRecorder:
 
     def cache_invalidate(self) -> None:
         """Emit a cache invalidation event."""
-
         emit_metric(
             self._cell.metrics,
             ("cache_invalidate", "cacheInvalidate"),
@@ -308,7 +295,6 @@ class AuthMetricsRecorder:
 
 def auth_metrics_recorder(metrics: AuthMetricsLike, provider: str) -> AuthMetricsRecorder:
     """Create an auth metrics recorder, preserving shared callback cells."""
-
     return AuthMetricsRecorder(metrics, provider)
 
 
@@ -320,7 +306,6 @@ def record_config_metric(
     duration_seconds: float,
 ) -> None:
     """Emit a config-reader metric."""
-
     names = ("config_load", "configLoad") if kind == "config_load" else ("credentials_resolve", "credentialsResolve")
     emit_metric(
         metrics,
@@ -331,7 +316,6 @@ def record_config_metric(
 
 def emit_metric(metrics: object | None, names: tuple[str, str], metric: object) -> None:
     """Call a metric callback if present and swallow callback failures."""
-
     try:
         callback = _metric_callback(metrics, names)
         if callback is None:
@@ -348,7 +332,6 @@ def emit_metric(metrics: object | None, names: tuple[str, str], metric: object) 
 
 def auth_metric_provider(bearer: object | None) -> str:
     """Return an auth provider label from a bearer hook."""
-
     if bearer is None:
         return "custom"
 
@@ -373,7 +356,6 @@ def auth_metric_provider(bearer: object | None) -> str:
 
 def bind_auth_metrics(bearer: object, metrics: AuthMetricsLike) -> object:
     """Attach auth metrics to ``bearer`` or return an instrumented wrapper."""
-
     if metrics is None:
         return bearer
     if _apply_metrics_setter(bearer, metrics):
@@ -438,7 +420,6 @@ _metric_tasks_lock = Lock()
 
 def _reset_metric_tasks_after_fork() -> None:
     """Drop inherited fallback tasks and replace a possibly locked lock."""
-
     global _metric_tasks
     global _metric_tasks_lock
     _metric_tasks = set()
@@ -462,7 +443,6 @@ def _schedule_metric_awaitable(
 
         async def run() -> None:
             """Claim and run the callback unless cancellation closed it."""
-
             nonlocal started
             with state_lock:
                 if closed_before_start:
@@ -494,7 +474,6 @@ def _schedule_metric_awaitable(
 
                 def close_unstarted(completed: object) -> None:
                     """Close callback work whenever its wrapper never starts."""
-
                     nonlocal closed_before_start
                     with state_lock:
                         if started or closed_before_start:
@@ -522,7 +501,6 @@ def _discard_metric_task(task: Task[None]) -> None:
 
     :param task: Completed metric callback task.
     """
-
     with _metric_tasks_lock:
         _metric_tasks.discard(task)
 
@@ -574,7 +552,6 @@ class _InstrumentedReceiver(_TokenReceiver):
     @property
     def latest(self) -> _Token | None:
         """Return the wrapped receiver's latest token."""
-
         latest = getattr(self._receiver, "latest", None)
         return latest if isinstance(latest, _Token) else None
 
@@ -594,12 +571,10 @@ class _InstrumentedReceiver(_TokenReceiver):
 
     async def fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> _Token:
         """Fetch a token and record the result."""
-
         return await super().fetch(timeout=timeout, options=options)
 
     def can_retry(self, err: Exception, options: dict[str, str] | None = None) -> bool:
         """Delegate retry decisions to the wrapped receiver."""
-
         return bool(self._receiver.can_retry(err, options))
 
 
@@ -611,36 +586,30 @@ class _InstrumentedBearer(_TokenBearer):
     @property
     def name(self) -> str | None:
         """Return the wrapped bearer's name."""
-
         name = getattr(self._bearer, "name", None)
         return name if isinstance(name, str) else None
 
     @property
     def wrapped(self) -> _TokenBearer:
         """Return the wrapped bearer."""
-
         return self._bearer
 
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self._metrics.provider
 
     def receiver(self) -> _InstrumentedReceiver:
         """Return an instrumented receiver."""
-
         return _InstrumentedReceiver(self._bearer.receiver(), self._metrics)
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Replace callbacks and propagate them to the wrapped bearer."""
-
         self._metrics.set_metrics(metrics)
         bind_auth_metrics(self._bearer, self._metrics)
 
     async def close(self, grace: float | None = None) -> None:
         """Close the wrapped bearer."""
-
         close = getattr(self._bearer, "close", None)
         if callable(close):
             await close(grace=grace)

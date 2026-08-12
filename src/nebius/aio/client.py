@@ -182,6 +182,6 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
                 Constant(
                     self.__service_name__ + "." + self.__operation_source_method__,
                     self._channel,
-                )
+                ),
             )
         return self.__operation_service__

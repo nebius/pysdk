@@ -232,11 +232,11 @@ class SDK(Channel):
     - You can also set ``grpc.primary_user_agent`` in ``options``.
     - The SDK combines these values with its internal version string.
 
-    See also
+    See Also
     --------
-
     - See the project README and API reference for more examples and
       explanations.
+
     """
 
     def whoami(
@@ -256,7 +256,6 @@ class SDK(Channel):
         :rtype: :class:`Request` of
             :class:`GetProfileResponse`
         """
-
         client = ProfileServiceClient(self)
         return client.get(
             GetProfileRequest(),

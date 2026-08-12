@@ -16,10 +16,9 @@ from typing import Any
 from weakref import ref
 
 import grpc
-import pytest
-
 import nebius.aio._runtime as runtime_module
 import nebius.aio.channel as channel_module
+import pytest
 from nebius.aio._runtime import (
     AsyncRuntime,
     CrossLoopAwaitable,
@@ -84,7 +83,6 @@ def _stop_loop(loop: asyncio.AbstractEventLoop, thread: Thread) -> None:
 )
 def test_borrowed_loop_eager_task_factory_does_not_deadlock_submission() -> None:
     """A caller-owned eager task factory may run SDK work during creation."""
-
     loop, thread = _start_loop()
     configured: Future[None] = Future()
 
@@ -131,7 +129,6 @@ def test_owned_runtime_threads_are_daemons_and_stop_on_close() -> None:
 
 def test_sdk_sets_owned_loop_exception_handler_before_return() -> None:
     """An owned runtime publishes readiness after installing its handler."""
-
     reported: Future[tuple[asyncio.AbstractEventLoop, dict[str, object]]] = Future()
 
     def handler(
@@ -139,7 +136,6 @@ def test_sdk_sets_owned_loop_exception_handler_before_return() -> None:
         context: dict[str, Any],
     ) -> None:
         """Capture one owned-loop diagnostic."""
-
         if not reported.done():
             reported.set_result((loop, context))
 
@@ -151,7 +147,6 @@ def test_sdk_sets_owned_loop_exception_handler_before_return() -> None:
 
         async def report() -> None:
             """Publish a diagnostic through the configured loop handler."""
-
             loop = asyncio.get_running_loop()
             assert getattr(loop.get_exception_handler(), "handler", None) is handler
             loop.call_exception_handler({"message": "SDK diagnostic"})
@@ -169,14 +164,12 @@ def test_sdk_reports_awaitable_returned_by_sync_exception_handler(
     supplied_loop: bool,
 ) -> None:
     """A synchronous wrapper cannot leak its returned coroutine."""
-
     handler_body_ran = Event()
     reported: list[dict[str, Any]] = []
     both_reported = Event()
 
     async def hidden_async_handler() -> None:
         """Represent work hidden behind a synchronous wrapper."""
-
         handler_body_ran.set()
 
     def handler(
@@ -184,7 +177,6 @@ def test_sdk_reports_awaitable_returned_by_sync_exception_handler(
         __: dict[str, Any],
     ) -> Any:
         """Return an unsupported awaitable from a synchronous function."""
-
         return hidden_async_handler()
 
     loop: asyncio.AbstractEventLoop | None = None
@@ -200,12 +192,10 @@ def test_sdk_reports_awaitable_returned_by_sync_exception_handler(
 
         async def report() -> None:
             """Capture the validation diagnostic from the loop thread."""
-
             running = asyncio.get_running_loop()
 
             def capture(context: dict[str, Any]) -> None:
                 """Store the default-handler diagnostic."""
-
                 reported.append(context)
                 if len(reported) == 2:
                     both_reported.set()
@@ -236,7 +226,6 @@ def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
     returned_kind: str,
 ) -> None:
     """A contract violation does not transfer ownership of shared work."""
-
     returned: list[asyncio.Future[Any]] = []
     reported: list[dict[str, Any]] = []
     both_reported = Event()
@@ -246,7 +235,6 @@ def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
         __: dict[str, Any],
     ) -> Any:
         """Return loop work that remains owned by the application."""
-
         return returned[0]
 
     loop: asyncio.AbstractEventLoop | None = None
@@ -262,7 +250,6 @@ def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
 
         async def report() -> None:
             """Return shared work and verify that validation leaves it intact."""
-
             running = asyncio.get_running_loop()
             if returned_kind == "future":
                 shared: asyncio.Future[Any] = running.create_future()
@@ -272,7 +259,6 @@ def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
 
             def capture(context: dict[str, Any]) -> None:
                 """Store the default-handler diagnostic."""
-
                 reported.append(context)
                 if len(reported) == 2:
                     both_reported.set()
@@ -302,7 +288,6 @@ def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
 
 def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() -> None:
     """A handler does not transfer ownership of a suspended coroutine."""
-
     returned: list[Any] = []
     finalized = Event()
     both_reported = Event()
@@ -313,12 +298,10 @@ def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() 
 
         def __await__(self) -> Any:
             """Yield control until the test explicitly closes the coroutine."""
-
             yield None
 
     async def suspended() -> None:
         """Record when the suspended coroutine is explicitly closed."""
-
         try:
             await SuspendOnce()
         finally:
@@ -329,7 +312,6 @@ def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() 
         __: dict[str, Any],
     ) -> Any:
         """Return application-owned suspended work."""
-
         return returned[0]
 
     sdk = SDK(
@@ -340,7 +322,6 @@ def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() 
 
         async def report() -> None:
             """Verify handler validation leaves suspended work unchanged."""
-
             running = asyncio.get_running_loop()
             coroutine = suspended()
             coroutine.send(None)
@@ -348,7 +329,6 @@ def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() 
 
             def capture(context: dict[str, Any]) -> None:
                 """Store both default-handler diagnostics."""
-
                 reported.append(context)
                 if len(reported) == 2:
                     both_reported.set()
@@ -401,7 +381,6 @@ def test_sdk_rejects_async_generator_exception_handler_before_start() -> None:
         context: dict[str, Any],
     ) -> Any:
         """Represent an unsupported async-generator exception handler."""
-
         yield context
 
     before = set(enumerate_threads())
@@ -422,7 +401,6 @@ def test_sdk_rejects_async_generator_exception_handler_before_start() -> None:
 
 def test_sdk_rejects_noncallable_loop_exception_handler_before_start() -> None:
     """A non-callable handler is rejected before owned threads start."""
-
     before = set(enumerate_threads())
     with pytest.raises(
         TypeError,
@@ -456,7 +434,6 @@ def test_sdk_rejects_async_callable_handler_before_supplied_loop_setup(
 
     def unexpected_runtime(*_: Any, **__: Any) -> AsyncRuntime:
         """Fail if validation reaches runtime construction."""
-
         raise AssertionError("Runtime construction started before validation.")
 
     loop, thread = _start_loop()
@@ -488,7 +465,6 @@ def test_owned_handler_setter_failure_stops_runtime_threads(
 
     def fail_setter(_: Any, __: Any) -> None:
         """Reject the handler during owned-loop setup."""
-
         raise RuntimeError("The test event loop rejected the exception handler.")
 
     monkeypatch.setattr(asyncio.BaseEventLoop, "set_exception_handler", fail_setter)
@@ -511,7 +487,6 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A supplied loop retains the explicitly installed handler after close."""
-
     loop, thread = _start_loop()
     handler_threads: list[int | None] = []
     setter_threads: list[int | None] = []
@@ -526,7 +501,6 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
 
     def configure_previous() -> None:
         """Install the previous handler on the supplied loop thread."""
-
         loop.set_exception_handler(previous_handler)
         configured.set_result(None)
 
@@ -536,7 +510,6 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
 
     def observed_set_exception_handler(handler: Any) -> None:
         """Record the thread that installs the SDK handler."""
-
         setter_threads.append(current_thread().ident)
         original_set_exception_handler(handler)
 
@@ -547,7 +520,6 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
         __: dict[str, Any],
     ) -> None:
         """Record the thread that receives a supplied-loop diagnostic."""
-
         handler_threads.append(current_thread().ident)
 
     sdk = SDK(
@@ -559,7 +531,6 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
 
         async def report() -> None:
             """Report a diagnostic through the supplied-loop handler."""
-
             running = asyncio.get_running_loop()
             running.call_exception_handler({"message": "SDK diagnostic"})
 
@@ -575,7 +546,6 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
 
         def inspect_handler() -> None:
             """Inspect the retained handler on the supplied loop thread."""
-
             loop.call_exception_handler({"message": "retained SDK diagnostic"})
             retained.set_result(True)
 
@@ -588,7 +558,6 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
 
 def test_sdks_sharing_loop_keep_latest_exception_handler_after_close() -> None:
     """Closing shared-loop SDKs does not restore an older handler."""
-
     loop, thread = _start_loop()
     retained_handler = Event()
 
@@ -597,7 +566,6 @@ def test_sdks_sharing_loop_keep_latest_exception_handler_after_close() -> None:
         __: dict[str, Any],
     ) -> None:
         """Represent the first SDK's loop handler."""
-
         raise AssertionError("The loop invoked the replaced SDK handler.")
 
     def second_handler(
@@ -605,7 +573,6 @@ def test_sdks_sharing_loop_keep_latest_exception_handler_after_close() -> None:
         __: dict[str, Any],
     ) -> None:
         """Represent the later SDK's loop handler."""
-
         retained_handler.set()
 
     first = SDK(
@@ -625,7 +592,6 @@ def test_sdks_sharing_loop_keep_latest_exception_handler_after_close() -> None:
 
         def inspect_handler() -> None:
             """Check the loop-wide last-assignment-wins contract."""
-
             loop.call_exception_handler({"message": "retained SDK diagnostic"})
             installed = loop.get_exception_handler()
             retained.set_result(getattr(installed, "_state", (None, object()))[1] is None)
@@ -643,7 +609,6 @@ def test_failed_supplied_loop_constructor_does_not_replace_handler(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A failed constructor preserves the handler and finishes async cleanup."""
-
     loop, thread = _start_loop()
     shutdowns: list[CrossLoopAwaitable[None]] = []
     shutdown_started = Event()
@@ -653,7 +618,6 @@ def test_failed_supplied_loop_constructor_does_not_replace_handler(
         runtime: AsyncRuntime,
     ) -> CrossLoopAwaitable[None]:
         """Record borrowed-runtime cleanup started by constructor rollback."""
-
         shutdown = original_shutdown_async(runtime)
         shutdowns.append(shutdown)
         shutdown_started.set()
@@ -677,7 +641,6 @@ def test_failed_supplied_loop_constructor_does_not_replace_handler(
 
     def configure_previous() -> None:
         """Install the caller's handler on its loop thread."""
-
         loop.set_exception_handler(previous_handler)
         configured.set_result(None)
 
@@ -701,7 +664,6 @@ def test_failed_supplied_loop_constructor_does_not_replace_handler(
 
         def inspect_handler() -> None:
             """Check the retained handler on the supplied loop thread."""
-
             retained.set_result(loop.get_exception_handler() is previous_handler)
 
         loop.call_soon_threadsafe(inspect_handler)
@@ -714,7 +676,6 @@ def test_interrupted_supplied_loop_handler_installation_is_cancelled(
     monkeypatch,
 ) -> None:
     """An interrupted wait cannot install its queued handler later."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     loop_blocked = Event()
@@ -734,7 +695,6 @@ def test_interrupted_supplied_loop_handler_installation_is_cancelled(
 
     def block_loop() -> None:
         """Install the previous handler and block later callbacks."""
-
         loop.set_exception_handler(previous_handler)
         loop_blocked.set()
         release_loop.wait(timeout=5)
@@ -744,7 +704,6 @@ def test_interrupted_supplied_loop_handler_installation_is_cancelled(
 
         def result(self, timeout: float | None = None) -> None:
             """Raise the simulated external interruption."""
-
             raise KeyboardInterrupt
 
     loop.call_soon_threadsafe(block_loop)
@@ -762,7 +721,6 @@ def test_interrupted_supplied_loop_handler_installation_is_cancelled(
 
     def inspect_handler() -> None:
         """Check the handler after the cancelled callback can run."""
-
         retained.set_result(loop.get_exception_handler() is previous_handler)
 
     loop.call_soon_threadsafe(inspect_handler)
@@ -779,7 +737,6 @@ def test_supplied_loop_handler_setter_timeout_error_is_preserved(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A setter's TimeoutError is not mistaken for a polling timeout."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
 
@@ -791,7 +748,6 @@ def test_supplied_loop_handler_setter_timeout_error_is_preserved(
 
     def fail_setter(_: Any) -> None:
         """Raise the application error that installation must preserve."""
-
         raise TimeoutError("The loop handler setter failed.")
 
     monkeypatch.setattr(loop, "set_exception_handler", fail_setter)
@@ -809,7 +765,6 @@ def test_supplied_loop_handler_installation_has_a_time_limit(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A blocked supplied loop cannot hang handler installation forever."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     loop_blocked = Event()
@@ -831,7 +786,6 @@ def test_supplied_loop_handler_installation_has_a_time_limit(
 
     def configure_and_block() -> None:
         """Install the previous handler and block the loop thread."""
-
         loop.set_exception_handler(previous_handler)
         configured.set_result(None)
         loop_blocked.set()
@@ -861,7 +815,6 @@ def test_supplied_loop_handler_installation_has_a_time_limit(
 
     def inspect_handler() -> None:
         """Check that the timed-out assignment stayed cancelled."""
-
         retained.set_result(loop.get_exception_handler() is previous_handler)
 
     loop.call_soon_threadsafe(inspect_handler)
@@ -878,7 +831,6 @@ def test_failed_handler_installation_closes_registered_bearer(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Constructor rollback closes resources registered before its last step."""
-
     loop, thread = _start_loop()
     close_loops: list[asyncio.AbstractEventLoop] = []
     closed = Event()
@@ -887,7 +839,6 @@ def test_failed_handler_installation_closes_registered_bearer(
 
     def observed_runtime(*args: Any, **kwargs: Any) -> AsyncRuntime:
         """Record the runtime that partial-channel cleanup must stop."""
-
         runtime = original_runtime(*args, **kwargs)
         runtimes.append(runtime)
         return runtime
@@ -897,12 +848,10 @@ def test_failed_handler_installation_closes_registered_bearer(
 
         def receiver(self) -> TokenReceiver:
             """Reject token use, which this construction test does not need."""
-
             raise AssertionError("The test bearer receiver was requested.")
 
         async def close(self, grace: float | None = None) -> None:
             """Record the loop that closes the partial credential."""
-
             close_loops.append(asyncio.get_running_loop())
             closed.set()
 
@@ -916,7 +865,6 @@ def test_failed_handler_installation_closes_registered_bearer(
 
     def fail_sdk_handler(candidate: Any) -> None:
         """Reject only the SDK forwarding handler."""
-
         if getattr(candidate, "handler", None) is handler:
             raise RuntimeError("The test loop rejected the SDK exception handler.")
         original_set_exception_handler(candidate)
@@ -942,14 +890,12 @@ def test_failed_constructor_starts_shutdown_before_borrowed_cleanup_finishes(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A stopped supplied loop cannot strand failed-constructor shutdown."""
-
     loop, thread = _start_loop()
     runtimes: list[AsyncRuntime] = []
     original_runtime = AsyncRuntime
 
     def observed_runtime(*args: Any, **kwargs: Any) -> AsyncRuntime:
         """Record the runtime whose loop stops during rollback."""
-
         runtime = original_runtime(*args, **kwargs)
         runtimes.append(runtime)
         return runtime
@@ -964,7 +910,6 @@ def test_failed_constructor_starts_shutdown_before_borrowed_cleanup_finishes(
 
     def fail_sdk_handler(candidate: Any) -> None:
         """Reject only the SDK forwarding handler."""
-
         if getattr(candidate, "handler", None) is handler:
             raise RuntimeError("The test loop rejected the SDK exception handler.")
         original_set_exception_handler(candidate)
@@ -976,7 +921,6 @@ def test_failed_constructor_starts_shutdown_before_borrowed_cleanup_finishes(
         _grace: float | None,
     ) -> CrossLoopAwaitable[None]:
         """Stop the borrowed loop and return cleanup that cannot complete."""
-
         loop.call_soon_threadsafe(loop.stop)
         thread.join(timeout=5)
         assert not thread.is_alive()
@@ -1001,7 +945,6 @@ def test_interrupted_handler_installation_restores_claimed_assignment(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Interruption after callback entry restores the prior loop handler."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     setter_entered = Event()
@@ -1024,7 +967,6 @@ def test_interrupted_handler_installation_restores_claimed_assignment(
 
     def configure_previous() -> None:
         """Install the prior handler on its owner thread."""
-
         loop.set_exception_handler(previous_handler)
         configured.set_result(None)
 
@@ -1034,7 +976,6 @@ def test_interrupted_handler_installation_restores_claimed_assignment(
 
     def controlled_set_exception_handler(handler: Any) -> None:
         """Pause the replacement after its future claims callback execution."""
-
         if getattr(handler, "handler", None) is replacement_handler:
             setter_entered.set()
             assert release_setter.wait(timeout=5)
@@ -1049,7 +990,6 @@ def test_interrupted_handler_installation_restores_claimed_assignment(
 
         def result(self, timeout: float | None = None) -> Any:
             """Raise once after the loop callback enters the handler setter."""
-
             if self._first_result:
                 self._first_result = False
                 assert setter_entered.wait(timeout=5)
@@ -1068,7 +1008,6 @@ def test_interrupted_handler_installation_restores_claimed_assignment(
 
     def inspect_handler() -> None:
         """Check the guarded restoration after the interrupted assignment."""
-
         retained.set_result(loop.get_exception_handler() is previous_handler)
 
     loop.call_soon_threadsafe(inspect_handler)
@@ -1085,7 +1024,6 @@ def test_interruption_during_handler_commit_keeps_accepted_assignment(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A late interruption cannot erase the handler accepted by the loop."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     replacement_called = Event()
@@ -1101,14 +1039,12 @@ def test_interruption_during_handler_commit_keeps_accepted_assignment(
         __: dict[str, Any],
     ) -> None:
         """Record use of the assignment accepted before interruption."""
-
         replacement_called.set()
 
     configured: Future[None] = Future()
 
     def configure_previous() -> None:
         """Install the predecessor on the loop-owner thread."""
-
         loop.set_exception_handler(previous_handler)
         configured.set_result(None)
 
@@ -1120,7 +1056,6 @@ def test_interruption_during_handler_commit_keeps_accepted_assignment(
         installed_handler: runtime_module._StagedLoopExceptionHandler,
     ) -> None:
         """Interrupt after the assignment releases its predecessor."""
-
         original_commit(installed_handler)
         raise KeyboardInterrupt
 
@@ -1137,7 +1072,6 @@ def test_interruption_during_handler_commit_keeps_accepted_assignment(
 
         def inspect_handler() -> None:
             """Invoke and identify the handler retained after interruption."""
-
             installed = loop.get_exception_handler()
             inspected.set_result(getattr(installed, "handler", None) is replacement_handler)
             loop.call_exception_handler({"message": "SDK diagnostic"})
@@ -1156,7 +1090,6 @@ def test_interrupted_sdk_constructor_does_not_wait_for_borrowed_loop(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Constructor rollback does not wait for an unresponsive borrowed loop."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     loop_blocked = Event()
@@ -1175,23 +1108,19 @@ def test_interrupted_sdk_constructor_does_not_wait_for_borrowed_loop(
 
     def block_loop() -> None:
         """Prevent queued construction callbacks from running."""
-
         loop_blocked.set()
         release_loop.wait(timeout=5)
 
     def existing_runtime(*_: Any, **__: Any) -> AsyncRuntime:
         """Return the prepared runtime used by the constructor."""
-
         return runtime
 
     def interrupt_install(*_: Any, **__: Any) -> None:
         """Interrupt construction before it can install the handler."""
-
         raise KeyboardInterrupt
 
     def observed_shutdown_async() -> CrossLoopAwaitable[None]:
         """Record cleanup that the failed constructor starts."""
-
         shutdown = original_shutdown_async()
         shutdowns.append(shutdown)
         shutdown_started.set()
@@ -1199,7 +1128,6 @@ def test_interrupted_sdk_constructor_does_not_wait_for_borrowed_loop(
 
     def construct() -> None:
         """Run the interrupted constructor on an observable caller thread."""
-
         try:
             SDK(
                 credentials=NoCredentials(),
@@ -1245,14 +1173,12 @@ def test_stopped_supplied_loop_cannot_install_queued_handler(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A cancelled assignment stays cancelled when its loop restarts."""
-
     ready: Future[asyncio.AbstractEventLoop] = Future()
     first_run_stopped = Event()
     restart = Event()
 
     def run_reusable_loop() -> None:
         """Run one event loop twice so queued callbacks survive a stop."""
-
         reusable_loop = asyncio.new_event_loop()
         asyncio.set_event_loop(reusable_loop)
         ready.set_result(reusable_loop)
@@ -1284,7 +1210,6 @@ def test_stopped_supplied_loop_cannot_install_queued_handler(
 
     def block_then_stop() -> None:
         """Stop after the setter queues work outside this ready snapshot."""
-
         loop.set_exception_handler(previous_handler)
         blocker_entered.set()
         assert release_blocker.wait(timeout=5)
@@ -1294,7 +1219,6 @@ def test_stopped_supplied_loop_cannot_install_queued_handler(
 
     def observe_assignment(callback: Any, *args: Any) -> Any:
         """Release the stopping callback after assignment enters the queue."""
-
         handle = original_call_soon_threadsafe(callback, *args)
         if getattr(callback, "__name__", "") == "configure":
             assignment_queued.set()
@@ -1318,7 +1242,6 @@ def test_stopped_supplied_loop_cannot_install_queued_handler(
 
     def inspect_handler() -> None:
         """Check that the callback retained cancellation across restart."""
-
         retained.set_result(loop.get_exception_handler() is previous_handler)
 
     loop.call_soon_threadsafe(inspect_handler)
@@ -1333,7 +1256,6 @@ def test_stopped_supplied_loop_cannot_install_queued_handler(
 
 def test_sdk_sets_supplied_loop_exception_handler_from_that_loop() -> None:
     """Handler installation does not block construction on the supplied loop."""
-
     loop, thread = _start_loop()
     constructed: Future[SDK] = Future()
     handled = Event()
@@ -1343,12 +1265,10 @@ def test_sdk_sets_supplied_loop_exception_handler_from_that_loop() -> None:
         __: dict[str, Any],
     ) -> None:
         """Handle diagnostics from the supplied loop."""
-
         handled.set()
 
     def construct() -> None:
         """Construct the SDK on the supplied loop's thread."""
-
         try:
             sdk = SDK(
                 credentials=NoCredentials(),
@@ -1375,7 +1295,6 @@ def test_sdk_sets_supplied_loop_exception_handler_from_that_loop() -> None:
 
 def test_owned_runtime_starts_executor_workers_lazily() -> None:
     """An unused SDK owns a pool but does not consume worker threads."""
-
     before = set(enumerate_threads())
     channel = Channel(credentials=NoCredentials(), executor_max_workers=3)
     try:
@@ -1387,10 +1306,9 @@ def test_owned_runtime_starts_executor_workers_lazily() -> None:
         channel.sync_close(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_default_sdks_run_on_independent_internal_loops_in_parallel() -> None:
     """Default SDK runtimes do not share loop threads or task context."""
-
     first = Channel(credentials=NoCredentials())
     second = Channel(credentials=NoCredentials())
     both_running = Barrier(2)
@@ -1412,7 +1330,6 @@ async def test_default_sdks_run_on_independent_internal_loops_in_parallel() -> N
 
 def test_runtime_startup_failure_is_reported_and_workers_stop(monkeypatch) -> None:
     """An exception in loop-thread setup must not strand the constructor."""
-
     original = asyncio.BaseEventLoop.set_default_executor
 
     def fail_setup(
@@ -1437,7 +1354,6 @@ def test_runtime_startup_failure_is_reported_and_workers_stop(monkeypatch) -> No
 
 def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
     """A failed lazy worker start must not leak an earlier worker."""
-
     original_start = Thread.start
     worker_starts = 0
 
@@ -1481,7 +1397,6 @@ def test_executor_lazy_start_failure_stops_started_workers(monkeypatch) -> None:
 
 def test_executor_reuses_idle_worker_for_sequential_submissions() -> None:
     """Completed sequential work does not grow the daemon worker pool."""
-
     executor = DaemonThreadPoolExecutor(20, "nebius-test-worker-idle")
     try:
         for value in range(100):
@@ -1493,7 +1408,6 @@ def test_executor_reuses_idle_worker_for_sequential_submissions() -> None:
 
 def test_executor_survives_base_exception_from_completion_callback() -> None:
     """One hostile Future callback cannot remove bounded pool capacity."""
-
     executor = DaemonThreadPoolExecutor(1, "nebius-test-worker-callback")
     work_started = Event()
     release_work = Event()
@@ -1524,7 +1438,6 @@ def test_executor_survives_base_exception_from_completion_callback() -> None:
 
 def test_executor_registers_worker_before_it_can_consume_queued_work() -> None:
     """Every started worker is recognizable before it executes SDK work."""
-
     executor = DaemonThreadPoolExecutor(2, "nebius-test-worker-race")
     first_worker_started = Event()
     release_first_worker = Event()
@@ -1551,7 +1464,6 @@ def test_executor_registers_worker_before_it_can_consume_queued_work() -> None:
 
 def test_executor_construction_failure_closes_new_event_loop(monkeypatch) -> None:
     """Runtime construction must close a loop if executor creation fails."""
-
     created: list[asyncio.AbstractEventLoop] = []
     new_event_loop = asyncio.new_event_loop
 
@@ -1575,7 +1487,6 @@ def test_executor_construction_failure_closes_new_event_loop(monkeypatch) -> Non
 
 def test_loop_thread_start_failure_stops_executor_workers(monkeypatch) -> None:
     """A failed loop-thread start must clean the loop and owned executor."""
-
     original_start = Thread.start
 
     def fail_loop_thread(thread: Thread) -> None:
@@ -1598,7 +1509,6 @@ def test_loop_thread_start_failure_stops_executor_workers(monkeypatch) -> None:
 
 def test_failed_channel_constructor_stops_its_runtime() -> None:
     """A retained constructor traceback must not retain live SDK threads."""
-
     before = set(enumerate_threads())
     retained_errors: list[BaseException] = []
     try:
@@ -1616,7 +1526,6 @@ def test_failed_channel_constructor_stops_its_runtime() -> None:
 
 def test_failed_channel_constructor_uses_graceful_async_shutdown(monkeypatch) -> None:
     """Constructor rollback uses the loop-pumping shutdown path."""
-
     called = Event()
     original_shutdown_async = AsyncRuntime.shutdown_async
 
@@ -1656,12 +1565,11 @@ def test_channel_constructor_base_exception_stops_its_runtime() -> None:
     assert leaked == []
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_failed_channel_constructor_does_not_block_borrowed_loop(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Borrowed-loop rollback schedules cleanup without waiting on itself."""
-
     shutdowns = []
     shutdown_started = Event()
     original_shutdown_async = AsyncRuntime.shutdown_async
@@ -1683,7 +1591,6 @@ async def test_failed_channel_constructor_does_not_block_borrowed_loop(
 
     async def wait_for_shutdown_start() -> None:
         """Yield until partial-channel resource cleanup starts shutdown."""
-
         while not shutdown_started.is_set():
             await asyncio.sleep(0)
 
@@ -1697,7 +1604,6 @@ def test_shutdown_async_reports_async_generator_cleanup_failure(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Graceful cleanup failures survive best-effort runtime teardown."""
-
     runtime = AsyncRuntime(None, 2)
     runtime_threads = [runtime._loop_thread]
 
@@ -1719,7 +1625,6 @@ def test_shutdown_async_reports_executor_cleanup_failure(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """An executor shutdown failure is reported after fallback cleanup."""
-
     runtime = AsyncRuntime(None, 2)
     executor = runtime._executor
     assert executor is not None
@@ -1746,7 +1651,6 @@ def test_shutdown_async_reports_executor_cleanup_failure(
 
 def test_owned_runtime_shutdown_completes_after_loop_was_stopped() -> None:
     """A previously stopped owned loop must not strand shutdown waiters."""
-
     runtime = AsyncRuntime(None, 2)
     loop_thread = runtime._loop_thread
     assert loop_thread is not None
@@ -1763,7 +1667,6 @@ def test_owned_runtime_shutdown_handles_loop_stop_race(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Loop closure during stop scheduling must still finish all resources."""
-
     runtime = AsyncRuntime(None, 2)
     loop_thread = runtime._loop_thread
     assert loop_thread is not None
@@ -1792,7 +1695,6 @@ def test_owned_runtime_shutdown_reports_finalizer_start_failure(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Failure to start an off-loop finalizer must not hang shutdown."""
-
     runtime = AsyncRuntime(None, 2)
     original_start = Thread.start
     shutdown_called = Event()
@@ -1825,7 +1727,6 @@ def test_finalizer_start_failure_still_stops_owned_executor(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A failed finalizer start still closes executor admission and workers."""
-
     runtime = AsyncRuntime(None, 1)
     worker_started = Event()
     release_worker = Event()
@@ -1882,7 +1783,6 @@ def test_owned_runtime_recovers_unexecuted_shutdown_dispatch(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """An accepted prepare callback cannot strand owned-loop shutdown."""
-
     runtime = AsyncRuntime(None, 2)
     stop_callback_entered = Event()
     release_stop_callback = Event()
@@ -1919,7 +1819,6 @@ def test_owned_runtime_recovers_unexecuted_shutdown_dispatch(
 
 def test_cancelled_shutdown_waiter_does_not_poison_shared_completion() -> None:
     """One cancelled shutdown handle cannot cancel later shutdown waiters."""
-
     runtime = AsyncRuntime(None, 2)
     loop_blocked = Event()
     release_loop = Event()
@@ -1948,12 +1847,10 @@ def test_runtime_rejects_use_after_fork_without_hanging(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A child must create its own SDK instead of using inherited threads."""
-
     from nebius.aio.channel import _CrossLoopUnaryUnaryCall
 
     async def invoke_without_transport(self: _CrossLoopUnaryUnaryCall) -> Disk:
         """Keep the wrapper pending without opening a native transport."""
-
         await asyncio.Event().wait()
         raise AssertionError("The pending call unexpectedly resumed.")
 
@@ -2017,7 +1914,6 @@ def test_runtime_rejects_use_after_fork_without_hanging(
 
         def serialize_inherited_request(value: object) -> bytes:
             """Record serializer work that occurs before fork rejection."""
-
             serializer_calls.append(value)
             return b"serialized"
 
@@ -2098,7 +1994,6 @@ def test_runtime_rejects_use_after_fork_without_hanging(
 
 def test_cross_loop_callback_runs_on_registration_loop() -> None:
     """Public completion callbacks retain Task-like loop affinity."""
-
     channel = Channel(credentials=NoCredentials())
 
     async def register() -> tuple[int, int]:
@@ -2150,7 +2045,6 @@ def test_cancelled_shielded_wait_observes_late_wrapper_exception() -> None:
 
 def test_cancelled_shielded_wait_does_not_retain_caller_loop() -> None:
     """A pending shared submission cannot retain an abandoned caller loop."""
-
     source: Future[int] = Future()
     owner_loop = asyncio.new_event_loop()
     handle = CrossLoopAwaitable(source, owner_loop)
@@ -2182,10 +2076,9 @@ def test_cancelled_shielded_wait_does_not_retain_caller_loop() -> None:
     owner_loop.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_cancelled_shielded_waits_do_not_accumulate_callbacks() -> None:
     """Cancelled waiters leave one bounded concurrent completion callback."""
-
     source: Future[int] = Future()
     handle = CrossLoopAwaitable(source, asyncio.get_running_loop())
     callback_count = len(source._done_callbacks)
@@ -2201,10 +2094,9 @@ async def test_cancelled_shielded_waits_do_not_accumulate_callbacks() -> None:
     assert await handle == 42
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_cancelled_low_level_accessor_does_not_cancel_native_accessor() -> None:
     """Public accessor cancellation does not mutate shared native capture."""
-
     from nebius.aio.channel import _CrossLoopUnaryUnaryCall
 
     accessor_started = asyncio.Event()
@@ -2280,7 +2172,6 @@ def test_completed_callback_releases_registration_context() -> None:
 
 def test_completed_callback_rejects_closed_sdk_loop() -> None:
     """Registration fails promptly when no callback loop can run."""
-
     channel = Channel(credentials=NoCredentials())
     submitted = channel.run_async(asyncio.sleep(0, result=42))
     assert submitted.result(timeout=5) == 42
@@ -2293,7 +2184,6 @@ def test_runtime_tracks_submission_before_task_can_start(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Runtime tracking is visible before submitted work can call close."""
-
     channel = Channel(credentials=NoCredentials())
     tracking_entered = Event()
     release_tracking = Event()
@@ -2303,7 +2193,6 @@ def test_runtime_tracks_submission_before_task_can_start(
 
     def delayed_track(handle: CrossLoopAwaitable[object]) -> None:
         """Hold tracking so the test can inspect task-start ordering."""
-
         tracking_entered.set()
         assert release_tracking.wait(timeout=5)
         original_track(handle)
@@ -2312,13 +2201,11 @@ def test_runtime_tracks_submission_before_task_can_start(
 
     async def work() -> int:
         """Report task entry and return a value."""
-
         task_started.set()
         return 42
 
     def submit() -> None:
         """Submit work while the tracking hook is blocked."""
-
         try:
             submitted.set_result(channel.run_async(work()))
         except BaseException as error:
@@ -2342,13 +2229,11 @@ def test_runtime_tracks_submission_before_task_can_start(
 
 def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
     """A synchronous pending-result read in async code fails promptly."""
-
     channel = Channel(credentials=NoCredentials())
     release = Event()
 
     async def pending() -> int:
         """Wait until the test permits the submission to finish."""
-
         while not release.is_set():
             await asyncio.sleep(0)
         return 42
@@ -2357,7 +2242,6 @@ def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
 
     async def inspect() -> None:
         """Verify that synchronous inspection cannot block this loop."""
-
         with pytest.raises(RuntimeError, match="Await the work instead"):
             submitted.result()
         with pytest.raises(RuntimeError, match="Await the work instead"):
@@ -2371,13 +2255,12 @@ def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
         channel.sync_close(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("work_kind", ("request", "operation", "stream"))
 async def test_dispatch_gate_waiter_is_drained_after_cancellation(
     work_kind: str,
 ) -> None:
     """Cancellation does not leave a dispatch-start waiter on the caller loop."""
-
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
     channel = Channel(credentials=NoCredentials())
@@ -2386,7 +2269,6 @@ async def test_dispatch_gate_waiter_is_drained_after_cancellation(
 
     async def block_sdk_loop() -> None:
         """Block SDK-loop dispatch until the cancellation check finishes."""
-
         loop_blocked.set()
         release_loop.wait(timeout=5)
 
@@ -2440,7 +2322,6 @@ async def test_dispatch_gate_waiter_is_drained_after_cancellation(
 
 def test_stopped_borrowed_loop_rejects_submission_promptly() -> None:
     """The caller must keep a supplied loop running until SDK close."""
-
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials(), event_loop=loop)
     _stop_loop(loop, thread)
@@ -2452,7 +2333,6 @@ def test_stopped_borrowed_loop_rejects_submission_promptly() -> None:
 
 def test_borrowed_loop_stop_after_shutdown_dispatch_completes() -> None:
     """An accepted but stranded close callback cannot hang shutdown."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     runtime._start_shutdown_preparation_on_loop = loop.stop  # type: ignore[method-assign]
@@ -2465,7 +2345,6 @@ def test_borrowed_loop_stop_after_shutdown_dispatch_completes() -> None:
 
 def test_repeated_shutdown_does_not_block_borrowed_owner_loop() -> None:
     """Owner-loop re-entry cannot wait on its pending shutdown completion."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     returned = Event()
@@ -2476,7 +2355,6 @@ def test_repeated_shutdown_does_not_block_borrowed_owner_loop() -> None:
 
     def repeat_shutdown() -> None:
         """Repeat shutdown from the borrowed owner loop."""
-
         runtime.shutdown()
         returned.set()
 
@@ -2490,19 +2368,16 @@ def test_repeated_shutdown_does_not_block_borrowed_owner_loop() -> None:
 
 def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
     """A rejecting custom task factory cannot strand shutdown completion."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     factory_installed = Event()
 
     def reject_task(loop: object, coroutine: object, **kwargs: object) -> None:
         """Reject creation of the runtime shutdown task."""
-
         raise RuntimeError("The test rejected the shutdown task.")
 
     def install_factory() -> None:
         """Install the rejecting factory on the borrowed loop."""
-
         loop.set_task_factory(reject_task)  # type: ignore[arg-type]
         factory_installed.set()
 
@@ -2520,7 +2395,6 @@ def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
 
 def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
     """Close cleanup cannot be stranded by a second task-factory rejection."""
-
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials(), event_loop=loop)
     resource_closed = Event()
@@ -2530,7 +2404,6 @@ def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
 
         async def close(self, grace: float | None = None) -> None:
             """Record resource cleanup on the supplied loop."""
-
             assert asyncio.get_running_loop() is loop
             resource_closed.set()
 
@@ -2539,7 +2412,6 @@ def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
 
     def reject_while_cleanup_pending(loop, coroutine, **kwargs):
         """Reject a nested task while channel cleanup is pending."""
-
         completion = channel._close_completion
         if completion is not None and not completion.done():
             raise RuntimeError("The test rejected the nested cleanup task.")
@@ -2547,7 +2419,6 @@ def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
 
     def install_factory() -> None:
         """Install the conditional task factory on the borrowed loop."""
-
         loop.set_task_factory(reject_while_cleanup_pending)
         factory_installed.set()
 
@@ -2567,13 +2438,11 @@ def test_borrowed_shutdown_watcher_start_failure_falls_back(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Watcher resource failure cannot leave borrowed shutdown pending."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
 
     def reject_thread_start(self: Thread) -> None:
         """Reject creation of the borrowed-loop watcher thread."""
-
         raise RuntimeError("The test rejected the watcher thread start.")
 
     monkeypatch.setattr(runtime_module.Thread, "start", reject_thread_start)
@@ -2587,14 +2456,12 @@ def test_borrowed_shutdown_watcher_start_failure_falls_back(
 
 def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
     """Two external loops can await one SDK submission handle."""
-
     channel = Channel(credentials=NoCredentials())
     started = Event()
     release = Event()
 
     async def work() -> int:
         """Return the SDK loop identity after both waiters start."""
-
         started.set()
         while not release.is_set():
             await asyncio.sleep(0)
@@ -2606,7 +2473,6 @@ def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
 
     async def wait_for_result() -> int:
         """Await the shared result from an external loop."""
-
         return await submitted
 
     try:
@@ -2623,10 +2489,9 @@ def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
         _stop_loop(loop_b, thread_b)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_rejected_sync_wait_preserves_running_cross_loop_handle() -> None:
     """An invalid blocking wait cannot cancel independently scheduled work."""
-
     channel = Channel(credentials=NoCredentials())
     started = Event()
     release = Event()
@@ -2656,7 +2521,6 @@ async def test_rejected_sync_wait_preserves_running_cross_loop_handle() -> None:
 
 def test_rejected_executor_sync_wait_preserves_running_handle() -> None:
     """An executor-worker rejection also leaves shared work untouched."""
-
     channel = Channel(credentials=NoCredentials())
     started = Event()
     release = Event()
@@ -2695,7 +2559,6 @@ def test_rejected_executor_sync_wait_preserves_running_handle() -> None:
 
 def test_sdk_executor_rejects_synchronous_wait_on_another_sdk() -> None:
     """A worker cannot form a finite-pool wait cycle with another SDK."""
-
     first = Channel(credentials=NoCredentials(), executor_max_workers=1)
     second = Channel(credentials=NoCredentials(), executor_max_workers=1)
 
@@ -2749,7 +2612,6 @@ def test_run_sync_is_safe_from_many_threads() -> None:
 
 def test_completed_submission_handle_does_not_retain_input_awaitable() -> None:
     """A reusable result handle must not keep completed caller work alive."""
-
     channel = Channel(credentials=NoCredentials())
 
     class Work:
@@ -2774,7 +2636,6 @@ def test_completed_submission_handle_does_not_retain_input_awaitable() -> None:
 
 def test_submit_and_close_race_leaves_no_untracked_work() -> None:
     """Close waits until an accepted submission is registered for draining."""
-
     channel = Channel(credentials=NoCredentials())
     tracking = Event()
     allow_tracking = Event()
@@ -2841,7 +2702,6 @@ def test_foreign_loop_future_is_bridged() -> None:
 
 def test_pending_future_from_stopped_loop_fails_bridge_promptly() -> None:
     """A stopped owner loop cannot deliver a pending future's completion."""
-
     foreign_loop = asyncio.new_event_loop()
     source = foreign_loop.create_future()
     channel = Channel(credentials=NoCredentials())
@@ -2859,7 +2719,6 @@ def test_pending_future_from_stopped_loop_fails_bridge_promptly() -> None:
 
 def test_completed_foreign_future_from_stopped_loop_fails_without_inspection() -> None:
     """A stopped owner prevents even terminal foreign-Future inspection."""
-
     foreign_loop = asyncio.new_event_loop()
     source = foreign_loop.create_future()
     source.set_result(42)
@@ -2877,7 +2736,6 @@ def test_completed_foreign_future_from_stopped_loop_fails_without_inspection() -
 
 def test_foreign_future_is_inspected_only_on_its_owner_loop() -> None:
     """Bridge setup, completion, and result reads preserve Future affinity."""
-
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials())
 
@@ -2916,7 +2774,6 @@ def test_foreign_future_is_inspected_only_on_its_owner_loop() -> None:
 
 def test_cancelled_bridge_observes_completed_foreign_future_exception() -> None:
     """Bridge cancellation consumes a source error before releasing the source."""
-
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials())
     owner_blocked = Event()
@@ -2958,7 +2815,6 @@ def test_cancelled_bridge_observes_completed_foreign_future_exception() -> None:
 
 def test_foreign_future_disposal_decides_on_owner_loop_after_completion() -> None:
     """Disposal observes a racing terminal exception on the Future's loop."""
-
     loop, thread = _start_loop()
     callback_started = Event()
     allow_completion = Event()
@@ -3072,7 +2928,6 @@ def test_bg_task_pre_start_cancellation_closes_caller_coroutine() -> None:
 
 def test_bg_task_start_failure_disposes_caller_awaitable() -> None:
     """Accepted background work is disposed if task creation later fails."""
-
     channel = Channel(credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the background task.")
     disposed = Event()
@@ -3255,7 +3110,6 @@ def test_runtime_pre_start_cancellation_reaches_cross_loop_handle() -> None:
 
 def test_runtime_rejects_resubmitting_current_handle() -> None:
     """A child wrapper cannot hide a pending self-await cycle."""
-
     channel = Channel(credentials=NoCredentials())
     holder: Future[CrossLoopAwaitable[int]] = Future()
 
@@ -3277,7 +3131,6 @@ def test_submission_failure_runs_threadsafe_disposal_hook_outside_locks(
     monkeypatch,
 ) -> None:
     """A thread-safe disposal hook may re-enter channel state on rejection."""
-
     channel = Channel(credentials=NoCredentials())
     original_submit = channel._event_loop.call_soon_threadsafe
     closed: list[grpc.ChannelConnectivity] = []
@@ -3316,7 +3169,6 @@ def test_submission_failure_runs_threadsafe_disposal_hook_outside_locks(
 
 def test_context_submission_binding_isolated_for_sdks_sharing_loop() -> None:
     """Nested and concurrent SDK tasks keep runtime-specific ContextVars."""
-
     loop, thread = _start_loop()
     first = Channel(credentials=NoCredentials(), event_loop=loop)
     second = Channel(credentials=NoCredentials(), event_loop=loop)
@@ -3377,7 +3229,6 @@ def test_close_cancels_bg_task_foreign_loop_future() -> None:
 
 def test_borrowed_runtime_shutdown_drains_tracked_task_finalizer() -> None:
     """Shutdown completion follows asynchronous finalization on a borrowed loop."""
-
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
     started = Event()
@@ -3411,7 +3262,6 @@ def test_channel_close_preserves_cleanup_and_shutdown_failures(
     asynchronous: bool,
 ) -> None:
     """A runtime-shutdown error is chained behind the primary close error."""
-
     channel = Channel(credentials=NoCredentials())
     close_error = RuntimeError("The channel cleanup failed.")
     shutdown_error = RuntimeError("The runtime shutdown failed.")
@@ -3449,7 +3299,6 @@ def test_sync_close_preserves_terminal_timeout_error_identity(
     timeout_phase: str,
 ) -> None:
     """Completed cleanup timeouts are not mistaken for wait expiration."""
-
     channel = Channel(credentials=NoCredentials())
     terminal_error = TimeoutError(f"The {timeout_phase} phase failed because its time limit expired.")
     close_future: Future[None] = Future()
@@ -3539,7 +3388,6 @@ def test_public_authorization_provider_dispatches_to_internal_loop() -> None:
 
 def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
     """A synchronous wait consumes the same one-shot claim as ``await``."""
-
     channel = Channel(credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
@@ -3573,7 +3421,6 @@ def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
 
 def test_request_wait_for_ready_default_and_native_option() -> None:
     """The public readiness option is initialized and reaches gRPC."""
-
     channel = Channel(credentials=NoCredentials())
     observed: list[bool | None] = []
 
@@ -3615,7 +3462,6 @@ def test_request_wait_for_ready_default_and_native_option() -> None:
 
 def test_legacy_request_wait_binds_task_to_channel_sync_loop() -> None:
     """A legacy sync runner creates the request task on its private loop."""
-
     policy_loop = asyncio.new_event_loop()
     private_loop = asyncio.new_event_loop()
     asyncio.set_event_loop(policy_loop)
@@ -3650,10 +3496,9 @@ def test_legacy_request_wait_binds_task_to_channel_sync_loop() -> None:
         private_loop.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_request_releases_override_when_authenticator_setup_fails() -> None:
     """Pre-leased request transports are released before native setup."""
-
     released: list[tuple[object | None, bool]] = []
 
     class FailingProvider:
@@ -3682,10 +3527,9 @@ async def test_request_releases_override_when_authenticator_setup_fails() -> Non
     assert released == [(override, False)]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_request_releases_override_when_authentication_is_cancelled() -> None:
     """Cancellation during authentication releases a pre-leased transport."""
-
     entered = asyncio.Event()
     release_completed = asyncio.Event()
     released: list[tuple[object | None, bool]] = []
@@ -3736,7 +3580,6 @@ def test_synchronous_request_timeout_cancels_before_delayed_start(
     authorization_enabled: bool,
 ) -> None:
     """A direct cross-loop wait timeout cannot leave the RPC queued."""
-
     from nebius.aio.service_error import RequestError as ServiceRequestError
 
     loop_blocked = Event()
@@ -3781,7 +3624,6 @@ def test_synchronous_request_timeout_cancels_before_delayed_start(
 
 def test_synchronous_request_wait_uses_remaining_submission_deadline() -> None:
     """A previously submitted request does not receive a fresh sync budget."""
-
     from nebius.aio.service_error import RequestError as ServiceRequestError
 
     loop_blocked = Event()
@@ -3825,7 +3667,6 @@ def test_synchronous_unlimited_request_ignores_inapplicable_auth_timeout(
     disable_explicitly: bool,
 ) -> None:
     """An irrelevant auth budget cannot cap an unlimited blocking wait."""
-
     from nebius.aio.authorization.options import OPTION_TYPE, Types
 
     class ProbeChannel:
@@ -3849,7 +3690,7 @@ def test_synchronous_unlimited_request_ignores_inapplicable_auth_timeout(
     assert request._sync_wait_timeout() is None
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
     ((0.05, 5, False), (5, 0.05, True), (0.05, 5, True)),
@@ -3861,7 +3702,6 @@ async def test_async_request_timeout_includes_sdk_loop_queueing(
     authorization_enabled: bool,
 ) -> None:
     """An async deadline expires even while the SDK loop cannot dispatch."""
-
     loop_blocked = Event()
     release_loop = Event()
     rpc_started = Event()
@@ -3901,13 +3741,12 @@ async def test_async_request_timeout_includes_sdk_loop_queueing(
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("disable_explicitly", (False, True))
 async def test_async_request_auth_timeout_only_applies_when_authorizing(
     disable_explicitly: bool,
 ) -> None:
     """An auth-only budget cannot shorten an unauthenticated request."""
-
     from nebius.aio.authorization.options import OPTION_TYPE, Types
     from nebius.aio.token.static import Bearer as StaticBearer
 
@@ -3945,7 +3784,7 @@ async def test_async_request_auth_timeout_only_applies_when_authorizing(
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_request_timeout_excludes_slow_authentication() -> None:
     """Authentication consumes auth budget but not request-only budget."""
 
@@ -3999,7 +3838,7 @@ async def test_request_timeout_excludes_slow_authentication() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_legacy_request_does_not_guess_provider_before_authentication() -> None:
     """A legacy provider discovered in-loop does not activate the request clock."""
 
@@ -4075,10 +3914,9 @@ def test_constant_preserves_authorization_provider_probe_state(
     assert channel._has_authorization_provider() is provider_state
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_token_timeout_includes_sdk_loop_queueing() -> None:
     """A token deadline expires without starting a late receiver fetch."""
-
     loop_blocked = Event()
     release_loop = Event()
     fetch_started = Event()
@@ -4115,10 +3953,9 @@ async def test_token_timeout_includes_sdk_loop_queueing() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_token_options_are_snapshotted_before_sdk_loop_dispatch() -> None:
     """Caller mutation cannot change token options already submitted."""
-
     loop_blocked = Event()
     release_loop = Event()
     received: list[dict[str, str] | None] = []
@@ -4160,7 +3997,6 @@ async def test_token_options_are_snapshotted_before_sdk_loop_dispatch() -> None:
 
 def test_sync_token_options_are_snapshotted_before_run_sync() -> None:
     """A sync token call fixes mutable options on the caller thread."""
-
     run_sync_entered = Event()
     release_run_sync = Event()
     received: list[dict[str, str] | None] = []
@@ -4215,7 +4051,6 @@ def test_sync_token_options_are_snapshotted_before_run_sync() -> None:
 
 def test_sync_token_deadline_starts_before_run_sync_dispatch() -> None:
     """A sync token timeout cannot become work time after delayed dispatch."""
-
     from time import sleep
 
     fetch_started = Event()
@@ -4225,13 +4060,11 @@ def test_sync_token_deadline_starts_before_run_sync_dispatch() -> None:
 
         async def _fetch(self, timeout=None, options=None):
             """Return a token only if the SDK incorrectly starts the fetch."""
-
             fetch_started.set()
             return Token("late-sync-token")
 
         def can_retry(self, err, options=None):
             """Disable retries for this deadline test."""
-
             return False
 
     class Bearer(TokenBearer):
@@ -4239,7 +4072,6 @@ def test_sync_token_deadline_starts_before_run_sync_dispatch() -> None:
 
         def receiver(self):
             """Return a receiver that records fetch calls."""
-
             return Receiver()
 
     channel = Channel(credentials=Bearer())
@@ -4247,7 +4079,6 @@ def test_sync_token_deadline_starts_before_run_sync_dispatch() -> None:
 
     def delay_run_sync(awaitable, timeout=None):
         """Delay SDK dispatch without consuming its cleanup allowance."""
-
         sleep(0.05)
         return original_run_sync(awaitable, timeout)
 
@@ -4261,10 +4092,9 @@ def test_sync_token_deadline_starts_before_run_sync_dispatch() -> None:
         channel.sync_close(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_token_fetch_preserves_receiver_timeout_error() -> None:
     """A receiver's own TimeoutError is not rewritten as dispatch expiry."""
-
     application_error = TimeoutError("The token receiver timed out.")
 
     class Receiver(TokenReceiver):
@@ -4287,10 +4117,9 @@ async def test_token_fetch_preserves_receiver_timeout_error() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_authentication_retry_reopens_request_cancellation() -> None:
     """A retried UNAUTHENTICATED call must not stay terminal."""
-
     from nebius.aio.service_error import RequestError as ServiceRequestError
     from nebius.aio.service_error import RequestStatusExtended
 
@@ -4346,7 +4175,7 @@ async def test_authentication_retry_reopens_request_cancellation() -> None:
                     service_errors=[],
                     request_id="",
                     trace_id="",
-                )
+                ),
             )
         second_attempt.set()
         await asyncio.Event().wait()
@@ -4372,11 +4201,10 @@ async def test_authentication_retry_reopens_request_cancellation() -> None:
     assert retry_count == 2
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("use_override", [False, True])
 async def test_authentication_retry_transport_ownership(use_override: bool) -> None:
     """An auth retry reacquires a lease but retains an explicit override."""
-
     from nebius.aio.service_error import RequestError as ServiceRequestError
     from nebius.aio.service_error import RequestStatusExtended
 
@@ -4468,7 +4296,7 @@ async def test_authentication_retry_transport_ownership(use_override: bool) -> N
             service_errors=[],
             request_id="",
             trace_id="",
-        )
+        ),
     )
 
     def send(timeout: float | None) -> None:
@@ -4570,7 +4398,6 @@ def test_sync_close_timeout_still_finishes_runtime_shutdown() -> None:
 
 def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
     """The first close call publishes rejection before SDK-loop dispatch."""
-
     channel = Channel(credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
@@ -4592,10 +4419,9 @@ def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
         channel._runtime._shutdown_complete.result(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_rejected_request_submission_discards_explicit_override() -> None:
     """A scheduler rejection cannot strand a request-owned transport lease."""
-
     rejection = ChannelClosedError("The test channel rejected the submission.")
     override = object.__new__(AddressChannel)
     released: list[tuple[object | None, bool]] = []
@@ -4631,7 +4457,6 @@ async def test_rejected_request_submission_discards_explicit_override() -> None:
 
 def test_raw_inherited_protected_task_is_discarded_when_done() -> None:
     """Borrowed-loop context inheritance cannot retain a completed raw task."""
-
     runtime = AsyncRuntime(None, 2)
 
     async def parent() -> asyncio.Task[None]:
@@ -4654,7 +4479,6 @@ def test_failed_first_close_submission_still_finalizes_runtime(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A failed cleanup dispatch is cached and followed by runtime shutdown."""
-
     channel = Channel(credentials=NoCredentials())
     original_submit = channel._runtime.submit
 
@@ -4730,7 +4554,6 @@ def test_supplied_loop_close_cancels_and_drains_submissions() -> None:
 
 def test_close_cancels_nested_submission_finalizer_once() -> None:
     """Parent cancellation cannot recancel a child's async finalizer."""
-
     loop, thread = _start_loop()
     channel = Channel(credentials=NoCredentials(), event_loop=loop)
     child_started = Event()
@@ -4799,7 +4622,6 @@ def test_internal_close_caller_completes_before_runtime_stops(
 
     def observe_cancel_returning(task: asyncio.Task[object]) -> None:
         """Record the next-turn callback before applying its normal check."""
-
         callback_ran.set()
         original_cancel_returning(task)
 
@@ -4829,7 +4651,6 @@ def test_internal_close_stops_continuation_on_its_next_await(
 
     def observe_cancel_returning(task: asyncio.Task[object]) -> None:
         """Prove the callback runs only after close returns to its caller."""
-
         assert close_returned.is_set()
         callback_ran.set()
         original_cancel_returning(task)
@@ -4896,7 +4717,6 @@ def test_internal_close_does_not_recancel_an_externally_cancelled_finalizer() ->
 
 def test_repeated_failed_internal_close_still_starts_shutdown() -> None:
     """A completed close failure cannot retain a protected internal caller."""
-
     channel = Channel(credentials=NoCredentials())
     close_error = RuntimeError("The cached channel cleanup failed.")
     close_future: Future[None] = Future()
@@ -4926,7 +4746,6 @@ def test_repeated_failed_internal_close_still_starts_shutdown() -> None:
 
 def test_raw_child_close_does_not_receive_second_cancellation() -> None:
     """Shutdown preserves a cancelling inherited child's async finalizer."""
-
     channel = Channel(credentials=NoCredentials())
     child_ready: Future[asyncio.Task[None]] = Future()
     finalizer_started = Event()
@@ -5033,7 +4852,6 @@ def test_run_sync_preserves_runtime_error_from_awaitable() -> None:
 
 def test_run_sync_preserves_timeout_error_from_completed_awaitable() -> None:
     """An application's TimeoutError is not mistaken for a wait deadline."""
-
     channel = Channel(credentials=NoCredentials())
     application_error = TimeoutError("The application task timed out.")
 
@@ -5050,7 +4868,6 @@ def test_run_sync_preserves_timeout_error_from_completed_awaitable() -> None:
 
 def test_run_sync_translates_expired_wait_and_cancels_work() -> None:
     """A real synchronous wait deadline cancels and drains submitted work."""
-
     channel = Channel(credentials=NoCredentials())
     started = Event()
     finalized = Event()
@@ -5073,7 +4890,6 @@ def test_run_sync_translates_expired_wait_and_cancels_work() -> None:
 
 def test_run_sync_keeps_deadline_classification_during_completion_race() -> None:
     """Completion after a wait expires cannot impersonate an application error."""
-
     channel = Channel(credentials=NoCredentials())
     future: Future[int] = Future()
 
@@ -5102,8 +4918,8 @@ def test_constructor_config_metrics_run_on_internal_loop_and_are_drained(
                 "profiles:",
                 "  test:",
                 "    endpoint: api.example.test:443",
-            ]
-        )
+            ],
+        ),
     )
     started = Event()
     finalized = Event()
@@ -5234,7 +5050,6 @@ def test_low_level_deadline_includes_internal_queue_delay() -> None:
 
 def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
     """An accepted call whose task is rejected settles every public gate."""
-
     channel = Channel(credentials=NoCredentials())
     rejection = RuntimeError("The SDK rejected the low-level call task.")
     factory_installed = Event()
@@ -5242,13 +5057,11 @@ def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
 
     def reject_once(loop, coroutine, **kwargs):
         """Reject the first task that starts after factory installation."""
-
         loop.set_task_factory(None)
         raise rejection
 
     async def install() -> None:
         """Install the factory and hold the SDK loop for target submission."""
-
         asyncio.get_running_loop().set_task_factory(reject_once)
         factory_installed.set()
         release_installer.wait(timeout=5)
@@ -5268,7 +5081,6 @@ def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
 
         async def await_call() -> Disk:
             """Wait for the rejected low-level call."""
-
             return await call
 
         with pytest.raises(RuntimeError) as raised:
@@ -5285,7 +5097,6 @@ def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
 
 def test_request_task_start_failure_releases_explicit_override() -> None:
     """An asynchronously rejected request releases its pre-leased transport."""
-
     channel = Channel(credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the request task.")
     released = Event()
@@ -5335,7 +5146,6 @@ def test_request_task_start_failure_releases_explicit_override() -> None:
 
 def test_request_start_rejection_closes_unleased_override_from_async_loop() -> None:
     """Async pre-start cleanup closes an unleased explicit transport."""
-
     channel = Channel(credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the request task.")
     closed = Event()
@@ -5343,7 +5153,6 @@ def test_request_start_rejection_closes_unleased_override_from_async_loop() -> N
     class Transport:
         async def close(self, grace: float | None = None) -> None:
             """Record transport cleanup on the SDK event loop."""
-
             closed.set()
 
     override = AddressChannel(  # type: ignore[arg-type]
@@ -5354,18 +5163,15 @@ def test_request_start_rejection_closes_unleased_override_from_async_loop() -> N
 
     def reject_once(loop, coroutine, **kwargs):
         """Reject one request task after the SDK accepts it."""
-
         loop.set_task_factory(None)
         raise rejection
 
     async def install() -> None:
         """Install the one-shot task factory on the SDK loop."""
-
         asyncio.get_running_loop().set_task_factory(reject_once)
 
     async def run_request() -> None:
         """Submit the request from a separate active event loop."""
-
         request: Request[GetDiskRequest, Disk] = Request(
             channel,
             "nebius.compute.v1.DiskService",
@@ -5389,7 +5195,6 @@ def test_request_start_rejection_closes_unleased_override_from_async_loop() -> N
 
 def test_stream_task_start_failure_releases_explicit_override() -> None:
     """An asynchronously rejected stream operation releases its lease."""
-
     channel = Channel(credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the stream task.")
     released = Event()
@@ -5397,7 +5202,6 @@ def test_stream_task_start_failure_releases_explicit_override() -> None:
     class Transport:
         async def close(self, grace: float | None = None) -> None:
             """Record cleanup of the rejected stream transport."""
-
             released.set()
 
     override = AddressChannel(  # type: ignore[arg-type]
@@ -5435,7 +5239,6 @@ def test_stream_task_start_failure_releases_explicit_override() -> None:
 
 def test_later_stream_task_start_failure_keeps_active_transport() -> None:
     """Rejecting one later operation does not release the active stream."""
-
     channel = Channel(credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the later stream task.")
     release_calls: list[tuple[object | None, bool]] = []
@@ -5540,7 +5343,6 @@ def test_low_level_prestart_cancel_publishes_terminal_status() -> None:
 
 def test_low_level_awaiter_cancel_publishes_terminal_status() -> None:
     """Task cancellation must publish status even if the SDK call never starts."""
-
     channel = Channel(credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
@@ -5577,7 +5379,6 @@ def test_low_level_awaiter_cancel_publishes_terminal_status() -> None:
 
 def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
     """Cancellation must not be swallowed by best-effort status capture."""
-
     native_started = Event()
     terminal_capture_started = Event()
     transport_closed = Event()
@@ -5672,7 +5473,6 @@ def test_low_level_native_completion_wins_before_wrapper_resumes(
     close_during_wait: bool,
 ) -> None:
     """Native completion wins over direct cancellation and SDK shutdown."""
-
     native_waiting = Event()
     release_result = Event()
     native_call: CompletedCall | None = None
@@ -5823,7 +5623,6 @@ def test_low_level_sync_terminal_accessor_failure_preserves_success() -> None:
 
 def test_low_level_done_callback_observes_remote_cancellation() -> None:
     """Native done publication includes synchronous cancellation diagnostics."""
-
     native_waiting = Event()
     release_result = Event()
     callback_called = Event()
@@ -5901,10 +5700,10 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
                     completed.done(),
                     completed.cancelled(),
                     completed.debug_error_string(),
-                )
+                ),
             ),
             callback_called.set(),
-        )
+        ),
     )
     try:
         assert native_waiting.wait(timeout=5)
@@ -5926,7 +5725,6 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
 
 def test_low_level_terminal_precedes_blocking_fatal_diagnostics() -> None:
     """Optional native diagnostics cannot delay authoritative completion."""
-
     native_waiting = Event()
     release_result = Event()
     debug_started = Event()
@@ -6027,7 +5825,6 @@ def test_low_level_terminal_precedes_blocking_fatal_diagnostics() -> None:
 
 def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> None:
     """Task-factory rejection cannot replace a completed native result."""
-
     caplog.set_level("DEBUG")
     native_result = Disk()
 
@@ -6036,12 +5833,10 @@ def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> N
 
         def __init__(self) -> None:
             """Create a native call without a completion callback."""
-
             self.callback = None
 
         def add_done_callback(self, callback) -> None:
             """Store the native completion callback."""
-
             self.callback = callback
 
         def __await__(self):
@@ -6049,13 +5844,11 @@ def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> N
 
             async def result() -> Disk:
                 """Publish completion and return the native response."""
-
                 assert self.callback is not None
                 self.callback(self)
 
                 def reject_once(loop, coroutine, **kwargs):
                     """Reject terminal capture and restore the default factory."""
-
                     loop.set_task_factory(None)
                     raise RuntimeError("The test rejected terminal capture.")
 
@@ -6066,32 +5859,26 @@ def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> N
 
         def cancelled(self) -> bool:
             """Report that the native call was not canceled."""
-
             return False
 
         def debug_error_string(self) -> str:
             """Return an empty optional diagnostic."""
-
             return ""
 
         async def initial_metadata(self) -> tuple[()]:
             """Return empty initial metadata."""
-
             return ()
 
         async def trailing_metadata(self) -> tuple[()]:
             """Return empty trailing metadata."""
-
             return ()
 
         async def code(self) -> grpc.StatusCode:
             """Return the successful native status."""
-
             return grpc.StatusCode.OK
 
         async def details(self) -> str:
             """Return empty native status details."""
-
             return ""
 
     native_call = NativeCall()
@@ -6101,25 +5888,21 @@ def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> N
 
         def unary_unary(self, *args: object, **kwargs: object):
             """Return a callable that provides the controlled call."""
-
             return lambda *call_args, **call_kwargs: native_call
 
         def get_state(self) -> grpc.ChannelConnectivity:
             """Report a reusable transport state."""
-
             return grpc.ChannelConnectivity.READY
 
         async def close(self, grace: float | None = None) -> None:
             """Close the test transport."""
-
-            return None
+            return
 
     class TestChannel(Channel):
         """Create address wrappers for the controlled transport."""
 
         def create_address_channel(self, addr: str) -> AddressChannel:
             """Create one wrapper owned by the SDK loop."""
-
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
     channel = TestChannel(credentials=NoCredentials())
@@ -6138,10 +5921,9 @@ def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> N
         channel.sync_close(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_low_level_call_captures_async_debug_error_string() -> None:
     """An intercepted asynchronous debug accessor is awaited exactly once."""
-
     debug_reads = 0
 
     class NativeCall:
@@ -6212,7 +5994,6 @@ async def test_low_level_call_captures_async_debug_error_string() -> None:
 
 def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
     """Accepted cancellation discards a resolved address before call creation."""
-
     resolver_started = Event()
     release_resolver = Event()
     call_factory_used = Event()
@@ -6260,7 +6041,6 @@ def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
 
 def test_low_level_accessors_preserve_setup_failure_after_close() -> None:
     """Late accessors retain the call submission's authoritative failure."""
-
     setup_error = RuntimeError("The route resolution failed.")
     channel = Channel(credentials=NoCredentials())
 
@@ -6295,7 +6075,6 @@ def test_low_level_accessors_preserve_setup_failure_after_close() -> None:
 
 def test_low_level_reentrant_cancel_discards_unpublished_call() -> None:
     """Cancellation inside call creation cancels the unpublished native call."""
-
     wrapper_ready = Event()
     native_cancelled_event = Event()
     address_released = Event()
@@ -6353,7 +6132,6 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
     cancel_accessor: bool,
 ) -> None:
     """Terminal metadata capture must not reopen native cancellation."""
-
     terminal_capture_started = Event()
     release_terminal_capture = Event()
 
@@ -6491,7 +6269,6 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
 
 def test_generated_request_ignores_stale_attempt_completion_callback() -> None:
     """A delayed old callback cannot suppress current-attempt cancellation."""
-
     channel = Channel(credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
@@ -6516,7 +6293,6 @@ def test_generated_request_ignores_stale_attempt_completion_callback() -> None:
 
 def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
     """Task-factory rejection cannot replace a generated request result."""
-
     caplog.set_level("DEBUG")
     native_result = Disk()
 
@@ -6525,12 +6301,10 @@ def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
 
         def __init__(self) -> None:
             """Create a native call without a completion callback."""
-
             self.callback = None
 
         def add_done_callback(self, callback) -> None:
             """Store the native completion callback."""
-
             self.callback = callback
 
         def __await__(self):
@@ -6538,13 +6312,11 @@ def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
 
             async def result() -> Disk:
                 """Publish completion and return the native response."""
-
                 assert self.callback is not None
                 self.callback(self)
 
                 def reject_once(loop, coroutine, **kwargs):
                     """Reject request completion and restore the default factory."""
-
                     loop.set_task_factory(None)
                     raise RuntimeError("The test rejected request completion.")
 
@@ -6555,22 +6327,18 @@ def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
 
         async def code(self) -> grpc.StatusCode:
             """Return the successful native status."""
-
             return grpc.StatusCode.OK
 
         async def details(self) -> str:
             """Return empty native status details."""
-
             return ""
 
         async def initial_metadata(self) -> tuple[()]:
             """Return empty initial metadata."""
-
             return ()
 
         async def trailing_metadata(self) -> tuple[()]:
             """Return empty trailing metadata."""
-
             return ()
 
     completed_call = CompletedCall()
@@ -6585,7 +6353,6 @@ def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
 
     def send(timeout: float | None) -> None:
         """Install the controlled native call on the request."""
-
         request._call = completed_call  # type: ignore[assignment]
         completed_call.add_done_callback(request._mark_native_attempt_terminal)
 
@@ -6601,7 +6368,6 @@ def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
 
 def test_generated_request_rejects_cancel_after_native_success() -> None:
     """Metadata capture cannot replace a successful request with cancellation."""
-
     terminal_capture_started = Event()
     release_terminal_capture = Event()
     results: list[Disk] = []
@@ -6701,7 +6467,6 @@ def test_generated_native_success_wins_before_wrapper_resumes(
     close_during_wait: bool,
 ) -> None:
     """A native success survives direct cancellation and SDK shutdown."""
-
     native_waiting = Event()
     release_result = Event()
     results: list[Disk] = []
@@ -6805,7 +6570,6 @@ def test_generated_native_success_wins_before_wrapper_resumes(
 
 def test_generated_request_rejects_cancel_after_native_error() -> None:
     """Error translation cannot replace an authoritative RPC failure."""
-
     translation_started = Event()
     release_translation = Event()
     errors: list[BaseException] = []
@@ -6871,7 +6635,6 @@ def test_generated_request_rejects_cancel_after_native_error() -> None:
 
 def test_generated_done_state_includes_remote_cancellation() -> None:
     """Raw terminal code is visible before error translation completes."""
-
     translation_started = Event()
     release_translation = Event()
     errors: list[BaseException] = []
@@ -6940,7 +6703,6 @@ def test_generated_request_accepts_cancel_while_deciding_to_retry(
     structured_retry: bool,
 ) -> None:
     """An attempt's terminal state must not hide a pending logical retry."""
-
     translation_started = Event()
     release_translation = Event()
     errors: list[BaseException] = []
@@ -7032,10 +6794,9 @@ def test_generated_request_accepts_cancel_while_deciding_to_retry(
         channel.sync_close(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_cancel_during_authorization_retry_decision_stops_retry() -> None:
     """Cancellation queued during synchronous auth classification wins."""
-
     from nebius.aio.request import RequestIsCancelledError
     from nebius.aio.service_error import RequestError as ServiceRequestError
     from nebius.aio.service_error import RequestStatusExtended
@@ -7098,7 +6859,7 @@ async def test_cancel_during_authorization_retry_decision_stops_retry() -> None:
                 service_errors=[],
                 request_id="",
                 trace_id="",
-            )
+            ),
         )
 
     request._retry_loop = retry_loop  # type: ignore[method-assign]
@@ -7126,7 +6887,6 @@ async def test_cancel_during_authorization_retry_decision_stops_retry() -> None:
 
 def test_generated_request_discards_wrong_loop_override() -> None:
     """An incompatible override must close on its owner loop, not enter the pool."""
-
     from nebius.aio.request import RequestError
 
     foreign_loop, foreign_thread = _start_loop()
@@ -7167,7 +6927,6 @@ def test_generated_request_discards_wrong_loop_override() -> None:
 
 def test_request_inputs_are_snapshotted_at_first_submission() -> None:
     """External mutation after submission must not race SDK-loop processing."""
-
     channel = Channel(credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
@@ -7222,7 +6981,6 @@ def test_request_inputs_are_snapshotted_at_first_submission() -> None:
 @pytest.mark.parametrize("parameter", ("timeout", "per_retry_timeout", "auth_timeout"))
 def test_request_rejects_non_finite_timeouts(value: float, parameter: str) -> None:
     """Request deadlines require a portable finite value or ``None``."""
-
     with pytest.raises(
         ValueError,
         match=f"The {parameter} value must be finite or None",
@@ -7237,11 +6995,10 @@ def test_request_rejects_non_finite_timeouts(value: float, parameter: str) -> No
         )
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
 async def test_channel_rejects_non_finite_token_timeout(value: float) -> None:
     """Token dispatch rejects deadlines unsupported by asyncio and gRPC."""
-
     channel = Channel(credentials=NoCredentials())
     try:
         with pytest.raises(
@@ -7256,7 +7013,6 @@ async def test_channel_rejects_non_finite_token_timeout(value: float) -> None:
 @pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
 def test_low_level_call_rejects_non_finite_timeout(value: float) -> None:
     """Low-level cross-loop calls validate timeouts before submission."""
-
     channel = Channel(credentials=NoCredentials())
     unary = channel.unary_unary("/acme.Service/Get")
     try:
@@ -7271,7 +7027,6 @@ def test_low_level_call_rejects_non_finite_timeout(value: float) -> None:
 
 def test_generated_update_payload_matches_eager_reset_mask() -> None:
     """Mutation after wrapper creation cannot invalidate reset-mask metadata."""
-
     channel = Channel(credentials=NoCredentials())
     source = UpdateDiskRequest()
     source.spec.block_size_bytes = 4096
@@ -7421,7 +7176,6 @@ def test_async_close_does_not_block_external_loop_needed_by_worker() -> None:
 
 def test_close_keeps_owned_loop_running_until_executor_drains() -> None:
     """An executor worker can finish one SDK-loop round trip during close."""
-
     channel = Channel(credentials=NoCredentials())
     executor = channel._runtime._executor
     assert executor is not None
@@ -7462,7 +7216,6 @@ def test_close_keeps_owned_loop_running_until_executor_drains() -> None:
 
 def test_sync_sdk_calls_fail_fast_from_owned_executor_worker() -> None:
     """A worker cannot block on work that may need the same executor."""
-
     channel = Channel(credentials=NoCredentials(), executor_max_workers=1)
     errors: list[BaseException] = []
 
@@ -7492,10 +7245,9 @@ def test_sync_sdk_calls_fail_fast_from_owned_executor_worker() -> None:
         channel.sync_close(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_service_factories_do_not_block_async_callers() -> None:
     """Synchronous client factories defer source-address resolution."""
-
     channel = Channel(credentials=NoCredentials())
     try:
         transport = channel.get_corresponding_operation_service(DiskServiceClient)
@@ -7508,7 +7260,6 @@ async def test_operation_service_factories_do_not_block_async_callers() -> None:
 
 def test_cross_loop_handles_fail_fast_from_owned_executor_worker() -> None:
     """A worker cannot wait on a handle whose work may need that worker."""
-
     channel = Channel(credentials=NoCredentials(), executor_max_workers=1)
     errors: list[BaseException] = []
 
@@ -7543,7 +7294,6 @@ def test_cross_loop_handles_fail_fast_from_owned_executor_worker() -> None:
 
 def test_submission_cannot_await_its_own_cross_loop_handle() -> None:
     """Self-await fails like native Task self-await instead of deadlocking."""
-
     channel = Channel(credentials=NoCredentials())
     holder: Future[object] = Future()
 
@@ -7562,7 +7312,6 @@ def test_submission_cannot_await_its_own_cross_loop_handle() -> None:
 
 def test_submission_cannot_wrap_its_own_handle_on_another_runtime() -> None:
     """Cross-runtime wrapping cannot turn self-await into an A-B-A cycle."""
-
     channel_a = Channel(credentials=NoCredentials())
     channel_b = Channel(credentials=NoCredentials())
     holder: Future[object] = Future()
@@ -7583,7 +7332,6 @@ def test_submission_cannot_wrap_its_own_handle_on_another_runtime() -> None:
 
 def test_inherited_child_context_can_await_completed_parent_handle() -> None:
     """A child task's inherited marker is not self-await after parent completion."""
-
     channel = Channel(credentials=NoCredentials())
     holder: Future[object] = Future()
     child_started = Event()
@@ -7623,7 +7371,6 @@ def test_inherited_child_context_can_await_completed_parent_handle() -> None:
 
 def test_borrowed_loop_sync_close_from_external_async_loop_is_rejected() -> None:
     """Sync close cannot block a loop that borrowed SDK work may need."""
-
     sdk_loop, sdk_thread = _start_loop()
     channel = Channel(credentials=NoCredentials(), event_loop=sdk_loop)
 
@@ -7668,13 +7415,11 @@ class _BlockingCloseResource:
 
     def __init__(self) -> None:
         """Create the cleanup synchronization events."""
-
         self.started = Event()
         self.release = Event()
 
     async def close(self, grace: float | None = None) -> None:
         """Report cleanup entry and wait for the test to release it."""
-
         self.started.set()
         while not self.release.is_set():
             await asyncio.sleep(0)
@@ -7685,13 +7430,11 @@ def _observe_external_close_join(
     monkeypatch: pytest.MonkeyPatch,
 ) -> Event:
     """Return an event that reports an external caller joining close."""
-
     joined = Event()
     original_get_close_handle = channel._get_close_handle
 
     def observe_close_handle(grace: float | None) -> CrossLoopAwaitable[None]:
         """Report an external caller after it gets the shared close handle."""
-
         closing = original_get_close_handle(grace)
         if not channel._runtime.in_event_loop():
             joined.set()
@@ -7712,7 +7455,6 @@ def test_external_close_does_not_cancel_concurrent_internal_close_result(
 
     async def run_once() -> None:
         """Run one synchronized close race."""
-
         channel = Channel(credentials=NoCredentials())
         resource = _BlockingCloseResource()
         channel._gracefuls.add(resource)
@@ -7720,7 +7462,6 @@ def test_external_close_does_not_cancel_concurrent_internal_close_result(
 
         async def internal() -> int:
             """Close from the SDK loop and publish a result."""
-
             await channel.close()
             return 42
 
@@ -7746,7 +7487,6 @@ def test_sync_close_does_not_cancel_concurrent_internal_close_result(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A synchronous close preserves a protected internal close result."""
-
     for _ in range(20):
         channel = Channel(credentials=NoCredentials())
         resource = _BlockingCloseResource()
@@ -7756,13 +7496,11 @@ def test_sync_close_does_not_cancel_concurrent_internal_close_result(
 
         async def internal() -> int:
             """Close from the SDK loop and publish a result."""
-
             await channel.close()
             return 42
 
         def close_externally() -> None:
             """Join close synchronously and retain an unexpected error."""
-
             try:
                 channel.sync_close(timeout=5)
             except BaseException as error:

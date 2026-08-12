@@ -20,9 +20,8 @@ the token exchange. It uses :class:`nebius.aio.token.renewable.Bearer` for
 background refresh. For file credentials, a
 :class:`nebius.aio.token.token.NamedBearer` supplies a stable diagnostic name.
 
-Example
+Example:
 -------
-
 Using a file path::
 
     from nebius.aio.token.federated_credentials import FederatedCredentialsBearer
@@ -36,6 +35,7 @@ Using an existing reader/token requester::
 
     reader = SomeReader(...)
     bearer = FederatedCredentialsBearer(reader, service_account_id="sa-123")
+
 """
 
 from datetime import timedelta
@@ -88,9 +88,8 @@ class FederatedCredentialsBearer(ParentBearer):
         shared across exchange, renewal, and cache layers with the
         bearer metric provider label.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from asyncio import Future
@@ -111,6 +110,7 @@ class FederatedCredentialsBearer(ParentBearer):
 
         # Resolve the future with the newly created SDK
         channel_future.set_result(sdk)
+
     """
 
     def __init__(
@@ -132,7 +132,7 @@ class FederatedCredentialsBearer(ParentBearer):
         if isinstance(federated_credentials, FederatedCredentialsReader):
             if not isinstance(service_account_id, str):
                 raise TypeError(
-                    "Service account ID must be provided as a string when federated_credentials is a string."
+                    "Service account ID must be provided as a string when federated_credentials is a string.",
                 )
             federated_credentials = FederatedCredentialsTokenRequester(
                 service_account_id=service_account_id,
@@ -143,7 +143,7 @@ class FederatedCredentialsBearer(ParentBearer):
             raise TypeError(
                 "federated_credentials must be FederatedCredentialsTokenRequester, "
                 "FederatedCredentialsBearer or string"
-                f", got {type(federated_credentials)}"
+                f", got {type(federated_credentials)}",
             )
 
         self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, "federated-credentials")
@@ -199,7 +199,6 @@ class FederatedCredentialsBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to inner bearers."""
-
         self._metrics.set_metrics(metrics)
         self._exchangeable.set_metrics(self._metrics)
         setter = getattr(self._source, "set_metrics", None)

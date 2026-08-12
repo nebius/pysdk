@@ -72,9 +72,8 @@ class CurrentStep:
     :meth:`work_fraction` helper converts them into a usable fraction.
     The method returns ``None`` when the fraction cannot be computed.
 
-    Example
+    Example:
     -------
-
     Inspecting steps and progress::
 
         tracker = operation.progress_tracker()
@@ -85,6 +84,7 @@ class CurrentStep:
                     print(step.description())
                 else:
                     print(f"{step.description()}: {fraction:.0%}")
+
     """
 
     def __init__(self, step: object) -> None:
@@ -141,9 +141,8 @@ class OperationProgressTracker(Protocol):
     ``progress_tracker`` field. For v1alpha1 operations,
     :meth:`Operation.progress_tracker` returns ``None``.
 
-    Example
+    Example:
     -------
-
     Reading overall progress::
 
         tracker = operation.progress_tracker()
@@ -155,6 +154,7 @@ class OperationProgressTracker(Protocol):
             time_fraction = tracker.time_fraction()
             if time_fraction is not None:
                 print(f"Time: {time_fraction:.0%}")
+
     """
 
     def description(self) -> str:
@@ -223,9 +223,8 @@ class Operation(Generic[OperationPb]):
         :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf
         classes.
 
-    Example
+    Example:
     -------
-
     Operation from a service action (e.g., creating a bucket)::
 
         from nebius.sdk import SDK
@@ -276,6 +275,7 @@ class Operation(Generic[OperationPb]):
             # Manual update
             await operation.update()
             print(f"Operation status: {operation.status()}")
+
     """
 
     def __init__(
@@ -311,15 +311,13 @@ class Operation(Generic[OperationPb]):
 
     def _check_process(self) -> None:
         """Reject an operation inherited across ``fork`` before locking."""
-
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "You cannot use an SDK operation after a fork. Create SDK objects after the child process starts."
+                "You cannot use an SDK operation after a fork. Create SDK objects after the child process starts.",
             )
 
     def _operation_snapshot(self) -> OperationPb:
         """Return the current operation message under the state lock."""
-
         self._check_process()
         with self._state_lock:
             return self._operation
@@ -354,9 +352,8 @@ class Operation(Generic[OperationPb]):
         Return ``None`` if the operation has no progress tracker. For example,
         v1alpha1 operations do not have one.
 
-        Example
+        Example:
         -------
-
         Polling with a single-line progress display::
 
             from asyncio import sleep
@@ -390,6 +387,7 @@ class Operation(Generic[OperationPb]):
                 await sleep(1)
 
             print()
+
         """
         return wrap_progress_tracker(self)
 
@@ -427,7 +425,6 @@ class Operation(Generic[OperationPb]):
             dispatch delay.
         :param kwargs: Additional request options for the operation service.
         """
-
         if self.done():
             return
         metadata = kwargs.get("metadata")
@@ -462,7 +459,6 @@ class Operation(Generic[OperationPb]):
 
         async def start_update() -> None:
             """Publish SDK-loop dispatch before the update starts."""
-
             nonlocal update_started
             with dispatch_state_lock:
                 update_started = True
@@ -480,7 +476,6 @@ class Operation(Generic[OperationPb]):
 
         def dispose_update_if_unstarted(_: object) -> None:
             """Dispose update work if its dispatch wrapper did not start."""
-
             with dispatch_state_lock:
                 if update_started:
                     return
@@ -581,7 +576,6 @@ class Operation(Generic[OperationPb]):
             deadline captured before SDK-loop dispatch.
         :param kwargs: Request options for the operation service.
         """
-
         async with self._update_lock:
             if self.done():
                 return
@@ -769,7 +763,6 @@ class Operation(Generic[OperationPb]):
         :param poll_retries: Retry count for each polling request.
         :param kwargs: Additional request options for the operation service.
         """
-
         # Preserve the historical terminal fast path. In particular,
         # asyncio.wait_for(..., 0) cannot start a newly submitted coroutine,
         # even when that coroutine would immediately observe terminal state.
@@ -851,7 +844,6 @@ class Operation(Generic[OperationPb]):
         :param kwargs: Additional request options for the operation service.
         :raises TimeoutError: If the overall wait limit expires.
         """
-
         if deadline is None and timeout is not None:
             deadline = monotonic() + max(timeout, 0)
         if poll_iteration_timeout is None:
@@ -863,7 +855,6 @@ class Operation(Generic[OperationPb]):
 
         def _is_ignorable(err: Exception) -> bool:
             """Return whether one polling error is transient."""
-
             # TimeoutError raised locally or RequestError with DEADLINE_EXCEEDED
             if isinstance(err, TimeoutError):
                 return True
@@ -876,7 +867,6 @@ class Operation(Generic[OperationPb]):
 
         async def _safe_update() -> None:
             """Run one update and ignore only transient polling errors."""
-
             try:
                 update_kwargs: dict[str, Any] = {
                     **kwargs,
@@ -1019,7 +1009,6 @@ class _ProgressTrackerWrapper:
     @staticmethod
     def _tracker_from(op_proto: object) -> object | None:
         """Return a tracker from one stable operation snapshot."""
-
         if not _check_presence(op_proto, "progress_tracker"):
             return None
         return getattr(op_proto, "progress_tracker", None)
@@ -1137,14 +1126,14 @@ def wrap_progress_tracker(
     the presence checks needed to avoid accessing default/absent fields on
     protobuf wrappers.
 
-    Example
+    Example:
     -------
-
     Using the helper directly::
 
         tracker = wrap_progress_tracker(operation)
         if tracker is not None:
             print(tracker.description())
+
     """
     if operation is None:
         return None

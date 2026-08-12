@@ -1,7 +1,6 @@
 """Tests for parsing fully-qualified RPC method identifiers."""
 
 import pytest
-
 from nebius.base.methods import InvalidMethodNameError, service_from_method_name
 
 

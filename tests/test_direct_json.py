@@ -5,6 +5,14 @@ from __future__ import annotations
 import math
 
 from google.protobuf import json_format as provider_json_format
+from nebius.base.protos.codec import FLOAT
+from nebius.base.protos.direct import Field, Message
+from nebius.base.protos.json_format import (
+    JsonError,
+    message_to_dict,
+    message_to_json,
+    parse_dict,
+)
 from test_direct_message import (
     REF_REQUIRED_EXTENSION,
     REFERENCE_CHILD,
@@ -16,15 +24,6 @@ from test_direct_message import (
     ExtensionHost,
     Legacy,
     Sample,
-)
-
-from nebius.base.protos.codec import FLOAT
-from nebius.base.protos.direct import Field, Message
-from nebius.base.protos.json_format import (
-    JsonError,
-    message_to_dict,
-    message_to_json,
-    parse_dict,
 )
 
 
@@ -103,7 +102,7 @@ def test_protojson_aliases_follow_reference_order_and_merge_messages() -> None:
         {
             "childMap": {"first": {"value": 1}},
             "child_map": {"second": {"value": 2}},
-        }
+        },
     )
     assert list(replaced.child_map) == ["second"]
 
@@ -166,7 +165,7 @@ def test_protojson_message_and_map_values_are_owned() -> None:
             "child": message_to_dict(child),
             "children": [message_to_dict(child)],
             "childMap": {"key": message_to_dict(child)},
-        }
+        },
     )
     child.value = 2
     assert direct.child.value == 1
@@ -262,7 +261,7 @@ def test_ignored_unknown_enum_names_do_not_hide_invalid_closed_numbers() -> None
                 {"states": ["MISSING"]},
                 Legacy(),
                 ignore_unknown_fields=True,
-            ).states
+            ).states,
         )
         == []
     )

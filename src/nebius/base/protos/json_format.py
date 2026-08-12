@@ -218,7 +218,7 @@ def _encode_well_known(
                     preserving_proto_field_name=preserving_proto_field_name,
                     always_print_fields_with_no_presence=always_print_fields_with_no_presence,
                     use_integers_for_enums=use_integers_for_enums,
-                )
+                ),
             )
         return True, result
     if name == "google.protobuf.Empty":

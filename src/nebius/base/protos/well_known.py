@@ -33,7 +33,7 @@ def ts_mask(_: Any) -> Mask:
         field_parts={
             "seconds": Mask(),
             "nanos": Mask(),
-        }
+        },
     )
 
 
@@ -85,7 +85,7 @@ def duration_mask(_: Any) -> Mask:
         field_parts={
             "seconds": Mask(),
             "nanos": Mask(),
-        }
+        },
     )
 
 
@@ -108,7 +108,7 @@ def status_mask(_: Any) -> Mask:
                         "type_url": Mask(),
                         "value": Mask(),
                     },
-                )
+                ),
             ),
-        }
+        },
     )

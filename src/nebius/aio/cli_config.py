@@ -100,9 +100,8 @@ class Config:
         selected profile.
     :type impersonate_service_account_id: optional `str`
 
-    Example
+    Example:
     -------
-
     Initialize the SDK with CLI config::
 
         from nebius.sdk import SDK
@@ -121,6 +120,7 @@ class Config:
         config = Config()
         print(f"Default parent ID: {config.parent_id}")
         print(f"Endpoint: {config.endpoint()}")
+
     """
 
     def __init__(
@@ -172,7 +172,6 @@ class Config:
         The same callback object is propagated to credentials returned later so
         token acquisition, refresh, and cache events share the same sink.
         """
-
         previous = self._metrics
         self._metrics = metrics
         self._auth_metrics = metrics
@@ -195,12 +194,10 @@ class Config:
         :meth:`set_metrics` when the same sink should receive both config and
         auth events.
         """
-
         self._auth_metrics = metrics
 
     def profile_name(self) -> str | None:
         """Return the selected profile name."""
-
         return self._profile_name
 
     def _record_metric(
@@ -282,7 +279,7 @@ class Config:
                         "No profile selected. Either set the profile in the "
                         "config setup,"
                         " set the env var NEBIUS_PROFILE or "
-                        "execute `nebius profile activate`."
+                        "execute `nebius profile activate`.",
                     )
             profile = self._profile_name
             if not isinstance(profile, str):
@@ -403,7 +400,7 @@ class Config:
                     raise ConfigError("Missing federation-endpoint in the profile.")
                 if not isinstance(self._profile["federation-endpoint"], str):
                     raise ConfigError(
-                        f"Federation endpoint should be a string, got {type(self._profile['federation-endpoint'])}."
+                        f"Federation endpoint should be a string, got {type(self._profile['federation-endpoint'])}.",
                     )
                 if "federation-id" not in self._profile:
                     raise ConfigError("Missing federation-id in the profile.")
@@ -419,7 +416,7 @@ class Config:
                     f"client_id {self._client_id}, "
                     f"federation_url {self._profile['federation-endpoint']}, "
                     f"federation_id {self._profile['federation-id']}, "
-                    f"writer {writer}, no_browser_open {no_browser_open}."
+                    f"writer {writer}, no_browser_open {no_browser_open}.",
                 )
 
                 return finish(
@@ -450,7 +447,7 @@ class Config:
                 if "service-account-id" in self._profile:
                     if not isinstance(self._profile["service-account-id"], str):
                         raise ConfigError(
-                            f"Service account should be a string, got {type(self._profile['service-account-id'])}."
+                            f"Service account should be a string, got {type(self._profile['service-account-id'])}.",
                         )
                     svc_id = self._profile["service-account-id"]
 
@@ -485,7 +482,7 @@ class Config:
                         start,
                         ServiceAccountBearer(
                             service_account=CredentialsFileReader(
-                                self._profile["service-account-credentials-file-path"]
+                                self._profile["service-account-credentials-file-path"],
                             ),
                             channel=channel,
                             metrics=self._auth_metrics,
@@ -545,7 +542,7 @@ class Config:
                     "(service-account-id and federated-subject-credentials-file-path) "
                     "OR (service-account-credentials-file-path) OR "
                     "(service-account-id, public-key-id and one of "
-                    "private-key / private-key-file-path)"
+                    "private-key / private-key-file-path)",
                 )
             except Exception:
                 fail("service-account", start)

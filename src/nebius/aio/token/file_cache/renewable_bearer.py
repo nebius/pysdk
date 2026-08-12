@@ -181,9 +181,8 @@ class RenewableFileCacheBearer(ParentBearer):
     :param provider: Optional provider label for emitted auth
         metrics. When omitted, the label is inferred from the wrapped bearer.
 
-    Example
+    Example:
     -------
-
     Wrap a custom bearer with a name and file cache::
 
         from nebius.sdk import SDK
@@ -211,6 +210,7 @@ class RenewableFileCacheBearer(ParentBearer):
             credentials=cached_bearer,
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -253,7 +253,6 @@ class RenewableFileCacheBearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self.metrics.provider
 
     def _is_token_fresh(self, token: Token) -> bool:
@@ -275,6 +274,5 @@ class RenewableFileCacheBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self.metrics.set_metrics(metrics)
         self._bearer = cast(ParentBearer, bind_auth_metrics(self._bearer, self.metrics))

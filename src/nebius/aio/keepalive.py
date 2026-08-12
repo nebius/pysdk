@@ -79,7 +79,6 @@ class KeepaliveConfig:
 
 def default_keepalive_config() -> KeepaliveConfig:
     """Return the GoSDK-compatible default keepalive configuration."""
-
     return KeepaliveConfig(
         enabled=True,
         time_ms=DEFAULT_KEEPALIVE_TIME_MS,
@@ -96,7 +95,6 @@ def keepalive_config_from_env(
     Durations use Go-style syntax such as ``20s``, ``500ms``, or ``1m30s``.
     Boolean values follow Go ``strconv.ParseBool`` accepted values.
     """
-
     env = environ if env is None else env
     cfg = default_keepalive_config()
     enabled = cfg.enabled
@@ -137,7 +135,6 @@ def keepalive_config_from_options(
     camelCase keys: ``time_ms``/``timeMs``, ``timeout_ms``/``timeoutMs``, and
     ``permit_without_stream``/``permitWithoutStream``.
     """
-
     if options is False:
         cfg = default_keepalive_config()
         return KeepaliveConfig(
@@ -188,7 +185,6 @@ def keepalive_config_from_options(
 
 def keepalive_channel_options(cfg: KeepaliveConfig) -> ChannelArgumentType:
     """Convert keepalive config to Python gRPC channel options."""
-
     if not cfg.enabled:
         return []
     return [
@@ -203,7 +199,6 @@ def keepalive_channel_options(cfg: KeepaliveConfig) -> ChannelArgumentType:
 
 def parse_go_duration_ms(name: str, value: str) -> int:
     """Parse a subset of Go ``time.ParseDuration`` syntax into milliseconds."""
-
     value = value.strip()
     if value == "":
         raise ValueError(f"{name} is empty")
@@ -236,7 +231,6 @@ def parse_go_duration_ms(name: str, value: str) -> int:
 
 def parse_go_bool(name: str, value: str) -> bool:
     """Parse Go ``strconv.ParseBool`` accepted values."""
-
     value = value.strip()
     if value in ("1", "t", "T", "TRUE", "true", "True"):
         return True
@@ -247,7 +241,6 @@ def parse_go_bool(name: str, value: str) -> bool:
 
 def validate_keepalive_config(cfg: KeepaliveConfig) -> None:
     """Validate resolved keepalive values."""
-
     _assert_valid_keepalive_ms("keepalive.time_ms", cfg.time_ms, True)
     _assert_valid_keepalive_ms("keepalive.timeout_ms", cfg.timeout_ms, True)
     if cfg.enabled and cfg.timeout_ms <= 0:

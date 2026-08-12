@@ -17,7 +17,6 @@ from google.protobuf import (
 from google.protobuf import (
     json_format as provider_json_format,
 )
-
 from nebius.base.protos.codec import (
     BOOL,
     BYTES,

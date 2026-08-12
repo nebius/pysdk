@@ -15,9 +15,8 @@ Types
     constructs a :class:`ThrottledTokenCache` for a named credential and
     returns a :class:`PureFileCacheReceiver` when requested.
 
-Example
+Example:
 -------
-
 Create a bearer that reads credentials from the default credentials file
 and caches them for five minutes::
 
@@ -112,9 +111,8 @@ class PureFileCacheBearer(ParentBearer):
     """Bearer that exposes a :class:`PureFileCacheReceiver` for a named
     token.
 
-    Notes
+    Notes:
     -----
-
     Construction is inexpensive; the cache performs I/O lazily when
     tokens are accessed via the receiver.
 
@@ -126,9 +124,8 @@ class PureFileCacheBearer(ParentBearer):
     :param provider: Optional provider label for emitted auth metrics. Defaults
         to the fully qualified bearer class name.
 
-    Example
+    Example:
     -------
-
     Create a bearer that reads credentials from the default credentials file
     and caches them for five minutes::
 
@@ -140,6 +137,7 @@ class PureFileCacheBearer(ParentBearer):
             credentials=bearer,
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -169,7 +167,6 @@ class PureFileCacheBearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self._metrics.provider
 
     def receiver(self) -> ParentReceiver:
@@ -184,5 +181,4 @@ class PureFileCacheBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks used by subsequently created receivers."""
-
         self._metrics.set_metrics(metrics)

@@ -2,10 +2,10 @@
 
 from google.protobuf import descriptor_pb2
 from google.protobuf.compiler import plugin_pb2
-
 from nebius.api._registry import REGISTRY
 from nebius.api.google.protobuf import MessageOptions
 from nebius.api.nebius import message_py_sdk
+
 from nebius_generator.bootstrap import (
     include_file_descriptors,
     normalize_request,

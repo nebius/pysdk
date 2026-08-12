@@ -155,12 +155,12 @@ def validate(output: Path) -> None:
             *output.glob("*._impl_*.html"),
             *output.glob("nebius.api._registry*.html"),
             *output.glob("nebius.api.*._registry_fragment.html"),
-        }
+        },
     )
     if internal:
         raise RuntimeError(
             "documentation build exposed generated implementation pages: "
-            + ", ".join(path.name for path in internal[:5])
+            + ", ".join(path.name for path in internal[:5]),
         )
 
 

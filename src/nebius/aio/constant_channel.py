@@ -102,7 +102,6 @@ class Constant(ClientChannelInterface):
         :return: ``True`` or ``False`` when the source can answer safely, or
             ``None`` when provider discovery belongs to its owner loop.
         """
-
         provider_probe = getattr(self._source, "_has_authorization_provider", None)
         if not callable(provider_probe):
             return None
@@ -143,7 +142,6 @@ class Constant(ClientChannelInterface):
         :param awaitable: Work to submit or return for legacy execution.
         :return: Source submission handle, or the unchanged awaitable.
         """
-
         submit = getattr(self._source, "run_async", None)
         if callable(submit):
             return cast(Awaitable[T], submit(awaitable))

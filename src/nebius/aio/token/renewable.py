@@ -63,6 +63,7 @@ timeout):
         print(tok)
 
     asyncio.run(sync_demo())
+
 """
 
 import sys
@@ -139,9 +140,8 @@ class Receiver(ParentReceiver):
     schedule a background renewal (unless a synchronous renewal was
     requested via options).
 
-    Example
+    Example:
     -------
-
     ::
 
         receiver = bearer.receiver()
@@ -151,6 +151,7 @@ class Receiver(ParentReceiver):
         fetch and renewal.
     :param max_retries: Maximum number of automatic retry attempts
         this receiver will allow before giving up.
+
     """
 
     def __init__(
@@ -238,9 +239,8 @@ class Bearer(ParentBearer):
     - Asynchronous mode starts background renewal and waits for a fresh cache.
     - Synchronous mode waits for a new token or the request timeout.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -275,6 +275,7 @@ class Bearer(ParentBearer):
         refresh/cache metrics share one callback sink.
     :param provider: Optional provider label for emitted auth
         metrics. When omitted, the label is inferred from ``source``.
+
     """
 
     def __init__(
@@ -327,7 +328,6 @@ class Bearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self._metrics.provider
 
     def bg_task(self, coro: Awaitable[T]) -> Task[None]:
@@ -515,7 +515,7 @@ class Bearer(ParentBearer):
                 retry_timeout = self._initial_retry_timeout.total_seconds()
 
             log.debug(
-                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}"
+                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}",
             )
             renew_task = self.bg_task(self._renew_requested.wait())
             sleep_task = self.bg_task(sleep(retry_timeout))
@@ -592,6 +592,5 @@ class Bearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self._metrics.set_metrics(metrics)
         self._source = cast(ParentBearer, bind_auth_metrics(self._source, self._metrics))

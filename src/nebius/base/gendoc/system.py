@@ -368,7 +368,7 @@ class NamespacePackageSystem(BaseSystem):  # type: ignore[misc]
                     parameter.annotation,
                     function,
                     transformer,
-                )
+                ),
             )
             for parameter in signature.parameters.values()
         ]

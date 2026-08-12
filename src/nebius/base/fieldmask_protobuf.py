@@ -25,9 +25,8 @@ def ensure_reset_mask_in_metadata(
     missing. The mask is derived from the protobuf message by calling
     the message's ``get_full_update_reset_mask`` method.
 
-    Example
+    Example:
     -------
-
     Use the helper before sending an update request::
 
         from nebius.base.fieldmask_protobuf import ensure_reset_mask_in_metadata
@@ -38,6 +37,7 @@ def ensure_reset_mask_in_metadata(
     :param msg: Protobuf message used to derive the full update reset mask.
     :param metadata: Existing metadata entries or ``None``.
     :returns: A :class:`Metadata` instance containing the reset mask header.
+
     """
     metadata = Metadata(metadata)
 

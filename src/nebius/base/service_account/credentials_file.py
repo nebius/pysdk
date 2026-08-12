@@ -36,7 +36,9 @@ class SubjectCredentials:
 
     def parse_private_key(self) -> RSAPrivateKey:
         pk = serialization.load_pem_private_key(
-            self.private_key.encode("utf-8"), password=None, backend=default_backend()
+            self.private_key.encode("utf-8"),
+            password=None,
+            backend=default_backend(),
         )
 
         if not isinstance(pk, RSAPrivateKey):

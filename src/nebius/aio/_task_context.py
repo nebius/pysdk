@@ -111,7 +111,6 @@ def bridge_awaitable(awaitable: Awaitable[Any]) -> Awaitable[Any]:
     :param awaitable: Awaitable to examine.
     :return: The original awaitable or a cross-loop awaitable.
     """
-
     bridge = awaitable_bridge.get()
     return awaitable if bridge is None else bridge(awaitable)
 
@@ -129,7 +128,6 @@ def close_rejected_sync_awaitable(awaitable: Awaitable[Any]) -> bool:
     :param awaitable: Input rejected before a synchronous wait starts.
     :return: ``True`` when a native coroutine object was closed.
     """
-
     if not inspect.iscoroutine(awaitable):
         return False
     awaitable.close()
@@ -161,7 +159,6 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
     :return: ``True`` when disposal completed or was accepted for dispatch;
         otherwise ``False``.
     """
-
     if isinstance(awaitable, asyncio.Future):
         owner_loop = awaitable.get_loop()
         try:
@@ -171,7 +168,6 @@ def dispose_unstarted_awaitable(awaitable: Awaitable[Any]) -> bool:
 
         def dispose_on_owner() -> None:
             """Inspect and dispose the Future only on its owning loop."""
-
             if awaitable.done():
                 if not awaitable.cancelled():
                     awaitable.exception()

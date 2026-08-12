@@ -46,9 +46,8 @@ Classes
 - :class:`Bearer` -- A small bearer wrapper exposing the receiver and a
     canonical :attr:`Bearer.name` used for caching and logging.
 
-Example
+Example:
 -------
-
 Construct a bearer and fetch a token::
 
         bearer = Bearer(profile_name, client_id, endpoint, federation_id)
@@ -259,9 +258,8 @@ class Bearer(ParentBearer):
     :param metrics: Optional auth metrics callbacks used by receivers created
         by this bearer. Callbacks receive this bearer's metric provider label.
 
-    Example
+    Example:
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -279,6 +277,7 @@ class Bearer(ParentBearer):
             ),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -327,5 +326,4 @@ class Bearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks used by subsequently created receivers."""
-
         self._metrics.set_metrics(metrics)

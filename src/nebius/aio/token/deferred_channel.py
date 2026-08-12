@@ -2,7 +2,6 @@
 
 Examples
 --------
-
 Used in deferred token bearer implementations::
 
     from nebius.aio.token.deferred_channel import DeferredChannel
@@ -18,6 +17,7 @@ Used in deferred token bearer implementations::
         user_agent_prefix="example-application/1.0",
     )
     chan.set_result(sdk)
+
 """
 
 from collections.abc import Awaitable

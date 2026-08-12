@@ -8,7 +8,6 @@ from google.protobuf import (
     message_factory,
 )
 from google.protobuf.message import DecodeError, EncodeError
-
 from nebius.api.google.protobuf import (
     Any as ProtoAny,
 )
@@ -848,7 +847,7 @@ def test_deterministic_map_output_is_independent_of_insertion_order() -> None:
     right = Sample(labels={"middle": 3, "z": 1, "a": 2})
     assert left.SerializeToString(deterministic=True) == right.SerializeToString(deterministic=True)
     assert Envelope(sample=left).SerializeToString(deterministic=True) == Envelope(sample=right).SerializeToString(
-        deterministic=True
+        deterministic=True,
     )
 
 

@@ -26,9 +26,9 @@ from google.protobuf import (
 from google.protobuf.compiler import plugin_pb2
 from google.rpc import status_pb2
 from grpc import StatusCode
-
 from nebius.aio.request_status import rpc_status_from_call
 from nebius.base.fieldmask import FieldKey, Mask
+
 from nebius_generator import coordinator, emitter
 from nebius_generator.bootstrap import parse_request
 from nebius_generator.errors import GeneratorError
@@ -348,7 +348,9 @@ def _request(namespace: str, partition: str = "all") -> plugin_pb2.CodeGenerator
     )
 
     extension_file = descriptor_pb2.FileDescriptorProto(
-        name="acme/extension.proto", package="acme.extension", syntax="proto2"
+        name="acme/extension.proto",
+        package="acme.extension",
+        syntax="proto2",
     )
     host = extension_file.message_type.add(name="Host")
     host.extension_range.add(start=100, end=200)
@@ -661,7 +663,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
                 _option_field(4, 2, map_entry),
                 _option_field(5, 2, timestamp_payload),
                 _option_field(6, 2, status_payload),
-            )
+            ),
         )
         holder = module.Holder.FromString(payload)
         expected = datetime(1969, 12, 31, 23, 59, 59, tzinfo=timezone.utc).astimezone()
@@ -706,7 +708,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
                     1,
                     2,
                     protobuf.Timestamp(seconds=0, nanos=-1).SerializeToString(),
-                )
+                ),
             ).created_at
         with pytest.raises(ValueError, match="timestamp seconds"):
             module.Holder.FromString(
@@ -714,7 +716,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
                     1,
                     2,
                     protobuf.Timestamp(seconds=253_402_300_800).SerializeToString(),
-                )
+                ),
             ).created_at
 
         assigned_time = datetime(2020, 1, 2, 3, 4, 5, 123456, tzinfo=timezone.utc)
@@ -1066,7 +1068,8 @@ def test_split_package_links_one_relative_import_per_target() -> None:
 
 
 def test_large_package_shards_are_lazy_and_keep_public_identity(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     request = _request("sharded_edges")
     extra = descriptor_pb2.FileDescriptorProto(name="alternate/extra.proto", package="acme.widget", syntax="proto3")
@@ -1097,7 +1100,7 @@ def test_large_package_shards_are_lazy_and_keep_public_identity(
         assert widget_type.__module__ == "sharded_edges.acme.widget"
         assert "Widget" in vars(module)
         assert "Extra" not in vars(module)
-        restored_type = pickle.loads(pickle.dumps(widget_type.Nested))  # noqa: S301
+        restored_type = pickle.loads(pickle.dumps(widget_type.Nested))
         assert restored_type is widget_type.Nested
 
         extra_type = module.Extra
@@ -1204,7 +1207,9 @@ def test_nested_attachments_do_not_depend_on_child_order(tmp_path: Path) -> None
 def test_runtime_closure_excludes_option_only_dependency() -> None:
     request = _request("closure")
     metadata = descriptor_pb2.FileDescriptorProto(
-        name="metadata/options.proto", package="metadata.options", syntax="proto3"
+        name="metadata/options.proto",
+        package="metadata.options",
+        syntax="proto3",
     )
     metadata.message_type.add(name="Rule")
     request.proto_file.append(metadata)
@@ -1224,7 +1229,9 @@ def test_runtime_closure_excludes_option_only_dependency() -> None:
 def test_runtime_closure_is_declaration_granular() -> None:
     request = _request("closure")
     dependency = descriptor_pb2.FileDescriptorProto(
-        name="dependency/mixed.proto", package="dependency", syntax="proto3"
+        name="dependency/mixed.proto",
+        package="dependency",
+        syntax="proto3",
     )
     dependency.message_type.add(name="Used")
     unused = dependency.message_type.add(name="Unused")
@@ -1366,7 +1373,8 @@ def test_persistent_fragment_cache_rejects_corruption(tmp_path: Path, monkeypatc
     source_file = next(iter(tampered["ir"]))
     package = next(iter(tampered["ir"][source_file]))
     tampered["ir"][source_file][package] = tampered["ir"][source_file][package].replace(
-        "Field('value', 'value', 1,", "Field('value', 'value', 2,"
+        "Field('value', 'value', 1,",
+        "Field('value', 'value', 2,",
     )
     tampered["content_hash"] = coordinator._content_hash(tampered)
     renamed_tamper = semantic_object.with_name(tampered["content_hash"] + ".json")
@@ -1539,7 +1547,7 @@ def test_plugin_io_uses_committed_sdk_api() -> None:
     assert parse_request(request.SerializeToString()).__class__.__module__ == ("nebius.api.google.protobuf.compiler")
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_all_streaming_rpc_shapes_use_native_transport(tmp_path: Path) -> None:
     request = _request("streaming")
     service = request.proto_file[1].service[0]
@@ -2077,7 +2085,7 @@ def test_collisions_fail_in_band() -> None:
         [
             descriptor_pb2.FileDescriptorProto(name="empty.proto"),
             descriptor_pb2.FileDescriptorProto(name="unpackaged.proto", package="_unpackaged"),
-        ]
+        ],
     )
     output_alias.file_to_generate.extend(("empty.proto", "unpackaged.proto"))
     output_alias.proto_file[-2].message_type.add(name="EmptyPackageMessage")
@@ -2116,7 +2124,7 @@ def test_unknown_nebius_annotations_drive_generated_api(tmp_path: Path) -> None:
     widget.options.MergeFromString(_name_option(1195, 1, "Resource"))
     widget.oneof_decl[0].options.MergeFromString(_name_option(1192, 1, "selection"))
     widget.field[0].options.MergeFromString(
-        _name_option(1195, 1, "identifier") + _option_field(1192, 0, 1) + _option_field(1193, 0, 1)
+        _name_option(1195, 1, "identifier") + _option_field(1192, 0, 1) + _option_field(1193, 0, 1),
     )
 
     service = widget_file.service[0]
@@ -2222,7 +2230,7 @@ def test_annotation_policy_follows_current_public_descriptor_schema() -> None:
             extensions["message_py_sdk"].number,
             message_name_field,
             "CurrentResource",
-        )
+        ),
     )
     widget.options.deprecated = True
     details = messages["DeprecationDetails"]
@@ -2233,11 +2241,11 @@ def test_annotation_policy_follows_current_public_descriptor_schema() -> None:
             2,
             _option_field(detail_fields["effective_at"], 2, b"2029-03-04")
             + _option_field(detail_fields["description"], 2, b"use the successor"),
-        )
+        ),
     )
     field = widget.field[0]
     field.options.MergeFromString(
-        _option_field(extensions["sensitive"].number, 0, 1) + _option_field(extensions["credentials"].number, 0, 1)
+        _option_field(extensions["sensitive"].number, 0, 1) + _option_field(extensions["credentials"].number, 0, 1),
     )
     service = widget_file.service[0]
     service.options.MergeFromString(_option_field(extensions["api_service_name"].number, 2, b"current-widget-api"))
@@ -2246,7 +2254,7 @@ def test_annotation_policy_follows_current_public_descriptor_schema() -> None:
             extensions["method_behavior"].number,
             0,
             (1 << 64) - 1,
-        )
+        ),
     )
     request.proto_file.append(annotations)
 
@@ -2316,7 +2324,8 @@ def test_user_client_symbol_does_not_collide_with_private_runtime_import() -> No
 
 
 def test_source_docs_and_deprecation_are_emitted_in_every_partition(
-    tmp_path: Path, caplog: pytest.LogCaptureFixture
+    tmp_path: Path,
+    caplog: pytest.LogCaptureFixture,
 ) -> None:
     def request(partition: str) -> plugin_pb2.CodeGeneratorRequest:
         file = descriptor_pb2.FileDescriptorProto(

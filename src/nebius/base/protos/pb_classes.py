@@ -159,7 +159,7 @@ class Message:
         elif initial_message is not None:
             AttributeError(
                 f"Wrong initial message type: expected {self.__PB2_CLASS__},"  # type: ignore[unused-ignore]
-                f" received {type(initial_message)}."
+                f" received {type(initial_message)}.",
             )
         else:
             self.__pb2_message__ = self.__PB2_CLASS__()  # type: ignore[unused-ignore]
@@ -253,7 +253,8 @@ class Message:
 
     def __repr__(self) -> str:
         """Return a human-readable representation of the message, sanitizing sensitive
-        fields."""
+        fields.
+        """
         ret = self.__class__.__name__ + ":\n"
         desc = self.__class__.get_descriptor()
         for el in dir(self):
@@ -286,7 +287,8 @@ class Message:
         if self.__class__.__default is None:
             self.__class__.__default = self.__class__(None)
         return getattr(self, pythonic_name) == getattr(  # type: ignore[no-any-return]
-            self.__class__.__default, pythonic_name
+            self.__class__.__default,
+            pythonic_name,
         )
 
     @classmethod

@@ -9,7 +9,6 @@ timeout/polling interval.
 
 Examples
 --------
-
 Acquire an exclusive lock::
 
     async with Lock("/var/lock/my.lock"):
@@ -43,9 +42,8 @@ class Lock:
     for the event loop because it polls to acquire the lock using
     :func:`asyncio.sleep` between attempts.
 
-    Example
+    Example:
     -------
-
     ::
 
         async with Lock("/tmp/my.lock", timeout=2.0):
@@ -77,6 +75,7 @@ class Lock:
         defaults to 0.25 seconds.
     :param fopen_kwargs: Additional keyword arguments passed to the
         underlying :func:`open` call used by portalocker.
+
     """
 
     def __init__(
