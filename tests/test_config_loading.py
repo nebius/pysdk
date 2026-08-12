@@ -465,7 +465,8 @@ async def test_load_config_private_key_inline(tmp_path, monkeypatch) -> None:
     with open(nebius_dir / "config.yaml", "w+") as f:
         # indent PEM as YAML literal
         pem_block = "\n".join(["            " + line for line in pem.splitlines()])
-        f.write("""
+        f.write(
+            """
 default: prod
 profiles:
     prod:
@@ -475,7 +476,9 @@ profiles:
         service-account-id: sa-inline
         public-key-id: kid-inline
         private-key: |
-""" + pem_block)
+"""
+            + pem_block
+        )
     config = Config("foo")
     from asyncio import Future
 

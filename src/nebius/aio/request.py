@@ -1508,7 +1508,9 @@ class Request(Generic[Req, Res]):
                 submission_limit = (
                     self._auth_timeout
                     if authorization_applies is True
-                    else self._timeout if authorization_applies is False else None
+                    else self._timeout
+                    if authorization_applies is False
+                    else None
                 )
                 self._submission_deadline = (
                     None if submission_limit is None else submitted_monotonic + max(submission_limit, 0)

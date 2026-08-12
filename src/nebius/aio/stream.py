@@ -318,7 +318,9 @@ class StreamRequest(Generic[Req, Res]):
                 shape = (
                     "stream_stream"
                     if self._client_streaming and self._server_streaming
-                    else "stream_unary" if self._client_streaming else "unary_stream"
+                    else "stream_unary"
+                    if self._client_streaming
+                    else "unary_stream"
                 )
                 multi: Callable[..., Any] = getattr(transport, shape)(
                     f"/{self._route.service}/{self._route.method}",
@@ -939,8 +941,7 @@ class StreamRequest(Generic[Req, Res]):
                     self._release(discard=True)
                 except BaseException as release_error:
                     logger.warning(
-                        "The SDK could not release the stream transport after it "
-                        "rejected the cancellation submission.",
+                        "The SDK could not release the stream transport after it rejected the cancellation submission.",
                         exc_info=release_error,
                     )
                 with self._state_lock:

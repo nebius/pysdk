@@ -73,6 +73,12 @@ Ensure your code meets project standards by running the linter:
 pre-commit run --all && tox
 ```
 
+Apply Ruff formatting and safe lint fixes with:
+
+```bash
+tox -e fix
+```
+
 ## 📋 Makefile Commands
 
 To see a list of available `make` commands, run:

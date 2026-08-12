@@ -620,10 +620,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                     "",
                     "        @_NebiusProperty",
                     f"        def value(self) -> {field_type}:",
-                    "            return _nebius_cast("
-                    f"{field_type!r}, "
-                    f"self._message._get_field({field_constant}),"
-                    ")",
+                    f"            return _nebius_cast({field_type!r}, self._message._get_field({field_constant}),)",
                 ]
             )
         union = " | ".join(wrappers) if wrappers else "None"
@@ -1261,7 +1258,9 @@ def _split_package_fragment(source: str) -> tuple[str, dict[str, str]]:
     return "\n".join(header), {name: "\n".join(lines).strip("\n") for name, lines in sections.items()}
 
 
-def _package_models(package: str, source_files: frozenset[str], graph: Graph) -> tuple[
+def _package_models(
+    package: str, source_files: frozenset[str], graph: Graph
+) -> tuple[
     tuple[MessageModel, ...],
     tuple[ServiceModel, ...],
     tuple[ExtensionModel, ...],

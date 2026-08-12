@@ -500,7 +500,9 @@ class Operation(Generic[OperationPb]):
         caller_deadline = (
             authorization_deadline
             if authorization_applies is True
-            else request_deadline if authorization_applies is False else None
+            else request_deadline
+            if authorization_applies is False
+            else None
         )
         done = getattr(submitted, "done", None)
         dispatch_limits = [deadline for deadline in (request_deadline, authorization_deadline) if deadline is not None]

@@ -180,8 +180,7 @@ class ServiceAccountBearer(ParentBearer):
                 )
         if not isinstance(service_account, ServiceAccount):  # type: ignore[unused-ignore]
             raise TypeError(
-                "service_account must be ServiceAccountReader, ServiceAccount or string"
-                f", got {type(service_account)}"
+                f"service_account must be ServiceAccountReader, ServiceAccount or string, got {type(service_account)}"
             )
         if reader is None:
             reader = ServiceAccountReaderStatic(service_account)

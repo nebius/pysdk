@@ -40,8 +40,7 @@ dev = [
     "tox>=4.0",     # For testing automation
     "mypy>=1.13",    # For type checking
     "pyright[nodejs]>=1.1.390",  # For installed-wheel type checking
-    "black>=24.10",  # For code formatting
-    "ruff>=0.7",   # For linting
+    "ruff>=0.7",   # For linting and code formatting
     "grpc-stubs>=1.53",  # For mypy
     "types-protobuf>=5.29.1", # for mypy
     "types-PyYAML>=5.0",  # for mypy
@@ -67,11 +66,6 @@ nebius = ["py.typed"]
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["nebius*"]
-
-[tool.black]
-line-length = 120
-target-version = ["py310"]
-exclude = "(docs/generated|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
 
 [tool.mypy]
 strict = true
@@ -113,8 +107,8 @@ indent-width = 4
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "Q", "S"]
-ignore = []
+select = ["E", "F", "I", "ISC001", "N", "Q", "S"]
+ignore = ["E731"]
 exclude = ["src/nebius/api"]
 fixable = ["ALL"]
 unfixable = []
@@ -126,9 +120,11 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.format]
 exclude = ["src/nebius/api/**", "*.pyi"]
-
-[tool.isort]
-profile = "black"
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
 
 [tool.pylint]
 load-plugins = ["pylint.extensions.mccabe"]
@@ -215,8 +211,17 @@ commands = [["ruff","check","src/","tests/","nebius_generator/","scripts/"]]
 [tool.tox.env.format]
 description = "Run code formatting checks"
 package = "skip"
-deps = ["black"]
-commands = [["black","--check","src/","tests/","nebius_generator/","scripts/"]]
+deps = ["ruff"]
+commands = [["ruff","format","--check","--force-exclude","src/","tests/","nebius_generator/","scripts/"]]
+
+[tool.tox.env.fix]
+description = "Apply code formatting and safe lint fixes"
+package = "skip"
+deps = ["ruff"]
+commands = [
+    ["ruff","format","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
+    ["ruff","check","--fix","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
+]
 
 [tool.tox.env.type]
 description = "Run type-checking"

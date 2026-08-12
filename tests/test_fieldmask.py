@@ -536,9 +536,7 @@ def test_fieldpath_matches_select_mask(subtests) -> None:
             # Assert the results
             assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
             assert res2 == case["Res"], f"Failed on case {i}: {res2} != {case['Res']}"
-            assert inner == case.get(
-                "Inner", False
-            ), f"Failed on case {i}: {inner} != {case.get('Inner', False)}"  # noqa: E501
+            assert inner == case.get("Inner", False), f"Failed on case {i}: {inner} != {case.get('Inner', False)}"  # noqa: E501
 
 
 def test_fieldpath_marshal(subtests) -> None:
@@ -704,9 +702,7 @@ def test_parse_fieldmask(subtests) -> None:
                 result = parse(case["Input"])
                 assert isinstance(result, Mask)
                 normalized = result.marshal()
-                assert (
-                    normalized == case["Output"]
-                ), f"Failed on case {i}: expected {case['Output']}, got {normalized}"  # noqa: E501
+                assert normalized == case["Output"], f"Failed on case {i}: expected {case['Output']}, got {normalized}"  # noqa: E501
 
 
 def test_mask_is_empty() -> None:
