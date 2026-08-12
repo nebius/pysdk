@@ -33,9 +33,7 @@ def _status_registry(status: object, registry: Registry | None) -> Registry:
         return registry
     owned = getattr(type(status), "__REGISTRY__", None)
     if owned is None:
-        raise ValueError(
-            "RPC status conversion requires an explicit or retained direct registry"
-        )
+        raise ValueError("RPC status conversion requires an explicit or retained direct registry")
     return cast("Registry", owned)
 
 
@@ -47,9 +45,7 @@ def _localized_status(status: object, registry: Registry) -> Any:
     if not callable(serializer):
         raise TypeError("RPC status must be a serializable google.rpc.Status")
     descriptor = getattr(status, "DESCRIPTOR", None)
-    full_name = getattr(descriptor, "full_name", None) or getattr(
-        type(status), "__PROTO_FULL_NAME__", None
-    )
+    full_name = getattr(descriptor, "full_name", None) or getattr(type(status), "__PROTO_FULL_NAME__", None)
     if full_name != "google.rpc.Status":
         raise TypeError("RPC status must be google.rpc.Status")
     return status_type.FromString(serializer())
@@ -64,12 +60,8 @@ class RequestStatus:
     details: list[Any]
     request_id: str
     trace_id: str
-    registry: Registry | None = field(
-        default=None, repr=False, compare=False, kw_only=True
-    )
-    _raw_status: Any | None = field(
-        default=None, repr=False, compare=False, kw_only=True
-    )
+    registry: Registry | None = field(default=None, repr=False, compare=False, kw_only=True)
+    _raw_status: Any | None = field(default=None, repr=False, compare=False, kw_only=True)
     _original_state: tuple[StatusCode, str | None, tuple[bytes, ...]] | None = field(
         default=None, init=False, repr=False, compare=False
     )
@@ -85,9 +77,7 @@ class RequestStatus:
         """Convert into the selected namespace's direct ``google.rpc.Status``."""
         selected = registry or self.registry
         if selected is None:
-            raise ValueError(
-                "RPC status conversion requires an explicit or retained direct registry"
-            )
+            raise ValueError("RPC status conversion requires an explicit or retained direct registry")
         if self._raw_status is not None and self._original_state is not None:
             localized = _localized_status(self._raw_status, selected)
             current_state = self._state()
@@ -113,9 +103,7 @@ class RequestStatus:
             if type(detail) is any_type:
                 details.append(detail)
                 continue
-            if getattr(type(detail), "__PROTO_FULL_NAME__", None) != (
-                "google.protobuf.Any"
-            ):
+            if getattr(type(detail), "__PROTO_FULL_NAME__", None) != ("google.protobuf.Any"):
                 raise TypeError("RPC status details must be google.protobuf.Any")
             details.append(any_type.FromString(detail.SerializeToString()))
         return details
@@ -146,9 +134,7 @@ class RequestStatus:
         return result
 
 
-def request_status_from_rpc_status(
-    status: object, *, registry: Registry | None = None
-) -> RequestStatus:
+def request_status_from_rpc_status(status: object, *, registry: Registry | None = None) -> RequestStatus:
     """Convert a direct Status field into the SDK's extended status view."""
     from .service_error import RequestStatusExtended
 
@@ -160,9 +146,7 @@ def request_status_from_rpc_status(
     )
 
 
-def request_status_to_rpc_status(
-    status: RequestStatus, *, registry: Registry | None = None
-) -> Any:
+def request_status_to_rpc_status(status: RequestStatus, *, registry: Registry | None = None) -> Any:
     """Convert an SDK status into a namespace-local direct Status."""
     return status.to_rpc_status(registry=registry)
 

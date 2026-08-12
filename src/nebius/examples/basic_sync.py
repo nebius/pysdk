@@ -26,9 +26,7 @@ if __name__ == "__main__":
             "examples/basic_sync.py",
             description="basic example that creates and then deletes a bucket",
         )
-        parser.add_argument(
-            "project_id", help="project in which to create and delete a test bucket."
-        )
+        parser.add_argument("project_id", help="project in which to create and delete a test bucket.")
         args = parser.parse_args()
 
         sdk = SDK(

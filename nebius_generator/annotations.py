@@ -76,9 +76,7 @@ class Deprecation:
             try:
                 effective = date.fromisoformat(self.effective_at)
             except ValueError as error:
-                raise GeneratorError(
-                    f"invalid deprecation date {self.effective_at!r}"
-                ) from error
+                raise GeneratorError(f"invalid deprecation date {self.effective_at!r}") from error
             parts.append(f"Supported until {effective:%m/%d/%y}.")
         if self.description:
             description = self.description[0].upper() + self.description[1:]
@@ -94,15 +92,11 @@ class Annotations:
     def __init__(self, files: dict[str, FrozenMessage]):
         schema = files.get("nebius/annotations.proto")
         if schema is None:
-            descriptor = _COMMITTED_API_REGISTRY.file_descriptor(
-                "nebius/annotations.proto"
-            )
+            descriptor = _COMMITTED_API_REGISTRY.file_descriptor("nebius/annotations.proto")
             schema = FileDescriptorProto.FromString(descriptor.serialized_pb)
         package = schema.package
         self._extensions = {extension.name: extension for extension in schema.extension}
-        self._messages = {
-            f"{package}.{message.name}": message for message in schema.message_type
-        }
+        self._messages = {f"{package}.{message.name}": message for message in schema.message_type}
         self._enums = {f"{package}.{enum.name}": enum for enum in schema.enum_type}
 
     @staticmethod
@@ -122,11 +116,7 @@ class Annotations:
         if extension is None:
             raise GeneratorError(f"missing public annotation {name!r}")
         label = _LABEL_REPEATED if repeated else _LABEL_OPTIONAL
-        if (
-            extension.extendee != self._extendee(option_kind)
-            or extension.type != type_
-            or extension.label != label
-        ):
+        if extension.extendee != self._extendee(option_kind) or extension.type != type_ or extension.label != label:
             raise GeneratorError(f"incompatible public annotation {name!r}")
         return extension
 
@@ -188,12 +178,8 @@ class Annotations:
             return None
         extension_name = f"{option_kind}_deprecation_details"
         return Deprecation(
-            effective_at=self._nested_string(
-                options, extension_name, option_kind, "effective_at"
-            ),
-            description=self._nested_string(
-                options, extension_name, option_kind, "description"
-            ),
+            effective_at=self._nested_string(options, extension_name, option_kind, "effective_at"),
+            description=self._nested_string(options, extension_name, option_kind, "description"),
         )
 
     def python_name(
@@ -204,9 +190,7 @@ class Annotations:
         name_kind: NameKind,
     ) -> str:
         """Resolve and validate a py-sdk name override."""
-        annotated = self._nested_string(
-            options, f"{option_kind}_py_sdk", option_kind, "name"
-        )
+        annotated = self._nested_string(options, f"{option_kind}_py_sdk", option_kind, "name")
         if not annotated:
             return fallback
         if keyword.iskeyword(annotated) or keyword.issoftkeyword(annotated):
@@ -218,32 +202,21 @@ class Annotations:
             "enum_value": _ENUM_VALUE_NAME,
         }[name_kind]
         if pattern.fullmatch(annotated) is None:
-            raise GeneratorError(
-                f"invalid annotated Python {name_kind} name {annotated!r}"
-            )
+            raise GeneratorError(f"invalid annotated Python {name_kind} name {annotated!r}")
         return annotated
 
     def api_service_name(self, options: SerializableOptions | bytes) -> str:
         return self._string(options, "api_service_name", "service")
 
     def method_is_updater(self, options: SerializableOptions | bytes) -> bool | None:
-        extension = self._extension(
-            "method_behavior", "method", _TYPE_ENUM, repeated=True
-        )
-        values = tuple(
-            _signed_enum_number(value)
-            for value in repeated_varints(options, extension.number)
-        )
+        extension = self._extension("method_behavior", "method", _TYPE_ENUM, repeated=True)
+        values = tuple(_signed_enum_number(value) for value in repeated_varints(options, extension.number))
         if not values:
             return None
         enum = self._enums.get(extension.type_name.lstrip("."))
         if enum is None:
-            raise GeneratorError(
-                f"incompatible annotation enum {extension.type_name!r}"
-            )
-        updater_values = {
-            value.number for value in enum.value if value.name == "METHOD_UPDATER"
-        }
+            raise GeneratorError(f"incompatible annotation enum {extension.type_name!r}")
+        updater_values = {value.number for value in enum.value if value.name == "METHOD_UPDATER"}
         return any(value in updater_values for value in values)
 
     def sensitive(self, options: SerializableOptions | bytes) -> bool:

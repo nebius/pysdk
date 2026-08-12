@@ -110,12 +110,8 @@ def _reference_types():
 
     pool = descriptor_pool.DescriptorPool()
     pool.Add(file_proto)
-    options_class = message_factory.GetMessageClass(
-        pool.FindMessageTypeByName("extensions.test.Options")
-    )
-    child_class = message_factory.GetMessageClass(
-        pool.FindMessageTypeByName("extensions.test.Child")
-    )
+    options_class = message_factory.GetMessageClass(pool.FindMessageTypeByName("extensions.test.Options"))
+    child_class = message_factory.GetMessageClass(pool.FindMessageTypeByName("extensions.test.Child"))
     return (
         options_class,
         child_class,
@@ -461,9 +457,7 @@ def test_message_extensions_merge_and_own_values() -> None:
 
 def test_message_extension_lazy_presence_and_repeated_validation() -> None:
     mutations: list[None] = []
-    values = ExtensionValues(
-        REGISTRY, "extensions.test.Options", lambda: mutations.append(None)
-    )
+    values = ExtensionValues(REGISTRY, "extensions.test.Options", lambda: mutations.append(None))
     child = values.get(OPTIONAL_CHILD)
     assert child is values.get(OPTIONAL_CHILD)
     assert not values.has(OPTIONAL_CHILD)

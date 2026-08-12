@@ -42,9 +42,7 @@ def _coerce_direct_message(value: object, message_type: type[Any], name: str) ->
 def timestamp_to_datetime(value: Any) -> datetime:
     """Return a local-time datetime view without mutating the direct message."""
     if not _TIMESTAMP_MIN_SECONDS <= value.seconds <= _TIMESTAMP_MAX_SECONDS:
-        raise ValueError(
-            "timestamp seconds must be in the range for years 1 through 9999"
-        )
+        raise ValueError("timestamp seconds must be in the range for years 1 through 9999")
     if not 0 <= value.nanos < 1_000_000_000:
         raise ValueError("timestamp nanos must be in the range [0, 999999999]")
     result = _EPOCH + timedelta(
@@ -79,9 +77,7 @@ def timedelta_to_duration(value: object, factory: Callable[[], type[Any]]) -> An
     message_type = factory()
     if not isinstance(value, timedelta):
         return _coerce_direct_message(value, message_type, "duration")
-    total_microseconds = (
-        value.days * 86_400 + value.seconds
-    ) * 1_000_000 + value.microseconds
+    total_microseconds = (value.days * 86_400 + value.seconds) * 1_000_000 + value.microseconds
     seconds = abs(total_microseconds) // 1_000_000
     if total_microseconds < 0:
         seconds = -seconds

@@ -48,11 +48,7 @@ from datetime import timedelta
 from ssl import SSLContext
 from typing import TextIO
 
-from nebius.aio.metrics import (
-    AuthMetricsLike,
-    AuthMetricsRecorder,
-    auth_metrics_recorder,
-)
+from nebius.aio.metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
 from nebius.aio.token.token import Bearer as ParentBearer
 from nebius.aio.token.token import Receiver
 
@@ -168,9 +164,7 @@ class FederationBearer(ParentBearer):
         metrics: AuthMetricsLike = None,
     ) -> None:
         """Initialize the federation bearer with renewable file cache."""
-        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
-            metrics, "federation"
-        )
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, "federation")
         self._source = AsynchronousRenewableFileCacheBearer(
             FederationAuthBearer(
                 profile_name=profile_name,

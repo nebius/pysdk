@@ -53,9 +53,7 @@ def _scalar_message() -> type[Message]:
         )
     pool = descriptor_pool.DescriptorPool()
     pool.Add(file_proto)
-    return message_factory.GetMessageClass(
-        pool.FindMessageTypeByName("wire.test.Scalars")
-    )
+    return message_factory.GetMessageClass(pool.FindMessageTypeByName("wire.test.Scalars"))
 
 
 SCALARS = _scalar_message()
@@ -247,9 +245,7 @@ def test_float32_overflow_matches_reference_infinity() -> None:
         (BinaryWriter.write_sint64, 1 << 63),
     ),
 )
-def test_integer_writer_rejects_out_of_range_values(
-    method: Callable[[BinaryWriter, int], None], value: int
-) -> None:
+def test_integer_writer_rejects_out_of_range_values(method: Callable[[BinaryWriter, int], None], value: int) -> None:
     with pytest.raises(ValueError):
         method(BinaryWriter(), value)
 
@@ -304,9 +300,9 @@ def test_group_depth_and_input_size_limits() -> None:
 
 def test_group_skipping_does_not_depend_on_python_recursion() -> None:
     depth = 1_100
-    nested = b"".join(
-        _tag(number, WIRE_START_GROUP) for number in range(1, depth + 1)
-    ) + b"".join(_tag(number, WIRE_END_GROUP) for number in range(depth, 0, -1))
+    nested = b"".join(_tag(number, WIRE_START_GROUP) for number in range(1, depth + 1)) + b"".join(
+        _tag(number, WIRE_END_GROUP) for number in range(depth, 0, -1)
+    )
     reader = BinaryReader(nested, max_depth=depth)
     field_number, wire_type, start = reader.read_tag()
     assert reader.skip_field(field_number, wire_type, start) == nested

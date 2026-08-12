@@ -45,9 +45,7 @@ def _mask_paths(mask: Mask) -> set[str]:
     while pending:
         prefix, current = pending.pop()
         children = [("*", current.any)] if current.any is not None else []
-        children.extend(
-            (key.marshal(), child) for key, child in current.field_parts.items()
-        )
+        children.extend((key.marshal(), child) for key, child in current.field_parts.items())
         for name, child in children:
             path = (*prefix, name)
             if child.is_empty():
@@ -71,9 +69,7 @@ def _reference_type(request: Any) -> tuple[type[Any], descriptor_pool.Descriptor
             else:
                 progressed = True
         if not progressed:
-            raise AssertionError(
-                f"could not link synthetic descriptors: {[p.name for p in remaining]}"
-            )
+            raise AssertionError(f"could not link synthetic descriptors: {[p.name for p in remaining]}")
         pending = remaining
     descriptor = pool.FindMessageTypeByName("synthetic.everything.v1.AllTypes")
     return message_factory.GetMessageClass(descriptor), pool
@@ -175,19 +171,12 @@ async def test_generated_all_types_service_end_to_end(tmp_path: Path) -> None:
             11,
             14,
         }
-        assert descriptor.fields_by_name["display_label"].json_name == (
-            "displayLabelCustom"
-        )
-        map_fields = [
-            field for field in descriptor.fields if field.name.startswith("map_")
-        ]
-        assert {
-            field.message_type.fields_by_name["key"].type for field in map_fields
-        } == set(MAP_KEY_TYPES)
-        assert {
-            descriptor.fields_by_name[name].message_type.full_name
-            for name, _ in WELL_KNOWN_TYPES
-        } == {type_name.lstrip(".") for _, type_name in WELL_KNOWN_TYPES}
+        assert descriptor.fields_by_name["display_label"].json_name == ("displayLabelCustom")
+        map_fields = [field for field in descriptor.fields if field.name.startswith("map_")]
+        assert {field.message_type.fields_by_name["key"].type for field in map_fields} == set(MAP_KEY_TYPES)
+        assert {descriptor.fields_by_name[name].message_type.full_name for name, _ in WELL_KNOWN_TYPES} == {
+            type_name.lstrip(".") for _, type_name in WELL_KNOWN_TYPES
+        }
         assert all(direct.check_presence(f"optional_{name}") for name, _, _ in SCALARS)
         assert direct.check_presence("optional_state")
         assert direct.WhichOneof("choice") == "choice_child"
@@ -217,17 +206,10 @@ async def test_generated_all_types_service_end_to_end(tmp_path: Path) -> None:
 
         direct_wire = direct.SerializeToString(deterministic=True)
         assert direct_wire == reference_wire + unknown_suffix
-        provider_json = json.loads(
-            json_format.MessageToJson(reference, descriptor_pool=reference_pool)
-        )
+        provider_json = json.loads(json_format.MessageToJson(reference, descriptor_pool=reference_pool))
         direct_json = json.loads(direct.to_json())
         assert direct_json == provider_json
-        assert (
-            direct_type.from_json(direct.to_json()).SerializeToString(
-                deterministic=True
-            )
-            == reference_wire
-        )
+        assert direct_type.from_json(direct.to_json()).SerializeToString(deterministic=True) == reference_wire
 
         views = direct_type.FromString(reference_wire)
         assert list(views.repeated_int32_value) == [-123, -123]
@@ -267,24 +249,21 @@ async def test_generated_all_types_service_end_to_end(tmp_path: Path) -> None:
         unpacked = module.REGISTRY.unpack_any(direct.any_value)
         assert type(unpacked) is module.Child
         assert unpacked.text == "child"
-        assert (
-            direct_type.__REGISTRY__.message_class("synthetic.everything.v1.AllTypes")
-            is direct_type
-        )
+        assert direct_type.__REGISTRY__.message_class("synthetic.everything.v1.AllTypes") is direct_type
 
         service = module.AllTypesServiceClient.get_descriptor()
-        assert {
-            (method.client_streaming, method.server_streaming)
-            for method in service.methods
-        } == {(False, False), (False, True), (True, False), (True, True)}
+        assert {(method.client_streaming, method.server_streaming) for method in service.methods} == {
+            (False, False),
+            (False, True),
+            (True, False),
+            (True, True),
+        }
 
         class Implementation:
             async def Echo(self, value: Any, context: Any) -> Any:  # noqa: N802
                 return value
 
-            async def Expand(  # noqa: N802
-                self, value: Any, context: Any
-            ) -> AsyncIterator[Any]:
+            async def Expand(self, value: Any, context: Any) -> AsyncIterator[Any]:  # noqa: N802
                 yield value
                 expanded = direct_type(value)
                 expanded.string_value = "expanded"
@@ -296,9 +275,7 @@ async def test_generated_all_types_service_end_to_end(tmp_path: Path) -> None:
                     result = value
                 return result
 
-            async def Chat(  # noqa: N802
-                self, values: Any, context: Any
-            ) -> AsyncIterator[Any]:
+            async def Chat(self, values: Any, context: Any) -> AsyncIterator[Any]:  # noqa: N802
                 async for value in values:
                     yield value
 

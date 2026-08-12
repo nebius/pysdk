@@ -1,18 +1,7 @@
 """Runtime wrappers for protobuf messages, maps, and repeated fields."""
 
-from collections.abc import (
-    Callable,
-    Iterable,
-    Iterator,
-    Mapping,
-    MutableMapping,
-    MutableSequence,
-)
-from typing import (
-    Any,
-    TypeVar,
-    overload,
-)
+from collections.abc import Callable, Iterable, Iterator, Mapping, MutableMapping, MutableSequence
+from typing import Any, TypeVar, cast, overload
 
 from google.protobuf.descriptor import Descriptor
 from google.protobuf.duration_pb2 import Duration
@@ -73,11 +62,7 @@ def unwrap_type(obj: Any, unwrap: Callable[[Any], Any] | None = None) -> Any:
         return obj.__pb2_message__  # type: ignore[unused-ignore]
     if isinstance(obj, Mapping):
         return {k: unwrap_type(v, unwrap) for k, v in obj.items()}  # type: ignore[unused-ignore]
-    if (
-        isinstance(obj, Iterable)
-        and not isinstance(obj, str)
-        and not isinstance(obj, bytes)
-    ):
+    if isinstance(obj, Iterable) and not isinstance(obj, str) and not isinstance(obj, bytes):
         return [unwrap_type(x, unwrap) for x in obj]  # type: ignore[unused-ignore]
     if unwrap is not None:
         return unwrap(obj)
@@ -111,13 +96,12 @@ def repr_field(key: str, attr: Any, indent: str = "") -> str:
         ret += indent + key + " " + el_repr[0] + "\n"
         for line in el_repr[1:]:
             ret += indent + line + "\n"
+    elif len(el_repr) == 1:
+        ret += indent + key + ": " + el_repr[0] + "\n"
     else:
-        if len(el_repr) == 1:
-            ret += indent + key + ": " + el_repr[0] + "\n"
-        else:
-            ret += indent + key + ": |\n"
-            for line in el_repr:
-                ret += indent + "  " + line + "\n"
+        ret += indent + key + ": |\n"
+        for line in el_repr:
+            ret += indent + "  " + line + "\n"
     return ret
 
 
@@ -169,9 +153,7 @@ class Message:
         """
         self.__recorded_reset_mask = Mask()
         if not hasattr(self, "__PB2_CLASS__"):
-            raise AttributeError(
-                f"Proto Class not set for message {self.__class__.__name__}"
-            )
+            raise AttributeError(f"Proto Class not set for message {self.__class__.__name__}")
         if isinstance(initial_message, self.__PB2_CLASS__):  # type: ignore[unused-ignore]
             self.__pb2_message__ = initial_message
         elif initial_message is not None:
@@ -201,11 +183,7 @@ class Message:
             m_mask = Mask()
             if el_key in self.__class__.__mask_functions__:
                 m_mask = self.__class__.__mask_functions__[el_key](el)
-            elif (
-                isinstance(el, Map)
-                or isinstance(el, Repeated)
-                or isinstance(el, Message)
-            ):
+            elif isinstance(el, Map | Message | Repeated):
                 if isinstance(el, Message):
                     m_mask = Message.get_full_update_reset_mask(el)
                 else:
@@ -244,7 +222,7 @@ class Message:
         desc = cls.get_descriptor()
         field_desc: FieldDescriptor = desc.fields_by_name[fn_pb2]
         try:
-            is_sensitive = bool(field_desc.GetOptions().Extensions[sensitive])  # type: ignore
+            is_sensitive = bool(field_desc.GetOptions().Extensions[cast(Any, sensitive)])
         except AttributeError:
             is_sensitive = False
         cls.__sensitive_fields[field_name] = is_sensitive
@@ -267,7 +245,7 @@ class Message:
         desc = cls.get_descriptor()
         field_desc: FieldDescriptor = desc.fields_by_name[fn_pb2]
         try:
-            is_creds = bool(field_desc.GetOptions().Extensions[credentials])  # type: ignore
+            is_creds = bool(field_desc.GetOptions().Extensions[cast(Any, credentials)])
         except AttributeError:
             is_creds = False
         cls.__credentials_fields[field_name] = is_creds
@@ -411,16 +389,13 @@ class Message:
         if value is None:
             if fk not in self.__recorded_reset_mask.field_parts:
                 self.__recorded_reset_mask.field_parts[fk] = Mask()
-            return
+            return None
 
         value = unwrap_type(value, unwrap)
 
         if self.__class__.__default is None:
             self.__class__.__default = self.__class__(None)
-        if (
-            not explicit_presence
-            and getattr(self.__class__.__default.__pb2_message__, el_pb2) == value
-        ):
+        if not explicit_presence and getattr(self.__class__.__default.__pb2_message__, el_pb2) == value:
             if fk not in self.__recorded_reset_mask.field_parts:
                 self.__recorded_reset_mask.field_parts[fk] = Mask()
 
@@ -431,24 +406,17 @@ class Message:
                     pb_arr[k].MergeFrom(v)
                 else:
                     pb_arr[k] = v
-            return
-        elif (
-            isinstance(value, Iterable)
-            and not isinstance(value, str)
-            and not isinstance(value, bytes)
-        ):
+            return None
+        elif isinstance(value, Iterable) and not isinstance(value, str) and not isinstance(value, bytes):
             pb_arr = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
             pb_arr.extend(value)
-            return
+            return None
         elif isinstance(value, PMessage):
             sub_msg = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
             if not isinstance(sub_msg, PMessage):
-                raise AttributeError(
-                    f"Attribute {name} of message {self.__class__.__name__} is not "
-                    "a message."
-                )
+                raise AttributeError(f"Attribute {name} of message {self.__class__.__name__} is not a message.")
             sub_msg.MergeFrom(value)
-            return
+            return None
         return setattr(self.__pb2_message__, el_pb2, value)  # type: ignore[unused-ignore]
 
 
@@ -456,9 +424,7 @@ MapKey = TypeVar("MapKey", int, str, bool)
 """Type placeholder for map keys."""
 CollectibleInner = TypeVar("CollectibleInner", int, str, float, bytes, bool, PMessage)
 """Type placeholder for values on the ProtoBuf side."""
-CollectibleOuter = TypeVar(
-    "CollectibleOuter", int, str, float, bytes, bool, Enum, Message, PMessage
-)
+CollectibleOuter = TypeVar("CollectibleOuter", int, str, float, bytes, bool, Enum, Message, PMessage)
 """Type placeholder for values on the SDK side."""
 
 
@@ -545,11 +511,7 @@ class Repeated(MutableSequence[CollectibleOuter]):
         ret = Mask()
         if len(self) > 0:
             if isinstance(self[0], Message) or self._mask_function is not None:
-                func = (
-                    self._mask_function
-                    if self._mask_function is not None
-                    else Message.get_full_update_reset_mask
-                )
+                func = self._mask_function if self._mask_function is not None else Message.get_full_update_reset_mask
                 ret.any = Mask()
                 for el in self:
                     ret.any += func(el)  # type: ignore
@@ -563,9 +525,7 @@ class Repeated(MutableSequence[CollectibleOuter]):
     @overload
     def __getitem__(self, index: slice) -> MutableSequence[CollectibleOuter]: ...
 
-    def __getitem__(
-        self, index: int | slice
-    ) -> CollectibleOuter | MutableSequence[CollectibleOuter]:
+    def __getitem__(self, index: int | slice) -> CollectibleOuter | MutableSequence[CollectibleOuter]:
         """Return an item or slice from the sequence.
 
         :param index: Integer index or slice.
@@ -627,9 +587,7 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         wrap: Callable[[CollectibleInner], CollectibleOuter] | None = None,
         unwrap: Callable[[CollectibleOuter], CollectibleInner] | None = None,
         mask_function: MaskFunction | None = None,
-    ) -> Callable[
-        [MutableMapping[MapKey, CollectibleInner]], "Map[MapKey, CollectibleOuter]"
-    ]:
+    ) -> Callable[[MutableMapping[MapKey, CollectibleInner]], "Map[MapKey, CollectibleOuter]"]:
         """Create a factory that wraps protobuf map fields.
 
         :param wrap: Optional wrapper for inner values.

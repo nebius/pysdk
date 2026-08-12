@@ -164,9 +164,7 @@ class Receiver(ParentReceiver):
         self._max_retries = max_retries
         self._trial = 0
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Fetch a token by delegating to the parent bearer.
 
         This method increments the internal trial counter which is used by
@@ -210,9 +208,7 @@ class Receiver(ParentReceiver):
                 try:
                     max_retries = int(value)
                 except ValueError as val_err:
-                    log.error(
-                        f"option {OPTION_MAX_RETRIES} is not valid integer: {val_err=}"
-                    )
+                    log.error(f"option {OPTION_MAX_RETRIES} is not valid integer: {val_err=}")
         if self._trial >= max_retries:
             log.debug("max retries reached, cannot retry")
             return False
@@ -295,9 +291,7 @@ class Bearer(ParentBearer):
     ) -> None:
         """Initialize the renewable bearer."""
         super().__init__()
-        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
-            metrics, provider or auth_metric_provider(source)
-        )
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, provider or auth_metric_provider(source))
         self._source = cast(ParentBearer, bind_auth_metrics(source, self._metrics))
         self._cache: Token | None = None
 
@@ -360,9 +354,7 @@ class Bearer(ParentBearer):
         self._tasks.add(ret)
         return ret
 
-    async def fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Fetch a token, renewing it if necessary.
 
         The fetch operation may trigger a background renewal or perform a
@@ -404,14 +396,9 @@ class Bearer(ParentBearer):
                 await wait_for(self._synchronous_can_proceed.wait(), timeout)
                 if OPTION_RENEW_REQUEST_TIMEOUT in options:  # type: ignore
                     try:
-                        self._renew_synchronous_timeout = float(
-                            options[OPTION_RENEW_REQUEST_TIMEOUT]  # type: ignore
-                        )
+                        self._renew_synchronous_timeout = float(options[OPTION_RENEW_REQUEST_TIMEOUT])  # type: ignore
                     except ValueError as err:
-                        log.error(
-                            f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float:"
-                            f" {err=}"
-                        )
+                        log.error(f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float: {err=}")
                 self._renew_synchronous_options = options.copy()  # type: ignore
             if report_error or synchronous:
                 self._renewal_future = Future[Token]()
@@ -502,21 +489,15 @@ class Bearer(ParentBearer):
                 if exp is None:
                     retry_timeout = VERY_LONG_TIMEOUT.total_seconds()
                 else:
-                    retry_timeout = (
-                        exp - datetime.now(timezone.utc)
-                    ).total_seconds() * self._lifetime_safe_fraction
+                    retry_timeout = (exp - datetime.now(timezone.utc)).total_seconds() * self._lifetime_safe_fraction
             except Exception as e:
                 log.error(
-                    f"Failed refresh token, attempt: {self._renewal_attempt}, "
-                    f"error: {e}",
+                    f"Failed refresh token, attempt: {self._renewal_attempt}, error: {e}",
                     exc_info=sys.exc_info(),
                 )
                 if self._renewal_future is not None and not self._renewal_future.done():
                     self._renewal_future.set_exception(e)
-                if (
-                    self._renewal_attempt <= 1
-                    or abs(self._retry_timeout_exponent - 1) < 1e-9
-                ):
+                if self._renewal_attempt <= 1 or abs(self._retry_timeout_exponent - 1) < 1e-9:
                     retry_timeout = self._initial_retry_timeout.total_seconds()
                 else:
                     mul = self._retry_timeout_exponent ** (self._renewal_attempt - 1)
@@ -534,8 +515,7 @@ class Bearer(ParentBearer):
                 retry_timeout = self._initial_retry_timeout.total_seconds()
 
             log.debug(
-                f"Will refresh token after {retry_timeout} seconds, "
-                f"renewal attempt number {self._renewal_attempt}"
+                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}"
             )
             renew_task = self.bg_task(self._renew_requested.wait())
             sleep_task = self.bg_task(sleep(retry_timeout))
@@ -614,6 +594,4 @@ class Bearer(ParentBearer):
         """Attach auth metrics callbacks and propagate them to the source."""
 
         self._metrics.set_metrics(metrics)
-        self._source = cast(
-            ParentBearer, bind_auth_metrics(self._source, self._metrics)
-        )
+        self._source = cast(ParentBearer, bind_auth_metrics(self._source, self._metrics))

@@ -247,10 +247,7 @@ def _field_expression(
         if field.HasField("oneof_index")
         else None
     )
-    repeated = (
-        field.label == descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED
-        and map_key_codec is None
-    )
+    repeated = field.label == descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED and map_key_codec is None
     packable = field.type not in {
         descriptor_pb2.FieldDescriptorProto.TYPE_STRING,
         descriptor_pb2.FieldDescriptorProto.TYPE_BYTES,
@@ -259,11 +256,7 @@ def _field_expression(
     packed = (
         repeated
         and packable
-        and (
-            field.options.packed
-            if field.options.HasField("packed")
-            else message.syntax == "proto3"
-        )
+        and (field.options.packed if field.options.HasField("packed") else message.syntax == "proto3")
     )
     arguments = [
         repr(field.name),
@@ -349,9 +342,7 @@ def _relative_type_import(current: str, target: str, alias: str) -> str:
             break
         common += 1
     if common == 0:
-        raise GeneratorError(
-            f"cannot import generated package {target!r} from {current!r}"
-        )
+        raise GeneratorError(f"cannot import generated package {target!r} from {current!r}")
     level = len(current_parts) - common + 1
     module = "." * level + ".".join(target_parent[common:])
     return f"from {module} import {target_parts[-1]} as {alias}"
@@ -416,9 +407,7 @@ def _setter_value_type(field: FrozenMessage, package: str, graph: Graph) -> str:
     return view_type if view_type == raw_type else f"{view_type} | {raw_type}"
 
 
-def _map_fields(
-    field: FrozenMessage, graph: Graph
-) -> tuple[FrozenMessage, FrozenMessage] | None:
+def _map_fields(field: FrozenMessage, graph: Graph) -> tuple[FrozenMessage, FrozenMessage] | None:
     if field.type != descriptor_pb2.FieldDescriptorProto.TYPE_MESSAGE:
         return None
     target = graph.messages[field.type_name.lstrip(".")]
@@ -439,11 +428,7 @@ def _getter_type(field: FrozenMessage, package: str, graph: Graph) -> str:
     value_type = _value_type(field, package, graph)
     if field.label == descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED:
         return f"_NebiusMutableSequence[{value_type}]"
-    if (
-        field.HasField("oneof_index")
-        or field.proto3_optional
-        or field.type_name.lstrip(".") in _WKT_VIEW_TYPES
-    ):
+    if field.HasField("oneof_index") or field.proto3_optional or field.type_name.lstrip(".") in _WKT_VIEW_TYPES:
         return f"{value_type} | None"
     return value_type
 
@@ -495,9 +480,7 @@ def _referenced_type_packages(
             )
     for service in services:
         for method in service.proto.method:
-            names.extend(
-                (method.input_type.lstrip("."), method.output_type.lstrip("."))
-            )
+            names.extend((method.input_type.lstrip("."), method.output_type.lstrip(".")))
     for extension in extensions:
         field = extension.proto
         if field.type in {
@@ -526,9 +509,7 @@ def _type_import_lines(
     services = tuple(services)
     extensions = tuple(extensions)
     output_package = graph.output_package(package)
-    type_packages = _referenced_type_packages(
-        package, messages, services, extensions, graph
-    )
+    type_packages = _referenced_type_packages(package, messages, services, extensions, graph)
     runtime_type_packages = {
         graph.messages[method.output_type.lstrip(".")].package
         for service in services
@@ -564,12 +545,8 @@ def _type_import_lines(
 
 def _message_source(message: MessageModel, graph: Graph) -> list[str]:
     lines = [f"class {message.implementation_name}(Message):"]
-    message_deprecation = graph.annotations.deprecation(
-        message.proto.options, "message"
-    )
-    message_summary = (
-        message_deprecation.summary() if message_deprecation is not None else ""
-    )
+    message_deprecation = graph.annotations.deprecation(message.proto.options, "message")
+    message_summary = message_deprecation.summary() if message_deprecation is not None else ""
     _append_docstring(
         lines,
         "    ",
@@ -588,8 +565,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             '    """Registry for this message and its descriptor."""',
             "    __EXTENSION_REGISTRY__ = EXTENSIONS",
             '    """Registry that decodes extensions for this message."""',
-            "    __PROTO_DESCRIPTOR__ = "
-            f"REGISTRY.message_descriptor({message.full_name!r})",
+            f"    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor({message.full_name!r})",
             '    """Protobuf message descriptor from the registry."""',
             "    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__",
             '    """Alias for code that expects a protobuf message descriptor."""',
@@ -601,16 +577,11 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
         message_target = graph.messages[f"{message.full_name}.{nested.name}"]
         if not message_target.map_entry:
             child = message_target.python_qualname.rsplit(".", 1)[-1]
-            lines.append(
-                f"    {child}: _NebiusTypeAlias = "
-                f"{_named_alias(message_target.full_name)}"
-            )
+            lines.append(f"    {child}: _NebiusTypeAlias = {_named_alias(message_target.full_name)}")
     for nested in message.proto.enum_type:
         enum_target = graph.enums[f"{message.full_name}.{nested.name}"]
         child = enum_target.python_qualname.rsplit(".", 1)[-1]
-        lines.append(
-            f"    {child}: _NebiusTypeAlias = {_named_alias(enum_target.full_name)}"
-        )
+        lines.append(f"    {child}: _NebiusTypeAlias = {_named_alias(enum_target.full_name)}")
     for extension in sorted(
         (item for item in graph.extensions.values() if item.scope == message.full_name),
         key=lambda item: item.full_name,
@@ -622,9 +593,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
     for index, oneof in enumerate(message.proto.oneof_decl):
         oneof_name = graph.oneof_python_name(message, oneof)
         fields = [
-            field
-            for field in message.proto.field
-            if field.HasField("oneof_index") and field.oneof_index == index
+            field for field in message.proto.field if field.HasField("oneof_index") and field.oneof_index == index
         ]
         if not fields:
             continue
@@ -684,9 +653,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             ]
         )
     constructor_fields = list(message.proto.field)
-    used_names = {
-        graph.field_python_name(message, field) for field in constructor_fields
-    }
+    used_names = {graph.field_python_name(message, field) for field in constructor_fields}
     self_name = _local_name("self", used_names)
     initial_name = _local_name("initial_message", used_names)
     values_name = _local_name("values", used_names)
@@ -701,9 +668,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
         for field in constructor_fields:
             name = graph.field_python_name(message, field)
             setter_type = _setter_type(field, message.package, graph)
-            signature.append(
-                f"        {name}: {setter_type} | _NebiusUnsetType = " "_NEBIUS_UNSET,"
-            )
+            signature.append(f"        {name}: {setter_type} | _NebiusUnsetType = _NEBIUS_UNSET,")
     signature.extend(
         [
             "    ) -> None:",
@@ -712,9 +677,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
         ]
     )
     if message_deprecation is not None:
-        signature.append(
-            _warning("Message", message.full_name, message_summary, "        ")
-        )
+        signature.append(_warning("Message", message.full_name, message_summary, "        "))
     for field in constructor_fields:
         name = graph.field_python_name(message, field)
         signature.append(f"        if {name} is not _NEBIUS_UNSET:")
@@ -735,9 +698,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             enum = graph.enums[field.type_name.lstrip(".")]
             enum_type = _named_type(field.type_name, message.package, graph)
             for enum_value in enum.proto.value:
-                value_deprecation = graph.annotations.deprecation(
-                    enum_value.options, "enum_value"
-                )
+                value_deprecation = graph.annotations.deprecation(enum_value.options, "enum_value")
                 if value_deprecation is None:
                     continue
                 value_name = graph.enum_value_python_name(enum, enum_value)
@@ -745,8 +706,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 signature.append(
                     _warning(
                         "Setting deprecated enum value",
-                        f"{enum.full_name}.{enum_value.name} for field "
-                        f"{message.full_name}.{field.name}",
+                        f"{enum.full_name}.{enum_value.name} for field {message.full_name}.{field.name}",
                         value_deprecation.summary(),
                         "                ",
                     )
@@ -769,9 +729,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
         )
         field_index = message.proto.field.index(field)
         field_deprecation = graph.annotations.deprecation(field.options, "field")
-        field_summary = (
-            field_deprecation.summary() if field_deprecation is not None else ""
-        )
+        field_summary = field_deprecation.summary() if field_deprecation is not None else ""
         lines.extend(
             [
                 "",
@@ -798,12 +756,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                     "        ",
                 )
             )
-        lines.extend(
-            (
-                f"        value = self._get_field({constant}, "
-                f"absent_is_none={absent_is_none!r})",
-            )
-        )
+        lines.extend((f"        value = self._get_field({constant}, absent_is_none={absent_is_none!r})",))
         if (
             field.type == descriptor_pb2.FieldDescriptorProto.TYPE_ENUM
             and field.label != descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED
@@ -840,9 +793,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             enum = graph.enums[field.type_name.lstrip(".")]
             enum_type = _named_type(field.type_name, message.package, graph)
             for enum_value in enum.proto.value:
-                value_deprecation = graph.annotations.deprecation(
-                    enum_value.options, "enum_value"
-                )
+                value_deprecation = graph.annotations.deprecation(enum_value.options, "enum_value")
                 if value_deprecation is None:
                     continue
                 value_name = graph.enum_value_python_name(enum, enum_value)
@@ -850,17 +801,13 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 lines.append(
                     _warning(
                         "Setting deprecated enum value",
-                        f"{enum.full_name}.{enum_value.name} for field "
-                        f"{message.full_name}.{field.name}",
+                        f"{enum.full_name}.{enum_value.name} for field {message.full_name}.{field.name}",
                         value_deprecation.summary(),
                         "            ",
                     )
                 )
         lines.append(f"        self._set_field({constant}, value)")
-    mappings = {
-        graph.field_python_name(message, field): field.name
-        for field in constructor_fields
-    }
+    mappings = {graph.field_python_name(message, field): field.name for field in constructor_fields}
     mappings.update(
         {
             graph.oneof_python_name(message, oneof): oneof.name
@@ -875,17 +822,13 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
     )
     mappings.update(
         {
-            graph.messages[f"{message.full_name}.{nested.name}"].python_qualname.rsplit(
-                ".", 1
-            )[-1]: nested.name
+            graph.messages[f"{message.full_name}.{nested.name}"].python_qualname.rsplit(".", 1)[-1]: nested.name
             for nested in message.proto.nested_type
         }
     )
     mappings.update(
         {
-            graph.enums[f"{message.full_name}.{nested.name}"].python_qualname.rsplit(
-                ".", 1
-            )[-1]: nested.name
+            graph.enums[f"{message.full_name}.{nested.name}"].python_qualname.rsplit(".", 1)[-1]: nested.name
             for nested in message.proto.enum_type
         }
     )
@@ -913,44 +856,26 @@ _PACKAGE_SECTIONS = (
 _SHARD_LINE_LIMIT = 5_000
 
 
-def _package_source(
-    package: str, graph: Graph, source_files: frozenset[str] | None = None
-) -> str:
+def _package_source(package: str, graph: Graph, source_files: frozenset[str] | None = None) -> str:
     def selected(
         item: MessageModel | EnumModel | ServiceModel | ExtensionModel,
     ) -> bool:
         return source_files is None or item.source_file in source_files
 
     messages = sorted(
-        (
-            item
-            for item in graph.messages.values()
-            if item.package == package and not item.map_entry and selected(item)
-        ),
+        (item for item in graph.messages.values() if item.package == package and not item.map_entry and selected(item)),
         key=lambda item: (-item.python_qualname.count("."), item.full_name),
     )
     enums = sorted(
-        (
-            item
-            for item in graph.enums.values()
-            if item.package == package and selected(item)
-        ),
+        (item for item in graph.enums.values() if item.package == package and selected(item)),
         key=lambda item: item.full_name,
     )
     services = sorted(
-        (
-            item
-            for item in graph.services.values()
-            if item.package == package and selected(item)
-        ),
+        (item for item in graph.services.values() if item.package == package and selected(item)),
         key=lambda item: item.full_name,
     )
     extensions = sorted(
-        (
-            item
-            for item in graph.extensions.values()
-            if item.package == package and selected(item)
-        ),
+        (item for item in graph.extensions.values() if item.package == package and selected(item)),
         key=lambda item: item.full_name,
     )
     output_package = graph.output_package(package)
@@ -959,14 +884,10 @@ def _package_source(
     package_implementations: set[str] = set()
     if package == "google.protobuf":
         package_implementations.update(
-            item.implementation_name
-            for item in graph.messages.values()
-            if item.package == package
+            item.implementation_name for item in graph.messages.values() if item.package == package
         )
         package_implementations.update(
-            item.implementation_name
-            for item in graph.enums.values()
-            if item.package == package
+            item.implementation_name for item in graph.enums.values() if item.package == package
         )
     field_collision = "Field" in package_implementations
     enum_collision = "Enum" in package_implementations
@@ -989,13 +910,11 @@ def _package_source(
         "    Mapping as _NebiusMapping, MutableMapping as _NebiusMutableMapping,",
         "    MutableSequence as _NebiusMutableSequence,",
         ")",
-        "from datetime import datetime as _NebiusDatetime, "
-        "timedelta as _NebiusTimedelta",
+        "from datetime import datetime as _NebiusDatetime, timedelta as _NebiusTimedelta",
         "from logging import getLogger as _nebius_get_logger",
         "from typing import (",
         "    TYPE_CHECKING as _NEBIUS_TYPE_CHECKING, ClassVar as _NebiusClassVar,",
-        "    Literal as _NebiusLiteral, TypeAlias as _NebiusTypeAlias, "
-        "cast as _nebius_cast,",
+        "    Literal as _NebiusLiteral, TypeAlias as _NebiusTypeAlias, cast as _nebius_cast,",
         ")",
         "from typing_extensions import Unpack as _NebiusUnpack",
         "",
@@ -1019,10 +938,8 @@ def _package_source(
         f"from {runtime}.base.fieldmask_protobuf import ensure_reset_mask_in_metadata",
         f"from {runtime}.base.protos.pb_enum import {enum_import}",
         f"from {runtime}.base.protos.extensions import Extension as _NebiusExtension",
-        f"from {runtime}.base.protos.unset import Unset as _NEBIUS_UNSET, "
-        "UnsetType as _NebiusUnsetType",
-        f"from {runtime}.aio.request_status import "
-        "RequestStatus as _NebiusRequestStatus",
+        f"from {runtime}.base.protos.unset import Unset as _NEBIUS_UNSET, UnsetType as _NebiusUnsetType",
+        f"from {runtime}.aio.request_status import RequestStatus as _NebiusRequestStatus",
         f"from {runtime}.base.protos.well_known_direct import (",
         "    datetime_to_timestamp as _nebius_datetime_to_timestamp,",
         "    duration_to_timedelta as _nebius_duration_to_timedelta,",
@@ -1044,9 +961,7 @@ def _package_source(
     for enum in enums:
         implementation = enum.implementation_name
         enum_deprecation = graph.annotations.deprecation(enum.proto.options, "enum")
-        enum_summary = (
-            enum_deprecation.summary() if enum_deprecation is not None else ""
-        )
+        enum_summary = enum_deprecation.summary() if enum_deprecation is not None else ""
         lines.append(f"class {implementation}({enum_base}):")
         _append_docstring(
             lines,
@@ -1064,8 +979,7 @@ def _package_source(
                 '    """Fully qualified protobuf enum name."""',
                 "    __REGISTRY__ = REGISTRY",
                 '    """Registry for this enum and its descriptor."""',
-                "    __PROTO_DESCRIPTOR__ = "
-                f"REGISTRY.enum_descriptor({enum.full_name!r})",
+                f"    __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor({enum.full_name!r})",
                 '    """Protobuf enum descriptor from the registry."""',
                 "    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__",
                 '    """Alias for code that expects a protobuf enum descriptor."""',
@@ -1074,9 +988,7 @@ def _package_source(
         for index, value in enumerate(enum.proto.value):
             value_name = graph.enum_value_python_name(enum, value)
             lines.append(f"    {value_name} = {value.number}")
-            value_deprecation = graph.annotations.deprecation(
-                value.options, "enum_value"
-            )
+            value_deprecation = graph.annotations.deprecation(value.options, "enum_value")
             _append_docstring(
                 lines,
                 "    ",
@@ -1084,11 +996,7 @@ def _package_source(
                     graph,
                     enum.source_file,
                     (*enum.source_path, 2, index),
-                    deprecation_summary=(
-                        value_deprecation.summary()
-                        if value_deprecation is not None
-                        else ""
-                    ),
+                    deprecation_summary=(value_deprecation.summary() if value_deprecation is not None else ""),
                 ),
             )
         lines.append(f"{_named_alias(enum.full_name)} = {implementation}")
@@ -1096,9 +1004,7 @@ def _package_source(
     lines.append("# @@nebius-section:messages@@")
     for message in messages:
         lines.extend(_message_source(message, graph))
-        lines.append(
-            f"{_named_alias(message.full_name)} = {message.implementation_name}"
-        )
+        lines.append(f"{_named_alias(message.full_name)} = {message.implementation_name}")
         lines.extend(["", ""])
     lines.append("# @@nebius-section:fields@@")
     for message in messages:
@@ -1106,10 +1012,7 @@ def _package_source(
         for field in message.proto.field:
             constant = _constant(message.full_name, field.name)
             runtime_field = "_NebiusField" if field_collision else "Field"
-            lines.append(
-                f"{constant} = "
-                f"{_field_expression(message, field, graph, runtime_field)}"
-            )
+            lines.append(f"{constant} = {_field_expression(message, field, graph, runtime_field)}")
             constants.append(constant)
         tuple_text = ", ".join(constants)
         if len(constants) == 1:
@@ -1127,19 +1030,12 @@ def _package_source(
         if "." in message.python_qualname:
             _, _, child = message.python_qualname.rpartition(".")
             lines.append(f"{message.implementation_name}.__name__ = {child!r}")
-            lines.append(
-                f"{message.implementation_name}.__qualname__ = "
-                f"{message.python_qualname!r}"
-            )
+            lines.append(f"{message.implementation_name}.__qualname__ = {message.python_qualname!r}")
     lines.append("# @@nebius-section:extensions@@")
     for extension in extensions:
         extension_name = extension.python_name
         extension_type = _extension_type(extension.proto, package, graph)
-        target = (
-            graph.messages[extension.scope].implementation_name + "."
-            if extension.scope is not None
-            else ""
-        )
+        target = graph.messages[extension.scope].implementation_name + "." if extension.scope is not None else ""
         annotation = f"_NebiusExtension[{extension_type}]"
         lines.append(
             f"{target}{extension_name}"
@@ -1153,19 +1049,14 @@ def _package_source(
     for service in services:
         client_name = service.python_name + "Client"
         endpoint_name = graph.annotations.api_service_name(service.proto.options)
-        service_deprecation = graph.annotations.deprecation(
-            service.proto.options, "service"
-        )
-        service_summary = (
-            service_deprecation.summary() if service_deprecation is not None else ""
-        )
+        service_deprecation = graph.annotations.deprecation(service.proto.options, "service")
+        service_summary = service_deprecation.summary() if service_deprecation is not None else ""
         operation_method = next(
             (
                 method
                 for method in service.proto.method
                 if method.output_type.lstrip(".") in _OPERATION_SERVICES
-                and service.full_name
-                != _OPERATION_SERVICES[method.output_type.lstrip(".")]
+                and service.full_name != _OPERATION_SERVICES[method.output_type.lstrip(".")]
             ),
             None,
         )
@@ -1174,12 +1065,8 @@ def _package_source(
         else:
             operation_name = operation_method.output_type.lstrip(".")
             operation_type = _named_type(operation_name, package, graph)
-            operation_service = _service_type(
-                _OPERATION_SERVICES[operation_name], package, graph
-            )
-            client_base = (
-                f"_NebiusClientWithOperations[{operation_type}, {operation_service}]"
-            )
+            operation_service = _service_type(_OPERATION_SERVICES[operation_name], package, graph)
+            client_base = f"_NebiusClientWithOperations[{operation_type}, {operation_service}]"
         lines.append(f"class {client_name}({client_base}):")
         _append_docstring(
             lines,
@@ -1189,10 +1076,7 @@ def _package_source(
                 service.source_file,
                 service.source_path,
                 deprecation_summary=service_summary,
-                additional=(
-                    f"This class provides client methods for the "
-                    f"``{service.full_name}`` service."
-                ),
+                additional=(f"This class provides client methods for the ``{service.full_name}`` service."),
             ),
         )
         lines.extend(
@@ -1206,12 +1090,10 @@ def _package_source(
                 "",
                 "    @classmethod",
                 "    def get_descriptor(cls) -> _NebiusObject:",
-                '        """Return the protobuf service descriptor '
-                'from the registry."""',
+                '        """Return the protobuf service descriptor from the registry."""',
                 f"        return REGISTRY.service_descriptor({service.full_name!r})",
                 "",
-                "    __PB2_DESCRIPTOR__ = "
-                f"REGISTRY.service_descriptor({service.full_name!r})",
+                f"    __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor({service.full_name!r})",
                 '    """Alias for code that expects a protobuf service descriptor."""',
             ]
         )
@@ -1224,13 +1106,10 @@ def _package_source(
             )
         if operation_method is not None:
             operation_name = operation_method.output_type.lstrip(".")
-            operation_service = _service_type(
-                _OPERATION_SERVICES[operation_name], package, graph
-            )
+            operation_service = _service_type(_OPERATION_SERVICES[operation_name], package, graph)
             lines.extend(
                 [
-                    "    __operation_type__ = "
-                    f"{_named_type(operation_name, package, graph)}",
+                    f"    __operation_type__ = {_named_type(operation_name, package, graph)}",
                     '    """Message type representing a long-running operation."""',
                     f"    __operation_service_class__ = {operation_service}",
                     '    """Client class that manages long-running operations."""',
@@ -1244,26 +1123,17 @@ def _package_source(
             output_type = _named_type(method.output_type, package, graph)
             output_name = method.output_type.lstrip(".")
             annotated_updater = graph.annotations.method_is_updater(method.options)
-            updater = (
-                method.name == "Update"
-                if annotated_updater is None
-                else annotated_updater
-            )
+            updater = method.name == "Update" if annotated_updater is None else annotated_updater
             request_annotation = (
-                f"_NebiusAsyncIterable[{input_type}] | "
-                f"_NebiusIterable[{input_type}] | None"
+                f"_NebiusAsyncIterable[{input_type}] | _NebiusIterable[{input_type}] | None"
                 if method.client_streaming
                 else input_type
             )
             request_argument = (
-                f"request: {request_annotation} = None"
-                if method.client_streaming
-                else f"request: {request_annotation}"
+                f"request: {request_annotation} = None" if method.client_streaming else f"request: {request_annotation}"
             )
             operation_output = output_name in _OPERATION_SERVICES
-            response_type = (
-                f"_NebiusOperation[{output_type}]" if operation_output else output_type
-            )
+            response_type = f"_NebiusOperation[{output_type}]" if operation_output else output_type
             result_annotation = (
                 f"_NebiusStreamRequest[{input_type}, {output_type}]"
                 if method.client_streaming or method.server_streaming
@@ -1285,9 +1155,7 @@ def _package_source(
                 ]
             )
             method_deprecation = graph.annotations.deprecation(method.options, "method")
-            method_summary = (
-                method_deprecation.summary() if method_deprecation is not None else ""
-            )
+            method_summary = method_deprecation.summary() if method_deprecation is not None else ""
             _append_docstring(
                 lines,
                 "        ",
@@ -1296,9 +1164,7 @@ def _package_source(
                     service.source_file,
                     (*service.source_path, 2, method_index),
                     deprecation_summary=method_summary,
-                    additional=(
-                        "The request object is returned without starting the RPC."
-                    ),
+                    additional=("The request object is returned without starting the RPC."),
                 ),
             )
             if method_deprecation is not None:
@@ -1311,9 +1177,7 @@ def _package_source(
                     )
                 )
             if updater and not method.client_streaming:
-                lines.append(
-                    "        kwargs['metadata'] = ensure_reset_mask_in_metadata("
-                )
+                lines.append("        kwargs['metadata'] = ensure_reset_mask_in_metadata(")
                 lines.append("            request, kwargs.get('metadata'),")
                 lines.append("        )")
             if method.client_streaming or method.server_streaming:
@@ -1338,20 +1202,15 @@ def _package_source(
                     "        return super().request(",
                     f"            method={method.name!r},",
                     "            request=request,",
-                    "            result_pb2_class="
-                    f"REGISTRY.message_class({output_name!r}),",
+                    f"            result_pb2_class=REGISTRY.message_class({output_name!r}),",
                 ]
             )
             if operation_output:
                 lines.append("            result_wrapper=_NebiusOperation,")
             lines.extend(["            **kwargs,", "        )"])
         lines.extend(["", ""])
-    exported = [
-        item.python_qualname for item in enums if "." not in item.python_qualname
-    ]
-    exported.extend(
-        item.python_qualname for item in messages if "." not in item.python_qualname
-    )
+    exported = [item.python_qualname for item in enums if "." not in item.python_qualname]
+    exported.extend(item.python_qualname for item in messages if "." not in item.python_qualname)
     exported.extend(item.python_name for item in extensions if item.scope is None)
     exported.extend(item.python_name + "Client" for item in services)
     lines.append("# @@nebius-section:exports@@")
@@ -1370,21 +1229,9 @@ def package_source_files(package: str, graph: Graph) -> tuple[str, ...]:
                     for item in graph.messages.values()
                     if item.package == package and not item.map_entry
                 ],
-                *[
-                    item.source_file
-                    for item in graph.enums.values()
-                    if item.package == package
-                ],
-                *[
-                    item.source_file
-                    for item in graph.services.values()
-                    if item.package == package
-                ],
-                *[
-                    item.source_file
-                    for item in graph.extensions.values()
-                    if item.package == package
-                ],
+                *[item.source_file for item in graph.enums.values() if item.package == package],
+                *[item.source_file for item in graph.services.values() if item.package == package],
+                *[item.source_file for item in graph.extensions.values() if item.package == package],
             }
         )
     )
@@ -1393,9 +1240,7 @@ def package_source_files(package: str, graph: Graph) -> tuple[str, ...]:
 def emit_package_fragment(package: str, source_file: str, graph: Graph) -> str:
     """Analyze declarations owned by one source file into mergeable Python IR."""
     if source_file not in package_source_files(package, graph):
-        raise GeneratorError(
-            f"source file {source_file!r} does not contribute to {package!r}"
-        )
+        raise GeneratorError(f"source file {source_file!r} does not contribute to {package!r}")
     return _package_source(package, graph, frozenset({source_file}))
 
 
@@ -1413,9 +1258,7 @@ def _split_package_fragment(source: str) -> tuple[str, dict[str, str]]:
         (header if current is None else sections[current]).append(line)
     if current is None:
         raise GeneratorError("package IR contains no sections")
-    return "\n".join(header), {
-        name: "\n".join(lines).strip("\n") for name, lines in sections.items()
-    }
+    return "\n".join(header), {name: "\n".join(lines).strip("\n") for name, lines in sections.items()}
 
 
 def _package_models(package: str, source_files: frozenset[str], graph: Graph) -> tuple[
@@ -1426,19 +1269,13 @@ def _package_models(package: str, source_files: frozenset[str], graph: Graph) ->
     messages = tuple(
         item
         for item in graph.messages.values()
-        if item.package == package
-        and not item.map_entry
-        and item.source_file in source_files
+        if item.package == package and not item.map_entry and item.source_file in source_files
     )
     services = tuple(
-        item
-        for item in graph.services.values()
-        if item.package == package and item.source_file in source_files
+        item for item in graph.services.values() if item.package == package and item.source_file in source_files
     )
     extensions = tuple(
-        item
-        for item in graph.extensions.values()
-        if item.package == package and item.source_file in source_files
+        item for item in graph.extensions.values() if item.package == package and item.source_file in source_files
     )
     return messages, services, extensions
 
@@ -1466,9 +1303,7 @@ def _same_package_import_lines(
             )
     for service in services:
         for method in service.proto.method:
-            referenced_names.update(
-                (method.input_type.lstrip("."), method.output_type.lstrip("."))
-            )
+            referenced_names.update((method.input_type.lstrip("."), method.output_type.lstrip(".")))
     for extension in extensions:
         if extension.proto.type in {
             descriptor_pb2.FieldDescriptorProto.TYPE_MESSAGE,
@@ -1479,11 +1314,7 @@ def _same_package_import_lines(
     typing_names: set[str] = set()
     for full_name in referenced_names:
         target = graph.messages.get(full_name) or graph.enums.get(full_name)
-        if (
-            target is None
-            or target.package != package
-            or target.source_file in source_files
-        ):
+        if target is None or target.package != package or target.source_file in source_files:
             continue
         typing_names.add(_named_alias(target.full_name))
 
@@ -1496,15 +1327,9 @@ def _same_package_import_lines(
                 continue
             operation = graph.messages[operation_name]
             operation_service = graph.services[operation_service_name]
-            if (
-                operation.package == package
-                and operation.source_file not in source_files
-            ):
+            if operation.package == package and operation.source_file not in source_files:
                 runtime_names.add(_named_alias(operation.full_name))
-            if (
-                operation_service.package == package
-                and operation_service.source_file not in source_files
-            ):
+            if operation_service.package == package and operation_service.source_file not in source_files:
                 runtime_names.add(operation_service.python_name + "Client")
     typing_names.difference_update(runtime_names)
 
@@ -1573,22 +1398,16 @@ def _linked_package_source(
     return "\n".join(lines), tuple(sorted(exported))
 
 
-def _shard_defined_names(
-    package: str, source_files: frozenset[str], graph: Graph
-) -> tuple[str, ...]:
+def _shard_defined_names(package: str, source_files: frozenset[str], graph: Graph) -> tuple[str, ...]:
     names = {
         item.implementation_name
         for item in graph.messages.values()
-        if item.package == package
-        and not item.map_entry
-        and item.source_file in source_files
+        if item.package == package and not item.map_entry and item.source_file in source_files
     }
     names.update(
         _named_alias(item.full_name)
         for item in graph.messages.values()
-        if item.package == package
-        and not item.map_entry
-        and item.source_file in source_files
+        if item.package == package and not item.map_entry and item.source_file in source_files
     )
     names.update(
         item.implementation_name
@@ -1608,9 +1427,7 @@ def _shard_defined_names(
     names.update(
         item.python_name
         for item in graph.extensions.values()
-        if item.package == package
-        and item.scope is None
-        and item.source_file in source_files
+        if item.package == package and item.scope is None and item.source_file in source_files
     )
     return tuple(sorted(names))
 
@@ -1648,11 +1465,7 @@ def _lazy_package_source(
         "    )",
     ]
     for shard, defined, _ in shards:
-        type_visible = tuple(
-            name
-            for name in defined
-            if name not in {"EXTENSIONS", "EXTENSION_HANDLES", "REGISTRY"}
-        )
+        type_visible = tuple(name for name in defined if name not in {"EXTENSIONS", "EXTENSION_HANDLES", "REGISTRY"})
         if not type_visible:
             continue
         lines.append(f"    from .{shard} import (")
@@ -1729,9 +1542,7 @@ def link_package_fragments(
         source_files = frozenset(source_file for source_file, _ in batch)
         defined = _shard_defined_names(package, source_files, graph)
         if index == 0:
-            defined = tuple(
-                sorted({*defined, "EXTENSIONS", "EXTENSION_HANDLES", "REGISTRY"})
-            )
+            defined = tuple(sorted({*defined, "EXTENSIONS", "EXTENSION_HANDLES", "REGISTRY"}))
         generated.append(
             GeneratedFile(
                 name=f"{output_directory}/{shard}.py",
@@ -1762,14 +1573,9 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
     package_files = (
         (file for file in graph.files.values() if file.package == package)
         if package is not None
-        else (
-            file for file in graph.files.values() if file.package not in public_packages
-        )
+        else (file for file in graph.files.values() if file.package not in public_packages)
     )
-    serialized = tuple(
-        serialize_file_descriptor(proto)
-        for proto in sorted(package_files, key=lambda item: item.name)
-    )
+    serialized = tuple(serialize_file_descriptor(proto) for proto in sorted(package_files, key=lambda item: item.name))
     lines = [
         "# Generated by nebius_generator. DO NOT EDIT!",
         '"""Package-owned inputs for the namespace registry."""',
@@ -1787,11 +1593,7 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
         "",
     ]
     package_extensions = sorted(
-        (
-            item
-            for item in graph.extensions.values()
-            if package is not None and item.package == package
-        ),
+        (item for item in graph.extensions.values() if package is not None and item.package == package),
         key=lambda item: item.full_name,
     )
     if package_extensions:
@@ -1808,11 +1610,7 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
         )
     lines.append("EXTENDEES: tuple[tuple[str, tuple[tuple[int, int], ...]], ...] = (")
     for message in sorted(
-        (
-            item
-            for item in graph.messages.values()
-            if package is not None and item.package == package
-        ),
+        (item for item in graph.messages.values() if package is not None and item.package == package),
         key=lambda item: item.full_name,
     ):
         ranges = tuple((item.start, item.end) for item in message.proto.extension_range)
@@ -1820,35 +1618,21 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
             lines.append(f"    ({message.full_name!r}, {ranges!r}),")
     lines.extend([")", "", "_SYMBOLS: dict[str, MessageReference] = {"])
     for message in sorted(
-        (
-            item
-            for item in graph.messages.values()
-            if package is not None and item.package == package
-        ),
+        (item for item in graph.messages.values() if package is not None and item.package == package),
         key=lambda item: item.full_name,
     ):
         if message.map_entry:
             continue
         symbol = f"    {message.full_name!r}: MessageReference("
-        lines.append(
-            symbol
-            + "module=__package__, "
-            + f"qualname={message.implementation_name!r}),"
-        )
+        lines.append(symbol + "module=__package__, " + f"qualname={message.implementation_name!r}),")
     lines.append("}")
     lines.extend(["", "_ENUM_SYMBOLS: dict[str, MessageReference] = {"])
     for enum in sorted(
-        (
-            item
-            for item in graph.enums.values()
-            if package is not None and item.package == package
-        ),
+        (item for item in graph.enums.values() if package is not None and item.package == package),
         key=lambda item: item.full_name,
     ):
         symbol = f"    {enum.full_name!r}: MessageReference("
-        lines.append(
-            symbol + "module=__package__, " + f"qualname={enum.implementation_name!r}),"
-        )
+        lines.append(symbol + "module=__package__, " + f"qualname={enum.implementation_name!r}),")
     lines.append("}")
     lines.extend(
         [
@@ -1875,9 +1659,7 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
     for index, extension in enumerate(package_extensions):
         codec_name = f"_EXTENSION_CODEC_{index}"
         lines.append(f"    {codec_name} = {_codec(extension.proto, graph)}")
-        repeated = (
-            extension.proto.label == descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED
-        )
+        repeated = extension.proto.label == descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED
         packable = extension.proto.type not in {
             descriptor_pb2.FieldDescriptorProto.TYPE_STRING,
             descriptor_pb2.FieldDescriptorProto.TYPE_BYTES,
@@ -1894,8 +1676,7 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
                 f"        value_codec={codec_name},",
                 "        default_factory="
                 + (
-                    f"lambda: {codec_name}.normalize("
-                    f"{_literal(_default(extension.proto, graph))}),"
+                    f"lambda: {codec_name}.normalize({_literal(_default(extension.proto, graph))}),"
                     if extension.proto.HasField("default_value")
                     else f"{codec_name}.default,"
                 ),
@@ -1924,18 +1705,14 @@ def _registry_source(graph: Graph) -> str:
         f"from {runtime}.base.protos.registry import Registry",
         "",
     ]
-    has_root_fragment = any(
-        file.package not in fragment_packages for file in graph.files.values()
-    )
+    has_root_fragment = any(file.package not in fragment_packages for file in graph.files.values())
     fragment_imports: list[str] = []
     if has_root_fragment:
         lines.append("from . import _registry_fragment as _fragment_root")
         fragment_imports.append("_fragment_root")
     for index, package in enumerate(fragment_packages):
         suffix = package or "_unpackaged"
-        lines.append(
-            f"from .{suffix} import _registry_fragment as _fragment_{index:03d}"
-        )
+        lines.append(f"from .{suffix} import _registry_fragment as _fragment_{index:03d}")
         fragment_imports.append(f"_fragment_{index:03d}")
     lines.extend(
         [
@@ -1953,9 +1730,7 @@ def _registry_source(graph: Graph) -> str:
         lines.append("    EXTENSIONS.add_extendee(_full_name, _ranges)")
     lines.append("")
     for name in fragment_imports:
-        lines.append(
-            f"{name}.register_extensions(" "REGISTRY, EXTENSIONS, EXTENSION_HANDLES)"
-        )
+        lines.append(f"{name}.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)")
     lines.extend(["EXTENSIONS.freeze()", ""])
     return "\n".join(lines)
 
@@ -1965,11 +1740,7 @@ def packages(graph: Graph) -> tuple[str, ...]:
     return tuple(
         sorted(
             {
-                *[
-                    item.package
-                    for item in graph.messages.values()
-                    if not item.map_entry
-                ],
+                *[item.package for item in graph.messages.values() if not item.map_entry],
                 *[item.package for item in graph.enums.values()],
                 *[item.package for item in graph.services.values()],
                 *[item.package for item in graph.extensions.values()],
@@ -1993,10 +1764,7 @@ def emit_registry_fragments(graph: Graph) -> tuple[GeneratedFile, ...]:
     if any(file.package not in public_packages for file in graph.files.values()):
         generated.append(
             GeneratedFile(
-                name=(
-                    graph.options.package_prefix.replace(".", "/")
-                    + "/_registry_fragment.py"
-                ),
+                name=(graph.options.package_prefix.replace(".", "/") + "/_registry_fragment.py"),
                 content=_registry_fragment_source(None, graph),
             )
         )

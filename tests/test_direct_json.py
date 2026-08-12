@@ -66,9 +66,7 @@ def test_protojson_matches_reference_for_populated_message() -> None:
     assert message_to_dict(direct) == expected
 
     parsed = parse_dict(expected, Sample())
-    round_tripped = REFERENCE_SAMPLE.FromString(
-        parsed.SerializeToString(deterministic=True)
-    )
+    round_tripped = REFERENCE_SAMPLE.FromString(parsed.SerializeToString(deterministic=True))
     assert round_tripped == reference
 
 
@@ -96,9 +94,7 @@ def test_protojson_output_options_match_reference() -> None:
 def test_protojson_aliases_follow_reference_order_and_merge_messages() -> None:
     assert _sample_from_dict({"displayTitle": "json"}).title == "json"
     assert _sample_from_dict({"title": "proto"}).title == "proto"
-    assert (
-        _sample_from_dict({"displayTitle": "json", "title": "proto"}).title == "proto"
-    )
+    assert _sample_from_dict({"displayTitle": "json", "title": "proto"}).title == "proto"
     merged = _sample_from_dict({"directChild": {"value": 1}, "child": {"note": "x"}})
     assert merged.child.value == 1
     assert merged.child.note == "x"
@@ -141,9 +137,7 @@ def test_protojson_rejects_exact_duplicate_and_unknown_keys() -> None:
 
 
 def test_protojson_nulls_and_invalid_scalar_forms() -> None:
-    cleared = _sample_from_dict(
-        {"count": None, "nums": None, "optionalCount": None, "child": None}
-    )
+    cleared = _sample_from_dict({"count": None, "nums": None, "optionalCount": None, "child": None})
     assert cleared.count == 0
     assert cleared.nums == []
     assert cleared.optional_count is None
@@ -275,9 +269,7 @@ def test_ignored_unknown_enum_names_do_not_hide_invalid_closed_numbers() -> None
     for value in (2, "2"):
         reference = REFERENCE_LEGACY()
         try:
-            provider_json_format.ParseDict(
-                {"states": [value]}, reference, ignore_unknown_fields=True
-            )
+            provider_json_format.ParseDict({"states": [value]}, reference, ignore_unknown_fields=True)
         except provider_json_format.ParseError:
             pass
         else:

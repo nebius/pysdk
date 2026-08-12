@@ -37,12 +37,12 @@ class RequestError(BaseError):
     ``status`` attribute providing structured details about the failure.
     """
 
-    status: "RequestStatusExtended"
+    status: RequestStatusExtended
 
-    def __init__(self, status: "RequestStatusExtended") -> None:
+    def __init__(self, status: RequestStatusExtended) -> None:
         self.status = status
 
-        super().__init__(f"Request error {str(status)}")
+        super().__init__(f"Request error {status!s}")
 
 
 def to_str(err: Any) -> str:
@@ -166,16 +166,15 @@ DefaultRetriableCodes = [
 
 _HTTP_STATUS_PATTERNS = [
     re.compile(
-        r"\bunexpected\s+http\s+status(?:\s+code)?"
-        r"(?:\s+received\s+from\s+server)?\s*[:=]?\s*(?P<code>\d{3})",
+        r"\bunexpected\s+http\s+status(?:\s+code)?(?:\s+received\s+from\s+server)?\s*[:=]?\s*(?P<code>\d{3})",
         re.IGNORECASE,
     ),
     re.compile(
-        r"\breceived\s+http2?\s+header\s+with\s+status\s*[:=]?\s*" r"(?P<code>\d{3})",
+        r"\breceived\s+http2?\s+header\s+with\s+status\s*[:=]?\s*(?P<code>\d{3})",
         re.IGNORECASE,
     ),
     re.compile(
-        r"\bhttp(?:/2|2)?\s+status(?:\s+code)?\s*[:=]?\s*" r"(?P<code>\d{3})",
+        r"\bhttp(?:/2|2)?\s+status(?:\s+code)?\s*[:=]?\s*(?P<code>\d{3})",
         re.IGNORECASE,
     ),
 ]
@@ -187,11 +186,7 @@ def _is_unknown_code(code: object) -> bool:
         return True
     if code == StatusCode.UNKNOWN.value[0]:
         return True
-    if (
-        isinstance(code, tuple)
-        and len(code) > 0
-        and code[0] == StatusCode.UNKNOWN.value[0]
-    ):
+    if isinstance(code, tuple) and len(code) > 0 and code[0] == StatusCode.UNKNOWN.value[0]:
         return True
     return getattr(code, "name", None) == "UNKNOWN"
 
@@ -271,10 +266,9 @@ class RequestStatusExtended(RequestStatus):
     service_errors: list[Any]
     request_id: str
     trace_id: str
-    _original_extended_state: (
-        tuple[tuple[StatusCode, str | None, tuple[bytes, ...]], tuple[bytes, ...]]
-        | None
-    ) = field(default=None, init=False, repr=False, compare=False)
+    _original_extended_state: tuple[tuple[StatusCode, str | None, tuple[bytes, ...]], tuple[bytes, ...]] | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
 
     def _extended_state(
         self,
@@ -322,9 +316,7 @@ class RequestStatusExtended(RequestStatus):
         """
         selected = registry or self.registry
         if selected is None:
-            raise ValueError(
-                "RPC status conversion requires an explicit or retained direct registry"
-            )
+            raise ValueError("RPC status conversion requires an explicit or retained direct registry")
         current_state = self._extended_state()
         if self._raw_status is not None and self._original_extended_state is not None:
             from nebius.aio.request_status import _localized_status
@@ -364,7 +356,7 @@ class RequestStatusExtended(RequestStatus):
         trace_id: str,
         *,
         registry: Registry | None = None,
-    ) -> "RequestStatusExtended":
+    ) -> RequestStatusExtended:
         """Construct an extended status by extracting ServiceError protos.
 
         This function uses internal helper :func:`pb2_from_status` to remove
@@ -431,9 +423,7 @@ class RequestStatusExtended(RequestStatus):
         if deadline_retriable and self.code == StatusCode.DEADLINE_EXCEEDED:
             return True
 
-        if _is_unknown_code(self.code) and _has_unexpected_http_52x_status(
-            self.message
-        ):
+        if _is_unknown_code(self.code) and _has_unexpected_http_52x_status(self.message):
             return True
 
         return False
@@ -454,9 +444,7 @@ def is_retriable_error(err: Exception, deadline_retriable: bool = False) -> bool
 
         # Network and transport error handling
         if isinstance(chained_err, Exception) and (
-            is_network_error(chained_err)
-            or is_transport_error(chained_err)
-            or is_dns_error(chained_err)
+            is_network_error(chained_err) or is_transport_error(chained_err) or is_dns_error(chained_err)
         ):
             return True
 
@@ -475,9 +463,7 @@ def is_transport_error(err: Exception) -> bool:
 
     This is a heuristic based on the textual content of the exception.
     """
-    if isinstance(err, OSError) and (
-        "connection refused" in str(err) or "connection reset" in str(err)
-    ):
+    if isinstance(err, OSError) and ("connection refused" in str(err) or "connection reset" in str(err)):
         return True
     return False
 

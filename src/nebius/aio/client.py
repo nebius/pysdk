@@ -56,8 +56,7 @@ class Client:
 
         if self.__service_deprecation_details__ is not None:
             getLogger("deprecation").warning(
-                f"Service {self.__service_name__} is deprecated. "
-                f"{self.__service_deprecation_details__}",
+                f"Service {self.__service_name__} is deprecated. {self.__service_deprecation_details__}",
                 stack_info=True,
                 stacklevel=2,
             )

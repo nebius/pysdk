@@ -90,24 +90,10 @@ def _semantic_digest() -> str:
 
 def _symbols(graph: Graph, files: set[str]) -> dict[str, list[str]]:
     return {
-        "messages": sorted(
-            item.full_name
-            for item in graph.messages.values()
-            if item.source_file in files
-        ),
-        "enums": sorted(
-            item.full_name for item in graph.enums.values() if item.source_file in files
-        ),
-        "services": sorted(
-            item.full_name
-            for item in graph.services.values()
-            if item.source_file in files
-        ),
-        "extensions": sorted(
-            item.full_name
-            for item in graph.extensions.values()
-            if item.source_file in files
-        ),
+        "messages": sorted(item.full_name for item in graph.messages.values() if item.source_file in files),
+        "enums": sorted(item.full_name for item in graph.enums.values() if item.source_file in files),
+        "services": sorted(item.full_name for item in graph.services.values() if item.source_file in files),
+        "extensions": sorted(item.full_name for item in graph.extensions.values() if item.source_file in files),
     }
 
 
@@ -125,9 +111,7 @@ def _fragment_key(
     for name in file_names:
         digest.update(name.encode())
         digest.update(serialize_file_descriptor(graph.files[name]))
-        digest.update(
-            graph.files[name].source_code_info.SerializeToString(deterministic=True)
-        )
+        digest.update(graph.files[name].source_code_info.SerializeToString(deterministic=True))
     for name, message_model in sorted(graph.messages.items()):
         digest.update(name.encode())
         digest.update(message_model.proto.SerializeToString(deterministic=True))
@@ -138,11 +122,7 @@ def _fragment_key(
 
 
 def _content_hash(payload: JSONPayload) -> str:
-    content = {
-        key: value
-        for key, value in payload.items()
-        if key not in {"invocation", "content_hash"}
-    }
+    content = {key: value for key, value in payload.items() if key not in {"invocation", "content_hash"}}
     serialized = json.dumps(content, sort_keys=True, separators=(",", ":")).encode()
     return hashlib.sha256(serialized).hexdigest()
 
@@ -186,19 +166,13 @@ def _cache_signature(key: bytes, semantic_key: str, content_hash: str) -> str:
     return hmac.new(key, message, hashlib.sha256).hexdigest()
 
 
-def _analyze_files(
-    graph: Graph, file_names: tuple[str, ...]
-) -> dict[str, dict[str, str]]:
+def _analyze_files(graph: Graph, file_names: tuple[str, ...]) -> dict[str, dict[str, str]]:
     source_packages = {
-        source_file: package
-        for package in packages(graph)
-        for source_file in package_source_files(package, graph)
+        source_file: package for package in packages(graph) for source_file in package_source_files(package, graph)
     }
     return {
         source_file: {
-            source_packages[source_file]: emit_package_fragment(
-                source_packages[source_file], source_file, graph
-            )
+            source_packages[source_file]: emit_package_fragment(source_packages[source_file], source_file, graph)
         }
         for source_file in file_names
     }
@@ -227,12 +201,8 @@ def _analyze_batch(
                 raise TypeError("cache content hash is not a string")
             if signing_key is None:
                 raise TypeError("cache signing key is missing")
-            expected_signature = _cache_signature(
-                signing_key, key, expected_content_hash
-            )
-            pointer_valid = hmac.compare_digest(
-                pointer_value["signature"], expected_signature
-            )
+            expected_signature = _cache_signature(signing_key, key, expected_content_hash)
+            pointer_valid = hmac.compare_digest(pointer_value["signature"], expected_signature)
         except (KeyError, OSError, TypeError, ValueError):
             pointer_valid = False
     cache_path = (
@@ -258,9 +228,7 @@ def _analyze_batch(
             cached["invocation"] = invocation
             path = fragments / f"{key}.json"
             temporary = path.with_suffix(".tmp")
-            temporary.write_text(
-                json.dumps(cached, sort_keys=True, separators=(",", ":")) + "\n"
-            )
+            temporary.write_text(json.dumps(cached, sort_keys=True, separators=(",", ":")) + "\n")
             temporary.replace(path)
             return FragmentAttestation(path, key, content_hash, owner, file_names)
     if pointer is not None:
@@ -293,26 +261,20 @@ def _analyze_batch(
             delete=False,
         ) as handle:
             cache_temporary = Path(handle.name)
-            handle.write(
-                json.dumps(cached, sort_keys=True, separators=(",", ":")) + "\n"
-            )
+            handle.write(json.dumps(cached, sort_keys=True, separators=(",", ":")) + "\n")
         os.replace(cache_temporary, cache_path)
         pointer_temporary = cache_entry / f".current.{os.getpid()}.{id(payload)}.tmp"
         pointer_value = {
             "content_hash": cached["content_hash"],
             "signature": _cache_signature(signing_key, key, cached["content_hash"]),
         }
-        pointer_temporary.write_text(
-            json.dumps(pointer_value, sort_keys=True, separators=(",", ":")) + "\n"
-        )
+        pointer_temporary.write_text(json.dumps(pointer_value, sort_keys=True, separators=(",", ":")) + "\n")
         os.replace(pointer_temporary, cache_entry / "current")
     path = fragments / f"{key}.json"
     temporary = path.with_suffix(".tmp")
     temporary.write_text(content)
     temporary.replace(path)
-    return FragmentAttestation(
-        path, key, cast(str, payload["content_hash"]), owner, file_names
-    )
+    return FragmentAttestation(path, key, cast(str, payload["content_hash"]), owner, file_names)
 
 
 def _verify_fragments(
@@ -325,9 +287,7 @@ def _verify_fragments(
     expected_batches = dict(batches)
     seen_owners: set[str] = set()
     actual_symbols: dict[str, list[str]] = {kind: [] for kind in _KINDS}
-    package_index: dict[str, list[tuple[Path, str, str]]] = {
-        package: [] for package in packages(graph)
-    }
+    package_index: dict[str, list[tuple[Path, str, str]]] = {package: [] for package in packages(graph)}
     for attestation in attestations:
         path = attestation.path
         payload = json.loads(path.read_text())
@@ -342,11 +302,7 @@ def _verify_fragments(
             or attestation.files != file_names
         ):
             raise GeneratorError(f"fragment attestation mismatch: {path}")
-        if (
-            owner not in expected_batches
-            or owner in seen_owners
-            or file_names != expected_batches[owner]
-        ):
+        if owner not in expected_batches or owner in seen_owners or file_names != expected_batches[owner]:
             raise GeneratorError(f"fragment ownership mismatch: {path}")
         seen_owners.add(owner)
         ir = payload.get("ir")
@@ -358,9 +314,7 @@ def _verify_fragments(
                 raise GeneratorError(f"fragment IR package mismatch: {path}")
             if not isinstance(outputs[expected_package], str):
                 raise GeneratorError(f"fragment IR content is invalid: {path}")
-            package_index[expected_package].append(
-                (path, source_file, attestation.content_hash)
-            )
+            package_index[expected_package].append((path, source_file, attestation.content_hash))
         batch_graph = graph.batch_view(frozenset(file_names))
         key = _fragment_key(batch_graph, owner, file_names, semantic)
         if path.stem != key or payload.get("key") != key:
@@ -384,25 +338,18 @@ def _verify_fragments(
     for kind in _KINDS:
         values = actual_symbols[kind]
         if sorted(values) != expected_symbols[kind] or len(values) != len(set(values)):
-            raise GeneratorError(
-                f"fragment {kind} coverage is incomplete or duplicated"
-            )
+            raise GeneratorError(f"fragment {kind} coverage is incomplete or duplicated")
     return package_index
 
 
 def _load_attested_payload(path: Path, content_hash: str) -> JSONPayload:
     payload = cast(JSONPayload, json.loads(path.read_text()))
-    if (
-        payload.get("content_hash") != content_hash
-        or _content_hash(payload) != content_hash
-    ):
+    if payload.get("content_hash") != content_hash or _content_hash(payload) != content_hash:
         raise GeneratorError(f"fragment changed after verification: {path}")
     return payload
 
 
-def generate(
-    manifest: Path, output: Path, *, include_generator_protocol: bool = False
-) -> None:
+def generate(manifest: Path, output: Path, *, include_generator_protocol: bool = False) -> None:
     raw = manifest.read_bytes()
     request = parse_request(raw)
     if include_generator_protocol:
@@ -416,11 +363,7 @@ def generate(
     fragments.mkdir(parents=True)
     invocation = hashlib.sha256(raw).hexdigest()
     semantic = _semantic_digest()
-    cache = (
-        None
-        if graph.options.cache_dir is None
-        else Path(graph.options.cache_dir).expanduser().resolve()
-    )
+    cache = None if graph.options.cache_dir is None else Path(graph.options.cache_dir).expanduser().resolve()
     batches = _batches(graph)
     attestations: list[FragmentAttestation] = []
     with ThreadPoolExecutor(max_workers=graph.options.jobs) as executor:
@@ -439,9 +382,7 @@ def generate(
             ]
             for future in futures:
                 attestations.append(future.result())
-    package_index = _verify_fragments(
-        attestations, graph, invocation, semantic, batches
-    )
+    package_index = _verify_fragments(attestations, graph, invocation, semantic, batches)
     registry = emit_registry(graph)
     _write(output, registry.name, registry.content)
     for fragment in emit_registry_fragments(graph):

@@ -35,15 +35,9 @@ from .token import Bearer as ParentBearer
 from .token import NamedBearer, Token
 from .token import Receiver as ParentReceiver
 
-TOKEN_EXCHANGE_ACCESS_TOKEN_TYPE = (
-    "urn:ietf:params:oauth:token-type:access_token"  # noqa: S105
-)
-TOKEN_EXCHANGE_GRANT_TYPE = (
-    "urn:ietf:params:oauth:grant-type:token-exchange"  # noqa: S105
-)
-TOKEN_EXCHANGE_SUBJECT_IDENTIFIER_TYPE = (
-    "urn:nebius:params:oauth:token-type:subject_identifier"  # noqa: S105
-)
+TOKEN_EXCHANGE_ACCESS_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token"  # noqa: S105
+TOKEN_EXCHANGE_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange"  # noqa: S105
+TOKEN_EXCHANGE_SUBJECT_IDENTIFIER_TYPE = "urn:nebius:params:oauth:token-type:subject_identifier"  # noqa: S105
 
 sanitizer = TokenSanitizer.access_token_sanitizer()
 log = getLogger(__name__)
@@ -69,9 +63,7 @@ class Receiver(ParentReceiver):
         self._metrics = auth_metrics_recorder(metrics, "impersonated")
         self._trial = 0
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Fetch the source token and exchange it for an impersonated token."""
         self._trial += 1
         start = metric_start()

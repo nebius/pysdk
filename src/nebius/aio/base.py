@@ -162,5 +162,3 @@ class ChannelBase(GRPCChannel):
     SDK components accept this type when they require the SDK extensions to a
     gRPC channel.
     """
-
-    pass

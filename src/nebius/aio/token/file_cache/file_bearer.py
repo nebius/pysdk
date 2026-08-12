@@ -66,9 +66,7 @@ class PureFileCacheReceiver(ParentReceiver):
     :param cache: Throttled token cache implementation.
     """
 
-    def __init__(
-        self, cache: ThrottledTokenCache, metrics: AuthMetricsRecorder
-    ) -> None:
+    def __init__(self, cache: ThrottledTokenCache, metrics: AuthMetricsRecorder) -> None:
         """Create a receiver backed by ``cache``.
 
         No file I/O occurs during construction; the cache performs I/O on demand.
@@ -77,9 +75,7 @@ class PureFileCacheReceiver(ParentReceiver):
         self._cache = cache
         self._metrics = metrics
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Return the cached token or an empty token.
 
         :param timeout: Ignored. Present for interface compatibility.
@@ -160,9 +156,7 @@ class PureFileCacheBearer(ParentBearer):
             metrics,
             provider or "file-cache",
         )
-        self._cache = ThrottledTokenCache(
-            name=self._name, cache_file=cache_file, throttle=throttle
-        )
+        self._cache = ThrottledTokenCache(name=self._name, cache_file=cache_file, throttle=throttle)
 
     @property
     def name(self) -> str:

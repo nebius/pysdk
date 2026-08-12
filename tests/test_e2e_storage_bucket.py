@@ -62,9 +62,7 @@ def _get_config_file_path() -> tuple[str | None, bool]:
         yaml.safe_load(config_content)
 
         # Create temporary file
-        temp_file = tempfile.NamedTemporaryFile(
-            mode="w", suffix=".yaml", prefix="nebius_e2e_config_", delete=False
-        )
+        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", prefix="nebius_e2e_config_", delete=False)
         temp_file.write(config_content)
         temp_file.close()
 
@@ -97,10 +95,7 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
     config_file, is_temp_file = _get_config_file_path()
     try:
         if not config_file:
-            pytest.skip(
-                "Neither NEBIUS_E2E_CONFIG_FILE nor NEBIUS_E2E_CONFIG_B64 "
-                "environment variable is set or valid"
-            )
+            pytest.skip("Neither NEBIUS_E2E_CONFIG_FILE nor NEBIUS_E2E_CONFIG_B64 environment variable is set or valid")
 
         if not is_temp_file and not _validate_yaml_config(config_file):
             pytest.skip("NEBIUS_E2E_CONFIG_FILE does not point to a valid YAML file")
@@ -141,9 +136,7 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
                 await create_operation.wait()
                 bucket_id = create_operation.resource_id
 
-                assert (
-                    bucket_id is not None
-                ), "Bucket creation should return a valid bucket ID"
+                assert bucket_id is not None, "Bucket creation should return a valid bucket ID"
 
                 # Get bucket by ID
                 get_request = GetBucketRequest(id=bucket_id)
@@ -165,9 +158,7 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
                         found_bucket = bucket_item
                         break
 
-                assert (
-                    found_bucket is not None
-                ), f"Bucket {bucket_id} should be found in the list"
+                assert found_bucket is not None, f"Bucket {bucket_id} should be found in the list"
                 assert found_bucket.metadata.name == bucket_name
 
                 delete_request = DeleteBucketRequest(id=bucket_id)
@@ -184,10 +175,7 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
                         await delete_operation.wait()
                     except Exception as cleanup_error:
                         # Log cleanup error but don't fail the test
-                        print(
-                            "Warning: Failed to cleanup bucket "
-                            f"{bucket_id}: {cleanup_error}"
-                        )
+                        print(f"Warning: Failed to cleanup bucket {bucket_id}: {cleanup_error}")
                 raise e
 
     finally:

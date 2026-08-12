@@ -119,24 +119,16 @@ def test_fieldpath_copy(subtests) -> None:
             cp = case["A"].copy()
             # Assert the copy matches the original
             assert cp == case["A"], f"Failed on case {i}: {cp} != {case['A']}"
-            assert case["A"] == FieldPath(
-                case["A"]
-            ), f"Failed on case {i}: FieldPath doesn't match"  # noqa: E501
+            assert case["A"] == FieldPath(case["A"]), f"Failed on case {i}: FieldPath doesn't match"  # noqa: E501
             assert case["A"] == cp, f"Failed on case {i}: A != cp"
             assert cp == case["A"], f"Failed on case {i}: cp != A"
 
             if len(case["A"]) > 0:
                 # Modify the original and assert copy is unaffected
                 case["A"][0] = FieldKey("changed")
-                assert (
-                    cp != case["A"]
-                ), f"Failed on case {i}: cp == A after modification"
-                assert (
-                    case["A"] != cp
-                ), f"Failed on case {i}: A equal to cp after modification"  # noqa: E501
-                assert (
-                    cp != case["A"]
-                ), f"Failed on case {i}: cp equal to A after modification"  # noqa: E501
+                assert cp != case["A"], f"Failed on case {i}: cp == A after modification"
+                assert case["A"] != cp, f"Failed on case {i}: A equal to cp after modification"  # noqa: E501
+                assert cp != case["A"], f"Failed on case {i}: cp equal to A after modification"  # noqa: E501
 
 
 def test_fieldpath_equality(subtests) -> None:
@@ -196,17 +188,13 @@ def test_fieldpath_to_mask(subtests):
             m = case["FP"].to_mask()
 
             # Check that the result is an instance of Mask
-            assert isinstance(
-                m, Mask
-            ), f"Failed on case {i}: Result is not a Mask instance"
+            assert isinstance(m, Mask), f"Failed on case {i}: Result is not a Mask instance"
 
             # Marshal the mask to a string
             str_representation = m.marshal()
 
             # Assert no error and correct string representation
-            assert (
-                str_representation == case["Res"]
-            ), f"Failed on case {i}: {str_representation} != {case['Res']}"
+            assert str_representation == case["Res"], f"Failed on case {i}: {str_representation} != {case['Res']}"
 
 
 def test_fieldpath_is_prefix_of(subtests):
@@ -228,30 +216,22 @@ def test_fieldpath_is_prefix_of(subtests):
         },  # noqa: E501
         {
             "A": FieldPath([FieldKey("foo"), FieldKey("baz"), FieldKey("abc")]),
-            "B": FieldPath(
-                [FieldKey("foo"), FieldKey("bar"), FieldKey("abc"), FieldKey("def")]
-            ),
+            "B": FieldPath([FieldKey("foo"), FieldKey("bar"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
         },  # noqa: E501
         {
             "A": FieldPath([FieldKey("baz"), FieldKey("foo")]),
-            "B": FieldPath(
-                [FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]
-            ),
+            "B": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
         },  # noqa: E501
         {
             "A": FieldPath([FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
-            "B": FieldPath(
-                [FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]
-            ),
+            "B": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
         },  # noqa: E501
         {
             "A": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("")]),
-            "B": FieldPath(
-                [FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]
-            ),
+            "B": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
         },  # noqa: E501
         {"A": FieldPath([]), "B": FieldPath([FieldKey("foo")]), "Res": True},
@@ -277,23 +257,17 @@ def test_fieldpath_is_prefix_of(subtests):
         },  # noqa: E501
         {
             "A": FieldPath([FieldKey("bar"), FieldKey("baz")]),
-            "B": FieldPath(
-                [FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]
-            ),
+            "B": FieldPath([FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
             "Res": True,
         },  # noqa: E501
         {
             "A": FieldPath([FieldKey("bar")]),
-            "B": FieldPath(
-                [FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]
-            ),
+            "B": FieldPath([FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
             "Res": True,
         },  # noqa: E501
         {
             "A": FieldPath([]),
-            "B": FieldPath(
-                [FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]
-            ),
+            "B": FieldPath([FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
             "Res": True,
         },  # noqa: E501
     ]
@@ -346,11 +320,7 @@ def test_fieldpath_matches_reset_mask(subtests) -> None:
         },
         {
             "FP": FieldPath([FieldKey("abc")]),
-            "M": Mask(
-                field_parts={
-                    FieldKey("abc"): Mask(field_parts={FieldKey("foo"): Mask()})
-                }
-            ),
+            "M": Mask(field_parts={FieldKey("abc"): Mask(field_parts={FieldKey("foo"): Mask()})}),
             "Res": True,
             "Final": False,
         },
@@ -394,9 +364,7 @@ def test_fieldpath_matches_reset_mask(subtests) -> None:
             "M": Mask(
                 any=Mask(field_parts={FieldKey("bar"): Mask()}),
                 field_parts={
-                    FieldKey("abc"): Mask(
-                        field_parts={FieldKey("bar"): Mask(any=Mask())}
-                    ),
+                    FieldKey("abc"): Mask(field_parts={FieldKey("bar"): Mask(any=Mask())}),
                     FieldKey("def"): Mask(field_parts={FieldKey("baz"): Mask()}),
                 },
             ),
@@ -453,9 +421,7 @@ def test_fieldpath_matches_reset_mask(subtests) -> None:
             res = case["FP"].matches_reset_mask(case["M"])
             res_final = case["FP"].matches_reset_mask_final(case["M"])
             assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
-            assert (
-                res_final == case["Final"]
-            ), f"Failed on case {i}: {res} != {case['Final']}"  # noqa: E501
+            assert res_final == case["Final"], f"Failed on case {i}: {res} != {case['Final']}"  # noqa: E501
 
 
 def test_fieldpath_matches_select_mask(subtests) -> None:
@@ -604,9 +570,7 @@ def test_fieldpath_marshal(subtests) -> None:
     for i, case in enumerate(cases):
         with subtests.test(msg=f"case_{i}"):
             res = case["FP"].marshal()
-            assert (
-                res == case["M"]
-            ), f"Failed on case {i}: expected {case['M']}, got {res}"
+            assert res == case["M"], f"Failed on case {i}: expected {case['M']}, got {res}"
 
 
 def test_fieldpath_unmarshal(subtests) -> None:
@@ -639,9 +603,7 @@ def test_fieldpath_unmarshal(subtests) -> None:
                     FieldPath.unmarshal(mask)
             else:
                 res = FieldPath.unmarshal(mask)
-                assert (
-                    res == case["Result"]
-                ), f"Failed on case {i}: expected {case['Result']}, got {res}"  # noqa: E501
+                assert res == case["Result"], f"Failed on case {i}: expected {case['Result']}, got {res}"  # noqa: E501
 
 
 def test_parse_fieldmask(subtests) -> None:
@@ -1199,11 +1161,7 @@ def test_mask_unmarshal_text(subtests: SubTests) -> None:
         },
         {
             "mask": "test.(inner,outer)",
-            "result": Mask(
-                field_parts={
-                    "test": Mask(field_parts={"inner": Mask(), "outer": Mask()})
-                }
-            ),
+            "result": Mask(field_parts={"test": Mask(field_parts={"inner": Mask(), "outer": Mask()})}),
         },
         {
             "mask": "*.*",
@@ -1262,18 +1220,10 @@ def test_mask_equality(subtests: SubTests) -> None:
                     if i != j:
                         assert mask1 != mask2, f"mask{i} must not be equal to mask{j}"
                         assert mask2 != mask1, f"mask{j} must not be equal to mask{i}"
-                        assert (
-                            mask2.copy() != mask1
-                        ), f"mask{j} copy must not be equal to mask{i}"  # noqa: E501
-                        assert (
-                            mask1.copy() != mask2
-                        ), f"mask{i} copy must not be equal to mask{j}"  # noqa: E501
-                        assert (
-                            mask1 != mask2.copy()
-                        ), f"mask{i} must not be equal to mask{j} copy"  # noqa: E501
-                        assert (
-                            mask2 != mask1.copy()
-                        ), f"mask{j} must not be equal to mask{i} copy"  # noqa: E501
+                        assert mask2.copy() != mask1, f"mask{j} copy must not be equal to mask{i}"  # noqa: E501
+                        assert mask1.copy() != mask2, f"mask{i} copy must not be equal to mask{j}"  # noqa: E501
+                        assert mask1 != mask2.copy(), f"mask{i} must not be equal to mask{j} copy"  # noqa: E501
+                        assert mask2 != mask1.copy(), f"mask{j} must not be equal to mask{i} copy"  # noqa: E501
 
 
 def test_mask_copy() -> None:

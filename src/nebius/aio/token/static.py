@@ -67,9 +67,7 @@ class Receiver(ParentReceiver):
         super().__init__()
         self._latest = token
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Return the configured token.
 
         The receiver returns the pre-configured token. If no token is configured
@@ -172,7 +170,7 @@ class EnvBearer(Bearer):
 
     def __init__(self, env_var_name: str = TOKEN_ENV) -> None:
         """Initialize the environment-variable based bearer."""
-        val = os.environ.get(env_var_name, "")
+        val = os.environ.get(env_var_name, "").strip()
         if val == "":
             raise NoTokenInEnvError(env_var_name)
         super().__init__(val)

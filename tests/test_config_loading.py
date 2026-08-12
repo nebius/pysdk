@@ -126,22 +126,15 @@ async def test_impersonated_bearer_exchange_request() -> None:
     assert len(seen) == 1
     request = seen[0]
     assert request.grant_type == "urn:ietf:params:oauth:grant-type:token-exchange"
-    assert (
-        request.requested_token_type == "urn:ietf:params:oauth:token-type:access_token"
-    )
+    assert request.requested_token_type == "urn:ietf:params:oauth:token-type:access_token"
     assert request.subject_token == "target-sa"
-    assert (
-        request.subject_token_type
-        == "urn:nebius:params:oauth:token-type:subject_identifier"
-    )
+    assert request.subject_token_type == "urn:nebius:params:oauth:token-type:subject_identifier"
     assert request.actor_token == "actor-token"
     assert request.actor_token_type == "urn:ietf:params:oauth:token-type:access_token"
 
 
 @pytest.mark.asyncio
-async def test_config_impersonates_with_constructor_override(
-    tmp_path, monkeypatch
-) -> None:
+async def test_config_impersonates_with_constructor_override(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
     from nebius.aio.abc import ClientChannelInterface
@@ -336,9 +329,7 @@ profiles:
 
 
 @pytest.mark.asyncio
-async def test_load_config_service_account_credentials_file(
-    tmp_path, monkeypatch
-) -> None:
+async def test_load_config_service_account_credentials_file(tmp_path, monkeypatch) -> None:
     # create a service account credentials JSON with a PEM private key
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa

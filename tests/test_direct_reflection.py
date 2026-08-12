@@ -17,9 +17,7 @@ def _descriptors() -> tuple[bytes, bytes]:
         package="direct.dep",
         syntax="proto3",
     )
-    dependency.message_type.add(name="Dependency").field.add(
-        name="name", number=1, label=1, type=9
-    )
+    dependency.message_type.add(name="Dependency").field.add(name="name", number=1, label=1, type=9)
 
     main = descriptor_pb2.FileDescriptorProto(
         name="direct/main.proto",
@@ -96,9 +94,7 @@ def test_raw_descriptor_graph_links_without_provider_pool() -> None:
     assert request.file is file
     assert request.fields_by_name["id"].has_presence
     dependency = request.fields_by_number[2]
-    assert (
-        dependency.message_type is reflection.messages_by_name["direct.dep.Dependency"]
-    )
+    assert dependency.message_type is reflection.messages_by_name["direct.dep.Dependency"]
     assert dependency.containing_oneof is request.oneofs_by_name["choice"]
     assert request.nested_types_by_name["Nested"].containing_type is request
     assert request.extension_ranges == ((100, 200),)
@@ -141,15 +137,11 @@ def test_provider_descriptor_is_private_lazy_and_identity_separate() -> None:
 
     field = direct.fields_by_name["dependency"]
     assert field.provider_descriptor.full_name == field.full_name
-    nested_field = reflection.messages_by_name[
-        "direct.test.Request.Nested"
-    ].fields_by_name["value"]
+    nested_field = reflection.messages_by_name["direct.test.Request.Nested"].fields_by_name["value"]
     assert nested_field.provider_descriptor.full_name == nested_field.full_name
     enum_value = reflection.enums_by_name["direct.test.State"].values[0]
     assert enum_value.provider_descriptor.name == enum_value.name
-    method = reflection.services_by_name["direct.test.TestService"].methods_by_name[
-        "Watch"
-    ]
+    method = reflection.services_by_name["direct.test.TestService"].methods_by_name["Watch"]
     assert method.provider_descriptor.full_name == method.full_name
 
 
@@ -184,9 +176,7 @@ def test_registry_decodes_direct_options_and_binds_message_descriptor() -> None:
 
     descriptor = Request.get_descriptor()
     assert descriptor is registry.message_descriptor("direct.test.Request")
-    method = registry.service_descriptor("direct.test.TestService").methods_by_name[
-        "Watch"
-    ]
+    method = registry.service_descriptor("direct.test.TestService").methods_by_name["Watch"]
     options = method.GetOptions()
     assert isinstance(options, MethodOptions)
     assert options._get_field(MethodOptions.__FIELDS__[0]) is True
@@ -254,12 +244,8 @@ def test_duplicate_local_indices_are_rejected(duplicate: str) -> None:
         message.oneof_decl.add(name="choice")
     else:
         service = proto.service.add(name="Service")
-        service.method.add(
-            name="Call", input_type=".test.Message", output_type=".test.Message"
-        )
-        service.method.add(
-            name="Call", input_type=".test.Message", output_type=".test.Message"
-        )
+        service.method.add(name="Call", input_type=".test.Message", output_type=".test.Message")
+        service.method.add(name="Call", input_type=".test.Message", output_type=".test.Message")
     with pytest.raises(ValueError, match="duplicate"):
         Reflection(
             (proto.SerializeToString(),),
@@ -278,9 +264,7 @@ def test_bytes_defaults_match_provider_c_unescape() -> None:
         r"\"",
         "é",
     )
-    proto = descriptor_pb2.FileDescriptorProto(
-        name="defaults.proto", package="test", syntax="proto2"
-    )
+    proto = descriptor_pb2.FileDescriptorProto(name="defaults.proto", package="test", syntax="proto2")
     message = proto.message_type.add(name="Defaults")
     for index, default in enumerate(defaults, start=1):
         message.field.add(
@@ -295,9 +279,7 @@ def test_bytes_defaults_match_provider_c_unescape() -> None:
     provider = descriptor_pool.DescriptorPool().AddSerializedFile(raw)
     direct_fields = direct.messages_by_name["test.Defaults"].fields
     provider_fields = provider.message_types_by_name["Defaults"].fields
-    assert [field.default_value for field in direct_fields] == [
-        field.default_value for field in provider_fields
-    ]
+    assert [field.default_value for field in direct_fields] == [field.default_value for field in provider_fields]
 
 
 @pytest.mark.parametrize("default", [r"\x123", r"\x", r"\z", "trailing\\"])

@@ -120,9 +120,7 @@ def length_delimited(
     return tuple(
         field.value
         for field in iter_wire_fields(option_bytes(options))
-        if field.number == field_number
-        and field.wire_type == 2
-        and isinstance(field.value, bytes)
+        if field.number == field_number and field.wire_type == 2 and isinstance(field.value, bytes)
     )
 
 
@@ -164,9 +162,7 @@ def bool_option(
     values = tuple(
         field.value
         for field in iter_wire_fields(option_bytes(options))
-        if field.number == field_number
-        and field.wire_type == 0
-        and isinstance(field.value, int)
+        if field.number == field_number and field.wire_type == 0 and isinstance(field.value, int)
     )
     return bool(values[-1]) if values else False
 

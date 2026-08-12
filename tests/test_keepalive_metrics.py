@@ -46,9 +46,7 @@ def test_keepalive_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
 
     assert opts["grpc.keepalive_time_ms"] == DEFAULT_KEEPALIVE_TIME_MS
     assert opts["grpc.keepalive_timeout_ms"] == DEFAULT_KEEPALIVE_TIMEOUT_MS
-    assert opts["grpc.keepalive_permit_without_calls"] == (
-        1 if DEFAULT_KEEPALIVE_PERMIT_WITHOUT_STREAM else 0
-    )
+    assert opts["grpc.keepalive_permit_without_calls"] == (1 if DEFAULT_KEEPALIVE_PERMIT_WITHOUT_STREAM else 0)
 
 
 def test_keepalive_env_and_disable(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -164,9 +162,7 @@ async def test_custom_bearer_metrics_provider_defaults_to_class_name() -> None:
     await sdk.get_authorization_provider().authenticator().authenticate(metadata)  # type: ignore[union-attr]
 
     assert metadata.get_one("authorization") == "Bearer custom-token"
-    assert [(item.provider, item.result) for item in acquired] == [
-        (_provider_name(CustomBearer), "success")
-    ]
+    assert [(item.provider, item.result) for item in acquired] == [(_provider_name(CustomBearer), "success")]
 
 
 @pytest.mark.asyncio
@@ -202,9 +198,7 @@ async def test_non_token_receiver_result_records_error_metric() -> None:
     with pytest.raises(TypeError, match="Expected Token"):
         await sdk.get_authorization_provider().authenticator().authenticate(Metadata())  # type: ignore[union-attr]
 
-    assert [(item.provider, item.result) for item in acquired] == [
-        (_provider_name(BadBearer), "error")
-    ]
+    assert [(item.provider, item.result) for item in acquired] == [(_provider_name(BadBearer), "error")]
 
 
 @pytest.mark.asyncio
@@ -319,9 +313,7 @@ def test_config_reader_metrics_replay_and_credentials_resolve(tmp_path) -> None:
     events = []
     metrics = {
         "config_load": lambda metric: events.append(("config_load", metric)),
-        "credentials_resolve": lambda metric: events.append(
-            ("credentials_resolve", metric)
-        ),
+        "credentials_resolve": lambda metric: events.append(("credentials_resolve", metric)),
     }
 
     config = Config(config_file=config_file, no_env=True)
@@ -331,9 +323,7 @@ def test_config_reader_metrics_replay_and_credentials_resolve(tmp_path) -> None:
         metrics=metrics,
     )
 
-    assert ("config_load", "file", "success") in {
-        (kind, metric.source, metric.result) for kind, metric in events
-    }
+    assert ("config_load", "file", "success") in {(kind, metric.source, metric.result) for kind, metric in events}
     assert ("credentials_resolve", "token-file", "success") in {
         (kind, metric.source, metric.result) for kind, metric in events
     }
@@ -368,9 +358,7 @@ def test_async_config_metric_callback_runs_from_sync_constructor(tmp_path) -> No
 
 
 @pytest.mark.asyncio
-async def test_config_reader_env_credentials_keep_auth_metrics(
-    tmp_path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+async def test_config_reader_env_credentials_keep_auth_metrics(tmp_path, monkeypatch: pytest.MonkeyPatch) -> None:
     from nebius.aio.token.static import EnvBearer
 
     config_file = tmp_path / "config.yaml"
@@ -396,9 +384,7 @@ async def test_config_reader_env_credentials_keep_auth_metrics(
     token = await credentials.receiver().fetch()  # type: ignore[attr-defined]
 
     assert token.token == "env-token"
-    assert [(item.provider, item.result) for item in acquired] == [
-        (_provider_name(EnvBearer), "success")
-    ]
+    assert [(item.provider, item.result) for item in acquired] == [(_provider_name(EnvBearer), "success")]
 
 
 def test_config_reader_metrics_replay_excludes_prior_credentials_resolve(
@@ -423,17 +409,9 @@ def test_config_reader_metrics_replay_excludes_prior_credentials_resolve(
     config.set_metrics(
         {
             "config_load": lambda metric: events.append(("config_load", metric)),
-            "credentials_resolve": lambda metric: events.append(
-                ("credentials_resolve", metric)
-            ),
+            "credentials_resolve": lambda metric: events.append(("credentials_resolve", metric)),
         }
     )
 
-    assert ("config_load", "file", "success") in {
-        (kind, metric.source, metric.result) for kind, metric in events
-    }
-    assert [
-        (kind, metric.source, metric.result)
-        for kind, metric in events
-        if kind == "credentials_resolve"
-    ] == []
+    assert ("config_load", "file", "success") in {(kind, metric.source, metric.result) for kind, metric in events}
+    assert [(kind, metric.source, metric.result) for kind, metric in events if kind == "credentials_resolve"] == []

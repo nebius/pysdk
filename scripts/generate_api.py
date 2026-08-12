@@ -33,10 +33,7 @@ def same_tree(left: Path, right: Path) -> bool:
     comparison = filecmp.dircmp(left, right, ignore=["__pycache__"])
     if comparison.left_only or comparison.right_only or comparison.funny_files:
         return False
-    if any(
-        (left / name).read_bytes() != (right / name).read_bytes()
-        for name in comparison.common_files
-    ):
+    if any((left / name).read_bytes() != (right / name).read_bytes() for name in comparison.common_files):
         return False
     return all(same_tree(left / name, right / name) for name in comparison.common_dirs)
 
@@ -72,9 +69,7 @@ def validate(root: Path) -> None:
         raise RuntimeError("generator produced no Python files")
     for source in sources:
         ast.parse(source.read_text(), filename=str(source))
-    forbidden = [
-        path for path in sources if path.name.endswith(("_pb2.py", "_pb2_grpc.py"))
-    ]
+    forbidden = [path for path in sources if path.name.endswith(("_pb2.py", "_pb2_grpc.py"))]
     if forbidden:
         raise RuntimeError(f"provider-generated files remain: {forbidden[0]}")
     modules = tuple(
@@ -170,11 +165,7 @@ def generate(
 
 def recover() -> None:
     if PROMOTION_MARKER.exists():
-        previous = (
-            BACKUP_API
-            if BACKUP_API.exists()
-            else RETIRED_API if RETIRED_API.exists() else None
-        )
+        previous = BACKUP_API if BACKUP_API.exists() else RETIRED_API if RETIRED_API.exists() else None
         if previous is not None:
             shutil.rmtree(TARGET_API, ignore_errors=True)
             previous.rename(TARGET_API)
@@ -206,11 +197,7 @@ def promote(
         BACKUP_API.rename(RETIRED_API)
         PROMOTION_MARKER.unlink()
     except BaseException:
-        previous = (
-            BACKUP_API
-            if BACKUP_API.exists()
-            else RETIRED_API if RETIRED_API.exists() else None
-        )
+        previous = BACKUP_API if BACKUP_API.exists() else RETIRED_API if RETIRED_API.exists() else None
         if not live_moved and previous is None:
             PROMOTION_MARKER.unlink()
             raise
@@ -232,9 +219,7 @@ def validate_cache_path(cache_dir: Path | None) -> None:
     cache = cache_dir.expanduser().resolve()
     protected = (TARGET_API, BACKUP_API, RETIRED_API, STAGING_PARENT)
     if any(
-        cache == path.resolve()
-        or cache.is_relative_to(path.resolve())
-        or path.resolve().is_relative_to(cache)
+        cache == path.resolve() or cache.is_relative_to(path.resolve()) or path.resolve().is_relative_to(cache)
         for path in protected
     ):
         raise ValueError(f"cache directory overlaps generated API paths: {cache}")
@@ -246,9 +231,7 @@ def main() -> int:
     mode.add_argument("--check", action="store_true")
     mode.add_argument("--verify-partitions", action="store_true")
     mode.add_argument("--validate-only", action="store_true")
-    parser.add_argument(
-        "--partition", choices=("all", "package", "directory"), default="all"
-    )
+    parser.add_argument("--partition", choices=("all", "package", "directory"), default="all")
     parser.add_argument("--jobs", type=int, default=1)
     parser.add_argument("--cache-dir", type=Path)
     args = parser.parse_args()
@@ -257,14 +240,10 @@ def main() -> int:
     validate_cache_path(args.cache_dir)
     LOCK.parent.mkdir(parents=True, exist_ok=True)
     with portalocker.Lock(LOCK, timeout=0):
-        recovery_pending = any(
-            path.exists() for path in (PROMOTION_MARKER, BACKUP_API, RETIRED_API)
-        )
+        recovery_pending = any(path.exists() for path in (PROMOTION_MARKER, BACKUP_API, RETIRED_API))
         if args.check or args.verify_partitions or args.validate_only:
             if recovery_pending:
-                raise RuntimeError(
-                    "generated API recovery is required; run update mode first"
-                )
+                raise RuntimeError("generated API recovery is required; run update mode first")
         else:
             recover()
         STAGING_PARENT.mkdir(parents=True, exist_ok=True)
@@ -276,9 +255,7 @@ def main() -> int:
             try:
                 outputs = [
                     generate(partition, args.jobs, run_root, args.cache_dir)
-                    for partition, run_root in zip(
-                        ("all", "package", "directory"), run_roots, strict=True
-                    )
+                    for partition, run_root in zip(("all", "package", "directory"), run_roots, strict=True)
                 ]
                 if not all(same_tree(outputs[0], output) for output in outputs[1:]):
                     print("Generator partition outputs differ.", file=sys.stderr)
@@ -299,9 +276,7 @@ def main() -> int:
                     print("Generated API is out of date.", file=sys.stderr)
                     return 1
                 return 0
-            verification_root = Path(
-                tempfile.mkdtemp(prefix="verify-promoted-", dir=STAGING_PARENT)
-            )
+            verification_root = Path(tempfile.mkdtemp(prefix="verify-promoted-", dir=STAGING_PARENT))
             promoted_run_root = verification_root
 
             def validate_promoted(live: Path) -> None:
@@ -312,9 +287,7 @@ def main() -> int:
                     args.cache_dir,
                 )
                 if not same_tree(live, regenerated):
-                    raise RuntimeError(
-                        "regenerated API is not a byte-identical fixed point"
-                    )
+                    raise RuntimeError("regenerated API is not a byte-identical fixed point")
 
             promote(staged_api, validate_promoted)
             return 0

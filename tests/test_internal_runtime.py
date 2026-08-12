@@ -110,17 +110,14 @@ def test_owned_runtime_threads_are_daemons_and_stop_on_close() -> None:
 
     async def start_workers() -> None:
         loop = asyncio.get_running_loop()
-        await asyncio.gather(
-            *(loop.run_in_executor(None, workers_ready.wait) for _ in range(3))
-        )
+        await asyncio.gather(*(loop.run_in_executor(None, workers_ready.wait) for _ in range(3)))
 
     submitted = channel.run_async(start_workers())
     workers_ready.wait(timeout=5)
     runtime_threads = [
         thread
         for thread in enumerate_threads()
-        if thread.name == "nebius-sdk-loop"
-        or thread.name.startswith("nebius-sdk-worker_")
+        if thread.name == "nebius-sdk-loop" or thread.name.startswith("nebius-sdk-worker_")
     ]
 
     assert len([t for t in runtime_threads if "worker" in t.name]) == 3
@@ -220,13 +217,9 @@ def test_sdk_reports_awaitable_returned_by_sync_exception_handler(
         assert both_reported.wait(timeout=5)
         assert reported[0] == {"message": "SDK diagnostic"}
         context = reported[1]
-        assert context["message"] == (
-            "The SDK loop_exception_handler callable returned a value."
-        )
+        assert context["message"] == ("The SDK loop_exception_handler callable returned a value.")
         assert isinstance(context["exception"], TypeError)
-        assert str(context["exception"]) == (
-            "The loop_exception_handler callable must return None."
-        )
+        assert str(context["exception"]) == ("The loop_exception_handler callable must return None.")
         assert not handler_body_ran.is_set()
     finally:
         try:
@@ -297,9 +290,7 @@ def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
         assert both_reported.wait(timeout=5)
         assert reported[0] == {"message": "SDK diagnostic"}
         context = reported[1]
-        assert context["message"] == (
-            "The SDK loop_exception_handler callable returned a value."
-        )
+        assert context["message"] == ("The SDK loop_exception_handler callable returned a value.")
         assert isinstance(context["exception"], TypeError)
     finally:
         try:
@@ -372,9 +363,7 @@ def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() 
         sdk.run_sync(report(), timeout=5)
         assert both_reported.wait(timeout=5)
         assert reported[0] == {"message": "SDK diagnostic"}
-        assert reported[1]["message"] == (
-            "The SDK loop_exception_handler callable returned a value."
-        )
+        assert reported[1]["message"] == ("The SDK loop_exception_handler callable returned a value.")
     finally:
         sdk.sync_close(timeout=5)
 
@@ -399,9 +388,7 @@ def test_sdk_rejects_async_loop_exception_handler_before_start() -> None:
         )
 
     created_runtime_threads = [
-        thread
-        for thread in set(enumerate_threads()) - before
-        if thread.name.startswith("nebius-sdk-")
+        thread for thread in set(enumerate_threads()) - before if thread.name.startswith("nebius-sdk-")
     ]
     assert created_runtime_threads == []
 
@@ -428,9 +415,7 @@ def test_sdk_rejects_async_generator_exception_handler_before_start() -> None:
         )
 
     created_runtime_threads = [
-        thread
-        for thread in set(enumerate_threads()) - before
-        if thread.name.startswith("nebius-sdk-")
+        thread for thread in set(enumerate_threads()) - before if thread.name.startswith("nebius-sdk-")
     ]
     assert created_runtime_threads == []
 
@@ -449,9 +434,7 @@ def test_sdk_rejects_noncallable_loop_exception_handler_before_start() -> None:
         )
 
     created_runtime_threads = [
-        thread
-        for thread in set(enumerate_threads()) - before
-        if thread.name.startswith("nebius-sdk-")
+        thread for thread in set(enumerate_threads()) - before if thread.name.startswith("nebius-sdk-")
     ]
     assert created_runtime_threads == []
 
@@ -645,9 +628,7 @@ def test_sdks_sharing_loop_keep_latest_exception_handler_after_close() -> None:
 
             loop.call_exception_handler({"message": "retained SDK diagnostic"})
             installed = loop.get_exception_handler()
-            retained.set_result(
-                getattr(installed, "_state", (None, object()))[1] is None
-            )
+            retained.set_result(getattr(installed, "_state", (None, object()))[1] is None)
 
         loop.call_soon_threadsafe(inspect_handler)
         assert retained.result(timeout=5)
@@ -1158,9 +1139,7 @@ def test_interruption_during_handler_commit_keeps_accepted_assignment(
             """Invoke and identify the handler retained after interruption."""
 
             installed = loop.get_exception_handler()
-            inspected.set_result(
-                getattr(installed, "handler", None) is replacement_handler
-            )
+            inspected.set_result(getattr(installed, "handler", None) is replacement_handler)
             loop.call_exception_handler({"message": "SDK diagnostic"})
 
         loop.call_soon_threadsafe(inspect_handler)
@@ -1232,9 +1211,7 @@ def test_interrupted_sdk_constructor_does_not_wait_for_borrowed_loop(
         except BaseException as error:
             constructor_errors.append(error)
         else:
-            constructor_errors.append(
-                AssertionError("The test constructor did not stop.")
-            )
+            constructor_errors.append(AssertionError("The test constructor did not stop."))
         finally:
             constructor_finished.set()
 
@@ -1403,9 +1380,7 @@ def test_owned_runtime_starts_executor_workers_lazily() -> None:
     channel = Channel(credentials=NoCredentials(), executor_max_workers=3)
     try:
         created_workers = [
-            thread
-            for thread in set(enumerate_threads()) - before
-            if thread.name.startswith("nebius-sdk-worker_")
+            thread for thread in set(enumerate_threads()) - before if thread.name.startswith("nebius-sdk-worker_")
         ]
         assert created_workers == []
     finally:
@@ -2454,9 +2429,7 @@ async def test_dispatch_gate_waiter_is_drained_after_cancellation(
             await pending
         await asyncio.sleep(0)
         leaked = [
-            task
-            for task in asyncio.all_tasks() - baseline
-            if not task.done() and task is not asyncio.current_task()
+            task for task in asyncio.all_tasks() - baseline if not task.done() and task is not asyncio.current_task()
         ]
         assert leaked == []
     finally:
@@ -3352,23 +3325,14 @@ def test_context_submission_binding_isolated_for_sdks_sharing_loop() -> None:
         own = second._runtime.protect_current_submission()
         foreign = first._runtime.protect_current_submission()
         await asyncio.sleep(0)
-        return (
-            own is not None
-            and foreign is None
-            and second._runtime.protect_current_submission() is own
-        )
+        return own is not None and foreign is None and second._runtime.protect_current_submission() is own
 
     async def inspect_first_with_nested_second() -> bool:
         own = first._runtime.protect_current_submission()
         foreign = second._runtime.protect_current_submission()
         nested = second.run_async(inspect_second())
         nested_ok = await nested
-        return (
-            own is not None
-            and foreign is None
-            and nested_ok
-            and first._runtime.protect_current_submission() is own
-        )
+        return own is not None and foreign is None and nested_ok and first._runtime.protect_current_submission() is own
 
     try:
         first_check = first.run_async(inspect_first_with_nested_second())
@@ -3487,9 +3451,7 @@ def test_sync_close_preserves_terminal_timeout_error_identity(
     """Completed cleanup timeouts are not mistaken for wait expiration."""
 
     channel = Channel(credentials=NoCredentials())
-    terminal_error = TimeoutError(
-        f"The {timeout_phase} phase failed because its time limit expired."
-    )
+    terminal_error = TimeoutError(f"The {timeout_phase} phase failed because its time limit expired.")
     close_future: Future[None] = Future()
     shutdown_future: Future[None] = Future()
     if timeout_phase == "cleanup":
@@ -4514,9 +4476,7 @@ async def test_authentication_retry_transport_ownership(use_override: bool) -> N
         if request._grpc_channel is None:
             request._grpc_channel = channel.get_channel_by_method("test")
         attempt += 1
-        request._call = AttemptCall(  # type: ignore[assignment]
-            authentication_error if attempt == 1 else None
-        )
+        request._call = AttemptCall(authentication_error if attempt == 1 else None)  # type: ignore[assignment]
 
     request._send = send  # type: ignore[method-assign]
 
@@ -5775,9 +5735,7 @@ def test_low_level_native_completion_wins_before_wrapper_resumes(
     )(GetDiskRequest(id="native-complete-before-resume"))
     callback_called = Event()
     callback_values: list[object] = []
-    call.add_done_callback(
-        lambda completed: (callback_values.append(completed), callback_called.set())
-    )
+    call.add_done_callback(lambda completed: (callback_values.append(completed), callback_called.set()))
     closer: Thread | None = None
     try:
         assert native_waiting.wait(timeout=5)
@@ -7201,11 +7159,7 @@ def test_generated_request_discards_wrong_loop_override() -> None:
         assert closed.wait(timeout=5)
         assert close_loops == [foreign_loop]
         with channel._channel_pool_lock:
-            assert all(
-                pooled is not override
-                for channels in channel._free_channels.values()
-                for pooled in channels
-            )
+            assert all(pooled is not override for channels in channel._free_channels.values() for pooled in channels)
     finally:
         channel.sync_close(timeout=5)
         _stop_loop(foreign_loop, foreign_thread)

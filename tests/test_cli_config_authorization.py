@@ -141,9 +141,7 @@ async def test_service_account_variants(monkeypatch, tmp_path) -> None:
 
     class TokenExchange:
         async def Exchange(self, request, context):  # noqa: N802 — GRPC method
-            return CreateTokenResponse(
-                access_token="satok", token_type="Bearer", expires_in=3600
-            )
+            return CreateTokenResponse(access_token="satok", token_type="Bearer", expires_in=3600)
 
     srv = grpc.aio.server()
     port = srv.add_insecure_port("[::]:0")

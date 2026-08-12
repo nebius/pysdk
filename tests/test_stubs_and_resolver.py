@@ -61,9 +61,7 @@ async def test_get_instance() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         client = DiskServiceClient(channel)
 
         # Make a request
@@ -146,9 +144,7 @@ async def test_get_instance_timeout_change() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=Bearer("abc")
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=Bearer("abc"))
         client = DiskServiceClient(channel)
 
         # Make a request
@@ -245,9 +241,7 @@ async def test_get_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         client = DiskServiceClient(channel)
 
         # Make a request

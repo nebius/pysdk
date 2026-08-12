@@ -6,9 +6,7 @@ from bs4 import Tag as BSTag
 from bs4.element import CData, NavigableString, PageElement
 from pydoctor.model import System  # type: ignore
 from pydoctor.templatewriter import TemplateLookup  # type: ignore
-from pydoctor.templatewriter import (  # type: ignore[unused-ignore]
-    TemplateWriter as Base,
-)
+from pydoctor.templatewriter import TemplateWriter as Base  # type: ignore[unused-ignore]
 from pydoctor.templatewriter.pages import Page  # type: ignore
 from pydoctor.templatewriter.writer import flattenToFile  # type: ignore
 from twisted.web.template import CDATA, Comment, Tag, renderer
@@ -57,9 +55,7 @@ CLIENT_SELECTOR = 'li a[name="nebius.aio.client.Client"] ~ ul'
 
 
 class TemplateWriter(Base):  # type: ignore[misc]
-    def writeSummaryPages(  # noqa: N802 # comply with the protocol
-        self, system: System
-    ) -> None:
+    def writeSummaryPages(self, system: System) -> None:  # noqa: N802 # comply with the protocol
         super().writeSummaryPages(system)
 
         system.msg("html", "starting " + APIReferencePage.filename + " ...", nonl=True)

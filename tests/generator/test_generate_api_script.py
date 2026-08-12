@@ -32,9 +32,7 @@ def test_same_tree_detects_content_additions_and_deletions(tmp_path: Path) -> No
     assert not generate_api.same_tree(left, right)
 
 
-def test_recover_restores_backup_after_interrupted_promotion(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_recover_restores_backup_after_interrupted_promotion(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     _tree(generate_api.TARGET_API, "new\n")
     _tree(generate_api.BACKUP_API, "old\n")
@@ -47,9 +45,7 @@ def test_recover_restores_backup_after_interrupted_promotion(
     assert not generate_api.PROMOTION_MARKER.exists()
 
 
-def test_promote_restores_live_tree_when_validation_fails(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_promote_restores_live_tree_when_validation_fails(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     staged = tmp_path / "staged"
     _tree(generate_api.TARGET_API, "old\n")
@@ -67,9 +63,7 @@ def test_promote_restores_live_tree_when_validation_fails(
     assert not generate_api.PROMOTION_MARKER.exists()
 
 
-def test_promote_replaces_complete_tree(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_promote_replaces_complete_tree(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     staged = tmp_path / "staged"
     _tree(generate_api.TARGET_API, "old\n")
@@ -83,9 +77,7 @@ def test_promote_replaces_complete_tree(
     assert not generate_api.PROMOTION_MARKER.exists()
 
 
-def test_failed_rollback_keeps_recovery_marker(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_failed_rollback_keeps_recovery_marker(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     staged = tmp_path / "staged"
     _tree(generate_api.TARGET_API, "old\n")
@@ -100,11 +92,7 @@ def test_failed_rollback_keeps_recovery_marker(
 
     def fail_once(path: Path, target: Path) -> Path:
         nonlocal failed
-        if (
-            path == generate_api.BACKUP_API
-            and target == generate_api.TARGET_API
-            and not failed
-        ):
+        if path == generate_api.BACKUP_API and target == generate_api.TARGET_API and not failed:
             failed = True
             raise OSError("rollback interrupted")
         return original_rename(path, target)
@@ -120,9 +108,7 @@ def test_failed_rollback_keeps_recovery_marker(
     assert not generate_api.PROMOTION_MARKER.exists()
 
 
-def test_failed_backup_retirement_rolls_back_immediately(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_failed_backup_retirement_rolls_back_immediately(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     staged = tmp_path / "staged"
     _tree(generate_api.TARGET_API, "old\n")
@@ -133,11 +119,7 @@ def test_failed_backup_retirement_rolls_back_immediately(
 
     def fail_once(path: Path, target: Path) -> Path:
         nonlocal failed
-        if (
-            path == generate_api.BACKUP_API
-            and target == generate_api.RETIRED_API
-            and not failed
-        ):
+        if path == generate_api.BACKUP_API and target == generate_api.RETIRED_API and not failed:
             failed = True
             raise OSError("retirement interrupted")
         return original_rename(path, target)
@@ -149,9 +131,7 @@ def test_failed_backup_retirement_rolls_back_immediately(
     assert not generate_api.PROMOTION_MARKER.exists()
 
 
-def test_recover_restores_retired_backup_before_commit(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_recover_restores_retired_backup_before_commit(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     _tree(generate_api.TARGET_API, "new\n")
     _tree(generate_api.RETIRED_API, "old\n")
@@ -164,9 +144,7 @@ def test_recover_restores_retired_backup_before_commit(
     assert not generate_api.PROMOTION_MARKER.exists()
 
 
-def test_failed_first_rename_preserves_live_tree(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_failed_first_rename_preserves_live_tree(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     staged = tmp_path / "staged"
     _tree(generate_api.TARGET_API, "old\n")
@@ -206,9 +184,7 @@ def test_check_mode_refuses_recovery_without_mutating_live_tree(
     assert generate_api.PROMOTION_MARKER.exists()
 
 
-def test_check_mode_rejects_cache_overlapping_live_tree(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_check_mode_rejects_cache_overlapping_live_tree(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _configure_paths(monkeypatch, tmp_path)
     monkeypatch.setattr(generate_api, "LOCK", tmp_path / "lock")
     monkeypatch.setattr(generate_api, "STAGING_PARENT", tmp_path / "runs")
@@ -227,9 +203,7 @@ def test_check_mode_rejects_cache_overlapping_live_tree(
     with pytest.raises(ValueError, match="overlaps"):
         generate_api.main()
 
-    assert list(generate_api.TARGET_API.iterdir()) == [
-        generate_api.TARGET_API / "value.py"
-    ]
+    assert list(generate_api.TARGET_API.iterdir()) == [generate_api.TARGET_API / "value.py"]
 
 
 def test_validate_only_generates_without_comparing_or_promoting(

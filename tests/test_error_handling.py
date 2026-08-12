@@ -90,9 +90,7 @@ async def test_get_instance_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -152,8 +150,7 @@ def test_operation_conflict_service_error_rendering() -> None:
     )
 
     assert (
-        to_str(err)
-        == "OperationConflict in service compute operation conflict: resource: "
+        to_str(err) == "OperationConflict in service compute operation conflict: resource: "
         "instance-1, conflicting operation ID: operation-2"
     )
 
@@ -174,10 +171,7 @@ def test_unknown_service_error_detail_uses_raw_rendering() -> None:
         service = "compute"
         details = UnknownDetails()
 
-    assert (
-        to_str(UnknownServiceError())
-        == "NewError in service compute new_detail: RawDetail(field='value')"
-    )
+    assert to_str(UnknownServiceError()) == "NewError in service compute new_detail: RawDetail(field='value')"
 
 
 @pytest.mark.parametrize(
@@ -186,10 +180,7 @@ def test_unknown_service_error_detail_uses_raw_rendering() -> None:
         "Received http2 header with status: 520",
         "Received HTTP2 header with status: 524",
         "unexpected HTTP status code received from server: 522",
-        (
-            "Error received from peer "
-            '{grpc_message:"Received http2 header with status: 523"}'
-        ),
+        'Error received from peer {grpc_message:"Received http2 header with status: 523"}',
         "proxy failed with HTTP status code 529",
     ],
 )
@@ -211,8 +202,7 @@ def test_unknown_http_52x_status_is_retriable_after_sdk_wrapping(
         ("Received http2 header with status: 500", "UNKNOWN"),
         ("unexpected HTTP status code received from server: 502", "UNKNOWN"),
         (
-            "Error received from peer "
-            '{grpc_message:"Received http2 header with status: 503"}',
+            'Error received from peer {grpc_message:"Received http2 header with status: 503"}',
             "UNKNOWN",
         ),
         ("Received http2 header with status: 519", "UNKNOWN"),
@@ -245,10 +235,7 @@ def test_raw_grpc_unknown_http_52x_status_is_retriable() -> None:
         Metadata(),
         Metadata(),
         "Received http2 header with status: 522",
-        (
-            "Error received from peer "
-            '{grpc_message:"Received http2 header with status: 522"}'
-        ),
+        'Error received from peer {grpc_message:"Received http2 header with status: 522"}',
     )
 
     assert is_retriable_error(err)
@@ -449,9 +436,7 @@ async def test_get_instance_retry() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -548,9 +533,7 @@ async def test_metadata_at_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -653,9 +636,7 @@ async def test_status_at_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -758,9 +739,7 @@ async def test_status_does_not_block_failed_call() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -867,9 +846,7 @@ async def test_request_id_at_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)

@@ -106,12 +106,12 @@ _CPP_TYPES = {
 class _Facade(Generic[P]):
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: P,
         *,
         name: str,
         full_name: str,
-        file: "FileDescriptor",
+        file: FileDescriptor,
         option_kind: str,
     ) -> None:
         self._owner = owner
@@ -127,9 +127,7 @@ class _Facade(Generic[P]):
         """Decode localized direct options without exposing provider identity."""
         if self._options is None:
             options = getattr(self._proto, "options")
-            self._options = self._owner.decode_options(
-                self._option_kind, options.SerializeToString(deterministic=True)
-            )
+            self._options = self._owner.decode_options(self._option_kind, options.SerializeToString(deterministic=True))
         return self._options
 
     def CopyToProto(self, target: Any) -> None:  # noqa: N802
@@ -142,7 +140,7 @@ class _Facade(Generic[P]):
 
 
 class FileDescriptor(_Facade[descriptor_pb2.FileDescriptorProto]):
-    def __init__(self, owner: "Reflection", proto: descriptor_pb2.FileDescriptorProto):
+    def __init__(self, owner: Reflection, proto: descriptor_pb2.FileDescriptorProto):
         self.package = proto.package
         self.syntax = proto.syntax or "proto2"
         self.serialized_pb = proto.SerializeToString(deterministic=True)
@@ -156,9 +154,7 @@ class FileDescriptor(_Facade[descriptor_pb2.FileDescriptorProto]):
         )
         self.dependencies: tuple[FileDescriptor, ...] = ()
         self.public_dependencies: tuple[FileDescriptor, ...] = ()
-        self.message_types_by_name: Mapping[str, MessageDescriptor] = MappingProxyType(
-            {}
-        )
+        self.message_types_by_name: Mapping[str, MessageDescriptor] = MappingProxyType({})
         self.enum_types_by_name: Mapping[str, EnumDescriptor] = MappingProxyType({})
         self.services_by_name: Mapping[str, ServiceDescriptor] = MappingProxyType({})
         self.extensions_by_name: Mapping[str, FieldDescriptor] = MappingProxyType({})
@@ -167,12 +163,12 @@ class FileDescriptor(_Facade[descriptor_pb2.FileDescriptorProto]):
 class MessageDescriptor(_Facade[descriptor_pb2.DescriptorProto]):
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: descriptor_pb2.DescriptorProto,
         *,
         full_name: str,
         file: FileDescriptor,
-        containing_type: "MessageDescriptor | None",
+        containing_type: MessageDescriptor | None,
     ) -> None:
         super().__init__(
             owner,
@@ -187,24 +183,16 @@ class MessageDescriptor(_Facade[descriptor_pb2.DescriptorProto]):
         self.fields_by_name: Mapping[str, FieldDescriptor] = MappingProxyType({})
         self.fields_by_number: Mapping[int, FieldDescriptor] = MappingProxyType({})
         self.nested_types: tuple[MessageDescriptor, ...] = ()
-        self.nested_types_by_name: Mapping[str, MessageDescriptor] = MappingProxyType(
-            {}
-        )
+        self.nested_types_by_name: Mapping[str, MessageDescriptor] = MappingProxyType({})
         self.enum_types: tuple[EnumDescriptor, ...] = ()
         self.enum_types_by_name: Mapping[str, EnumDescriptor] = MappingProxyType({})
         self.oneofs: tuple[OneofDescriptor, ...] = ()
         self.oneofs_by_name: Mapping[str, OneofDescriptor] = MappingProxyType({})
         self.extensions: tuple[FieldDescriptor, ...] = ()
         self.extensions_by_name: Mapping[str, FieldDescriptor] = MappingProxyType({})
-        self.fields_by_camelcase_name: Mapping[str, FieldDescriptor] = MappingProxyType(
-            {}
-        )
-        self.enum_values_by_name: Mapping[str, EnumValueDescriptor] = MappingProxyType(
-            {}
-        )
-        self.extension_ranges = tuple(
-            (item.start, item.end) for item in proto.extension_range
-        )
+        self.fields_by_camelcase_name: Mapping[str, FieldDescriptor] = MappingProxyType({})
+        self.enum_values_by_name: Mapping[str, EnumValueDescriptor] = MappingProxyType({})
+        self.extension_ranges = tuple((item.start, item.end) for item in proto.extension_range)
         self.is_extendable = bool(self.extension_ranges)
 
     def EnumValueName(self, enum_name: str, number: int) -> str:  # noqa: N802
@@ -214,7 +202,7 @@ class MessageDescriptor(_Facade[descriptor_pb2.DescriptorProto]):
 class EnumDescriptor(_Facade[descriptor_pb2.EnumDescriptorProto]):
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: descriptor_pb2.EnumDescriptorProto,
         *,
         full_name: str,
@@ -239,16 +227,12 @@ class EnumDescriptor(_Facade[descriptor_pb2.EnumDescriptorProto]):
 class EnumValueDescriptor(_Facade[descriptor_pb2.EnumValueDescriptorProto]):
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: descriptor_pb2.EnumValueDescriptorProto,
         enum: EnumDescriptor,
         index: int,
     ):
-        scope = (
-            enum.containing_type.full_name
-            if enum.containing_type is not None
-            else enum.file.package
-        )
+        scope = enum.containing_type.full_name if enum.containing_type is not None else enum.file.package
         super().__init__(
             owner,
             proto,
@@ -265,7 +249,7 @@ class EnumValueDescriptor(_Facade[descriptor_pb2.EnumValueDescriptorProto]):
 class OneofDescriptor(_Facade[descriptor_pb2.OneofDescriptorProto]):
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: descriptor_pb2.OneofDescriptorProto,
         message: MessageDescriptor,
         index: int,
@@ -319,7 +303,7 @@ class FieldDescriptor(_Facade[descriptor_pb2.FieldDescriptorProto]):
 
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: descriptor_pb2.FieldDescriptorProto,
         *,
         full_name: str,
@@ -360,7 +344,7 @@ class FieldDescriptor(_Facade[descriptor_pb2.FieldDescriptorProto]):
 class ServiceDescriptor(_Facade[descriptor_pb2.ServiceDescriptorProto]):
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: descriptor_pb2.ServiceDescriptorProto,
         *,
         full_name: str,
@@ -379,14 +363,14 @@ class ServiceDescriptor(_Facade[descriptor_pb2.ServiceDescriptorProto]):
         self.methods: tuple[MethodDescriptor, ...] = ()
         self.methods_by_name: Mapping[str, MethodDescriptor] = MappingProxyType({})
 
-    def FindMethodByName(self, name: str) -> "MethodDescriptor | None":  # noqa: N802
+    def FindMethodByName(self, name: str) -> MethodDescriptor | None:  # noqa: N802
         return self.methods_by_name.get(name)
 
 
 class MethodDescriptor(_Facade[descriptor_pb2.MethodDescriptorProto]):
     def __init__(
         self,
-        owner: "Reflection",
+        owner: Reflection,
         proto: descriptor_pb2.MethodDescriptorProto,
         service: ServiceDescriptor,
         index: int,
@@ -410,17 +394,12 @@ class MethodDescriptor(_Facade[descriptor_pb2.MethodDescriptorProto]):
 class Reflection:
     """Immutable linked descriptor graph for one generated namespace."""
 
-    def __init__(
-        self, serialized_files: Sequence[bytes], decode_options: OptionDecoder
-    ):
+    def __init__(self, serialized_files: Sequence[bytes], decode_options: OptionDecoder):
         self.decode_options = decode_options
         self._serialized_files = tuple(serialized_files)
         self._provider_pool: descriptor_pool.DescriptorPool | None = None
         self._provider_lock = RLock()
-        protos = [
-            descriptor_pb2.FileDescriptorProto.FromString(raw)
-            for raw in serialized_files
-        ]
+        protos = [descriptor_pb2.FileDescriptorProto.FromString(raw) for raw in serialized_files]
         self.files_by_name: Mapping[str, FileDescriptor]
         self.messages_by_name: Mapping[str, MessageDescriptor]
         self.enums_by_name: Mapping[str, EnumDescriptor]
@@ -446,9 +425,7 @@ class Reflection:
         def claim(full_name: str, kind: str) -> None:
             previous = symbols.get(full_name)
             if previous is not None:
-                raise ValueError(
-                    f"duplicate protobuf symbol {full_name!r}: {previous} and {kind}"
-                )
+                raise ValueError(f"duplicate protobuf symbol {full_name!r}: {previous} and {kind}")
             symbols[full_name] = kind
 
         def add_message(
@@ -459,23 +436,12 @@ class Reflection:
         ) -> MessageDescriptor:
             full_name = self._qualified(prefix, proto.name)
             claim(full_name, "message")
-            message = MessageDescriptor(
-                self, proto, full_name=full_name, file=file, containing_type=parent
-            )
+            message = MessageDescriptor(self, proto, full_name=full_name, file=file, containing_type=parent)
             messages[full_name] = message
-            message.nested_types = tuple(
-                add_message(item, file, full_name, message)
-                for item in proto.nested_type
-            )
-            message.nested_types_by_name = MappingProxyType(
-                {item.name: item for item in message.nested_types}
-            )
-            message.enum_types = tuple(
-                add_enum(item, file, full_name, message) for item in proto.enum_type
-            )
-            message.enum_types_by_name = MappingProxyType(
-                {item.name: item for item in message.enum_types}
-            )
+            message.nested_types = tuple(add_message(item, file, full_name, message) for item in proto.nested_type)
+            message.nested_types_by_name = MappingProxyType({item.name: item for item in message.nested_types})
+            message.enum_types = tuple(add_enum(item, file, full_name, message) for item in proto.enum_type)
+            message.enum_types_by_name = MappingProxyType({item.name: item for item in message.enum_types})
             return message
 
         def add_enum(
@@ -486,14 +452,9 @@ class Reflection:
         ) -> EnumDescriptor:
             full_name = self._qualified(prefix, proto.name)
             claim(full_name, "enum")
-            enum = EnumDescriptor(
-                self, proto, full_name=full_name, file=file, containing_type=parent
-            )
+            enum = EnumDescriptor(self, proto, full_name=full_name, file=file, containing_type=parent)
             enums[full_name] = enum
-            enum.values = tuple(
-                EnumValueDescriptor(self, item, enum, index)
-                for index, item in enumerate(proto.value)
-            )
+            enum.values = tuple(EnumValueDescriptor(self, item, enum, index) for index, item in enumerate(proto.value))
             values_by_name = {item.name: item for item in enum.values}
             if len(values_by_name) != len(enum.values):
                 raise ValueError(f"duplicate value name in enum {full_name!r}")
@@ -509,22 +470,11 @@ class Reflection:
         for proto in protos:
             file = files[proto.name]
             file.dependencies = tuple(files[name] for name in proto.dependency)
-            file.public_dependencies = tuple(
-                file.dependencies[index] for index in proto.public_dependency
-            )
-            file_messages = tuple(
-                add_message(item, file, proto.package, None)
-                for item in proto.message_type
-            )
-            file.message_types_by_name = MappingProxyType(
-                {item.name: item for item in file_messages}
-            )
-            file_enums = tuple(
-                add_enum(item, file, proto.package, None) for item in proto.enum_type
-            )
-            file.enum_types_by_name = MappingProxyType(
-                {item.name: item for item in file_enums}
-            )
+            file.public_dependencies = tuple(file.dependencies[index] for index in proto.public_dependency)
+            file_messages = tuple(add_message(item, file, proto.package, None) for item in proto.message_type)
+            file.message_types_by_name = MappingProxyType({item.name: item for item in file_messages})
+            file_enums = tuple(add_enum(item, file, proto.package, None) for item in proto.enum_type)
+            file.enum_types_by_name = MappingProxyType({item.name: item for item in file_enums})
             file_services = tuple(
                 ServiceDescriptor(
                     self,
@@ -537,9 +487,7 @@ class Reflection:
             )
             for service in file_services:
                 claim(service.full_name, "service")
-            file.services_by_name = MappingProxyType(
-                {item.name: item for item in file_services}
-            )
+            file.services_by_name = MappingProxyType({item.name: item for item in file_services})
             services.update((item.full_name, item) for item in file_services)
 
         for message in messages.values():
@@ -549,49 +497,30 @@ class Reflection:
                 raise ValueError(f"duplicate oneof name in {message.full_name!r}")
             field_names = [item.name for item in message_proto.field]
             field_numbers = [item.number for item in message_proto.field]
-            if len(field_names) != len(set(field_names)) or len(field_numbers) != len(
-                set(field_numbers)
-            ):
+            if len(field_names) != len(set(field_names)) or len(field_numbers) != len(set(field_numbers)):
                 raise ValueError(f"duplicate field in {message.full_name!r}")
             message.oneofs = tuple(
-                OneofDescriptor(self, item, message, index)
-                for index, item in enumerate(message_proto.oneof_decl)
+                OneofDescriptor(self, item, message, index) for index, item in enumerate(message_proto.oneof_decl)
             )
-            message.oneofs_by_name = MappingProxyType(
-                {item.name: item for item in message.oneofs}
-            )
+            message.oneofs_by_name = MappingProxyType({item.name: item for item in message.oneofs})
             message.fields = tuple(
                 self._field(item, message.file, message, index, messages, enums)
                 for index, item in enumerate(message_proto.field)
             )
-            message.fields_by_name = MappingProxyType(
-                {item.name: item for item in message.fields}
-            )
-            message.fields_by_number = MappingProxyType(
-                {item.number: item for item in message.fields}
-            )
-            message.fields_by_camelcase_name = MappingProxyType(
-                {item.camelcase_name: item for item in message.fields}
-            )
+            message.fields_by_name = MappingProxyType({item.name: item for item in message.fields})
+            message.fields_by_number = MappingProxyType({item.number: item for item in message.fields})
+            message.fields_by_camelcase_name = MappingProxyType({item.camelcase_name: item for item in message.fields})
             message.enum_values_by_name = MappingProxyType(
-                {
-                    value.name: value
-                    for enum in message.enum_types
-                    for value in enum.values
-                }
+                {value.name: value for enum in message.enum_types for value in enum.values}
             )
             for field in message.fields:
                 if field._proto.HasField("oneof_index"):
                     field.containing_oneof = message.oneofs[field._proto.oneof_index]
                     field.containing_oneof.fields += (field,)
-                field.has_presence = (
-                    field.label != descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED
-                    and (
-                        message.file.syntax == "proto2"
-                        or field.type
-                        == descriptor_pb2.FieldDescriptorProto.TYPE_MESSAGE
-                        or field.containing_oneof is not None
-                    )
+                field.has_presence = field.label != descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED and (
+                    message.file.syntax == "proto2"
+                    or field.type == descriptor_pb2.FieldDescriptorProto.TYPE_MESSAGE
+                    or field.containing_oneof is not None
                 )
                 field.is_packed = self._is_packed(field)
                 field.default_value = self._default_value(field)
@@ -608,9 +537,7 @@ class Reflection:
                 for index, item in enumerate(message._proto.extension)
             )
             message.extensions = message_extensions
-            message.extensions_by_name = MappingProxyType(
-                {item.name: item for item in message_extensions}
-            )
+            message.extensions_by_name = MappingProxyType({item.name: item for item in message_extensions})
             for extension in message_extensions:
                 claim(extension.full_name, "extension")
                 extensions[extension.full_name] = extension
@@ -627,9 +554,7 @@ class Reflection:
                 )
                 for index, item in enumerate(file._proto.extension)
             )
-            file.extensions_by_name = MappingProxyType(
-                {item.name: item for item in file_extensions}
-            )
+            file.extensions_by_name = MappingProxyType({item.name: item for item in file_extensions})
             for extension in file_extensions:
                 claim(extension.full_name, "extension")
                 extensions[extension.full_name] = extension
@@ -639,12 +564,9 @@ class Reflection:
             if len(method_names) != len(set(method_names)):
                 raise ValueError(f"duplicate method name in {service.full_name!r}")
             service.methods = tuple(
-                MethodDescriptor(self, item, service, index)
-                for index, item in enumerate(service._proto.method)
+                MethodDescriptor(self, item, service, index) for index, item in enumerate(service._proto.method)
             )
-            service.methods_by_name = MappingProxyType(
-                {item.name: item for item in service.methods}
-            )
+            service.methods_by_name = MappingProxyType({item.name: item for item in service.methods})
             for method in service.methods:
                 method.input_type = messages[method._proto.input_type.lstrip(".")]
                 method.output_type = messages[method._proto.output_type.lstrip(".")]
@@ -709,9 +631,7 @@ class Reflection:
             field.message_type = messages[proto.type_name.lstrip(".")]
         elif proto.type == descriptor_pb2.FieldDescriptorProto.TYPE_ENUM:
             field.enum_type = enums[proto.type_name.lstrip(".")]
-        field.has_presence = (
-            proto.label != descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED
-        )
+        field.has_presence = proto.label != descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED
         field.is_packed = self._is_packed(field)
         field.default_value = self._default_value(field)
         return field
@@ -765,54 +685,34 @@ class Reflection:
                     remaining: list[bytes] = []
                     for raw in pending:
                         try:
-                            pool.AddSerializedFile(  # type: ignore[no-untyped-call, unused-ignore]
-                                raw
-                            )
+                            pool.AddSerializedFile(raw)  # type: ignore[no-untyped-call, unused-ignore]
                         except TypeError:
                             remaining.append(raw)
                     if len(remaining) == len(pending):
-                        raise RuntimeError(
-                            "unable to link private provider descriptors"
-                        )
+                        raise RuntimeError("unable to link private provider descriptors")
                     pending = remaining
                 self._provider_pool = pool
             pool = self._provider_pool
         if isinstance(facade, FileDescriptor):
-            return pool.FindFileByName(  # type: ignore[no-untyped-call, unused-ignore]
-                facade.name
-            )
+            return pool.FindFileByName(facade.name)  # type: ignore[no-untyped-call, unused-ignore]
         if isinstance(facade, MessageDescriptor):
-            return pool.FindMessageTypeByName(  # type: ignore[no-untyped-call, unused-ignore]
-                facade.full_name
-            )
+            return pool.FindMessageTypeByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
         if isinstance(facade, EnumDescriptor):
-            return pool.FindEnumTypeByName(  # type: ignore[no-untyped-call, unused-ignore]
-                facade.full_name
-            )
+            return pool.FindEnumTypeByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
         if isinstance(facade, ServiceDescriptor):
-            return pool.FindServiceByName(  # type: ignore[no-untyped-call, unused-ignore]
-                facade.full_name
-            )
+            return pool.FindServiceByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
         if isinstance(facade, FieldDescriptor) and facade.is_extension:
-            return pool.FindExtensionByName(  # type: ignore[no-untyped-call, unused-ignore]
-                facade.full_name
-            )
+            return pool.FindExtensionByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
         if isinstance(facade, FieldDescriptor):
             if facade.containing_type is None:
                 raise LookupError(facade.full_name)
-            return facade.containing_type.provider_descriptor.fields_by_name[
-                facade.name
-            ]
+            return facade.containing_type.provider_descriptor.fields_by_name[facade.name]
         if isinstance(facade, OneofDescriptor):
-            return facade.containing_type.provider_descriptor.oneofs_by_name[
-                facade.name
-            ]
+            return facade.containing_type.provider_descriptor.oneofs_by_name[facade.name]
         if isinstance(facade, EnumValueDescriptor):
             return facade.type.provider_descriptor.values_by_name[facade.name]
         if isinstance(facade, MethodDescriptor):
-            return facade.containing_service.provider_descriptor.methods_by_name[
-                facade.name
-            ]
+            return facade.containing_service.provider_descriptor.methods_by_name[facade.name]
         parent = facade.file.provider_descriptor
         return self._find_provider(parent, facade.full_name)
 

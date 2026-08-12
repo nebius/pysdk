@@ -33,17 +33,9 @@ from nebius.aio.token.service_account import ServiceAccountBearer
 from nebius.aio.token.static import EnvBearer, NoTokenInEnvError
 from nebius.aio.token.token import Bearer as TokenBearer
 from nebius.aio.token.token import Token
-from nebius.base.constants import (
-    DEFAULT_CONFIG_DIR,
-    DEFAULT_CONFIG_FILE,
-    ENDPOINT_ENV,
-    PROFILE_ENV,
-    TOKEN_ENV,
-)
+from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CONFIG_FILE, ENDPOINT_ENV, PROFILE_ENV, TOKEN_ENV
 from nebius.base.error import SDKError
-from nebius.base.service_account.service_account import (
-    TokenRequester as TokenRequestReader,
-)
+from nebius.base.service_account.service_account import TokenRequester as TokenRequestReader
 
 Credentials = AuthorizationProvider | TokenBearer | TokenRequestReader | Token | str
 
@@ -236,15 +228,11 @@ class Config:
         :raises ConfigError: if the profile contains a non-string parent-id
         """
         if self._no_parent_id:
-            raise NoParentIdError(
-                "Config is set to not use parent id from the profile."
-            )
+            raise NoParentIdError("Config is set to not use parent id from the profile.")
         if "parent-id" not in self._profile:
             raise NoParentIdError("Missing parent-id in the profile.")
         if not isinstance(self._profile["parent-id"], str):
-            raise ConfigError(
-                f"Parent id should be a string, got {type(self._profile['parent-id'])}."
-            )
+            raise ConfigError(f"Parent id should be a string, got {type(self._profile['parent-id'])}.")
         if self._profile["parent-id"] == "":
             raise NoParentIdError("Parent id is empty.")
 
@@ -278,22 +266,15 @@ class Config:
             if "profiles" not in config:
                 raise ConfigError("No profiles found in the config file.")
             if not isinstance(config["profiles"], dict):
-                raise ConfigError(
-                    f"Profiles should be a dictionary, got {type(config['profiles'])}."
-                )
+                raise ConfigError(f"Profiles should be a dictionary, got {type(config['profiles'])}.")
             if not config["profiles"]:
-                raise ConfigError(
-                    "No profiles found in the config file, setup the nebius CLI profile"
-                    " first."
-                )
+                raise ConfigError("No profiles found in the config file, setup the nebius CLI profile first.")
             if self._profile_name is None:
                 if "default" not in config:
                     if len(config["profiles"]) == 1:
                         self._profile_name = next(iter(config["profiles"]))
                     else:
-                        raise ConfigError(
-                            "No default profile found in the config file."
-                        )
+                        raise ConfigError("No default profile found in the config file.")
                 else:
                     self._profile_name = config["default"]
                 if self._profile_name is None:
@@ -305,26 +286,16 @@ class Config:
                     )
             profile = self._profile_name
             if not isinstance(profile, str):
-                raise ConfigError(
-                    f"Profile name should be a string, got {type(profile)}."
-                )
+                raise ConfigError(f"Profile name should be a string, got {type(profile)}.")
             if profile not in config["profiles"]:
                 raise ConfigError(f"Profile {profile} not found in the config file.")
             if not isinstance(config["profiles"][profile], dict):
-                raise ConfigError(
-                    f"Profile {profile} should be a dictionary, got "
-                    f"{type(config['profiles'][profile])}."
-                )
+                raise ConfigError(f"Profile {profile} should be a dictionary, got {type(config['profiles'][profile])}.")
             self._profile: dict[str, Any] = config["profiles"][profile]
 
-            if (
-                self._endpoint is None or self._endpoint.strip() == ""
-            ) and "endpoint" in self._profile:
+            if (self._endpoint is None or self._endpoint.strip() == "") and "endpoint" in self._profile:
                 if not isinstance(self._profile["endpoint"], str):
-                    raise ConfigError(
-                        "Endpoint should be a string, got "
-                        f"{type(self._profile['endpoint'])}."
-                    )
+                    raise ConfigError(f"Endpoint should be a string, got {type(self._profile['endpoint'])}.")
                 self._endpoint = self._profile["endpoint"]
         except Exception:
             self._record_metric(
@@ -411,10 +382,7 @@ class Config:
 
             try:
                 if not isinstance(self._profile["token-file"], str):
-                    raise ConfigError(
-                        "Token file should be a string, got "
-                        f" {type(self._profile['token-file'])}."
-                    )
+                    raise ConfigError(f"Token file should be a string, got {type(self._profile['token-file'])}.")
                 return finish(
                     "token-file",
                     start,
@@ -435,22 +403,16 @@ class Config:
                     raise ConfigError("Missing federation-endpoint in the profile.")
                 if not isinstance(self._profile["federation-endpoint"], str):
                     raise ConfigError(
-                        "Federation endpoint should be a string, got "
-                        f"{type(self._profile['federation-endpoint'])}."
+                        f"Federation endpoint should be a string, got {type(self._profile['federation-endpoint'])}."
                     )
                 if "federation-id" not in self._profile:
                     raise ConfigError("Missing federation-id in the profile.")
                 if not isinstance(self._profile["federation-id"], str):
-                    raise ConfigError(
-                        "Federation id should be a string, got "
-                        f"{type(self._profile['federation-id'])}."
-                    )
+                    raise ConfigError(f"Federation id should be a string, got {type(self._profile['federation-id'])}.")
                 from nebius.aio.token.federation_account import FederationBearer
 
                 if not self._client_id:
-                    raise ConfigError(
-                        "Client ID is required for federation authentication."
-                    )
+                    raise ConfigError("Client ID is required for federation authentication.")
 
                 log.debug(
                     f"Creating FederationBearer with profile {self._profile_name}, "
@@ -488,26 +450,17 @@ class Config:
                 if "service-account-id" in self._profile:
                     if not isinstance(self._profile["service-account-id"], str):
                         raise ConfigError(
-                            "Service account should be a string, got "
-                            f"{type(self._profile['service-account-id'])}."
+                            f"Service account should be a string, got {type(self._profile['service-account-id'])}."
                         )
                     svc_id = self._profile["service-account-id"]
 
-                if (
-                    svc_id is not None
-                    and "federated-subject-credentials-file-path" in self._profile
-                ):
+                if svc_id is not None and "federated-subject-credentials-file-path" in self._profile:
                     if not isinstance(
                         self._profile["federated-subject-credentials-file-path"],
                         str,
                     ):
-                        raise ConfigError(
-                            "federated-subject-credentials-file-path should be "
-                            "a string"
-                        )
-                    from nebius.aio.token.federated_credentials import (
-                        FederatedCredentialsBearer,
-                    )
+                        raise ConfigError("federated-subject-credentials-file-path should be a string")
+                    from nebius.aio.token.federated_credentials import FederatedCredentialsBearer
 
                     return finish(
                         "service-account",
@@ -521,12 +474,8 @@ class Config:
                     )
 
                 if "service-account-credentials-file-path" in self._profile:
-                    if not isinstance(
-                        self._profile["service-account-credentials-file-path"], str
-                    ):
-                        raise ConfigError(
-                            "service-account-credentials-file-path should be a string"
-                        )
+                    if not isinstance(self._profile["service-account-credentials-file-path"], str):
+                        raise ConfigError("service-account-credentials-file-path should be a string")
                     from nebius.base.service_account.credentials_file import (
                         Reader as CredentialsFileReader,
                     )
@@ -549,28 +498,19 @@ class Config:
                 if "public-key-id" not in self._profile:
                     raise ConfigError("Missing public-key-id in the profile.")
                 if not isinstance(self._profile["public-key-id"], str):
-                    raise ConfigError(
-                        "Public key should be a string, got "
-                        f"{type(self._profile['public-key-id'])}."
-                    )
+                    raise ConfigError(f"Public key should be a string, got {type(self._profile['public-key-id'])}.")
                 pk_id = self._profile["public-key-id"]
 
                 if "private-key" in self._profile:
                     if not isinstance(self._profile["private-key"], str):
-                        raise ConfigError(
-                            "Private key should be a string, got "
-                            f"{type(self._profile['private-key'])}."
-                        )
+                        raise ConfigError(f"Private key should be a string, got {type(self._profile['private-key'])}.")
                     pk = serialization.load_pem_private_key(
                         self._profile["private-key"].encode("utf-8"),
                         password=None,
                         backend=default_backend(),
                     )
                     if not isinstance(pk, RSAPrivateKey):
-                        raise ConfigError(
-                            "Private key should be of type RSAPrivateKey, got "
-                            f"{type(pk)}."
-                        )
+                        raise ConfigError(f"Private key should be of type RSAPrivateKey, got {type(pk)}.")
                     return finish(
                         "service-account",
                         start,
@@ -594,9 +534,7 @@ class Config:
                         "service-account",
                         start,
                         ServiceAccountBearer(
-                            service_account=PKFileReader(
-                                self._profile["private-key-file-path"], pk_id, svc_id
-                            ),
+                            service_account=PKFileReader(self._profile["private-key-file-path"], pk_id, svc_id),
                             channel=channel,
                             metrics=self._auth_metrics,
                         ),
@@ -629,18 +567,12 @@ class Config:
             if value is None:
                 return credentials
             if not isinstance(value, str):
-                raise ConfigError(
-                    "Impersonate service account id should be a string, got "
-                    f"{type(value)}."
-                )
+                raise ConfigError(f"Impersonate service account id should be a string, got {type(value)}.")
             service_account_id = value
         if service_account_id == "":
             return credentials
         if not isinstance(credentials, TokenBearer):
-            raise ConfigError(
-                "Impersonation requires token bearer credentials, got "
-                f"{type(credentials)}."
-            )
+            raise ConfigError(f"Impersonation requires token bearer credentials, got {type(credentials)}.")
         from nebius.aio.token.impersonated import CachedBearer as ImpersonatedBearer
 
         return ImpersonatedBearer(

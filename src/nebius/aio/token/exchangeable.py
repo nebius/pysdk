@@ -67,9 +67,7 @@ class UnsupportedResponseError(SDKError):
 
     def __init__(self, expected: str, resp: Any) -> None:
         """Initialize the error."""
-        super().__init__(
-            f"Unsupported response received: expected {expected}, received {type(resp)}"
-        )
+        super().__init__(f"Unsupported response received: expected {expected}, received {type(resp)}")
 
 
 class UnsupportedTokenTypeError(SDKError):
@@ -80,9 +78,7 @@ class UnsupportedTokenTypeError(SDKError):
 
         :param token_type: The token type string received from the server.
         """
-        super().__init__(
-            f"Unsupported token received: expected Bearer, received {token_type}"
-        )
+        super().__init__(f"Unsupported token received: expected Bearer, received {token_type}")
 
 
 class Receiver(ParentReceiver):
@@ -159,9 +155,7 @@ class Receiver(ParentReceiver):
         )
         raise RequestError(self._status) from None
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Perform the exchange RPC and return a :class:`Token`.
 
         :param timeout: Optional RPC timeout in seconds forwarded to the
@@ -194,14 +188,10 @@ class Receiver(ParentReceiver):
                 auth_options={OPTION_TYPE: Types.DISABLE},
             )
         except AioRpcError as e:
-            self._metrics.token_acquire_from_start(
-                METRIC_RESULT_ERROR, start, self._trial
-            )
+            self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._trial)
             self._raise_request_error(e)
         except Exception:
-            self._metrics.token_acquire_from_start(
-                METRIC_RESULT_ERROR, start, self._trial
-            )
+            self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._trial)
             raise
         try:
             if not isinstance(ret, CreateTokenResponse):
@@ -210,10 +200,7 @@ class Receiver(ParentReceiver):
             if ret.token_type != "Bearer":  # noqa: S105 — not a password
                 raise UnsupportedTokenTypeError(ret.token_type)
 
-            log.debug(
-                f"token fetched: {sanitizer.sanitize(ret.access_token)},"
-                f" expires in: {ret.expires_in} seconds."
-            )
+            log.debug(f"token fetched: {sanitizer.sanitize(ret.access_token)}, expires in: {ret.expires_in} seconds.")
             token = Token(
                 token=ret.access_token,
                 expiration=now + timedelta(seconds=ret.expires_in),
@@ -226,9 +213,7 @@ class Receiver(ParentReceiver):
             )
             return token
         except Exception:
-            self._metrics.token_acquire_from_start(
-                METRIC_RESULT_ERROR, start, self._trial
-            )
+            self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._trial)
             raise
 
     def can_retry(
@@ -313,9 +298,7 @@ class Bearer(ParentBearer):
         super().__init__()
         self._requester = requester
         self._max_retries = max_retries
-        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
-            metrics, "token-exchange"
-        )
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, "token-exchange")
 
         self._svc: TokenExchangeServiceClient | None = None
         self._deferred_channel: DeferredChannel | None = None

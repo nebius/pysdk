@@ -106,13 +106,9 @@ def test_registry_composes_package_fragments_and_rejects_duplicates() -> None:
 def test_registry_pack_unpack_and_json_round_trip() -> None:
     namespace = _namespace("Public")
     payload = namespace.payload_type(text="hello", count=7)
-    packed = namespace.registry.pack_any(
-        payload, type_url_prefix="example.invalid/custom/"
-    )
+    packed = namespace.registry.pack_any(payload, type_url_prefix="example.invalid/custom/")
     assert _value(packed, "type_url") == "example.invalid/custom/direct.test.Payload"
-    assert namespace.registry.unpack_any(packed).SerializeToString() == (
-        payload.SerializeToString()
-    )
+    assert namespace.registry.unpack_any(packed).SerializeToString() == (payload.SerializeToString())
 
     expected = {
         "@type": "example.invalid/custom/direct.test.Payload",
@@ -121,9 +117,7 @@ def test_registry_pack_unpack_and_json_round_trip() -> None:
     }
     assert message_to_value(packed) == expected
     parsed = parse_value(expected, namespace.any_type())
-    unpacked = namespace.registry.unpack_any(
-        parsed, expected_type=namespace.payload_type
-    )
+    unpacked = namespace.registry.unpack_any(parsed, expected_type=namespace.payload_type)
     assert _value(unpacked, "text") == "hello"
     assert _value(unpacked, "count") == 7
 
@@ -170,9 +164,7 @@ def test_any_well_known_value_envelope_and_nested_any() -> None:
     }
     assert message_to_value(packed_stamp) == stamp_json
     parsed_stamp = parse_value(stamp_json, namespace.any_type())
-    assert namespace.registry.unpack_any(parsed_stamp).SerializeToString() == (
-        stamp.SerializeToString()
-    )
+    assert namespace.registry.unpack_any(parsed_stamp).SerializeToString() == (stamp.SerializeToString())
 
     nested = namespace.registry.pack_any(packed_stamp)
     assert message_to_value(nested) == {
@@ -187,14 +179,9 @@ def test_registry_identity_isolates_same_proto_names() -> None:
     public_payload = public.payload_type(text="public")
     internal_payload = internal.payload_type(text="internal")
 
-    public_unpacked = public.registry.unpack_any(
-        public.registry.pack_any(public_payload)
-    )
+    public_unpacked = public.registry.unpack_any(public.registry.pack_any(public_payload))
     assert type(public_unpacked) is public.payload_type
-    assert (
-        type(internal.registry.unpack_any(internal.registry.pack_any(internal_payload)))
-        is internal.payload_type
-    )
+    assert type(internal.registry.unpack_any(internal.registry.pack_any(internal_payload))) is internal.payload_type
     for registry, foreign in (
         (public.registry, internal_payload),
         (internal.registry, public_payload),
@@ -240,9 +227,7 @@ def test_any_empty_malformed_unknown_and_expected_type_errors() -> None:
 def test_registry_symbol_mapping_is_immutable_and_validated() -> None:
     namespace = _namespace("Frozen")
     try:
-        namespace.registry.symbols["new.Message"] = MessageReference(
-            factory=lambda: namespace.payload_type
-        )
+        namespace.registry.symbols["new.Message"] = MessageReference(factory=lambda: namespace.payload_type)
     except TypeError:
         pass
     else:

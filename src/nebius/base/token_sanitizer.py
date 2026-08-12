@@ -56,9 +56,7 @@ ACCESS_TOKEN_VERSIONS: dict[str, TokenVersion] = {
         signature_position=NO_SIGNATURE,
         token_parts_count=1,
     ),
-    "NE1": TokenVersion(
-        prefix="ne1", delimiter=".", signature_position=1, token_parts_count=2
-    ),
+    "NE1": TokenVersion(prefix="ne1", delimiter=".", signature_position=1, token_parts_count=2),
 }
 """
 Supported access-token formats.
@@ -68,12 +66,8 @@ The keys are version names. The values describe each format.
 
 CREDENTIALS_VERSIONS: dict[str, TokenVersion] = {
     **ACCESS_TOKEN_VERSIONS,
-    "DE1": TokenVersion(
-        prefix="nd1", delimiter=".", signature_position=1, token_parts_count=2
-    ),
-    "JWT": TokenVersion(
-        prefix="eyJ", delimiter=".", signature_position=2, token_parts_count=3
-    ),
+    "DE1": TokenVersion(prefix="nd1", delimiter=".", signature_position=1, token_parts_count=2),
+    "JWT": TokenVersion(prefix="eyJ", delimiter=".", signature_position=2, token_parts_count=3),
 }
 """
 Supported credential formats.

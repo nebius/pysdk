@@ -31,14 +31,10 @@ V = TypeVar("V")
 _MISSING = object()
 _MESSAGE_HARD_MAX_DEPTH = 100
 _RESET_MASK_MAX_DEPTH = 1000
-_MESSAGE_DECODE_DEPTH: ContextVar[tuple[int, int] | None] = ContextVar(
-    "nebius_message_decode_depth", default=None
-)
-_MESSAGE_ENCODE_DEPTH: ContextVar[tuple[int, int] | None] = ContextVar(
-    "nebius_message_encode_depth", default=None
-)
-_MESSAGE_INITIALIZATION_DEPTH: ContextVar[tuple[int, int, frozenset[int]] | None] = (
-    ContextVar("nebius_message_initialization_depth", default=None)
+_MESSAGE_DECODE_DEPTH: ContextVar[tuple[int, int] | None] = ContextVar("nebius_message_decode_depth", default=None)
+_MESSAGE_ENCODE_DEPTH: ContextVar[tuple[int, int] | None] = ContextVar("nebius_message_encode_depth", default=None)
+_MESSAGE_INITIALIZATION_DEPTH: ContextVar[tuple[int, int, frozenset[int]] | None] = ContextVar(
+    "nebius_message_initialization_depth", default=None
 )
 
 _CREDENTIALS_SANITIZER = TokenSanitizer.credentials_sanitizer()
@@ -93,9 +89,7 @@ class _ExtensionMapping(MutableMapping[Extension[Any], Any]):
         return 0 if values is None else sum(1 for _ in values.present_items())
 
     def __contains__(self, extension: object) -> bool:
-        return isinstance(extension, Extension) and self._message.has_extension(
-            extension
-        )
+        return isinstance(extension, Extension) and self._message.has_extension(extension)
 
 
 class _ConvertedSequence(MutableSequence[Any]):
@@ -238,12 +232,7 @@ class Field:
 
     @property
     def has_presence(self) -> bool:
-        return (
-            self.explicit_presence
-            or self.required
-            or (self.message and not self.map)
-            or self.oneof is not None
-        )
+        return self.explicit_presence or self.required or (self.message and not self.map) or self.oneof is not None
 
 
 class Message:
@@ -300,9 +289,7 @@ class Message:
             else:
                 serializer = getattr(initial_message, "SerializeToString", None)
                 if not callable(serializer):
-                    raise TypeError(
-                        f"expected {self.__class__.__name__} or a serializable message"
-                    )
+                    raise TypeError(f"expected {self.__class__.__name__} or a serializable message")
                 self.ParseFromString(serializer(deterministic=True))
         with self._suspend_reset_mask():
             fields = self.__class__._public_fields_by_python_name()
@@ -310,9 +297,7 @@ class Message:
                 try:
                     field = fields[name]
                 except KeyError as error:
-                    raise TypeError(
-                        f"{self.__class__.__name__} got an unexpected field {name!r}"
-                    ) from error
+                    raise TypeError(f"{self.__class__.__name__} got an unexpected field {name!r}") from error
                 self._set_field(field, value)
 
     @classmethod
@@ -467,9 +452,7 @@ class Message:
             if isinstance(value, (str, bytes)) or not isinstance(value, Iterable):
                 raise TypeError("repeated field requires an iterable")
             converted_values: Iterable[Any] = (
-                (field.from_python(item) for item in value)
-                if field.from_python is not None
-                else value
+                (field.from_python(item) for item in value) if field.from_python is not None else value
             )
             self._repeated(field).replace(converted_values)
             if not self._values[field]:
@@ -539,9 +522,7 @@ class Message:
     def __dir__(self) -> Iterable[str]:
         """List generated fields, oneofs, and nested declarations."""
         names = {field.python_name for field in self.__FIELDS__ if field.public}
-        names.update(
-            field.oneof for field in self.__FIELDS__ if field.public and field.oneof
-        )
+        names.update(field.oneof for field in self.__FIELDS__ if field.public and field.oneof)
         for name, value in vars(self.__class__).items():
             if not name.startswith("_") and isinstance(value, type):
                 names.add(name)
@@ -629,9 +610,7 @@ class Message:
                             field_mask.any = Mask()
                         reset_mask.field_parts[key] = field_mask
                         for item in cast(MapValues[Any, Any], value).values():
-                            pending.append(
-                                (cast(Message, item), field_mask.any, depth + 1)
-                            )
+                            pending.append((cast(Message, item), field_mask.any, depth + 1))
                     continue
 
                 if field.repeated:
@@ -640,9 +619,7 @@ class Message:
                             field_mask.any = Mask()
                         reset_mask.field_parts[key] = field_mask
                         for item in cast(RepeatedValues[Any], value):
-                            pending.append(
-                                (cast(Message, item), field_mask.any, depth + 1)
-                            )
+                            pending.append((cast(Message, item), field_mask.any, depth + 1))
                     continue
 
                 if field.message:
@@ -676,9 +653,7 @@ class Message:
         """
         oneof_name = self.__class__._oneof_python_name(name)
         oneof_fields = [
-            field
-            for field in self.__FIELDS__
-            if oneof_name is not None and field.public and field.oneof == oneof_name
+            field for field in self.__FIELDS__ if oneof_name is not None and field.public and field.oneof == oneof_name
         ]
         if oneof_name is not None and oneof_fields:
             selected = self._oneofs.get(oneof_name)
@@ -706,19 +681,11 @@ class Message:
 
     @classmethod
     def _oneof_python_name(cls, name: str) -> str | None:
-        candidates: set[str] = {
-            field.oneof
-            for field in cls.__FIELDS__
-            if field.public and field.oneof is not None
-        }
+        candidates: set[str] = {field.oneof for field in cls.__FIELDS__ if field.public and field.oneof is not None}
         if name in candidates:
             return name
         return next(
-            (
-                candidate
-                for candidate in candidates
-                if cls.__PY_TO_PB2__.get(candidate, candidate) == name
-            ),
+            (candidate for candidate in candidates if cls.__PY_TO_PB2__.get(candidate, candidate) == name),
             None,
         )
 
@@ -730,9 +697,7 @@ class Message:
         """
         oneof_name = self.__class__._oneof_python_name(name)
         oneof_fields = [
-            field
-            for field in self.__FIELDS__
-            if oneof_name is not None and field.public and field.oneof == oneof_name
+            field for field in self.__FIELDS__ if oneof_name is not None and field.public and field.oneof == oneof_name
         ]
         if oneof_fields and oneof_name is not None:
             selected = self._oneofs.get(oneof_name)
@@ -792,9 +757,7 @@ class Message:
     def _serialize_to_string(self, *, deterministic: bool) -> bytes:
         missing = self.FindInitializationErrors()
         if missing:
-            raise EncodeError(
-                "Message is missing required fields: " + ", ".join(missing)
-            )
+            raise EncodeError("Message is missing required fields: " + ", ".join(missing))
         writer = BinaryWriter()
         for field in sorted(self.__FIELDS__, key=lambda item: item.number):
             value = self._values.get(field)
@@ -811,9 +774,7 @@ class Message:
                     nested.write_tag(1, key_codec.wire_type)
                     key_codec.write(nested, key)
                     nested.write_tag(2, field.codec.wire_type)
-                    field.codec.write_value(
-                        nested, entries[key], deterministic=deterministic
-                    )
+                    field.codec.write_value(nested, entries[key], deterministic=deterministic)
                     writer.write_tag(field.number, WIRE_LENGTH_DELIMITED)
                     writer.write_bytes(nested.to_bytes())
             elif field.repeated:
@@ -825,9 +786,7 @@ class Message:
                     writer.write_packed(values, field.codec.write)
                 else:
                     for item in values:
-                        self._write_field(
-                            writer, field, item, deterministic=deterministic
-                        )
+                        self._write_field(writer, field, item, deterministic=deterministic)
             elif field.has_presence:
                 if field not in self._present:
                     continue
@@ -894,27 +853,19 @@ class Message:
                 if field is not None:
                     if self._try_decode_field(field, reader, wire_type, tag_start):
                         continue
-                    self._unknown_fields.append(
-                        reader.skip_field(field_number, wire_type, tag_start)
-                    )
+                    self._unknown_fields.append(reader.skip_field(field_number, wire_type, tag_start))
                     continue
                 extension = (
-                    self.__class__.__EXTENSION_REGISTRY__.by_number(
-                        self.__class__.__PROTO_FULL_NAME__, field_number
-                    )
+                    self.__class__.__EXTENSION_REGISTRY__.by_number(self.__class__.__PROTO_FULL_NAME__, field_number)
                     if self.__class__.__EXTENSION_REGISTRY__ is not None
                     else None
                 )
                 if extension is not None and self._extensions is not None:
-                    result = self._extensions.try_decode(
-                        extension, reader, wire_type, tag_start
-                    )
+                    result = self._extensions.try_decode(extension, reader, wire_type, tag_start)
                     if result.consumed:
                         self._unknown_fields.extend(result.unknown_fields)
                         continue
-                self._unknown_fields.append(
-                    reader.skip_field(field_number, wire_type, tag_start)
-                )
+                self._unknown_fields.append(reader.skip_field(field_number, wire_type, tag_start))
         return len(payload)
 
     def _try_decode_field(
@@ -943,9 +894,7 @@ class Message:
         if wire_type != codec.wire_type:
             return False
         decoded = codec.read(reader)
-        if self._closed_enum_unknown(
-            field, decoded, packed=False, raw=reader.raw_bytes(tag_start)
-        ):
+        if self._closed_enum_unknown(field, decoded, packed=False, raw=reader.raw_bytes(tag_start)):
             return True
         if field.repeated:
             self._repeated(field).append(decoded)
@@ -1021,11 +970,7 @@ class Message:
         raw: bytes | None = None,
     ) -> bool:
         codec = field.codec
-        if (
-            not codec.closed_enum
-            or codec.enum_values is None
-            or value in codec.enum_values
-        ):
+        if not codec.closed_enum or codec.enum_values is None or value in codec.enum_values:
             return False
         if packed:
             writer = BinaryWriter()
@@ -1061,22 +1006,16 @@ class Message:
                 if field.map:
                     if value:
                         destination = self._map(field)
-                        for key, item in tuple(
-                            cast(MapValues[Any, Any], value).items()
-                        ):
+                        for key, item in tuple(cast(MapValues[Any, Any], value).items()):
                             destination[key] = item
                     continue
                 if field.repeated:
                     if value:
-                        self._repeated(field).extend(
-                            tuple(cast(RepeatedValues[Any], value))
-                        )
+                        self._repeated(field).extend(tuple(cast(RepeatedValues[Any], value)))
                     continue
                 if field.has_presence and field not in other._present:
                     continue
-                if not field.has_presence and (
-                    value is None or value == field.default()
-                ):
+                if not field.has_presence and (value is None or value == field.default()):
                     continue
                 if field.message and field in self._values and field in self._present:
                     merge = field.codec.merge
@@ -1088,9 +1027,7 @@ class Message:
                     self._select(field)
                 else:
                     self._detach_child(field)
-                    self._values[field] = self._bind_child(
-                        field, field.codec.copy(value)
-                    )
+                    self._values[field] = self._bind_child(field, field.codec.copy(value))
                     self._select(field)
             if self._extensions is not None and other._extensions is not None:
                 self._extensions.merge_from(other._extensions)
@@ -1099,9 +1036,7 @@ class Message:
 
     def _check_same_type(self, other: Message) -> None:
         if other.__class__ is not self.__class__:
-            raise TypeError(
-                f"expected {self.__class__.__name__}, got {other.__class__.__name__}"
-            )
+            raise TypeError(f"expected {self.__class__.__name__}, got {other.__class__.__name__}")
 
     def ByteSize(self) -> int:
         """Return the serialized protobuf wire size in bytes."""
@@ -1113,15 +1048,11 @@ class Message:
         :raises EncodeError: If recursive message nesting is too deep.
         """
         state = _MESSAGE_INITIALIZATION_DEPTH.get()
-        depth, limit, active = (
-            (0, self._nesting_limit(), frozenset()) if state is None else state
-        )
+        depth, limit, active = (0, self._nesting_limit(), frozenset()) if state is None else state
         identity = id(self)
         if depth >= limit or identity in active:
             raise EncodeError("protobuf message nesting exceeds the configured limit")
-        token = _MESSAGE_INITIALIZATION_DEPTH.set(
-            (depth + 1, limit, active | {identity})
-        )
+        token = _MESSAGE_INITIALIZATION_DEPTH.set((depth + 1, limit, active | {identity}))
         try:
             return self._find_initialization_errors()
         finally:
@@ -1139,9 +1070,7 @@ class Message:
             elif field.map and field.message and value:
                 for key, item in cast(MapValues[Any, Any], value).items():
                     for nested in item.FindInitializationErrors():
-                        errors.append(
-                            f"{field.proto_name}{self._format_map_key(key)}.{nested}"
-                        )
+                        errors.append(f"{field.proto_name}{self._format_map_key(key)}.{nested}")
             elif field.repeated and field.message and value:
                 for index, item in enumerate(value):
                     for nested in item.FindInitializationErrors():
@@ -1245,9 +1174,7 @@ class Message:
         """
         from .json_format import message_from_json
 
-        return message_from_json(
-            payload, cls(), ignore_unknown_fields=ignore_unknown_fields
-        )
+        return message_from_json(payload, cls(), ignore_unknown_fields=ignore_unknown_fields)
 
 
 def message_codec(message_type: Callable[[], type[M]]) -> ValueCodec[M]:

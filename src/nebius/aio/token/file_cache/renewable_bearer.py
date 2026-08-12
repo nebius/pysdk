@@ -75,9 +75,7 @@ class RenewableFileCacheReceiver(ParentReceiver):
         self._last_saved: Token | None = None
         self._from_cache: bool = True
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Return a cached token when valid or fetch and store a new one.
 
         :param timeout: Pass-through timeout to the wrapped receiver.
@@ -230,9 +228,7 @@ class RenewableFileCacheBearer(ParentBearer):
 
         :raises ValueError: When the wrapped bearer has no name.
         """
-        self.metrics: AuthMetricsRecorder = auth_metrics_recorder(
-            metrics, provider or auth_metric_provider(bearer)
-        )
+        self.metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, provider or auth_metric_provider(bearer))
         self._bearer = cast(ParentBearer, bind_auth_metrics(bearer, self.metrics))
         if isinstance(safety_margin, (float, int)):
             safety_margin = timedelta(seconds=safety_margin)

@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable, MutableSequence
+from collections.abc import Callable, Iterable, Iterator, MutableSequence
 from dataclasses import dataclass
-from typing import Any, Generic, Iterator, TypeVar, cast, overload
+from typing import Any, Generic, TypeVar, cast, overload
 
 from .codec import ValueCodec
 from .wire import WIRE_LENGTH_DELIMITED, BinaryReader, BinaryWriter
@@ -161,9 +161,7 @@ class ExtensionRegistry:
             raise RuntimeError("extension registry is frozen")
         if extension.registry is not self:
             raise ValueError("extension belongs to another registry")
-        if extension.packed and (
-            not extension.repeated or not extension.value_codec.packable
-        ):
+        if extension.packed and (not extension.repeated or not extension.value_codec.packable):
             raise ValueError("only repeated packable extensions may be packed")
         ranges = self._ranges.get(extension.extendee, ())
         if not any(start <= extension.number < end for start, end in ranges):
@@ -303,9 +301,7 @@ class ExtensionValues:
     def find_initialization_errors(self) -> list[str]:
         """Return required-field paths from present message extension values."""
         errors: list[str] = []
-        for extension, value in sorted(
-            self._values.items(), key=lambda item: item[0].number
-        ):
+        for extension, value in sorted(self._values.items(), key=lambda item: item[0].number):
             if extension.value_codec.bind_mutation is None:
                 continue
             name = extension.full_name.rsplit(".", 1)[-1]
@@ -313,9 +309,7 @@ class ExtensionValues:
                 for index, item in enumerate(cast(RepeatedValues[Any], value)):
                     finder = getattr(item, "FindInitializationErrors", None)
                     if callable(finder):
-                        errors.extend(
-                            f"{name}[{index}].{nested}" for nested in finder()
-                        )
+                        errors.extend(f"{name}[{index}].{nested}" for nested in finder())
             elif extension in self._present:
                 finder = getattr(value, "FindInitializationErrors", None)
                 if callable(finder):
@@ -324,9 +318,7 @@ class ExtensionValues:
 
     def present_items(self) -> Iterator[tuple[Extension[Any], Any]]:
         """Iterate present extension values in field-number order."""
-        for extension, value in sorted(
-            self._values.items(), key=lambda item: item[0].number
-        ):
+        for extension, value in sorted(self._values.items(), key=lambda item: item[0].number):
             if extension.repeated:
                 if value:
                     yield extension, value
@@ -347,11 +339,7 @@ class ExtensionValues:
             values = self._repeated(extension)
             unknown: list[bytes] = []
             for value in decoded:
-                if (
-                    codec.closed_enum
-                    and codec.enum_values is not None
-                    and value not in codec.enum_values
-                ):
+                if codec.closed_enum and codec.enum_values is not None and value not in codec.enum_values:
                     writer = BinaryWriter()
                     writer.write_tag(extension.number, codec.wire_type)
                     writer.write_varint(value & 0xFFFFFFFF)
@@ -362,11 +350,7 @@ class ExtensionValues:
         if wire_type != codec.wire_type:
             return ExtensionDecodeResult(False)
         decoded = codec.read(reader)
-        if (
-            codec.closed_enum
-            and codec.enum_values is not None
-            and decoded not in codec.enum_values
-        ):
+        if codec.closed_enum and codec.enum_values is not None and decoded not in codec.enum_values:
             return ExtensionDecodeResult(True, (reader.raw_bytes(tag_start),))
         if extension.repeated:
             self._repeated(extension).append(decoded)
@@ -377,9 +361,7 @@ class ExtensionValues:
             self._mark_present(extension)
         else:
             self._detach_singular(extension)
-            self._values[extension] = self._bind_singular(
-                extension, codec.copy(decoded)
-            )
+            self._values[extension] = self._bind_singular(extension, codec.copy(decoded))
             self._mark_present(extension)
         return ExtensionDecodeResult(True)
 
@@ -430,7 +412,5 @@ class ExtensionValues:
                 self._mark_present(extension)
             else:
                 self._detach_singular(extension)
-                self._values[extension] = self._bind_singular(
-                    extension, codec.copy(value)
-                )
+                self._values[extension] = self._bind_singular(extension, codec.copy(value))
                 self._mark_present(extension)

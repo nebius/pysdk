@@ -41,14 +41,9 @@ async def test_update_instance_v2() -> None:
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
             got_mask = md.get("x-resetmask", "")
-            assert got_mask == (
-                "metadata.(created_at,labels,name,parent_id,resource_version,updated_at),"
-                "spec"
-            )
+            assert got_mask == ("metadata.(created_at,labels,name,parent_id,resource_version,updated_at),spec")
             ua = md.get("user-agent", "")
-            assert ua.startswith(
-                f"a b c test nebius-python-sdk/{sdk_version} (python/3."
-            )
+            assert ua.startswith(f"a b c test nebius-python-sdk/{sdk_version} (python/3.")
             assert ua.endswith(" x y z")
 
             await context.send_initial_metadata(
@@ -176,9 +171,7 @@ async def test_update_list() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         from nebius.aio.operation import Operation
         from nebius.api.nebius.compute.v1 import (
             AttachedFilesystemSpec,

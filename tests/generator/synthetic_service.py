@@ -140,10 +140,7 @@ def _standard_files() -> Iterable[descriptor_pb2.FileDescriptorProto]:
         code_pb2,
         status_pb2,
     )
-    return (
-        descriptor_pb2.FileDescriptorProto.FromString(module.DESCRIPTOR.serialized_pb)
-        for module in modules
-    )
+    return (descriptor_pb2.FileDescriptorProto.FromString(module.DESCRIPTOR.serialized_pb) for module in modules)
 
 
 def synthetic_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:

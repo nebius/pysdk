@@ -50,13 +50,9 @@ _simple_string_pattern = compile("^[a-zA-Z0-9_]+$")
 class Error(Exception):
     """Base error for field mask operations."""
 
-    pass
-
 
 class MarshalError(Error):
     """Raised when parsing or serializing field mask strings fails."""
-
-    pass
 
 
 class FieldKey(str):
@@ -124,9 +120,7 @@ class FieldPath(list[FieldKey]):
                 if isinstance(v, str):  # type: ignore[unused-ignore]
                     v = FieldKey(v)
                 if not isinstance(v, FieldKey):  # type: ignore[unused-ignore]
-                    raise ValueError(
-                        f"base contents should be FieldKey or str, got {type(v)}"
-                    )
+                    raise ValueError(f"base contents should be FieldKey or str, got {type(v)}")
                 self.append(v)
 
     def parent(self) -> "FieldPath|None":
@@ -159,9 +153,7 @@ class FieldPath(list[FieldKey]):
         return ret
 
     @staticmethod
-    def _matches_reset_mask(
-        fp: "FieldPath|list[FieldKey]", mask: "Mask|None"
-    ) -> tuple[bool, bool]:
+    def _matches_reset_mask(fp: "FieldPath|list[FieldKey]", mask: "Mask|None") -> tuple[bool, bool]:
         if not isinstance(mask, Mask):
             return False, False
         if len(fp) == 0:
@@ -172,18 +164,14 @@ class FieldPath(list[FieldKey]):
         if mask.any is not None:
             has_match, is_final = FieldPath._matches_reset_mask(rest, mask.any)
         if key in mask.field_parts:
-            k_match, k_final = FieldPath._matches_reset_mask(
-                rest, mask.field_parts[key]
-            )
+            k_match, k_final = FieldPath._matches_reset_mask(rest, mask.field_parts[key])
             has_match |= k_match
             if k_match:
                 is_final |= k_final
         return has_match, is_final
 
     @staticmethod
-    def _matches_select_mask(
-        fp: "FieldPath|list[FieldKey]", mask: "Mask|None"
-    ) -> tuple[bool, bool]:
+    def _matches_select_mask(fp: "FieldPath|list[FieldKey]", mask: "Mask|None") -> tuple[bool, bool]:
         if mask is None or mask.is_empty():
             return True, len(fp) != 0
         if len(fp) == 0:
@@ -194,9 +182,7 @@ class FieldPath(list[FieldKey]):
         if mask.any is not None:
             has_match, is_inner = FieldPath._matches_select_mask(rest, mask.any)
         if key in mask.field_parts:
-            k_match, k_final = FieldPath._matches_select_mask(
-                rest, mask.field_parts[key]
-            )
+            k_match, k_final = FieldPath._matches_select_mask(rest, mask.field_parts[key])
             has_match |= k_match
             if k_match:
                 is_inner |= k_final
@@ -272,9 +258,7 @@ class FieldPath(list[FieldKey]):
             if isinstance(v, str):  # type: ignore[unused-ignore]
                 v = FieldKey(v)
             if not isinstance(v, FieldKey):  # type: ignore[unused-ignore]
-                raise ValueError(
-                    f"value contents should be FieldKey or str, got {type(v)}"
-                )
+                raise ValueError(f"value contents should be FieldKey or str, got {type(v)}")
             self.append(v)
         return self
 
@@ -369,13 +353,9 @@ class Mask:
                 if isinstance(k, str):  # type: ignore[unused-ignore]
                     k = FieldKey(k)
                 if not isinstance(k, FieldKey):  # type: ignore[unused-ignore]
-                    raise ValueError(
-                        f"field_parts keys should be FieldKey or str, got {type(k)}"
-                    )
+                    raise ValueError(f"field_parts keys should be FieldKey or str, got {type(k)}")
                 if not isinstance(v, Mask):  # type: ignore[unused-ignore]
-                    raise ValueError(
-                        f"field_parts values should be of type Mask, got {type(v)}"
-                    )
+                    raise ValueError(f"field_parts values should be of type Mask, got {type(v)}")
                 self.field_parts[k] = v
 
     def is_empty(self) -> bool:
@@ -526,9 +506,7 @@ class Mask:
                 children = list[tuple[str, Mask]]()
                 if mask.any is not None:
                     children.append(("*", mask.any))
-                children.extend(
-                    (key.marshal(), value) for key, value in mask.field_parts.items()
-                )
+                children.extend((key.marshal(), value) for key, value in mask.field_parts.items())
                 ret = list[str]()
                 for key, child in children:
                     counter, mask_str = results[id(child)]
