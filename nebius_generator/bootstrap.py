@@ -102,9 +102,7 @@ def normalize_request(request: CodeGeneratorRequest) -> CodeGeneratorRequest:
     return normalized
 
 
-def include_file_descriptors(
-    request: CodeGeneratorRequest, names: tuple[str, ...]
-) -> None:
+def include_file_descriptors(request: CodeGeneratorRequest, names: tuple[str, ...]) -> None:
     """Add committed descriptors and their dependencies to a plugin request."""
     present = {file.name for file in request.proto_file}
     pending = list(names)

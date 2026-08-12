@@ -26,10 +26,7 @@ class WrongTypeError(Exception):
     """
 
     def __init__(self, name: str, exp_type: type[T], received: Any) -> None:
-        super().__init__(
-            f"Option with name {name} expected type is {type(exp_type)},"
-            f" found {type(received)}"
-        )
+        super().__init__(f"Option with name {name} expected type is {type(exp_type)}, found {type(received)}")
 
 
 def pop_option(

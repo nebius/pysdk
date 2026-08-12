@@ -88,10 +88,7 @@ def test_metrics_callbacks_can_be_set_at_creation() -> None:
     metrics_module.emit_metric(metrics, ("config_load", "configLoad"), metric)
 
     assert events == [metric]
-    assert (
-        metrics.callback_timeout_seconds
-        == metrics_module.DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
-    )
+    assert metrics.callback_timeout_seconds == metrics_module.DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
 
 
 @pytest.mark.asyncio

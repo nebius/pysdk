@@ -30,16 +30,8 @@ change request or authentication behavior.
 from __future__ import annotations
 
 import os
-from asyncio import (
-    CancelledError,
-    Task,
-    create_task,
-    get_running_loop,
-    wait_for,
-)
-from asyncio import (
-    run as asyncio_run,
-)
+from asyncio import CancelledError, Task, create_task, get_running_loop, wait_for
+from asyncio import run as asyncio_run
 from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -49,11 +41,7 @@ from threading import Lock
 from time import monotonic
 from typing import Literal, SupportsFloat, SupportsIndex, cast
 
-from nebius.aio._task_context import (
-    bridge_awaitable,
-    dispose_unstarted_awaitable,
-    task_scheduler,
-)
+from nebius.aio._task_context import bridge_awaitable, dispose_unstarted_awaitable, task_scheduler
 from nebius.aio.token.token import Bearer as _TokenBearer
 from nebius.aio.token.token import Receiver as _TokenReceiver
 from nebius.aio.token.token import Token as _Token
@@ -151,9 +139,7 @@ class Metrics:
     callback_timeout_seconds: object = DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
 
     def __post_init__(self) -> None:
-        self.callback_timeout_seconds = sanitize_metric_callback_timeout_seconds(
-            self.callback_timeout_seconds
-        )
+        self.callback_timeout_seconds = sanitize_metric_callback_timeout_seconds(self.callback_timeout_seconds)
 
 
 @dataclass
@@ -195,11 +181,7 @@ class AuthMetricsRecorder:
 
     def __init__(self, metrics: AuthMetricsLike, provider: str) -> None:
         self._cell: _AuthMetricsCell
-        self._cell = (
-            metrics._cell
-            if isinstance(metrics, AuthMetricsRecorder)
-            else _AuthMetricsCell(metrics)
-        )
+        self._cell = metrics._cell if isinstance(metrics, AuthMetricsRecorder) else _AuthMetricsCell(metrics)
         self.provider = provider
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
@@ -210,9 +192,7 @@ class AuthMetricsRecorder:
             return
         self._cell.metrics = metrics
 
-    def token_acquire(
-        self, result: MetricResult, duration_seconds: float, attempt: int
-    ) -> None:
+    def token_acquire(self, result: MetricResult, duration_seconds: float, attempt: int) -> None:
         """Emit a token acquisition event."""
 
         emit_metric(
@@ -326,9 +306,7 @@ class AuthMetricsRecorder:
         )
 
 
-def auth_metrics_recorder(
-    metrics: AuthMetricsLike, provider: str
-) -> AuthMetricsRecorder:
+def auth_metrics_recorder(metrics: AuthMetricsLike, provider: str) -> AuthMetricsRecorder:
     """Create an auth metrics recorder, preserving shared callback cells."""
 
     return AuthMetricsRecorder(metrics, provider)
@@ -343,11 +321,7 @@ def record_config_metric(
 ) -> None:
     """Emit a config-reader metric."""
 
-    names = (
-        ("config_load", "configLoad")
-        if kind == "config_load"
-        else ("credentials_resolve", "credentialsResolve")
-    )
+    names = ("config_load", "configLoad") if kind == "config_load" else ("credentials_resolve", "credentialsResolve")
     emit_metric(
         metrics,
         names,
@@ -407,14 +381,10 @@ def bind_auth_metrics(bearer: object, metrics: AuthMetricsLike) -> object:
 
     if not isinstance(bearer, _TokenBearer):
         return bearer
-    return _InstrumentedBearer(
-        bearer, auth_metrics_recorder(metrics, auth_metric_provider(bearer))
-    )
+    return _InstrumentedBearer(bearer, auth_metrics_recorder(metrics, auth_metric_provider(bearer)))
 
 
-def _metric_callback(
-    metrics: object | None, names: tuple[str, str]
-) -> Callable[[object], object] | None:
+def _metric_callback(metrics: object | None, names: tuple[str, str]) -> Callable[[object], object] | None:
     if metrics is None:
         return None
     if isinstance(metrics, Mapping):
@@ -574,9 +544,7 @@ def _run_metric_awaitable(awaitable: Awaitable[object], timeout: float) -> None:
         dispose_unstarted_awaitable(awaitable)
 
 
-def _apply_metrics_setter(
-    bearer: object, metrics: AuthMetricsLike, seen: set[int] | None = None
-) -> bool:
+def _apply_metrics_setter(bearer: object, metrics: AuthMetricsLike, seen: set[int] | None = None) -> bool:
     if seen is None:
         seen = set()
     ident = id(bearer)
@@ -610,31 +578,21 @@ class _InstrumentedReceiver(_TokenReceiver):
         latest = getattr(self._receiver, "latest", None)
         return latest if isinstance(latest, _Token) else None
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> _Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> _Token:
         self._attempt += 1
         start = metric_start()
         try:
             token = await self._receiver.fetch(timeout=timeout, options=options)
         except Exception:
-            self._metrics.token_acquire_from_start(
-                METRIC_RESULT_ERROR, start, self._attempt
-            )
+            self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._attempt)
             raise
         if not isinstance(token, _Token):
-            self._metrics.token_acquire_from_start(
-                METRIC_RESULT_ERROR, start, self._attempt
-            )
+            self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._attempt)
             raise TypeError(f"Expected Token from receiver, got {type(token)}")
-        self._metrics.token_acquire_from_start(
-            METRIC_RESULT_SUCCESS, start, self._attempt, token
-        )
+        self._metrics.token_acquire_from_start(METRIC_RESULT_SUCCESS, start, self._attempt, token)
         return token
 
-    async def fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> _Token:
+    async def fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> _Token:
         """Fetch a token and record the result."""
 
         return await super().fetch(timeout=timeout, options=options)

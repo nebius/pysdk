@@ -87,11 +87,7 @@ class Registry:
         self._cache: dict[str, type[Message]] = {}
         self._enum_cache: dict[str, type[IntEnum]] = {}
         self._lock = RLock()
-        self.reflection = (
-            Reflection(serialized_files, self._decode_options)
-            if serialized_files
-            else None
-        )
+        self.reflection = Reflection(serialized_files, self._decode_options) if serialized_files else None
 
     @classmethod
     def from_fragments(cls, fragments: Iterable[RegistryFragment]) -> Registry:
@@ -131,21 +127,14 @@ class Registry:
             try:
                 reference = self._symbols[canonical]
             except KeyError as error:
-                raise LookupError(
-                    f"message {canonical!r} is not registered in this namespace"
-                ) from error
+                raise LookupError(f"message {canonical!r} is not registered in this namespace") from error
             message_type = reference.resolve()
             from .direct import Message
 
-            if not isinstance(message_type, type) or not issubclass(
-                message_type, Message
-            ):
+            if not isinstance(message_type, type) or not issubclass(message_type, Message):
                 raise TypeError(f"symbol {canonical!r} is not a direct Message class")
-            if message_type.__PROTO_FULL_NAME__ != canonical:
-                raise ValueError(
-                    f"symbol {canonical!r} resolved to "
-                    f"{message_type.__PROTO_FULL_NAME__!r}"
-                )
+            if canonical != message_type.__PROTO_FULL_NAME__:
+                raise ValueError(f"symbol {canonical!r} resolved to {message_type.__PROTO_FULL_NAME__!r}")
             if message_type.__REGISTRY__ is not self:
                 raise ValueError(f"symbol {canonical!r} belongs to another registry")
             self._cache[canonical] = message_type
@@ -161,9 +150,7 @@ class Registry:
             try:
                 reference = self._enum_symbols[canonical]
             except KeyError as error:
-                raise LookupError(
-                    f"enum {canonical!r} is not registered in this namespace"
-                ) from error
+                raise LookupError(f"enum {canonical!r} is not registered in this namespace") from error
             enum_type = reference.resolve()
             if not isinstance(enum_type, type) or not issubclass(enum_type, IntEnum):
                 raise TypeError(f"symbol {canonical!r} is not an IntEnum class")
@@ -255,8 +242,5 @@ class Registry:
             if expected_type.__REGISTRY__ is not self:
                 raise ValueError("expected Any type belongs to another registry")
             if message_type is not expected_type:
-                raise ValueError(
-                    f"Any contains {full_name!r}, expected "
-                    f"{expected_type.__PROTO_FULL_NAME__!r}"
-                )
+                raise ValueError(f"Any contains {full_name!r}, expected {expected_type.__PROTO_FULL_NAME__!r}")
         return message_type._from_string(payload)

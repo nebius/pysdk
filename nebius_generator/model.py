@@ -180,11 +180,7 @@ def _cleanup_comment(comment: str) -> str:
         negative = exclusion.startswith("^")
         selected = exclusion.removeprefix("^")
         tools = {item.strip() for item in selected.split(",") if item.strip()}
-        excluded = bool(
-            "all" in tools
-            or "api" in tools
-            or {"public", "api-public"}.intersection(tools)
-        )
+        excluded = bool("all" in tools or "api" in tools or {"public", "api-public"}.intersection(tools))
         if excluded == negative:
             result.append(_COMMENT_DIRECTIVE.sub("", line).removeprefix(" "))
     return "\n".join(result)
@@ -241,10 +237,7 @@ class Options:
 
 def _validate_package(package: str, label: str) -> None:
     if not package or any(
-        not part.isidentifier()
-        or keyword.iskeyword(part)
-        or keyword.issoftkeyword(part)
-        for part in package.split(".")
+        not part.isidentifier() or keyword.iskeyword(part) or keyword.issoftkeyword(part) for part in package.split(".")
     ):
         raise GeneratorError(f"invalid {label} {package!r}")
 
@@ -326,10 +319,7 @@ class Graph:
         self.files = MappingProxyType(files)
         self.annotations = Annotations(files)
         self._source_comments = MappingProxyType(
-            {
-                name: MappingProxyType(self._comments_for_file(file))
-                for name, file in files.items()
-            }
+            {name: MappingProxyType(self._comments_for_file(file)) for name, file in files.items()}
         )
         self.requested = frozenset(request.file_to_generate)
         (
@@ -376,40 +366,16 @@ class Graph:
         view = object.__new__(Graph)
         view.options = self.options
         view.annotations = self.annotations
-        view.files = MappingProxyType(
-            {name: self.files[name] for name in sorted(source_files)}
-        )
-        view._source_comments = MappingProxyType(
-            {name: self._source_comments[name] for name in sorted(source_files)}
-        )
-        view.requested = frozenset(
-            name for name in self.requested if name in source_files
-        )
+        view.files = MappingProxyType({name: self.files[name] for name in sorted(source_files)})
+        view._source_comments = MappingProxyType({name: self._source_comments[name] for name in sorted(source_files)})
+        view.requested = frozenset(name for name in self.requested if name in source_files)
         view.emitted_files = source_files
-        owned_messages = {
-            name: model
-            for name, model in self.messages.items()
-            if model.source_file in source_files
-        }
+        owned_messages = {name: model for name, model in self.messages.items() if model.source_file in source_files}
         messages = dict(owned_messages)
-        enums = {
-            name: model
-            for name, model in self.enums.items()
-            if model.source_file in source_files
-        }
-        extensions = {
-            name: model
-            for name, model in self.extensions.items()
-            if model.source_file in source_files
-        }
-        services = {
-            name: model
-            for name, model in self.services.items()
-            if model.source_file in source_files
-        }
-        fields = [
-            field for model in owned_messages.values() for field in model.proto.field
-        ]
+        enums = {name: model for name, model in self.enums.items() if model.source_file in source_files}
+        extensions = {name: model for name, model in self.extensions.items() if model.source_file in source_files}
+        services = {name: model for name, model in self.services.items() if model.source_file in source_files}
+        fields = [field for model in owned_messages.values() for field in model.proto.field]
         fields.extend(model.proto for model in extensions.values())
         for field in tuple(fields):
             if field.type == descriptor_pb2.FieldDescriptorProto.TYPE_MESSAGE:
@@ -429,9 +395,7 @@ class Graph:
                     "nebius.common.v1.Operation",
                     "nebius.common.v1alpha1.Operation",
                 }:
-                    operation_service_name = (
-                        output_name.rsplit(".", 1)[0] + ".OperationService"
-                    )
+                    operation_service_name = output_name.rsplit(".", 1)[0] + ".OperationService"
                     operation_service = self.services.get(operation_service_name)
                     if operation_service is not None:
                         services[operation_service_name] = operation_service
@@ -457,15 +421,11 @@ class Graph:
             if model.source_file in source_files
         ) + tuple(f"{model.full_name}." for model in enums.values())
         view._python_names = {
-            key: value
-            for key, value in self._python_names.items()
-            if key[1].startswith(owned_prefixes)
+            key: value for key, value in self._python_names.items() if key[1].startswith(owned_prefixes)
         }
         view._symbols = {}
         view.active_messages = frozenset(owned_messages)
-        view.active_enums = frozenset(
-            name for name, model in enums.items() if model.source_file in source_files
-        )
+        view.active_enums = frozenset(name for name, model in enums.items() if model.source_file in source_files)
         view.active_services = frozenset(view.services)
         view.active_extensions = frozenset(extensions)
         return view
@@ -546,21 +506,14 @@ class Graph:
 
     def _check_output_packages(self) -> None:
         outputs: dict[str, str] = {}
-        for proto_package in sorted(
-            {self.files[name].package for name in self.emitted_files}
-        ):
+        for proto_package in sorted({self.files[name].package for name in self.emitted_files}):
             reserved = proto_package.split(".", 1)[0]
             if reserved in {"_registry", "_registry_fragment"}:
-                raise GeneratorError(
-                    f"proto package {reserved!r} conflicts with generated registry"
-                )
+                raise GeneratorError(f"proto package {reserved!r} conflicts with generated registry")
             output = self.output_package(proto_package)
             previous = outputs.get(output)
             if previous is not None and previous != proto_package:
-                raise GeneratorError(
-                    f"proto packages {previous!r} and {proto_package!r} "
-                    f"share output {output!r}"
-                )
+                raise GeneratorError(f"proto packages {previous!r} and {proto_package!r} share output {output!r}")
             outputs[output] = proto_package
 
     def _runtime_symbols(
@@ -679,9 +632,7 @@ class Graph:
                 }:
                     activate(value.type_name)
 
-        emitted_files = frozenset(
-            top_level[symbol][0] for symbols in active.values() for symbol in symbols
-        )
+        emitted_files = frozenset(top_level[symbol][0] for symbols in active.values() for symbol in symbols)
         return (
             emitted_files,
             frozenset(active["message"]),
@@ -703,9 +654,7 @@ class Graph:
     def _claim_symbol(self, full_name: str, kind: str) -> None:
         previous = self._symbols.get(full_name)
         if previous is not None:
-            raise GeneratorError(
-                f"duplicate protobuf symbol {full_name!r}: {previous} and {kind}"
-            )
+            raise GeneratorError(f"duplicate protobuf symbol {full_name!r}: {previous} and {kind}")
         self._symbols[full_name] = kind
 
     def _build(self) -> None:
@@ -716,9 +665,7 @@ class Graph:
             _validate_package(file.package, "proto package") if file.package else None
             syntax = file.syntax or "proto2"
             if syntax == "editions" or file.HasField("edition"):
-                raise GeneratorError(
-                    f"protobuf editions are not supported: {file.name}"
-                )
+                raise GeneratorError(f"protobuf editions are not supported: {file.name}")
 
             def add_enum(
                 proto: FrozenMessage,
@@ -760,15 +707,9 @@ class Graph:
                         python_name(value.name),
                         "enum_value",
                     )
-                    self._python_names[("enum_value", f"{full_name}.{value.name}")] = (
-                        value_python_name
-                    )
-                    reserved_wrapped_name = value_python_name.startswith(
-                        "_"
-                    ) and value_python_name.endswith("_")
-                    private_mangled = value_python_name.startswith(
-                        "__"
-                    ) and not value_python_name.endswith("__")
+                    self._python_names[("enum_value", f"{full_name}.{value.name}")] = value_python_name
+                    reserved_wrapped_name = value_python_name.startswith("_") and value_python_name.endswith("_")
+                    private_mangled = value_python_name.startswith("__") and not value_python_name.endswith("__")
                     if (
                         value_python_name in python_value_names
                         or value_python_name in _ENUM_RUNTIME_NAMES
@@ -776,9 +717,7 @@ class Graph:
                         or private_mangled
                     ):
                         full_value_name = f"{full_name}.{value_python_name}"
-                        raise GeneratorError(
-                            f"Python enum value collision {full_value_name}"
-                        )
+                        raise GeneratorError(f"Python enum value collision {full_value_name}")
                     python_value_names.add(value_python_name)
                     self._claim_symbol(self.qualify(prefix, value.name), "enum value")
 
@@ -816,33 +755,25 @@ class Graph:
                 if len(oneof_names) != len(set(oneof_names)):
                     raise GeneratorError(f"duplicate oneof in {full_name!r}")
                 for oneof in proto.oneof_decl:
-                    self._python_names[("oneof", f"{full_name}.{oneof.name}")] = (
-                        self.annotations.python_name(
-                            oneof.options,
-                            "oneof",
-                            python_name(oneof.name),
-                            "field",
-                        )
+                    self._python_names[("oneof", f"{full_name}.{oneof.name}")] = self.annotations.python_name(
+                        oneof.options,
+                        "oneof",
+                        python_name(oneof.name),
+                        "field",
                     )
                 for field in proto.field:
                     if field.name in field_names or field.number in field_numbers:
                         raise GeneratorError(f"duplicate field in {full_name!r}")
                     field_names.add(field.name)
                     field_numbers.add(field.number)
-                    self._python_names[("field", f"{full_name}.{field.name}")] = (
-                        self.annotations.python_name(
-                            field.options,
-                            "field",
-                            python_name(field.name),
-                            "field",
-                        )
+                    self._python_names[("field", f"{full_name}.{field.name}")] = self.annotations.python_name(
+                        field.options,
+                        "field",
+                        python_name(field.name),
+                        "field",
                     )
-                    if field.HasField("oneof_index") and not (
-                        0 <= field.oneof_index < len(proto.oneof_decl)
-                    ):
-                        raise GeneratorError(
-                            f"invalid oneof index in {full_name}.{field.name}"
-                        )
+                    if field.HasField("oneof_index") and not (0 <= field.oneof_index < len(proto.oneof_decl)):
+                        raise GeneratorError(f"invalid oneof index in {full_name}.{field.name}")
                     self._claim_symbol(self.qualify(full_name, field.name), "field")
                 for index, nested in enumerate(proto.nested_type):
                     add_message(
@@ -946,9 +877,7 @@ class Graph:
                 if field.type == descriptor_pb2.FieldDescriptorProto.TYPE_MESSAGE:
                     target = field.type_name.lstrip(".")
                     if target not in self.messages:
-                        raise GeneratorError(
-                            f"unknown message type {field.type_name!r}"
-                        )
+                        raise GeneratorError(f"unknown message type {field.type_name!r}")
                 if field.type == descriptor_pb2.FieldDescriptorProto.TYPE_ENUM:
                     target = field.type_name.lstrip(".")
                     if target not in self.enums:
@@ -957,17 +886,15 @@ class Graph:
             method_names: set[str] = set()
             for method in service_model.proto.method:
                 if method.name in method_names:
-                    raise GeneratorError(
-                        f"duplicate method in {service_model.full_name!r}"
-                    )
+                    raise GeneratorError(f"duplicate method in {service_model.full_name!r}")
                 method_names.add(method.name)
-                self._python_names[
-                    ("method", f"{service_model.full_name}.{method.name}")
-                ] = self.annotations.python_name(
-                    method.options,
-                    "method",
-                    _snake_method(method.name),
-                    "method",
+                self._python_names[("method", f"{service_model.full_name}.{method.name}")] = (
+                    self.annotations.python_name(
+                        method.options,
+                        "method",
+                        _snake_method(method.name),
+                        "method",
+                    )
                 )
                 for target in (method.input_type, method.output_type):
                     if target.lstrip(".") not in self.messages:
@@ -1079,18 +1006,12 @@ class Graph:
                 "Enum",
                 "Field",
             }
-            if (name in module_reserved and not standard_runtime_alias) or re.fullmatch(
-                r"_impl_[0-9]+", name
-            ):
-                raise GeneratorError(
-                    f"Python symbol {full_name} shadows generated import {name}"
-                )
+            if (name in module_reserved and not standard_runtime_alias) or re.fullmatch(r"_impl_[0-9]+", name):
+                raise GeneratorError(f"Python symbol {full_name} shadows generated import {name}")
             names = package_names.setdefault(package, {})
             previous = names.get(name)
             if previous is not None:
-                raise GeneratorError(
-                    f"Python symbol collision {name!r}: {previous} and {full_name}"
-                )
+                raise GeneratorError(f"Python symbol collision {name!r}: {previous} and {full_name}")
             names[name] = full_name
 
         for message in self.messages.values():
@@ -1143,9 +1064,7 @@ class Graph:
             *(item.package for item in self.services.values()),
             *(item.package for item in self.extensions.values()),
         }
-        output_packages = {
-            package: self.output_package(package) for package in emitted_packages
-        }
+        output_packages = {package: self.output_package(package) for package in emitted_packages}
         for parent, parent_output in output_packages.items():
             descendants: set[str] = set()
             for child, child_output in output_packages.items():
@@ -1166,14 +1085,8 @@ class Graph:
             for field in message.proto.field:
                 name = self.field_python_name(message, field)
                 private_mangled = name.startswith("__") and not name.endswith("__")
-                if (
-                    name in _MESSAGE_RUNTIME_NAMES
-                    or name in python_fields
-                    or private_mangled
-                ):
-                    raise GeneratorError(
-                        f"Python field collision {message.full_name}.{name}"
-                    )
+                if name in _MESSAGE_RUNTIME_NAMES or name in python_fields or private_mangled:
+                    raise GeneratorError(f"Python field collision {message.full_name}.{name}")
                 python_fields[name] = field.name
             python_oneofs: dict[str, str] = {}
             for oneof in message.proto.oneof_decl:
@@ -1184,14 +1097,9 @@ class Graph:
                     or name in python_fields.values()
                     or name in _MESSAGE_RUNTIME_NAMES
                 ):
-                    raise GeneratorError(
-                        f"Python oneof collision {message.full_name}.{name}"
-                    )
+                    raise GeneratorError(f"Python oneof collision {message.full_name}.{name}")
                 python_oneofs[name] = oneof.name
-            proto_oneofs = {
-                proto_name: python_name
-                for python_name, proto_name in python_oneofs.items()
-            }
+            proto_oneofs = {proto_name: python_name for python_name, proto_name in python_oneofs.items()}
             for python_name, proto_name in python_oneofs.items():
                 other_python_name = proto_oneofs.get(python_name)
                 if other_python_name is not None and other_python_name != python_name:
@@ -1200,15 +1108,11 @@ class Graph:
                         f"generated from {proto_name} and protobuf oneof {python_name}"
                     )
             child_names = {
-                self.messages[
-                    f"{message.full_name}.{item.name}"
-                ].python_qualname.rsplit(".", 1)[-1]
+                self.messages[f"{message.full_name}.{item.name}"].python_qualname.rsplit(".", 1)[-1]
                 for item in message.proto.nested_type
             }
             child_names.update(
-                self.enums[f"{message.full_name}.{item.name}"].python_qualname.rsplit(
-                    ".", 1
-                )[-1]
+                self.enums[f"{message.full_name}.{item.name}"].python_qualname.rsplit(".", 1)[-1]
                 for item in message.proto.enum_type
             )
             extension_owners: dict[str, str] = {}
@@ -1222,16 +1126,12 @@ class Graph:
                 extension_owners[item.python_name] = item.full_name
             extension_names = set(extension_owners)
             attachment_runtime_names = {
-                generated_type_alias(
-                    self.messages[f"{message.full_name}.{item.name}"].full_name
-                )
+                generated_type_alias(self.messages[f"{message.full_name}.{item.name}"].full_name)
                 for item in message.proto.nested_type
                 if not item.options.map_entry
             }
             attachment_runtime_names.update(
-                generated_type_alias(
-                    self.enums[f"{message.full_name}.{item.name}"].full_name
-                )
+                generated_type_alias(self.enums[f"{message.full_name}.{item.name}"].full_name)
                 for item in message.proto.enum_type
             )
             generated_oneof_owners: dict[str, str] = {}
@@ -1240,16 +1140,13 @@ class Graph:
                 previous = generated_oneof_owners.get(name)
                 if previous is not None:
                     raise GeneratorError(
-                        f"Python oneof helper collision {message.full_name}.{name}: "
-                        f"{previous} and {owner}"
+                        f"Python oneof helper collision {message.full_name}.{name}: {previous} and {owner}"
                     )
                 generated_oneof_owners[name] = owner
 
             for index, oneof in enumerate(message.proto.oneof_decl):
                 oneof_name = self.oneof_python_name(message, oneof)
-                claim_oneof_helper(
-                    f"__OneOfClass_{oneof_name}__", f"oneof {oneof.name}"
-                )
+                claim_oneof_helper(f"__OneOfClass_{oneof_name}__", f"oneof {oneof.name}")
                 for field in message.proto.field:
                     if not field.HasField("oneof_index") or field.oneof_index != index:
                         continue
@@ -1259,33 +1156,22 @@ class Graph:
                         f"field {field.name}",
                     )
             generated_oneof_names = set(generated_oneof_owners)
-            runtime_collisions = (child_names | extension_names) & (
-                _MESSAGE_RUNTIME_NAMES | attachment_runtime_names
-            )
+            runtime_collisions = (child_names | extension_names) & (_MESSAGE_RUNTIME_NAMES | attachment_runtime_names)
             if runtime_collisions:
-                raise GeneratorError(
-                    f"Python member collision {message.full_name}."
-                    f"{min(runtime_collisions)}"
-                )
-            collisions = set(python_fields) & (
-                child_names | extension_names | generated_oneof_names
-            )
+                raise GeneratorError(f"Python member collision {message.full_name}.{min(runtime_collisions)}")
+            collisions = set(python_fields) & (child_names | extension_names | generated_oneof_names)
             collisions |= child_names & extension_names
             collisions |= set(python_oneofs) & (child_names | extension_names)
             collisions |= generated_oneof_names & (child_names | extension_names)
             if collisions:
-                raise GeneratorError(
-                    f"Python member collision {message.full_name}.{min(collisions)}"
-                )
+                raise GeneratorError(f"Python member collision {message.full_name}.{min(collisions)}")
         for service in self.services.values():
             names: set[str] = set(_CLIENT_RUNTIME_NAMES)
             for method in service.proto.method:
                 name = self.method_python_name(service, method)
                 private_mangled = name.startswith("__") and not name.endswith("__")
                 if name in names or private_mangled:
-                    raise GeneratorError(
-                        f"Python method collision {service.full_name}.{name}"
-                    )
+                    raise GeneratorError(f"Python method collision {service.full_name}.{name}")
                 names.add(name)
 
 

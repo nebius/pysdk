@@ -102,17 +102,13 @@ class StreamRequest(Generic[Req, Res]):
             raise ValueError("A StreamRequest object requires a streaming RPC shape.")
         if unsupported:
             name = min(unsupported)
-            raise TypeError(
-                f"The SDK does not support the streaming request option {name!r}."
-            )
+            raise TypeError(f"The SDK does not support the streaming request option {name!r}.")
         self._channel = channel
         self._route = route
         # A request iterator is stateful and cannot be cloned generically. A
         # unary request, however, must be fixed before it crosses to the SDK
         # loop so caller-side mutation cannot change what is transmitted.
-        self._request = (
-            request if client_streaming else _snapshot_request_input(request)
-        )
+        self._request = request if client_streaming else _snapshot_request_input(request)
         self._result_class = result_class
         self._client_streaming = client_streaming
         self._server_streaming = server_streaming
@@ -155,17 +151,14 @@ class StreamRequest(Generic[Req, Res]):
 
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "You cannot use an SDK stream after a fork. Create SDK objects "
-                "after the child process starts."
+                "You cannot use an SDK stream after a fork. Create SDK objects after the child process starts."
             )
 
     @staticmethod
     def _serialize(message: object) -> bytes:
         serializer = getattr(message, "SerializeToString", None)
         if not callable(serializer):
-            raise TypeError(
-                f"The SDK does not support streaming message type {type(message)}."
-            )
+            raise TypeError(f"The SDK does not support streaming message type {type(message)}.")
         return cast(bytes, serializer(deterministic=True))
 
     async def _authenticate(self) -> None:
@@ -241,11 +234,7 @@ class StreamRequest(Generic[Req, Res]):
             if self._timeout is None or self._request_deadline_paused:
                 return
             deadline = self._request_deadline
-            self._request_timeout_remaining = (
-                max(0.0, self._timeout)
-                if deadline is None
-                else max(0.0, deadline - now)
-            )
+            self._request_timeout_remaining = max(0.0, self._timeout) if deadline is None else max(0.0, deadline - now)
             self._request_deadline = None
             self._request_deadline_paused = True
 
@@ -298,8 +287,7 @@ class StreamRequest(Generic[Req, Res]):
                     self._release(discard=isinstance(error, CancelledError))
                 except BaseException as release_error:
                     logger.warning(
-                        "The SDK could not release the stream transport after "
-                        "the stream setup failed.",
+                        "The SDK could not release the stream transport after the stream setup failed.",
                         exc_info=release_error,
                     )
                 raise
@@ -310,15 +298,9 @@ class StreamRequest(Generic[Req, Res]):
                 if callable(routed):
                     address_channel = routed(self._route)
                 else:
-                    address_channel = self._channel.get_channel_by_method(
-                        self._route.method_name
-                    )
+                    address_channel = self._channel.get_channel_by_method(self._route.method_name)
                 with self._state_lock:
-                    publish_address = (
-                        not self._cancel_requested
-                        and not self._cancelled
-                        and not self._released
-                    )
+                    publish_address = not self._cancel_requested and not self._cancelled and not self._released
                     if publish_address:
                         self._address_channel = address_channel
                 if not publish_address:
@@ -332,10 +314,7 @@ class StreamRequest(Generic[Req, Res]):
                 transport = address_channel.channel
                 owner_loop = getattr(address_channel, "event_loop", None)
                 if owner_loop is not None and owner_loop is not current_loop:
-                    raise RuntimeError(
-                        "The grpc_channel_override value belongs to a different "
-                        "event loop."
-                    )
+                    raise RuntimeError("The grpc_channel_override value belongs to a different event loop.")
                 shape = (
                     "stream_stream"
                     if self._client_streaming and self._server_streaming
@@ -346,9 +325,7 @@ class StreamRequest(Generic[Req, Res]):
                     self._serialize,
                     self._result_class.FromString,
                 )
-                arguments: tuple[object, ...] = (
-                    () if self._request is None else (self._request,)
-                )
+                arguments: tuple[object, ...] = () if self._request is None else (self._request,)
                 timeout = self._remaining_deadline()
                 if timeout is not None and timeout <= 0:
                     raise TimeoutError("The stream timed out before RPC dispatch.")
@@ -361,11 +338,7 @@ class StreamRequest(Generic[Req, Res]):
                     compression=self._compression,
                 )
                 with self._state_lock:
-                    publish_call = (
-                        not self._cancel_requested
-                        and not self._cancelled
-                        and not self._released
-                    )
+                    publish_call = not self._cancel_requested and not self._cancelled and not self._released
                     if publish_call:
                         self._call = call
                 if not publish_call:
@@ -498,26 +471,14 @@ class StreamRequest(Generic[Req, Res]):
         with self._state_lock:
             if initialize and not self._deadlines_started:
                 self._deadlines_started = True
-                self._request_deadline = (
-                    None if self._timeout is None else now + max(self._timeout, 0)
-                )
+                self._request_deadline = None if self._timeout is None else now + max(self._timeout, 0)
                 self._authorization_deadline = (
                     None
-                    if (
-                        self._auth_timeout is None
-                        or not self._authorization_deadline_enabled
-                    )
+                    if (self._auth_timeout is None or not self._authorization_deadline_enabled)
                     else now + max(self._auth_timeout, 0)
                 )
-            if (
-                self._authorization_deadline_enabled
-                and not self._authentication_finished
-            ):
-                deadlines = (
-                    []
-                    if self._authorization_deadline is None
-                    else [self._authorization_deadline]
-                )
+            if self._authorization_deadline_enabled and not self._authentication_finished:
+                deadlines = [] if self._authorization_deadline is None else [self._authorization_deadline]
             else:
                 deadlines = [
                     deadline
@@ -565,9 +526,7 @@ class StreamRequest(Generic[Req, Res]):
 
         self._check_process()
         self._remaining_deadline(initialize=enforce_deadline)
-        dispatch_remaining = (
-            self._remaining_dispatch_deadline() if enforce_deadline else None
-        )
+        dispatch_remaining = self._remaining_dispatch_deadline() if enforce_deadline else None
         submit = getattr(self._channel, "run_async", None)
         submission_state_lock = ThreadLock()
         submission_started = not callable(submit)
@@ -605,8 +564,7 @@ class StreamRequest(Generic[Req, Res]):
                         self._abort()
                     except BaseException as abort_error:
                         logger.warning(
-                            "The SDK could not abort the stream after it rejected "
-                            "the close task start.",
+                            "The SDK could not abort the stream after it rejected the close task start.",
                             exc_info=abort_error,
                         )
 
@@ -628,8 +586,7 @@ class StreamRequest(Generic[Req, Res]):
                 self._release_soon(discard=True)
             except BaseException as release_error:
                 logger.warning(
-                    "The SDK could not release the stream transport after it "
-                    "rejected the task start.",
+                    "The SDK could not release the stream transport after it rejected the task start.",
                     exc_info=release_error,
                 )
 
@@ -681,9 +638,7 @@ class StreamRequest(Generic[Req, Res]):
                     # Closing that outer coroutine does not enter it, so its
                     # captured inner stream operation needs separate cleanup.
                     cleanup_if_unstarted(release_unopened_stream=False)
-                    raise RuntimeError(
-                        "The stream work belongs to a different event loop."
-                    )
+                    raise RuntimeError("The stream work belongs to a different event loop.")
         try:
             if not enforce_deadline:
                 return cast(T, await operation)
@@ -704,9 +659,7 @@ class StreamRequest(Generic[Req, Res]):
             waiter = ensure_future(operation)
             try:
                 if dispatch_remaining is not None and not dispatch_started.done():
-                    started_waiter = ensure_future(
-                        shield(wrap_future(dispatch_started))
-                    )
+                    started_waiter = ensure_future(shield(wrap_future(dispatch_started)))
                     try:
                         completed, _ = await wait(
                             (waiter, started_waiter),
@@ -721,13 +674,10 @@ class StreamRequest(Generic[Req, Res]):
                     if not dispatch_started.done():
                         waiter.cancel()
                         self.cancel()
-                        raise TimeoutError(
-                            "The stream timed out before SDK-loop dispatch."
-                        )
+                        raise TimeoutError("The stream timed out before SDK-loop dispatch.")
                 with self._state_lock:
                     authorization_unknown = (
-                        self._authorization_deadline_enabled is None
-                        and not self._authentication_finished
+                        self._authorization_deadline_enabled is None and not self._authentication_finished
                     )
                 if authorization_unknown:
                     return cast(T, await waiter)
@@ -758,7 +708,7 @@ class StreamRequest(Generic[Req, Res]):
                 self.cancel()
             except BaseException as cleanup_error:
                 logger.warning(
-                    "The SDK could not schedule stream cleanup after " "cancellation.",
+                    "The SDK could not schedule stream cleanup after cancellation.",
                     exc_info=cleanup_error,
                 )
             # ``cancel`` schedules the authoritative SDK-loop abort, which
@@ -892,10 +842,7 @@ class StreamRequest(Generic[Req, Res]):
             if not self._client_streaming:
                 raise TypeError("The RPC does not accept a client stream.")
             if self._request is not None:
-                raise TypeError(
-                    "You cannot use a request iterator and write() for the same "
-                    "stream."
-                )
+                raise TypeError("You cannot use a request iterator and write() for the same stream.")
             call = await self._start()
             try:
                 await call.write(request)
@@ -1001,9 +948,7 @@ class StreamRequest(Generic[Req, Res]):
                 if isinstance(error, Exception):
                     get_state = getattr(self._channel, "get_state", None)
                     try:
-                        closed = callable(get_state) and (
-                            get_state() == ChannelConnectivity.SHUTDOWN
-                        )
+                        closed = callable(get_state) and (get_state() == ChannelConnectivity.SHUTDOWN)
                     except BaseException as state_error:
                         logger.debug(
                             "The SDK could not inspect the channel state after it "

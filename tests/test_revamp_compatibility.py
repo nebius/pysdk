@@ -62,20 +62,9 @@ def test_message_assignment_copies_instead_of_aliasing() -> None:
 def test_wkt_convenience_read_preserves_raw_nanos_and_unknowns() -> None:
     assert ResourceMetadata().created_at is None
 
-    raw_timestamp = (
-        Timestamp(seconds=7, nanos=123).SerializeToString(deterministic=True)
-        + b"\x98\x06\x2a"
-    )
-    created_at = next(
-        field
-        for field in ResourceMetadata.__FIELDS__
-        if field.proto_name == "created_at"
-    )
-    wire = (
-        _varint((created_at.number << 3) | 2)
-        + _varint(len(raw_timestamp))
-        + raw_timestamp
-    )
+    raw_timestamp = Timestamp(seconds=7, nanos=123).SerializeToString(deterministic=True) + b"\x98\x06\x2a"
+    created_at = next(field for field in ResourceMetadata.__FIELDS__ if field.proto_name == "created_at")
+    wire = _varint((created_at.number << 3) | 2) + _varint(len(raw_timestamp)) + raw_timestamp
     wrapped = ResourceMetadata.FromString(wire)
 
     assert wrapped.created_at is not None

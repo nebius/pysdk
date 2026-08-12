@@ -377,18 +377,12 @@ class Request(Generic[Req, Res]):
         self._result_wrapper = result_wrapper
         self._grpc_channel_override = grpc_channel_override
         self._grpc_channel = grpc_channel_override
-        self._timeout: float | None = (
-            timeout if not isinstance(timeout, UnsetType) else DEFAULT_TIMEOUT
-        )
+        self._timeout: float | None = timeout if not isinstance(timeout, UnsetType) else DEFAULT_TIMEOUT
         self._per_retry_timeout: float | None = (
-            per_retry_timeout
-            if not isinstance(per_retry_timeout, UnsetType)
-            else DEFAULT_PER_RETRY_TIMEOUT
+            per_retry_timeout if not isinstance(per_retry_timeout, UnsetType) else DEFAULT_PER_RETRY_TIMEOUT
         )
         self._auth_timeout: float | None = (
-            auth_timeout
-            if not isinstance(auth_timeout, UnsetType)
-            else DEFAULT_AUTH_TIMEOUT
+            auth_timeout if not isinstance(auth_timeout, UnsetType) else DEFAULT_AUTH_TIMEOUT
         )
         _validate_timeout(self._timeout, "timeout")
         _validate_timeout(self._per_retry_timeout, "per_retry_timeout")
@@ -438,8 +432,7 @@ class Request(Generic[Req, Res]):
 
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "You cannot use an SDK request after a fork. Create SDK objects "
-                "after the child process starts."
+                "You cannot use an SDK request after a fork. Create SDK objects after the child process starts."
             )
 
     def _claim_await(self) -> None:
@@ -471,10 +464,7 @@ class Request(Generic[Req, Res]):
 
     def __repr__(self) -> str:
         """Return a short representation including service, method and status."""
-        return (
-            f"{self.__class__.__name__}({self._service}.{self._method}, "
-            f"{self.current_status()})"
-        )
+        return f"{self.__class__.__name__}({self._service}.{self._method}, {self.current_status()})"
 
     def done(self) -> bool:
         """Return True if the underlying gRPC call has completed."""
@@ -515,9 +505,7 @@ class Request(Generic[Req, Res]):
         """
         self._check_process()
         with self._future_lock:
-            if self._cancelled or (
-                self._native_terminal and not self._retry_decision_pending
-            ):
+            if self._cancelled or (self._native_terminal and not self._retry_decision_pending):
                 return False
             if self._native_attempt_terminal:
                 # The owner loop has not classified the result as final or
@@ -654,9 +642,7 @@ class Request(Generic[Req, Res]):
             if callable(routed):
                 self._grpc_channel = routed(self._route)
             else:
-                self._grpc_channel = self._channel.get_channel_by_method(
-                    self._service + "." + self._method
-                )
+                self._grpc_channel = self._channel.get_channel_by_method(self._service + "." + self._method)
         s_name = self._service
         if s_name[0] == ".":
             s_name = s_name[1:]
@@ -665,9 +651,7 @@ class Request(Generic[Req, Res]):
             incompatible = self._grpc_channel
             self._grpc_channel = None
             release_address_channel(self._channel, incompatible, discard=True)
-            raise RequestError(
-                "The grpc_channel_override value belongs to a different event " "loop."
-            )
+            raise RequestError("The grpc_channel_override value belongs to a different event loop.")
         self._call = self._grpc_channel.channel.unary_unary(  # type: ignore
             "/" + s_name + "/" + self._method,
             serializer,
@@ -722,9 +706,7 @@ class Request(Generic[Req, Res]):
                 else:
                     caller_loop_running = True
                 runtime = getattr(self._channel, "_runtime", None)
-                in_executor_thread = (
-                    runtime.in_executor_thread() if runtime is not None else False
-                )
+                in_executor_thread = runtime.in_executor_thread() if runtime is not None else False
                 if caller_loop_running or in_executor_thread:
                     return cast(
                         T,
@@ -1141,9 +1123,7 @@ class Request(Generic[Req, Res]):
             if timeout is not None and timeout <= 0:
                 raise TimeoutError("The request timed out before RPC dispatch.")
 
-            if self._per_retry_timeout is not None and (
-                timeout is None or timeout > self._per_retry_timeout
-            ):
+            if self._per_retry_timeout is not None and (timeout is None or timeout > self._per_retry_timeout):
                 # Clip per-retry timeout by remaining overall deadline if present
                 per_attempt = self._per_retry_timeout
                 if deadline is not None:
@@ -1209,13 +1189,8 @@ class Request(Generic[Req, Res]):
                         # cancel() then records intent instead of cancelling
                         # the wrapper that owns native-error cleanup.
                         self._native_attempt_terminal = awaiting_auth_retry
-                        self._retry_decision_pending = (
-                            could_retry or awaiting_auth_retry
-                        )
-                        if (
-                            self._cancel_after_terminal_attempt
-                            and not self._retry_decision_pending
-                        ):
+                        self._retry_decision_pending = could_retry or awaiting_auth_retry
+                        if self._cancel_after_terminal_attempt and not self._retry_decision_pending:
                             self._cancel_after_terminal_attempt = False
                             self._cancelled = False
                     self._raise_request_error(e)
@@ -1234,18 +1209,13 @@ class Request(Generic[Req, Res]):
                     )
                 )
                 with self._future_lock:
-                    terminal_attempt = (
-                        self._native_terminal or self._native_attempt_terminal
-                    )
+                    terminal_attempt = self._native_terminal or self._native_attempt_terminal
                     if terminal_attempt:
                         self._native_terminal = True
                         if not deferred_unauthenticated:
                             self._native_attempt_terminal = False
                     cancelled_during_decision = (
-                        retry
-                        and terminal_attempt
-                        and self._retry_decision_pending
-                        and self._cancelled
+                        retry and terminal_attempt and self._retry_decision_pending and self._cancelled
                     )
                     if not deferred_unauthenticated:
                         self._retry_decision_pending = False
@@ -1265,8 +1235,7 @@ class Request(Generic[Req, Res]):
                     # response was received. Retrying reopens cancellation
                     # until the next native attempt becomes terminal.
                     log.error(
-                        "The SDK request attempt %d failed. The SDK will retry "
-                        "the request.",
+                        "The SDK request attempt %d failed. The SDK will retry the request.",
                         attempt,
                         exc_info=exc_info(),
                     )
@@ -1293,9 +1262,7 @@ class Request(Generic[Req, Res]):
             return
         deadline = self._request_deadline
         self._request_timeout_remaining = (
-            max(0.0, self._timeout)
-            if deadline is None
-            else max(0.0, deadline - monotonic())
+            max(0.0, self._timeout) if deadline is None else max(0.0, deadline - monotonic())
         )
         self._request_deadline = None
         self._request_deadline_paused = True
@@ -1354,8 +1321,7 @@ class Request(Generic[Req, Res]):
             # response or abandon the rejected coroutine.
             dispose_unstarted_awaitable(completion_work)
             log.debug(
-                "The event-loop task factory rejected request completion. The "
-                "SDK will bypass the factory.",
+                "The event-loop task factory rejected request completion. The SDK will bypass the factory.",
                 exc_info=error,
             )
             completion = Task(complete(), loop=get_running_loop())
@@ -1379,13 +1345,10 @@ class Request(Generic[Req, Res]):
         except BaseException:
             if self._grpc_channel is not None:
                 try:
-                    self._release_grpc_channel(
-                        discard=self._call is not None and not self._native_terminal
-                    )
+                    self._release_grpc_channel(discard=self._call is not None and not self._native_terminal)
                 except BaseException as release_error:
                     log.warning(
-                        "The SDK could not release the request transport after "
-                        "setup failed.",
+                        "The SDK could not release the request transport after setup failed.",
                         exc_info=release_error,
                     )
             raise
@@ -1406,11 +1369,7 @@ class Request(Generic[Req, Res]):
             "_get_runtime_authorization_provider",
             None,
         )
-        provider = (
-            runtime_provider()
-            if callable(runtime_provider)
-            else self._channel.get_authorization_provider()
-        )
+        provider = runtime_provider() if callable(runtime_provider) else self._channel.get_authorization_provider()
 
         auth_type = self._auth_options.get(OPTION_TYPE, None)
         if provider is None or auth_type == Types.DISABLE:
@@ -1434,9 +1393,7 @@ class Request(Generic[Req, Res]):
             # to the internal Metadata used when sending the request
             auth_md = Metadata(self._input_metadata)
             try:
-                await wait_for(
-                    auth.authenticate(auth_md, timeout, self._auth_options), timeout
-                )
+                await wait_for(auth.authenticate(auth_md, timeout, self._auth_options), timeout)
             except Exception as e:  # noqa: BLE001
                 # If authentication itself failed (e.g., token refresh timeout),
                 # retry if authenticator allows and we are within deadline.
@@ -1483,10 +1440,7 @@ class Request(Generic[Req, Res]):
                     self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
-                if not (
-                    code == StatusCode.UNAUTHENTICATED
-                    or getattr(code, "name", None) == "UNAUTHENTICATED"
-                ):
+                if not (code == StatusCode.UNAUTHENTICATED or getattr(code, "name", None) == "UNAUTHENTICATED"):
                     self._resolve_authorization_retry(False)
                     self._release_grpc_channel()
                     raise
@@ -1540,11 +1494,7 @@ class Request(Generic[Req, Res]):
                     self._channel,
                     self._auth_options,
                 )
-                self._request_deadline = (
-                    None
-                    if self._timeout is None
-                    else submitted_monotonic + max(self._timeout, 0)
-                )
+                self._request_deadline = None if self._timeout is None else submitted_monotonic + max(self._timeout, 0)
                 self._authorization_deadline = (
                     None
                     if self._auth_timeout is None or authorization_applies is not True
@@ -1561,9 +1511,7 @@ class Request(Generic[Req, Res]):
                     else self._timeout if authorization_applies is False else None
                 )
                 self._submission_deadline = (
-                    None
-                    if submission_limit is None
-                    else submitted_monotonic + max(submission_limit, 0)
+                    None if submission_limit is None else submitted_monotonic + max(submission_limit, 0)
                 )
                 dispatch_limits = [
                     deadline
@@ -1573,9 +1521,7 @@ class Request(Generic[Req, Res]):
                     )
                     if deadline is not None
                 ]
-                self._dispatch_deadline = (
-                    min(dispatch_limits) if authorization_applies is True else None
-                )
+                self._dispatch_deadline = min(dispatch_limits) if authorization_applies is True else None
                 dispatch_started: ConcurrentFuture[None] = ConcurrentFuture()
                 self._dispatch_started = dispatch_started
                 request_work = self._request_with_authorization_loop()
@@ -1587,17 +1533,12 @@ class Request(Generic[Req, Res]):
                     with submission_state_lock:
                         submission_started = True
                     dispatch_deadline = self._dispatch_deadline
-                    if (
-                        dispatch_deadline is not None
-                        and monotonic() >= dispatch_deadline
-                    ):
+                    if dispatch_deadline is not None and monotonic() >= dispatch_deadline:
                         dispose_unstarted_awaitable(request_work)
                         with self._future_lock:
                             self._cancelled = True
                         self._release_grpc_channel(discard=True)
-                        raise TimeoutError(
-                            "The request timed out before SDK-loop dispatch."
-                        )
+                        raise TimeoutError("The request timed out before SDK-loop dispatch.")
                     if not dispatch_started.done():
                         dispatch_started.set_result(None)
                     return await cast(Awaitable[Res], request_work)
@@ -1609,11 +1550,7 @@ class Request(Generic[Req, Res]):
                     # SDK channels return a reusable cross-loop handle. A legacy
                     # adapter can return the original one-shot coroutine; schedule
                     # that fallback before memoizing it for status/metadata reads.
-                    submitted = (
-                        candidate
-                        if callable(getattr(candidate, "done", None))
-                        else ensure_future(candidate)
-                    )
+                    submitted = candidate if callable(getattr(candidate, "done", None)) else ensure_future(candidate)
                 except BaseException as error:
                     submission_error = error
                     submission_traceback = error.__traceback__
@@ -1644,9 +1581,7 @@ class Request(Generic[Req, Res]):
                         )
                 if channel_to_release is not None:
                     try:
-                        release_soon = getattr(
-                            self._channel, "_release_channel_soon", None
-                        )
+                        release_soon = getattr(self._channel, "_release_channel_soon", None)
                         if callable(release_soon):
                             release_soon(channel_to_release, discard=True)
                         else:
@@ -1657,8 +1592,7 @@ class Request(Generic[Req, Res]):
                             )
                     except BaseException as release_error:
                         log.warning(
-                            "The SDK could not release the request transport "
-                            "after it rejected the task start.",
+                            "The SDK could not release the request transport after it rejected the task start.",
                             exc_info=release_error,
                         )
 
@@ -1687,8 +1621,7 @@ class Request(Generic[Req, Res]):
                 )
             except BaseException as release_error:
                 log.warning(
-                    "The SDK could not release the request transport after it "
-                    "rejected the submission.",
+                    "The SDK could not release the request transport after it rejected the submission.",
                     exc_info=release_error,
                 )
         if submission_error is not None:
@@ -1718,16 +1651,10 @@ class Request(Generic[Req, Res]):
                 return await wait_shared()
             waiter = ensure_future(wait_shared())
             try:
-                if (
-                    dispatch_deadline is not None
-                    and dispatch_started is not None
-                    and not dispatch_started.done()
-                ):
+                if dispatch_deadline is not None and dispatch_started is not None and not dispatch_started.done():
                     remaining = dispatch_deadline - monotonic()
                     if remaining > 0:
-                        started_waiter = ensure_future(
-                            shield(wrap_future(dispatch_started))
-                        )
+                        started_waiter = ensure_future(shield(wrap_future(dispatch_started)))
                         try:
                             completed, _ = await wait(
                                 (waiter, started_waiter),
@@ -1742,9 +1669,7 @@ class Request(Generic[Req, Res]):
                     if not dispatch_started.done():
                         waiter.cancel()
                         self.cancel()
-                        raise TimeoutError(
-                            "The request timed out before SDK-loop dispatch."
-                        )
+                        raise TimeoutError("The request timed out before SDK-loop dispatch.")
                 if deadline is None:
                     return await waiter
                 remaining = deadline - monotonic()

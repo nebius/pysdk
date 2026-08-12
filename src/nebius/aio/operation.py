@@ -11,17 +11,7 @@ from __future__ import annotations
 
 import importlib
 import os
-from asyncio import (
-    FIRST_COMPLETED,
-    CancelledError,
-    ensure_future,
-    gather,
-    shield,
-    sleep,
-    wait,
-    wait_for,
-    wrap_future,
-)
+from asyncio import FIRST_COMPLETED, CancelledError, ensure_future, gather, shield, sleep, wait, wait_for, wrap_future
 from asyncio import Lock as AsyncLock
 from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Sequence
@@ -30,19 +20,14 @@ from datetime import datetime, timedelta
 from math import isfinite
 from threading import Lock
 from time import monotonic
-from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Generic, Protocol, TypeVar, cast
 
 from grpc import StatusCode
 from typing_extensions import Unpack
 
 from nebius.aio._task_context import dispose_unstarted_awaitable
 from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.request import (
-    DEFAULT_AUTH_TIMEOUT,
-    DEFAULT_TIMEOUT,
-    _authorization_deadline_applies,
-    _validate_timeout,
-)
+from nebius.aio.request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT, _authorization_deadline_applies, _validate_timeout
 from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
@@ -329,8 +314,7 @@ class Operation(Generic[OperationPb]):
 
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "You cannot use an SDK operation after a fork. Create SDK "
-                "objects after the child process starts."
+                "You cannot use an SDK operation after a fork. Create SDK objects after the child process starts."
             )
 
     def _operation_snapshot(self) -> OperationPb:
@@ -351,9 +335,7 @@ class Operation(Generic[OperationPb]):
         if tracker is not None:
             work = tracker.work_done()
             if work is not None and work.total_tick_count:
-                parts.append(
-                    f"work_done: {work.done_tick_count}/{work.total_tick_count}"
-                )
+                parts.append(f"work_done: {work.done_tick_count}/{work.total_tick_count}")
             eta = tracker.estimated_finished_at()
             if eta is not None:
                 parts.append(f"eta: {eta}")
@@ -455,15 +437,9 @@ class Operation(Generic[OperationPb]):
         if auth_options is not None:
             kwargs["auth_options"] = dict(auth_options)
         timeout_option = kwargs.get("timeout", Unset)
-        timeout = (
-            DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
-        )
+        timeout = DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
         auth_timeout_option = kwargs.get("auth_timeout", Unset)
-        auth_timeout = (
-            DEFAULT_AUTH_TIMEOUT
-            if isinstance(auth_timeout_option, UnsetType)
-            else auth_timeout_option
-        )
+        auth_timeout = DEFAULT_AUTH_TIMEOUT if isinstance(auth_timeout_option, UnsetType) else auth_timeout_option
         _validate_timeout(timeout, "timeout")
         _validate_timeout(auth_timeout, "auth_timeout")
         authorization_applies = _authorization_deadline_applies(
@@ -472,9 +448,7 @@ class Operation(Generic[OperationPb]):
         )
         request_deadline = None if timeout is None else submitted_at + max(timeout, 0)
         authorization_deadline = (
-            None
-            if auth_timeout is None or authorization_applies is not True
-            else submitted_at + max(auth_timeout, 0)
+            None if auth_timeout is None or authorization_applies is not True else submitted_at + max(auth_timeout, 0)
         )
         submit = getattr(self._channel, "run_async", None)
         dispatch_started: ConcurrentFuture[None] = ConcurrentFuture()
@@ -529,17 +503,9 @@ class Operation(Generic[OperationPb]):
             else request_deadline if authorization_applies is False else None
         )
         done = getattr(submitted, "done", None)
-        dispatch_limits = [
-            deadline
-            for deadline in (request_deadline, authorization_deadline)
-            if deadline is not None
-        ]
-        dispatch_deadline = (
-            min(dispatch_limits) if authorization_applies is True else None
-        )
-        if (caller_deadline is None and dispatch_deadline is None) or (
-            callable(done) and done()
-        ):
+        dispatch_limits = [deadline for deadline in (request_deadline, authorization_deadline) if deadline is not None]
+        dispatch_deadline = min(dispatch_limits) if authorization_applies is True else None
+        if (caller_deadline is None and dispatch_deadline is None) or (callable(done) and done()):
             await submitted
             return
         waiter = ensure_future(submitted)
@@ -547,9 +513,7 @@ class Operation(Generic[OperationPb]):
             if dispatch_deadline is not None and not dispatch_started.done():
                 remaining = dispatch_deadline - monotonic()
                 if remaining > 0:
-                    started_waiter = ensure_future(
-                        shield(wrap_future(dispatch_started))
-                    )
+                    started_waiter = ensure_future(shield(wrap_future(dispatch_started)))
                     try:
                         completed, _ = await wait(
                             (waiter, started_waiter),
@@ -567,9 +531,7 @@ class Operation(Generic[OperationPb]):
                     cancel = getattr(submitted, "cancel", None)
                     if callable(cancel):
                         cancel()
-                    raise TimeoutError(
-                        "The operation update timed out before SDK-loop dispatch."
-                    )
+                    raise TimeoutError("The operation update timed out before SDK-loop dispatch.")
             if caller_deadline is None:
                 await waiter
                 return
@@ -587,7 +549,7 @@ class Operation(Generic[OperationPb]):
             waiter.cancel()
             await gather(waiter, return_exceptions=True)
             raise
-        except (TimeoutError, AsyncTimeoutError) as error:
+        except (AsyncTimeoutError, TimeoutError) as error:
             if waiter.done() and not waiter.cancelled():
                 terminal_error = waiter.exception()
                 if terminal_error is error:
@@ -625,17 +587,12 @@ class Operation(Generic[OperationPb]):
             if request_deadline is not None:
                 request_timeout = request_deadline - monotonic()
                 if request_timeout <= 0:
-                    raise TimeoutError(
-                        "The operation update timed out before request dispatch."
-                    )
+                    raise TimeoutError("The operation update timed out before request dispatch.")
                 kwargs["timeout"] = request_timeout
             if authorization_deadline is not None:
                 authorization_timeout = authorization_deadline - monotonic()
                 if authorization_timeout <= 0:
-                    raise TimeoutError(
-                        "The operation update authorization timed out before "
-                        "dispatch."
-                    )
+                    raise TimeoutError("The operation update authorization timed out before dispatch.")
                 kwargs["auth_timeout"] = authorization_timeout
 
             req = self._service.get(
@@ -664,7 +621,7 @@ class Operation(Generic[OperationPb]):
         """
         self._check_process()
         if self.done():
-            return
+            return None
         metadata = kwargs.get("metadata")
         if metadata is not None:
             kwargs["metadata"] = Metadata(metadata)
@@ -714,15 +671,9 @@ class Operation(Generic[OperationPb]):
         if auth_options is not None:
             kwargs["auth_options"] = dict(auth_options)
         timeout_option = kwargs.get("timeout", Unset)
-        timeout = (
-            DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
-        )
+        timeout = DEFAULT_TIMEOUT if isinstance(timeout_option, UnsetType) else timeout_option
         auth_timeout_option = kwargs.get("auth_timeout", Unset)
-        auth_timeout = (
-            DEFAULT_AUTH_TIMEOUT
-            if isinstance(auth_timeout_option, UnsetType)
-            else auth_timeout_option
-        )
+        auth_timeout = DEFAULT_AUTH_TIMEOUT if isinstance(auth_timeout_option, UnsetType) else auth_timeout_option
         _validate_timeout(timeout, "timeout")
         _validate_timeout(auth_timeout, "auth_timeout")
         authorization_applies = _authorization_deadline_applies(
@@ -730,9 +681,7 @@ class Operation(Generic[OperationPb]):
             cast(dict[str, str], kwargs.get("auth_options") or {}),
         )
         run_limit = (
-            auth_timeout
-            if authorization_applies is True
-            else timeout if authorization_applies is False else None
+            auth_timeout if authorization_applies is True else timeout if authorization_applies is False else None
         )
         run_timeout = None if run_limit is None else max(0.0, run_limit) + 0.2
         submitted_at = monotonic()
@@ -828,9 +777,7 @@ class Operation(Generic[OperationPb]):
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
         if not isfinite(interval) or interval <= 0:
-            raise ValueError(
-                "The interval value must be a finite positive number of seconds."
-            )
+            raise ValueError("The interval value must be a finite positive number of seconds.")
         metadata = kwargs.get("metadata")
         if metadata is not None:
             kwargs["metadata"] = Metadata(metadata)
@@ -870,7 +817,7 @@ class Operation(Generic[OperationPb]):
             # it. ``wait_for`` propagates cancellation to the one submitted
             # wait when the caller-side deadline expires.
             await wait_for(submitted, timeout=remaining)
-        except (TimeoutError, AsyncTimeoutError) as error:
+        except (AsyncTimeoutError, TimeoutError) as error:
             raise TimeoutError("The operation wait timed out.") from error
 
     async def _wait_internal(
@@ -920,7 +867,7 @@ class Operation(Generic[OperationPb]):
                 return True
             if isinstance(err, ServiceRequestError):
                 try:
-                    return err.status.code == StatusCode.DEADLINE_EXCEEDED
+                    return bool(err.status.code == StatusCode.DEADLINE_EXCEEDED)
                 except Exception:  # pragma: no cover - defensive
                     return False
             return False
@@ -929,12 +876,14 @@ class Operation(Generic[OperationPb]):
             """Run one update and ignore only transient polling errors."""
 
             try:
-                update = self._update_internal(
-                    timeout=poll_iteration_timeout,
-                    per_retry_timeout=poll_per_retry_timeout,
-                    retries=poll_retries,
+                update_kwargs: dict[str, Any] = {
                     **kwargs,
-                )
+                    "timeout": poll_iteration_timeout,
+                    "per_retry_timeout": poll_per_retry_timeout,
+                }
+                if poll_retries is not None:
+                    update_kwargs["retries"] = poll_retries
+                update = self._update_internal(**cast(RequestKwargs, update_kwargs))
                 if deadline is None:
                     await update
                 else:
@@ -943,7 +892,7 @@ class Operation(Generic[OperationPb]):
                         update.close()
                         raise TimeoutError("The operation wait timed out.")
                     await wait_for(update, timeout=remaining)
-            except Exception as e:  # noqa: S110
+            except Exception as e:
                 if deadline is not None and monotonic() >= deadline:
                     raise TimeoutError("The operation wait timed out.") from e
                 if not _is_ignorable(e):

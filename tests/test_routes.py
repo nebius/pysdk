@@ -55,10 +55,7 @@ def test_method_and_route_fallbacks_keep_public_resolver_override() -> None:
     channel = CustomChannel(credentials=NoCredentials())
     route = Route(service="acme.RouteService", method="Get")
     try:
-        assert (
-            channel.get_addr_by_method("/acme.MethodService/Get")
-            == "acme.MethodService.custom:443"
-        )
+        assert channel.get_addr_by_method("/acme.MethodService/Get") == "acme.MethodService.custom:443"
         assert channel.get_addr_by_route(route) == "acme.RouteService.custom:443"
         assert resolver_loops == [channel._event_loop, channel._event_loop]
     finally:

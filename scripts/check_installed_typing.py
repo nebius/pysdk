@@ -82,11 +82,7 @@ def _check_wheel_contents() -> None:
 
     for namespace in ("nebius.api", "nebius.api.google"):
         spec = importlib.util.find_spec(namespace)
-        if (
-            spec is None
-            or spec.origin is not None
-            or not spec.submodule_search_locations
-        ):
+        if spec is None or spec.origin is not None or not spec.submodule_search_locations:
             raise RuntimeError(f"{namespace} is not an installed PEP 420 namespace")
 
     generated_modules: list[str] = []
@@ -111,18 +107,13 @@ def _assert_success(result: subprocess.CompletedProcess[str], checker: str) -> N
         raise RuntimeError(f"{checker} rejected the valid consumer:\n{output}")
 
 
-def _assert_expected_failure(
-    result: subprocess.CompletedProcess[str], checker: str
-) -> None:
+def _assert_expected_failure(result: subprocess.CompletedProcess[str], checker: str) -> None:
     output = result.stdout + result.stderr
     if result.returncode == 0:
         raise RuntimeError(f"{checker} accepted the invalid consumer")
     for expected in ("size_gibibytes", "DiskSpec", "TotallyMissing"):
         if expected not in output:
-            raise RuntimeError(
-                f"{checker} did not report the expected {expected!r} "
-                f"diagnostic:\n{output}"
-            )
+            raise RuntimeError(f"{checker} did not report the expected {expected!r} diagnostic:\n{output}")
 
 
 def main() -> None:
@@ -159,9 +150,7 @@ def main() -> None:
 
         pyright_arguments = ("--project", str(pyright_config))
         _assert_success(_run("pyright", *pyright_arguments, str(valid)), "pyright")
-        _assert_expected_failure(
-            _run("pyright", *pyright_arguments, str(invalid)), "pyright"
-        )
+        _assert_expected_failure(_run("pyright", *pyright_arguments, str(invalid)), "pyright")
 
 
 if __name__ == "__main__":

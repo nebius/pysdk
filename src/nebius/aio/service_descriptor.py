@@ -7,29 +7,16 @@ service metadata for the Nebius asynchronous SDK.
 from typing import Any, Protocol, TypeVar
 
 from google.protobuf.message import Message
-from grpc import (
-    CallCredentials,
-    ChannelConnectivity,
-    Compression,
-)
+from grpc import CallCredentials, ChannelConnectivity, Compression
 from grpc.aio import Channel as GRPCChannel
-from grpc.aio._base_call import (
-    StreamStreamCall,
-    StreamUnaryCall,
-    UnaryStreamCall,
-    UnaryUnaryCall,
-)
+from grpc.aio._base_call import StreamStreamCall, StreamUnaryCall, UnaryStreamCall, UnaryUnaryCall
 from grpc.aio._base_channel import (
     StreamStreamMultiCallable,
     StreamUnaryMultiCallable,
     UnaryStreamMultiCallable,
     UnaryUnaryMultiCallable,
 )
-from grpc.aio._typing import (
-    DeserializingFunction,
-    RequestIterableType,
-    SerializingFunction,
-)
+from grpc.aio._typing import DeserializingFunction, RequestIterableType, SerializingFunction
 
 from nebius.aio._metadata_type import MetadataType
 from nebius.base.error import SDKError
@@ -76,7 +63,7 @@ class StubUU(UnaryUnaryMultiCallable):  # type: ignore[unused-ignore,misc,type-a
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
     ) -> UnaryUnaryCall:  # type: ignore[unused-ignore, type-arg]
-        raise NotATrueCallError()
+        raise NotATrueCallError
 
 
 class StubUS(UnaryStreamMultiCallable):  # type: ignore[unused-ignore,misc,type-arg]
@@ -95,7 +82,7 @@ class StubUS(UnaryStreamMultiCallable):  # type: ignore[unused-ignore,misc,type-
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
     ) -> UnaryStreamCall:  # type: ignore[unused-ignore, type-arg]
-        raise NotATrueCallError()
+        raise NotATrueCallError
 
 
 class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
@@ -113,7 +100,7 @@ class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
     ) -> StreamUnaryCall:  # type: ignore[unused-ignore, type-arg]
-        raise NotATrueCallError()
+        raise NotATrueCallError
 
 
 class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc]
@@ -131,7 +118,7 @@ class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc]
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
     ) -> StreamStreamCall:  # type: ignore[unused-ignore, type-arg]
-        raise NotATrueCallError()
+        raise NotATrueCallError
 
 
 class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
@@ -153,7 +140,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :raises NoMethodsInServiceError: If no methods have been recorded.
         """
         if self._last_method == "":
-            raise NoMethodsInServiceError()
+            raise NoMethodsInServiceError
         return service_from_method_name(self._last_method)
 
     def unary_unary(  # type: ignore[unused-ignore, override]
@@ -185,7 +172,6 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :param grace: Optional grace period.
         :type grace: float or None
         """
-        pass
 
     async def __aenter__(self) -> "ExtractorChannel":
         """Enter the asynchronous context.

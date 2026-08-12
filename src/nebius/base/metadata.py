@@ -100,7 +100,7 @@ class Metadata(MutableSequence[tuple[str, str]]):
         self, index: int | slice | str
     ) -> tuple[str, str] | MutableSequence[tuple[str, str]] | Sequence[str]:
         """Return metadata entries by index, slice, or key."""
-        if isinstance(index, int) or isinstance(index, slice):
+        if isinstance(index, int | slice):
             return self._contents[index]
         if isinstance(index, str):  # type: ignore[unused-ignore]
             index = index.lower()
@@ -122,12 +122,7 @@ class Metadata(MutableSequence[tuple[str, str]]):
     ) -> None:
         """Set metadata by numeric index, slice, or key."""
         if isinstance(index, int):
-            if (
-                isinstance(value, tuple)
-                and len(value) == 2
-                and isinstance(value[0], str)
-                and isinstance(value[1], str)
-            ):
+            if isinstance(value, tuple) and len(value) == 2 and isinstance(value[0], str) and isinstance(value[1], str):
                 self._contents[index] = (value[0].lower(), value[1])
                 return
             else:
@@ -145,15 +140,13 @@ class Metadata(MutableSequence[tuple[str, str]]):
                 if isinstance(s, str):
                     self.append((index, s))
                 else:
-                    raise TypeError(
-                        "If index is str, value must be str or Iterable[str]"
-                    )
+                    raise TypeError("If index is str, value must be str or Iterable[str]")
             return
         raise TypeError("Index must be int, str or slice")
 
     def __delitem__(self, index: int | slice | str) -> None:
         """Delete metadata by numeric index, slice, or key."""
-        if isinstance(index, int) or isinstance(index, slice):
+        if isinstance(index, int | slice):
             del self._contents[index]
             return
         if isinstance(index, str):  # type: ignore[unused-ignore]

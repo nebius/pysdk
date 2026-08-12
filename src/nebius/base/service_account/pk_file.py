@@ -28,9 +28,7 @@ class Reader(BaseReader):
 
         log.debug(f"reading SA from file {filename}")
         with open(filename, "rb") as f:
-            pk = serialization.load_pem_private_key(
-                f.read(), password=None, backend=default_backend()
-            )
+            pk = serialization.load_pem_private_key(f.read(), password=None, backend=default_backend())
         if not isinstance(pk, RSAPrivateKey):
             raise WrongKeyTypeError(pk)
         self._pk = pk

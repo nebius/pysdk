@@ -39,14 +39,12 @@ def _rich_status_from_call(call: RpcError) -> StatusPb | None:
         call_code = call.code()
         if call_code.value[0] != status.code:
             raise ValueError(
-                f"Code in Status proto ({_status_code(status.code)}) "
-                f"doesn't match status code ({call_code})"
+                f"Code in Status proto ({_status_code(status.code)}) doesn't match status code ({call_code})"
             )
         call_details = call.details()
         if call_details != status.message:
             raise ValueError(
-                f"Message in Status proto ({status.message}) doesn't match "
-                f"status details ({call_details})"
+                f"Message in Status proto ({status.message}) doesn't match status details ({call_details})"
             )
         return status
     return None
@@ -60,6 +58,8 @@ def pb2_from_status(
     ret: list[ServiceErrorPb] = []
     rest: list[AnyPb] = []
     registry = type(status).__REGISTRY__
+    if registry is None:
+        raise RuntimeError("status message has no descriptor registry")
     for detail in status.details:
         try:
             unpacked = registry.unpack_any(detail)
@@ -82,7 +82,10 @@ def pb2_from_error(err: RpcError) -> list[ServiceErrorPb]:
 
 
 def to_anypb(err: ServiceErrorPb) -> AnyPb:
-    return type(err).__REGISTRY__.pack_any(err)  # type: ignore[return-value]
+    registry = type(err).__REGISTRY__
+    if registry is None:
+        raise RuntimeError("service error message has no descriptor registry")
+    return cast(AnyPb, registry.pack_any(err))
 
 
 def pbrpc_status_of_errors(

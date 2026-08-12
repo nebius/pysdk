@@ -17,9 +17,7 @@ from .model import Graph, Options
 
 def generate(request: object) -> CodeGeneratorResponse:
     """Generate a deterministic response, reporting schema errors in-band."""
-    response = CodeGeneratorResponse(
-        supported_features=int(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL)
-    )
+    response = CodeGeneratorResponse(supported_features=int(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL))
     try:
         request = normalize_request(coerce_request(request))
         graph = Graph(request, Options.parse(request.parameter))

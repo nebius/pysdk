@@ -287,9 +287,7 @@ class Cached(Resolver):
             when it does not match the id.
         """
         if service_id in self._cache:
-            log.debug(
-                f"cached resolver {service_id} resolved to {self._cache[service_id]}"
-            )
+            log.debug(f"cached resolver {service_id} resolved to {self._cache[service_id]}")
             return self._cache[service_id]
 
         addr = self._next.resolve(service_id)

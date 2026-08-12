@@ -94,9 +94,7 @@ def _field(message: Message, name: str) -> Field:
     try:
         return message.__class__._fields_by_proto_name()[name]
     except KeyError as error:
-        raise JsonError(
-            f"{message.__PROTO_FULL_NAME__} is missing WKT field {name!r}"
-        ) from error
+        raise JsonError(f"{message.__PROTO_FULL_NAME__} is missing WKT field {name!r}") from error
 
 
 def _get(message: Message, name: str) -> Any:
@@ -125,10 +123,7 @@ def _encode_well_known(
     if name == "google.protobuf.Timestamp":
         seconds = cast(int, _get(message, "seconds"))
         nanos = cast(int, _get(message, "nanos"))
-        if (
-            not _TIMESTAMP_MIN <= seconds <= _TIMESTAMP_MAX
-            or not 0 <= nanos < 1_000_000_000
-        ):
+        if not _TIMESTAMP_MIN <= seconds <= _TIMESTAMP_MAX or not 0 <= nanos < 1_000_000_000:
             raise JsonError("Timestamp is outside its valid range")
         stamp = datetime(1970, 1, 1) + timedelta(seconds=seconds)
         rendered = (
@@ -147,9 +142,7 @@ def _encode_well_known(
         if not valid:
             raise JsonError("Duration is outside its valid range")
         negative = seconds < 0 or nanos < 0
-        return True, (
-            ("-" if negative else "") + str(abs(seconds)) + _fraction(abs(nanos)) + "s"
-        )
+        return True, (("-" if negative else "") + str(abs(seconds)) + _fraction(abs(nanos)) + "s")
     if name == "google.protobuf.FieldMask":
         return True, ",".join(_snake_to_camel(path) for path in _get(message, "paths"))
     if name == "google.protobuf.Struct":
@@ -290,9 +283,7 @@ def message_to_dict(
                     always_print_fields_with_no_presence=always_print_fields_with_no_presence,
                     use_integers_for_enums=use_integers_for_enums,
                 )
-                for key, item in (
-                    cast(MapValues[Any, Any], value).items() if value else ()
-                )
+                for key, item in (cast(MapValues[Any, Any], value).items() if value else ())
             }
         elif field.repeated:
             if not value and not always_print_fields_with_no_presence:
@@ -328,9 +319,7 @@ def message_to_dict(
                 always_print_fields_with_no_presence=always_print_fields_with_no_presence,
                 use_integers_for_enums=use_integers_for_enums,
             )
-        result[
-            field.proto_name if preserving_proto_field_name else _json_name(field)
-        ] = encoded
+        result[field.proto_name if preserving_proto_field_name else _json_name(field)] = encoded
     if message._extensions is not None:
         for extension, value in message._extensions.present_items():
             if not extension.public:
@@ -394,9 +383,7 @@ def _parse_value(codec: ValueCodec[Any], value: Any, *, ignore_unknown: bool) ->
             try:
                 value.encode("utf-8")
             except UnicodeEncodeError as error:
-                raise JsonError(
-                    "string field contains an unpaired surrogate"
-                ) from error
+                raise JsonError("string field contains an unpaired surrogate") from error
             return codec.normalize(value)
         if kind in {"float", "double"}:
             if isinstance(value, str):
@@ -409,20 +396,12 @@ def _parse_value(codec: ValueCodec[Any], value: Any, *, ignore_unknown: bool) ->
                 if parsed is None:
                     parsed = float(value)
                     if value == "nan":
-                        raise JsonError(
-                            "NaN requires the exact ProtoJSON spelling 'NaN'"
-                        )
+                        raise JsonError("NaN requires the exact ProtoJSON spelling 'NaN'")
             elif isinstance(value, (int, float)):
                 parsed = float(value)
                 if not math.isfinite(parsed):
-                    raise JsonError(
-                        "non-finite floats require a quoted ProtoJSON spelling"
-                    )
-                if (
-                    kind == "float"
-                    and isinstance(value, float)
-                    and not -_FLOAT32_MAX <= value <= _FLOAT32_MAX
-                ):
+                    raise JsonError("non-finite floats require a quoted ProtoJSON spelling")
+                if kind == "float" and isinstance(value, float) and not -_FLOAT32_MAX <= value <= _FLOAT32_MAX:
                     raise JsonError("float value is outside the float32 range")
             else:
                 raise JsonError("invalid ProtoJSON float")
@@ -482,10 +461,7 @@ def _accepts_null(codec: ValueCodec[Any]) -> bool:
     if codec.json_kind != "message":
         return False
     value = codec.default()
-    return (
-        isinstance(value, Message)
-        and value.__PROTO_FULL_NAME__ == "google.protobuf.Value"
-    )
+    return isinstance(value, Message) and value.__PROTO_FULL_NAME__ == "google.protobuf.Value"
 
 
 def _snake_to_camel(path: str) -> str:
@@ -500,9 +476,7 @@ def _snake_to_camel(path: str) -> str:
             capitalize = True
         elif capitalize:
             if not character.islower():
-                raise JsonError(
-                    f"underscore in FieldMask path {path!r} must precede a letter"
-                )
+                raise JsonError(f"underscore in FieldMask path {path!r} must precede a letter")
             result.append(character.upper())
             capitalize = False
         else:
@@ -565,10 +539,7 @@ def _parse_timestamp(value: Any, message: Message) -> None:
         raise JsonError(str(error)) from error
     delta = local - datetime(1970, 1, 1)
     seconds = delta.days * 86_400 + delta.seconds - offset
-    if (
-        not _TIMESTAMP_MIN <= seconds <= _TIMESTAMP_MAX
-        or not 0 <= nanos < 1_000_000_000
-    ):
+    if not _TIMESTAMP_MIN <= seconds <= _TIMESTAMP_MAX or not 0 <= nanos < 1_000_000_000:
         raise JsonError("Timestamp is outside its valid range")
     _set(message, "seconds", seconds)
     _set(message, "nanos", nanos)
@@ -602,9 +573,7 @@ def _parse_duration(value: Any, message: Message) -> None:
     _set(message, "nanos", nanos)
 
 
-def _parse_well_known(
-    value: Any, message: Message, *, ignore_unknown_fields: bool
-) -> bool:
+def _parse_well_known(value: Any, message: Message, *, ignore_unknown_fields: bool) -> bool:
     name = message.__PROTO_FULL_NAME__
     if name == "google.protobuf.Timestamp":
         _parse_timestamp(value, message)
@@ -734,9 +703,7 @@ def parse_value(
     """Replace a direct message from its ProtoJSON value."""
     message.Clear()
     with message._suspend_mutation(), message._suspend_reset_mask():
-        if _parse_well_known(
-            data, message, ignore_unknown_fields=ignore_unknown_fields
-        ):
+        if _parse_well_known(data, message, ignore_unknown_fields=ignore_unknown_fields):
             return message
     if not isinstance(data, Mapping):
         raise JsonError("message ProtoJSON must be an object")
@@ -776,9 +743,7 @@ def parse_dict(
                 continue
             if field.oneof is not None:
                 if field.oneof in seen_oneofs:
-                    raise JsonError(
-                        f"multiple fields supplied for oneof {field.oneof!r}"
-                    )
+                    raise JsonError(f"multiple fields supplied for oneof {field.oneof!r}")
                 seen_oneofs.add(field.oneof)
             if field.map:
                 if not isinstance(raw, Mapping):
@@ -807,13 +772,9 @@ def parse_dict(
                     )
                     for item in raw
                 ]
-                message._set_field(
-                    field, [item for item in parsed_items if item is not _SKIP]
-                )
+                message._set_field(field, [item for item in parsed_items if item is not _SKIP])
             else:
-                parsed = _parse_value(
-                    field.codec, raw, ignore_unknown=ignore_unknown_fields
-                )
+                parsed = _parse_value(field.codec, raw, ignore_unknown=ignore_unknown_fields)
                 if parsed is not _SKIP:
                     if field in seen and field.message:
                         current = message._values.get(field)
@@ -846,8 +807,7 @@ def _parse_extension(
         return
     if extension.repeated:
         if not isinstance(raw, list) or (
-            any(item is None for item in raw)
-            and not _accepts_null(extension.value_codec)
+            any(item is None for item in raw) and not _accepts_null(extension.value_codec)
         ):
             raise JsonError("repeated extension requires a non-null JSON array")
         parsed_values = [
@@ -860,9 +820,7 @@ def _parse_extension(
         ]
         value = [item for item in parsed_values if item is not _SKIP]
     else:
-        value = _parse_value(
-            extension.value_codec, raw, ignore_unknown=ignore_unknown_fields
-        )
+        value = _parse_value(extension.value_codec, raw, ignore_unknown=ignore_unknown_fields)
         if value is _SKIP:
             return
     message.set_extension(extension, value)

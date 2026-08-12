@@ -95,10 +95,7 @@ def test_stale_wrapper_cannot_release_a_reused_transport() -> None:
         channel.discard_channel(first)
         with channel._channel_pool_lock:
             assert channel._leased_channels.get(id(second)) is second
-            assert all(
-                pooled is not second
-                for pooled in channel._free_channels.get(second.address, ())
-            )
+            assert all(pooled is not second for pooled in channel._free_channels.get(second.address, ()))
         assert not second._is_retired_by_sdk()
     finally:
         channel.return_channel(second)
@@ -201,14 +198,8 @@ def test_lease_factory_cannot_reuse_a_tracked_wrapper(caplog) -> None:
         with channel._channel_pool_lock:
             assert channel._leased_channels.get(id(tracked)) is tracked
             assert id(returned) not in channel._leased_channels
-            assert all(
-                pooled is not tracked
-                for pooled in channel._free_channels.get(tracked.address, ())
-            )
-        assert (
-            "The transport lease factory returned a lease that the SDK "
-            "already tracks."
-        ) in caplog.text
+            assert all(pooled is not tracked for pooled in channel._free_channels.get(tracked.address, ()))
+        assert ("The transport lease factory returned a lease that the SDK already tracks.") in caplog.text
     finally:
         channel.sync_close(timeout=5)
 
@@ -262,9 +253,7 @@ def test_constructor_snapshots_mutable_channel_configuration() -> None:
         assert ("address", "before") in effective_options
         assert ("global", "after") not in effective_options
         assert ("address", "after") not in effective_options
-        effective_interceptors = channel.get_address_interceptors(
-            "snapshot.example:443"
-        )
+        effective_interceptors = channel.get_address_interceptors("snapshot.example:443")
         assert first_interceptor in effective_interceptors
         assert later_interceptor not in effective_interceptors
     finally:
@@ -326,18 +315,8 @@ def test_generated_requests_use_loop_owned_pooled_channels() -> None:
         return ret.metadata.id
 
     try:
-        assert (
-            asyncio.run_coroutine_threadsafe(get_disk("loop-a"), loop_a).result(
-                timeout=10
-            )
-            == "loop-a"
-        )
-        assert (
-            asyncio.run_coroutine_threadsafe(get_disk("loop-b"), loop_b).result(
-                timeout=10
-            )
-            == "loop-b"
-        )
+        assert asyncio.run_coroutine_threadsafe(get_disk("loop-a"), loop_a).result(timeout=10) == "loop-a"
+        assert asyncio.run_coroutine_threadsafe(get_disk("loop-b"), loop_b).result(timeout=10) == "loop-b"
     finally:
         asyncio.run_coroutine_threadsafe(channel.close(), loop_a).result(timeout=10)
         _stop_event_loop(loop_a, thread_a)
@@ -377,9 +356,7 @@ def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None
         return await call
 
     try:
-        result = asyncio.run_coroutine_threadsafe(await_call(), loop_a).result(
-            timeout=5
-        )
+        result = asyncio.run_coroutine_threadsafe(await_call(), loop_a).result(timeout=5)
         assert result.metadata.id == "cross-loop"
         assert call.debug_error_string() == ""
 
@@ -389,14 +366,8 @@ def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None
             call.wait_for_connection(),
             loop_b,
         ).result(timeout=5)
-        assert (
-            asyncio.run_coroutine_threadsafe(call.code(), loop_b).result(timeout=5)
-            == grpc.StatusCode.OK
-        )
-        assert (
-            asyncio.run_coroutine_threadsafe(call.details(), loop_b).result(timeout=5)
-            == ""
-        )
+        assert asyncio.run_coroutine_threadsafe(call.code(), loop_b).result(timeout=5) == grpc.StatusCode.OK
+        assert asyncio.run_coroutine_threadsafe(call.details(), loop_b).result(timeout=5) == ""
         assert (
             asyncio.run_coroutine_threadsafe(
                 call.initial_metadata(),
@@ -777,9 +748,7 @@ def test_foreign_transport_close_accepts_general_owner_loop_awaitable() -> None:
         owner_loop,
     )
     try:
-        channel.run_async(channel._close_address_channel(address, None)).result(
-            timeout=5
-        )
+        channel.run_async(channel._close_address_channel(address, None)).result(timeout=5)
         assert invoked_loops == [owner_loop]
         assert address._is_closed_by_sdk()
     finally:
@@ -1136,10 +1105,7 @@ def test_transport_in_flight_close_cannot_be_returned_to_pool() -> None:
         channel.return_channel(address)
 
         with channel._channel_pool_lock:
-            assert all(
-                pooled is not address
-                for pooled in channel._free_channels.get(address.address, ())
-            )
+            assert all(pooled is not address for pooled in channel._free_channels.get(address.address, ()))
         assert address._is_retired_by_sdk()
     finally:
         release_close.set()
@@ -1263,10 +1229,7 @@ def test_transport_retirement_wins_return_publication_race(
         assert not returning.is_alive()
         assert errors == []
         with channel._channel_pool_lock:
-            assert all(
-                pooled is not address
-                for pooled in channel._free_channels.get(address.address, ())
-            )
+            assert all(pooled is not address for pooled in channel._free_channels.get(address.address, ()))
     finally:
         release_close.set()
         channel.sync_close(timeout=5)

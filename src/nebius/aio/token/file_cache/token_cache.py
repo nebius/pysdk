@@ -80,9 +80,7 @@ class TokenCache:
         try:
             data = yaml.safe_load(data) or {}  # type: ignore
             if not isinstance(data, dict):
-                raise ValueError(
-                    f"Invalid YAML format: {type(data)} expected a dictionary."
-                )
+                raise ValueError(f"Invalid YAML format: {type(data)} expected a dictionary.")
             tokens_strs = data.get("tokens", {})  # type: ignore[unused-ignore]
             if not isinstance(tokens_strs, dict):
                 raise ValueError(
@@ -91,9 +89,7 @@ class TokenCache:
             tokens = dict[str, Token]()
             for k, v in tokens_strs.items():  # type: ignore[unused-ignore]
                 if not isinstance(k, str):
-                    raise ValueError(
-                        f"Invalid token format: key '{k}' must be a string."
-                    )
+                    raise ValueError(f"Invalid token format: key '{k}' must be a string.")
 
                 tokens[k] = Token.from_dict(v)
             return tokens
@@ -126,10 +122,7 @@ class TokenCache:
             await self.remove(name)  # Clean up expired token
             return None
         except ValueError as e:
-            log.warning(
-                f"Failed to parse tokens from {self.cache_file}. "
-                f"Returning None for the requested token: {e}"
-            )
+            log.warning(f"Failed to parse tokens from {self.cache_file}. Returning None for the requested token: {e}")
             return None
         except FileNotFoundError:
             return None
@@ -163,9 +156,7 @@ class TokenCache:
         """
         try:
             if not self.cache_file.parent.is_dir():
-                self.cache_file.parent.mkdir(
-                    mode=self.path_create_mode, parents=True, exist_ok=True
-                )
+                self.cache_file.parent.mkdir(mode=self.path_create_mode, parents=True, exist_ok=True)
             async with Lock(
                 self.cache_file,
                 "a+",
@@ -176,10 +167,7 @@ class TokenCache:
                 try:
                     tokens = self._yaml_parse(f.read())  # type: ignore[unused-ignore]
                 except ValueError as e:
-                    log.warning(
-                        f"Failed to parse tokens from {self.cache_file}. "
-                        f"Starting with an empty cache: {e}"
-                    )
+                    log.warning(f"Failed to parse tokens from {self.cache_file}. Starting with an empty cache: {e}")
                     tokens = {}
                 tokens[name] = token
                 f.seek(0)
@@ -209,10 +197,7 @@ class TokenCache:
                 try:
                     tokens = self._yaml_parse(f.read())  # type: ignore[unused-ignore]
                 except ValueError as e:
-                    log.warning(
-                        f"Failed to parse tokens from {self.cache_file}. "
-                        f"Starting with an empty cache: {e}"
-                    )
+                    log.warning(f"Failed to parse tokens from {self.cache_file}. Starting with an empty cache: {e}")
                     tokens = {}
                 if name in tokens:
                     del tokens[name]
@@ -243,10 +228,7 @@ class TokenCache:
                 try:
                     tokens = self._yaml_parse(f.read())  # type: ignore[unused-ignore]
                 except ValueError as e:
-                    log.warning(
-                        f"Failed to parse tokens from {self.cache_file}. "
-                        f"Starting with an empty cache: {e}"
-                    )
+                    log.warning(f"Failed to parse tokens from {self.cache_file}. Starting with an empty cache: {e}")
                     tokens = {}
                 if name in tokens and tokens[name] == token:
                     del tokens[name]

@@ -88,8 +88,6 @@ def _context_around(s: str, pos: int) -> str:
 class ParseError(Error):
     """Raised when parsing fails."""
 
-    pass
-
 
 class ContextedParseError(ParseError):
     """Parse error that includes source context.
@@ -248,9 +246,7 @@ class Lexer:
         start = self.pos
         re_match = simple_string_token.match(self.source[start:])
         if re_match is None:
-            raise ContextedParseError(
-                self.source, self.pos, "unexpected match mismatch"
-            )
+            raise ContextedParseError(self.source, self.pos, "unexpected match mismatch")
         self.consume(re_match[0])
         return Token(
             type=TokenType.PLAIN_KEY,
@@ -445,17 +441,14 @@ def parse(source: str) -> Mask:
                     case TokenType.RBRACE:
                         lvl_ = lvl.pop_level()
                         if lvl_ is None:
-                            raise ContextedParseError(
-                                source, tok.pos, "unmatched right brace"
-                            )
+                            raise ContextedParseError(source, tok.pos, "unmatched right brace")
                         lvl = lvl_
                         state = State.SEPARATOR
                     case _:
                         raise ContextedParseError(
                             source,
                             tok.pos,
-                            f"unexpected token {tok}, expecting separator or closing"
-                            " brace",
+                            f"unexpected token {tok}, expecting separator or closing brace",
                         )
             case _:  # type: ignore[unused-ignore]
                 raise ParseError(f"state machine corruption: unknown state {state}")

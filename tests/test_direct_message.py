@@ -100,9 +100,7 @@ def _reference_types():
         return sample.field.add(
             name=name,
             number=number,
-            label=kwargs.pop(
-                "label", descriptor_pb2.FieldDescriptorProto.LABEL_OPTIONAL
-            ),
+            label=kwargs.pop("label", descriptor_pb2.FieldDescriptorProto.LABEL_OPTIONAL),
             type=field_type,
             **kwargs,
         )
@@ -210,12 +208,8 @@ def _reference_types():
     pool = descriptor_pool.DescriptorPool()
     pool.Add(file_proto)
     return (
-        message_factory.GetMessageClass(
-            pool.FindMessageTypeByName("direct.test.Child")
-        ),
-        message_factory.GetMessageClass(
-            pool.FindMessageTypeByName("direct.test.Sample")
-        ),
+        message_factory.GetMessageClass(pool.FindMessageTypeByName("direct.test.Child")),
+        message_factory.GetMessageClass(pool.FindMessageTypeByName("direct.test.Sample")),
     )
 
 
@@ -259,19 +253,13 @@ def _reference_proto2_type():
     pool = descriptor_pool.DescriptorPool()
     pool.Add(file_proto)
     return (
-        message_factory.GetMessageClass(
-            pool.FindMessageTypeByName("direct.test.Legacy")
-        ),
-        message_factory.GetMessageClass(
-            pool.FindMessageTypeByName("direct.test.ExtensionHost")
-        ),
+        message_factory.GetMessageClass(pool.FindMessageTypeByName("direct.test.Legacy")),
+        message_factory.GetMessageClass(pool.FindMessageTypeByName("direct.test.ExtensionHost")),
         pool.FindExtensionByName(f"direct.test.{required_extension.name}"),
     )
 
 
-REFERENCE_LEGACY, REFERENCE_EXTENSION_HOST, REF_REQUIRED_EXTENSION = (
-    _reference_proto2_type()
-)
+REFERENCE_LEGACY, REFERENCE_EXTENSION_HOST, REF_REQUIRED_EXTENSION = _reference_proto2_type()
 
 
 class Child(Message):
@@ -433,9 +421,7 @@ SAMPLE_CHILD = Field("child", "child", 3, CHILD_CODEC, json_name="directChild")
 SAMPLE_NUMS = Field("nums", "nums", 4, SINT32, repeated=True, packed=True)
 SAMPLE_CHILDREN = Field("children", "children", 5, CHILD_CODEC, repeated=True)
 SAMPLE_TEXT = Field("text", "text", 6, STRING, oneof="choice")
-SAMPLE_SELECTED_CHILD = Field(
-    "selected_child", "selected_child", 7, CHILD_CODEC, oneof="choice"
-)
+SAMPLE_SELECTED_CHILD = Field("selected_child", "selected_child", 7, CHILD_CODEC, oneof="choice")
 SAMPLE_OPTIONAL_COUNT = Field(
     "optional_count",
     "optional_count",
@@ -445,9 +431,7 @@ SAMPLE_OPTIONAL_COUNT = Field(
     oneof="_optional_count",
 )
 SAMPLE_LABELS = Field("labels", "labels", 9, INT32, map_key_codec=STRING)
-SAMPLE_CHILD_MAP = Field(
-    "child_map", "child_map", 10, CHILD_CODEC, map_key_codec=STRING
-)
+SAMPLE_CHILD_MAP = Field("child_map", "child_map", 10, CHILD_CODEC, map_key_codec=STRING)
 SAMPLE_STATE = Field(
     "state",
     "state",
@@ -616,9 +600,7 @@ def test_binary_round_trip_matches_reference_in_both_directions() -> None:
         selected_child=Child(value=11),
         optional_count=0,
     )
-    parsed = REFERENCE_SAMPLE.FromString(
-        constructed.SerializeToString(deterministic=True)
-    )
+    parsed = REFERENCE_SAMPLE.FromString(constructed.SerializeToString(deterministic=True))
     assert parsed == reference
 
 
@@ -713,9 +695,7 @@ def test_maps_match_reference_and_own_message_values() -> None:
     direct = Sample.FromString(reference.SerializeToString(deterministic=True))
     assert direct.labels == {"a": 1, "b": 2}
     assert direct.child_map["first"].value == 3
-    round_tripped = REFERENCE_SAMPLE.FromString(
-        direct.SerializeToString(deterministic=True)
-    )
+    round_tripped = REFERENCE_SAMPLE.FromString(direct.SerializeToString(deterministic=True))
     assert round_tripped == reference
 
     source = Child(value=4)
@@ -847,14 +827,7 @@ def test_invalid_map_entry_is_preserved_as_one_unknown_outer_field() -> None:
         assert direct.labels == {}
         assert dict(reference.labels) == {}
         assert direct.SerializeToString(deterministic=True) == payload
-        assert (
-            dict(
-                REFERENCE_SAMPLE.FromString(
-                    reference.SerializeToString(deterministic=True)
-                ).labels
-            )
-            == {}
-        )
+        assert dict(REFERENCE_SAMPLE.FromString(reference.SerializeToString(deterministic=True)).labels) == {}
 
     invalid_enum_entry = BinaryWriter()
     invalid_enum_entry.write_tag(1, STRING.wire_type)
@@ -873,12 +846,10 @@ def test_invalid_map_entry_is_preserved_as_one_unknown_outer_field() -> None:
 def test_deterministic_map_output_is_independent_of_insertion_order() -> None:
     left = Sample(labels={"z": 1, "a": 2, "middle": 3})
     right = Sample(labels={"middle": 3, "z": 1, "a": 2})
-    assert left.SerializeToString(deterministic=True) == right.SerializeToString(
+    assert left.SerializeToString(deterministic=True) == right.SerializeToString(deterministic=True)
+    assert Envelope(sample=left).SerializeToString(deterministic=True) == Envelope(sample=right).SerializeToString(
         deterministic=True
     )
-    assert Envelope(sample=left).SerializeToString(deterministic=True) == Envelope(
-        sample=right
-    ).SerializeToString(deterministic=True)
 
 
 def test_copy_merge_clear_and_container_identity() -> None:
@@ -1035,9 +1006,7 @@ def test_required_fields_and_closed_declared_enums_match_reference() -> None:
     direct.ParseFromString(payload)
     assert direct.states == [0, 1]
     assert direct.IsInitialized()
-    expected = REFERENCE_LEGACY.FromString(payload).SerializeToString(
-        deterministic=True
-    )
+    expected = REFERENCE_LEGACY.FromString(payload).SerializeToString(deterministic=True)
     assert direct.SerializeToString(deterministic=True) == expected
 
 
@@ -1235,21 +1204,13 @@ def test_full_reset_mask_reflects_wkt_raw_state() -> None:
     assert Duration().get_full_update_reset_mask().marshal() == "nanos,seconds"
     assert Duration(seconds=1, nanos=1).get_full_update_reset_mask().marshal() == ""
     assert ProtoAny().get_full_update_reset_mask().marshal() == "type_url,value"
-    assert (
-        ProtoAny(type_url="type.example/Message").get_full_update_reset_mask().marshal()
-        == "value"
-    )
+    assert ProtoAny(type_url="type.example/Message").get_full_update_reset_mask().marshal() == "value"
 
 
 def test_full_reset_mask_struct_value_list_value_empty_and_null() -> None:
-    all_value_fields = (
-        "bool_value,list_value,null_value,number_value,string_value,struct_value"
-    )
+    all_value_fields = "bool_value,list_value,null_value,number_value,string_value,struct_value"
     assert Value().get_full_update_reset_mask().marshal() == all_value_fields
-    assert (
-        Value(null_value=NullValue.NULL_VALUE).get_full_update_reset_mask().marshal()
-        == all_value_fields
-    )
+    assert Value(null_value=NullValue.NULL_VALUE).get_full_update_reset_mask().marshal() == all_value_fields
     assert Value(number_value=1).get_full_update_reset_mask().marshal() == (
         "bool_value,list_value,null_value,string_value,struct_value"
     )
@@ -1264,9 +1225,7 @@ def test_full_reset_mask_struct_value_list_value_empty_and_null() -> None:
     assert Struct(fields=None).get_full_update_reset_mask().marshal() == "fields"
     assert Struct(fields={}).get_full_update_reset_mask().marshal() == "fields"
     assert (
-        Struct(fields={"null": Value(null_value=NullValue.NULL_VALUE)})
-        .get_full_update_reset_mask()
-        .marshal()
+        Struct(fields={"null": Value(null_value=NullValue.NULL_VALUE)}).get_full_update_reset_mask().marshal()
         == f"fields.*.({all_value_fields})"
     )
 
@@ -1274,9 +1233,7 @@ def test_full_reset_mask_struct_value_list_value_empty_and_null() -> None:
     assert ListValue(values=None).get_full_update_reset_mask().marshal() == "values"
     assert ListValue(values=[]).get_full_update_reset_mask().marshal() == "values"
     assert (
-        ListValue(values=[Value(null_value=NullValue.NULL_VALUE)])
-        .get_full_update_reset_mask()
-        .marshal()
+        ListValue(values=[Value(null_value=NullValue.NULL_VALUE)]).get_full_update_reset_mask().marshal()
         == f"values.*.({all_value_fields})"
     )
 
@@ -1315,14 +1272,9 @@ def test_full_reset_mask_recursive_types_stop_at_absent_values() -> None:
         mapped,
     )
 
-    assert Recursive().get_full_update_reset_mask().marshal() == (
-        "mapped_proto,recursive_proto,repeated_proto"
-    )
-    assert Recursive(
-        recursive_python=Recursive()
-    ).get_full_update_reset_mask().marshal() == (
-        "mapped_proto,recursive_proto.(mapped_proto,recursive_proto,repeated_proto),"
-        "repeated_proto"
+    assert Recursive().get_full_update_reset_mask().marshal() == ("mapped_proto,recursive_proto,repeated_proto")
+    assert Recursive(recursive_python=Recursive()).get_full_update_reset_mask().marshal() == (
+        "mapped_proto,recursive_proto.(mapped_proto,recursive_proto,repeated_proto),repeated_proto"
     )
 
     collection = Recursive(

@@ -115,9 +115,7 @@ def keepalive_config_from_env(
 
     permit = _lookup_keepalive_env(env, ENV_GRPC_KEEPALIVE_PERMIT_WITHOUT_STREAM)
     if permit is not None:
-        permit_without_stream = parse_go_bool(
-            ENV_GRPC_KEEPALIVE_PERMIT_WITHOUT_STREAM, permit
-        )
+        permit_without_stream = parse_go_bool(ENV_GRPC_KEEPALIVE_PERMIT_WITHOUT_STREAM, permit)
 
     cfg = KeepaliveConfig(
         enabled=enabled,
@@ -167,9 +165,7 @@ def keepalive_config_from_options(
     else:
         explicit_time_ms = _mapping_keepalive_int(options, "time_ms", "timeMs")
         explicit_timeout_ms = _mapping_keepalive_int(options, "timeout_ms", "timeoutMs")
-        explicit_permit = _mapping_keepalive_bool(
-            options, "permit_without_stream", "permitWithoutStream"
-        )
+        explicit_permit = _mapping_keepalive_bool(options, "permit_without_stream", "permitWithoutStream")
 
     if explicit_time_ms is not None:
         _assert_valid_keepalive_ms("keepalive.time_ms", explicit_time_ms, True)
@@ -235,11 +231,7 @@ def parse_go_duration_ms(name: str, value: str) -> int:
         raise ValueError(f"{name} must not be negative")
     if total_ns == 0:
         return 0
-    return int(
-        (total_ns / _NANOSECONDS_IN_MILLISECOND).to_integral_value(
-            rounding=ROUND_CEILING
-        )
-    )
+    return int((total_ns / _NANOSECONDS_IN_MILLISECOND).to_integral_value(rounding=ROUND_CEILING))
 
 
 def parse_go_bool(name: str, value: str) -> bool:
@@ -259,9 +251,7 @@ def validate_keepalive_config(cfg: KeepaliveConfig) -> None:
     _assert_valid_keepalive_ms("keepalive.time_ms", cfg.time_ms, True)
     _assert_valid_keepalive_ms("keepalive.timeout_ms", cfg.timeout_ms, True)
     if cfg.enabled and cfg.timeout_ms <= 0:
-        raise ValueError(
-            f"{ENV_GRPC_KEEPALIVE_TIMEOUT} must be positive when keepalive is enabled"
-        )
+        raise ValueError(f"{ENV_GRPC_KEEPALIVE_TIMEOUT} must be positive when keepalive is enabled")
 
 
 def _duration_part_ns(match: Match[str]) -> Decimal:
@@ -289,22 +279,16 @@ def _assert_valid_keepalive_ms(name: str, value: int, allow_zero: bool) -> None:
         raise ValueError(f"{name} must be positive")
 
 
-def _mapping_keepalive_int(
-    options: Mapping[str, object], snake_name: str, camel_name: str
-) -> int | None:
+def _mapping_keepalive_int(options: Mapping[str, object], snake_name: str, camel_name: str) -> int | None:
     value = options.get(snake_name, options.get(camel_name))
     if value is None:
         return None
     if not isinstance(value, int) or isinstance(value, bool):
-        raise TypeError(
-            f"keepalive.{snake_name} must be an integer number of milliseconds"
-        )
+        raise TypeError(f"keepalive.{snake_name} must be an integer number of milliseconds")
     return value
 
 
-def _mapping_keepalive_bool(
-    options: Mapping[str, object], snake_name: str, camel_name: str
-) -> bool | None:
+def _mapping_keepalive_bool(options: Mapping[str, object], snake_name: str, camel_name: str) -> bool | None:
     value = options.get(snake_name, options.get(camel_name))
     if value is None:
         return None

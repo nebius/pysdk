@@ -38,14 +38,10 @@ from nebius_generator.model import Graph, Options
 coordinate = coordinator.generate
 
 
-def _implementation_source(
-    response: plugin_pb2.CodeGeneratorResponse, package_path: str
-) -> str:
+def _implementation_source(response: plugin_pb2.CodeGeneratorResponse, package_path: str) -> str:
     prefix = package_path.rstrip("/") + "/_impl_"
     return "\n".join(
-        output.content
-        for output in response.file
-        if output.name.startswith(prefix) and output.name.endswith(".py")
+        output.content for output in response.file if output.name.startswith(prefix) and output.name.endswith(".py")
     )
 
 
@@ -117,9 +113,7 @@ def _add_public_annotation_schema(
             descriptor_pb2.FieldDescriptorProto.TYPE_STRING,
         )
     details = annotations.message_type.add(name="DeprecationDetails")
-    for number, name in enumerate(
-        ("effective_at", "description", "description_cli"), start=1
-    ):
+    for number, name in enumerate(("effective_at", "description", "description_cli"), start=1):
         _field(
             details,
             name,
@@ -262,9 +256,7 @@ def _add_public_annotation_schema(
 
 
 def _request(namespace: str, partition: str = "all") -> plugin_pb2.CodeGeneratorRequest:
-    common = descriptor_pb2.FileDescriptorProto(
-        name="acme/common.proto", package="acme.common", syntax="proto3"
-    )
+    common = descriptor_pb2.FileDescriptorProto(name="acme/common.proto", package="acme.common", syntax="proto3")
     shared = common.message_type.add(name="Shared")
     _field(shared, "value", 1, descriptor_pb2.FieldDescriptorProto.TYPE_STRING)
     state = common.enum_type.add(name="State")
@@ -448,9 +440,7 @@ def _operation_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:
         syntax="proto3",
     )
     operation = operation_file.message_type.add(name="Operation")
-    for number, name in enumerate(
-        ("id", "description", "created_by", "resource_id"), start=1
-    ):
+    for number, name in enumerate(("id", "description", "created_by", "resource_id"), start=1):
         _field(operation, name, number, descriptor_pb2.FieldDescriptorProto.TYPE_STRING)
     get_request = operation_file.message_type.add(name="GetOperationRequest")
     _field(get_request, "id", 1, descriptor_pb2.FieldDescriptorProto.TYPE_STRING)
@@ -494,18 +484,10 @@ def _operation_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:
 
 
 def _wkt_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:
-    timestamp_file = descriptor_pb2.FileDescriptorProto.FromString(
-        timestamp_pb2.DESCRIPTOR.serialized_pb
-    )
-    duration_file = descriptor_pb2.FileDescriptorProto.FromString(
-        duration_pb2.DESCRIPTOR.serialized_pb
-    )
-    any_file = descriptor_pb2.FileDescriptorProto.FromString(
-        any_pb2.DESCRIPTOR.serialized_pb
-    )
-    status_file = descriptor_pb2.FileDescriptorProto.FromString(
-        status_pb2.DESCRIPTOR.serialized_pb
-    )
+    timestamp_file = descriptor_pb2.FileDescriptorProto.FromString(timestamp_pb2.DESCRIPTOR.serialized_pb)
+    duration_file = descriptor_pb2.FileDescriptorProto.FromString(duration_pb2.DESCRIPTOR.serialized_pb)
+    any_file = descriptor_pb2.FileDescriptorProto.FromString(any_pb2.DESCRIPTOR.serialized_pb)
+    status_file = descriptor_pb2.FileDescriptorProto.FromString(status_pb2.DESCRIPTOR.serialized_pb)
     error_file = descriptor_pb2.FileDescriptorProto(
         name="nebius/common/v1/error.proto",
         package="nebius.common.v1",
@@ -694,9 +676,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
         assert holder.request_status.message == "invalid"
         assert holder.request_status.registry is module.REGISTRY
         assert len(holder.request_status.details) == 1
-        assert (
-            holder.request_status.details[0].type_url == "type.example/unknown.Detail"
-        )
+        assert holder.request_status.details[0].type_url == "type.example/unknown.Detail"
         assert holder.SerializeToString(deterministic=True) == payload
 
         original = holder.SerializeToString(deterministic=True)
@@ -712,17 +692,12 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
         with pytest.raises(KeyError):
             holder.schedule.pop("missing")
 
-        later_timestamp_payload = (
-            protobuf.Timestamp(seconds=2, nanos=456).SerializeToString() + b"\x20\x09"
-        )
-        moments_payload = _option_field(3, 2, timestamp_payload) + _option_field(
-            3, 2, later_timestamp_payload
-        )
+        later_timestamp_payload = protobuf.Timestamp(seconds=2, nanos=456).SerializeToString() + b"\x20\x09"
+        moments_payload = _option_field(3, 2, timestamp_payload) + _option_field(3, 2, later_timestamp_payload)
         moments_holder = module.Holder.FromString(moments_payload)
         moments_holder.moments.reverse()
         assert moments_holder.SerializeToString(deterministic=True) == (
-            _option_field(3, 2, later_timestamp_payload)
-            + _option_field(3, 2, timestamp_payload)
+            _option_field(3, 2, later_timestamp_payload) + _option_field(3, 2, timestamp_payload)
         )
 
         with pytest.raises(ValueError, match="timestamp nanos"):
@@ -757,9 +732,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
         assert assigned.schedule["key"] == assigned_time.astimezone()
         assert assigned.request_status is not None
         assert assigned.request_status.registry is module.REGISTRY
-        assert _option_field(6, 2, status_payload) in assigned.SerializeToString(
-            deterministic=True
-        )
+        assert _option_field(6, 2, status_payload) in assigned.SerializeToString(deterministic=True)
 
         def full_field_mask(holder, name: str) -> Mask | None:
             return holder.get_full_update_reset_mask().field_parts.get(FieldKey(name))
@@ -776,14 +749,9 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
             assert full_field_mask(empty_holder, name) == Mask()
 
         epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
-        assert full_field_mask(
-            module.Holder(created_at=epoch), "created_at"
-        ).marshal() == ("nanos,seconds")
+        assert full_field_mask(module.Holder(created_at=epoch), "created_at").marshal() == ("nanos,seconds")
         assert (
-            full_field_mask(
-                module.Holder(created_at=epoch + timedelta(seconds=1)), "created_at"
-            ).marshal()
-            == "nanos"
+            full_field_mask(module.Holder(created_at=epoch + timedelta(seconds=1)), "created_at").marshal() == "nanos"
         )
         assert (
             full_field_mask(
@@ -802,9 +770,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
         assert moments_mask.any.marshal() == "nanos,seconds"
 
         assert full_field_mask(module.Holder(schedule={}), "schedule") == Mask()
-        schedule_mask = full_field_mask(
-            module.Holder(schedule={"epoch": epoch}), "schedule"
-        )
+        schedule_mask = full_field_mask(module.Holder(schedule={"epoch": epoch}), "schedule")
         assert schedule_mask is not None and schedule_mask.any is not None
         assert schedule_mask.any.marshal() == "nanos,seconds"
 
@@ -836,9 +802,7 @@ def check(holder: Holder, raw: Timestamp, value: datetime) -> None:
     Holder(created_at=value, moments=[raw, value], schedule={"x": raw})
 """)
         environment = os.environ.copy()
-        environment["MYPYPATH"] = os.pathsep.join(
-            (str(tmp_path), str(Path(__file__).parents[2] / "src"))
-        )
+        environment["MYPYPATH"] = os.pathsep.join((str(tmp_path), str(Path(__file__).parents[2] / "src")))
         result = subprocess.run(
             [
                 sys.executable,
@@ -872,9 +836,7 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
     try:
         public = importlib.import_module("status_public.acme.wkt")
         public_common = importlib.import_module("status_public.nebius.common.v1")
-        public_alpha = importlib.import_module(
-            "status_public.nebius.common.error.v1alpha1"
-        )
+        public_alpha = importlib.import_module("status_public.nebius.common.error.v1alpha1")
         public_confusing = importlib.import_module("status_public.confusing")
         alternate = importlib.import_module("status_alternate.acme.wkt")
         public_error = public_common.ServiceError(value="original")
@@ -894,29 +856,20 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
             ).SerializeToString()
             + b"\x20\x07"
         )
-        public_status = public.Holder.FromString(
-            _option_field(6, 2, raw_status)
-        ).request_status
+        public_status = public.Holder.FromString(_option_field(6, 2, raw_status)).request_status
         assert public_status is not None
         assert public_status.code is StatusCode.UNKNOWN
         assert public_status.registry is public.REGISTRY
         assert len(public_status.service_errors) == 2
         assert len(public_status.details) == 1
-        assert public_status.details[0].type_url.endswith(
-            "/confusing.ServiceErrorLookalike"
-        )
+        assert public_status.details[0].type_url.endswith("/confusing.ServiceErrorLookalike")
 
         alternate_holder = alternate.Holder(request_status=public_status)
-        assert alternate_holder.SerializeToString(deterministic=True) == _option_field(
-            6, 2, raw_status
-        )
+        assert alternate_holder.SerializeToString(deterministic=True) == _option_field(6, 2, raw_status)
         assert alternate_holder.request_status is not None
         assert alternate_holder.request_status.registry is alternate.REGISTRY
         assert len(alternate_holder.request_status.service_errors) == 2
-        assert (
-            type(alternate_holder.request_status.service_errors[0]).__REGISTRY__
-            is alternate.REGISTRY
-        )
+        assert type(alternate_holder.request_status.service_errors[0]).__REGISTRY__ is alternate.REGISTRY
 
         public_status.service_errors[0].value = "changed"
         public_status.service_errors[1].value = "changed alpha"
@@ -924,10 +877,7 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
         assert changed_holder.request_status is not None
         assert changed_holder.request_status.service_errors[0].value == "changed"
         assert changed_holder.request_status.service_errors[1].value == "changed alpha"
-        assert (
-            type(changed_holder.request_status.service_errors[0]).__REGISTRY__
-            is alternate.REGISTRY
-        )
+        assert type(changed_holder.request_status.service_errors[0]).__REGISTRY__ is alternate.REGISTRY
         changed_raw = public_status.to_rpc_status(registry=alternate.REGISTRY)
         assert changed_raw.code == 123
         assert b"\x20\x07" in changed_raw.SerializeToString(deterministic=True)
@@ -970,9 +920,7 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
         with pytest.raises(ServiceRequestError) as captured:
             request._raise_request_error(NoRichError())  # type: ignore[arg-type]
         assert captured.value.status.registry is public.REGISTRY
-        assert (
-            type(captured.value.status.to_rpc_status()).__REGISTRY__ is public.REGISTRY
-        )
+        assert type(captured.value.status.to_rpc_status()).__REGISTRY__ is public.REGISTRY
 
         class FakeCall:
             def __init__(self, payload: bytes, code: StatusCode) -> None:
@@ -989,9 +937,7 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
                 return "missing"
 
         call = FakeCall(
-            status_type(
-                code=StatusCode.NOT_FOUND.value[0], message="missing"
-            ).SerializeToString(),
+            status_type(code=StatusCode.NOT_FOUND.value[0], message="missing").SerializeToString(),
             StatusCode.NOT_FOUND,
         )
         decoded = rpc_status_from_call(call, registry=public.REGISTRY)
@@ -1023,10 +969,7 @@ def test_operation_outputs_use_direct_registry_owned_wrappers(tmp_path: Path) ->
         assert issubclass(widget.WidgetServiceClient, ClientWithOperations)
         assert not issubclass(common.OperationServiceClient, ClientWithOperations)
         assert widget.WidgetServiceClient.__operation_type__ is common.Operation
-        assert (
-            widget.WidgetServiceClient.__operation_service_class__
-            is common.OperationServiceClient
-        )
+        assert widget.WidgetServiceClient.__operation_service_class__ is common.OperationServiceClient
 
         class Channel:
             def parent_id(self) -> None:
@@ -1069,9 +1012,7 @@ def test_operation_outputs_use_direct_registry_owned_wrappers(tmp_path: Path) ->
         assert transport_stub.List == "/nebius.common.v1.OperationService/List"
         assert calls[0][1](common.GetOperationRequest(id="x")) != b""  # type: ignore[operator]
         assert calls[0][2](raw.SerializeToString()).id == "operation-1"  # type: ignore[operator]
-        assert from_stub_class(widget.WidgetServiceClient) == (
-            "acme.widget.WidgetService"
-        )
+        assert from_stub_class(widget.WidgetServiceClient) == ("acme.widget.WidgetService")
     finally:
         sys.path.remove(str(tmp_path))
 
@@ -1092,9 +1033,7 @@ def test_partition_modes_emit_byte_identical_trees() -> None:
 
 def test_split_package_links_one_relative_import_per_target() -> None:
     request = _request("relative_edges")
-    extra = descriptor_pb2.FileDescriptorProto(
-        name="alternate/extra.proto", package="acme.widget", syntax="proto3"
-    )
+    extra = descriptor_pb2.FileDescriptorProto(name="alternate/extra.proto", package="acme.widget", syntax="proto3")
     extra.dependency.append("acme/common.proto")
     holder = extra.message_type.add(name="Extra")
     _field(
@@ -1115,15 +1054,12 @@ def test_split_package_links_one_relative_import_per_target() -> None:
     absolute_edges = [
         node
         for node in ast.walk(tree)
-        if isinstance(node, ast.Import)
-        and any(alias.name.startswith("relative_edges.") for alias in node.names)
+        if isinstance(node, ast.Import) and any(alias.name.startswith("relative_edges.") for alias in node.names)
     ]
     relative_common_edges = [
         node
         for node in ast.walk(tree)
-        if isinstance(node, ast.ImportFrom)
-        and node.level > 0
-        and any(alias.name == "common" for alias in node.names)
+        if isinstance(node, ast.ImportFrom) and node.level > 0 and any(alias.name == "common" for alias in node.names)
     ]
     assert not absolute_edges
     assert len(relative_common_edges) == 1
@@ -1133,9 +1069,7 @@ def test_large_package_shards_are_lazy_and_keep_public_identity(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     request = _request("sharded_edges")
-    extra = descriptor_pb2.FileDescriptorProto(
-        name="alternate/extra.proto", package="acme.widget", syntax="proto3"
-    )
+    extra = descriptor_pb2.FileDescriptorProto(name="alternate/extra.proto", package="acme.widget", syntax="proto3")
     for name in ("Extra", "getattr", "globals", "isinstance", "sorted", "type"):
         extra.message_type.add(name=name)
     request.proto_file.append(extra)
@@ -1173,13 +1107,10 @@ def test_large_package_shards_are_lazy_and_keep_public_identity(
         for builtin_name in ("getattr", "globals", "isinstance", "sorted", "type"):
             exported_name = (
                 builtin_name + "_"
-                if keyword.iskeyword(builtin_name)
-                or keyword.issoftkeyword(builtin_name)
+                if keyword.iskeyword(builtin_name) or keyword.issoftkeyword(builtin_name)
                 else builtin_name
             )
-            assert (
-                getattr(module, exported_name).__module__ == "sharded_edges.acme.widget"
-            )
+            assert getattr(module, exported_name).__module__ == "sharded_edges.acme.widget"
     finally:
         sys.path.remove(str(tmp_path))
 
@@ -1191,21 +1122,11 @@ def test_small_packages_are_lazy_and_own_registry_fragments() -> None:
     names = {output.name for output in response.file}
     assert "fragmented/acme/widget/_impl_000.py" in names
     assert "fragmented/acme/widget/_registry_fragment.py" in names
-    facade = next(
-        output.content
-        for output in response.file
-        if output.name == "fragmented/acme/widget/__init__.py"
-    )
+    facade = next(output.content for output in response.file if output.name == "fragmented/acme/widget/__init__.py")
     fragment = next(
-        output.content
-        for output in response.file
-        if output.name == "fragmented/acme/widget/_registry_fragment.py"
+        output.content for output in response.file if output.name == "fragmented/acme/widget/_registry_fragment.py"
     )
-    registry = next(
-        output.content
-        for output in response.file
-        if output.name == "fragmented/_registry.py"
-    )
+    registry = next(output.content for output in response.file if output.name == "fragmented/_registry.py")
     assert "from ._impl_000" in facade
     assert "from fragmented._registry" not in facade
     assert "module=__package__" in fragment
@@ -1296,11 +1217,7 @@ def test_runtime_closure_excludes_option_only_dependency() -> None:
     names = {file.name for file in response.file}
     assert "closure/acme/common/__init__.py" in names
     assert "closure/metadata/options/__init__.py" not in names
-    metadata_fragment = next(
-        file.content
-        for file in response.file
-        if file.name == "closure/_registry_fragment.py"
-    )
+    metadata_fragment = next(file.content for file in response.file if file.name == "closure/_registry_fragment.py")
     assert "metadata/options.proto" in metadata_fragment
 
 
@@ -1318,9 +1235,7 @@ def test_runtime_closure_is_declaration_granular() -> None:
         descriptor_pb2.FieldDescriptorProto.TYPE_MESSAGE,
         type_name=".other.Other",
     )
-    other = descriptor_pb2.FileDescriptorProto(
-        name="other/other.proto", package="other", syntax="proto3"
-    )
+    other = descriptor_pb2.FileDescriptorProto(name="other/other.proto", package="other", syntax="proto3")
     other.message_type.add(name="Other")
     dependency.dependency.append(other.name)
     request.proto_file.extend((dependency, other))
@@ -1344,9 +1259,7 @@ def test_runtime_closure_is_declaration_granular() -> None:
 
 
 def test_nested_extension_activates_external_extendee() -> None:
-    host_file = descriptor_pb2.FileDescriptorProto(
-        name="dependency/host.proto", package="dependency", syntax="proto2"
-    )
+    host_file = descriptor_pb2.FileDescriptorProto(name="dependency/host.proto", package="dependency", syntax="proto2")
     host = host_file.message_type.add(name="Host")
     host.extension_range.add(start=100, end=200)
     root_file = descriptor_pb2.FileDescriptorProto(
@@ -1406,9 +1319,7 @@ def test_fragment_verifier_rejects_owner_and_key_tampering(tmp_path: Path) -> No
     payload["owner"] = "WRONG"
     fragments[0].write_text(json.dumps(payload))
     with pytest.raises(GeneratorError, match="attestation mismatch"):
-        coordinator._verify_fragments(
-            attestations, graph, invocation, semantic, batches
-        )
+        coordinator._verify_fragments(attestations, graph, invocation, semantic, batches)
 
     payload["owner"] = original_owner
     payload["key"] = "0" * 64
@@ -1432,13 +1343,9 @@ def test_fragment_verifier_rejects_owner_and_key_tampering(tmp_path: Path) -> No
         )
 
 
-def test_persistent_fragment_cache_rejects_corruption(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_persistent_fragment_cache_rejects_corruption(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     cache = tmp_path / "cache"
-    monkeypatch.setenv(
-        "NEBIUS_GENERATOR_CACHE_KEY_FILE", str(tmp_path / "state" / "cache.key")
-    )
+    monkeypatch.setenv("NEBIUS_GENERATOR_CACHE_KEY_FILE", str(tmp_path / "state" / "cache.key"))
     request = _request("cached", "package")
     request.parameter += f",cache_dir={cache}"
     manifest = tmp_path / "request.bin"
@@ -1454,9 +1361,7 @@ def test_persistent_fragment_cache_rejects_corruption(
     repaired = json.loads(objects[0].read_text())
     assert repaired["content_hash"] == coordinator._content_hash(repaired)
 
-    semantic_object = next(
-        path for path in objects if "Field('value', 'value', 1," in path.read_text()
-    )
+    semantic_object = next(path for path in objects if "Field('value', 'value', 1," in path.read_text())
     tampered = json.loads(semantic_object.read_text())
     source_file = next(iter(tampered["ir"]))
     package = next(iter(tampered["ir"][source_file]))
@@ -1479,36 +1384,26 @@ def test_persistent_fragment_cache_rejects_corruption(
     assert "Field('value', 'value', 1," in repaired_source
 
 
-def test_persistent_cache_allows_concurrent_identical_writers(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_persistent_cache_allows_concurrent_identical_writers(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     cache = tmp_path / "cache"
-    monkeypatch.setenv(
-        "NEBIUS_GENERATOR_CACHE_KEY_FILE", str(tmp_path / "state" / "cache.key")
-    )
+    monkeypatch.setenv("NEBIUS_GENERATOR_CACHE_KEY_FILE", str(tmp_path / "state" / "cache.key"))
     request = _request("concurrent_cache", "package")
     request.parameter += f",cache_dir={cache}"
     manifest = tmp_path / "request.bin"
     manifest.write_bytes(request.SerializeToString(deterministic=True))
 
     with ThreadPoolExecutor(max_workers=8) as executor:
-        futures = [
-            executor.submit(coordinate, manifest, tmp_path / f"run-{index}" / "src")
-            for index in range(8)
-        ]
+        futures = [executor.submit(coordinate, manifest, tmp_path / f"run-{index}" / "src") for index in range(8)]
         for future in futures:
             future.result()
 
     assert all(
-        json.loads(path.read_text())["content_hash"]
-        == coordinator._content_hash(json.loads(path.read_text()))
+        json.loads(path.read_text())["content_hash"] == coordinator._content_hash(json.loads(path.read_text()))
         for path in cache.rglob("*.json")
     )
 
 
-def test_cache_signing_key_cold_initialization_is_atomic(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_cache_signing_key_cold_initialization_is_atomic(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     key_file = tmp_path / "state" / "cache.key"
     monkeypatch.setenv("NEBIUS_GENERATOR_CACHE_KEY_FILE", str(key_file))
 
@@ -1520,13 +1415,9 @@ def test_cache_signing_key_cold_initialization_is_atomic(
     assert len(keys[0]) == 32
 
 
-def test_persistent_cache_hit_does_not_reanalyze(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_persistent_cache_hit_does_not_reanalyze(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     cache = tmp_path / "cache"
-    monkeypatch.setenv(
-        "NEBIUS_GENERATOR_CACHE_KEY_FILE", str(tmp_path / "state" / "cache.key")
-    )
+    monkeypatch.setenv("NEBIUS_GENERATOR_CACHE_KEY_FILE", str(tmp_path / "state" / "cache.key"))
     request = _request("cache_hit", "package")
     request.parameter += f",cache_dir={cache}"
     manifest = tmp_path / "request.bin"
@@ -1577,9 +1468,7 @@ def test_worker_batch_view_contains_only_owned_models_and_type_signatures() -> N
 def test_coordinator_partition_modes_emit_byte_identical_trees(tmp_path: Path) -> None:
     def request_for(partition: str):
         request = _request("coordinated", partition)
-        extra = descriptor_pb2.FileDescriptorProto(
-            name="alternate/extra.proto", package="acme.widget", syntax="proto3"
-        )
+        extra = descriptor_pb2.FileDescriptorProto(name="alternate/extra.proto", package="acme.widget", syntax="proto3")
         extra.message_type.add(name="Extra")
         request.proto_file.append(extra)
         request.file_to_generate.append(extra.name)
@@ -1594,21 +1483,13 @@ def test_coordinator_partition_modes_emit_byte_identical_trees(tmp_path: Path) -
         output = tmp_path / partition
         manifest.write_bytes(request.SerializeToString(deterministic=True))
         coordinate(manifest, output)
-        actual_files = {
-            str(path.relative_to(output)): path.read_bytes()
-            for path in output.rglob("*.py")
-        }
+        actual_files = {str(path.relative_to(output)): path.read_bytes() for path in output.rglob("*.py")}
         assert actual_files == expected_files
-    fragments = [
-        json.loads(path.read_text()) for path in (tmp_path / "fragments").iterdir()
-    ]
+    fragments = [json.loads(path.read_text()) for path in (tmp_path / "fragments").iterdir()]
     owners = {
         fragment["owner"]
         for fragment in fragments
-        if any(
-            symbol.startswith("acme.widget.")
-            for symbol in fragment["symbols"]["messages"]
-        )
+        if any(symbol.startswith("acme.widget.") for symbol in fragment["symbols"]["messages"])
     }
     assert owners == {"acme", "alternate"}
 
@@ -1655,9 +1536,7 @@ def test_plugin_io_uses_committed_sdk_api() -> None:
     assert not response.error
     assert response.supported_features & response.FEATURE_PROTO3_OPTIONAL
     assert any(item.name.endswith("/_registry.py") for item in response.file)
-    assert parse_request(request.SerializeToString()).__class__.__module__ == (
-        "nebius.api.google.protobuf.compiler"
-    )
+    assert parse_request(request.SerializeToString()).__class__.__module__ == ("nebius.api.google.protobuf.compiler")
 
 
 @pytest.mark.asyncio
@@ -1826,13 +1705,9 @@ def test_generated_namespaces_are_direct_and_isolated(tmp_path: Path) -> None:
         assert b"\x98\x06\x07" in decoded.SerializeToString(deterministic=True)
         assert type(original) is not type(decoded)
         assert original.get_descriptor() is not decoded.get_descriptor()
-        assert one_widget.WidgetServiceClient.__service_name__ == (
-            "acme.widget.WidgetService"
-        )
+        assert one_widget.WidgetServiceClient.__service_name__ == ("acme.widget.WidgetService")
         assert (
-            one_widget.WidgetServiceClient.get_descriptor()
-            .methods_by_name["GetWidget"]
-            .output_type.full_name
+            one_widget.WidgetServiceClient.get_descriptor().methods_by_name["GetWidget"].output_type.full_name
             == "acme.widget.Widget"
         )
 
@@ -1847,12 +1722,7 @@ def test_generated_namespaces_are_direct_and_isolated(tmp_path: Path) -> None:
         assert host.get_extension(one_extension.mode) is one_extension.Mode.MODE_ON
         host.set_extension(one_extension.tag, "typed")
         assert host.get_extension(one_extension.tag) == "typed"
-        assert (
-            one_extension.Host.FromString(host.SerializeToString()).get_extension(
-                one_extension.tag
-            )
-            == "typed"
-        )
+        assert one_extension.Host.FromString(host.SerializeToString()).get_extension(one_extension.tag) == "typed"
         host.set_extension(one_extension.Host.tag, "scoped")
         decoded_host = one_extension.Host.FromString(host.SerializeToString())
         assert decoded_host.get_extension(one_extension.Host.tag) == "scoped"
@@ -1960,9 +1830,7 @@ def check(widget: Widget, client: WidgetServiceClient) -> None:
     enum_value: Mode = Host().get_extension(enum_extension)
 """)
     environment = os.environ.copy()
-    environment["MYPYPATH"] = os.pathsep.join(
-        (str(tmp_path), str(Path(__file__).parents[2] / "src"))
-    )
+    environment["MYPYPATH"] = os.pathsep.join((str(tmp_path), str(Path(__file__).parents[2] / "src")))
     result = subprocess.run(
         [
             sys.executable,
@@ -2010,9 +1878,7 @@ def check(widget: Widget, client: WidgetServiceClient) -> None:
 def test_constructor_local_names_do_not_collide_with_fields(tmp_path: Path) -> None:
     request = _request("locals")
     message = request.proto_file[0].message_type.add(name="LocalNames")
-    for number, name in enumerate(
-        ("self", "initial_message", "values", "property", "after_property"), start=1
-    ):
+    for number, name in enumerate(("self", "initial_message", "values", "property", "after_property"), start=1):
         _field(message, name, number, descriptor_pb2.FieldDescriptorProto.TYPE_STRING)
     response = generate(request)
     assert not response.error
@@ -2032,9 +1898,7 @@ def test_runtime_typing_aliases_do_not_reserve_public_proto_names() -> None:
 
 
 @pytest.mark.parametrize("field_kind", ("message", "enum", "renamed_message"))
-def test_standard_type_symbols_alias_runtime_field_and_enum_imports(
-    field_kind: str, tmp_path: Path
-) -> None:
+def test_standard_type_symbols_alias_runtime_field_and_enum_imports(field_kind: str, tmp_path: Path) -> None:
     standard = descriptor_pb2.FileDescriptorProto(
         name="google/protobuf/type_fixture.proto",
         package="google.protobuf",
@@ -2110,19 +1974,12 @@ def test_collisions_fail_in_band() -> None:
     assert "shadows generated import Message" in generate(reserved).error
 
     nested_runtime = _request("invalid")
-    nested_runtime.proto_file[1].message_type[0].nested_type.add(
-        name="SerializeToString"
-    )
+    nested_runtime.proto_file[1].message_type[0].nested_type.add(name="SerializeToString")
     assert "Python member collision" in generate(nested_runtime).error
 
     private_state = _request("invalid")
-    private_state.proto_file[0].message_type[0].field.add(
-        name="_values", number=2, label=1, type=9
-    )
-    assert (
-        "Python field collision acme.common.Shared._values"
-        in generate(private_state).error
-    )
+    private_state.proto_file[0].message_type[0].field.add(name="_values", number=2, label=1, type=9)
+    assert "Python field collision acme.common.Shared._values" in generate(private_state).error
 
     for field_name in (
         "is_default",
@@ -2134,9 +1991,7 @@ def test_collisions_fail_in_band() -> None:
         "_NebiusProperty",
     ):
         helper_collision = _request("invalid")
-        helper_collision.proto_file[0].message_type[0].field.add(
-            name=field_name, number=2, label=1, type=9
-        )
+        helper_collision.proto_file[0].message_type[0].field.add(name=field_name, number=2, label=1, type=9)
         assert "Python field collision" in generate(helper_collision).error
 
     enum_runtime = _request("invalid")
@@ -2161,9 +2016,7 @@ def test_collisions_fail_in_band() -> None:
         "__x",
     ):
         field_dunder = _request("invalid")
-        field_dunder.proto_file[0].message_type[0].field.add(
-            name=field_name, number=2, label=1, type=9
-        )
+        field_dunder.proto_file[0].message_type[0].field.add(name=field_name, number=2, label=1, type=9)
         assert "Python field collision" in generate(field_dunder).error
 
     nested_dunder = _request("invalid")
@@ -2171,9 +2024,7 @@ def test_collisions_fail_in_band() -> None:
     assert "Python member collision" in generate(nested_dunder).error
 
     helper_collision = _request("invalid")
-    helper_message = helper_collision.proto_file[0].message_type.add(
-        name="OneofHelpers"
-    )
+    helper_message = helper_collision.proto_file[0].message_type.add(name="OneofHelpers")
     helper_message.oneof_decl.add(name="a")
     helper_message.oneof_decl.add(name="a_b")
     _field(
@@ -2186,9 +2037,7 @@ def test_collisions_fail_in_band() -> None:
     assert "Python oneof helper collision" in generate(helper_collision).error
 
     renamed_oneof_collision = _request("invalid")
-    renamed_message = renamed_oneof_collision.proto_file[0].message_type.add(
-        name="RenamedOneofs"
-    )
+    renamed_message = renamed_oneof_collision.proto_file[0].message_type.add(name="RenamedOneofs")
     first = renamed_message.oneof_decl.add(name="foo")
     first.options.MergeFromString(_name_option(1192, 1, "bar"))
     second = renamed_message.oneof_decl.add(name="bar")
@@ -2227,9 +2076,7 @@ def test_collisions_fail_in_band() -> None:
     output_alias.proto_file.extend(
         [
             descriptor_pb2.FileDescriptorProto(name="empty.proto"),
-            descriptor_pb2.FileDescriptorProto(
-                name="unpackaged.proto", package="_unpackaged"
-            ),
+            descriptor_pb2.FileDescriptorProto(name="unpackaged.proto", package="_unpackaged"),
         ]
     )
     output_alias.file_to_generate.extend(("empty.proto", "unpackaged.proto"))
@@ -2244,9 +2091,7 @@ def test_generated_wire_matches_reference_provider(tmp_path: Path) -> None:
     pool = descriptor_pool.DescriptorPool()
     for proto in request.proto_file:
         pool.AddSerializedFile(proto.SerializeToString())
-    reference = message_factory.GetMessageClass(
-        pool.FindMessageTypeByName("acme.widget.Widget")
-    )
+    reference = message_factory.GetMessageClass(pool.FindMessageTypeByName("acme.widget.Widget"))
     sys.path.insert(0, str(tmp_path))
     try:
         module = importlib.import_module("reference_namespace.acme.widget")
@@ -2255,12 +2100,7 @@ def test_generated_wire_matches_reference_provider(tmp_path: Path) -> None:
         assert provider.id == 17
         assert provider.count == 4
         assert dict(provider.labels) == {"a": 1, "b": 2}
-        assert (
-            module.Widget.FromString(
-                provider.SerializeToString(deterministic=True)
-            ).count
-            == 4
-        )
+        assert module.Widget.FromString(provider.SerializeToString(deterministic=True)).count == 4
     finally:
         sys.path.remove(str(tmp_path))
 
@@ -2276,18 +2116,12 @@ def test_unknown_nebius_annotations_drive_generated_api(tmp_path: Path) -> None:
     widget.options.MergeFromString(_name_option(1195, 1, "Resource"))
     widget.oneof_decl[0].options.MergeFromString(_name_option(1192, 1, "selection"))
     widget.field[0].options.MergeFromString(
-        _name_option(1195, 1, "identifier")
-        + _option_field(1192, 0, 1)
-        + _option_field(1193, 0, 1)
+        _name_option(1195, 1, "identifier") + _option_field(1192, 0, 1) + _option_field(1193, 0, 1)
     )
 
     service = widget_file.service[0]
-    service.options.MergeFromString(
-        _option_field(1191, 2, b"widget-api") + _name_option(1195, 3, "Resources")
-    )
-    service.method[0].options.MergeFromString(
-        _name_option(1195, 3, "fetch") + _option_field(1197, 0, 2)
-    )
+    service.options.MergeFromString(_option_field(1191, 2, b"widget-api") + _name_option(1195, 3, "Resources"))
+    service.method[0].options.MergeFromString(_name_option(1195, 3, "fetch") + _option_field(1197, 0, 2))
 
     response = generate(request)
     assert not response.error
@@ -2368,9 +2202,7 @@ def test_annotation_policy_follows_current_public_descriptor_schema() -> None:
     for message in messages.values():
         for number, field in enumerate(message.field, start=11):
             field.number = number
-    behavior = next(
-        enum for enum in annotations.enum_type if enum.name == "MethodBehavior"
-    )
+    behavior = next(enum for enum in annotations.enum_type if enum.name == "MethodBehavior")
     behavior_values = {
         "METHOD_BEHAVIOR_UNSPECIFIED": 0,
         "METHOD_UPDATER": -1,
@@ -2405,13 +2237,10 @@ def test_annotation_policy_follows_current_public_descriptor_schema() -> None:
     )
     field = widget.field[0]
     field.options.MergeFromString(
-        _option_field(extensions["sensitive"].number, 0, 1)
-        + _option_field(extensions["credentials"].number, 0, 1)
+        _option_field(extensions["sensitive"].number, 0, 1) + _option_field(extensions["credentials"].number, 0, 1)
     )
     service = widget_file.service[0]
-    service.options.MergeFromString(
-        _option_field(extensions["api_service_name"].number, 2, b"current-widget-api")
-    )
+    service.options.MergeFromString(_option_field(extensions["api_service_name"].number, 2, b"current-widget-api"))
     service.method[0].options.MergeFromString(
         _option_field(
             extensions["method_behavior"].number,
@@ -2435,9 +2264,7 @@ def test_annotation_policy_follows_current_public_descriptor_schema() -> None:
 
 def test_invalid_annotated_names_fail_in_band() -> None:
     request = _request("invalid")
-    request.proto_file[1].message_type[0].options.MergeFromString(
-        _name_option(1195, 1, "not_a_class")
-    )
+    request.proto_file[1].message_type[0].options.MergeFromString(_name_option(1195, 1, "not_a_class"))
 
     assert "invalid annotated Python class name" in generate(request).error
 
@@ -2446,10 +2273,7 @@ def test_invalid_annotated_names_fail_in_band() -> None:
     widget.field[0].options.MergeFromString(_name_option(1195, 1, "identifier"))
     widget.oneof_decl[0].options.MergeFromString(_name_option(1192, 1, "id"))
 
-    assert (
-        "Python oneof collision acme.widget.Widget.id"
-        in generate(ambiguous_oneof).error
-    )
+    assert "Python oneof collision acme.widget.Widget.id" in generate(ambiguous_oneof).error
 
     duplicate_extensions = _request("invalid")
     host = duplicate_extensions.proto_file[2].message_type[0]
@@ -2520,9 +2344,7 @@ def test_source_docs_and_deprecation_are_emitted_in_every_partition(
             output_type=".acme.documented.Documented",
         )
 
-        details = _option_field(1, 2, b"2027-01-02") + _option_field(
-            2, 2, b"use the replacement"
-        )
+        details = _option_field(1, 2, b"2027-01-02") + _option_field(2, 2, b"use the replacement")
         for options in (
             message.options,
             field.options,
@@ -2544,25 +2366,18 @@ def test_source_docs_and_deprecation_are_emitted_in_every_partition(
             location = file.source_code_info.location.add(path=path)
             location.leading_comments = f" {leading}" if leading else ""
             location.trailing_comments = f" {trailing}" if trailing else ""
-            location.leading_detached_comments.extend(
-                f" {comment}" for comment in detached
-            )
+            location.leading_detached_comments.extend(f" {comment}" for comment in detached)
         return plugin_pb2.CodeGeneratorRequest(
             proto_file=[file],
             file_to_generate=[file.name],
-            parameter=(
-                f"package_prefix=documented_{partition},"
-                f"partition={partition},jobs=2"
-            ),
+            parameter=(f"package_prefix=documented_{partition},partition={partition},jobs=2"),
         )
 
     generated: dict[str, str] = {}
     for partition in ("all", "package", "directory"):
         response = generate(request(partition))
         assert not response.error
-        package = _implementation_source(
-            response, f"documented_{partition}/acme/documented"
-        )
+        package = _implementation_source(response, f"documented_{partition}/acme/documented")
         generated[partition] = package.replace(f"documented_{partition}", "documented")
         for output in response.file:
             path = tmp_path / output.name
@@ -2602,24 +2417,18 @@ def test_source_docs_and_deprecation_are_emitted_in_every_partition(
             "Service acme.documented.DocumentedService is deprecated",
             "Method acme.documented.DocumentedService.Get is deprecated",
         )
-        assert all(
-            any(needle in message for message in messages) for needle in expected
-        )
+        assert all(any(needle in message for message in messages) for needle in expected)
     finally:
         sys.path.remove(str(tmp_path))
 
 
 def test_parent_package_and_service_namespaces_are_protected() -> None:
     def package_request(parent_name: str, child_component: str):
-        parent = descriptor_pb2.FileDescriptorProto(
-            name="parent.proto", package="p", syntax="proto3"
-        )
+        parent = descriptor_pb2.FileDescriptorProto(name="parent.proto", package="p", syntax="proto3")
         message = parent.message_type.add(name=parent_name)
         if parent_name == "Host":
             message.field.add(name="id", number=1, label=1, type=9)
-        child = descriptor_pb2.FileDescriptorProto(
-            name="child.proto", package=f"p.{child_component}", syntax="proto3"
-        )
+        child = descriptor_pb2.FileDescriptorProto(name="child.proto", package=f"p.{child_component}", syntax="proto3")
         child.message_type.add(name="Child")
         return plugin_pb2.CodeGeneratorRequest(
             proto_file=[parent, child],
@@ -2633,10 +2442,7 @@ def test_parent_package_and_service_namespaces_are_protected() -> None:
         ("Host", "Message"),
         ("Host", "_P_HOST_ID"),
     ):
-        assert (
-            "Python symbol"
-            in generate(package_request(parent_name, child_component)).error
-        )
+        assert "Python symbol" in generate(package_request(parent_name, child_component)).error
 
     for method_name in (
         "__init__",
@@ -2657,9 +2463,7 @@ def test_parent_package_and_service_namespaces_are_protected() -> None:
 
 @pytest.mark.parametrize("package", ("_registry", "_registry_fragment"))
 def test_root_registry_module_names_are_reserved(package: str) -> None:
-    file = descriptor_pb2.FileDescriptorProto(
-        name=f"{package}.proto", package=package, syntax="proto3"
-    )
+    file = descriptor_pb2.FileDescriptorProto(name=f"{package}.proto", package=package, syntax="proto3")
     file.message_type.add(name="Collision")
     request = plugin_pb2.CodeGeneratorRequest(
         proto_file=[file],

@@ -41,19 +41,13 @@ Using an existing reader/token requester::
 from datetime import timedelta
 
 from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.metrics import (
-    AuthMetricsLike,
-    AuthMetricsRecorder,
-    auth_metrics_recorder,
-)
+from nebius.aio.metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
 from nebius.aio.token.deferred_channel import DeferredChannel
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
 from nebius.aio.token.renewable import Bearer as RenewableBearer
 from nebius.aio.token.token import Bearer as ParentBearer
 from nebius.aio.token.token import NamedBearer, Receiver
-from nebius.base.service_account.federated_credentials import (
-    FederatedCredentialsBearer as FederatedCredentialsReader,
-)
+from nebius.base.service_account.federated_credentials import FederatedCredentialsBearer as FederatedCredentialsReader
 from nebius.base.service_account.federated_credentials import (
     FederatedCredentialsTokenRequester,
     FileFederatedCredentials,
@@ -121,9 +115,7 @@ class FederatedCredentialsBearer(ParentBearer):
 
     def __init__(
         self,
-        federated_credentials: (
-            FederatedCredentialsTokenRequester | FederatedCredentialsReader | str
-        ),
+        federated_credentials: FederatedCredentialsTokenRequester | FederatedCredentialsReader | str,
         service_account_id: str | None = None,
         channel: ClientChannelInterface | DeferredChannel | None = None,
         max_retries: int = 2,
@@ -140,8 +132,7 @@ class FederatedCredentialsBearer(ParentBearer):
         if isinstance(federated_credentials, FederatedCredentialsReader):
             if not isinstance(service_account_id, str):
                 raise TypeError(
-                    "Service account ID must be provided as a string when "
-                    "federated_credentials is a string."
+                    "Service account ID must be provided as a string when federated_credentials is a string."
                 )
             federated_credentials = FederatedCredentialsTokenRequester(
                 service_account_id=service_account_id,
@@ -155,9 +146,7 @@ class FederatedCredentialsBearer(ParentBearer):
                 f", got {type(federated_credentials)}"
             )
 
-        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
-            metrics, "federated-credentials"
-        )
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, "federated-credentials")
 
         self._exchangeable = ExchangeableBearer(
             federated_credentials,

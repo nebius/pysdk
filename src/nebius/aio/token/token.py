@@ -194,9 +194,7 @@ class Token:
             raise ValueError(
                 f"Invalid expires_at format: {type(expires_at)} expected an int."  # type: ignore[assignment,unused-ignore]
             )
-        expiration = (
-            datetime.fromtimestamp(expires_at, tz=timezone.utc) if expires_at else None
-        )
+        expiration = datetime.fromtimestamp(expires_at, tz=timezone.utc) if expires_at else None
         return cls(token=token, expiration=expiration)
 
 
@@ -222,9 +220,7 @@ class Receiver(ABC):
     """
 
     @abstractmethod
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Low-level asynchronous fetch implementation.
 
         Subclasses must implement this token-retrieval method. Call
@@ -249,9 +245,7 @@ class Receiver(ABC):
         """
         return self._latest
 
-    async def fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Fetch a token and record it as the latest value.
 
         This method calls the concrete :meth:`_fetch` implementation and stores

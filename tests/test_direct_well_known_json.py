@@ -147,15 +147,11 @@ def _from_provider(direct_type: type[Message], provider: Any) -> Message:
     return direct_type.FromString(provider.SerializeToString(deterministic=True))
 
 
-def _assert_parse_matches(
-    value: Any, direct_type: type[Message], provider_type: type[Any]
-) -> None:
+def _assert_parse_matches(value: Any, direct_type: type[Message], provider_type: type[Any]) -> None:
     reference = provider_type()
     provider_json_format.ParseDict(value, reference)
     direct = parse_value(value, direct_type())
-    assert direct.SerializeToString(deterministic=True) == reference.SerializeToString(
-        deterministic=True
-    )
+    assert direct.SerializeToString(deterministic=True) == reference.SerializeToString(deterministic=True)
 
 
 def test_timestamp_json_matches_reference() -> None:
@@ -229,9 +225,7 @@ def test_timestamp_and_duration_reject_reference_invalid_values() -> None:
 
 
 def test_field_mask_json_matches_reference() -> None:
-    reference = field_mask_pb2.FieldMask(
-        paths=["foo_bar", "nested.child_name", "ip_v6_address"]
-    )
+    reference = field_mask_pb2.FieldMask(paths=["foo_bar", "nested.child_name", "ip_v6_address"])
     direct = _from_provider(FieldMask, reference)
     value = provider_json_format.MessageToDict(reference)
     assert message_to_value(direct) == value
@@ -250,9 +244,7 @@ def test_struct_value_and_list_value_match_reference() -> None:
     _assert_parse_matches(value, Struct, struct_pb2.Struct)
     direct = parse_value(value, Struct())
     assert message_to_value(direct) == value
-    assert message_to_value(Struct.from_json('{"nested": [null, true]}')) == {
-        "nested": [None, True]
-    }
+    assert message_to_value(Struct.from_json('{"nested": [null, true]}')) == {"nested": [None, True]}
 
     for scalar in (None, False, 1.5, "text", {"a": 1}, [None, 2]):
         _assert_parse_matches(scalar, Value, struct_pb2.Value)
@@ -290,9 +282,7 @@ def test_all_wrapper_json_forms_match_reference() -> None:
 
 
 def test_empty_json_matches_reference() -> None:
-    assert message_to_value(Empty()) == provider_json_format.MessageToDict(
-        empty_pb2.Empty()
-    )
+    assert message_to_value(Empty()) == provider_json_format.MessageToDict(empty_pb2.Empty())
     _assert_parse_matches({}, Empty, empty_pb2.Empty)
 
 

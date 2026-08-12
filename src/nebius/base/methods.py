@@ -26,12 +26,7 @@ class InvalidMethodNameError(SDKError):
     """Raised when a method name does not match expected patterns."""
 
 
-pattern = re.compile(
-    r"^(?P<leading>[./])?"
-    r"(?P<service>[\w_]+(?:\.[\w_]+)*)"
-    r"(?P<separator>[./])"
-    r"(?P<method>[\w_]+)$"
-)
+pattern = re.compile(r"^(?P<leading>[./])?(?P<service>[\w_]+(?:\.[\w_]+)*)(?P<separator>[./])(?P<method>[\w_]+)$")
 """Regular expression used to parse service and method components."""
 
 
@@ -54,7 +49,5 @@ def service_from_method_name(input_string: str) -> str:
     leading = match.group("leading")
     separator = match.group("separator")
     if leading and separator != leading:
-        raise InvalidMethodNameError(
-            f"Delimiter {separator} does not match the initial delimiter {leading}."
-        )
+        raise InvalidMethodNameError(f"Delimiter {separator} does not match the initial delimiter {leading}.")
     return match.group("service")

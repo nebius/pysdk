@@ -8,14 +8,7 @@ from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass
 from typing import Any, Generic, TypeVar
 
-from .wire import (
-    WIRE_FIXED32,
-    WIRE_FIXED64,
-    WIRE_LENGTH_DELIMITED,
-    WIRE_VARINT,
-    BinaryReader,
-    BinaryWriter,
-)
+from .wire import WIRE_FIXED32, WIRE_FIXED64, WIRE_LENGTH_DELIMITED, WIRE_VARINT, BinaryReader, BinaryWriter
 
 T = TypeVar("T")
 _C_LONG_BITS = struct.calcsize("l") * 8
@@ -47,9 +40,7 @@ class ValueCodec(Generic[T]):
             return value
         return self.clone(value)
 
-    def write_value(
-        self, writer: BinaryWriter, value: T, *, deterministic: bool = False
-    ) -> None:
+    def write_value(self, writer: BinaryWriter, value: T, *, deterministic: bool = False) -> None:
         """Write a value, propagating deterministic mode when it matters."""
         if self.deterministic_write is not None:
             self.deterministic_write(writer, value, deterministic)
@@ -57,9 +48,7 @@ class ValueCodec(Generic[T]):
             self.write(writer, value)
 
 
-def _integer_normalizer(
-    name: str, minimum: int, maximum: int
-) -> Callable[[object], int]:
+def _integer_normalizer(name: str, minimum: int, maximum: int) -> Callable[[object], int]:
     def normalize(value: object) -> int:
         if not isinstance(value, int):
             raise TypeError(f"{name} field requires int")

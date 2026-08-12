@@ -44,9 +44,7 @@ async def test_credentials_updater() -> None:
         async def Exchange(  # noqa: N802 — GRPC method
             self,
             request: ExchangeTokenRequest,
-            context: grpc.aio.ServicerContext[
-                ExchangeTokenRequest, CreateTokenResponse
-            ],
+            context: grpc.aio.ServicerContext[ExchangeTokenRequest, CreateTokenResponse],
         ) -> CreateTokenResponse:
             nonlocal call
             if call == 0:
@@ -168,9 +166,7 @@ async def test_credentials_updater_sync() -> None:
         async def Exchange(  # noqa: N802 — GRPC method
             self,
             request: ExchangeTokenRequest,
-            context: grpc.aio.ServicerContext[
-                ExchangeTokenRequest, CreateTokenResponse
-            ],
+            context: grpc.aio.ServicerContext[ExchangeTokenRequest, CreateTokenResponse],
         ) -> CreateTokenResponse:
             nonlocal call
             if call == 0:
@@ -308,9 +304,7 @@ async def test_credentials_updater_sync_error() -> None:
         async def Exchange(  # noqa: N802 — GRPC method
             self,
             request: ExchangeTokenRequest,
-            context: grpc.aio.ServicerContext[
-                ExchangeTokenRequest, CreateTokenResponse
-            ],
+            context: grpc.aio.ServicerContext[ExchangeTokenRequest, CreateTokenResponse],
         ) -> CreateTokenResponse:
             await context.send_initial_metadata(
                 (

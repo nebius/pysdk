@@ -110,27 +110,19 @@ def _check_framework_member_docs(output: Path) -> None:
             elif all('class="undocumented"' in row for row in matches):
                 undocumented.append(qualified_name)
     if missing:
-        raise RuntimeError(
-            "documentation omitted framework-owned members: " + ", ".join(missing[:5])
-        )
+        raise RuntimeError("documentation omitted framework-owned members: " + ", ".join(missing[:5]))
     if undocumented:
-        raise RuntimeError(
-            "framework-owned members are undocumented: " + ", ".join(undocumented[:5])
-        )
+        raise RuntimeError("framework-owned members are undocumented: " + ", ".join(undocumented[:5]))
 
 
 def validate(output: Path) -> None:
     missing = [name for name in REQUIRED_PAGES if not (output / name).is_file()]
     if missing:
-        raise RuntimeError(
-            "documentation build omitted required API pages: " + ", ".join(missing)
-        )
+        raise RuntimeError("documentation build omitted required API pages: " + ", ".join(missing))
 
     reference = (output / "apiReference.html").read_text(encoding="utf-8")
     if API_REFERENCE_LINK not in reference:
-        raise RuntimeError(
-            "API reference omitted the representative Instance service client"
-        )
+        raise RuntimeError("API reference omitted the representative Instance service client")
 
     _check_framework_member_docs(output)
 
@@ -149,21 +141,13 @@ def validate(output: Path) -> None:
         )
     ]
     if mangled_annotations:
-        raise RuntimeError(
-            "documentation exposed generated annotation aliases: "
-            + ", ".join(mangled_annotations[:5])
-        )
+        raise RuntimeError("documentation exposed generated annotation aliases: " + ", ".join(mangled_annotations[:5]))
 
     broken = sorted(
-        link
-        for page in output.glob("*.html")
-        for link in _local_html_links(page)
-        if not (output / link).is_file()
+        link for page in output.glob("*.html") for link in _local_html_links(page) if not (output / link).is_file()
     )
     if broken:
-        raise RuntimeError(
-            "documentation contains broken local links: " + ", ".join(broken[:5])
-        )
+        raise RuntimeError("documentation contains broken local links: " + ", ".join(broken[:5]))
 
     internal = sorted(
         {

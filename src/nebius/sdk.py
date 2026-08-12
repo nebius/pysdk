@@ -5,11 +5,7 @@ from typing_extensions import Unpack
 from nebius.aio.channel import Channel
 from nebius.aio.request import Request
 from nebius.aio.request_kwargs import RequestKwargs
-from nebius.api.nebius.iam.v1 import (
-    GetProfileRequest,
-    GetProfileResponse,
-    ProfileServiceClient,
-)
+from nebius.api.nebius.iam.v1 import GetProfileRequest, GetProfileResponse, ProfileServiceClient
 
 
 class SDK(Channel):
@@ -157,7 +153,8 @@ class SDK(Channel):
     - The overall timeout limits the request and all retries.
     - The per-retry timeout limits each retry attempt.
     - The default overall timeout is 60 seconds.
-    - The default per-retry timeout is 20 seconds (60 seconds / 3 retries).
+    - Requests make up to three retries by default. The default per-retry
+      timeout is 20 seconds (60 seconds / 3 retries).
     - Set ``timeout=None`` to disable the request deadline.
     - Set ``retries`` and ``per_retry_timeout`` for each call as necessary.
 

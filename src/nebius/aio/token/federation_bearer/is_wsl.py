@@ -6,7 +6,7 @@ def is_wsl() -> bool:
         bool: True if running in WSL, False otherwise.
     """
     try:
-        with open("/proc/version", "r") as f:
+        with open("/proc/version") as f:
             version_info = f.read().lower()
             return "microsoft" in version_info or "wsl" in version_info
     except FileNotFoundError:

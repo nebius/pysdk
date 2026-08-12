@@ -28,7 +28,7 @@ class Enum(IntEnum):
     __PB2_DESCRIPTOR__: ClassVar[Any] = None
 
     @classmethod
-    def _missing_(cls, value: object) -> "Enum" | None:
+    def _missing_(cls, value: object) -> Enum | None:
         """Represent unknown open-enum numbers without losing their value."""
         if not isinstance(value, int):
             return None

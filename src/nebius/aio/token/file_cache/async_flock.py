@@ -93,15 +93,11 @@ class Lock:
         self.file_path = Path(file_path)
         self.shared = shared
         self.create_mode = create_mode
-        self.timeout = (
-            timeout.total_seconds() if isinstance(timeout, timedelta) else timeout
-        )
+        self.timeout = timeout.total_seconds() if isinstance(timeout, timedelta) else timeout
         self.mode: str = mode
         self.fopen_kwargs = fopen_kwargs
         self.polling_interval = (
-            polling_interval.total_seconds()
-            if isinstance(polling_interval, timedelta)
-            else polling_interval
+            polling_interval.total_seconds() if isinstance(polling_interval, timedelta) else polling_interval
         )
         lock_flags = LockFlags.SHARED if self.shared else LockFlags.EXCLUSIVE
         lock_flags |= LockFlags.NON_BLOCKING
@@ -134,10 +130,7 @@ class Lock:
                 return self.lock.acquire()
             except AlreadyLocked:
                 if self.timeout is not None and time() - start > self.timeout:
-                    raise TimeoutError(
-                        f"Failed to acquire lock on {self.file_path} after "
-                        f"{self.timeout} seconds."
-                    )
+                    raise TimeoutError(f"Failed to acquire lock on {self.file_path} after {self.timeout} seconds.")
                 await sleep(self.polling_interval)
                 continue
 

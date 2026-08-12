@@ -11,9 +11,7 @@ class FederatedCredentialsBearer(ABC):
 
 
 class FederatedCredentialsTokenRequester(TokenRequester):
-    def __init__(
-        self, service_account_id: str, credentials: FederatedCredentialsBearer
-    ) -> None:
+    def __init__(self, service_account_id: str, credentials: FederatedCredentialsBearer) -> None:
         self.service_account_id = service_account_id
         self.credentials = credentials
         super().__init__()
@@ -42,5 +40,5 @@ class FileFederatedCredentials(FederatedCredentialsBearer):
         self.file_path = file_path
 
     def credentials(self) -> str:
-        with open(self.file_path, "r", encoding="utf-8") as f:
+        with open(self.file_path, encoding="utf-8") as f:
             return f.read().strip()

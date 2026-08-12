@@ -44,9 +44,7 @@ class PKCE(str):
         sha256_hash = hashlib.sha256(self.encode("utf-8")).digest()
 
         # Base64 URL-safe encode the hash and strip padding
-        code_challenge = (
-            base64.urlsafe_b64encode(sha256_hash).strip(b"=").decode("utf-8")
-        )
+        code_challenge = base64.urlsafe_b64encode(sha256_hash).strip(b"=").decode("utf-8")
 
         return code_challenge
 

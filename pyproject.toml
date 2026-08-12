@@ -69,7 +69,7 @@ where = ["src"]
 include = ["nebius*"]
 
 [tool.black]
-line-length = 88
+line-length = 120
 target-version = ["py310"]
 exclude = "(docs/generated|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
 
@@ -108,7 +108,7 @@ exclude = [
     "venv",
     "src/nebius/api",
 ]
-line-length = 88
+line-length = 120
 indent-width = 4
 target-version = "py310"
 

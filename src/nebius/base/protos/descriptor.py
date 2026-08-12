@@ -5,9 +5,7 @@ from typing import Generic, TypeVar
 
 import google.protobuf.descriptor as pb
 
-T = TypeVar(
-    "T", pb.EnumDescriptor, pb.Descriptor, pb.OneofDescriptor, pb.ServiceDescriptor
-)
+T = TypeVar("T", pb.EnumDescriptor, pb.Descriptor, pb.OneofDescriptor, pb.ServiceDescriptor)
 """The TypeVar for supported descriptor types"""
 
 
@@ -62,13 +60,7 @@ class DescriptorWrap(ABC, Generic[T]):
 
     def _find_descriptor(
         self, container: pb.FileDescriptor | pb.Descriptor, name: str
-    ) -> (
-        pb.Descriptor
-        | pb.EnumDescriptor
-        | pb.OneofDescriptor
-        | pb.ServiceDescriptor
-        | None
-    ):
+    ) -> pb.Descriptor | pb.EnumDescriptor | pb.OneofDescriptor | pb.ServiceDescriptor | None:
         """Recursively search for a descriptor by name.
 
         :param container: File or message descriptor to search within.
@@ -104,9 +96,7 @@ class DescriptorWrap(ABC, Generic[T]):
             for nested_enum in container.enum_types:
                 if nested_enum.full_name == name:
                     if not isinstance(nested_enum, pb.EnumDescriptor):
-                        raise ValueError(
-                            f"Pool returned unexpected type {type(nested_enum)}"
-                        )
+                        raise ValueError(f"Pool returned unexpected type {type(nested_enum)}")
                     return nested_enum
             for oneof in container.oneofs:
                 if oneof.full_name == name:

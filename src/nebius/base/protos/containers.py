@@ -109,9 +109,7 @@ class MapValues(MutableMapping[K, V], Generic[K, V]):
             self._on_mutation()
 
     def replace(self, values: Mapping[K, V]) -> None:
-        prepared = {
-            self._key(key): self._prepare(value) for key, value in values.items()
-        }
+        prepared = {self._key(key): self._prepare(value) for key, value in values.items()}
         for value in self._items.values():
             self._detach(value)
         self._items = prepared

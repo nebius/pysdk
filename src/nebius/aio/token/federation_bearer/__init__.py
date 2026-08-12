@@ -148,9 +148,7 @@ class Receiver(ParentReceiver):
             provider or "federation",
         )
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Execute the interactive authorization flow and return a Token.
 
         The implementation imports and calls
@@ -180,15 +178,9 @@ class Receiver(ParentReceiver):
             )
             token = Token(
                 token=tok.access_token,
-                expiration=(
-                    now + timedelta(seconds=tok.expires_in)
-                    if tok.expires_in is not None
-                    else None
-                ),
+                expiration=(now + timedelta(seconds=tok.expires_in) if tok.expires_in is not None else None),
             )
-            self._metrics.token_acquire_from_start(
-                METRIC_RESULT_SUCCESS, start, 0, token
-            )
+            self._metrics.token_acquire_from_start(METRIC_RESULT_SUCCESS, start, 0, token)
             return token
         except Exception:
             self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, 0)
@@ -308,18 +300,13 @@ class Bearer(ParentBearer):
         self._writer = writer
         self._no_browser_open = no_browser_open
         self._ssl_ctx = ssl_ctx
-        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
-            metrics, "federation"
-        )
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, "federation")
 
         self._tasks = set[Task[Any]]()
 
     @property
     def name(self) -> str:
-        return (
-            f"federation/{self._federation_endpoint}/{self._federation_id}/"
-            f"{self._profile_name}"
-        )
+        return f"federation/{self._federation_endpoint}/{self._federation_id}/{self._profile_name}"
 
     def receiver(self) -> ParentReceiver:
         """Return a new :class:`Receiver` bound to this bearer's configuration.

@@ -162,14 +162,10 @@ class ServiceAccountBearer(ParentBearer):
         if isinstance(service_account, str):
             if not isinstance(private_key, RSAPrivateKey):
                 raise TypeError(
-                    "Private key must be provided as RSAPrivateKey instance "
-                    "when service_account is a string."
+                    "Private key must be provided as RSAPrivateKey instance when service_account is a string."
                 )
             if not isinstance(public_key_id, str):
-                raise TypeError(
-                    "Public key ID must be provided as a string when service_account "
-                    "is a string."
-                )
+                raise TypeError("Public key ID must be provided as a string when service_account is a string.")
             service_account = ServiceAccount(
                 private_key=private_key,
                 public_key_id=public_key_id,
@@ -192,9 +188,7 @@ class ServiceAccountBearer(ParentBearer):
         sa_id = service_account.service_account_id
         public_key_id = service_account.public_key_id
         private_key = service_account.private_key
-        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
-            metrics, "service-account"
-        )
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, "service-account")
 
         self._exchangeable = ExchangeableBearer(
             reader,

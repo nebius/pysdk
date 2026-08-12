@@ -87,10 +87,7 @@ class CallbackHandler:
         await self._set_code(code, state)
 
         if self._code and state == self._state:
-            return web.Response(
-                text="Login is successful, you may close the browser tab and go to the "
-                "console"
-            )
+            return web.Response(text="Login is successful, you may close the browser tab and go to the console")
         return web.Response(
             status=400,
             text="Login is not successful, you may close the browser tab and try again",

@@ -24,9 +24,7 @@ def main() -> None:
         output.flush()
         os.fsync(output.fileno())
     temporary.replace(manifest)
-    response = CodeGeneratorResponse(
-        supported_features=int(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL)
-    )
+    response = CodeGeneratorResponse(supported_features=int(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL))
     sys.stdout.buffer.write(response.SerializeToString(deterministic=True))
 
 

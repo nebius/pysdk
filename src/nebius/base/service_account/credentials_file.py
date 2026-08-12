@@ -26,21 +26,13 @@ class SubjectCredentials:
 
     def validate(self) -> None:
         if self.type != "" and self.type != "JWT":
-            raise ValueError(
-                f"Invalid service account credentials type: '{self.type}',"
-                " only 'JWT' is supported."
-            )
+            raise ValueError(f"Invalid service account credentials type: '{self.type}', only 'JWT' is supported.")
 
         if self.alg != "RS256":
-            raise ValueError(
-                f"Invalid service account algorithm: '{self.alg}',"
-                " only 'RS256' is supported."
-            )
+            raise ValueError(f"Invalid service account algorithm: '{self.alg}', only 'RS256' is supported.")
 
         if self.iss != self.sub:
-            raise ValueError(
-                f"Issuer must be the same as subject: '{self.iss}' != '{self.sub}'."
-            )
+            raise ValueError(f"Issuer must be the same as subject: '{self.iss}' != '{self.sub}'.")
 
     def parse_private_key(self) -> RSAPrivateKey:
         pk = serialization.load_pem_private_key(

@@ -66,9 +66,7 @@ class Receiver(ParentReceiver):
         super().__init__()
         self._bearer = bearer
 
-    async def _fetch(
-        self, timeout: float | None = None, options: dict[str, str] | None = None
-    ) -> Token:
+    async def _fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> Token:
         """Read the token file and return a :class:`Token`.
 
         :param timeout: Ignored for file-backed receivers but accepted for

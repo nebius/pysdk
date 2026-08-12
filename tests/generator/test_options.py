@@ -54,9 +54,7 @@ def test_unknown_extensions_are_read_without_registration() -> None:
 
 def test_boolean_unknown_option_uses_last_value() -> None:
     options = descriptor_pb2.FieldOptions()
-    options.MergeFromString(
-        _field(1192, 0, 0) + _field(1192, 0, 1) + _field(1192, 2, b"\x00")
-    )
+    options.MergeFromString(_field(1192, 0, 0) + _field(1192, 0, 1) + _field(1192, 2, b"\x00"))
 
     assert bool_option(options, 1192)
     assert not bool_option(options, 1193)

@@ -70,7 +70,6 @@ async def open_browser(url: str) -> None:
         )
     else:
         webbrowser.open(url)
-    return None
 
 
 async def get_code(
@@ -128,22 +127,14 @@ async def get_code(
     full_auth_url = auth_url._replace(query=query).geturl()
 
     if no_browser_open:
-        msg = (
-            "To complete the authentication process, open this link in your"
-            f" browser:\n{full_auth_url}"
-        )
-        log.debug(
-            "Browser won't be opened. Show link to user.", extra={"url": full_auth_url}
-        )
+        msg = f"To complete the authentication process, open this link in your browser:\n{full_auth_url}"
+        log.debug("Browser won't be opened. Show link to user.", extra={"url": full_auth_url})
         if writer:
             print(msg, file=writer)
         else:
             log.info(msg)
     else:
-        msg = (
-            "Switch to your browser to complete login. If it didn't open "
-            f"automatically, use:\n{full_auth_url}"
-        )
+        msg = f"Switch to your browser to complete login. If it didn't open automatically, use:\n{full_auth_url}"
         log.debug("Attempting to open browser.", extra={"url": full_auth_url})
         if writer:
             print(msg, file=writer)
@@ -221,14 +212,9 @@ async def get_token(
             tok = ret.get("access_token", "")  # type: ignore[unused-ignore]
             expires_in = ret.get("expires_in", None)  # type: ignore[unused-ignore]
             if not isinstance(tok, str):
-                raise RuntimeError(
-                    f"Invalid token response: {ret}, expected 'access_token' as str"
-                )
+                raise RuntimeError(f"Invalid token response: {ret}, expected 'access_token' as str")
             if expires_in is not None and not isinstance(expires_in, int):
-                raise RuntimeError(
-                    f"Invalid token response: {ret}, expected 'expires_in' as int or"
-                    " None"
-                )
+                raise RuntimeError(f"Invalid token response: {ret}, expected 'expires_in' as int or None")
             return GetTokenResult(access_token=tok, expires_in=expires_in)
 
 

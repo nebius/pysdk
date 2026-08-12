@@ -237,9 +237,7 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
         return address
 
     channel.get_channel_by_route = resolve  # type: ignore[method-assign]
-    channel.release_channel = (  # type: ignore[method-assign]
-        lambda value, *, discard=False: discarded.append(value)
-    )
+    channel.release_channel = lambda value, *, discard=False: discarded.append(value)  # type: ignore[method-assign]
     stream = StreamRequest(
         channel=channel,
         route=Route("acme.Service", "Watch"),
@@ -311,9 +309,7 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
         (),
         {"channel": Transport(), "event_loop": channel._event_loop},
     )()
-    channel._release_channel_soon = (  # type: ignore[method-assign]
-        lambda value, *, discard=False: released.set()
-    )
+    channel._release_channel_soon = lambda value, *, discard=False: released.set()  # type: ignore[method-assign]
     blocker = channel.run_async(block_sdk_loop())
     assert await asyncio.to_thread(loop_blocked.wait, 5)
     stream = StreamRequest(
@@ -528,9 +524,7 @@ def test_rejected_stream_cancel_preserves_submission_error() -> None:
         server_streaming=True,
     )
 
-    with pytest.raises(
-        RuntimeError, match="rejected the cancellation submission"
-    ) as raised:
+    with pytest.raises(RuntimeError, match="rejected the cancellation submission") as raised:
         stream.cancel()
     assert raised.value is rejection
     assert not stream._cancel_requested
@@ -577,9 +571,7 @@ def test_stream_snapshots_unary_request_and_auth_options() -> None:
     )()
     channel.get_authorization_provider = lambda: Provider()  # type: ignore[method-assign]
     channel.get_channel_by_route = lambda route: address  # type: ignore[method-assign]
-    channel.release_channel = (  # type: ignore[method-assign]
-        lambda value, *, discard=False: discarded.append(value)
-    )
+    channel.release_channel = lambda value, *, discard=False: discarded.append(value)  # type: ignore[method-assign]
     source = GetDiskRequest(id="before")
     options = {"scope": "before"}
     stream = StreamRequest(
@@ -697,9 +689,7 @@ def test_legacy_constant_stream_preserves_independent_auth_clock() -> None:
 def test_sdk_stream_bridges_foreign_loop_authenticator_future() -> None:
     """Streaming auth accepts a Future owned by another running loop."""
 
-    auth_ready: Future[tuple[asyncio.AbstractEventLoop, asyncio.Future[None]]] = (
-        Future()
-    )
+    auth_ready: Future[tuple[asyncio.AbstractEventLoop, asyncio.Future[None]]] = Future()
 
     def run_auth_loop() -> None:
         loop = asyncio.new_event_loop()
@@ -913,9 +903,7 @@ def test_stream_write_snapshots_request_before_sdk_loop_dispatch() -> None:
         {"channel": Transport(), "event_loop": channel._event_loop},
     )()
     channel.get_channel_by_route = lambda route: address  # type: ignore[method-assign]
-    channel.release_channel = (  # type: ignore[method-assign]
-        lambda value, *, discard=False: discarded.append(value)
-    )
+    channel.release_channel = lambda value, *, discard=False: discarded.append(value)  # type: ignore[method-assign]
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -1659,9 +1647,7 @@ def test_failed_stream_release_can_be_retried() -> None:
 
 
 @pytest.mark.asyncio
-async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable() -> (
-    None
-):
+async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable() -> None:
     """Implicit iterator cleanup must not hide an unexpected release error."""
 
     release_calls = 0

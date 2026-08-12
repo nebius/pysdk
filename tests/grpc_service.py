@@ -8,9 +8,7 @@ from nebius.base.protos.reflection import ServiceDescriptor
 from nebius.base.protos.registry import Registry
 
 
-def add_service(
-    server: grpc.Server, client_type: type[Any], implementation: object
-) -> None:
+def add_service(server: grpc.Server, client_type: type[Any], implementation: object) -> None:
     """Register a direct generated service implementation with a gRPC server."""
     descriptor = cast(ServiceDescriptor, client_type.get_descriptor())
     registry = cast(Registry, client_type.__registry__)
@@ -36,6 +34,4 @@ def add_service(
             handler = grpc.unary_unary_rpc_method_handler(behavior, **kwargs)
         handlers[method.name] = handler
 
-    server.add_generic_rpc_handlers(
-        (grpc.method_handlers_generic_handler(descriptor.full_name, handlers),)
-    )
+    server.add_generic_rpc_handlers((grpc.method_handlers_generic_handler(descriptor.full_name, handlers),))

@@ -209,9 +209,7 @@ class BinaryReader:
             nested_number, nested_wire, _ = self.read_tag()
             if nested_wire == WIRE_START_GROUP:
                 if len(groups) >= self._max_depth:
-                    raise DecodeError(
-                        "protobuf group nesting exceeds the configured limit"
-                    )
+                    raise DecodeError("protobuf group nesting exceeds the configured limit")
                 groups.append(nested_number)
             elif nested_wire == WIRE_END_GROUP:
                 if nested_number != groups[-1]:
@@ -313,7 +311,7 @@ class BinaryWriter:
     def write_packed(
         self,
         values: Iterable[T],
-        write_value: Callable[["BinaryWriter", T], None],
+        write_value: Callable[[BinaryWriter, T], None],
     ) -> None:
         nested = BinaryWriter()
         for value in values:

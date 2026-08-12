@@ -151,10 +151,7 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
         # Await response and metadata
         req.wait()
     except LoopError as e:
-        assert (
-            str(e) == "Code on the SDK event loop cannot call the SDK "
-            "synchronously. Await the SDK handle instead."
-        )
+        assert str(e) == "Code on the SDK event loop cannot call the SDK synchronously. Await the SDK handle instead."
     finally:
         # Clean up
         if channel is not None:
@@ -306,9 +303,7 @@ async def test_status_not_blocks_get_instance_v2() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(
-            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
-        )
+        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
         client = DiskServiceClient(channel)
         req = client.get(GetDiskRequest(id="foo-bar"))
 

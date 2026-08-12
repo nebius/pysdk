@@ -91,9 +91,7 @@ def test_request_normalization_stabilizes_buf_owned_descriptors() -> None:
     assert normalized.proto_file[3].package == "google.rpc"
     assert not normalized.proto_file[3].source_code_info.location
     assert normalized.proto_file[4].package == "acme"
-    assert normalized.proto_file[4].source_code_info.location[0].leading_comments == (
-        "keep"
-    )
+    assert normalized.proto_file[4].source_code_info.location[0].leading_comments == ("keep")
 
 
 def test_descriptor_normalization_drops_source_info() -> None:
