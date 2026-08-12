@@ -6,7 +6,7 @@ disk reads by keeping the value in memory for a configurable period.
 The class is useful when many coroutines may request the same token
 frequently and you want to reduce filesystem and YAML parsing overhead.
 
-Example:
+Example
 -------
     cache = ThrottledTokenCache("service-account")
     tok = await cache.get()

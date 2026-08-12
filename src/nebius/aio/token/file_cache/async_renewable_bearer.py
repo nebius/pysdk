@@ -10,7 +10,7 @@ refresh task. The implementation exposes two primary classes:
 - :class:`AsynchronousRenewableFileCacheBearer` -- A bearer that wraps an
   existing bearer. Its background refresh loop saves tokens to a file cache.
 
-Example:
+Example
 -------
 Create an asynchronous renewable bearer from a named network bearer::
 
@@ -62,7 +62,7 @@ class AsynchronousRenewableFileCacheReceiver(ParentReceiver):
     for actual fetching and renewal coordination. It tracks a small retry
     counter so transient errors can be retried a configurable number of times.
 
-    Example:
+    Example
     -------
     Constructing a receiver is normally done via the bearer's
     :meth:`AsynchronousRenewableFileCacheBearer.receiver` method::
@@ -191,7 +191,7 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
     :param provider: Optional provider label for emitted auth
         metrics. When omitted, the label is inferred from ``source``.
 
-    Example:
+    Example
     -------
     Wrap a custom bearer with a name and file cache::
 

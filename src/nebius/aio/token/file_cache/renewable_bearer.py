@@ -181,7 +181,7 @@ class RenewableFileCacheBearer(ParentBearer):
     :param provider: Optional provider label for emitted auth
         metrics. When omitted, the label is inferred from the wrapped bearer.
 
-    Example:
+    Example
     -------
     Wrap a custom bearer with a name and file cache::
 

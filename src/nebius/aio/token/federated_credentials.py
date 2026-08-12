@@ -20,7 +20,7 @@ the token exchange. It uses :class:`nebius.aio.token.renewable.Bearer` for
 background refresh. For file credentials, a
 :class:`nebius.aio.token.token.NamedBearer` supplies a stable diagnostic name.
 
-Example:
+Example
 -------
 Using a file path::
 
@@ -88,7 +88,7 @@ class FederatedCredentialsBearer(ParentBearer):
         shared across exchange, renewal, and cache layers with the
         bearer metric provider label.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 

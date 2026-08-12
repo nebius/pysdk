@@ -42,7 +42,7 @@ class Lock:
     for the event loop because it polls to acquire the lock using
     :func:`asyncio.sleep` between attempts.
 
-    Example:
+    Example
     -------
     ::
 

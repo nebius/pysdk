@@ -94,7 +94,7 @@ class FieldPath(list[FieldKey]):
     :raises ValueError: If ``base`` is not iterable or contains invalid element
         types.
 
-    Example:
+    Example
     -------
     Construct a path and build a mask::
 
@@ -328,7 +328,7 @@ class Mask:
     :ivar any: Wildcard sub-mask or ``None``.
     :ivar field_parts: Mapping of field names to nested masks.
 
-    Example:
+    Example
     -------
     Build a mask with a wildcard and a specific field::
 

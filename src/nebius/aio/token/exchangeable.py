@@ -257,7 +257,7 @@ class Bearer(ParentBearer):
     :param metrics: Optional auth metrics callbacks used by receivers created
         by this bearer. Callbacks receive this bearer's metric provider label.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 

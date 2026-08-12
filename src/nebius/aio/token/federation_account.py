@@ -121,7 +121,7 @@ class FederationBearer(ParentBearer):
         shared across interactive federation auth and renewable file-cache
         layers with the bearer metric provider label.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 

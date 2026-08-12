@@ -107,7 +107,7 @@ indent-width = 4
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "Q", "S", "TD003", "FA100", "PERF401"]
+select = ["E", "F", "I", "N", "Q", "S", "TD003", "FA100", "PERF401", "D409"]
 ignore = [
     "D",
     "ANN101",
@@ -134,6 +134,9 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 [tool.ruff.lint.per-file-ignores]
 "tests/**.py" = ["S"]
 "src/nebius/api/**" = ["ALL"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
 
 [tool.ruff.format]
 exclude = ["src/nebius/api/**", "*.pyi"]
@@ -224,7 +227,7 @@ description = "Run linter checks"
 package = "skip"  # Skip installing the package
 deps = ["ruff==0.4.1"]
 commands = [
-    ["ruff","check","--diff","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--target-version","py310","--unfixable","B","src/","tests/","nebius_generator/","scripts/"],
+    ["ruff","check","--diff","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D409","--target-version","py310","--unfixable","B","src/","tests/","nebius_generator/","scripts/"],
     ["ruff","check","src/","tests/","nebius_generator/","scripts/"],
 ]
 
@@ -239,7 +242,7 @@ description = "Apply code formatting and safe lint fixes"
 package = "skip"
 deps = ["ruff==0.4.1"]
 commands = [
-    ["ruff","check","--fix-only","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--target-version","py310","--unfixable","B","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
+    ["ruff","check","--fix-only","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D409","--target-version","py310","--unfixable","B","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
     ["ruff","format","--target-version","py310","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
 ]
 

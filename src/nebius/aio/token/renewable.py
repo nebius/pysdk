@@ -140,7 +140,7 @@ class Receiver(ParentReceiver):
     schedule a background renewal (unless a synchronous renewal was
     requested via options).
 
-    Example:
+    Example
     -------
     ::
 
@@ -239,7 +239,7 @@ class Bearer(ParentBearer):
     - Asynchronous mode starts background renewal and waits for a fresh cache.
     - Synchronous mode waits for a new token or the request timeout.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 

@@ -8,7 +8,7 @@ The ``tokens`` key contains mappings from :meth:`Token.to_dict`. A mapping can
 contain an ``expires_at`` timestamp. The cache ignores and removes expired
 tokens.
 
-Example:
+Example
 -------
     cache = TokenCache()
     await cache.set("my-token", Token("abc", expiration=...))

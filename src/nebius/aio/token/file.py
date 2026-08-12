@@ -111,7 +111,7 @@ class Bearer(ParentBearer):
     :param metrics: Optional auth metrics callbacks used to record file reads,
         cache hits, cache misses, and invalidations.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 

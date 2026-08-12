@@ -299,7 +299,7 @@ class Bearer(ABC):
     is thread-safe, loop-neutral, and explicitly supports concurrent use and
     independent close calls.
 
-    Example:
+    Example
     -------
     Implement a custom bearer::
 
@@ -406,7 +406,7 @@ class NamedBearer(Bearer):
     :param name: The :meth:`name` that reflects the configuration of the underlying
         bearer.
 
-    Example:
+    Example
     -------
     Wrap a custom bearer with a name and file cache::
 

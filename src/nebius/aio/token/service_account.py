@@ -104,7 +104,7 @@ class ServiceAccountBearer(ParentBearer):
         shared across exchange and renewal layers with the bearer metric
         provider label.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 

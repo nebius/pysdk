@@ -113,7 +113,7 @@ class Bearer(ParentBearer):
     :type token: :class:`Token` or `str`
     :raises SDKError: When an empty token string is provided.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 
@@ -153,7 +153,7 @@ class EnvBearer(Bearer):
     :raises NoTokenInEnvError: When the environment variable is not set or
         empty.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 

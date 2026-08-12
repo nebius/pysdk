@@ -100,7 +100,7 @@ class Config:
         selected profile.
     :type impersonate_service_account_id: optional `str`
 
-    Example:
+    Example
     -------
     Initialize the SDK with CLI config::
 

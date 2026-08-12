@@ -72,7 +72,7 @@ class CurrentStep:
     :meth:`work_fraction` helper converts them into a usable fraction.
     The method returns ``None`` when the fraction cannot be computed.
 
-    Example:
+    Example
     -------
     Inspecting steps and progress::
 
@@ -141,7 +141,7 @@ class OperationProgressTracker(Protocol):
     ``progress_tracker`` field. For v1alpha1 operations,
     :meth:`Operation.progress_tracker` returns ``None``.
 
-    Example:
+    Example
     -------
     Reading overall progress::
 
@@ -223,7 +223,7 @@ class Operation(Generic[OperationPb]):
         :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf
         classes.
 
-    Example:
+    Example
     -------
     Operation from a service action (e.g., creating a bucket)::
 
@@ -352,7 +352,7 @@ class Operation(Generic[OperationPb]):
         Return ``None`` if the operation has no progress tracker. For example,
         v1alpha1 operations do not have one.
 
-        Example:
+        Example
         -------
         Polling with a single-line progress display::
 
@@ -1126,7 +1126,7 @@ def wrap_progress_tracker(
     the presence checks needed to avoid accessing default/absent fields on
     protobuf wrappers.
 
-    Example:
+    Example
     -------
     Using the helper directly::
 

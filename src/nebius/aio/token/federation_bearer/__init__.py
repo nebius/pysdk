@@ -46,7 +46,7 @@ Classes
 - :class:`Bearer` -- A small bearer wrapper exposing the receiver and a
     canonical :attr:`Bearer.name` used for caching and logging.
 
-Example:
+Example
 -------
 Construct a bearer and fetch a token::
 
@@ -258,7 +258,7 @@ class Bearer(ParentBearer):
     :param metrics: Optional auth metrics callbacks used by receivers created
         by this bearer. Callbacks receive this bearer's metric provider label.
 
-    Example:
+    Example
     -------
     Construct a bearer and use it to initialize the SDK::
 
