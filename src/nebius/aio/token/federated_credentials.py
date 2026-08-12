@@ -115,7 +115,7 @@ class FederatedCredentialsBearer(ParentBearer):
 
     def __init__(
         self,
-        federated_credentials: FederatedCredentialsTokenRequester | FederatedCredentialsReader | str,
+        federated_credentials: (FederatedCredentialsTokenRequester | FederatedCredentialsReader | str),
         service_account_id: str | None = None,
         channel: ClientChannelInterface | DeferredChannel | None = None,
         max_retries: int = 2,

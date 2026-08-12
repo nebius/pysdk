@@ -522,9 +522,7 @@ class Config:
                 if "private-key-file-path" in self._profile:
                     if not isinstance(self._profile["private-key-file-path"], str):
                         raise ConfigError("private-key-file-path should be a string")
-                    from nebius.base.service_account.pk_file import (
-                        Reader as PKFileReader,
-                    )
+                    from nebius.base.service_account.pk_file import Reader as PKFileReader
 
                     return finish(
                         "service-account",

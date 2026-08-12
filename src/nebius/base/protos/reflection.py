@@ -685,7 +685,9 @@ class Reflection:
                     remaining: list[bytes] = []
                     for raw in pending:
                         try:
-                            pool.AddSerializedFile(raw)  # type: ignore[no-untyped-call, unused-ignore]
+                            pool.AddSerializedFile(  # type: ignore[no-untyped-call, unused-ignore]
+                                raw,
+                            )
                         except TypeError:
                             remaining.append(raw)
                     if len(remaining) == len(pending):
@@ -694,15 +696,25 @@ class Reflection:
                 self._provider_pool = pool
             pool = self._provider_pool
         if isinstance(facade, FileDescriptor):
-            return pool.FindFileByName(facade.name)  # type: ignore[no-untyped-call, unused-ignore]
+            return pool.FindFileByName(  # type: ignore[no-untyped-call, unused-ignore]
+                facade.name,
+            )
         if isinstance(facade, MessageDescriptor):
-            return pool.FindMessageTypeByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
+            return pool.FindMessageTypeByName(  # type: ignore[no-untyped-call, unused-ignore]
+                facade.full_name,
+            )
         if isinstance(facade, EnumDescriptor):
-            return pool.FindEnumTypeByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
+            return pool.FindEnumTypeByName(  # type: ignore[no-untyped-call, unused-ignore]
+                facade.full_name,
+            )
         if isinstance(facade, ServiceDescriptor):
-            return pool.FindServiceByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
+            return pool.FindServiceByName(  # type: ignore[no-untyped-call, unused-ignore]
+                facade.full_name,
+            )
         if isinstance(facade, FieldDescriptor) and facade.is_extension:
-            return pool.FindExtensionByName(facade.full_name)  # type: ignore[no-untyped-call, unused-ignore]
+            return pool.FindExtensionByName(  # type: ignore[no-untyped-call, unused-ignore]
+                facade.full_name,
+            )
         if isinstance(facade, FieldDescriptor):
             if facade.containing_type is None:
                 raise LookupError(facade.full_name)

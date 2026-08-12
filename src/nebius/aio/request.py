@@ -645,6 +645,7 @@ class Request(Generic[Req, Res]):
             self._grpc_channel = None
             release_address_channel(self._channel, incompatible, discard=True)
             raise RequestError("The grpc_channel_override value belongs to a different event loop.")
+        metadata = Metadata(self._input_metadata)
         self._call = self._grpc_channel.channel.unary_unary(
             "/" + s_name + "/" + self._method,
             serializer,
@@ -652,7 +653,7 @@ class Request(Generic[Req, Res]):
         )(
             req,
             timeout=timeout,
-            metadata=GrpcMetadata(*self._input_metadata),
+            metadata=GrpcMetadata(*metadata),
             credentials=self._credentials,
             wait_for_ready=self._wait_for_ready,
             compression=self._compression,
@@ -1658,7 +1659,7 @@ class Request(Generic[Req, Res]):
                 waiter.cancel()
                 await gather(waiter, return_exceptions=True)
                 raise
-            except (TimeoutError, AsyncTimeoutError) as error:
+            except (AsyncTimeoutError, TimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
                     terminal_error = waiter.exception()
                     if terminal_error is error:

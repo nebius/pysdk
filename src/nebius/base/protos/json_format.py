@@ -127,7 +127,8 @@ def _encode_well_known(
             raise JsonError("Timestamp is outside its valid range")
         stamp = datetime(1970, 1, 1) + timedelta(seconds=seconds)
         rendered = (
-            f"{stamp.year:04d}-{stamp.month:02d}-{stamp.day:02d}T{stamp.hour:02d}:{stamp.minute:02d}:{stamp.second:02d}"
+            f"{stamp.year:04d}-{stamp.month:02d}-{stamp.day:02d}"
+            f"T{stamp.hour:02d}:{stamp.minute:02d}:{stamp.second:02d}"
         )
         return True, rendered + _fraction(nanos) + "Z"
     if name == "google.protobuf.Duration":

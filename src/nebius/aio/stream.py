@@ -328,10 +328,11 @@ class StreamRequest(Generic[Req, Res]):
                 timeout = self._remaining_deadline()
                 if timeout is not None and timeout <= 0:
                     raise TimeoutError("The stream timed out before RPC dispatch.")
+                metadata = Metadata(self._metadata)
                 call = multi(
                     *arguments,
                     timeout=timeout,
-                    metadata=GrpcMetadata(*self._metadata),
+                    metadata=GrpcMetadata(*metadata),
                     credentials=self._credentials,
                     wait_for_ready=self._wait_for_ready,
                     compression=self._compression,
@@ -681,7 +682,7 @@ class StreamRequest(Generic[Req, Res]):
                 waiter.cancel()
                 await gather(waiter, return_exceptions=True)
                 raise
-            except (TimeoutError, AsyncTimeoutError) as error:
+            except (AsyncTimeoutError, TimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
                     terminal_error = waiter.exception()
                     if terminal_error is error:
@@ -919,7 +920,8 @@ class StreamRequest(Generic[Req, Res]):
                     self._release(discard=True)
                 except BaseException as release_error:
                     logger.warning(
-                        "The SDK could not release the stream transport after it rejected the cancellation submission.",
+                        "The SDK could not release the stream transport after it "
+                        "rejected the cancellation submission.",
                         exc_info=release_error,
                     )
                 with self._state_lock:

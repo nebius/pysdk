@@ -21,11 +21,7 @@ from nebius.aio.metrics import (
 )
 from nebius.aio.service_error import RequestError
 from nebius.aio.token.deferred_channel import DeferredChannel
-from nebius.api.nebius.iam.v1 import (
-    CreateTokenResponse,
-    ExchangeTokenRequest,
-    TokenExchangeServiceClient,
-)
+from nebius.api.nebius.iam.v1 import CreateTokenResponse, ExchangeTokenRequest, TokenExchangeServiceClient
 from nebius.base.error import SDKError
 from nebius.base.token_sanitizer import TokenSanitizer
 

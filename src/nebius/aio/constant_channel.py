@@ -83,7 +83,9 @@ class Constant(ClientChannelInterface):
         """
         return self._parent_id
 
-    def get_authorization_provider(self) -> AuthorizationProvider | None:
+    def get_authorization_provider(
+        self,
+    ) -> AuthorizationProvider | None:
         """Return the authorization provider used by the underlying source channel.
 
         :returns: :class:`AuthorizationProvider` or `None`

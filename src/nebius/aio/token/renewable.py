@@ -67,18 +67,7 @@ timeout):
 """
 
 import sys
-from asyncio import (
-    FIRST_COMPLETED,
-    CancelledError,
-    Event,
-    Future,
-    Task,
-    create_task,
-    gather,
-    sleep,
-    wait,
-    wait_for,
-)
+from asyncio import FIRST_COMPLETED, CancelledError, Event, Future, Task, create_task, gather, sleep, wait, wait_for
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
@@ -395,7 +384,9 @@ class Bearer(ParentBearer):
                 await wait_for(self._synchronous_can_proceed.wait(), timeout)
                 if OPTION_RENEW_REQUEST_TIMEOUT in options:  # type: ignore
                     try:
-                        self._renew_synchronous_timeout = float(options[OPTION_RENEW_REQUEST_TIMEOUT])  # type: ignore
+                        self._renew_synchronous_timeout = float(
+                            options[OPTION_RENEW_REQUEST_TIMEOUT],  # type: ignore
+                        )
                     except ValueError as err:
                         log.error(f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float: {err=}")
                 self._renew_synchronous_options = options.copy()  # type: ignore

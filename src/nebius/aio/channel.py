@@ -117,9 +117,7 @@ from nebius.base.resolver import (
     TemplateExpander,
     UnknownServiceError,
 )
-from nebius.base.service_account.service_account import (
-    Reader as ServiceAccountReader,
-)
+from nebius.base.service_account.service_account import Reader as ServiceAccountReader
 from nebius.base.service_account.service_account import (
     TokenRequester as TokenRequestReader,
 )
@@ -140,6 +138,7 @@ from ._task_context import (
 from .base import AddressChannel, ChannelBase
 
 logger = getLogger(__name__)
+
 
 Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)
@@ -1494,6 +1493,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         extend or override additional behavior.
     :type interceptors: optional list of :class:`ClientInterceptor`
 
+
     :param address_options:
         Optional mapping from a resolved address to per-address channel
         options. Each value must follow the ``ChannelArgumentType``
@@ -1672,6 +1672,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         as an error.
     :type parent_id: optional str
 
+
     :param federation_invitation_writer:
         Optional file-like writer passed to the config reader to display
         the URL for federation authentication during interactive credential
@@ -1795,9 +1796,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if domain is None:
             if config_reader is not None:
                 domain = self._runtime.call_with_context(config_reader.endpoint)
-
-            if domain is None or domain == "":
+            if (domain is None or domain == "") and config_reader is not None:
                 domain = DOMAIN
+
+        if domain is None or domain == "":
+            domain = DOMAIN
 
         substitutions_full = dict[str, str]()
         substitutions_full["{domain}"] = domain
@@ -1840,7 +1843,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._methods = dict[str, str]()
         self._routes = dict[tuple[int, str, str, str], str]()
         self.user_agent = "nebius-python-sdk/" + version
-        self.user_agent += f" (python/{sys.version_info.major}.{sys.version_info.minor}"
+        self.user_agent += " ("
+        self.user_agent += f"python/{sys.version_info.major}.{sys.version_info.minor}"
         self.user_agent += f".{sys.version_info.micro})"
 
         if user_agent_prefix is not None:
@@ -1964,7 +1968,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def _is_config_metrics_aware_config_reader(self, config_reader: ConfigReader) -> bool:
         return self._metrics is not None and callable(getattr(config_reader, "set_metrics", None))
 
-    def get_authorization_provider(self) -> AuthorizationProvider | None:
+    def get_authorization_provider(
+        self,
+    ) -> AuthorizationProvider | None:
         """Return the configured :class:`AuthorizationProvider`.
 
         :return: The authorization provider instance if any authorization
@@ -2049,7 +2055,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         waiter = ensure_future(submitted)
         try:
             return await wait_for(waiter, timeout=remaining)
-        except (TimeoutError, AsyncTimeoutError) as error:
+        except (AsyncTimeoutError, TimeoutError) as error:
             if waiter.done() and not waiter.cancelled():
                 terminal_error = waiter.exception()
                 if terminal_error is error:
@@ -3540,10 +3546,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 addr,
                 event_loop,
             )
+        tls_credentials = self._tls_credentials
         return AddressChannel(
             secure_channel(  # type: ignore[unused-ignore,no-any-return]
                 addr,
-                self._tls_credentials,
+                tls_credentials,
                 opts,
                 compression,
                 interceptors,
