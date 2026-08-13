@@ -52,8 +52,8 @@ def capture_template(
         f"  - local: {plugin}",
         f"    out: {output}",
         "    opt:",
-        "      - package_prefix=nebius.api",
-        "      - runtime_package=nebius",
+        "      - destination_prefix=nebius.api",
+        "      - runtime_prefix=nebius",
         f"      - partition={partition}",
         f"      - jobs={jobs}",
     ]

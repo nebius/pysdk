@@ -26,8 +26,8 @@ from typing import TypedDict
 
 from grpc import CallCredentials, Compression
 
-from nebius.aio.base import AddressChannel
-from nebius.base.protos.unset import UnsetType
+from ..base.protos.unset import UnsetType
+from .base import AddressChannel
 
 
 class StreamRequestKwargs(TypedDict, total=False):

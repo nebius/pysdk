@@ -326,6 +326,24 @@ def _relative_registry(package: str, prefix: str) -> str:
     return "." * (len(suffix.split(".")) + 1) + "_registry"
 
 
+def _relative_module(current: str, target: str) -> str:
+    current_parts = current.split(".")
+    target_parts = target.split(".")
+    common = 0
+    for current_part, target_part in zip(current_parts, target_parts):
+        if current_part != target_part:
+            break
+        common += 1
+    if common == 0:
+        raise GeneratorError(f"cannot import module {target!r} from {current!r}")
+    level = len(current_parts) - common + 1
+    return "." * level + ".".join(target_parts[common:])
+
+
+def _runtime_module(current: str, module: str, graph: Graph) -> str:
+    return _relative_module(current, f"{graph.options.runtime_prefix}.{module}")
+
+
 def _type_alias(package: str) -> str:
     readable = re.sub(r"[^A-Za-z0-9]", "_", package)
     digest = hashlib.sha256(package.encode()).hexdigest()[:8]
@@ -878,8 +896,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
         key=lambda item: item.full_name,
     )
     output_package = graph.output_package(package)
-    registry_import = _relative_registry(output_package, graph.options.package_prefix)
-    runtime = graph.options.runtime_package
+    registry_import = _relative_registry(output_package, graph.options.destination_prefix)
     package_implementations: set[str] = set()
     if package == "google.protobuf":
         package_implementations.update(
@@ -917,29 +934,32 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
         ")",
         "from typing_extensions import Unpack as _NebiusUnpack",
         "",
-        f"from {runtime}.aio.client import Client as _NebiusClient, "
+        f"from {_runtime_module(output_package, 'aio.client', graph)} import Client as _NebiusClient, "
         "ClientWithOperations as _NebiusClientWithOperations",
-        f"from {runtime}.aio.operation import Operation as _NebiusOperation",
-        f"from {runtime}.aio.request import Request as _NebiusRequest",
-        f"from {runtime}.aio.request_kwargs import "
+        f"from {_runtime_module(output_package, 'aio.operation', graph)} import Operation as _NebiusOperation",
+        f"from {_runtime_module(output_package, 'aio.request', graph)} import Request as _NebiusRequest",
+        f"from {_runtime_module(output_package, 'aio.request_kwargs', graph)} import "
         "RequestKwargs as _NebiusRequestKwargs, "
         "StreamRequestKwargs as _NebiusStreamRequestKwargs",
-        f"from {runtime}.aio.stream import StreamRequest as _NebiusStreamRequest",
-        f"from {runtime}.base.protos.codec import (",
+        f"from {_runtime_module(output_package, 'aio.stream', graph)} import StreamRequest as _NebiusStreamRequest",
+        f"from {_runtime_module(output_package, 'base.protos.codec', graph)} import (",
         "    BOOL, BYTES, DOUBLE, FIXED32, FIXED64, FLOAT, INT32, INT64,",
         "    SFIXED32, SFIXED64, SINT32, SINT64, STRING, UINT32, UINT64, enum_codec,",
         ")",
-        f"from {runtime}.base.protos.direct import (",
+        f"from {_runtime_module(output_package, 'base.protos.direct', graph)} import (",
         f"    {field_import}, Message, OneOf as _NebiusOneOf,",
         "    OneOfMatchError as _NebiusOneOfMatchError,",
         "    SerializableMessage as _NebiusSerializableMessage, message_codec,",
         ")",
-        f"from {runtime}.base.fieldmask_protobuf import ensure_reset_mask_in_metadata",
-        f"from {runtime}.base.protos.pb_enum import {enum_import}",
-        f"from {runtime}.base.protos.extensions import Extension as _NebiusExtension",
-        f"from {runtime}.base.protos.unset import Unset as _NEBIUS_UNSET, UnsetType as _NebiusUnsetType",
-        f"from {runtime}.aio.request_status import RequestStatus as _NebiusRequestStatus",
-        f"from {runtime}.base.protos.well_known_direct import (",
+        f"from {_runtime_module(output_package, 'base.fieldmask_protobuf', graph)} import "
+        "ensure_reset_mask_in_metadata",
+        f"from {_runtime_module(output_package, 'base.protos.pb_enum', graph)} import {enum_import}",
+        f"from {_runtime_module(output_package, 'base.protos.extensions', graph)} import Extension as _NebiusExtension",
+        f"from {_runtime_module(output_package, 'base.protos.unset', graph)} import "
+        "Unset as _NEBIUS_UNSET, UnsetType as _NebiusUnsetType",
+        f"from {_runtime_module(output_package, 'aio.request_status', graph)} import "
+        "RequestStatus as _NebiusRequestStatus",
+        f"from {_runtime_module(output_package, 'base.protos.well_known_direct', graph)} import (",
         "    datetime_to_timestamp as _nebius_datetime_to_timestamp,",
         "    duration_to_timedelta as _nebius_duration_to_timedelta,",
         "    request_status_to_status as _nebius_request_status_to_status,",
@@ -1560,7 +1580,7 @@ def link_package_fragments(
             name=output_directory + "/__init__.py",
             content=_lazy_package_source(
                 shard_metadata,
-                _relative_registry(output_package, graph.options.package_prefix),
+                _relative_registry(output_package, graph.options.destination_prefix),
             ),
         ),
         *generated,
@@ -1573,7 +1593,7 @@ def registry_packages(graph: Graph) -> tuple[str, ...]:
 
 
 def _registry_fragment_source(package: str | None, graph: Graph) -> str:
-    runtime = graph.options.runtime_package
+    output_package = graph.options.destination_prefix if package is None else graph.output_package(package)
     public_packages = frozenset(packages(graph))
     package_files = (
         (file for file in graph.files.values() if file.package == package)
@@ -1589,10 +1609,10 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
         "",
         "from typing import Any as _NebiusAny",
         "",
-        f"from {runtime}.base.protos.extensions import (",
+        f"from {_runtime_module(output_package, 'base.protos.extensions', graph)} import (",
         "    Extension, ExtensionRegistry,",
         ")",
-        f"from {runtime}.base.protos.registry import (",
+        f"from {_runtime_module(output_package, 'base.protos.registry', graph)} import (",
         "    MessageReference, Registry, RegistryFragment,",
         ")",
         "",
@@ -1604,8 +1624,8 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
     if package_extensions:
         lines.extend(
             [
-                f"from {runtime}.base.protos.direct import message_codec",
-                f"from {runtime}.base.protos.codec import (",
+                f"from {_runtime_module(output_package, 'base.protos.direct', graph)} import message_codec",
+                f"from {_runtime_module(output_package, 'base.protos.codec', graph)} import (",
                 "    BOOL, BYTES, DOUBLE, FIXED32, FIXED64, FLOAT, INT32, INT64,",
                 "    SFIXED32, SFIXED64, SINT32, SINT64, STRING, UINT32, UINT64,",
                 "    enum_codec,",
@@ -1698,7 +1718,7 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
 
 
 def _registry_source(graph: Graph) -> str:
-    runtime = graph.options.runtime_package
+    output_package = graph.options.destination_prefix
     fragment_packages = registry_packages(graph)
     lines = [
         "# Generated by nebius_generator. DO NOT EDIT!",
@@ -1706,8 +1726,8 @@ def _registry_source(graph: Graph) -> str:
         "",
         "from typing import Any as _NebiusAny",
         "",
-        f"from {runtime}.base.protos.extensions import Extension, ExtensionRegistry",
-        f"from {runtime}.base.protos.registry import Registry",
+        f"from {_runtime_module(output_package, 'base.protos.extensions', graph)} import Extension, ExtensionRegistry",
+        f"from {_runtime_module(output_package, 'base.protos.registry', graph)} import Registry",
         "",
     ]
     has_root_fragment = any(file.package not in fragment_packages for file in graph.files.values())
@@ -1756,7 +1776,7 @@ def packages(graph: Graph) -> tuple[str, ...]:
 def emit_registry(graph: Graph) -> GeneratedFile:
     """Emit the namespace registry after the complete graph is linked."""
     return GeneratedFile(
-        name=graph.options.package_prefix.replace(".", "/") + "/_registry.py",
+        name=graph.options.destination_prefix.replace(".", "/") + "/_registry.py",
         content=_registry_source(graph),
     )
 
@@ -1768,7 +1788,7 @@ def emit_registry_fragments(graph: Graph) -> tuple[GeneratedFile, ...]:
     if any(file.package not in public_packages for file in graph.files.values()):
         generated.append(
             GeneratedFile(
-                name=(graph.options.package_prefix.replace(".", "/") + "/_registry_fragment.py"),
+                name=(graph.options.destination_prefix.replace(".", "/") + "/_registry_fragment.py"),
                 content=_registry_fragment_source(None, graph),
             ),
         )

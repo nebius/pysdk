@@ -3,8 +3,8 @@
 from collections.abc import Iterable
 from typing import Protocol
 
-from nebius.base.fieldmask import Mask
-from nebius.base.metadata import Metadata
+from .fieldmask import Mask
+from .metadata import Metadata
 
 RESET_MASK_HEADER = "X-ResetMask"
 """Metadata header name used for reset masks."""

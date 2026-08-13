@@ -27,13 +27,14 @@ from google.protobuf.compiler import plugin_pb2
 from google.rpc import status_pb2
 from grpc import StatusCode
 from nebius.aio.request_status import rpc_status_from_call
-from nebius.base.fieldmask import FieldKey, Mask
+from nebius.base.fieldmask import FieldKey
 
 from nebius_generator import coordinator, emitter
 from nebius_generator.bootstrap import parse_request
 from nebius_generator.errors import GeneratorError
 from nebius_generator.main import generate
 from nebius_generator.model import Graph, Options
+from tests.generator.relocation import materialize
 
 coordinate = coordinator.generate
 
@@ -389,25 +390,22 @@ def _request(namespace: str, partition: str = "all") -> plugin_pb2.CodeGenerator
     return plugin_pb2.CodeGeneratorRequest(
         proto_file=[common, widget_file, extension_file],
         file_to_generate=[common.name, widget_file.name, extension_file.name],
-        parameter=f"package_prefix={namespace},partition={partition},jobs=2",
+        parameter=(f"destination_prefix={namespace}.generated,runtime_prefix={namespace},partition={partition},jobs=2"),
     )
 
 
 def _materialize(root: Path, namespace: str, partition: str = "all") -> None:
     response = generate(_request(namespace, partition))
     assert not response.error
-    for output in response.file:
-        path = root / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(root, namespace, response)
 
 
 def test_generator_documents_framework_owned_members() -> None:
     response = generate(_request("documented_framework"))
 
     assert not response.error
-    widget_source = _implementation_source(response, "documented_framework/acme/widget")
-    common_source = _implementation_source(response, "documented_framework/acme/common")
+    widget_source = _implementation_source(response, "documented_framework/generated/acme/widget")
+    common_source = _implementation_source(response, "documented_framework/generated/acme/common")
 
     for documentation in (
         '"""Fully qualified protobuf message name."""',
@@ -619,7 +617,7 @@ def _wkt_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:
             holder_file,
         ],
         file_to_generate=[holder_file.name],
-        parameter=f"package_prefix={namespace}",
+        parameter=f"destination_prefix={namespace}.generated,runtime_prefix={namespace}",
     )
 
 
@@ -628,16 +626,14 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
 ) -> None:
     response = generate(_wkt_request("wkt"))
     assert not response.error
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, "wkt", response)
 
     sys.path.insert(0, str(tmp_path))
     try:
-        protobuf = importlib.import_module("wkt.google.protobuf")
-        rpc = importlib.import_module("wkt.google.rpc")
-        module = importlib.import_module("wkt.acme.wkt")
+        protobuf = importlib.import_module("wkt.generated.google.protobuf")
+        rpc = importlib.import_module("wkt.generated.google.rpc")
+        module = importlib.import_module("wkt.generated.acme.wkt")
+        relocated_mask = importlib.import_module("wkt.base.fieldmask").Mask
         timestamp = protobuf.Timestamp(seconds=-1, nanos=123)
         timestamp_payload = timestamp.SerializeToString() + b"\x18\x07"
         duration = protobuf.Duration(seconds=-1, nanos=-1)
@@ -736,7 +732,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
         assert assigned.request_status.registry is module.REGISTRY
         assert _option_field(6, 2, status_payload) in assigned.SerializeToString(deterministic=True)
 
-        def full_field_mask(holder, name: str) -> Mask | None:
+        def full_field_mask(holder, name: str):
             return holder.get_full_update_reset_mask().field_parts.get(FieldKey(name))
 
         empty_holder = module.Holder()
@@ -748,7 +744,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
             "selected_at",
             "request_status",
         ):
-            assert full_field_mask(empty_holder, name) == Mask()
+            assert full_field_mask(empty_holder, name) == relocated_mask()
 
         epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
         assert full_field_mask(module.Holder(created_at=epoch), "created_at").marshal() == ("nanos,seconds")
@@ -760,10 +756,10 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
                 module.Holder(created_at=epoch + timedelta(seconds=1, microseconds=1)),
                 "created_at",
             )
-            == Mask()
+            == relocated_mask()
         )
 
-        assert full_field_mask(module.Holder(moments=[]), "moments") == Mask()
+        assert full_field_mask(module.Holder(moments=[]), "moments") == relocated_mask()
         moments_mask = full_field_mask(
             module.Holder(moments=[epoch, epoch + timedelta(seconds=1)]),
             "moments",
@@ -771,7 +767,7 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
         assert moments_mask is not None and moments_mask.any is not None
         assert moments_mask.any.marshal() == "nanos,seconds"
 
-        assert full_field_mask(module.Holder(schedule={}), "schedule") == Mask()
+        assert full_field_mask(module.Holder(schedule={}), "schedule") == relocated_mask()
         schedule_mask = full_field_mask(module.Holder(schedule={"epoch": epoch}), "schedule")
         assert schedule_mask is not None and schedule_mask.any is not None
         assert schedule_mask.any.marshal() == "nanos,seconds"
@@ -789,9 +785,9 @@ def test_wkt_fields_are_python_views_over_authoritative_direct_values(
 from collections.abc import MutableMapping, MutableSequence
 from datetime import datetime, timedelta
 
-from nebius.aio.request_status import RequestStatus
-from wkt.acme.wkt import Holder
-from wkt.google.protobuf import Timestamp
+from wkt.aio.request_status import RequestStatus
+from wkt.generated.acme.wkt import Holder
+from wkt.generated.google.protobuf import Timestamp
 
 
 def check(holder: Holder, raw: Timestamp, value: datetime) -> None:
@@ -829,18 +825,15 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
     for namespace in ("status_public", "status_alternate"):
         response = generate(_wkt_request(namespace))
         assert not response.error
-        for output in response.file:
-            path = tmp_path / output.name
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(output.content)
+        materialize(tmp_path, namespace, response)
 
     sys.path.insert(0, str(tmp_path))
     try:
-        public = importlib.import_module("status_public.acme.wkt")
-        public_common = importlib.import_module("status_public.nebius.common.v1")
-        public_alpha = importlib.import_module("status_public.nebius.common.error.v1alpha1")
-        public_confusing = importlib.import_module("status_public.confusing")
-        alternate = importlib.import_module("status_alternate.acme.wkt")
+        public = importlib.import_module("status_public.generated.acme.wkt")
+        public_common = importlib.import_module("status_public.generated.nebius.common.v1")
+        public_alpha = importlib.import_module("status_public.generated.nebius.common.error.v1alpha1")
+        public_confusing = importlib.import_module("status_public.generated.confusing")
+        alternate = importlib.import_module("status_alternate.generated.acme.wkt")
         public_error = public_common.ServiceError(value="original")
         alpha_error = public_alpha.ServiceError(value="alpha")
         confusing_error = public_confusing.ServiceErrorLookalike(value="opaque")
@@ -883,6 +876,13 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
         changed_raw = public_status.to_rpc_status(registry=alternate.REGISTRY)
         assert changed_raw.code == 123
         assert b"\x20\x07" in changed_raw.SerializeToString(deterministic=True)
+
+        class InvalidStatusView:
+            def to_rpc_status(self, *, registry: object) -> object:
+                return public.Holder()
+
+        with pytest.raises(TypeError, match="status field requires status or its Python view"):
+            alternate.Holder(request_status=InvalidStatusView())
 
         from nebius.aio.request import Request
         from nebius.aio.route import Route
@@ -954,19 +954,16 @@ def test_status_views_retain_and_retarget_namespace_registries(tmp_path: Path) -
 def test_operation_outputs_use_direct_registry_owned_wrappers(tmp_path: Path) -> None:
     response = generate(_operation_request("operations"))
     assert not response.error
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, "operations", response)
 
     sys.path.insert(0, str(tmp_path))
     try:
-        widget = importlib.import_module("operations.acme.widget")
-        common = importlib.import_module("operations.nebius.common.v1")
-        from nebius.aio.client import ClientWithOperations
-        from nebius.aio.operation import Operation
-        from nebius.aio.operation_service import OperationServiceTransportStub
-        from nebius.aio.service_descriptor import from_stub_class
+        widget = importlib.import_module("operations.generated.acme.widget")
+        common = importlib.import_module("operations.generated.nebius.common.v1")
+        from operations.aio.client import ClientWithOperations
+        from operations.aio.operation import Operation
+        from operations.aio.operation_service import OperationServiceTransportStub
+        from operations.aio.service_descriptor import from_stub_class
 
         assert issubclass(widget.WidgetServiceClient, ClientWithOperations)
         assert not issubclass(common.OperationServiceClient, ClientWithOperations)
@@ -1051,7 +1048,7 @@ def test_split_package_links_one_relative_import_per_target() -> None:
     response = generate(request)
 
     assert not response.error
-    source = _implementation_source(response, "relative_edges/acme/widget")
+    source = _implementation_source(response, "relative_edges/generated/acme/widget")
     tree = ast.parse(source)
     absolute_edges = [
         node
@@ -1083,28 +1080,25 @@ def test_large_package_shards_are_lazy_and_keep_public_identity(
 
     assert not response.error
     names = {output.name for output in response.file}
-    assert "sharded_edges/acme/widget/__init__.py" in names
+    assert "sharded_edges/generated/acme/widget/__init__.py" in names
     assert any(name.endswith("/_impl_000.py") for name in names)
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, "sharded_edges", response)
 
     sys.path.insert(0, str(tmp_path))
     try:
-        module = importlib.import_module("sharded_edges.acme.widget")
+        module = importlib.import_module("sharded_edges.generated.acme.widget")
         assert "Widget" not in vars(module)
         assert "Extra" not in vars(module)
 
         widget_type = module.Widget
-        assert widget_type.__module__ == "sharded_edges.acme.widget"
+        assert widget_type.__module__ == "sharded_edges.generated.acme.widget"
         assert "Widget" in vars(module)
         assert "Extra" not in vars(module)
         restored_type = pickle.loads(pickle.dumps(widget_type.Nested))
         assert restored_type is widget_type.Nested
 
         extra_type = module.Extra
-        assert extra_type.__module__ == "sharded_edges.acme.widget"
+        assert extra_type.__module__ == "sharded_edges.generated.acme.widget"
         reparsed = extra_type.FromString(extra_type().SerializeToString())
         assert reparsed.__class__ is extra_type
         for builtin_name in ("getattr", "globals", "isinstance", "sorted", "type"):
@@ -1113,7 +1107,7 @@ def test_large_package_shards_are_lazy_and_keep_public_identity(
                 if keyword.iskeyword(builtin_name) or keyword.issoftkeyword(builtin_name)
                 else builtin_name
             )
-            assert getattr(module, exported_name).__module__ == "sharded_edges.acme.widget"
+            assert getattr(module, exported_name).__module__ == "sharded_edges.generated.acme.widget"
     finally:
         sys.path.remove(str(tmp_path))
 
@@ -1123,15 +1117,19 @@ def test_small_packages_are_lazy_and_own_registry_fragments() -> None:
 
     assert not response.error
     names = {output.name for output in response.file}
-    assert "fragmented/acme/widget/_impl_000.py" in names
-    assert "fragmented/acme/widget/_registry_fragment.py" in names
-    facade = next(output.content for output in response.file if output.name == "fragmented/acme/widget/__init__.py")
-    fragment = next(
-        output.content for output in response.file if output.name == "fragmented/acme/widget/_registry_fragment.py"
+    assert "fragmented/generated/acme/widget/_impl_000.py" in names
+    assert "fragmented/generated/acme/widget/_registry_fragment.py" in names
+    facade = next(
+        output.content for output in response.file if output.name == "fragmented/generated/acme/widget/__init__.py"
     )
-    registry = next(output.content for output in response.file if output.name == "fragmented/_registry.py")
+    fragment = next(
+        output.content
+        for output in response.file
+        if output.name == "fragmented/generated/acme/widget/_registry_fragment.py"
+    )
+    registry = next(output.content for output in response.file if output.name == "fragmented/generated/_registry.py")
     assert "from ._impl_000" in facade
-    assert "from fragmented._registry" not in facade
+    assert "from fragmented.generated._registry" not in facade
     assert "module=__package__" in fragment
     assert "RegistryFragment(" in fragment
     assert "Registry.from_fragments" in registry
@@ -1187,13 +1185,10 @@ def test_nested_attachments_do_not_depend_on_child_order(tmp_path: Path) -> None
     response = generate(request)
 
     assert not response.error
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, "nested_order", response)
     sys.path.insert(0, str(tmp_path))
     try:
-        module = importlib.import_module("nested_order.acme.widget")
+        module = importlib.import_module("nested_order.generated.acme.widget")
         assert module.Outer.Outer__A is not module.Outer.A
         assert module.Outer.Outer__A.__qualname__ == "Outer.Outer__A"
         assert module.Outer.A.__qualname__ == "Outer.A"
@@ -1220,9 +1215,11 @@ def test_runtime_closure_excludes_option_only_dependency() -> None:
 
     assert not response.error
     names = {file.name for file in response.file}
-    assert "closure/acme/common/__init__.py" in names
-    assert "closure/metadata/options/__init__.py" not in names
-    metadata_fragment = next(file.content for file in response.file if file.name == "closure/_registry_fragment.py")
+    assert "closure/generated/acme/common/__init__.py" in names
+    assert "closure/generated/metadata/options/__init__.py" not in names
+    metadata_fragment = next(
+        file.content for file in response.file if file.name == "closure/generated/_registry_fragment.py"
+    )
     assert "metadata/options.proto" in metadata_fragment
 
 
@@ -1259,10 +1256,10 @@ def test_runtime_closure_is_declaration_granular() -> None:
 
     assert not response.error
     names = {file.name for file in response.file}
-    dependency_source = _implementation_source(response, "closure/dependency")
+    dependency_source = _implementation_source(response, "closure/generated/dependency")
     assert "class Used(Message):" in dependency_source
     assert "class Unused(Message):" not in dependency_source
-    assert "closure/other/__init__.py" not in names
+    assert "closure/generated/other/__init__.py" not in names
 
 
 def test_nested_extension_activates_external_extendee() -> None:
@@ -1286,14 +1283,14 @@ def test_nested_extension_activates_external_extendee() -> None:
     request = plugin_pb2.CodeGeneratorRequest(
         proto_file=[host_file, root_file],
         file_to_generate=[root_file.name],
-        parameter="package_prefix=nested_extension",
+        parameter="destination_prefix=nested_extension.generated,runtime_prefix=nested_extension",
     )
 
     response = generate(request)
 
     assert not response.error
     names = {file.name for file in response.file}
-    assert "nested_extension/dependency/__init__.py" in names
+    assert "nested_extension/generated/dependency/__init__.py" in names
 
 
 def test_fragment_verifier_rejects_owner_and_key_tampering(tmp_path: Path) -> None:
@@ -1572,14 +1569,11 @@ async def test_all_streaming_rpc_shapes_use_native_transport(tmp_path: Path) -> 
     )
     response = generate(request)
     assert not response.error
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, "streaming", response)
 
     sys.path.insert(0, str(tmp_path))
     try:
-        module = importlib.import_module("streaming.acme.widget")
+        module = importlib.import_module("streaming.generated.acme.widget")
         message = module.Widget(id=7)
         opened: list[tuple[str, str]] = []
         returned: list[object] = []
@@ -1672,10 +1666,10 @@ def test_generated_namespaces_are_direct_and_isolated(tmp_path: Path) -> None:
     _materialize(tmp_path, "ns_two", "directory")
     sys.path.insert(0, str(tmp_path))
     try:
-        one_common = importlib.import_module("ns_one.acme.common")
-        one_widget = importlib.import_module("ns_one.acme.widget")
-        two_widget = importlib.import_module("ns_two.acme.widget")
-        one_extension = importlib.import_module("ns_one.acme.extension")
+        one_common = importlib.import_module("ns_one.generated.acme.common")
+        one_widget = importlib.import_module("ns_one.generated.acme.widget")
+        two_widget = importlib.import_module("ns_two.generated.acme.widget")
+        one_extension = importlib.import_module("ns_one.generated.acme.extension")
 
         original = one_widget.Widget(
             id=2**61,
@@ -1691,7 +1685,7 @@ def test_generated_namespaces_are_direct_and_isolated(tmp_path: Path) -> None:
         decoded = two_widget.Widget.FromString(wire)
         assert decoded.id == 2**61
         assert decoded.shared.value == "owned"
-        two_common = importlib.import_module("ns_two.acme.common")
+        two_common = importlib.import_module("ns_two.generated.acme.common")
         assert decoded.state is two_common.State.STATE_READY
         assert decoded.states[1] is two_common.State.STATE_READY
         assert list(decoded.states) == [0, 1]
@@ -1789,20 +1783,17 @@ def test_generated_inline_types_pass_mypy(tmp_path: Path) -> None:
     )
     response = generate(request)
     assert not response.error
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, "typed", response)
     usage = tmp_path / "typing_usage.py"
     usage.write_text("""\
 from collections.abc import MutableMapping, MutableSequence
 
-from nebius.aio.request import Request
-from nebius.aio.stream import StreamRequest
-from nebius.base.protos.extensions import Extension
-from typed.acme.common import Shared, State
-from typed.acme.extension import Host, Mode, mode, tag
-from typed.acme.widget import (
+from typed.aio.request import Request
+from typed.aio.stream import StreamRequest
+from typed.base.protos.extensions import Extension
+from typed.generated.acme.common import Shared, State
+from typed.generated.acme.extension import Host, Mode, mode, tag
+from typed.generated.acme.widget import (
     EXTENSIONS,
     EXTENSION_HANDLES,
     REGISTRY,
@@ -1858,7 +1849,7 @@ def check(widget: Widget, client: WidgetServiceClient) -> None:
 
     invalid_usage = tmp_path / "invalid_streaming_kwargs.py"
     invalid_usage.write_text("""\
-from typed.acme.widget import Widget, WidgetServiceClient
+from typed.generated.acme.widget import Widget, WidgetServiceClient
 
 
 def check(widget: Widget, client: WidgetServiceClient) -> None:
@@ -1890,7 +1881,7 @@ def test_constructor_local_names_do_not_collide_with_fields(tmp_path: Path) -> N
         _field(message, name, number, descriptor_pb2.FieldDescriptorProto.TYPE_STRING)
     response = generate(request)
     assert not response.error
-    source = _implementation_source(response, "locals/acme/common")
+    source = _implementation_source(response, "locals/generated/acme/common")
     compile(source, "generated", "exec")
     assert "\n    @property\n" not in source
     assert "@_NebiusProperty" in source
@@ -1901,7 +1892,7 @@ def test_runtime_typing_aliases_do_not_reserve_public_proto_names() -> None:
     request.proto_file[0].message_type.add(name="Request")
     response = generate(request)
     assert not response.error
-    source = _implementation_source(response, "aliases/acme/common")
+    source = _implementation_source(response, "aliases/generated/acme/common")
     assert "class Request(Message):" in source
 
 
@@ -1931,27 +1922,24 @@ def test_standard_type_symbols_alias_runtime_field_and_enum_imports(field_kind: 
     request = plugin_pb2.CodeGeneratorRequest(
         file_to_generate=[standard.name],
         proto_file=[standard],
-        parameter=f"package_prefix=standard_{field_kind}",
+        parameter=(f"destination_prefix=standard_{field_kind}.generated,runtime_prefix=standard_{field_kind}"),
     )
 
     response = generate(request)
 
     assert not response.error
-    source = _implementation_source(response, f"standard_{field_kind}/google/protobuf")
+    source = _implementation_source(response, f"standard_{field_kind}/generated/google/protobuf")
     assert "Field as _NebiusField" in source
     assert "Enum as _NebiusEnum" in source
     expected_base = "_NebiusEnum" if field_kind == "enum" else "Message"
     assert f"class Field({expected_base}):" in source
     assert "class Enum(Message):" in source
     assert " = _NebiusField('name', 'name', 1, STRING" in source
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
     namespace = f"standard_{field_kind}"
+    materialize(tmp_path, namespace, response)
     sys.path.insert(0, str(tmp_path))
     try:
-        module = importlib.import_module(f"{namespace}.google.protobuf")
+        module = importlib.import_module(f"{namespace}.generated.google.protobuf")
         message_type = module.Holder if field_kind == "enum" else module.Field
         assert message_type(name="value").name == "value"
         if field_kind == "enum":
@@ -2102,7 +2090,7 @@ def test_generated_wire_matches_reference_provider(tmp_path: Path) -> None:
     reference = message_factory.GetMessageClass(pool.FindMessageTypeByName("acme.widget.Widget"))
     sys.path.insert(0, str(tmp_path))
     try:
-        module = importlib.import_module("reference_namespace.acme.widget")
+        module = importlib.import_module("reference_namespace.generated.acme.widget")
         direct = module.Widget(id=17, count=4, labels={"a": 1, "b": 2})
         provider = reference.FromString(direct.SerializeToString(deterministic=True))
         assert provider.id == 17
@@ -2133,15 +2121,12 @@ def test_unknown_nebius_annotations_drive_generated_api(tmp_path: Path) -> None:
 
     response = generate(request)
     assert not response.error
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, "annotated", response)
 
     sys.path.insert(0, str(tmp_path))
     try:
-        common_module = importlib.import_module("annotated.acme.common")
-        widget_module = importlib.import_module("annotated.acme.widget")
+        common_module = importlib.import_module("annotated.generated.acme.common")
+        widget_module = importlib.import_module("annotated.generated.acme.widget")
         resource = widget_module.Resource(
             identifier=17,
             state=common_module.Lifecycle.AVAILABLE,
@@ -2261,7 +2246,7 @@ def test_annotation_policy_follows_current_public_descriptor_schema() -> None:
     response = generate(request)
 
     assert not response.error
-    source = _implementation_source(response, "renumbered/acme/widget")
+    source = _implementation_source(response, "renumbered/generated/acme/widget")
     assert "class CurrentResource(Message):" in source
     assert "sensitive=True" in source
     assert "credentials=True" in source
@@ -2305,7 +2290,7 @@ def test_user_client_symbol_does_not_collide_with_private_runtime_import() -> No
     response = generate(request)
 
     assert not response.error
-    package = _implementation_source(response, "client_symbol/acme/widget")
+    package = _implementation_source(response, "client_symbol/generated/acme/widget")
     assert "class Client(Message):" in package
     assert "Client as _NebiusClient" in package
 
@@ -2379,26 +2364,26 @@ def test_source_docs_and_deprecation_are_emitted_in_every_partition(
         return plugin_pb2.CodeGeneratorRequest(
             proto_file=[file],
             file_to_generate=[file.name],
-            parameter=(f"package_prefix=documented_{partition},partition={partition},jobs=2"),
+            parameter=(
+                f"destination_prefix=documented_{partition}.generated,"
+                f"runtime_prefix=documented_{partition},partition={partition},jobs=2"
+            ),
         )
 
     generated: dict[str, str] = {}
     for partition in ("all", "package", "directory"):
         response = generate(request(partition))
         assert not response.error
-        package = _implementation_source(response, f"documented_{partition}/acme/documented")
+        package = _implementation_source(response, f"documented_{partition}/generated/acme/documented")
         generated[partition] = package.replace(f"documented_{partition}", "documented")
-        for output in response.file:
-            path = tmp_path / output.name
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(output.content)
+        materialize(tmp_path, f"documented_{partition}", response)
 
     assert generated["all"] == generated["package"] == generated["directory"]
     assert "Ready value leading." in generated["all"]
 
     sys.path.insert(0, str(tmp_path))
     try:
-        module = importlib.import_module("documented_all.acme.documented")
+        module = importlib.import_module("documented_all.generated.acme.documented")
         assert "Message detached." in module.Documented.__doc__
         assert "Message leading." in module.Documented.__doc__
         assert "Message trailing." in module.Documented.__doc__
@@ -2442,7 +2427,7 @@ def test_parent_package_and_service_namespaces_are_protected() -> None:
         return plugin_pb2.CodeGeneratorRequest(
             proto_file=[parent, child],
             file_to_generate=[parent.name, child.name],
-            parameter="package_prefix=invalid",
+            parameter="destination_prefix=invalid.generated,runtime_prefix=invalid",
         )
 
     for parent_name, child_component in (
@@ -2477,7 +2462,7 @@ def test_root_registry_module_names_are_reserved(package: str) -> None:
     request = plugin_pb2.CodeGeneratorRequest(
         proto_file=[file],
         file_to_generate=[file.name],
-        parameter="package_prefix=invalid",
+        parameter="destination_prefix=invalid.generated,runtime_prefix=invalid",
     )
 
     assert "conflicts with generated registry" in generate(request).error

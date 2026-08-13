@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from nebius.api.nebius.iam.v1 import ExchangeTokenRequest
-from nebius.base.service_account.service_account import TokenRequester
+from ...api.nebius.iam.v1 import ExchangeTokenRequest
+from .service_account import TokenRequester
 
 
 class FederatedCredentialsBearer(ABC):

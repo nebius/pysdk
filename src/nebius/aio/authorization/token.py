@@ -5,8 +5,7 @@ authorization interfaces that fetches bearer tokens from a token provider
 and injects them into request metadata.
 """
 
-from nebius.base.metadata import Metadata
-
+from ...base.metadata import Metadata
 from ..token import token
 from .authorization import Authenticator, Provider
 

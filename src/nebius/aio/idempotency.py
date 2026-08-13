@@ -14,7 +14,7 @@ from grpc.aio._call import UnaryUnaryCall
 from grpc.aio._interceptor import ClientCallDetails, UnaryUnaryClientInterceptor
 from grpc.aio._metadata import Metadata as GRPCMetadata
 
-from nebius.base.metadata import Metadata
+from ..base.metadata import Metadata
 
 log = getLogger(__name__)
 

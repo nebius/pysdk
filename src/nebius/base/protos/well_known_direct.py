@@ -89,16 +89,15 @@ def timedelta_to_duration(value: object, factory: Callable[[], type[Any]]) -> An
 
 def status_to_request_status(value: Any) -> Any:
     """Return an SDK status view retaining the direct value's registry."""
-    from nebius.aio.request_status import request_status_from_rpc_status
+    from ...aio.request_status import request_status_from_rpc_status
 
     return request_status_from_rpc_status(value, registry=type(value).__REGISTRY__)
 
 
 def request_status_to_status(value: object, factory: Callable[[], type[Any]]) -> Any:
     """Normalize an SDK/direct Status into the localized direct type."""
-    from nebius.aio.request_status import RequestStatus
-
     message_type = factory()
-    if isinstance(value, RequestStatus):
-        return value.to_rpc_status(registry=message_type.__REGISTRY__)
+    to_rpc_status = getattr(value, "to_rpc_status", None)
+    if callable(to_rpc_status):
+        value = to_rpc_status(registry=message_type.__REGISTRY__)
     return _coerce_direct_message(value, message_type, "status")

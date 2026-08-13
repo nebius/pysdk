@@ -4,9 +4,9 @@ from typing import cast
 
 from grpc import RpcError, Status, StatusCode
 
-from nebius.api.google.protobuf import Any as AnyPb
-from nebius.api.google.rpc import Status as StatusPb
-from nebius.api.nebius.common.v1 import ServiceError as ServiceErrorPb
+from ..api.google.protobuf import Any as AnyPb
+from ..api.google.rpc import Status as StatusPb
+from ..api.nebius.common.v1 import ServiceError as ServiceErrorPb
 
 _STATUS_DETAILS_KEY = "grpc-status-details-bin"
 

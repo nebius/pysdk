@@ -22,7 +22,7 @@ Used in deferred token bearer implementations::
 
 from collections.abc import Awaitable
 
-from nebius.aio.abc import ClientChannelInterface
+from ..abc import ClientChannelInterface
 
 DeferredChannel = Awaitable[ClientChannelInterface]
 """Deferred client channel type.

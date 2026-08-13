@@ -61,7 +61,7 @@ from logging import getLogger
 from ssl import SSLContext
 from typing import Any, TextIO, TypeVar
 
-from nebius.aio.metrics import (
+from ...metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -69,9 +69,9 @@ from nebius.aio.metrics import (
     auth_metrics_recorder,
     metric_start,
 )
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver as ParentReceiver
-from nebius.aio.token.token import Token
+from ..token import Bearer as ParentBearer
+from ..token import Receiver as ParentReceiver
+from ..token import Token
 
 log = getLogger(__name__)
 

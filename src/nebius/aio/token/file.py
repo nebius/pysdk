@@ -32,15 +32,14 @@ from logging import getLogger
 from pathlib import Path
 from time import monotonic
 
-from nebius.aio.metrics import (
+from ...base.error import SDKError
+from ..metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
     auth_metrics_recorder,
     metric_start,
 )
-from nebius.base.error import SDKError
-
 from .token import Bearer as ParentBearer
 from .token import Receiver as ParentReceiver
 from .token import Token

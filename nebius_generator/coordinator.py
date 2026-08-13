@@ -106,8 +106,8 @@ def _fragment_key(
 ) -> str:
     digest = hashlib.sha256()
     digest.update(semantic.encode())
-    digest.update(graph.options.package_prefix.encode())
-    digest.update(graph.options.runtime_package.encode())
+    digest.update(graph.options.destination_prefix.encode())
+    digest.update(graph.options.runtime_prefix.encode())
     digest.update(owner.encode())
     for name in file_names:
         digest.update(name.encode())

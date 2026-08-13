@@ -48,12 +48,11 @@ from datetime import timedelta
 from ssl import SSLContext
 from typing import TextIO
 
-from nebius.aio.metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver
-
+from ..metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
 from .federation_bearer import Bearer as FederationAuthBearer
 from .file_cache.async_renewable_bearer import AsynchronousRenewableFileCacheBearer
+from .token import Bearer as ParentBearer
+from .token import Receiver
 
 
 class FederationBearer(ParentBearer):

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, cast
 if TYPE_CHECKING:
     from grpc.aio import Channel
 
-    from nebius.base.protos.registry import Registry
+    from ..base.protos.registry import Registry
 
 
 class OperationServiceTransportStub:

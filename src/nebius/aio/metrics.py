@@ -41,10 +41,10 @@ from threading import Lock
 from time import monotonic
 from typing import Literal, SupportsFloat, SupportsIndex, cast
 
-from nebius.aio._task_context import bridge_awaitable, dispose_unstarted_awaitable, task_scheduler
-from nebius.aio.token.token import Bearer as _TokenBearer
-from nebius.aio.token.token import Receiver as _TokenReceiver
-from nebius.aio.token.token import Token as _Token
+from ._task_context import bridge_awaitable, dispose_unstarted_awaitable, task_scheduler
+from .token.token import Bearer as _TokenBearer
+from .token.token import Receiver as _TokenReceiver
+from .token.token import Token as _Token
 
 MetricResult = Literal["success", "error"]
 

@@ -40,16 +40,16 @@ from datetime import timedelta
 
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
-from nebius.aio.token.deferred_channel import DeferredChannel
-from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
-from nebius.aio.token.renewable import Bearer as RenewableBearer
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import NamedBearer, Receiver
-from nebius.base.service_account.service_account import Reader as ServiceAccountReader
-from nebius.base.service_account.service_account import ServiceAccount
-from nebius.base.service_account.static import Reader as ServiceAccountReaderStatic
+from ...base.service_account.service_account import Reader as ServiceAccountReader
+from ...base.service_account.service_account import ServiceAccount
+from ...base.service_account.static import Reader as ServiceAccountReaderStatic
+from ..abc import ClientChannelInterface
+from ..metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
+from .deferred_channel import DeferredChannel
+from .exchangeable import Bearer as ExchangeableBearer
+from .renewable import Bearer as RenewableBearer
+from .token import Bearer as ParentBearer
+from .token import NamedBearer, Receiver
 
 
 class ServiceAccountBearer(ParentBearer):

@@ -45,26 +45,25 @@ from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import AioRpcError
 from grpc.aio import Metadata as GrpcMetadata
 
-from nebius.aio._runtime import CrossLoopAwaitable
-from nebius.aio._task_context import dispose_unstarted_awaitable
-from nebius.aio.abc import ClientChannelInterface as Channel
-from nebius.aio.abc import release_address_channel
-from nebius.aio.authorization.options import OPTION_TYPE, Types
-from nebius.aio.base import AddressChannel
-from nebius.aio.idempotency import ensure_key_in_metadata
-from nebius.base.error import SDKError
-from nebius.base.metadata import Metadata
-from nebius.base.protos.direct import Message as DirectMessage
-from nebius.base.protos.pb_classes import Message as LegacyMessage
-from nebius.base.protos.unset import Unset, UnsetType
-
+from ..base.error import SDKError
+from ..base.metadata import Metadata
+from ..base.protos.direct import Message as DirectMessage
+from ..base.protos.pb_classes import Message as LegacyMessage
+from ..base.protos.unset import Unset, UnsetType
+from ._runtime import CrossLoopAwaitable
+from ._task_context import dispose_unstarted_awaitable
+from .abc import ClientChannelInterface as Channel
+from .abc import release_address_channel
+from .authorization.options import OPTION_TYPE, Types
+from .base import AddressChannel
+from .idempotency import ensure_key_in_metadata
 from .request_status import RequestStatus, UnfinishedRequestStatus
 from .route import Route
 
 if TYPE_CHECKING:
     from grpc.aio import UnaryUnaryCall
 
-    from nebius.base.protos.registry import Registry
+    from ..base.protos.registry import Registry
 
 Req = TypeVar("Req")
 """Request type variable. Either a protobuf/message or a serializable payload."""
@@ -611,7 +610,7 @@ class Request(Generic[Req, Res]):
         with self._future_lock:
             self._native_code = None
         req = self._input
-        from nebius.base.protos.pb_classes import Message as LegacyMessage
+        from ..base.protos.pb_classes import Message as LegacyMessage
 
         if isinstance(req, LegacyMessage):
             req = req.__pb2_message__  # type: ignore[assignment]

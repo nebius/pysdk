@@ -25,20 +25,19 @@ from typing import TYPE_CHECKING, Any, Generic, Protocol, TypeVar, cast
 from grpc import StatusCode
 from typing_extensions import Unpack
 
-from nebius.aio._task_context import dispose_unstarted_awaitable
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT, _authorization_deadline_applies, _validate_timeout
-from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
-from nebius.base.error import SDKError
-from nebius.base.metadata import Metadata
-from nebius.base.protos.unset import Unset, UnsetType
-from nebius.base.protos.well_known_direct import local_timezone
-
+from ..base.error import SDKError
+from ..base.metadata import Metadata
+from ..base.protos.unset import Unset, UnsetType
+from ..base.protos.well_known_direct import local_timezone
+from ._task_context import dispose_unstarted_awaitable
+from .abc import ClientChannelInterface
 from .constant_channel import Constant
+from .request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT, _authorization_deadline_applies, _validate_timeout
+from .request_kwargs import RequestKwargs, RequestKwargsForOperation
 from .request_status import RequestStatus
 
 if TYPE_CHECKING:
-    from nebius.api.nebius.common.v1 import ProgressTracker
+    from ..api.nebius.common.v1 import ProgressTracker
 
 
 class OperationMessage(Protocol):
@@ -851,7 +850,7 @@ class Operation(Generic[OperationPb]):
                 poll_iteration_timeout = min(5, timeout)
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
-        from nebius.aio.service_error import RequestError as ServiceRequestError
+        from .service_error import RequestError as ServiceRequestError
 
         def _is_ignorable(err: Exception) -> bool:
             """Return whether one polling error is transient."""

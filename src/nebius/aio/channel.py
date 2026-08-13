@@ -73,57 +73,26 @@ from grpc.aio._typing import (
     SerializingFunction,
 )
 
-from nebius.aio._metadata_type import MetadataType
-from nebius.aio.abc import GracefulInterface
-from nebius.aio.authorization.authorization import Authenticator
-from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
-from nebius.aio.authorization.token import TokenProvider
-from nebius.aio.cli_config import Config as ConfigReader
-from nebius.aio.idempotency import IdempotencyKeyInterceptor
-from nebius.aio.keepalive import (
-    KeepaliveOptions,
-    keepalive_channel_options,
-    keepalive_config_from_options,
-)
-from nebius.aio.metrics import (
-    METRIC_RESULT_ERROR,
-    METRIC_RESULT_SUCCESS,
-    AuthMetricsLike,
-    MetricsLike,
-    bind_auth_metrics,
-    metric_duration_seconds,
-    metric_start,
-    record_config_metric,
-)
-from nebius.aio.operation_service import OperationServiceTransportStub
-from nebius.aio.request import _snapshot_request_input, _validate_timeout
-from nebius.aio.route import Route
-from nebius.aio.service_descriptor import ServiceStub, from_stub_class
-from nebius.aio.token import exchangeable, renewable
-from nebius.aio.token.static import Bearer as StaticTokenBearer
-from nebius.aio.token.static import EnvBearer
-from nebius.aio.token.token import Bearer as TokenBearer
-from nebius.aio.token.token import Token
-from nebius.base.constants import DOMAIN
-from nebius.base.error import SDKError
-from nebius.base.metadata import Metadata
-from nebius.base.methods import service_from_method_name
-from nebius.base.options import COMPRESSION, INSECURE, pop_option
-from nebius.base.protos.registry import Registry
-from nebius.base.resolver import (
+from ..base.constants import DOMAIN
+from ..base.error import SDKError
+from ..base.metadata import Metadata
+from ..base.methods import service_from_method_name
+from ..base.options import COMPRESSION, INSECURE, pop_option
+from ..base.protos.registry import Registry
+from ..base.resolver import (
     Chain,
     Conventional,
     Resolver,
     TemplateExpander,
     UnknownServiceError,
 )
-from nebius.base.service_account.service_account import Reader as ServiceAccountReader
-from nebius.base.service_account.service_account import (
+from ..base.service_account.service_account import Reader as ServiceAccountReader
+from ..base.service_account.service_account import (
     TokenRequester as TokenRequestReader,
 )
-from nebius.base.tls_certificates import get_system_certificates
-from nebius.base.version import version
-
+from ..base.tls_certificates import get_system_certificates
+from ..base.version import version
+from ._metadata_type import MetadataType
 from ._runtime import (
     AsyncRuntime,
     CrossLoopAwaitable,
@@ -135,7 +104,37 @@ from ._task_context import (
     close_rejected_sync_awaitable,
     dispose_unstarted_awaitable,
 )
+from .abc import GracefulInterface
+from .authorization.authorization import Authenticator
+from .authorization.authorization import Provider as AuthorizationProvider
+from .authorization.token import TokenProvider
 from .base import AddressChannel, ChannelBase
+from .cli_config import Config as ConfigReader
+from .idempotency import IdempotencyKeyInterceptor
+from .keepalive import (
+    KeepaliveOptions,
+    keepalive_channel_options,
+    keepalive_config_from_options,
+)
+from .metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    MetricsLike,
+    bind_auth_metrics,
+    metric_duration_seconds,
+    metric_start,
+    record_config_metric,
+)
+from .operation_service import OperationServiceTransportStub
+from .request import _snapshot_request_input, _validate_timeout
+from .route import Route
+from .service_descriptor import ServiceStub, from_stub_class
+from .token import exchangeable, renewable
+from .token.static import Bearer as StaticTokenBearer
+from .token.static import EnvBearer
+from .token.token import Bearer as TokenBearer
+from .token.token import Token
 
 logger = getLogger(__name__)
 
@@ -1878,7 +1877,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._authorization_provider: AuthorizationProvider | None = None
         if credentials is None:
             if credentials_file_name is not None:
-                from nebius.base.service_account.credentials_file import (
+                from ..base.service_account.credentials_file import (
                     Reader as CredentialsFileReader,
                 )
 
@@ -1888,7 +1887,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 and service_account_private_key_file_name is not None
                 and service_account_public_key_id is not None
             ):
-                from nebius.base.service_account.pk_file import Reader as PKFileReader
+                from ..base.service_account.pk_file import Reader as PKFileReader
 
                 credentials = PKFileReader(
                     service_account_private_key_file_name,
@@ -1930,7 +1929,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if isinstance(credentials, (str, Token)):
             credentials = StaticTokenBearer(credentials)
         if isinstance(credentials, ServiceAccountReader):
-            from nebius.aio.token.service_account import ServiceAccountBearer
+            from .token.service_account import ServiceAccountBearer
 
             credentials = ServiceAccountBearer(
                 credentials,
@@ -2739,7 +2738,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if registry is not None:
             return registry
         try:
-            from nebius.api._registry import REGISTRY
+            from ..api._registry import REGISTRY
         except ImportError as error:
             raise SDKError("service stub has no direct-message registry") from error
         return REGISTRY

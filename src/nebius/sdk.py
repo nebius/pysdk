@@ -2,10 +2,10 @@
 
 from typing_extensions import Unpack
 
-from nebius.aio.channel import Channel
-from nebius.aio.request import Request
-from nebius.aio.request_kwargs import RequestKwargs
-from nebius.api.nebius.iam.v1 import GetProfileRequest, GetProfileResponse, ProfileServiceClient
+from .aio.channel import Channel
+from .aio.request import Request
+from .aio.request_kwargs import RequestKwargs
+from .api.nebius.iam.v1 import GetProfileRequest, GetProfileResponse, ProfileServiceClient
 
 
 class SDK(Channel):

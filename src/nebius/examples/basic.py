@@ -1,9 +1,9 @@
 import argparse
 from time import time  # type: ignore[unused-ignore]
 
-from nebius.aio.service_error import RequestError
-from nebius.api.nebius.common.v1 import ResourceMetadata
-from nebius.api.nebius.storage.v1 import (
+from ..aio.service_error import RequestError
+from ..api.nebius.common.v1 import ResourceMetadata
+from ..api.nebius.storage.v1 import (
     BucketServiceClient,
     BucketSpec,
     CreateBucketRequest,
@@ -11,7 +11,7 @@ from nebius.api.nebius.storage.v1 import (
     GetBucketRequest,
     VersioningPolicy,
 )
-from nebius.sdk import SDK
+from ..sdk import SDK
 
 if __name__ == "__main__":
     import logging

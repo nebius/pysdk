@@ -21,9 +21,8 @@ from pathlib import Path
 
 import yaml
 
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ..token import Token
 from .async_flock import Lock
 
 log = getLogger(__name__)

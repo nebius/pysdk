@@ -18,9 +18,9 @@ from grpc.aio._base_channel import (
 )
 from grpc.aio._typing import DeserializingFunction, RequestIterableType, SerializingFunction
 
-from nebius.aio._metadata_type import MetadataType
-from nebius.base.error import SDKError
-from nebius.base.methods import service_from_method_name
+from ..base.error import SDKError
+from ..base.methods import service_from_method_name
+from ._metadata_type import MetadataType
 
 Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)

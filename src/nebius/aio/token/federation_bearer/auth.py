@@ -16,8 +16,7 @@ from typing import TextIO
 import aiohttp
 from attr import dataclass
 
-from nebius.base.tls_certificates import get_system_certificates
-
+from ....base.tls_certificates import get_system_certificates
 from .constants import AUTH_ENDPOINT, TOKEN_ENDPOINT
 from .is_wsl import is_wsl
 from .pkce import PKCE

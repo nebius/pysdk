@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any, cast
 from grpc import StatusCode
 
 if TYPE_CHECKING:
-    from nebius.base.protos.registry import Registry
+    from ..base.protos.registry import Registry
 
 
 class UnfinishedRequestStatus(Enum):

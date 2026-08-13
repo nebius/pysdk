@@ -27,18 +27,18 @@ from typing import Any, Generic, TypeVar, cast
 from grpc import CallCredentials, ChannelConnectivity, Compression
 from grpc.aio import Metadata as GrpcMetadata
 
-from nebius.aio._task_context import bridge_awaitable, dispose_unstarted_awaitable
-from nebius.aio.abc import release_address_channel
-from nebius.aio.authorization.options import OPTION_TYPE, Types
-from nebius.aio.base import AddressChannel
-from nebius.aio.idempotency import ensure_key_in_metadata
-from nebius.aio.request import (
+from ..base.metadata import Metadata
+from ._task_context import bridge_awaitable, dispose_unstarted_awaitable
+from .abc import release_address_channel
+from .authorization.options import OPTION_TYPE, Types
+from .base import AddressChannel
+from .idempotency import ensure_key_in_metadata
+from .request import (
     _authorization_deadline_applies,
     _snapshot_request_input,
     _validate_timeout,
 )
-from nebius.aio.route import Route
-from nebius.base.metadata import Metadata
+from .route import Route
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
@@ -759,7 +759,7 @@ class StreamRequest(Generic[Req, Res]):
             if not self._is_released():
                 # Import locally to keep the streaming wrapper independent of
                 # the concrete Channel module during module initialization.
-                from nebius.aio.channel import ChannelClosedError
+                from .channel import ChannelClosedError
 
                 try:
                     await self._on_sdk_loop(

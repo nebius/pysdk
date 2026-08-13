@@ -218,8 +218,8 @@ class Conventional(Resolver):
             raise UnknownServiceError(service_id)
         service_name = parts[1]
         try:
-            from nebius.api._registry import REGISTRY
-            from nebius.api.nebius import api_service_name
+            from ..api._registry import REGISTRY
+            from ..api.nebius import api_service_name
 
             opts = cast(Message, REGISTRY.service_descriptor(service_id).GetOptions())
             annotated = opts.get_extension(api_service_name)

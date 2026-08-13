@@ -17,9 +17,8 @@ from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from pathlib import Path
 
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ..token import Token
 from .token_cache import TokenCache
 
 log = getLogger(__name__)

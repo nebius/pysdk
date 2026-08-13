@@ -13,10 +13,9 @@ from typing import TYPE_CHECKING, Any, ClassVar, Protocol, TypeVar, cast
 
 from google.protobuf.message import DecodeError, EncodeError
 
-from nebius.base.error import SDKError
-from nebius.base.fieldmask import FieldKey, Mask
-from nebius.base.token_sanitizer import TokenSanitizer
-
+from ..error import SDKError
+from ..fieldmask import FieldKey, Mask
+from ..token_sanitizer import TokenSanitizer
 from .codec import ValueCodec
 from .containers import MapValues
 from .extensions import Extension, ExtensionRegistry, ExtensionValues, RepeatedValues

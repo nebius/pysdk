@@ -30,9 +30,8 @@ Use an environment variable::
 import os
 from logging import getLogger
 
-from nebius.base.constants import TOKEN_ENV
-from nebius.base.error import SDKError
-
+from ...base.constants import TOKEN_ENV
+from ...base.error import SDKError
 from .token import Bearer as ParentBearer
 from .token import Receiver as ParentReceiver
 from .token import Token

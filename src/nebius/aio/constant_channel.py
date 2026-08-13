@@ -10,9 +10,8 @@ network and authorization functions.
 from collections.abc import Awaitable
 from typing import TypeVar, cast
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
-
+from .abc import ClientChannelInterface
+from .authorization.authorization import Provider as AuthorizationProvider
 from .base import AddressChannel
 
 T = TypeVar("T")

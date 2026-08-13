@@ -195,8 +195,8 @@ class _CommentParts:
 
 @dataclass(frozen=True)
 class Options:
-    package_prefix: str = "nebius.api"
-    runtime_package: str = "nebius"
+    destination_prefix: str = "nebius.api"
+    runtime_prefix: str = "nebius"
     partition: str = "all"
     jobs: int = 1
     cache_dir: str | None = None
@@ -210,8 +210,8 @@ class Options:
                 raise GeneratorError(f"invalid generator parameter {item!r}")
             values[key] = value
         supported = {
-            "package_prefix",
-            "runtime_package",
+            "destination_prefix",
+            "runtime_prefix",
             "partition",
             "jobs",
             "cache_dir",
@@ -220,14 +220,16 @@ class Options:
         if unknown:
             raise GeneratorError(f"unknown generator parameter {unknown[0]!r}")
         options = cls(
-            package_prefix=values.get("package_prefix", cls.package_prefix),
-            runtime_package=values.get("runtime_package", cls.runtime_package),
+            destination_prefix=values.get("destination_prefix", cls.destination_prefix),
+            runtime_prefix=values.get("runtime_prefix", cls.runtime_prefix),
             partition=values.get("partition", cls.partition),
             jobs=int(values.get("jobs", str(cls.jobs))),
             cache_dir=values.get("cache_dir"),
         )
-        _validate_package(options.package_prefix, "package_prefix")
-        _validate_package(options.runtime_package, "runtime_package")
+        _validate_package(options.destination_prefix, "destination_prefix")
+        _validate_package(options.runtime_prefix, "runtime_prefix")
+        if not options.destination_prefix.startswith(options.runtime_prefix + "."):
+            raise GeneratorError("destination_prefix must be below runtime_prefix")
         if options.partition not in {"all", "package", "directory"}:
             raise GeneratorError("partition must be all, package, or directory")
         if options.jobs < 1:
@@ -345,7 +347,7 @@ class Graph:
 
     def output_package(self, proto_package: str) -> str:
         suffix = proto_package or "_unpackaged"
-        return f"{self.options.package_prefix}.{suffix}"
+        return f"{self.options.destination_prefix}.{suffix}"
 
     def field_python_name(
         self,

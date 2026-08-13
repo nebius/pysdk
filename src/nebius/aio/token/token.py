@@ -42,7 +42,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from typing import Any
 
-from nebius.base.token_sanitizer import TokenSanitizer
+from ...base.token_sanitizer import TokenSanitizer
 
 sanitizer = TokenSanitizer.access_token_sanitizer()
 

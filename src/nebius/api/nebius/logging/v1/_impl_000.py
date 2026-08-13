@@ -21,26 +21,26 @@ from typing import (
 )
 from typing_extensions import Unpack as _NebiusUnpack
 
-from nebius.aio.client import Client as _NebiusClient, ClientWithOperations as _NebiusClientWithOperations
-from nebius.aio.operation import Operation as _NebiusOperation
-from nebius.aio.request import Request as _NebiusRequest
-from nebius.aio.request_kwargs import RequestKwargs as _NebiusRequestKwargs, StreamRequestKwargs as _NebiusStreamRequestKwargs
-from nebius.aio.stream import StreamRequest as _NebiusStreamRequest
-from nebius.base.protos.codec import (
+from .....aio.client import Client as _NebiusClient, ClientWithOperations as _NebiusClientWithOperations
+from .....aio.operation import Operation as _NebiusOperation
+from .....aio.request import Request as _NebiusRequest
+from .....aio.request_kwargs import RequestKwargs as _NebiusRequestKwargs, StreamRequestKwargs as _NebiusStreamRequestKwargs
+from .....aio.stream import StreamRequest as _NebiusStreamRequest
+from .....base.protos.codec import (
     BOOL, BYTES, DOUBLE, FIXED32, FIXED64, FLOAT, INT32, INT64,
     SFIXED32, SFIXED64, SINT32, SINT64, STRING, UINT32, UINT64, enum_codec,
 )
-from nebius.base.protos.direct import (
+from .....base.protos.direct import (
     Field, Message, OneOf as _NebiusOneOf,
     OneOfMatchError as _NebiusOneOfMatchError,
     SerializableMessage as _NebiusSerializableMessage, message_codec,
 )
-from nebius.base.fieldmask_protobuf import ensure_reset_mask_in_metadata
-from nebius.base.protos.pb_enum import Enum
-from nebius.base.protos.extensions import Extension as _NebiusExtension
-from nebius.base.protos.unset import Unset as _NEBIUS_UNSET, UnsetType as _NebiusUnsetType
-from nebius.aio.request_status import RequestStatus as _NebiusRequestStatus
-from nebius.base.protos.well_known_direct import (
+from .....base.fieldmask_protobuf import ensure_reset_mask_in_metadata
+from .....base.protos.pb_enum import Enum
+from .....base.protos.extensions import Extension as _NebiusExtension
+from .....base.protos.unset import Unset as _NEBIUS_UNSET, UnsetType as _NebiusUnsetType
+from .....aio.request_status import RequestStatus as _NebiusRequestStatus
+from .....base.protos.well_known_direct import (
     datetime_to_timestamp as _nebius_datetime_to_timestamp,
     duration_to_timedelta as _nebius_duration_to_timedelta,
     request_status_to_status as _nebius_request_status_to_status,

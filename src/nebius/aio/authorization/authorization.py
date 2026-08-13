@@ -19,7 +19,7 @@ the same authenticator.
 
 from abc import ABC, abstractmethod
 
-from nebius.base.metadata import Metadata
+from ...base.metadata import Metadata
 
 
 class Authenticator(ABC):

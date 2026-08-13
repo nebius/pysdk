@@ -29,9 +29,15 @@ from typing import Any
 
 from grpc.aio import AioRpcError
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.authorization.options import OPTION_TYPE, Types
-from nebius.aio.metrics import (
+from ...api.nebius.iam.v1 import CreateTokenResponse, TokenExchangeServiceClient
+from ...base.error import SDKError
+from ...base.metadata import Metadata as NebiusMetadata
+from ...base.service_account.service_account import TokenRequester
+from ...base.token_sanitizer import TokenSanitizer
+from .._task_context import bridge_awaitable
+from ..abc import ClientChannelInterface
+from ..authorization.options import OPTION_TYPE, Types
+from ..metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -39,13 +45,6 @@ from nebius.aio.metrics import (
     auth_metrics_recorder,
     metric_start,
 )
-from nebius.api.nebius.iam.v1 import CreateTokenResponse, TokenExchangeServiceClient
-from nebius.base.error import SDKError
-from nebius.base.metadata import Metadata as NebiusMetadata
-from nebius.base.service_account.service_account import TokenRequester
-from nebius.base.token_sanitizer import TokenSanitizer
-
-from .._task_context import bridge_awaitable
 from .deferred_channel import DeferredChannel
 from .options import OPTION_MAX_RETRIES
 from .token import Bearer as ParentBearer
@@ -128,11 +127,11 @@ class Receiver(ParentReceiver):
         initial_metadata = NebiusMetadata(err.initial_metadata())
         request_id = initial_metadata.get_one("x-request-id", "")
         trace_id = initial_metadata.get_one("x-trace-id", "")
-        from nebius.aio.request_status import rpc_status_from_call
+        from ..request_status import rpc_status_from_call
 
         registry = getattr(type(self._svc), "__registry__", None)
         status = rpc_status_from_call(err, registry=registry)
-        from nebius.aio.service_error import RequestError, RequestStatusExtended
+        from ..service_error import RequestError, RequestStatusExtended
 
         if status is None:
             self._status = RequestStatusExtended(

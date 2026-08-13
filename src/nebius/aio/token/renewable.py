@@ -73,7 +73,8 @@ from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from typing import Any, TypeVar, cast
 
-from nebius.aio.metrics import (
+from ...base.error import SDKError
+from ..metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -84,8 +85,6 @@ from nebius.aio.metrics import (
     metric_duration_seconds,
     metric_start,
 )
-from nebius.base.error import SDKError
-
 from .options import (
     OPTION_MAX_RETRIES,
     OPTION_RENEW_REQUEST_TIMEOUT,

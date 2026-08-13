@@ -26,7 +26,8 @@ from logging import getLogger
 from pathlib import Path
 from typing import Any, TypeVar, cast
 
-from nebius.aio.metrics import (
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ...metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -37,11 +38,6 @@ from nebius.aio.metrics import (
     metric_duration_seconds,
     metric_start,
 )
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver as ParentReceiver
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
 from ..options import (
     OPTION_MAX_RETRIES,
     OPTION_RENEW_REQUEST_TIMEOUT,
@@ -50,6 +46,9 @@ from ..options import (
     OPTION_REPORT_ERROR,
 )
 from ..renewable import RenewalError
+from ..token import Bearer as ParentBearer
+from ..token import Receiver as ParentReceiver
+from ..token import Token
 from .throttled_token_cache import ThrottledTokenCache
 
 log = getLogger(__name__)

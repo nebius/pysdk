@@ -8,11 +8,10 @@ from google.protobuf.duration_pb2 import Duration
 from google.protobuf.message import Message as PMessage
 from google.protobuf.timestamp_pb2 import Timestamp
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.base.error import SDKError
-from nebius.base.fieldmask import FieldKey, Mask
-from nebius.base.token_sanitizer import TokenSanitizer
-
+from ...aio.abc import ClientChannelInterface
+from ..error import SDKError
+from ..fieldmask import FieldKey, Mask
+from ..token_sanitizer import TokenSanitizer
 from .descriptor import DescriptorWrap
 from .pb_enum import Enum
 
@@ -216,7 +215,7 @@ class Message:
             return cls.__sensitive_fields[field_name]
         from google.protobuf.descriptor import FieldDescriptor
 
-        from nebius.api.nebius import sensitive
+        from ...api.nebius import sensitive
 
         fn_pb2 = cls.__PY_TO_PB2__[field_name]
         desc = cls.get_descriptor()
@@ -239,7 +238,7 @@ class Message:
             return cls.__credentials_fields[field_name]
         from google.protobuf.descriptor import FieldDescriptor
 
-        from nebius.api.nebius import credentials
+        from ...api.nebius import credentials
 
         fn_pb2 = cls.__PY_TO_PB2__[field_name]
         desc = cls.get_descriptor()

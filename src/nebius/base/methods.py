@@ -2,7 +2,7 @@
 
 import re
 
-from nebius.base.error import SDKError
+from .error import SDKError
 
 
 def fix_name(method_name: str) -> str:

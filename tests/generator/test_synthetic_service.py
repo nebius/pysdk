@@ -21,6 +21,7 @@ from nebius.base.options import INSECURE
 from nebius.base.resolver import Constant
 
 from nebius_generator.main import generate
+from tests.generator.relocation import materialize
 from tests.generator.synthetic_service import (
     MAP_KEY_TYPES,
     SCALARS,
@@ -33,10 +34,7 @@ from tests.grpc_service import add_service
 def _materialize(tmp_path: Path, namespace: str) -> None:
     response = generate(synthetic_request(namespace))
     assert not response.error
-    for output in response.file:
-        path = tmp_path / output.name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(output.content)
+    materialize(tmp_path, namespace, response)
 
 
 def _mask_paths(mask: Mask) -> set[str]:
@@ -154,8 +152,8 @@ async def test_generated_all_types_service_end_to_end(tmp_path: Path) -> None:
     _materialize(tmp_path, namespace)
     sys.path.insert(0, str(tmp_path))
     try:
-        module = importlib.import_module(f"{namespace}.synthetic.everything.v1")
-        rpc_module = importlib.import_module(f"{namespace}.google.rpc")
+        module = importlib.import_module(f"{namespace}.generated.synthetic.everything.v1")
+        rpc_module = importlib.import_module(f"{namespace}.generated.google.rpc")
         direct_type = module.AllTypes
         reference_type, reference_pool = _reference_type(request)
         reference = _populated_reference(reference_type)

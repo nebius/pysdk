@@ -40,18 +40,18 @@ Using an existing reader/token requester::
 
 from datetime import timedelta
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
-from nebius.aio.token.deferred_channel import DeferredChannel
-from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
-from nebius.aio.token.renewable import Bearer as RenewableBearer
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import NamedBearer, Receiver
-from nebius.base.service_account.federated_credentials import FederatedCredentialsBearer as FederatedCredentialsReader
-from nebius.base.service_account.federated_credentials import (
+from ...base.service_account.federated_credentials import FederatedCredentialsBearer as FederatedCredentialsReader
+from ...base.service_account.federated_credentials import (
     FederatedCredentialsTokenRequester,
     FileFederatedCredentials,
 )
+from ..abc import ClientChannelInterface
+from ..metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
+from .deferred_channel import DeferredChannel
+from .exchangeable import Bearer as ExchangeableBearer
+from .renewable import Bearer as RenewableBearer
+from .token import Bearer as ParentBearer
+from .token import NamedBearer, Receiver
 
 
 class FederatedCredentialsBearer(ParentBearer):
