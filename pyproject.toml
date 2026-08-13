@@ -40,7 +40,7 @@ dev = [
     "tox>=4.0",     # For testing automation
     "mypy>=1.13",    # For type checking
     "pyright[nodejs]>=1.1.390",  # For installed-wheel type checking
-    "ruff==0.4.1",   # Keep local fixes identical to the Nebo publisher
+    "ruff==0.16.2",   # Keep local fixes identical to the Nebo publisher
     "grpc-stubs>=1.53.0.3",  # For mypy
     "types-protobuf>=5.29.1", # for mypy
     "types-PyYAML>=5.0",  # for mypy
@@ -232,7 +232,7 @@ passenv = [
 [tool.tox.env.lint]
 description = "Run linter checks"
 package = "skip"  # Skip installing the package
-deps = ["ruff==0.4.1"]
+deps = ["ruff==0.16.2"]
 commands = [
     ["ruff","check","--diff","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D201,D202,D205,D206,D207,D208,D209,D210,D214,D215,D402,D405,D406,D407,D408,D409,D410,D411,D412,D414,D418,D419","--target-version","py310","--unfixable","B","src/","tests/","nebius_generator/","scripts/"],
     ["ruff","check","src/","tests/","nebius_generator/","scripts/"],
@@ -241,13 +241,13 @@ commands = [
 [tool.tox.env.format]
 description = "Run code formatting checks"
 package = "skip"
-deps = ["ruff==0.4.1"]
+deps = ["ruff==0.16.2"]
 commands = [["ruff","format","--check","--force-exclude","src/","tests/","nebius_generator/","scripts/"]]
 
 [tool.tox.env.fix]
 description = "Apply code formatting and safe lint fixes"
 package = "skip"
-deps = ["ruff==0.4.1"]
+deps = ["ruff==0.16.2"]
 commands = [
     ["ruff","check","--fix-only","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D201,D202,D205,D206,D207,D208,D209,D210,D214,D215,D402,D405,D406,D407,D408,D409,D410,D411,D412,D414,D418,D419","--target-version","py310","--unfixable","B","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
     ["ruff","format","--target-version","py310","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
