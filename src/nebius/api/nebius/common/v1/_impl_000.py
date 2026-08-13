@@ -164,6 +164,7 @@ class BadRequest__Violation(Message):
         *,
         field: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        related_fields: _NebiusIterable[_NebiusStr] | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
@@ -171,6 +172,8 @@ class BadRequest__Violation(Message):
             values['field'] = field
         if message is not _NEBIUS_UNSET:
             values['message'] = message
+        if related_fields is not _NEBIUS_UNSET:
+            values['related_fields'] = related_fields
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -195,7 +198,18 @@ class BadRequest__Violation(Message):
         """Set or clear the generated ``message`` field."""
         self._set_field(_NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_MESSAGE, value)
 
-    __PY_TO_PB2__ = {'field': 'field', 'message': 'message'}
+    @_NebiusProperty
+    def related_fields(self) -> _NebiusMutableSequence[_NebiusStr]:
+        'Other fields whose values contribute to this violation.\nDoes not include the primary field.'
+        value = self._get_field(_NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_RELATED_FIELDS, absent_is_none=False)
+        return _nebius_cast('_NebiusMutableSequence[_NebiusStr]', value)
+
+    @related_fields.setter
+    def related_fields(self, value: _NebiusIterable[_NebiusStr] | None) -> None:
+        """Set or clear the generated ``related_fields`` field."""
+        self._set_field(_NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_RELATED_FIELDS, value)
+
+    __PY_TO_PB2__ = {'field': 'field', 'message': 'message', 'related_fields': 'related_fields'}
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_common_v1_BadRequest_Violation_381b067c = BadRequest__Violation
 
@@ -2490,7 +2504,8 @@ _NebiusType_nebius_common_v1_Warnings_29562b55 = Warnings
 # @@nebius-section:fields@@
 _NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_FIELD = Field('field', 'field', 1, STRING, json_name='field')
 _NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_MESSAGE = Field('message', 'message', 2, STRING, json_name='message')
-BadRequest__Violation.__FIELDS__ = (_NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_FIELD, _NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_MESSAGE)
+_NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_RELATED_FIELDS = Field('related_fields', 'related_fields', 3, STRING, repeated=True, json_name='relatedFields')
+BadRequest__Violation.__FIELDS__ = (_NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_FIELD, _NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_MESSAGE, _NEBIUS_COMMON_V1_BADREQUEST_VIOLATION_RELATED_FIELDS)
 
 _NEBIUS_COMMON_V1_NOTENOUGHRESOURCES_VIOLATION_RESOURCE_TYPE = Field('resource_type', 'resource_type', 1, STRING, json_name='resourceType')
 _NEBIUS_COMMON_V1_NOTENOUGHRESOURCES_VIOLATION_MESSAGE = Field('message', 'message', 2, STRING, json_name='message')
