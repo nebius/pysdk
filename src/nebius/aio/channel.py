@@ -73,59 +73,26 @@ from grpc.aio._typing import (
     SerializingFunction,
 )
 
-from nebius.aio._metadata_type import MetadataType
-from nebius.aio.abc import GracefulInterface
-from nebius.aio.authorization.authorization import Authenticator
-from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
-from nebius.aio.authorization.token import TokenProvider
-from nebius.aio.cli_config import Config as ConfigReader
-from nebius.aio.idempotency import IdempotencyKeyInterceptor
-from nebius.aio.keepalive import (
-    KeepaliveOptions,
-    keepalive_channel_options,
-    keepalive_config_from_options,
-)
-from nebius.aio.metrics import (
-    METRIC_RESULT_ERROR,
-    METRIC_RESULT_SUCCESS,
-    AuthMetricsLike,
-    MetricsLike,
-    bind_auth_metrics,
-    metric_duration_seconds,
-    metric_start,
-    record_config_metric,
-)
-from nebius.aio.operation_service import OperationServiceTransportStub
-from nebius.aio.request import _snapshot_request_input, _validate_timeout
-from nebius.aio.route import Route
-from nebius.aio.service_descriptor import ServiceStub, from_stub_class
-from nebius.aio.token import exchangeable, renewable
-from nebius.aio.token.static import Bearer as StaticTokenBearer
-from nebius.aio.token.static import EnvBearer
-from nebius.aio.token.token import Bearer as TokenBearer
-from nebius.aio.token.token import Token
-from nebius.base.constants import DOMAIN
-from nebius.base.error import SDKError
-from nebius.base.metadata import Metadata
-from nebius.base.methods import service_from_method_name
-from nebius.base.options import COMPRESSION, INSECURE, pop_option
-from nebius.base.protos.registry import Registry
-from nebius.base.resolver import (
+from ..base.constants import DOMAIN
+from ..base.error import SDKError
+from ..base.metadata import Metadata
+from ..base.methods import service_from_method_name
+from ..base.options import COMPRESSION, INSECURE, pop_option
+from ..base.protos.registry import Registry
+from ..base.resolver import (
     Chain,
     Conventional,
     Resolver,
     TemplateExpander,
     UnknownServiceError,
 )
-from nebius.base.service_account.service_account import (
-    Reader as ServiceAccountReader,
-)
-from nebius.base.service_account.service_account import (
+from ..base.service_account.service_account import Reader as ServiceAccountReader
+from ..base.service_account.service_account import (
     TokenRequester as TokenRequestReader,
 )
-from nebius.base.tls_certificates import get_system_certificates
-from nebius.base.version import version
-
+from ..base.tls_certificates import get_system_certificates
+from ..base.version import version
+from ._metadata_type import MetadataType
 from ._runtime import (
     AsyncRuntime,
     CrossLoopAwaitable,
@@ -137,9 +104,40 @@ from ._task_context import (
     close_rejected_sync_awaitable,
     dispose_unstarted_awaitable,
 )
+from .abc import GracefulInterface
+from .authorization.authorization import Authenticator
+from .authorization.authorization import Provider as AuthorizationProvider
+from .authorization.token import TokenProvider
 from .base import AddressChannel, ChannelBase
+from .cli_config import Config as ConfigReader
+from .idempotency import IdempotencyKeyInterceptor
+from .keepalive import (
+    KeepaliveOptions,
+    keepalive_channel_options,
+    keepalive_config_from_options,
+)
+from .metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    MetricsLike,
+    bind_auth_metrics,
+    metric_duration_seconds,
+    metric_start,
+    record_config_metric,
+)
+from .operation_service import OperationServiceTransportStub
+from .request import _snapshot_request_input, _validate_timeout
+from .route import Route
+from .service_descriptor import ServiceStub, from_stub_class
+from .token import exchangeable, renewable
+from .token.static import Bearer as StaticTokenBearer
+from .token.static import EnvBearer
+from .token.token import Bearer as TokenBearer
+from .token.token import Token
 
 logger = getLogger(__name__)
+
 
 Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)
@@ -164,7 +162,6 @@ def _reset_detached_foreign_close_tasks_after_fork() -> None:
     objects also prevents a child from observing a lock held by a vanished
     parent thread.
     """
-
     global _detached_foreign_close_handles
     global _detached_foreign_close_tasks_lock
     global _transport_close_watch_entries
@@ -207,7 +204,6 @@ def _retain_detached_foreign_close(
     :param handle: Foreign-loop transport-close task or Future to retain.
     :param owner_loop: Event loop that owns the close operation.
     """
-
     with _detached_foreign_close_tasks_lock:
         _detached_foreign_close_handles.add(handle)
     loop_ref = ref(owner_loop)
@@ -215,7 +211,6 @@ def _retain_detached_foreign_close(
 
     def retain_on_owner_loop() -> None:
         """Renew owner-loop retention while detached close work is pending."""
-
         retained_loop = loop_ref()
         if handle.done() or retained_loop is None or retained_loop.is_closed():
             retention.clear()
@@ -227,7 +222,6 @@ def _retain_detached_foreign_close(
 
     def discard(completed: Any) -> None:
         """Release a completed detached transport close."""
-
         with _detached_foreign_close_tasks_lock:
             _detached_foreign_close_handles.discard(completed)
         timer = retention.pop("timer", None)
@@ -267,7 +261,6 @@ def _start_detached_foreign_close(
     :param completion: Optional SDK lifecycle reservation to settle on failure.
     :return: ``True`` if task creation succeeded.
     """
-
     try:
         task = create_task(close_coro, name=name)
     except BaseException as error:
@@ -308,7 +301,6 @@ def _schedule_detached_close_factory(
 
     def create_and_start() -> bool:
         """Create and start close work on its owner loop."""
-
         try:
             close_coro = factory()
         except BaseException as error:
@@ -326,7 +318,6 @@ def _schedule_detached_close_factory(
 
     def start() -> None:
         """Run the close factory from a thread-safe loop callback."""
-
         create_and_start()
 
     try:
@@ -358,7 +349,6 @@ def _watch_transport_close(
     :param owner_loop: Loop that accepted the close callback.
     :param completion: SDK lifecycle reservation to release if the loop stops.
     """
-
     global _transport_close_watch_thread
     start_thread = False
     with _transport_close_watch_lock:
@@ -394,7 +384,6 @@ def _watch_transport_close(
 
 def _monitor_transport_closes() -> None:
     """Release close reservations when their owner loops stop."""
-
     global _transport_close_watch_thread
     while True:
         _transport_close_watch_event.wait(0.01)
@@ -426,7 +415,6 @@ def _finalize_runtime(runtime: AsyncRuntime, process_id: int) -> None:
     :param runtime: Runtime owned by the finalized channel.
     :param process_id: Process that created ``runtime``.
     """
-
     if os.getpid() == process_id:
         runtime.shutdown_async()
 
@@ -451,7 +439,6 @@ def _shutdown_runtime_on_init_failure(
     @wraps(initializer)
     def guarded(instance: C, *args: P.args, **kwargs: P.kwargs) -> None:
         """Run the initializer and clean up a partial runtime on failure."""
-
         try:
             initializer(instance, *args, **kwargs)
         except BaseException:
@@ -501,8 +488,7 @@ def _shutdown_runtime_on_init_failure(
 
 
 class LoopError(SDKError):
-    """Exception raised when a synchronous helper is used incorrectly with
-    an asyncio event loop.
+    """Exception raised when a synchronous helper conflicts with an asyncio event loop.
 
     A synchronous operation raises this error if its asyncio event loop is
     already running in the current thread. :meth:`Channel.run_sync` is one
@@ -577,7 +563,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         call. A custom request value without a serializer is assumed to be
         immutable or otherwise safe to share between threads.
         """
-
         channel._check_process()
         self._channel = channel
         self._method = method
@@ -629,7 +614,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         :param submitted: Completed SDK submission.
         """
-
         with self._terminal_lock:
             call_was_never_created = self._call is None
         if not call_was_never_created:
@@ -646,7 +630,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
     def _publish_prestart_cancellation(self) -> None:
         """Cache the standard local-cancellation status and wake waiters."""
-
         with self._terminal_lock:
             self._terminal.update(
                 {
@@ -655,7 +638,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                     "code": StatusCode.CANCELLED,
                     "details": "The application canceled the RPC.",
                     "debug_error_string": "",
-                }
+                },
             )
         try:
             self._submitted.event_loop.call_soon_threadsafe(self._call_ready.set)
@@ -666,21 +649,18 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
     def _publish_rpc_done(self) -> None:
         """Signal the public native-RPC completion boundary once."""
-
         with self._terminal_lock:
             if not self._rpc_done.done():
                 self._rpc_done.set_result(None)
 
     def _publish_terminal_ready(self) -> None:
         """Signal that no further authoritative terminal capture is pending."""
-
         with self._terminal_lock:
             if not self._terminal_ready.done():
                 self._terminal_ready.set_result(None)
 
     async def _invoke(self) -> Res:
         """Create and run the native call on the SDK event loop."""
-
         discard = False
         try:
             if self._address is None:
@@ -758,7 +738,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
                         "code": StatusCode.CANCELLED,
                         "details": "The application or the SDK canceled the RPC.",
                         "debug_error_string": "",
-                    }
+                    },
                 )
             raise
         except Exception as error:
@@ -796,7 +776,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
     def _mark_native_terminal(self, completed: object) -> None:
         """Publish native call completion before the wrapper task resumes."""
-
         # Native terminality is authoritative before any optional diagnostic
         # accessor runs. A slow or failing custom accessor must not leave a
         # window in which another thread can still cancel the completed RPC.
@@ -849,7 +828,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
                         def observe_debug_failure(future: Future[Any]) -> None:
                             """Retrieve an exception from the debug accessor."""
-
                             if not future.cancelled():
                                 future.exception()
 
@@ -873,7 +851,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         :param call: Completed or failed native call.
         """
-
         names = (
             "initial_metadata",
             "trailing_metadata",
@@ -883,7 +860,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         async def read_accessor(name: str) -> Any:
             """Normalize synchronous and asynchronous accessor failures."""
-
             try:
                 pending = getattr(call, name)()
             except BaseException as error:
@@ -925,7 +901,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param pending: Awaitable already created by the native done callback.
         :return: Debug string, or ``None`` when it is unavailable.
         """
-
         try:
             result: Any
             if pending is not None:
@@ -958,7 +933,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         :param call: Authoritatively completed native call.
         """
-
         capture_work = self._capture_terminal(call)
         try:
             capture = create_task(capture_work)
@@ -987,7 +961,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param method: Name of the native call method to run.
         :return: Result of the named method.
         """
-
         with self._terminal_lock:
             if method in self._terminal:
                 return self._terminal[method]
@@ -1005,7 +978,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
             # with the authoritative RPC wrapper.
             def observe_abandoned(future: Future[Any]) -> None:
                 """Retrieve an exception from the abandoned accessor."""
-
                 if not future.cancelled():
                     future.exception()
 
@@ -1018,7 +990,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         :param method: Name of the native call method to run.
         :return: Result of the named method.
         """
-
         self._submitted._check_process()
         with self._terminal_lock:
             if method in self._terminal:
@@ -1041,7 +1012,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
     def __await__(self) -> Generator[Any, None, Res]:
         """Return an iterator that waits for the RPC result."""
-
         return self._await_submitted().__await__()
 
     async def _await_submitted(self) -> Res:
@@ -1059,7 +1029,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         :return: Native RPC result.
         """
-
         try:
             result = await self._submitted._wait_shielded()
         except CancelledError:
@@ -1080,7 +1049,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         :return: ``True`` if the active submission accepted cancellation.
         """
-
         # Check the process before taking a lock that could have been held by
         # a vanished thread when the process forked.
         self._submitted._check_process()
@@ -1098,7 +1066,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
     def cancelled(self) -> bool:
         """Return whether the RPC was cancelled."""
-
         self._submitted._check_process()
         with self._terminal_lock:
             return (
@@ -1109,13 +1076,11 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
     def done(self) -> bool:
         """Return whether the RPC is complete."""
-
         self._submitted._check_process()
         return self._rpc_done.done()
 
     def time_remaining(self) -> float | None:
         """Return the remaining RPC timeout in seconds."""
-
         if self._timeout is None:
             return None
         return max(0.0, self._timeout - (monotonic() - self._started_at))
@@ -1128,7 +1093,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         :param callback: Function that receives this call.
         """
-
         completion = CrossLoopAwaitable(
             self._rpc_done,
             self._submitted.event_loop,
@@ -1137,22 +1101,18 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
     async def initial_metadata(self) -> Any:
         """Return the initial RPC metadata."""
-
         return await self._public_call_result("initial_metadata")
 
     async def trailing_metadata(self) -> Any:
         """Return the trailing RPC metadata."""
-
         return await self._public_call_result("trailing_metadata")
 
     async def code(self) -> Any:
         """Return the final gRPC status code."""
-
         return await self._public_call_result("code")
 
     async def details(self) -> Any:
         """Return the final gRPC status details."""
-
         return await self._public_call_result("details")
 
     def debug_error_string(self) -> str:
@@ -1164,7 +1124,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
         :return: Native debug details after a failed call, or an empty string.
         """
-
         # Fail before an inherited lock can deadlock a child process.
         self._submitted._check_process()
         with self._terminal_lock:
@@ -1177,7 +1136,6 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         authoritative call owner. Successful completion proves that a
         connection existed; its native error is otherwise propagated.
         """
-
         try:
             await self._channel.run_async(self._call_result("wait_for_connection"))
         except ChannelClosedError:
@@ -1186,8 +1144,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
 
 
 class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore[unused-ignore,misc]
-    """A small callable wrapper that binds RPC calls to a Channel-managed
-    address channel.
+    """A small callable wrapper that binds RPC calls to a Channel-managed address.
 
     Instances act as gRPC :class:`UnaryUnaryMultiCallable` objects. They get
     the transport channel from the SDK :class:`Channel` pool. When the RPC is
@@ -1201,8 +1158,7 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
     ) -> None:
-        """Create a callable wrapper that returns requests bound to an
-        :class:`AddressChannel` from the SDK :class:`Channel`.
+        """Create a callable wrapper bound to an SDK :class:`AddressChannel`.
 
         :param channel: The SDK :class:`Channel` instance used to obtain a
             transport channel for the RPC.
@@ -1243,7 +1199,6 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         :return: A :class:`grpc.aio.UnaryUnaryCall` representing the in-flight
             RPC. The caller may await or add callbacks to the returned object.
         """
-
         return _CrossLoopUnaryUnaryCall(
             self._channel,
             self._method,
@@ -1268,7 +1223,6 @@ class _ServiceAddressChannel:
         :param service_name: Source service used for deferred address
             resolution.
         """
-
         self._channel = channel
         self._service_name = service_name
         self._resolved_address: str | None = None
@@ -1282,7 +1236,6 @@ class _ServiceAddressChannel:
 
         :return: Stable transport address for this operation-service adapter.
         """
-
         if self._resolved_address is None:
             self._resolved_address = self._channel.get_addr_from_service_name(self._service_name)
         return self._resolved_address
@@ -1300,7 +1253,6 @@ class _ServiceAddressChannel:
         :param response_deserializer: Optional response deserializer.
         :return: Callable that creates a cross-loop unary call.
         """
-
         channel = self._channel
         address_resolver = self._resolve_address
 
@@ -1327,7 +1279,6 @@ class _ServiceAddressChannel:
                 :param compression: Optional gRPC compression setting.
                 :return: Cross-loop unary call.
                 """
-
                 return _CrossLoopUnaryUnaryCall(
                     channel,
                     method,
@@ -1366,7 +1317,6 @@ class _RuntimeAuthenticator(Authenticator):
         :param channel: SDK channel that owns the event loop.
         :param authenticator: Authorization authenticator to wrap.
         """
-
         self._channel = channel
         self._authenticator = authenticator
 
@@ -1382,7 +1332,6 @@ class _RuntimeAuthenticator(Authenticator):
         :param timeout: Optional authentication timeout in seconds.
         :param options: Optional authentication settings.
         """
-
         await self._channel.run_async(self._authenticator.authenticate(metadata, timeout, options))
 
     def can_retry(
@@ -1396,7 +1345,6 @@ class _RuntimeAuthenticator(Authenticator):
         :param options: Optional authentication settings.
         :return: ``True`` if the authenticator permits a retry.
         """
-
         return self._channel._run_sdk_callable(
             self._authenticator.can_retry,
             err,
@@ -1413,13 +1361,11 @@ class _RuntimeAuthorizationProvider(AuthorizationProvider):
         :param channel: SDK channel that owns the event loop.
         :param provider: Authorization provider to wrap.
         """
-
         self._channel = channel
         self._provider = provider
 
     def authenticator(self) -> Authenticator:
         """Return an authenticator that uses the SDK event loop."""
-
         authenticator = self._channel._run_sdk_callable(self._provider.authenticator)
         return _RuntimeAuthenticator(self._channel, authenticator)
 
@@ -1433,8 +1379,8 @@ def _get_working_loop() -> AbstractEventLoop:
 
 
 def set_user_agent_option(user_agent: str, options: ChannelArgumentType | None) -> ChannelArgumentType:
-    """
-    Set or override the ``grpc.primary_user_agent`` channel option.
+    """Set or override the ``grpc.primary_user_agent`` channel option.
+
     This helper appends the provided user-agent string to the ``options``
     sequence, which is passed to gRPC when creating channels. If the
     ``grpc.primary_user_agent`` option is already present in ``options``,
@@ -1545,6 +1491,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         idempotency-key interceptor is added by default; pass a list to
         extend or override additional behavior.
     :type interceptors: optional list of :class:`ClientInterceptor`
+
 
     :param address_options:
         Optional mapping from a resolved address to per-address channel
@@ -1724,6 +1671,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         as an error.
     :type parent_id: optional str
 
+
     :param federation_invitation_writer:
         Optional file-like writer passed to the config reader to display
         the URL for federation authentication during interactive credential
@@ -1814,7 +1762,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         >>> channel = Channel(config_reader=Config(), resolver=my_resolver)
 
         """
-
         if loop_exception_handler is not None:
             _validate_loop_exception_handler(loop_exception_handler)
 
@@ -1848,9 +1795,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if domain is None:
             if config_reader is not None:
                 domain = self._runtime.call_with_context(config_reader.endpoint)
-
-            if domain is None or domain == "":
+            if (domain is None or domain == "") and config_reader is not None:
                 domain = DOMAIN
+
+        if domain is None or domain == "":
+            domain = DOMAIN
 
         substitutions_full = dict[str, str]()
         substitutions_full["{domain}"] = domain
@@ -1893,7 +1842,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._methods = dict[str, str]()
         self._routes = dict[tuple[int, str, str, str], str]()
         self.user_agent = "nebius-python-sdk/" + version
-        self.user_agent += f" (python/{sys.version_info.major}.{sys.version_info.minor}"
+        self.user_agent += " ("
+        self.user_agent += f"python/{sys.version_info.major}.{sys.version_info.minor}"
         self.user_agent += f".{sys.version_info.micro})"
 
         if user_agent_prefix is not None:
@@ -1927,7 +1877,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._authorization_provider: AuthorizationProvider | None = None
         if credentials is None:
             if credentials_file_name is not None:
-                from nebius.base.service_account.credentials_file import (
+                from ..base.service_account.credentials_file import (
                     Reader as CredentialsFileReader,
                 )
 
@@ -1937,7 +1887,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 and service_account_private_key_file_name is not None
                 and service_account_public_key_id is not None
             ):
-                from nebius.base.service_account.pk_file import Reader as PKFileReader
+                from ..base.service_account.pk_file import Reader as PKFileReader
 
                 credentials = PKFileReader(
                     service_account_private_key_file_name,
@@ -1979,7 +1929,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if isinstance(credentials, (str, Token)):
             credentials = StaticTokenBearer(credentials)
         if isinstance(credentials, ServiceAccountReader):
-            from nebius.aio.token.service_account import ServiceAccountBearer
+            from .token.service_account import ServiceAccountBearer
 
             credentials = ServiceAccountBearer(
                 credentials,
@@ -2017,7 +1967,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def _is_config_metrics_aware_config_reader(self, config_reader: ConfigReader) -> bool:
         return self._metrics is not None and callable(getattr(config_reader, "set_metrics", None))
 
-    def get_authorization_provider(self) -> AuthorizationProvider | None:
+    def get_authorization_provider(
+        self,
+    ) -> AuthorizationProvider | None:
         """Return the configured :class:`AuthorizationProvider`.
 
         :return: The authorization provider instance if any authorization
@@ -2037,14 +1989,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         :return: ``True`` when the channel has an authorization provider.
         """
-
         return self._authorization_provider is not None
 
     def _get_runtime_authorization_provider(
         self,
     ) -> AuthorizationProvider | None:
         """Return a private provider that uses the SDK event loop."""
-
         provider = self._authorization_provider
         if provider is None:
             return None
@@ -2075,7 +2025,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             an unlimited timeout.
         :raises SDKError: If no token bearer was configured on the channel.
         """
-
         _validate_timeout(timeout, "timeout")
         options_snapshot = None if options is None else dict(options)
         deadline = None if timeout is None else monotonic() + max(timeout, 0)
@@ -2095,7 +2044,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises TimeoutError: If dispatch or token retrieval exceeds the
             deadline.
         """
-
         submitted = self.run_async(self._get_token_internal(deadline, options))
         if deadline is None or submitted.done():
             return await submitted
@@ -2106,7 +2054,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         waiter = ensure_future(submitted)
         try:
             return await wait_for(waiter, timeout=remaining)
-        except (TimeoutError, AsyncTimeoutError) as error:
+        except (AsyncTimeoutError, TimeoutError) as error:
             if waiter.done() and not waiter.cancelled():
                 terminal_error = waiter.exception()
                 if terminal_error is error:
@@ -2127,7 +2075,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :return: Authorization token.
         :raises SDKError: If the channel has no token bearer.
         """
-
         if self._token_bearer is None:
             raise SDKError("The SDK has no token bearer.")
         timeout = None if deadline is None else deadline - monotonic()
@@ -2165,7 +2112,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises TimeoutError: If the token could not be obtained within the
             supplied timeout.
         """
-
         _validate_timeout(timeout, "timeout")
         options_snapshot = None if options is None else dict(options)
         deadline = None if timeout is None else monotonic() + max(timeout, 0)
@@ -2187,7 +2133,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :return: The configured parent ID or ``None``.
         :rtype: str | None
         """
-
         return self._parent_id
 
     def _check_process(self, awaitable: Awaitable[Any] | None = None) -> None:
@@ -2201,13 +2146,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param awaitable: Optional coroutine to close when rejecting it.
         :raises RuntimeError: If this process did not create the channel.
         """
-
         if os.getpid() == self._process_id:
             return
         if awaitable is not None:
             dispose_unstarted_awaitable(awaitable)
         raise RuntimeError(
-            "You cannot use an SDK channel after a fork. Create SDK objects after the child process starts."
+            "You cannot use an SDK channel after a fork. Create SDK objects after the child process starts.",
         )
 
     def run_async(self, awaitable: Awaitable[T]) -> CrossLoopAwaitable[T]:
@@ -2221,7 +2165,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :return: Cross-loop awaitable for the result.
         :raises ChannelClosedError: If channel close has started.
         """
-
         self._check_process(awaitable)
         failure: BaseException | None = None
         rejection: ChannelClosedError | None = None
@@ -2256,13 +2199,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param args: Positional arguments for ``callable_``.
         :return: Result of ``callable_``.
         """
-
         if self._runtime.in_event_loop():
             return callable_(*args)
 
         async def call() -> T:
             """Call the function in an SDK task."""
-
             return callable_(*args)
 
         return self.run_sync(call())
@@ -2279,14 +2220,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param coro: Work to run in the background.
         :return: Cross-loop awaitable that completes after the background work.
         """
-
         state_lock = Lock()
         started = False
         closed_before_start = False
 
         async def wrapper() -> None:
             """Claim and run background work unless cancellation closed it."""
-
             nonlocal started
             with state_lock:
                 if closed_before_start:
@@ -2317,7 +2256,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         def close_unstarted(completed: CrossLoopAwaitable[None]) -> None:
             """Close caller work whenever the wrapper never starts."""
-
             nonlocal closed_before_start
             with state_lock:
                 if started or closed_before_start:
@@ -2336,7 +2274,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         :param task: Completed background submission.
         """
-
         with self._tasks_lock:
             self._tasks.discard(task)
 
@@ -2357,7 +2294,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             an unlimited timeout.
         :raises TimeoutError: If the time limit expires.
         """
-
         self._check_process(awaitable)
         try:
             _validate_timeout(timeout, "timeout")
@@ -2368,7 +2304,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             close_rejected_sync_awaitable(awaitable)
             raise LoopError(
                 "An SDK executor worker cannot call the SDK synchronously. "
-                "Return to the caller, or use asynchronous SDK work."
+                "Return to the caller, or use asynchronous SDK work.",
             )
         try:
             current_loop = get_running_loop()
@@ -2378,12 +2314,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             close_rejected_sync_awaitable(awaitable)
             if current_loop is self._event_loop:
                 raise LoopError(
-                    "Code on the SDK event loop cannot call the SDK synchronously. Await the SDK handle instead."
+                    "Code on the SDK event loop cannot call the SDK synchronously. Await the SDK handle instead.",
                 )
             raise LoopError(
                 "Code in an asynchronous context cannot call the SDK "
                 "synchronously. Await the SDK handle, or use "
-                "asyncio.to_thread()."
+                "asyncio.to_thread().",
             )
 
         return self._runtime.run_sync(awaitable, timeout)
@@ -2403,12 +2339,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises TimeoutError: If the shutdown did not complete within the
             supplied timeout.
         """
-
         self._check_process()
         _validate_timeout(timeout, "timeout")
         if self._runtime.in_executor_thread():
             raise LoopError(
-                "An SDK executor worker cannot close the SDK synchronously. Start shutdown outside the SDK executor."
+                "An SDK executor worker cannot close the SDK synchronously. Start shutdown outside the SDK executor.",
             )
         if self._runtime.in_event_loop():
             raise LoopError("The SDK event loop cannot close the SDK synchronously. Await close() instead.")
@@ -2423,7 +2358,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         def remaining() -> float | None:
             """Return the time that remains for shutdown."""
-
             if deadline is None:
                 return None
             return max(0.0, deadline - monotonic())
@@ -2439,7 +2373,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             :return: ``True`` only when ``error`` is the handle's own stored
                 exception.
             """
-
             if not handle.done():
                 return False
             try:
@@ -2498,11 +2431,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises LoopError: If called from an SDK-owned executor worker. Such a
             worker cannot wait for shutdown of the finite pool it belongs to.
         """
-
         self._check_process()
         if self._runtime.in_executor_thread():
             raise LoopError(
-                "An SDK executor worker cannot close the SDK. Start and await close() outside the SDK executor."
+                "An SDK executor worker cannot close the SDK. Start and await close() outside the SDK executor.",
             )
         current_submission = self._runtime.protect_current_submission()
         closing = self._get_close_handle(grace)
@@ -2549,7 +2481,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param current_submission: Internal submission that called close.
         :param closing: Optional channel cleanup submission.
         """
-
         if current_submission is None:
             self._runtime.shutdown_async()
             return
@@ -2568,7 +2499,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param grace: Optional transport close period in seconds.
         :return: Cross-loop awaitable for channel cleanup.
         """
-
         with self._close_submit_lock:
             closing = self._close_handle
             if closing is None:
@@ -2600,7 +2530,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         :param grace: Optional transport close period in seconds.
         """
-
         with self._channel_pool_lock:
             completion = self._close_completion
             if completion is None:
@@ -2627,7 +2556,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         async def cleanup() -> None:
             """Cancel SDK work and close all channel resources."""
-
             try:
                 self._runtime.begin_close()
                 await self._runtime.cancel_submissions()
@@ -2649,7 +2577,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                             (
                                 type(chan.channel).__name__,
                                 self._close_address_channel(chan, grace),
-                            )
+                            ),
                         )
                 for graceful in gracefuls:
                     resource_type = type(graceful).__name__
@@ -2675,7 +2603,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
                     async def wait_for_cleanup() -> Any:
                         """Wait for one resource or background task."""
-
                         return await awaitable
 
                     wrapper = wait_for_cleanup()
@@ -2762,8 +2689,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
         service_stub_class: type[ServiceStub],
     ) -> OperationServiceTransportStub:
-        """Return an operations service stub for the same address as a
-        generated service stub.
+        """Return an operations service stub for a generated service stub's address.
 
         Long-running operations are associated with their source service. This
         method returns an ``OperationServiceStub`` that resolves the generated
@@ -2779,7 +2705,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             the provided service.
         :rtype: ``OperationServiceStub``
         """
-
         service_name = from_stub_class(service_stub_class)
         registry = self._registry_for_service(service_stub_class)
         return OperationServiceTransportStub(
@@ -2791,14 +2716,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
         service_stub_class: type[ServiceStub],
     ) -> OperationServiceTransportStub:
-        """Compatibility helper returning the alpha-version operations
-        service stub for the same address as a generated service stub.
+        """Return an alpha-version operations stub for a generated service's address.
 
         See :meth:`get_corresponding_operation_service` for details. This
         method returns the older alpha operations stub for callers that need
         to interoperate with legacy server implementations.
         """
-
         service_name = from_stub_class(service_stub_class)
         registry = self._registry_for_service(service_stub_class)
         return OperationServiceTransportStub(
@@ -2815,7 +2738,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if registry is not None:
             return registry
         try:
-            from nebius.api._registry import REGISTRY
+            from ..api._registry import REGISTRY
         except ImportError as error:
             raise SDKError("service stub has no direct-message registry") from error
         return REGISTRY
@@ -2832,7 +2755,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises LoopError: If called from an active event loop or an SDK-owned
             executor worker.
         """
-
         service = from_stub_class(service_stub_class)
         return self.get_addr_from_service_name(service)
 
@@ -2849,7 +2771,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises LoopError: If called from an active event loop or an SDK-owned
             executor worker.
         """
-
         runtime = cast(AsyncRuntime | None, getattr(self, "_runtime", None))
         if runtime is not None and not runtime.in_event_loop():
             return self.run_sync(self._get_addr_from_service_name(service_name))
@@ -2861,7 +2782,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param service_name: Logical service name.
         :return: Resolved transport address.
         """
-
         return self._get_addr_from_service_name_internal(service_name)
 
     def _get_addr_from_service_name_internal(self, service_name: str) -> str:
@@ -2870,7 +2790,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param service_name: Logical service name.
         :return: Resolved transport address.
         """
-
         if len(service_name) > 1 and service_name[0] == ".":
             service_name = service_name[1:]
         return self._resolver.resolve(service_name)
@@ -2888,7 +2807,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises LoopError: If called from an active event loop or an SDK-owned
             executor worker.
         """
-
         runtime = cast(AsyncRuntime | None, getattr(self, "_runtime", None))
         if runtime is not None and not runtime.in_event_loop():
             return self.run_sync(self._get_addr_by_method(method_name))
@@ -2900,7 +2818,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param method_name: Fully qualified RPC method name.
         :return: Resolved transport address.
         """
-
         return self._get_addr_by_method_internal(method_name)
 
     def _get_addr_by_method_internal(self, method_name: str) -> str:
@@ -2909,7 +2826,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param method_name: Fully qualified RPC method name.
         :return: Resolved transport address.
         """
-
         if method_name not in self._methods:
             service_name = service_from_method_name(method_name)
             # Keep the established subclass customization point. This method
@@ -2937,7 +2853,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param route: Generated route metadata.
         :return: Resolved transport address.
         """
-
         return self._get_addr_by_route_internal(route)
 
     def _get_addr_by_route_internal(self, route: Route) -> str:
@@ -2946,7 +2861,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param route: Generated route metadata.
         :return: Resolved transport address.
         """
-
         key = (
             id(route.registry),
             route.service,
@@ -3005,7 +2919,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
            by the SDK loop. Direct calls on it are loop-affine. Use generated
            clients or :meth:`unary_unary` for cross-loop call handling.
         """
-
         self._check_process()
         with self._channel_pool_lock:
             if self._closed:
@@ -3026,7 +2939,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param addr: Resolved transport address.
         :return: Leased address channel.
         """
-
         return self._get_channel_by_addr_internal(addr)
 
     def _get_channel_by_addr_internal(self, addr: str) -> AddressChannel:
@@ -3039,7 +2951,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :return: Leased address channel.
         :raises ChannelClosedError: If channel shutdown has started.
         """
-
         current_loop = self._event_loop
         while True:
             chan: AddressChannel | None = None
@@ -3074,7 +2985,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises LoopError: If called from an active event loop or an SDK-owned
             executor worker.
         """
-
         self._release_channel_on_sdk_loop(
             chan,
             discard=False,
@@ -3111,7 +3021,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param chan: Address channel to release. Use ``None`` for no action.
         :param discard: Close the channel instead of returning it to the pool.
         """
-
         if chan is None:
             return
         state_lock = Lock()
@@ -3119,7 +3028,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         async def release() -> None:
             """Release the transport on the SDK event loop."""
-
             nonlocal started
             with state_lock:
                 started = True
@@ -3139,7 +3047,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         def finish_release(completed: CrossLoopAwaitable[None]) -> None:
             """Observe release failure and close work that did not finish."""
-
             with state_lock:
                 did_start = started
             error: BaseException | None = None
@@ -3179,7 +3086,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises ChannelClosedError: If shutdown has started and
             ``raise_if_closed`` is ``True``.
         """
-
         self._check_process()
         if chan is None:
             return
@@ -3216,7 +3122,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     chan,
                     discard=discard,
                     raise_if_closed=raise_if_closed,
-                )
+                ),
             )
         except (RuntimeError, ConcurrentCancelledError):
             with self._channel_pool_lock:
@@ -3240,7 +3146,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises ChannelClosedError: If shutdown has started and
             ``raise_if_closed`` is ``True``.
         """
-
         self._release_address_channel(
             chan,
             discard=discard,
@@ -3347,7 +3252,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
             async def close_on_owner() -> None:
                 """Create and await the native close on its owning loop."""
-
                 await chan.channel.close(grace)
 
             close_coro = close_on_owner()
@@ -3369,14 +3273,14 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     if not owner_loop.is_running():
                         close_future.cancel()
                         logger.warning(
-                            "The SDK could not finish the channel close because its owner event loop stopped."
+                            "The SDK could not finish the channel close because its owner event loop stopped.",
                         )
                         return
                     await sleep(0.01)
                 if close_future.cancelled():
                     logger.warning(
                         "The SDK could not finish the channel close. Its owner "
-                        "event loop stopped or cancelled the close."
+                        "event loop stopped or cancelled the close.",
                     )
                     return
                 await wrap_future(close_future)
@@ -3398,7 +3302,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         lifecycle responsibility. Its close is dispatched there but is not
         allowed to make SDK shutdown depend on a caller-owned loop.
         """
-
         with self._channel_pool_lock:
             if not already_retired:
                 if not chan._retire_by_sdk():
@@ -3437,7 +3340,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
             async def close_foreign_and_log() -> None:
                 """Close without retaining the parent channel on a caller loop."""
-
                 try:
                     await chan.channel.close(grace)
                     chan._mark_closed_by_sdk()
@@ -3466,7 +3368,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         def discard(completed: ConcurrentFuture[None]) -> None:
             """Forget this transport only after its close has completed."""
-
             with self._tasks_lock:
                 current = self._transport_closes.get(channel_id)
                 if current is not None and current[1] is completed:
@@ -3514,7 +3415,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
             :param completed: Authoritative runtime submission handle.
             """
-
             if completion.done():
                 return
             try:
@@ -3546,7 +3446,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises LoopError: If called from an active event loop or an SDK-owned
             executor worker.
         """
-
         self._release_channel_on_sdk_loop(
             chan,
             discard=True,
@@ -3562,7 +3461,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param method_name: Full RPC method string.
         :return: An :class:`AddressChannel` bound to the resolved address.
         """
-
         addr = self.get_addr_by_method(method_name)
         return self.get_channel_by_addr(addr)
 
@@ -3577,7 +3475,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             gRPC when creating a channel.
         :rtype: list of ``tuple[str, Any]``
         """
-
         ret = list(keepalive_channel_options(self._keepalive_config))
         ret.extend(self._global_options)
         if addr in self._address_options:
@@ -3595,7 +3492,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :return: Combined global and per-address interceptors.
         :rtype: A sequence of :class:`ClientInterceptor`
         """
-
         ret = list(self._global_interceptors)
         if addr in self._address_interceptors:
             ret.extend(self._address_interceptors[addr])
@@ -3617,7 +3513,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :raises LoopError: If called from an active event loop or an SDK-owned
             executor worker.
         """
-
         if not self._runtime.in_event_loop():
             return self.run_sync(self._create_address_channel(addr))
         return self._create_address_channel_internal(addr)
@@ -3628,7 +3523,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param addr: Resolved transport address.
         :return: New address channel.
         """
-
         return self._create_address_channel_internal(addr)
 
     def _create_address_channel_internal(self, addr: str) -> AddressChannel:
@@ -3639,7 +3533,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :param addr: Resolved transport address.
         :return: New address channel.
         """
-
         logger.debug(f"creating channel for {addr=}")
         event_loop = _get_working_loop()
         opts = self.get_address_options(addr)
@@ -3652,10 +3545,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 addr,
                 event_loop,
             )
+        tls_credentials = self._tls_credentials
         return AddressChannel(
             secure_channel(  # type: ignore[unused-ignore,no-any-return]
                 addr,
-                self._tls_credentials,
+                tls_credentials,
                 opts,
                 compression,
                 interceptors,
@@ -3670,8 +3564,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
     ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore,override]
-        """
-        A method to support using SDK channel as gRPC Channel.
+        """A method to support using SDK channel as gRPC Channel.
 
         :param method_name:
             Full RPC method string, i.e., ``'/package.service/method'``.
@@ -3695,8 +3588,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         )
 
     async def __aenter__(self) -> "Channel":
-        """
-        Enter the async context manager.
+        """Enter the async context manager.
+
         Returns self to allow usage like::
 
             async with channel as chan:
@@ -3707,15 +3600,14 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         return self
 
     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
-        """
-        Exit the async context manager.
+        """Exit the async context manager.
+
         Calls close() to gracefully shut down resources.
         """
         await self.close(None)
 
     def get_state(self, try_to_connect: bool = False) -> ChannelConnectivity:
-        """
-        Nebius Python SDK channels are always ready unless closed.
+        """Nebius Python SDK channels are always ready unless closed.
 
         :param try_to_connect:
             Ignored parameter to satisfy the gRPC Channel interface.
@@ -3735,8 +3627,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
         last_observed_state: ChannelConnectivity,
     ) -> None:
-        """
-        Nebius Python SDK channels are always ready unless closed.
+        """Nebius Python SDK channels are always ready unless closed.
+
         This method is provided to satisfy the gRPC Channel interface.
 
         :raises NotImplementedError:
@@ -3744,11 +3636,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         raise NotImplementedError("this method has no meaning for this channel")
 
     async def channel_ready(self) -> None:
-        """
-        Channel is always ready, nothing to do here.
-        """
+        """Channel is always ready, nothing to do here."""
         self._check_process()
-        return
 
     def unary_stream(  # type: ignore[unused-ignore,override]
         self,
@@ -3756,8 +3645,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
-        """
-        Nebius Python SDK does not support streaming RPCs.
+        """Nebius Python SDK does not support streaming RPCs.
 
         :raises NotImplementedError:
         """
@@ -3769,8 +3657,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
     ) -> StreamUnaryMultiCallable:
-        """
-        Nebius Python SDK does not support streaming RPCs.
+        """Nebius Python SDK does not support streaming RPCs.
 
         :raises NotImplementedError:
         """
@@ -3782,8 +3669,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
     ) -> StreamStreamMultiCallable:
-        """
-        Nebius Python SDK does not support streaming RPCs.
+        """Nebius Python SDK does not support streaming RPCs.
 
         :raises NotImplementedError:
         """

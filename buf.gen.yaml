@@ -3,8 +3,8 @@ plugins:
   - local: [python, -m, nebius_generator.main]
     out: build/generated/src
     opt:
-      - package_prefix=nebius.api
-      - runtime_package=nebius
+      - destination_prefix=nebius.api
+      - runtime_prefix=nebius
       - partition=all
       - jobs=1
     strategy: all

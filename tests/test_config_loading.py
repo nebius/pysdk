@@ -1,7 +1,6 @@
 # type: ignore
 
 import pytest
-
 from nebius.aio import request
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
@@ -28,7 +27,7 @@ profiles:
     assert config.parent_id == "project-e00some-id"
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_load_config_env_token(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
@@ -60,7 +59,7 @@ profiles:
     assert tok.token == "my-token"
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_load_config_token_file(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
@@ -95,7 +94,7 @@ profiles:
     assert tok.token == "my-token"
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_impersonated_bearer_exchange_request() -> None:
     from nebius.aio.token.impersonated import Receiver as ImpersonatedReceiver
     from nebius.aio.token.static import Bearer as StaticBearer
@@ -133,7 +132,7 @@ async def test_impersonated_bearer_exchange_request() -> None:
     assert request.actor_token_type == "urn:ietf:params:oauth:token-type:access_token"
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_config_impersonates_with_constructor_override(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
@@ -174,7 +173,7 @@ profiles:
     assert "profile-sa" not in credentials.name
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_load_config_no_env(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
@@ -293,7 +292,7 @@ profiles:
     assert config.parent_id == "project-e00some-id"
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_load_config_federated_subject_file(tmp_path, monkeypatch) -> None:
     from nebius.aio.cli_config import Config
     from nebius.aio.token.federated_credentials import FederatedCredentialsBearer
@@ -328,12 +327,11 @@ profiles:
     assert isinstance(cred, FederatedCredentialsBearer)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_load_config_service_account_credentials_file(tmp_path, monkeypatch) -> None:
     # create a service account credentials JSON with a PEM private key
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
-
     from nebius.aio.cli_config import Config
     from nebius.aio.token.service_account import ServiceAccountBearer
 
@@ -363,9 +361,9 @@ async def test_load_config_service_account_credentials_file(tmp_path, monkeypatc
                     "kid": "kid-1",
                     "iss": "sa-creds",
                     "sub": "sa-creds",
-                }
-            }
-        )
+                },
+            },
+        ),
     )
 
     with open(nebius_dir / "config.yaml", "w+") as f:
@@ -389,12 +387,11 @@ profiles:
     assert isinstance(cred, ServiceAccountBearer)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_load_config_private_key_file(tmp_path, monkeypatch) -> None:
     # Test private-key-file-path
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
-
     from nebius.aio.cli_config import Config
     from nebius.aio.token.service_account import ServiceAccountBearer
 
@@ -437,12 +434,11 @@ profiles:
     assert isinstance(cred, ServiceAccountBearer)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_load_config_private_key_inline(tmp_path, monkeypatch) -> None:
     # Test inline private-key branch
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
-
     from nebius.aio.cli_config import Config
     from nebius.aio.token.service_account import ServiceAccountBearer
 
@@ -465,7 +461,8 @@ async def test_load_config_private_key_inline(tmp_path, monkeypatch) -> None:
     with open(nebius_dir / "config.yaml", "w+") as f:
         # indent PEM as YAML literal
         pem_block = "\n".join(["            " + line for line in pem.splitlines()])
-        f.write("""
+        f.write(
+            """
 default: prod
 profiles:
     prod:
@@ -475,7 +472,9 @@ profiles:
         service-account-id: sa-inline
         public-key-id: kid-inline
         private-key: |
-""" + pem_block)
+"""
+            + pem_block,
+        )
     config = Config("foo")
     from asyncio import Future
 

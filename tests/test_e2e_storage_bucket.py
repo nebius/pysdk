@@ -1,5 +1,4 @@
-"""
-End-to-end test for storage bucket operations using Nebius SDK.
+"""End-to-end test for storage bucket operations using Nebius SDK.
 
 This test requires NEBIUS_E2E_CONFIG_FILE environment variable to be set
 to a valid YAML config file. If the environment variable is not set or
@@ -16,7 +15,6 @@ from pathlib import Path
 
 import pytest
 import yaml
-
 from nebius.aio.cli_config import Config
 from nebius.api.nebius.common.v1 import ResourceMetadata
 from nebius.api.nebius.storage.v1 import (
@@ -39,10 +37,12 @@ def _generate_random_string(length: int = 8) -> str:
 def _get_config_file_path() -> tuple[str | None, bool]:
     """Get the configuration file path from an environment variable.
 
-    Returns:
+    Returns
+    -------
         A tuple with the file path and a temporary-file flag. The path is
         ``None`` if no file is available. The flag is true for decoded Base64
         content.
+
     """
     # First try NEBIUS_E2E_CONFIG_FILE
     config_file = os.environ.get("NEBIUS_E2E_CONFIG_FILE")
@@ -75,17 +75,19 @@ def _get_config_file_path() -> tuple[str | None, bool]:
 def _validate_yaml_config(config_file: str) -> bool:
     """Validate that the config file is a valid YAML."""
     try:
-        with open(config_file, "r") as f:
+        with open(config_file) as f:
             yaml.safe_load(f)
         return True
     except (yaml.YAMLError, OSError):
         return False
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_e2e_storage_bucket_lifecycle() -> None:
-    """
-    End-to-end test for storage bucket lifecycle:
+    """Test the storage bucket lifecycle end to end.
+
+    Steps:
+
     1. Create a storage bucket with specific configuration
     2. Get the bucket by ID
     3. List buckets and verify our bucket is present

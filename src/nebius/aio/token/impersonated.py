@@ -7,10 +7,13 @@ from typing import cast
 
 from grpc import StatusCode
 
-from nebius.aio._task_context import bridge_awaitable
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.authorization.options import OPTION_TYPE, Types
-from nebius.aio.metrics import (
+from ...api.nebius.iam.v1 import CreateTokenResponse, ExchangeTokenRequest, TokenExchangeServiceClient
+from ...base.error import SDKError
+from ...base.token_sanitizer import TokenSanitizer
+from .._task_context import bridge_awaitable
+from ..abc import ClientChannelInterface
+from ..authorization.options import OPTION_TYPE, Types
+from ..metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -19,16 +22,8 @@ from nebius.aio.metrics import (
     bind_auth_metrics,
     metric_start,
 )
-from nebius.aio.service_error import RequestError
-from nebius.aio.token.deferred_channel import DeferredChannel
-from nebius.api.nebius.iam.v1 import (
-    CreateTokenResponse,
-    ExchangeTokenRequest,
-    TokenExchangeServiceClient,
-)
-from nebius.base.error import SDKError
-from nebius.base.token_sanitizer import TokenSanitizer
-
+from ..service_error import RequestError
+from .deferred_channel import DeferredChannel
 from .exchangeable import UnsupportedResponseError, UnsupportedTokenTypeError
 from .options import OPTION_MAX_RETRIES
 from .token import Bearer as ParentBearer
@@ -265,7 +260,7 @@ class CachedBearer(ParentBearer):
         metrics: AuthMetricsLike = None,
     ) -> None:
         """Create a cached impersonation bearer."""
-        from nebius.aio.token.renewable import Bearer as RenewableBearer
+        from .renewable import Bearer as RenewableBearer
 
         self._impersonated = Bearer(
             service_account_id,

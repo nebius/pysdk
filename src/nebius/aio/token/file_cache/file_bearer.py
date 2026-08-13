@@ -17,7 +17,6 @@ Types
 
 Example
 -------
-
 Create a bearer that reads credentials from the default credentials file
 and caches them for five minutes::
 
@@ -36,18 +35,17 @@ from datetime import timedelta
 from logging import getLogger
 from pathlib import Path
 
-from nebius.aio.metrics import (
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ...metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
     AuthMetricsRecorder,
     auth_metrics_recorder,
 )
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver as ParentReceiver
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
+from ..token import Bearer as ParentBearer
+from ..token import Receiver as ParentReceiver
+from ..token import Token
 from .throttled_token_cache import ThrottledTokenCache
 
 log = getLogger(__name__)
@@ -109,12 +107,10 @@ class PureFileCacheReceiver(ParentReceiver):
 
 
 class PureFileCacheBearer(ParentBearer):
-    """Bearer that exposes a :class:`PureFileCacheReceiver` for a named
-    token.
+    """Bearer that exposes a :class:`PureFileCacheReceiver` for a named token.
 
     Notes
     -----
-
     Construction is inexpensive; the cache performs I/O lazily when
     tokens are accessed via the receiver.
 
@@ -128,7 +124,6 @@ class PureFileCacheBearer(ParentBearer):
 
     Example
     -------
-
     Create a bearer that reads credentials from the default credentials file
     and caches them for five minutes::
 
@@ -140,6 +135,7 @@ class PureFileCacheBearer(ParentBearer):
             credentials=bearer,
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -169,7 +165,6 @@ class PureFileCacheBearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self._metrics.provider
 
     def receiver(self) -> ParentReceiver:
@@ -184,5 +179,4 @@ class PureFileCacheBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks used by subsequently created receivers."""
-
         self._metrics.set_metrics(metrics)

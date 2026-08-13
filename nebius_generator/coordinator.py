@@ -10,11 +10,12 @@ import os
 import secrets
 import shutil
 import tempfile
+from collections.abc import Iterable, Iterator
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from itertools import islice
 from pathlib import Path, PurePosixPath
-from typing import Any, Iterable, Iterator, cast
+from typing import Any, cast
 
 from .bootstrap import (
     include_file_descriptors,
@@ -105,8 +106,8 @@ def _fragment_key(
 ) -> str:
     digest = hashlib.sha256()
     digest.update(semantic.encode())
-    digest.update(graph.options.package_prefix.encode())
-    digest.update(graph.options.runtime_package.encode())
+    digest.update(graph.options.destination_prefix.encode())
+    digest.update(graph.options.runtime_prefix.encode())
     digest.update(owner.encode())
     for name in file_names:
         digest.update(name.encode())
@@ -172,7 +173,7 @@ def _analyze_files(graph: Graph, file_names: tuple[str, ...]) -> dict[str, dict[
     }
     return {
         source_file: {
-            source_packages[source_file]: emit_package_fragment(source_packages[source_file], source_file, graph)
+            source_packages[source_file]: emit_package_fragment(source_packages[source_file], source_file, graph),
         }
         for source_file in file_names
     }
@@ -380,8 +381,7 @@ def generate(manifest: Path, output: Path, *, include_generator_protocol: bool =
                 )
                 for batch in window
             ]
-            for future in futures:
-                attestations.append(future.result())
+            attestations.extend(future.result() for future in futures)
     package_index = _verify_fragments(attestations, graph, invocation, semantic, batches)
     registry = emit_registry(graph)
     _write(output, registry.name, registry.content)

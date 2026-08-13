@@ -1,5 +1,4 @@
-"""A tiny channel implementation that routes all calls to a single
-service/method combination.
+"""A channel implementation that routes all calls to one service/method combination.
 
 The :class:`Constant` channel wraps an existing
 :class:`ClientChannelInterface`. It resolves all method lookups to one
@@ -11,9 +10,8 @@ network and authorization functions.
 from collections.abc import Awaitable
 from typing import TypeVar, cast
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
-
+from .abc import ClientChannelInterface
+from .authorization.authorization import Provider as AuthorizationProvider
 from .base import AddressChannel
 
 T = TypeVar("T")
@@ -84,9 +82,10 @@ class Constant(ClientChannelInterface):
         """
         return self._parent_id
 
-    def get_authorization_provider(self) -> AuthorizationProvider | None:
-        """Return the authorization provider used by the underlying source
-        channel (if any).
+    def get_authorization_provider(
+        self,
+    ) -> AuthorizationProvider | None:
+        """Return the authorization provider used by the underlying source channel.
 
         :returns: :class:`AuthorizationProvider` or `None`
         """
@@ -102,7 +101,6 @@ class Constant(ClientChannelInterface):
         :return: ``True`` or ``False`` when the source can answer safely, or
             ``None`` when provider discovery belongs to its owner loop.
         """
-
         provider_probe = getattr(self._source, "_has_authorization_provider", None)
         if not callable(provider_probe):
             return None
@@ -123,8 +121,7 @@ class Constant(ClientChannelInterface):
         return self._source.get_channel_by_method(self._method)
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
-        """Synchronously run an awaitable using the source channel's
-        synchronization helper.
+        """Synchronously run an awaitable using the source channel's helper.
 
         :param awaitable: an awaitable to execute
         :param timeout: optional timeout forwarded to the source implementation
@@ -143,7 +140,6 @@ class Constant(ClientChannelInterface):
         :param awaitable: Work to submit or return for legacy execution.
         :return: Source submission handle, or the unchanged awaitable.
         """
-
         submit = getattr(self._source, "run_async", None)
         if callable(submit):
             return cast(Awaitable[T], submit(awaitable))

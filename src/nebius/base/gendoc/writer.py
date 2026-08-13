@@ -55,7 +55,10 @@ CLIENT_SELECTOR = 'li a[name="nebius.aio.client.Client"] ~ ul'
 
 
 class TemplateWriter(Base):  # type: ignore[misc]
-    def writeSummaryPages(self, system: System) -> None:  # noqa: N802 # comply with the protocol
+    def writeSummaryPages(  # noqa: N802 # comply with the protocol
+        self,
+        system: System,
+    ) -> None:
         super().writeSummaryPages(system)
 
         system.msg("html", "starting " + APIReferencePage.filename + " ...", nonl=True)

@@ -3,8 +3,8 @@
 from collections.abc import Iterable
 from typing import Protocol
 
-from nebius.base.fieldmask import Mask
-from nebius.base.metadata import Metadata
+from .fieldmask import Mask
+from .metadata import Metadata
 
 RESET_MASK_HEADER = "X-ResetMask"
 """Metadata header name used for reset masks."""
@@ -27,7 +27,6 @@ def ensure_reset_mask_in_metadata(
 
     Example
     -------
-
     Use the helper before sending an update request::
 
         from nebius.base.fieldmask_protobuf import ensure_reset_mask_in_metadata
@@ -38,6 +37,7 @@ def ensure_reset_mask_in_metadata(
     :param msg: Protobuf message used to derive the full update reset mask.
     :param metadata: Existing metadata entries or ``None``.
     :returns: A :class:`Metadata` instance containing the reset mask header.
+
     """
     metadata = Metadata(metadata)
 

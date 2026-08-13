@@ -2,20 +2,18 @@
 import logging
 
 import pytest
-
 from nebius.aio import request
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_instance_error() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
     from nebius.aio.service_error import RequestError, RequestStatusExtended
@@ -26,6 +24,7 @@ async def test_get_instance_error() -> None:
         GetDiskRequest,
     )
     from nebius.base.options import INSECURE
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -49,7 +48,7 @@ async def test_get_instance_error() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             from nebius.base._service_error import trailing_metadata_of_errors
@@ -123,7 +122,6 @@ async def test_get_instance_error() -> None:
 
 def _status_with_message(message: str, code=None):
     from grpc import StatusCode
-
     from nebius.aio.service_error import RequestStatusExtended
 
     return RequestStatusExtended(
@@ -227,7 +225,6 @@ def test_raw_grpc_unknown_http_52x_status_is_retriable() -> None:
     from grpc import StatusCode
     from grpc.aio import AioRpcError
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.service_error import is_retriable_error
 
     err = AioRpcError(
@@ -270,7 +267,7 @@ async def _read_h2_frame(reader):
     return frame_type, flags, stream_id, payload
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_http2_52x_status_from_server_is_retried() -> None:
     import asyncio
 
@@ -343,14 +340,13 @@ async def test_http2_52x_status_from_server_is_retried() -> None:
         await server.wait_closed()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_instance_retry() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
     from nebius.api.nebius.compute.v1 import (
@@ -359,6 +355,7 @@ async def test_get_instance_retry() -> None:
         GetDiskRequest,
     )
     from nebius.base.options import INSECURE
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -385,7 +382,7 @@ async def test_get_instance_retry() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             from nebius.base._service_error import trailing_metadata_of_errors
@@ -452,14 +449,13 @@ async def test_get_instance_retry() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_metadata_at_error() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
     from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
@@ -469,6 +465,7 @@ async def test_metadata_at_error() -> None:
         GetDiskRequest,
     )
     from nebius.base.options import INSECURE
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -492,7 +489,7 @@ async def test_metadata_at_error() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             from nebius.base._service_error import trailing_metadata_of_errors
@@ -553,7 +550,7 @@ async def test_metadata_at_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_status_at_error() -> None:
     import grpc
     import grpc.aio
@@ -561,7 +558,6 @@ async def test_status_at_error() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
     from nebius.aio.service_error import RequestStatusExtended
@@ -572,6 +568,7 @@ async def test_status_at_error() -> None:
         GetDiskRequest,
     )
     from nebius.base.options import INSECURE
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -595,7 +592,7 @@ async def test_status_at_error() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             from nebius.base._service_error import trailing_metadata_of_errors
@@ -657,7 +654,7 @@ async def test_status_at_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_status_does_not_block_failed_call() -> None:
     import grpc
     import grpc.aio
@@ -665,7 +662,6 @@ async def test_status_does_not_block_failed_call() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.service_error import RequestStatusExtended
     from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
@@ -675,6 +671,7 @@ async def test_status_does_not_block_failed_call() -> None:
         GetDiskRequest,
     )
     from nebius.base.options import INSECURE
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -698,7 +695,7 @@ async def test_status_does_not_block_failed_call() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             from nebius.base._service_error import trailing_metadata_of_errors
@@ -764,7 +761,7 @@ async def test_status_does_not_block_failed_call() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_request_id_at_error() -> None:
     import grpc
     import grpc.aio
@@ -772,7 +769,6 @@ async def test_request_id_at_error() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
     from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
@@ -782,6 +778,7 @@ async def test_request_id_at_error() -> None:
         GetDiskRequest,
     )
     from nebius.base.options import INSECURE
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -805,7 +802,7 @@ async def test_request_id_at_error() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             from nebius.base._service_error import trailing_metadata_of_errors

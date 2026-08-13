@@ -44,7 +44,6 @@ def test_explicit_resolver_precedes_generated_endpoint() -> None:
 
 def test_method_and_route_fallbacks_keep_public_resolver_override() -> None:
     """Internal dispatch must preserve the established subclass hook."""
-
     resolver_loops: list[asyncio.AbstractEventLoop] = []
 
     class CustomChannel(Channel):

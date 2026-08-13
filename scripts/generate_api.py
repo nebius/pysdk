@@ -52,8 +52,8 @@ def capture_template(
         f"  - local: {plugin}",
         f"    out: {output}",
         "    opt:",
-        "      - package_prefix=nebius.api",
-        "      - runtime_package=nebius",
+        "      - destination_prefix=nebius.api",
+        "      - runtime_prefix=nebius",
         f"      - partition={partition}",
         f"      - jobs={jobs}",
     ]
@@ -100,8 +100,8 @@ assert Timestamp().SerializeToString() == b''
         environment = os.environ.copy()
         environment["PYTHONDONTWRITEBYTECODE"] = "1"
         environment.pop("PYTHONPATH", None)
-        subprocess.run(  # noqa: S603 - current interpreter and constant smoke code
-            [sys.executable, "-I", "-c", isolated_code],
+        subprocess.run(
+            [sys.executable, "-I", "-c", isolated_code],  # noqa: S603 - fixed interpreter
             cwd=temporary,
             env=environment,
             check=True,
@@ -127,8 +127,8 @@ def generate(
         buf = shutil.which("buf")
         if buf is None:
             raise RuntimeError("buf is not installed or is missing from PATH")
-        subprocess.run(  # noqa: S603 - resolved trusted build tool
-            [
+        subprocess.run(
+            [  # noqa: S603 - resolved trusted build tool
                 buf,
                 "generate",
                 str(PROTO_ROOT),
@@ -145,8 +145,8 @@ def generate(
         template_path.unlink(missing_ok=True)
     if not manifest.is_file():
         raise RuntimeError(f"capture plugin did not produce {manifest}")
-    subprocess.run(  # noqa: S603 - current interpreter and repository module
-        [
+    subprocess.run(
+        [  # noqa: S603 - fixed interpreter and repository module
             sys.executable,
             "-m",
             "nebius_generator.coordinator",

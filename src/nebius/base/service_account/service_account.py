@@ -6,7 +6,7 @@ from typing import Any
 import jwt
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
-from nebius.api.nebius.iam.v1 import ExchangeTokenRequest
+from ...api.nebius.iam.v1 import ExchangeTokenRequest
 
 log = getLogger(__name__)
 
@@ -55,7 +55,12 @@ class ServiceAccount(TokenRequester):
 
         # Create the JWT token and sign it with RS256
         headers = {"kid": self.public_key_id}
-        signed_jwt = jwt.encode(claims, self.private_key, algorithm="RS256", headers=headers)
+        signed_jwt = jwt.encode(
+            claims,
+            self.private_key,  # type: ignore[arg-type, unused-ignore]
+            algorithm="RS256",
+            headers=headers,
+        )
         log.debug("creating ExchangeTokenRequest for service account")
 
         # Return the ExchangeTokenRequest object

@@ -3,8 +3,8 @@
 
 from typing import Any as _NebiusAny
 
-from nebius.base.protos.extensions import Extension, ExtensionRegistry
-from nebius.base.protos.registry import Registry
+from ..base.protos.extensions import Extension, ExtensionRegistry
+from ..base.protos.registry import Registry
 
 from . import _registry_fragment as _fragment_root
 from .google.protobuf import _registry_fragment as _fragment_000

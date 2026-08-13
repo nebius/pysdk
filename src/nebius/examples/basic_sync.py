@@ -2,11 +2,11 @@ import argparse
 import os
 from time import time  # type: ignore[unused-ignore]
 
-from nebius.aio.service_error import RequestError
-from nebius.aio.token.static import Bearer
-from nebius.aio.token.token import Token
-from nebius.api.nebius.common.v1 import ResourceMetadata
-from nebius.api.nebius.storage.v1 import (
+from ..aio.service_error import RequestError
+from ..aio.token.static import Bearer
+from ..aio.token.token import Token
+from ..api.nebius.common.v1 import ResourceMetadata
+from ..api.nebius.storage.v1 import (
     BucketServiceClient,
     BucketSpec,
     CreateBucketRequest,
@@ -14,7 +14,7 @@ from nebius.api.nebius.storage.v1 import (
     GetBucketRequest,
     VersioningPolicy,
 )
-from nebius.sdk import SDK
+from ..sdk import SDK
 
 if __name__ == "__main__":
     import logging
@@ -33,7 +33,7 @@ if __name__ == "__main__":
             credentials=Bearer(
                 Token(
                     os.environ.get("NEBIUS_IAM_TOKEN", ""),
-                )
+                ),
             ),
             user_agent_prefix="example-application/1.0",
         )
@@ -51,7 +51,7 @@ if __name__ == "__main__":
                         versioning_policy=VersioningPolicy.DISABLED,
                         max_size_bytes=4096,
                     ),
-                )
+                ),
             )
             status = req.current_status()
             print(status)

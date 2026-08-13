@@ -9,7 +9,6 @@ timeout/polling interval.
 
 Examples
 --------
-
 Acquire an exclusive lock::
 
     async with Lock("/var/lock/my.lock"):
@@ -45,7 +44,6 @@ class Lock:
 
     Example
     -------
-
     ::
 
         async with Lock("/tmp/my.lock", timeout=2.0):
@@ -77,6 +75,7 @@ class Lock:
         defaults to 0.25 seconds.
     :param fopen_kwargs: Additional keyword arguments passed to the
         underlying :func:`open` call used by portalocker.
+
     """
 
     def __init__(
@@ -103,7 +102,7 @@ class Lock:
         lock_flags |= LockFlags.NON_BLOCKING
         self.lock = PortalockerLock(
             self.file_path,
-            mode=self.mode,  # type: ignore
+            mode=self.mode,  # type: ignore[arg-type, unused-ignore]
             timeout=0,
             flags=lock_flags,
             **self.fopen_kwargs,
@@ -145,4 +144,4 @@ class Lock:
         The release operation delegates to :mod:`portalocker` and does
         not re-raise exceptions to the caller.
         """
-        self.lock.release()
+        self.lock.release()  # type: ignore[no-untyped-call, unused-ignore]

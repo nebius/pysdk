@@ -65,10 +65,6 @@ This project uses third-party libraries under the following licenses:
   Node.js.
   https://github.com/njzjz/nodejs-wheel
 
-- **black** (>=24.10)
-  Licensed under the MIT License.
-  https://github.com/psf/black
-
 - **ruff** (>=0.7)
   Licensed under the MIT License.
   https://github.com/astral-sh/ruff

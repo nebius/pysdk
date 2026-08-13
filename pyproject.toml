@@ -40,9 +40,8 @@ dev = [
     "tox>=4.0",     # For testing automation
     "mypy>=1.13",    # For type checking
     "pyright[nodejs]>=1.1.390",  # For installed-wheel type checking
-    "black>=24.10",  # For code formatting
-    "ruff>=0.7",   # For linting
-    "grpc-stubs>=1.53",  # For mypy
+    "ruff==0.4.1",   # Keep local fixes identical to the Nebo publisher
+    "grpc-stubs>=1.53.0.3",  # For mypy
     "types-protobuf>=5.29.1", # for mypy
     "types-PyYAML>=5.0",  # for mypy
     "grpcio-status>=1.56.2",  # interoperability tests only
@@ -67,11 +66,6 @@ nebius = ["py.typed"]
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["nebius*"]
-
-[tool.black]
-line-length = 120
-target-version = ["py310"]
-exclude = "(docs/generated|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
 
 [tool.mypy]
 strict = true
@@ -113,8 +107,30 @@ indent-width = 4
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "Q", "S"]
-ignore = []
+select = [
+    "E", "F", "I", "N", "Q", "S", "TD003", "FA100", "PERF401",
+    "D201", "D202", "D205", "D206", "D207", "D208", "D209", "D210",
+    "D214", "D215", "D402", "D405", "D406", "D407", "D408", "D409",
+    "D410", "D411", "D412", "D414", "D418", "D419",
+]
+ignore = [
+    "D",
+    "ANN101",
+    "ANN102",
+    "ANN401",
+    "FIX002",
+    "TD001",
+    "TD002",
+    "TID",
+    "FBT",
+    "PLR0913",
+    "TCH002",
+    "TCH003",
+    "ISC001",
+    "COM812",
+    "INP001",
+    "EXE002",
+]
 exclude = ["src/nebius/api"]
 fixable = ["ALL"]
 unfixable = []
@@ -124,11 +140,16 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 "tests/**.py" = ["S"]
 "src/nebius/api/**" = ["ALL"]
 
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
 [tool.ruff.format]
 exclude = ["src/nebius/api/**", "*.pyi"]
-
-[tool.isort]
-profile = "black"
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
 
 [tool.pylint]
 load-plugins = ["pylint.extensions.mccabe"]
@@ -159,6 +180,7 @@ deps = [
     "pytest-timeout",
     "grpcio",
     "grpcio-status",
+    "grpc-stubs>=1.53.0.3",
     "m2r2",
     "mypy>=1.13",
     "protobuf",
@@ -186,6 +208,7 @@ deps = [
     "pytest-timeout",
     "pyyaml==5.1.1",
     "grpcio==1.56.2",
+    "grpc-stubs==1.53.0.3",
     "protobuf==5.29.1",
     "types-PyYAML>=5.1.1",
     "types-protobuf>=5.29.1,<5.30",
@@ -209,14 +232,26 @@ passenv = [
 [tool.tox.env.lint]
 description = "Run linter checks"
 package = "skip"  # Skip installing the package
-deps = ["ruff"]
-commands = [["ruff","check","src/","tests/","nebius_generator/","scripts/"]]
+deps = ["ruff==0.4.1"]
+commands = [
+    ["ruff","check","--diff","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D201,D202,D205,D206,D207,D208,D209,D210,D214,D215,D402,D405,D406,D407,D408,D409,D410,D411,D412,D414,D418,D419","--target-version","py310","--unfixable","B","src/","tests/","nebius_generator/","scripts/"],
+    ["ruff","check","src/","tests/","nebius_generator/","scripts/"],
+]
 
 [tool.tox.env.format]
 description = "Run code formatting checks"
 package = "skip"
-deps = ["black"]
-commands = [["black","--check","src/","tests/","nebius_generator/","scripts/"]]
+deps = ["ruff==0.4.1"]
+commands = [["ruff","format","--check","--force-exclude","src/","tests/","nebius_generator/","scripts/"]]
+
+[tool.tox.env.fix]
+description = "Apply code formatting and safe lint fixes"
+package = "skip"
+deps = ["ruff==0.4.1"]
+commands = [
+    ["ruff","check","--fix-only","--no-unsafe-fixes","--select","ALL","--extend-ignore","D,ANN101,ANN102,ANN401,FIX002,TD001,TD002,TID,FBT,PLR0913,TCH002,TCH003,ISC001,COM812,INP001,EXE002","--extend-select","D201,D202,D205,D206,D207,D208,D209,D210,D214,D215,D402,D405,D406,D407,D408,D409,D410,D411,D412,D414,D418,D419","--target-version","py310","--unfixable","B","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
+    ["ruff","format","--target-version","py310","--force-exclude","src/","tests/","nebius_generator/","scripts/"],
+]
 
 [tool.tox.env.type]
 description = "Run type-checking"
@@ -235,7 +270,7 @@ deps = [
     "tomlkit>=0.13.2",
     "pyyaml>=5",  # Added pyyaml dependency
     # For mypy
-    "grpc-stubs>=1.53",
+    "grpc-stubs>=1.53.0.3",
     "types-protobuf>=5.29.1",
     "types-beautifulsoup4>=4.12.0",
     "types-PyYAML>=5",
@@ -248,7 +283,7 @@ package = "wheel"
 deps = [
     "mypy>=1.13",
     "pyright[nodejs]>=1.1.390",
-    "grpc-stubs>=1.53",
+    "grpc-stubs>=1.53.0.3",
     "types-protobuf>=5.29.1",
     "types-PyYAML>=5",
 ]

@@ -2,7 +2,6 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 
 import pytest
-
 from nebius.aio.channel import Channel, NoCredentials
 from nebius.aio.cli_config import Config
 from nebius.aio.keepalive import (
@@ -99,7 +98,7 @@ def test_keepalive_invalid_env(monkeypatch: pytest.MonkeyPatch) -> None:
         Channel(options=[(INSECURE, True)], credentials=NoCredentials())
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_static_token_metrics() -> None:
     from nebius.aio.token.static import Bearer as StaticBearer
 
@@ -128,7 +127,7 @@ async def test_static_token_metrics() -> None:
     assert 0 < lifetimes[0].ttl_seconds <= 60
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_custom_bearer_metrics_provider_defaults_to_class_name() -> None:
     from nebius.aio.token.token import Bearer, Receiver
 
@@ -165,7 +164,7 @@ async def test_custom_bearer_metrics_provider_defaults_to_class_name() -> None:
     assert [(item.provider, item.result) for item in acquired] == [(_provider_name(CustomBearer), "success")]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_non_token_receiver_result_records_error_metric() -> None:
     from nebius.aio.token.token import Bearer, Receiver
 
@@ -201,7 +200,7 @@ async def test_non_token_receiver_result_records_error_metric() -> None:
     assert [(item.provider, item.result) for item in acquired] == [(_provider_name(BadBearer), "error")]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_naive_token_expiration_does_not_break_metrics() -> None:
     lifetimes = []
     sdk = SDK(
@@ -217,7 +216,7 @@ async def test_naive_token_expiration_does_not_break_metrics() -> None:
     assert lifetimes == []
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_metric_cancelled_error_does_not_break_auth() -> None:
     def raise_cancelled_error(metric) -> None:
         raise asyncio.CancelledError()
@@ -234,7 +233,7 @@ async def test_metric_cancelled_error_does_not_break_auth() -> None:
     assert metadata.get_one("authorization") == "Bearer test-token"
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_token_file_metrics(tmp_path) -> None:
     from nebius.aio.token.file import Bearer as FileBearer
 
@@ -266,7 +265,7 @@ async def test_token_file_metrics(tmp_path) -> None:
     assert [item.provider for item in hits] == ["file"]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_token_file_retry_invalidates_cache_when_file_changes(tmp_path) -> None:
     from nebius.aio.token.file import Bearer as FileBearer
 
@@ -307,8 +306,8 @@ def test_config_reader_metrics_replay_and_credentials_resolve(tmp_path) -> None:
                 "  test:",
                 "    endpoint: api.example.test:443",
                 "    token-file: /tmp/nebius-token",
-            ]
-        )
+            ],
+        ),
     )
     events = []
     metrics = {
@@ -339,8 +338,8 @@ def test_async_config_metric_callback_runs_from_sync_constructor(tmp_path) -> No
                 "  test:",
                 "    endpoint: api.example.test:443",
                 "    token-file: /tmp/nebius-token",
-            ]
-        )
+            ],
+        ),
     )
     events = []
 
@@ -357,7 +356,7 @@ def test_async_config_metric_callback_runs_from_sync_constructor(tmp_path) -> No
     assert events == [("config_load", "file", "success")]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_config_reader_env_credentials_keep_auth_metrics(tmp_path, monkeypatch: pytest.MonkeyPatch) -> None:
     from nebius.aio.token.static import EnvBearer
 
@@ -369,8 +368,8 @@ async def test_config_reader_env_credentials_keep_auth_metrics(tmp_path, monkeyp
                 "profiles:",
                 "  test:",
                 "    endpoint: api.example.test:443",
-            ]
-        )
+            ],
+        ),
     )
     acquired = []
     monkeypatch.setenv("NEBIUS_TEST_TOKEN", "env-token")
@@ -399,8 +398,8 @@ def test_config_reader_metrics_replay_excludes_prior_credentials_resolve(
                 "  test:",
                 "    endpoint: api.example.test:443",
                 "    token-file: /tmp/nebius-token",
-            ]
-        )
+            ],
+        ),
     )
     events = []
 
@@ -410,7 +409,7 @@ def test_config_reader_metrics_replay_excludes_prior_credentials_resolve(
         {
             "config_load": lambda metric: events.append(("config_load", metric)),
             "credentials_resolve": lambda metric: events.append(("credentials_resolve", metric)),
-        }
+        },
     )
 
     assert ("config_load", "file", "success") in {(kind, metric.source, metric.result) for kind, metric in events}

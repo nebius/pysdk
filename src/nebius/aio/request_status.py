@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any, cast
 from grpc import StatusCode
 
 if TYPE_CHECKING:
-    from nebius.base.protos.registry import Registry
+    from ..base.protos.registry import Registry
 
 
 class UnfinishedRequestStatus(Enum):
@@ -63,7 +63,10 @@ class RequestStatus:
     registry: Registry | None = field(default=None, repr=False, compare=False, kw_only=True)
     _raw_status: Any | None = field(default=None, repr=False, compare=False, kw_only=True)
     _original_state: tuple[StatusCode, str | None, tuple[bytes, ...]] | None = field(
-        default=None, init=False, repr=False, compare=False
+        default=None,
+        init=False,
+        repr=False,
+        compare=False,
     )
 
     def _state(self) -> tuple[StatusCode, str | None, tuple[bytes, ...]]:

@@ -1,9 +1,8 @@
 # type: ignore
 
 import pytest
-from pytest_subtests import SubTests
-
 from nebius.aio import request
+from pytest_subtests import SubTests
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
@@ -119,7 +118,7 @@ def test_fieldpath_copy(subtests) -> None:
             cp = case["A"].copy()
             # Assert the copy matches the original
             assert cp == case["A"], f"Failed on case {i}: {cp} != {case['A']}"
-            assert case["A"] == FieldPath(case["A"]), f"Failed on case {i}: FieldPath doesn't match"  # noqa: E501
+            assert case["A"] == FieldPath(case["A"]), f"Failed on case {i}: FieldPath doesn't match"
             assert case["A"] == cp, f"Failed on case {i}: A != cp"
             assert cp == case["A"], f"Failed on case {i}: cp != A"
 
@@ -127,8 +126,8 @@ def test_fieldpath_copy(subtests) -> None:
                 # Modify the original and assert copy is unaffected
                 case["A"][0] = FieldKey("changed")
                 assert cp != case["A"], f"Failed on case {i}: cp == A after modification"
-                assert case["A"] != cp, f"Failed on case {i}: A equal to cp after modification"  # noqa: E501
-                assert cp != case["A"], f"Failed on case {i}: cp equal to A after modification"  # noqa: E501
+                assert case["A"] != cp, f"Failed on case {i}: A equal to cp after modification"
+                assert cp != case["A"], f"Failed on case {i}: cp equal to A after modification"
 
 
 def test_fieldpath_equality(subtests) -> None:
@@ -208,68 +207,68 @@ def test_fieldpath_is_prefix_of(subtests):
             "A": FieldPath([FieldKey("foo")]),
             "B": FieldPath([FieldKey("bar")]),
             "Res": False,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("foo"), FieldKey("baz")]),
             "B": FieldPath([FieldKey("foo"), FieldKey("bar")]),
             "Res": False,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("foo"), FieldKey("baz"), FieldKey("abc")]),
             "B": FieldPath([FieldKey("foo"), FieldKey("bar"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("baz"), FieldKey("foo")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("abc"), FieldKey("def")]),
             "Res": False,
-        },  # noqa: E501
+        },
         {"A": FieldPath([]), "B": FieldPath([FieldKey("foo")]), "Res": True},
         {
             "A": FieldPath([FieldKey("bar")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("foo")]),
             "Res": True,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("bar"), FieldKey("baz")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("baz"), FieldKey("foo")]),
             "Res": True,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([]),
             "B": FieldPath([FieldKey("foo"), FieldKey("bar"), FieldKey("baz")]),
             "Res": True,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("bar")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("foo"), FieldKey("baz")]),
             "Res": True,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("bar"), FieldKey("baz")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
             "Res": True,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([FieldKey("bar")]),
             "B": FieldPath([FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
             "Res": True,
-        },  # noqa: E501
+        },
         {
             "A": FieldPath([]),
             "B": FieldPath([FieldKey("bar"), FieldKey("baz"), FieldKey("foo"), FieldKey("abc")]),
             "Res": True,
-        },  # noqa: E501
+        },
     ]
 
     for i, case in enumerate(cases):
@@ -330,7 +329,7 @@ def test_fieldpath_matches_reset_mask(subtests) -> None:
                 field_parts={
                     FieldKey("abc"): Mask(field_parts={FieldKey("foo"): Mask()}),
                     FieldKey("def"): Mask(field_parts={FieldKey("foo"): Mask()}),
-                }
+                },
             ),
             "Res": True,
             "Final": False,
@@ -421,7 +420,7 @@ def test_fieldpath_matches_reset_mask(subtests) -> None:
             res = case["FP"].matches_reset_mask(case["M"])
             res_final = case["FP"].matches_reset_mask_final(case["M"])
             assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
-            assert res_final == case["Final"], f"Failed on case {i}: {res} != {case['Final']}"  # noqa: E501
+            assert res_final == case["Final"], f"Failed on case {i}: {res} != {case['Final']}"
 
 
 def test_fieldpath_matches_select_mask(subtests) -> None:
@@ -536,9 +535,7 @@ def test_fieldpath_matches_select_mask(subtests) -> None:
             # Assert the results
             assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
             assert res2 == case["Res"], f"Failed on case {i}: {res2} != {case['Res']}"
-            assert inner == case.get(
-                "Inner", False
-            ), f"Failed on case {i}: {inner} != {case.get('Inner', False)}"  # noqa: E501
+            assert inner == case.get("Inner", False), f"Failed on case {i}: {inner} != {case.get('Inner', False)}"
 
 
 def test_fieldpath_marshal(subtests) -> None:
@@ -603,7 +600,7 @@ def test_fieldpath_unmarshal(subtests) -> None:
                     FieldPath.unmarshal(mask)
             else:
                 res = FieldPath.unmarshal(mask)
-                assert res == case["Result"], f"Failed on case {i}: expected {case['Result']}, got {res}"  # noqa: E501
+                assert res == case["Result"], f"Failed on case {i}: expected {case['Result']}, got {res}"
 
 
 def test_parse_fieldmask(subtests) -> None:
@@ -616,18 +613,18 @@ def test_parse_fieldmask(subtests) -> None:
         {
             "Input": "*.(",
             "Err": r"unclosed left brace at position 2 near \"\*\.\u20de\(\"",
-        },  # noqa: E501
+        },
         {
             "Input": " \t\r\n*.( \t\r\n",
-            "Err": r"unclosed left brace at position 6 near \" \\t\\r\\n\*\.\u20de\( \\t\\r\\n\"",  # noqa: E501
+            "Err": r"unclosed left brace at position 6 near \" \\t\\r\\n\*\.\u20de\( \\t\\r\\n\"",
         },
         {
             "Input": "abcdefghijklmonpqrst.(abcdefghijklmonpqrst",
-            "Err": r"unclosed left brace at position 21 near \"jklmonpqrst\.\u20de\(abcdefghijklmo\.\.\.\"",  # noqa: E501
+            "Err": r"unclosed left brace at position 21 near \"jklmonpqrst\.\u20de\(abcdefghijklmo\.\.\.\"",
         },
         {
             "Input": "abcdefghijklmonpqrst)abcdefghijklmonpqrst",
-            "Err": r"unmatched right brace at position 20 near \"ijklmonpqrst\u20de\)abcdefghijklmo\.\.\.\"",  # noqa: E501
+            "Err": r"unmatched right brace at position 20 near \"ijklmonpqrst\u20de\)abcdefghijklmo\.\.\.\"",
         },
         {
             "Input": "abcdefghijklmonpqrst..abcdefghijklmonpqrst",
@@ -640,11 +637,11 @@ def test_parse_fieldmask(subtests) -> None:
         {"Input": "#", "Err": r"unexpected symbol at position 0 near \"\u20de#\""},
         {
             "Input": "#1234567890abcdefghijklmnopqrst",
-            "Err": r"unexpected symbol at position 0 near \"\u20de#1234567890abcdefghijklmnop\.\.\.\"",  # noqa: E501
+            "Err": r"unexpected symbol at position 0 near \"\u20de#1234567890abcdefghijklmnop\.\.\.\"",
         },
         {
             "Input": '"1234567890abcdefghijklmnopqrst',
-            "Err": r"unterminated quoted string at position 0 near \"\u20de\\\"1234567890abcdefghijklmnop\.\.\.\"",  # noqa: E501
+            "Err": r"unterminated quoted string at position 0 near \"\u20de\\\"1234567890abcdefghijklmnop\.\.\.\"",
         },
         {"Input": "", "Output": ""},
         {"Input": "()", "Output": ""},
@@ -686,13 +683,13 @@ def test_parse_fieldmask(subtests) -> None:
         {"Input": "a.(*,b,c)", "Output": "a.(*,b,c)"},
         {"Input": "a.(*,b,c.(d,e))", "Output": "a.(*,b,c.(d,e))"},
         {
-            "Input": "*.*.(a,b,c.*,d.(e,f),g.(*.(h,i),j,k)),1,A,B,l,m,n.*,o.(p,q,w,x),r.(*.(s,t),u.*,v),z.(*.y,u.*,v)",  # noqa: E501
-            "Output": "*.*.(a,b,c.*,d.(e,f),g.(*.(h,i),j,k)),1,A,B,l,m,n.*,o.(p,q,w,x),r.(*.(s,t),u.*,v),z.(*.y,u.*,v)",  # noqa: E501
+            "Input": "*.*.(a,b,c.*,d.(e,f),g.(*.(h,i),j,k)),1,A,B,l,m,n.*,o.(p,q,w,x),r.(*.(s,t),u.*,v),z.(*.y,u.*,v)",
+            "Output": "*.*.(a,b,c.*,d.(e,f),g.(*.(h,i),j,k)),1,A,B,l,m,n.*,o.(p,q,w,x),r.(*.(s,t),u.*,v),z.(*.y,u.*,v)",
         },
         {
             "Input": 'a."\\",.() \\\\t\\\\r\\\\n".b',
             "Output": 'a."\\",.() \\\\t\\\\r\\\\n".b',
-        },  # noqa: E501
+        },
     ]
 
     for i, case in enumerate(cases):
@@ -704,9 +701,7 @@ def test_parse_fieldmask(subtests) -> None:
                 result = parse(case["Input"])
                 assert isinstance(result, Mask)
                 normalized = result.marshal()
-                assert (
-                    normalized == case["Output"]
-                ), f"Failed on case {i}: expected {case['Output']}, got {normalized}"  # noqa: E501
+                assert normalized == case["Output"], f"Failed on case {i}: expected {case['Output']}, got {normalized}"
 
 
 def test_mask_is_empty() -> None:
@@ -762,7 +757,7 @@ def test_mask_marshal(subtests: SubTests) -> None:
             "Mask": Mask(
                 field_parts={
                     "test": Mask(),
-                }
+                },
             ),
             "Result": "test",
         },
@@ -1044,7 +1039,7 @@ def test_mask_marshal(subtests: SubTests) -> None:
                     ),
                 },
             ),
-            "Result": "*.*.(a,b,c.*,d.(e,f),g.(*.(h,i),j,k)),l,m,n.*,o.(p,q),r.(*.(s,t),u.*,v)",  # noqa: E501
+            "Result": "*.*.(a,b,c.*,d.(e,f),g.(*.(h,i),j,k)),l,m,n.*,o.(p,q),r.(*.(s,t),u.*,v)",
         },
         {
             "Mask": Mask(
@@ -1191,7 +1186,7 @@ def test_mask_equality(subtests: SubTests) -> None:
 
     assert infinite_mask != infinite_mask
     assert Mask() != ""
-    assert "" != Mask()
+    assert Mask() != ""
 
     # Test cases for equality
     masks = [
@@ -1220,10 +1215,10 @@ def test_mask_equality(subtests: SubTests) -> None:
                     if i != j:
                         assert mask1 != mask2, f"mask{i} must not be equal to mask{j}"
                         assert mask2 != mask1, f"mask{j} must not be equal to mask{i}"
-                        assert mask2.copy() != mask1, f"mask{j} copy must not be equal to mask{i}"  # noqa: E501
-                        assert mask1.copy() != mask2, f"mask{i} copy must not be equal to mask{j}"  # noqa: E501
-                        assert mask1 != mask2.copy(), f"mask{i} must not be equal to mask{j} copy"  # noqa: E501
-                        assert mask2 != mask1.copy(), f"mask{j} must not be equal to mask{i} copy"  # noqa: E501
+                        assert mask2.copy() != mask1, f"mask{j} copy must not be equal to mask{i}"
+                        assert mask1.copy() != mask2, f"mask{i} copy must not be equal to mask{j}"
+                        assert mask1 != mask2.copy(), f"mask{i} must not be equal to mask{j} copy"
+                        assert mask2 != mask1.copy(), f"mask{j} must not be equal to mask{i} copy"
 
 
 def test_mask_copy() -> None:
@@ -1328,22 +1323,22 @@ def test_mask_merge_success(subtests) -> None:
                                 field_parts={
                                     "e": Mask(),
                                     "f": Mask(),
-                                }
+                                },
                             ),
                             "g": Mask(
                                 any=Mask(
                                     field_parts={
                                         "h": Mask(),
                                         "i": Mask(),
-                                    }
+                                    },
                                 ),
                                 field_parts={
                                     "j": Mask(),
                                     "k": Mask(),
                                 },
                             ),
-                        }
-                    )
+                        },
+                    ),
                 ),
                 field_parts={
                     "l": Mask(),
@@ -1353,14 +1348,14 @@ def test_mask_merge_success(subtests) -> None:
                         field_parts={
                             "p": Mask(),
                             "q": Mask(),
-                        }
+                        },
                     ),
                     "r": Mask(
                         any=Mask(
                             field_parts={
                                 "s": Mask(),
                                 "t": Mask(),
-                            }
+                            },
                         ),
                         field_parts={
                             "u": Mask(any=Mask()),
@@ -1380,22 +1375,22 @@ def test_mask_merge_success(subtests) -> None:
                                 field_parts={
                                     "e": Mask(),
                                     "f": Mask(),
-                                }
+                                },
                             ),
                             "g": Mask(
                                 any=Mask(
                                     field_parts={
                                         "h": Mask(),
                                         "i": Mask(),
-                                    }
+                                    },
                                 ),
                                 field_parts={
                                     "j": Mask(),
                                     "k": Mask(),
                                 },
                             ),
-                        }
-                    )
+                        },
+                    ),
                 ),
                 field_parts={
                     "l": Mask(),
@@ -1406,13 +1401,13 @@ def test_mask_merge_success(subtests) -> None:
                         field_parts={
                             "w": Mask(),
                             "x": Mask(),
-                        }
+                        },
                     ),
                     "z": Mask(
                         any=Mask(
                             field_parts={
                                 "y": Mask(),
-                            }
+                            },
                         ),
                         field_parts={
                             "u": Mask(any=Mask()),
@@ -1484,7 +1479,7 @@ def test_mask_sub_mask(subtests):
             "key": "foo",
             "result": None,
             "err": None,
-        },  # noqa: E501
+        },
         {
             "mask": Mask(field_parts={"foo": Mask(field_parts={"bar": Mask()})}),
             "key": "foo",
@@ -1545,7 +1540,7 @@ def test_mask_sub_mask_by_path(subtests):
             "path": FieldPath(["foo"]),
             "result": None,
             "err": None,
-        },  # noqa: E501
+        },
         {
             "mask": Mask(field_parts={"foo": Mask(field_parts={"bar": Mask()})}),
             "path": FieldPath(["foo"]),

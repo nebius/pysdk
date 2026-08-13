@@ -22,7 +22,6 @@ background refresh. For file credentials, a
 
 Example
 -------
-
 Using a file path::
 
     from nebius.aio.token.federated_credentials import FederatedCredentialsBearer
@@ -36,22 +35,23 @@ Using an existing reader/token requester::
 
     reader = SomeReader(...)
     bearer = FederatedCredentialsBearer(reader, service_account_id="sa-123")
+
 """
 
 from datetime import timedelta
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
-from nebius.aio.token.deferred_channel import DeferredChannel
-from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
-from nebius.aio.token.renewable import Bearer as RenewableBearer
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import NamedBearer, Receiver
-from nebius.base.service_account.federated_credentials import FederatedCredentialsBearer as FederatedCredentialsReader
-from nebius.base.service_account.federated_credentials import (
+from ...base.service_account.federated_credentials import FederatedCredentialsBearer as FederatedCredentialsReader
+from ...base.service_account.federated_credentials import (
     FederatedCredentialsTokenRequester,
     FileFederatedCredentials,
 )
+from ..abc import ClientChannelInterface
+from ..metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
+from .deferred_channel import DeferredChannel
+from .exchangeable import Bearer as ExchangeableBearer
+from .renewable import Bearer as RenewableBearer
+from .token import Bearer as ParentBearer
+from .token import NamedBearer, Receiver
 
 
 class FederatedCredentialsBearer(ParentBearer):
@@ -90,7 +90,6 @@ class FederatedCredentialsBearer(ParentBearer):
 
     Example
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from asyncio import Future
@@ -111,11 +110,12 @@ class FederatedCredentialsBearer(ParentBearer):
 
         # Resolve the future with the newly created SDK
         channel_future.set_result(sdk)
+
     """
 
     def __init__(
         self,
-        federated_credentials: FederatedCredentialsTokenRequester | FederatedCredentialsReader | str,
+        federated_credentials: (FederatedCredentialsTokenRequester | FederatedCredentialsReader | str),
         service_account_id: str | None = None,
         channel: ClientChannelInterface | DeferredChannel | None = None,
         max_retries: int = 2,
@@ -132,7 +132,7 @@ class FederatedCredentialsBearer(ParentBearer):
         if isinstance(federated_credentials, FederatedCredentialsReader):
             if not isinstance(service_account_id, str):
                 raise TypeError(
-                    "Service account ID must be provided as a string when federated_credentials is a string."
+                    "Service account ID must be provided as a string when federated_credentials is a string.",
                 )
             federated_credentials = FederatedCredentialsTokenRequester(
                 service_account_id=service_account_id,
@@ -143,7 +143,7 @@ class FederatedCredentialsBearer(ParentBearer):
             raise TypeError(
                 "federated_credentials must be FederatedCredentialsTokenRequester, "
                 "FederatedCredentialsBearer or string"
-                f", got {type(federated_credentials)}"
+                f", got {type(federated_credentials)}",
             )
 
         self._metrics: AuthMetricsRecorder = auth_metrics_recorder(metrics, "federated-credentials")
@@ -190,8 +190,7 @@ class FederatedCredentialsBearer(ParentBearer):
         return self._source
 
     def receiver(self) -> "Receiver":
-        """Return a per-request receiver constructed from the underlying renewable
-        bearer.
+        """Return a receiver constructed from the underlying renewable bearer.
 
         :returns: A :class:`Receiver` from the underlying renewable bearer.
         """
@@ -199,7 +198,6 @@ class FederatedCredentialsBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to inner bearers."""
-
         self._metrics.set_metrics(metrics)
         self._exchangeable.set_metrics(self._metrics)
         setter = getattr(self._source, "set_metrics", None)

@@ -43,7 +43,7 @@ def test_unknown_extensions_are_read_without_registration() -> None:
             _field(1195, 2, name_settings),
             _field(1197, 0, 2),
             _field(1197, 2, _varint(3) + _varint(4)),
-        )
+        ),
     )
     options = descriptor_pb2.MethodOptions()
     options.MergeFromString(raw)

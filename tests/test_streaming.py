@@ -7,7 +7,6 @@ from time import monotonic, sleep
 
 import grpc
 import pytest
-
 from nebius.aio.channel import Channel as SDKChannel
 from nebius.aio.channel import NoCredentials
 from nebius.aio.constant_channel import Constant
@@ -62,7 +61,6 @@ def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> No
 @pytest.mark.parametrize("parameter", ("timeout", "auth_timeout"))
 def test_stream_rejects_non_finite_timeouts(value: float, parameter: str) -> None:
     """Stream deadlines require a portable finite value or ``None``."""
-
     with pytest.raises(
         ValueError,
         match=f"The {parameter} value must be finite or None",
@@ -80,7 +78,6 @@ def test_stream_rejects_non_finite_timeouts(value: float, parameter: str) -> Non
 
 def test_stream_unary_native_completion_wins_before_wrapper_resumes() -> None:
     """SDK shutdown cannot replace a completed stream-unary response."""
-
     native_waiting = Event()
     release_result = Event()
     released: list[tuple[object, bool]] = []
@@ -169,7 +166,6 @@ def test_stream_unary_native_completion_wins_before_wrapper_resumes() -> None:
 
 def test_terminal_server_stream_cancel_still_releases_lease() -> None:
     """Native terminal state rejects cancellation but not lease cleanup."""
-
     released = Event()
     release_calls: list[tuple[object | None, bool]] = []
     native_cancel_calls = 0
@@ -212,7 +208,6 @@ def test_terminal_server_stream_cancel_still_releases_lease() -> None:
 
 def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> None:
     """Accepted cross-thread cancellation prevents native call creation."""
-
     resolver_entered = Event()
     release_resolver = Event()
     call_factory_used = Event()
@@ -273,7 +268,7 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
     assert discarded == [address]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
     ((0.05, 5, False), (5, 0.05, True), (0.05, 5, True)),
@@ -285,7 +280,6 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
     authorization_enabled: bool,
 ) -> None:
     """A queued stream operation expires before opening a native RPC."""
-
     loop_blocked = Event()
     release_loop = Event()
     released = Event()
@@ -335,10 +329,9 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_stream_timeout_includes_synchronous_submission_delay() -> None:
     """Admission elapsed time is subtracted from the absolute deadline."""
-
     submissions = 0
     work_started = False
 
@@ -381,7 +374,6 @@ async def test_stream_timeout_includes_synchronous_submission_delay() -> None:
 
 def test_legacy_constant_stream_cancel_runs_on_owner_loop() -> None:
     """Constant's one-shot fallback must not discard stream cancellation."""
-
     ready: Future[asyncio.AbstractEventLoop] = Future()
     cancelled = Event()
     discarded = Event()
@@ -433,10 +425,9 @@ def test_legacy_constant_stream_cancel_runs_on_owner_loop() -> None:
         assert not thread.is_alive()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_legacy_stream_discovers_and_enforces_auth_timeout() -> None:
     """Provider discovery restores the legacy in-loop auth budget."""
-
     auth_started = asyncio.Event()
     auth_cancelled = asyncio.Event()
     released: list[object] = []
@@ -505,7 +496,6 @@ def test_rejected_stream_cancel_restores_retryable_state() -> None:
 
 def test_rejected_stream_cancel_preserves_submission_error() -> None:
     """A secondary legacy state failure must not mask dispatch rejection."""
-
     rejection = RuntimeError("The test rejected the cancellation submission.")
 
     class BrokenChannel:
@@ -532,7 +522,6 @@ def test_rejected_stream_cancel_preserves_submission_error() -> None:
 
 def test_stream_snapshots_unary_request_and_auth_options() -> None:
     """Stream setup observes values fixed before caller-side mutation."""
-
     received_requests: list[str] = []
     received_options: list[str] = []
     discarded: list[object] = []
@@ -688,7 +677,6 @@ def test_legacy_constant_stream_preserves_independent_auth_clock() -> None:
 
 def test_sdk_stream_bridges_foreign_loop_authenticator_future() -> None:
     """Streaming auth accepts a Future owned by another running loop."""
-
     auth_ready: Future[tuple[asyncio.AbstractEventLoop, asyncio.Future[None]]] = Future()
 
     def run_auth_loop() -> None:
@@ -785,7 +773,6 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
 
         async def authenticate(self, metadata, timeout, options) -> None:
             """Finish within the separate authorization budget."""
-
             await asyncio.sleep(0.08)
 
     class Provider:
@@ -793,7 +780,6 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
 
         def authenticator(self) -> SlowAuthenticator:
             """Create the slow test authenticator."""
-
             return SlowAuthenticator()
 
     class Call:
@@ -804,14 +790,12 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
 
             async def responses():
                 """Yield one test response."""
-
                 yield Disk()
 
             return responses()
 
         def cancel(self) -> bool:
             """Accept native stream cancellation."""
-
             return True
 
     class Transport:
@@ -819,7 +803,6 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
 
         def unary_stream(self, path, serializer, deserializer):
             """Return a callable that creates the test stream."""
-
             return lambda request, **kwargs: Call()
 
     owner = SDKChannel(credentials=NoCredentials())
@@ -834,23 +817,19 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
 
         def run_async(self, awaitable):
             """Submit work through the hidden owner SDK."""
-
             return owner.run_async(awaitable)
 
         def get_authorization_provider(self) -> Provider:
             """Return a provider that the caller cannot probe safely."""
-
             return Provider()
 
         def get_channel_by_route(self, route):
             """Return the owner-loop transport wrapper."""
-
             return address
 
         def release_channel(self, value, *, discard=False) -> None:
             """Accept release of the test transport."""
-
-            return None
+            return
 
     stream = StreamRequest(
         channel=FutureLikeLegacyChannel(),
@@ -865,7 +844,6 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
 
     async def consume() -> None:
         """Read the response after slow authentication finishes."""
-
         async with stream:
             assert isinstance(await anext(stream.__aiter__()), Disk)
 
@@ -877,7 +855,6 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
 
 def test_stream_write_snapshots_request_before_sdk_loop_dispatch() -> None:
     """Explicit writes cannot observe mutation while the SDK loop is busy."""
-
     loop_blocked = Event()
     release_loop = Event()
     received: list[str] = []
@@ -945,7 +922,6 @@ def test_prestart_stream_operation_cancellation_discards_override(
     operation: str,
 ) -> None:
     """Queued stream cancellation still establishes cleanup and finality."""
-
     loop_blocked = Event()
     release_loop = Event()
     released = Event()
@@ -1059,7 +1035,6 @@ def test_legacy_stream_cancel_stopped_dispatch_is_retryable(
 
 def test_stream_cancel_rolls_back_synchronous_cancelled_submission() -> None:
     """A submitter cancellation must close its coroutine and remain retryable."""
-
     submitted = []
 
     class CancellingChannel:
@@ -1166,7 +1141,6 @@ def test_legacy_stream_rejects_a_second_loop_before_write_lock() -> None:
 
 def test_constant_legacy_stream_disposes_nested_wrong_loop_operation() -> None:
     """Wrong-loop rejection disposes work below Constant's outer wrapper."""
-
     entered = Event()
     resume = Event()
     errors: list[BaseException] = []
@@ -1226,7 +1200,7 @@ def test_constant_legacy_stream_disposes_nested_wrong_loop_operation() -> None:
     assert errors == []
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_cancel_during_authentication_never_opens_transport() -> None:
     entered = asyncio.Event()
     resume = asyncio.Event()
@@ -1279,10 +1253,9 @@ async def test_cancel_during_authentication_never_opens_transport() -> None:
     assert released == [(override, True)]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_rejected_stream_submission_discards_explicit_override() -> None:
     """A scheduler rejection cannot strand a stream-owned transport lease."""
-
     rejection = RuntimeError("The test rejected the stream submission.")
     override = object()
     released: list[tuple[object | None, bool]] = []
@@ -1314,7 +1287,6 @@ async def test_rejected_stream_submission_discards_explicit_override() -> None:
 
 def test_rejected_stream_cancel_discards_explicit_override() -> None:
     """Rejected cancellation still releases a stream-owned transport lease."""
-
     override = object()
     released: list[tuple[object | None, bool]] = []
 
@@ -1344,10 +1316,9 @@ def test_rejected_stream_cancel_discards_explicit_override() -> None:
     assert released == [(override, True)]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_reentrant_resolver_cancellation_discards_unpublished_address() -> None:
     """A resolver-side cancellation discards its unpublished transport."""
-
     cancelled: list[bool] = []
     discarded: list[object] = []
 
@@ -1356,7 +1327,6 @@ async def test_reentrant_resolver_cancellation_discards_unpublished_address() ->
 
         def unary_stream(self, path, serializer, deserializer):
             """Reject creation of a native call for a canceled stream."""
-
             raise AssertionError("A canceled stream must not create a call.")
 
     class Address:
@@ -1371,13 +1341,11 @@ async def test_reentrant_resolver_cancellation_discards_unpublished_address() ->
 
         def get_channel_by_route(self, route):
             """Cancel reentrantly before returning the resolved transport."""
-
             cancelled.append(stream.cancel())
             return address
 
         def discard_channel(self, value):
             """Record cleanup of the unpublished transport."""
-
             discarded.append(value)
 
     class Result:
@@ -1386,7 +1354,6 @@ async def test_reentrant_resolver_cancellation_discards_unpublished_address() ->
         @classmethod
         def FromString(cls, data):  # noqa: N802
             """Create a test result from serialized data."""
-
             return cls()
 
     stream = StreamRequest(
@@ -1404,7 +1371,7 @@ async def test_reentrant_resolver_cancellation_discards_unpublished_address() ->
     assert discarded == [address]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_reentrant_call_factory_cancels_unpublished_call() -> None:
     cancelled: list[bool] = []
     call_cancellations: list[bool] = []
@@ -1458,7 +1425,7 @@ async def test_reentrant_call_factory_cancels_unpublished_call() -> None:
     assert discarded == [address]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_start_failure_discards_acquired_channel() -> None:
     address = object()
     discarded: list[object] = []
@@ -1496,7 +1463,7 @@ async def test_start_failure_discards_acquired_channel() -> None:
     assert discarded == [address]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_cancelled_write_aborts_call_and_discards_channel() -> None:
     entered = asyncio.Event()
     cancelled: list[bool] = []
@@ -1552,7 +1519,7 @@ async def test_cancelled_write_aborts_call_and_discards_channel() -> None:
     assert discarded == [address]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_context_manager_closes_server_stream_after_early_break() -> None:
     cancelled: list[bool] = []
     discarded: list[object] = []
@@ -1608,7 +1575,6 @@ async def test_context_manager_closes_server_stream_after_early_break() -> None:
 
 def test_failed_stream_release_can_be_retried() -> None:
     """A failing custom release hook must leave a later close retryable."""
-
     release_calls = 0
     successful_releases = 0
 
@@ -1646,10 +1612,9 @@ def test_failed_stream_release_can_be_retried() -> None:
     assert successful_releases == 1
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable() -> None:
     """Implicit iterator cleanup must not hide an unexpected release error."""
-
     release_calls = 0
 
     class Call:
@@ -1708,10 +1673,9 @@ async def test_iterator_cleanup_surfaces_release_failure_and_remains_retryable()
     assert release_calls == 2
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
     """Iterator finalization uses rejection-safe cleanup admission."""
-
     submissions = 0
     releases: list[tuple[object, bool]] = []
 
@@ -1776,7 +1740,6 @@ async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
 
 def test_rejected_stream_close_aborts_only_on_owner_loop() -> None:
     """Rejected external cleanup cannot mutate asyncio state off-loop."""
-
     channel = SDKChannel(credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the stream close submission.")
     released = Event()
@@ -1830,7 +1793,6 @@ def test_rejected_stream_close_aborts_only_on_owner_loop() -> None:
 
 def test_failed_async_stream_cancel_release_can_be_retried() -> None:
     """A scheduled cancellation observes cleanup failure and permits retry."""
-
     first_release = Event()
     successful_release = Event()
     release_calls = 0

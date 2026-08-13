@@ -48,7 +48,6 @@ Classes
 
 Example
 -------
-
 Construct a bearer and fetch a token::
 
         bearer = Bearer(profile_name, client_id, endpoint, federation_id)
@@ -62,7 +61,7 @@ from logging import getLogger
 from ssl import SSLContext
 from typing import Any, TextIO, TypeVar
 
-from nebius.aio.metrics import (
+from ...metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -70,9 +69,9 @@ from nebius.aio.metrics import (
     auth_metrics_recorder,
     metric_start,
 )
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver as ParentReceiver
-from nebius.aio.token.token import Token
+from ..token import Bearer as ParentBearer
+from ..token import Receiver as ParentReceiver
+from ..token import Token
 
 log = getLogger(__name__)
 
@@ -261,7 +260,6 @@ class Bearer(ParentBearer):
 
     Example
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -279,6 +277,7 @@ class Bearer(ParentBearer):
             ),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -327,5 +326,4 @@ class Bearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks used by subsequently created receivers."""
-
         self._metrics.set_metrics(metrics)

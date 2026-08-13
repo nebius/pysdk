@@ -1,9 +1,10 @@
 def generate_pkce_code_verifier() -> str:
-    """
-    Generate a PKCE code verifier.
+    """Generate a PKCE code verifier.
 
-    Returns:
+    Returns
+    -------
         str: A securely generated code verifier.
+
     """
     import base64
     import secrets
@@ -18,9 +19,7 @@ def generate_pkce_code_verifier() -> str:
 
 
 class PKCE(str):
-    """
-    A class representing a PKCE (Proof Key for Code Exchange) code verifier.
-    """
+    """A class representing a PKCE (Proof Key for Code Exchange) code verifier."""
 
     def __new__(cls) -> "PKCE":
         code_verifier = generate_pkce_code_verifier()
@@ -31,11 +30,12 @@ class PKCE(str):
 
     @property
     def challenge(self) -> str:
-        """
-        Generate the PKCE code challenge from the code verifier.
+        """Generate the PKCE code challenge from the code verifier.
 
-        Returns:
+        Returns
+        -------
             str: The PKCE code challenge.
+
         """
         import base64
         import hashlib
@@ -50,20 +50,22 @@ class PKCE(str):
 
     @property
     def method(self) -> str:
-        """
-        Get the PKCE method, which is always 'S256' for SHA-256.
+        """Get the PKCE method, which is always 'S256' for SHA-256.
 
-        Returns:
+        Returns
+        -------
             str: The PKCE method.
+
         """
         return "S256"
 
     @property
     def verifier(self) -> str:
-        """
-        Get the PKCE code verifier.
+        """Get the PKCE code verifier.
 
-        Returns:
+        Returns
+        -------
             str: The PKCE code verifier.
+
         """
         return str(self)

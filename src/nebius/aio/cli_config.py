@@ -16,9 +16,12 @@ from pathlib import Path
 from ssl import SSLContext
 from typing import Any, Literal, TextIO, cast
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
-from nebius.aio.metrics import (
+from ..base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CONFIG_FILE, ENDPOINT_ENV, PROFILE_ENV, TOKEN_ENV
+from ..base.error import SDKError
+from ..base.service_account.service_account import TokenRequester as TokenRequestReader
+from .abc import ClientChannelInterface
+from .authorization.authorization import Provider as AuthorizationProvider
+from .metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -29,13 +32,10 @@ from nebius.aio.metrics import (
     metric_start,
     record_config_metric,
 )
-from nebius.aio.token.service_account import ServiceAccountBearer
-from nebius.aio.token.static import EnvBearer, NoTokenInEnvError
-from nebius.aio.token.token import Bearer as TokenBearer
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CONFIG_FILE, ENDPOINT_ENV, PROFILE_ENV, TOKEN_ENV
-from nebius.base.error import SDKError
-from nebius.base.service_account.service_account import TokenRequester as TokenRequestReader
+from .token.service_account import ServiceAccountBearer
+from .token.static import EnvBearer, NoTokenInEnvError
+from .token.token import Bearer as TokenBearer
+from .token.token import Token
 
 Credentials = AuthorizationProvider | TokenBearer | TokenRequestReader | Token | str
 
@@ -102,7 +102,6 @@ class Config:
 
     Example
     -------
-
     Initialize the SDK with CLI config::
 
         from nebius.sdk import SDK
@@ -121,6 +120,7 @@ class Config:
         config = Config()
         print(f"Default parent ID: {config.parent_id}")
         print(f"Endpoint: {config.endpoint()}")
+
     """
 
     def __init__(
@@ -139,8 +139,7 @@ class Config:
         auth_metrics: AuthMetricsLike = None,
         impersonate_service_account_id: str | None = None,
     ) -> None:
-        """Initialize the config reader, and read the config file, selecting
-        the active profile.
+        """Initialize the config reader and select the active profile.
 
         ``metrics`` receives both configuration metrics and auth metrics for
         credentials created by this reader. ``auth_metrics`` receives only auth
@@ -172,7 +171,6 @@ class Config:
         The same callback object is propagated to credentials returned later so
         token acquisition, refresh, and cache events share the same sink.
         """
-
         previous = self._metrics
         self._metrics = metrics
         self._auth_metrics = metrics
@@ -195,12 +193,10 @@ class Config:
         :meth:`set_metrics` when the same sink should receive both config and
         auth events.
         """
-
         self._auth_metrics = metrics
 
     def profile_name(self) -> str | None:
         """Return the selected profile name."""
-
         return self._profile_name
 
     def _record_metric(
@@ -282,7 +278,7 @@ class Config:
                         "No profile selected. Either set the profile in the "
                         "config setup,"
                         " set the env var NEBIUS_PROFILE or "
-                        "execute `nebius profile activate`."
+                        "execute `nebius profile activate`.",
                     )
             profile = self._profile_name
             if not isinstance(profile, str):
@@ -378,7 +374,7 @@ class Config:
             )
         if "token-file" in self._profile:
             start = metric_start()
-            from nebius.aio.token.file import Bearer as FileBearer
+            from .token.file import Bearer as FileBearer
 
             try:
                 if not isinstance(self._profile["token-file"], str):
@@ -403,13 +399,13 @@ class Config:
                     raise ConfigError("Missing federation-endpoint in the profile.")
                 if not isinstance(self._profile["federation-endpoint"], str):
                     raise ConfigError(
-                        f"Federation endpoint should be a string, got {type(self._profile['federation-endpoint'])}."
+                        f"Federation endpoint should be a string, got {type(self._profile['federation-endpoint'])}.",
                     )
                 if "federation-id" not in self._profile:
                     raise ConfigError("Missing federation-id in the profile.")
                 if not isinstance(self._profile["federation-id"], str):
                     raise ConfigError(f"Federation id should be a string, got {type(self._profile['federation-id'])}.")
-                from nebius.aio.token.federation_account import FederationBearer
+                from .token.federation_account import FederationBearer
 
                 if not self._client_id:
                     raise ConfigError("Client ID is required for federation authentication.")
@@ -419,7 +415,7 @@ class Config:
                     f"client_id {self._client_id}, "
                     f"federation_url {self._profile['federation-endpoint']}, "
                     f"federation_id {self._profile['federation-id']}, "
-                    f"writer {writer}, no_browser_open {no_browser_open}."
+                    f"writer {writer}, no_browser_open {no_browser_open}.",
                 )
 
                 return finish(
@@ -450,7 +446,7 @@ class Config:
                 if "service-account-id" in self._profile:
                     if not isinstance(self._profile["service-account-id"], str):
                         raise ConfigError(
-                            f"Service account should be a string, got {type(self._profile['service-account-id'])}."
+                            f"Service account should be a string, got {type(self._profile['service-account-id'])}.",
                         )
                     svc_id = self._profile["service-account-id"]
 
@@ -460,7 +456,7 @@ class Config:
                         str,
                     ):
                         raise ConfigError("federated-subject-credentials-file-path should be a string")
-                    from nebius.aio.token.federated_credentials import FederatedCredentialsBearer
+                    from .token.federated_credentials import FederatedCredentialsBearer
 
                     return finish(
                         "service-account",
@@ -476,7 +472,7 @@ class Config:
                 if "service-account-credentials-file-path" in self._profile:
                     if not isinstance(self._profile["service-account-credentials-file-path"], str):
                         raise ConfigError("service-account-credentials-file-path should be a string")
-                    from nebius.base.service_account.credentials_file import (
+                    from ..base.service_account.credentials_file import (
                         Reader as CredentialsFileReader,
                     )
 
@@ -485,7 +481,7 @@ class Config:
                         start,
                         ServiceAccountBearer(
                             service_account=CredentialsFileReader(
-                                self._profile["service-account-credentials-file-path"]
+                                self._profile["service-account-credentials-file-path"],
                             ),
                             channel=channel,
                             metrics=self._auth_metrics,
@@ -526,9 +522,7 @@ class Config:
                 if "private-key-file-path" in self._profile:
                     if not isinstance(self._profile["private-key-file-path"], str):
                         raise ConfigError("private-key-file-path should be a string")
-                    from nebius.base.service_account.pk_file import (
-                        Reader as PKFileReader,
-                    )
+                    from ..base.service_account.pk_file import Reader as PKFileReader
 
                     return finish(
                         "service-account",
@@ -545,7 +539,7 @@ class Config:
                     "(service-account-id and federated-subject-credentials-file-path) "
                     "OR (service-account-credentials-file-path) OR "
                     "(service-account-id, public-key-id and one of "
-                    "private-key / private-key-file-path)"
+                    "private-key / private-key-file-path)",
                 )
             except Exception:
                 fail("service-account", start)
@@ -573,7 +567,7 @@ class Config:
             return credentials
         if not isinstance(credentials, TokenBearer):
             raise ConfigError(f"Impersonation requires token bearer credentials, got {type(credentials)}.")
-        from nebius.aio.token.impersonated import CachedBearer as ImpersonatedBearer
+        from .token.impersonated import CachedBearer as ImpersonatedBearer
 
         return ImpersonatedBearer(
             service_account_id,

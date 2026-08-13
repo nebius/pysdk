@@ -14,14 +14,14 @@ from typing import Any, Generic, TypeVar
 
 from typing_extensions import Unpack
 
-from nebius.aio.abc import ClientChannelInterface as Channel
-from nebius.aio.constant_channel import Constant
-from nebius.aio.request import Request
+from .abc import ClientChannelInterface as Channel
+from .constant_channel import Constant
+from .request import Request
 
-# from nebius.api.nebius.common.v1 import Operation
-from nebius.aio.request_kwargs import RequestKwargs
-from nebius.aio.route import Route
-from nebius.aio.stream import StreamRequest
+# from ..api.nebius.common.v1 import Operation
+from .request_kwargs import RequestKwargs
+from .route import Route
+from .stream import StreamRequest
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
@@ -137,8 +137,7 @@ OperationService = TypeVar("OperationService", bound=Client)
 
 
 class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
-    """Extension of :class:`Client` for services that manage long-running
-    operations.
+    """Extension of :class:`Client` for services that manage long-running operations.
 
     :meth:`operation_service` creates an operation client when first called.
     It caches this client. A constant channel routes the client to the
@@ -182,6 +181,6 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
                 Constant(
                     self.__service_name__ + "." + self.__operation_source_method__,
                     self._channel,
-                )
+                ),
             )
         return self.__operation_service__

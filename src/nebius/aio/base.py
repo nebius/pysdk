@@ -69,7 +69,6 @@ class AddressChannel:
 
     def _mark_closed_by_sdk(self) -> None:
         """Record that SDK lifecycle management closed this transport."""
-
         close_state_lock = self._ensure_close_state()
         with close_state_lock:
             self._retired_by_sdk = True
@@ -84,7 +83,6 @@ class AddressChannel:
 
         :return: New wrapper for the same native channel and owner loop.
         """
-
         lease = copy(self)
         lease._close_state_lock = Lock()
         lease._retired_by_sdk = False
@@ -102,7 +100,6 @@ class AddressChannel:
         never re-enter a pool while that close is pending or after its owner
         loop becomes available again.
         """
-
         close_state_lock = self._ensure_close_state()
         with close_state_lock:
             if getattr(self, "_retired_by_sdk", False):
@@ -112,14 +109,12 @@ class AddressChannel:
 
     def _is_retired_by_sdk(self) -> bool:
         """Return whether SDK lifecycle management reserved this transport."""
-
         close_state_lock = self._ensure_close_state()
         with close_state_lock:
             return getattr(self, "_retired_by_sdk", False)
 
     def _is_closed_by_sdk(self) -> bool:
         """Return whether SDK lifecycle management closed this transport."""
-
         close_state_lock = self._ensure_close_state()
         with close_state_lock:
             return self._closed_by_sdk
@@ -133,7 +128,6 @@ class AddressChannel:
 
         :return: Per-wrapper lock protecting the SDK-close marker.
         """
-
         try:
             close_state_lock = self._close_state_lock
         except AttributeError:

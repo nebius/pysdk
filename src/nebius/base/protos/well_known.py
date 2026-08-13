@@ -6,7 +6,7 @@ from typing import Any
 from google.protobuf.duration_pb2 import Duration
 from google.protobuf.timestamp_pb2 import Timestamp
 
-from nebius.base.fieldmask import Mask
+from ..fieldmask import Mask
 
 local_timezone = datetime.now(timezone.utc).astimezone().tzinfo
 """Local timezone used when converting protobuf timestamps."""
@@ -33,7 +33,7 @@ def ts_mask(_: Any) -> Mask:
         field_parts={
             "seconds": Mask(),
             "nanos": Mask(),
-        }
+        },
     )
 
 
@@ -85,7 +85,7 @@ def duration_mask(_: Any) -> Mask:
         field_parts={
             "seconds": Mask(),
             "nanos": Mask(),
-        }
+        },
     )
 
 
@@ -108,7 +108,7 @@ def status_mask(_: Any) -> Mask:
                         "type_url": Mask(),
                         "value": Mask(),
                     },
-                )
+                ),
             ),
-        }
+        },
     )

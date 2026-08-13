@@ -8,11 +8,10 @@ from google.protobuf.duration_pb2 import Duration
 from google.protobuf.message import Message as PMessage
 from google.protobuf.timestamp_pb2 import Timestamp
 
-from nebius.aio.abc import ClientChannelInterface
-from nebius.base.error import SDKError
-from nebius.base.fieldmask import FieldKey, Mask
-from nebius.base.token_sanitizer import TokenSanitizer
-
+from ...aio.abc import ClientChannelInterface
+from ..error import SDKError
+from ..fieldmask import FieldKey, Mask
+from ..token_sanitizer import TokenSanitizer
 from .descriptor import DescriptorWrap
 from .pb_enum import Enum
 
@@ -159,7 +158,7 @@ class Message:
         elif initial_message is not None:
             AttributeError(
                 f"Wrong initial message type: expected {self.__PB2_CLASS__},"  # type: ignore[unused-ignore]
-                f" received {type(initial_message)}."
+                f" received {type(initial_message)}.",
             )
         else:
             self.__pb2_message__ = self.__PB2_CLASS__()  # type: ignore[unused-ignore]
@@ -216,7 +215,7 @@ class Message:
             return cls.__sensitive_fields[field_name]
         from google.protobuf.descriptor import FieldDescriptor
 
-        from nebius.api.nebius import sensitive
+        from ...api.nebius import sensitive
 
         fn_pb2 = cls.__PY_TO_PB2__[field_name]
         desc = cls.get_descriptor()
@@ -239,7 +238,7 @@ class Message:
             return cls.__credentials_fields[field_name]
         from google.protobuf.descriptor import FieldDescriptor
 
-        from nebius.api.nebius import credentials
+        from ...api.nebius import credentials
 
         fn_pb2 = cls.__PY_TO_PB2__[field_name]
         desc = cls.get_descriptor()
@@ -252,8 +251,7 @@ class Message:
         return is_creds
 
     def __repr__(self) -> str:
-        """Return a human-readable representation of the message, sanitizing sensitive
-        fields."""
+        """Return a representation of the message with sensitive fields sanitized."""
         ret = self.__class__.__name__ + ":\n"
         desc = self.__class__.get_descriptor()
         for el in dir(self):
@@ -286,7 +284,8 @@ class Message:
         if self.__class__.__default is None:
             self.__class__.__default = self.__class__(None)
         return getattr(self, pythonic_name) == getattr(  # type: ignore[no-any-return]
-            self.__class__.__default, pythonic_name
+            self.__class__.__default,
+            pythonic_name,
         )
 
     @classmethod

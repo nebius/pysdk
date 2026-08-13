@@ -4,14 +4,13 @@ import logging
 import pytest
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_update_instance_v2() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
     from nebius.api.nebius.compute.v1 import (
@@ -22,6 +21,7 @@ async def test_update_instance_v2() -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.base.version import version as sdk_version
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -50,7 +50,7 @@ async def test_update_instance_v2() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             ret = OperationMessage()
@@ -82,7 +82,7 @@ async def test_update_instance_v2() -> None:
                 f"compute.localhost:{port}": [
                     ("grpc.primary_user_agent", "c"),
                     ("grpc.secondary_user_agent", "z"),
-                ]
+                ],
             },
             credentials=NoCredentials(),
             user_agent_prefix="test",
@@ -104,14 +104,13 @@ async def test_update_instance_v2() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_update_list() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
     from nebius.api.nebius.compute.v1 import (
@@ -121,6 +120,7 @@ async def test_update_list() -> None:
         UpdateInstanceRequest,
     )
     from nebius.base.options import INSECURE
+
     from tests.grpc_service import add_service
 
     # Set up logging
@@ -152,7 +152,7 @@ async def test_update_list() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             ret = OperationMessage()
@@ -188,7 +188,7 @@ async def test_update_list() -> None:
                 existing_filesystem=ExistingFilesystem(
                     id="foo-bar",
                 ),
-            )
+            ),
         ]
         upd.spec.filesystems = []
         req = client.update(upd)

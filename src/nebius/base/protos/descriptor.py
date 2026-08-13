@@ -43,8 +43,7 @@ class DescriptorWrap(ABC, Generic[T]):
         self._descriptor: T | None = None
 
     def __call__(self) -> T:
-        """Retrieve the descriptor of the specified type using the fully qualified
-        name."""
+        """Retrieve the descriptor of the specified type by its fully qualified name."""
         if self._descriptor is not None:
             return self._descriptor
         descriptor = self._find_descriptor(self._file_descriptor, self._name)
@@ -53,13 +52,15 @@ class DescriptorWrap(ABC, Generic[T]):
         if not isinstance(descriptor, self._expected_type):
             raise TypeError(
                 f"Descriptor {self._name} is of type {type(descriptor).__name__}, "
-                f"expected {self._expected_type.__name__}"
+                f"expected {self._expected_type.__name__}",
             )
         self._descriptor = descriptor
         return descriptor
 
     def _find_descriptor(
-        self, container: pb.FileDescriptor | pb.Descriptor, name: str
+        self,
+        container: pb.FileDescriptor | pb.Descriptor,
+        name: str,
     ) -> pb.Descriptor | pb.EnumDescriptor | pb.OneofDescriptor | pb.ServiceDescriptor | None:
         """Recursively search for a descriptor by name.
 

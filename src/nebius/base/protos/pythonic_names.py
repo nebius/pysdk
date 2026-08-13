@@ -68,7 +68,7 @@ def _modify_name(
             f"Suggested name '{suggested_name}' for {full_proto_name} is reserved in"
             " Python and cannot be "
             f"used. Prefixing with first container letter {first_container_letter}."
-            f" Resulting name: '{ret}'."
+            f" Resulting name: '{ret}'.",
         )
         return ret
 
@@ -87,7 +87,7 @@ def _modify_name(
                 " conflicts with other"
                 f" units renamed from a reserved word '{something}'."
                 f" Prefixing with repeated first container letter "
-                f"{first_container_letter}. Resulting name: '{ret}'."
+                f"{first_container_letter}. Resulting name: '{ret}'.",
             )
             return ret
 
@@ -105,7 +105,7 @@ def _modify_name(
             "conflicts with Python magic"
             f" methods '{something}' or units renamed from them."
             f" Prefixing with repeated first container letter {first_container_letter}."
-            f" Resulting name: '{ret}'."
+            f" Resulting name: '{ret}'.",
         )
         return ret
 

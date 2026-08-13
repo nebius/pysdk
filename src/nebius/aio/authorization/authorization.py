@@ -19,7 +19,7 @@ the same authenticator.
 
 from abc import ABC, abstractmethod
 
-from nebius.base.metadata import Metadata
+from ...base.metadata import Metadata
 
 
 class Authenticator(ABC):
@@ -102,7 +102,6 @@ class Provider(ABC):
 
     Example
     -------
-
     Give a provider to the SDK through the ``credentials`` parameter::
 
         from nebius.sdk import SDK

@@ -27,18 +27,18 @@ from typing import Any, Generic, TypeVar, cast
 from grpc import CallCredentials, ChannelConnectivity, Compression
 from grpc.aio import Metadata as GrpcMetadata
 
-from nebius.aio._task_context import bridge_awaitable, dispose_unstarted_awaitable
-from nebius.aio.abc import release_address_channel
-from nebius.aio.authorization.options import OPTION_TYPE, Types
-from nebius.aio.base import AddressChannel
-from nebius.aio.idempotency import ensure_key_in_metadata
-from nebius.aio.request import (
+from ..base.metadata import Metadata
+from ._task_context import bridge_awaitable, dispose_unstarted_awaitable
+from .abc import release_address_channel
+from .authorization.options import OPTION_TYPE, Types
+from .base import AddressChannel
+from .idempotency import ensure_key_in_metadata
+from .request import (
     _authorization_deadline_applies,
     _snapshot_request_input,
     _validate_timeout,
 )
-from nebius.aio.route import Route
-from nebius.base.metadata import Metadata
+from .route import Route
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
@@ -148,10 +148,9 @@ class StreamRequest(Generic[Req, Res]):
 
     def _check_process(self) -> None:
         """Reject a stream inherited across ``fork`` before taking its locks."""
-
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "You cannot use an SDK stream after a fork. Create SDK objects after the child process starts."
+                "You cannot use an SDK stream after a fork. Create SDK objects after the child process starts.",
             )
 
     @staticmethod
@@ -191,8 +190,8 @@ class StreamRequest(Generic[Req, Res]):
                     self._metadata,
                     timeout,
                     self._auth_options,
-                )
-            )
+                ),
+            ),
         )
         cancelled = ensure_future(self._cancel_event.wait())
         try:
@@ -228,7 +227,6 @@ class StreamRequest(Generic[Req, Res]):
         authorization deadline continues to bound authentication plus the
         native stream lifetime.
         """
-
         now = monotonic()
         with self._state_lock:
             if self._timeout is None or self._request_deadline_paused:
@@ -240,7 +238,6 @@ class StreamRequest(Generic[Req, Res]):
 
     def _resume_request_deadline_after_authorization(self) -> None:
         """Resume request timeout and publish completed authentication."""
-
         now = monotonic()
         with self._state_lock:
             if self._timeout is not None and self._request_deadline_paused:
@@ -318,7 +315,9 @@ class StreamRequest(Generic[Req, Res]):
                 shape = (
                     "stream_stream"
                     if self._client_streaming and self._server_streaming
-                    else "stream_unary" if self._client_streaming else "unary_stream"
+                    else "stream_unary"
+                    if self._client_streaming
+                    else "unary_stream"
                 )
                 multi: Callable[..., Any] = getattr(transport, shape)(
                     f"/{self._route.service}/{self._route.method}",
@@ -329,10 +328,11 @@ class StreamRequest(Generic[Req, Res]):
                 timeout = self._remaining_deadline()
                 if timeout is not None and timeout <= 0:
                     raise TimeoutError("The stream timed out before RPC dispatch.")
+                metadata = Metadata(self._metadata)
                 call = multi(
                     *arguments,
                     timeout=timeout,
-                    metadata=GrpcMetadata(*self._metadata),
+                    metadata=GrpcMetadata(*metadata),
                     credentials=self._credentials,
                     wait_for_ready=self._wait_for_ready,
                     compression=self._compression,
@@ -376,7 +376,6 @@ class StreamRequest(Generic[Req, Res]):
 
     def _release_soon(self, *, discard: bool = False) -> None:
         """Release transport state without blocking an active caller loop."""
-
         with self._state_lock:
             if self._released or self._address_channel is None:
                 return
@@ -400,14 +399,12 @@ class StreamRequest(Generic[Req, Res]):
 
     def _is_cancelled(self) -> bool:
         """Return the cancellation state under the state lock."""
-
         self._check_process()
         with self._state_lock:
             return self._cancel_requested or self._cancelled
 
     def _mark_native_terminal(self, _: object) -> None:
         """Publish native completion before the stream wrapper resumes."""
-
         with self._state_lock:
             self._native_terminal = True
 
@@ -416,7 +413,6 @@ class StreamRequest(Generic[Req, Res]):
 
         :param completed: Future-like cancellation submission.
         """
-
         try:
             error = completed.exception()
         except BaseException as completion_error:
@@ -431,7 +427,6 @@ class StreamRequest(Generic[Req, Res]):
 
     def _is_released(self) -> bool:
         """Return the channel-release state under the state lock."""
-
         self._check_process()
         with self._state_lock:
             return self._released
@@ -466,7 +461,6 @@ class StreamRequest(Generic[Req, Res]):
         :return: The smaller remaining request/authorization budget, or
             ``None`` when both configured limits are infinite.
         """
-
         now = monotonic()
         with self._state_lock:
             if initialize and not self._deadlines_started:
@@ -492,7 +486,6 @@ class StreamRequest(Generic[Req, Res]):
 
     def _remaining_dispatch_deadline(self) -> float | None:
         """Return the request/authentication budget before SDK-loop dispatch."""
-
         now = monotonic()
         with self._state_lock:
             deadlines = [
@@ -523,7 +516,6 @@ class StreamRequest(Generic[Req, Res]):
             operation rejection leaves an existing stream active.
         :return: Result of the stream work.
         """
-
         self._check_process()
         self._remaining_deadline(initialize=enforce_deadline)
         dispatch_remaining = self._remaining_dispatch_deadline() if enforce_deadline else None
@@ -536,7 +528,6 @@ class StreamRequest(Generic[Req, Res]):
 
         def cleanup_if_unstarted(*, release_unopened_stream: bool) -> None:
             """Dispose rejected work and release only an unopened stream."""
-
             nonlocal prestart_cleanup_done
             with submission_state_lock:
                 if submission_started or prestart_cleanup_done:
@@ -559,7 +550,6 @@ class StreamRequest(Generic[Req, Res]):
 
                 def abort_after_rejection() -> None:
                     """Abort on the stream owner loop without masking rejection."""
-
                     try:
                         self._abort()
                     except BaseException as abort_error:
@@ -594,7 +584,6 @@ class StreamRequest(Generic[Req, Res]):
 
             async def start_operation() -> T:
                 """Publish startup before entering stream lifecycle work."""
-
                 nonlocal submission_started
                 with submission_state_lock:
                     submission_started = True
@@ -693,7 +682,7 @@ class StreamRequest(Generic[Req, Res]):
                 waiter.cancel()
                 await gather(waiter, return_exceptions=True)
                 raise
-            except (TimeoutError, AsyncTimeoutError) as error:
+            except (AsyncTimeoutError, TimeoutError) as error:
                 if waiter.done() and not waiter.cancelled():
                     terminal_error = waiter.exception()
                     if terminal_error is error:
@@ -728,7 +717,6 @@ class StreamRequest(Generic[Req, Res]):
 
     async def _result_internal(self) -> Res:
         """Read a unary response and release the leased channel."""
-
         call = await self._start()
         try:
             try:
@@ -771,7 +759,7 @@ class StreamRequest(Generic[Req, Res]):
             if not self._is_released():
                 # Import locally to keep the streaming wrapper independent of
                 # the concrete Channel module during module initialization.
-                from nebius.aio.channel import ChannelClosedError
+                from .channel import ChannelClosedError
 
                 try:
                     await self._on_sdk_loop(
@@ -785,7 +773,6 @@ class StreamRequest(Generic[Req, Res]):
 
     async def _responses_internal(self) -> AsyncIterator[Res]:
         """Yield streaming responses directly on the call owner loop."""
-
         call = await self._start()
         try:
             async for response in call:
@@ -802,7 +789,6 @@ class StreamRequest(Generic[Req, Res]):
         :return: Next streaming response.
         :raises StopAsyncIteration: If the response stream is complete.
         """
-
         async with self._read_lock:
             if self._response_iterator is None:
                 call = await self._start()
@@ -827,7 +813,6 @@ class StreamRequest(Generic[Req, Res]):
             messages are copied before dispatch. Unknown custom values retain
             their historical pass-through behavior and must be thread-safe.
         """
-
         snapshot = _snapshot_request_input(request)
         await self._on_sdk_loop(self._write(snapshot))
 
@@ -837,7 +822,6 @@ class StreamRequest(Generic[Req, Res]):
         :param request: Request message to write.
         :raises TypeError: If the RPC does not accept explicit writes.
         """
-
         async with self._write_lock:
             if not self._client_streaming:
                 raise TypeError("The RPC does not accept a client stream.")
@@ -858,7 +842,6 @@ class StreamRequest(Generic[Req, Res]):
 
         :raises TypeError: If the RPC does not accept explicit writes.
         """
-
         async with self._write_lock:
             if not self._client_streaming:
                 raise TypeError("The RPC does not accept a client stream.")
@@ -881,10 +864,9 @@ class StreamRequest(Generic[Req, Res]):
 
     async def _aclose(self) -> None:
         """Abort the native call and release its leased channel."""
-
         self._abort()
 
-    async def __aenter__(self) -> "StreamRequest[Req, Res]":
+    async def __aenter__(self) -> StreamRequest[Req, Res]:
         self._check_process()
         return self
 
@@ -913,7 +895,6 @@ class StreamRequest(Generic[Req, Res]):
             dispatch; otherwise ``False``. A terminal server stream returns
             ``False`` even when its remaining lease cleanup was scheduled.
         """
-
         self._check_process()
         with self._state_lock:
             if self._cancel_requested or self._cancelled or self._released:

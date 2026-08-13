@@ -13,7 +13,6 @@ raise :class:`nebius.base.error.SDKError`.
 
 Examples
 --------
-
 Create a bearer that reads from ``~/.nebius/token``::
 
     from nebius.aio.token.file import Bearer
@@ -33,15 +32,14 @@ from logging import getLogger
 from pathlib import Path
 from time import monotonic
 
-from nebius.aio.metrics import (
+from ...base.error import SDKError
+from ..metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
     auth_metrics_recorder,
     metric_start,
 )
-from nebius.base.error import SDKError
-
 from .token import Bearer as ParentBearer
 from .token import Receiver as ParentReceiver
 from .token import Token
@@ -114,7 +112,6 @@ class Bearer(ParentBearer):
 
     Example
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -124,6 +121,7 @@ class Bearer(ParentBearer):
             credentials=Bearer("~/nebius.token"),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -152,7 +150,6 @@ class Bearer(ParentBearer):
 
     def fetch_token(self) -> Token:
         """Return a cached file token or read and cache it from disk."""
-
         now = monotonic()
         if (
             self._cached_token is not None
@@ -179,7 +176,6 @@ class Bearer(ParentBearer):
 
     def should_retry_after_error(self, token: Token) -> bool:
         """Invalidate cached token and return whether the file token changed."""
-
         if (
             self._cached_token is not None
             and not self._cached_token.is_empty()
@@ -197,7 +193,6 @@ class Bearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks used by subsequently created receivers."""
-
         self._metrics.set_metrics(metrics)
 
     def _read_token_value(self) -> str:

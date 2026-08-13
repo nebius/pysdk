@@ -20,7 +20,8 @@ from logging import getLogger
 from pathlib import Path
 from typing import cast
 
-from nebius.aio.metrics import (
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ...metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -29,11 +30,9 @@ from nebius.aio.metrics import (
     auth_metrics_recorder,
     bind_auth_metrics,
 )
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver as ParentReceiver
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
+from ..token import Bearer as ParentBearer
+from ..token import Receiver as ParentReceiver
+from ..token import Token
 from .throttled_token_cache import ThrottledTokenCache
 
 log = getLogger(__name__)
@@ -183,7 +182,6 @@ class RenewableFileCacheBearer(ParentBearer):
 
     Example
     -------
-
     Wrap a custom bearer with a name and file cache::
 
         from nebius.sdk import SDK
@@ -211,6 +209,7 @@ class RenewableFileCacheBearer(ParentBearer):
             credentials=cached_bearer,
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -253,7 +252,6 @@ class RenewableFileCacheBearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self.metrics.provider
 
     def _is_token_fresh(self, token: Token) -> bool:
@@ -275,6 +273,5 @@ class RenewableFileCacheBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self.metrics.set_metrics(metrics)
         self._bearer = cast(ParentBearer, bind_auth_metrics(self._bearer, self.metrics))

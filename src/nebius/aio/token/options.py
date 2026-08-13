@@ -60,7 +60,6 @@ Options
 
 Examples
 --------
-
 Typical usage when requesting a synchronous renewal with a short
 timeout::
 
@@ -83,6 +82,7 @@ used in :mod:`nebius.aio.token.renewable` and
 :mod:`nebius.aio.token.exchangeable`: boolean flags are tested by
 checking for a non-empty value, while numeric overrides are parsed and
 validated. Invalid numeric values are logged and ignored.
+
 """
 
 OPTION_MAX_RETRIES = "max_fetch_token_retries"

@@ -28,14 +28,12 @@ class SyncronizerInterface(Protocol):
         :param timeout: Optional wall-clock timeout in seconds.
         :return: The result of the awaitable.
         """
-
         ...
 
 
 @runtime_checkable
 class ClientChannelInterface(Protocol):
-    """Protocol describing the minimal channel operations required by
-    SDK clients.
+    """Protocol describing the minimal channel operations required by SDK clients.
 
     Typical implementations are :class:`nebius.aio.channel.Channel` or
     simple test doubles that provide access to transport channels and
@@ -53,40 +51,35 @@ class ClientChannelInterface(Protocol):
             (``'/pkg.Service/Method'``).
         :return: An :class:`AddressChannel` for the resolved address.
         """
-
         ...
 
     def return_channel(self, chan: AddressChannel | None) -> None:
-        """Return an :class:`AddressChannel` previously obtained from the
-        channel back to the pool for reuse.
-        """
-
+        """Return an :class:`AddressChannel` to the channel pool for reuse."""
         ...
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
-        """Discard an :class:`AddressChannel`, ensuring the underlying
-        transport is closed and not reused.
-        """
+        """Discard an :class:`AddressChannel`.
 
+        The underlying transport is closed and not reused.
+        """
         ...
 
     def get_authorization_provider(self) -> AuthorizationProvider | None:
         """Get the configured :class:`AuthorizationProvider` or ``None``."""
-
         ...
 
     def parent_id(self) -> str | None:
-        """Get the default parent id applied to some requests, or
-        ``None`` if none was configured.
-        """
+        """Get the default parent id applied to some requests.
 
+        Return ``None`` if no parent id was configured.
+        """
         ...
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
-        """Run an awaitable synchronously using the channel's configured
-        event loop and return the result.
-        """
+        """Run an awaitable synchronously using the channel's configured event loop.
 
+        Return the result after the awaitable completes.
+        """
         ...
 
 
@@ -124,5 +117,4 @@ class GracefulInterface(Protocol):
         :param grace: Optional grace period in seconds for the component to
             complete shutdown work.
         """
-
         ...

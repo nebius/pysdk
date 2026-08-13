@@ -377,5 +377,5 @@ def synthetic_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:
     return plugin_pb2.CodeGeneratorRequest(
         proto_file=[*standard, file],
         file_to_generate=[file.name],
-        parameter=f"package_prefix={namespace},partition=all,jobs=1",
+        parameter=(f"destination_prefix={namespace}.generated,runtime_prefix={namespace},partition=all,jobs=1"),
     )

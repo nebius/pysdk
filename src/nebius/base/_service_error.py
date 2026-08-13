@@ -4,9 +4,9 @@ from typing import cast
 
 from grpc import RpcError, Status, StatusCode
 
-from nebius.api.google.protobuf import Any as AnyPb
-from nebius.api.google.rpc import Status as StatusPb
-from nebius.api.nebius.common.v1 import ServiceError as ServiceErrorPb
+from ..api.google.protobuf import Any as AnyPb
+from ..api.google.rpc import Status as StatusPb
+from ..api.nebius.common.v1 import ServiceError as ServiceErrorPb
 
 _STATUS_DETAILS_KEY = "grpc-status-details-bin"
 
@@ -39,12 +39,12 @@ def _rich_status_from_call(call: RpcError) -> StatusPb | None:
         call_code = call.code()
         if call_code.value[0] != status.code:
             raise ValueError(
-                f"Code in Status proto ({_status_code(status.code)}) doesn't match status code ({call_code})"
+                f"Code in Status proto ({_status_code(status.code)}) doesn't match status code ({call_code})",
             )
         call_details = call.details()
         if call_details != status.message:
             raise ValueError(
-                f"Message in Status proto ({status.message}) doesn't match status details ({call_details})"
+                f"Message in Status proto ({status.message}) doesn't match status details ({call_details})",
             )
         return status
     return None

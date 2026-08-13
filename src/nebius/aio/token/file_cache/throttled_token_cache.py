@@ -8,7 +8,6 @@ frequently and you want to reduce filesystem and YAML parsing overhead.
 
 Example
 -------
-
     cache = ThrottledTokenCache("service-account")
     tok = await cache.get()
 
@@ -18,9 +17,8 @@ from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from pathlib import Path
 
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ..token import Token
 from .token_cache import TokenCache
 
 log = getLogger(__name__)
@@ -81,8 +79,7 @@ class ThrottledTokenCache:
         return await self.refresh()
 
     async def set(self, token: Token) -> None:
-        """Store the token in the underlying cache and update the in-memory
-        cache and throttle expiration.
+        """Store the token and update the in-memory cache and throttle expiration.
 
         If the provided token equals the in-memory cached token no write is performed.
         """

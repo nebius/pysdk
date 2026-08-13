@@ -24,14 +24,14 @@ Use an environment variable::
     bearer = EnvBearer()  # reads NEBIUS_IAM_TOKEN by default
     receiver = bearer.receiver()
     token = await receiver.fetch()
+
 """
 
 import os
 from logging import getLogger
 
-from nebius.base.constants import TOKEN_ENV
-from nebius.base.error import SDKError
-
+from ...base.constants import TOKEN_ENV
+from ...base.error import SDKError
 from .token import Bearer as ParentBearer
 from .token import Receiver as ParentReceiver
 from .token import Token
@@ -114,7 +114,6 @@ class Bearer(ParentBearer):
 
     Example
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -124,6 +123,7 @@ class Bearer(ParentBearer):
             credentials=Bearer("my-static-token"),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(self, token: Token | str) -> None:
@@ -154,7 +154,6 @@ class EnvBearer(Bearer):
 
     Example
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         import os
@@ -166,6 +165,7 @@ class EnvBearer(Bearer):
             credentials=EnvBearer(),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(self, env_var_name: str = TOKEN_ENV) -> None:

@@ -5,10 +5,10 @@ from __future__ import annotations
 
 from typing import Any as _NebiusAny
 
-from nebius.base.protos.extensions import (
+from ......base.protos.extensions import (
     Extension, ExtensionRegistry,
 )
-from nebius.base.protos.registry import (
+from ......base.protos.registry import (
     MessageReference, Registry, RegistryFragment,
 )
 

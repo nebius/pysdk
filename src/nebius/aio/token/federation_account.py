@@ -48,12 +48,11 @@ from datetime import timedelta
 from ssl import SSLContext
 from typing import TextIO
 
-from nebius.aio.metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver
-
+from ..metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
 from .federation_bearer import Bearer as FederationAuthBearer
 from .file_cache.async_renewable_bearer import AsynchronousRenewableFileCacheBearer
+from .token import Bearer as ParentBearer
+from .token import Receiver
 
 
 class FederationBearer(ParentBearer):
@@ -123,7 +122,6 @@ class FederationBearer(ParentBearer):
 
     Example
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -141,6 +139,7 @@ class FederationBearer(ParentBearer):
             ),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -200,6 +199,5 @@ class FederationBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self._metrics.set_metrics(metrics)
         self._source.set_metrics(self._metrics)

@@ -35,13 +35,14 @@ Restore the token from the serialized form::
 Using a static bearer/receiver (see :mod:`nebius.aio.token.static` for
 concrete implementations) the SDK creates per-request receivers with
 ``bearer.receiver()`` and uses :meth:`Receiver.fetch` to obtain tokens.
+
 """
 
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from typing import Any
 
-from nebius.base.token_sanitizer import TokenSanitizer
+from ...base.token_sanitizer import TokenSanitizer
 
 sanitizer = TokenSanitizer.access_token_sanitizer()
 
@@ -192,7 +193,7 @@ class Token:
             return cls(token=token)
         if not isinstance(expires_at, int):
             raise ValueError(
-                f"Invalid expires_at format: {type(expires_at)} expected an int."  # type: ignore[assignment,unused-ignore]
+                f"Invalid expires_at format: {type(expires_at)} expected an int.",  # type: ignore[assignment,unused-ignore]
             )
         expiration = datetime.fromtimestamp(expires_at, tz=timezone.utc) if expires_at else None
         return cls(token=token, expiration=expiration)
@@ -300,7 +301,6 @@ class Bearer(ABC):
 
     Example
     -------
-
     Implement a custom bearer::
 
         from nebius.sdk import SDK
@@ -321,6 +321,7 @@ class Bearer(ABC):
             credentials=MyBearer(),
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     @abstractmethod
@@ -339,7 +340,6 @@ class Bearer(ABC):
     @classmethod
     def default_metrics_provider(cls) -> str:
         """Return this bearer's default fully qualified metric provider label."""
-
         return f"{cls.__module__}.{cls.__qualname__}"
 
     @property
@@ -368,7 +368,6 @@ class Bearer(ABC):
         provider label. By default the label is the fully qualified class name,
         or the wrapped bearer's provider label for wrapper bearers.
         """
-
         if self.wrapped is not None:
             return self.wrapped.metrics_provider
         return type(self).default_metrics_provider()
@@ -409,7 +408,6 @@ class NamedBearer(Bearer):
 
     Example
     -------
-
     Wrap a custom bearer with a name and file cache::
 
         from nebius.sdk import SDK
@@ -438,6 +436,7 @@ class NamedBearer(Bearer):
             credentials=cached_bearer,
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(self, wrapped: Bearer, name: str) -> None:

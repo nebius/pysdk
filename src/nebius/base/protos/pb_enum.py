@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 
 import google.protobuf.descriptor as pb
 
-from nebius.base.protos.descriptor import DescriptorWrap
+from .descriptor import DescriptorWrap
 
 if TYPE_CHECKING:
     from .registry import Registry

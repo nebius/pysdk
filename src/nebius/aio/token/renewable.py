@@ -63,27 +63,18 @@ timeout):
         print(tok)
 
     asyncio.run(sync_demo())
+
 """
 
 import sys
-from asyncio import (
-    FIRST_COMPLETED,
-    CancelledError,
-    Event,
-    Future,
-    Task,
-    create_task,
-    gather,
-    sleep,
-    wait,
-    wait_for,
-)
+from asyncio import FIRST_COMPLETED, CancelledError, Event, Future, Task, create_task, gather, sleep, wait, wait_for
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from typing import Any, TypeVar, cast
 
-from nebius.aio.metrics import (
+from ...base.error import SDKError
+from ..metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -94,8 +85,6 @@ from nebius.aio.metrics import (
     metric_duration_seconds,
     metric_start,
 )
-from nebius.base.error import SDKError
-
 from .options import (
     OPTION_MAX_RETRIES,
     OPTION_RENEW_REQUEST_TIMEOUT,
@@ -131,8 +120,7 @@ class IsStoppedError(RenewalError):
 
 
 class Receiver(ParentReceiver):
-    """Per-request receiver that delegates fetching to the parent
-    renewable bearer while accounting for retry attempts.
+    """Per-request receiver that delegates fetching to the renewable bearer.
 
     The receiver tracks the number of fetch attempts for a single
     request. On transient failures it can instruct the parent bearer to
@@ -141,7 +129,6 @@ class Receiver(ParentReceiver):
 
     Example
     -------
-
     ::
 
         receiver = bearer.receiver()
@@ -151,6 +138,7 @@ class Receiver(ParentReceiver):
         fetch and renewal.
     :param max_retries: Maximum number of automatic retry attempts
         this receiver will allow before giving up.
+
     """
 
     def __init__(
@@ -240,7 +228,6 @@ class Bearer(ParentBearer):
 
     Example
     -------
-
     Construct a bearer and use it to initialize the SDK::
 
         from nebius.sdk import SDK
@@ -275,6 +262,7 @@ class Bearer(ParentBearer):
         refresh/cache metrics share one callback sink.
     :param provider: Optional provider label for emitted auth
         metrics. When omitted, the label is inferred from ``source``.
+
     """
 
     def __init__(
@@ -327,7 +315,6 @@ class Bearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self._metrics.provider
 
     def bg_task(self, coro: Awaitable[T]) -> Task[None]:
@@ -396,7 +383,9 @@ class Bearer(ParentBearer):
                 await wait_for(self._synchronous_can_proceed.wait(), timeout)
                 if OPTION_RENEW_REQUEST_TIMEOUT in options:  # type: ignore
                     try:
-                        self._renew_synchronous_timeout = float(options[OPTION_RENEW_REQUEST_TIMEOUT])  # type: ignore
+                        self._renew_synchronous_timeout = float(
+                            options[OPTION_RENEW_REQUEST_TIMEOUT],  # type: ignore
+                        )
                     except ValueError as err:
                         log.error(f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float: {err=}")
                 self._renew_synchronous_options = options.copy()  # type: ignore
@@ -515,7 +504,7 @@ class Bearer(ParentBearer):
                 retry_timeout = self._initial_retry_timeout.total_seconds()
 
             log.debug(
-                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}"
+                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}",
             )
             renew_task = self.bg_task(self._renew_requested.wait())
             sleep_task = self.bg_task(sleep(retry_timeout))
@@ -592,6 +581,5 @@ class Bearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self._metrics.set_metrics(metrics)
         self._source = cast(ParentBearer, bind_auth_metrics(self._source, self._metrics))

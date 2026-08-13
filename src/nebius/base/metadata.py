@@ -97,7 +97,8 @@ class Metadata(MutableSequence[tuple[str, str]]):
     def __getitem__(self, index: str) -> Sequence[str]: ...
 
     def __getitem__(
-        self, index: int | slice | str
+        self,
+        index: int | slice | str,
     ) -> tuple[str, str] | MutableSequence[tuple[str, str]] | Sequence[str]:
         """Return metadata entries by index, slice, or key."""
         if isinstance(index, int | slice):

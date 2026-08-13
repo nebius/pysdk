@@ -7,10 +7,9 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_progress_tracker_updates() -> None:
     import grpc.aio
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
     from nebius.api.google.rpc import Status
@@ -23,6 +22,7 @@ async def test_operation_progress_tracker_updates() -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.base.protos.well_known import local_timezone
+
     from tests.grpc_service import add_service
 
     def to_local(dt: datetime) -> datetime:
@@ -64,7 +64,7 @@ async def test_operation_progress_tracker_updates() -> None:
                 total_tick_count=10,
                 done_tick_count=2,
             ),
-        )
+        ),
     )
 
     op3 = op_with_tracker(
@@ -72,7 +72,7 @@ async def test_operation_progress_tracker_updates() -> None:
             description="phase-1-est",
             started_at=started_future,
             estimated_finished_at=estimate_future,
-        )
+        ),
     )
 
     step_a = ProgressTracker.Step(
@@ -265,7 +265,7 @@ async def test_operation_progress_tracker_updates() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_progress_tracker_mlflow_cluster_operation() -> None:
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
@@ -291,10 +291,9 @@ async def test_operation_progress_tracker_mlflow_cluster_operation() -> None:
             await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_concurrent_operation_updates_are_serialized() -> None:
     """A late pending response cannot overwrite a terminal update."""
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
     from nebius.api.google.rpc import Status
@@ -348,10 +347,9 @@ async def test_concurrent_operation_updates_are_serialized() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
     """Overall timeout includes waiting behind a serialized update."""
-
     from threading import Event
     from time import monotonic
 
@@ -384,10 +382,9 @@ async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_wait_timeout_includes_synchronous_admission_delay() -> None:
     """Expired admission time cannot grant polling a fresh timeout."""
-
     from threading import Event
     from time import sleep
 
@@ -422,7 +419,7 @@ async def test_operation_wait_timeout_includes_synchronous_admission_delay() -> 
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize(
     ("timeout", "auth_timeout", "authorization_enabled"),
     ((0.05, 5, False), (5, 0.05, True), (0.05, 5, True)),
@@ -434,7 +431,6 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
     authorization_enabled: bool,
 ) -> None:
     """Direct update budgets expire before a late service request starts."""
-
     from threading import Event
 
     from nebius.aio.channel import Channel, NoCredentials
@@ -478,10 +474,9 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_authorized_operation_request_timeout_is_not_an_outer_deadline() -> None:
     """An authorized update may authenticate longer than its request budget."""
-
     from nebius.aio.channel import Channel
     from nebius.aio.operation import Operation
     from nebius.aio.token.static import Bearer as StaticBearer
@@ -504,7 +499,7 @@ async def test_authorized_operation_request_timeout_is_not_an_outer_deadline() -
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
 @pytest.mark.parametrize("parameter", ("timeout", "auth_timeout"))
 async def test_operation_update_rejects_non_finite_timeouts(
@@ -512,7 +507,6 @@ async def test_operation_update_rejects_non_finite_timeouts(
     parameter: str,
 ) -> None:
     """Operation update deadlines require a finite value or ``None``."""
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
@@ -533,11 +527,10 @@ async def test_operation_update_rejects_non_finite_timeouts(
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
 async def test_operation_wait_rejects_non_finite_timeout(value: float) -> None:
     """Overall async wait deadlines require a finite value or ``None``."""
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
@@ -563,13 +556,12 @@ async def test_operation_wait_rejects_non_finite_timeout(value: float) -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("method", ("update", "wait"))
 async def test_operation_disposes_coroutine_on_submission_rejection(
     method: str,
 ) -> None:
     """An optional scheduler rejection cannot retain an unstarted coroutine."""
-
     from inspect import CORO_CLOSED, getcoroutinestate
 
     from nebius.aio.channel import Channel, NoCredentials
@@ -614,7 +606,6 @@ def test_operation_sync_update_uses_applicable_queue_deadline(
     authorization_enabled: bool,
 ) -> None:
     """Synchronous update uses the request or authorization outer budget."""
-
     from threading import Event
     from time import monotonic
 
@@ -663,7 +654,6 @@ def test_operation_sync_update_uses_applicable_queue_deadline(
 @pytest.mark.parametrize("method", ("sync_update", "sync_wait"))
 def test_sync_operation_deadline_starts_before_run_sync_dispatch(method: str) -> None:
     """A sync operation timeout includes delay before SDK-loop dispatch."""
-
     from time import sleep
 
     from nebius.aio.channel import Channel, NoCredentials
@@ -683,7 +673,6 @@ def test_sync_operation_deadline_starts_before_run_sync_dispatch(method: str) ->
 
         def get(self, request, **kwargs):
             """Reject an RPC that starts after the caller deadline."""
-
             nonlocal request_started
             request_started = True
             raise AssertionError("An expired operation must not issue an RPC.")
@@ -693,7 +682,6 @@ def test_sync_operation_deadline_starts_before_run_sync_dispatch(method: str) ->
 
     def delay_run_sync(awaitable, timeout=None):
         """Delay SDK dispatch without consuming its cleanup allowance."""
-
         sleep(0.05)
         return original_run_sync(awaitable, timeout)
 
@@ -714,7 +702,6 @@ def test_sync_operation_deadline_starts_before_run_sync_dispatch(method: str) ->
 @pytest.mark.parametrize("method", ("sync_update", "sync_wait"))
 def test_sync_operation_options_are_snapshotted_before_run_sync(method: str) -> None:
     """Sync operation calls fix nested options on the caller thread."""
-
     from threading import Event, Thread
 
     from nebius.aio.authorization.options import OPTION_TYPE, Types
@@ -801,7 +788,6 @@ def test_sync_operation_options_are_snapshotted_before_run_sync(method: str) -> 
 
 def test_authorized_sync_operation_request_timeout_is_not_outer_deadline() -> None:
     """A synchronous authorized update retains its independent request clock."""
-
     from nebius.aio.channel import Channel
     from nebius.aio.operation import Operation
     from nebius.aio.token.static import Bearer as StaticBearer
@@ -824,10 +810,9 @@ def test_authorized_sync_operation_request_timeout_is_not_outer_deadline() -> No
         channel.sync_close(timeout=5)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_update_snapshots_mutable_request_options() -> None:
     """Queued update metadata and auth options retain submission values."""
-
     from threading import Event
 
     from nebius.aio.channel import Channel, NoCredentials
@@ -877,7 +862,7 @@ async def test_operation_update_snapshots_mutable_request_options() -> None:
             auth_timeout=5,
             metadata=metadata,
             auth_options=auth_options,
-        )
+        ),
     )
     await asyncio.sleep(0)
     metadata[0] = ("x-scope", "after")
@@ -892,10 +877,9 @@ async def test_operation_update_snapshots_mutable_request_options() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_wait_snapshots_mutable_poll_options() -> None:
     """Queued wait metadata and auth options retain submission values."""
-
     from threading import Event
 
     from nebius.aio.channel import Channel, NoCredentials
@@ -945,7 +929,7 @@ async def test_operation_wait_snapshots_mutable_poll_options() -> None:
             timeout=5,
             metadata=metadata,
             auth_options=auth_options,
-        )
+        ),
     )
     await asyncio.sleep(0)
     metadata[0] = ("x-scope", "after")
@@ -960,10 +944,9 @@ async def test_operation_wait_snapshots_mutable_poll_options() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_operation_update_preserves_service_timeout_error() -> None:
     """A service TimeoutError is not rewritten as caller deadline expiry."""
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
@@ -992,10 +975,9 @@ async def test_operation_update_preserves_service_timeout_error() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_terminal_operation_wait_accepts_zero_timeout() -> None:
     """A terminal operation returns before applying a zero timeout."""
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
     from nebius.api.google.rpc import Status
@@ -1014,13 +996,12 @@ async def test_terminal_operation_wait_accepts_zero_timeout() -> None:
         await channel.close()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("interval", [0, -1, float("nan"), float("inf")])
 async def test_unfinished_operation_rejects_invalid_poll_interval(
     interval: float,
 ) -> None:
     """Invalid intervals fail before dispatching an operation-service RPC."""
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage

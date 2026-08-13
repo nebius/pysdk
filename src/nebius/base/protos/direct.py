@@ -5,18 +5,17 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable, Mapping, MutableMapping, MutableSequence
+from collections.abc import Callable, Iterable, Iterator, Mapping, MutableMapping, MutableSequence
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, ClassVar, Iterator, Protocol, TypeVar, cast
+from typing import TYPE_CHECKING, Any, ClassVar, Protocol, TypeVar, cast
 
 from google.protobuf.message import DecodeError, EncodeError
 
-from nebius.base.error import SDKError
-from nebius.base.fieldmask import FieldKey, Mask
-from nebius.base.token_sanitizer import TokenSanitizer
-
+from ..error import SDKError
+from ..fieldmask import FieldKey, Mask
+from ..token_sanitizer import TokenSanitizer
 from .codec import ValueCodec
 from .containers import MapValues
 from .extensions import Extension, ExtensionRegistry, ExtensionValues, RepeatedValues
@@ -34,7 +33,8 @@ _RESET_MASK_MAX_DEPTH = 1000
 _MESSAGE_DECODE_DEPTH: ContextVar[tuple[int, int] | None] = ContextVar("nebius_message_decode_depth", default=None)
 _MESSAGE_ENCODE_DEPTH: ContextVar[tuple[int, int] | None] = ContextVar("nebius_message_encode_depth", default=None)
 _MESSAGE_INITIALIZATION_DEPTH: ContextVar[tuple[int, int, frozenset[int]] | None] = ContextVar(
-    "nebius_message_initialization_depth", default=None
+    "nebius_message_initialization_depth",
+    default=None,
 )
 
 _CREDENTIALS_SANITIZER = TokenSanitizer.credentials_sanitizer()
@@ -609,8 +609,10 @@ class Message:
                         if field_mask.any is None:
                             field_mask.any = Mask()
                         reset_mask.field_parts[key] = field_mask
-                        for item in cast(MapValues[Any, Any], value).values():
-                            pending.append((cast(Message, item), field_mask.any, depth + 1))
+                        pending.extend(
+                            (cast(Message, item), field_mask.any, depth + 1)
+                            for item in cast(MapValues[Any, Any], value).values()
+                        )
                     continue
 
                 if field.repeated:
@@ -618,8 +620,10 @@ class Message:
                         if field_mask.any is None:
                             field_mask.any = Mask()
                         reset_mask.field_parts[key] = field_mask
-                        for item in cast(RepeatedValues[Any], value):
-                            pending.append((cast(Message, item), field_mask.any, depth + 1))
+                        pending.extend(
+                            (cast(Message, item), field_mask.any, depth + 1)
+                            for item in cast(RepeatedValues[Any], value)
+                        )
                     continue
 
                 if field.message:
@@ -1065,16 +1069,21 @@ class Message:
                 errors.append(field.proto_name)
             value = self._values.get(field)
             if field.message and field in self._present:
-                for nested in cast(Message, value).FindInitializationErrors():
-                    errors.append(f"{field.proto_name}.{nested}")
+                errors.extend(
+                    f"{field.proto_name}.{nested}" for nested in cast(Message, value).FindInitializationErrors()
+                )
             elif field.map and field.message and value:
-                for key, item in cast(MapValues[Any, Any], value).items():
-                    for nested in item.FindInitializationErrors():
-                        errors.append(f"{field.proto_name}{self._format_map_key(key)}.{nested}")
+                errors.extend(
+                    f"{field.proto_name}{self._format_map_key(key)}.{nested}"
+                    for key, item in cast(MapValues[Any, Any], value).items()
+                    for nested in item.FindInitializationErrors()
+                )
             elif field.repeated and field.message and value:
-                for index, item in enumerate(value):
-                    for nested in item.FindInitializationErrors():
-                        errors.append(f"{field.proto_name}[{index}].{nested}")
+                errors.extend(
+                    f"{field.proto_name}[{index}].{nested}"
+                    for index, item in enumerate(value)
+                    for nested in item.FindInitializationErrors()
+                )
         if self._extensions is not None:
             errors.extend(self._extensions.find_initialization_errors())
         return errors
@@ -1209,7 +1218,7 @@ def message_codec(message_type: Callable[[], type[M]]) -> ValueCodec[M]:
         merge=merge,
         bind_mutation=lambda value, callback: value._bind_mutation(callback),
         deterministic_write=lambda writer, value, deterministic: writer.write_bytes(
-            value.SerializeToString(deterministic=deterministic)
+            value.SerializeToString(deterministic=deterministic),
         ),
         json_kind="message",
     )

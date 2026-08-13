@@ -24,8 +24,8 @@ def test_unset_metadata_timestamp_returns_none() -> None:
                 tenant_user_account=TenantUserAccount(
                     metadata=metadata,
                 ),
-            )
-        ]
+            ),
+        ],
     )
 
     metadata = response.items[0].tenant_user_account.metadata

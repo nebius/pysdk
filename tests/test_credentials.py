@@ -4,7 +4,7 @@ import logging
 import pytest
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_credentials_updater() -> None:
     from asyncio import sleep
 
@@ -14,7 +14,6 @@ async def test_credentials_updater() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
     from nebius.api.nebius.compute.v1 import (
@@ -28,6 +27,7 @@ async def test_credentials_updater() -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
+
     from tests.grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
@@ -76,7 +76,7 @@ async def test_credentials_updater() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             ret = OperationMessage()
@@ -126,7 +126,7 @@ async def test_credentials_updater() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_credentials_updater_sync() -> None:
     from asyncio import sleep
 
@@ -136,7 +136,6 @@ async def test_credentials_updater_sync() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
     from nebius.api.nebius.compute.v1 import (
@@ -150,6 +149,7 @@ async def test_credentials_updater_sync() -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
+
     from tests.grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
@@ -198,7 +198,7 @@ async def test_credentials_updater_sync() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             ret = OperationMessage()
@@ -261,7 +261,7 @@ async def test_credentials_updater_sync() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_credentials_updater_sync_error() -> None:
     import grpc
     import grpc.aio
@@ -269,7 +269,6 @@ async def test_credentials_updater_sync_error() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel
     from nebius.aio.service_error import RequestError, RequestStatusExtended
     from nebius.api.nebius.common.v1 import (
@@ -290,6 +289,7 @@ async def test_credentials_updater_sync_error() -> None:
     )
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
+
     from tests.grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
@@ -310,7 +310,7 @@ async def test_credentials_updater_sync_error() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             from nebius.base._service_error import trailing_metadata_of_errors
@@ -356,7 +356,7 @@ async def test_credentials_updater_sync_error() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             ret = OperationMessage()

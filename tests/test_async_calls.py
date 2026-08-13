@@ -3,20 +3,18 @@ import logging
 
 import pytest
 from grpc_service import add_service
-
 from nebius.aio import request
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_instance_sync_in_async_no_loop() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, LoopError, NoCredentials
     from nebius.api.nebius.compute.v1 import (
         Disk,
@@ -83,7 +81,7 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_instance_sync_in_async_same_loop() -> None:
     from asyncio import (
         get_event_loop,
@@ -94,7 +92,6 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, LoopError, NoCredentials
     from nebius.api.nebius.compute.v1 import (
         Disk,
@@ -159,14 +156,13 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_instance_v2() -> None:
     import grpc
     import grpc.aio
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.compute.v1 import (
         Disk,
@@ -196,7 +192,7 @@ async def test_get_instance_v2() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             # Return an Instance object as expected by the client
@@ -243,7 +239,7 @@ async def test_get_instance_v2() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_status_not_blocks_get_instance_v2() -> None:
     import grpc
     import grpc.aio
@@ -251,7 +247,6 @@ async def test_status_not_blocks_get_instance_v2() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.compute.v1 import (
         Disk,
@@ -281,7 +276,7 @@ async def test_status_not_blocks_get_instance_v2() -> None:
                 (
                     ("x-request-id", "some-req-id"),
                     ("x-trace-id", "some-trace-id"),
-                )
+                ),
             )
 
             # Return an Instance object as expected by the client

@@ -10,10 +10,10 @@ tokens.
 
 Example
 -------
-
     cache = TokenCache()
     await cache.set("my-token", Token("abc", expiration=...))
     tok = await cache.get("my-token")
+
 """
 
 from logging import getLogger
@@ -21,9 +21,8 @@ from pathlib import Path
 
 import yaml
 
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ..token import Token
 from .async_flock import Lock
 
 log = getLogger(__name__)
@@ -84,7 +83,7 @@ class TokenCache:
             tokens_strs = data.get("tokens", {})  # type: ignore[unused-ignore]
             if not isinstance(tokens_strs, dict):
                 raise ValueError(
-                    f"Invalid tokens format: {type(tokens_strs)} expected a dictionary."  # type: ignore[unused-ignore]
+                    f"Invalid tokens format: {type(tokens_strs)} expected a dictionary.",  # type: ignore[unused-ignore]
                 )
             tokens = dict[str, Token]()
             for k, v in tokens_strs.items():  # type: ignore[unused-ignore]

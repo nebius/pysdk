@@ -2,7 +2,6 @@
 import logging
 
 from grpc_service import add_service
-
 from nebius.aio import request
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
@@ -22,7 +21,6 @@ def test_get_instance_sync() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.api.nebius.compute.v1 import (
         Disk,
@@ -139,7 +137,6 @@ def test_get_instance_timeout_sync() -> None:
 
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
-
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.service_error import RequestError
     from nebius.api.nebius.compute.v1 import (

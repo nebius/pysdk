@@ -298,7 +298,7 @@ def _field_expression(
                 "from_python=lambda value: _nebius_datetime_to_timestamp("
                 "value, lambda: REGISTRY.message_class("
                 f"{target_name!r}))",
-            )
+            ),
         )
     elif target_name == "google.protobuf.Duration":
         keywords.extend(
@@ -307,7 +307,7 @@ def _field_expression(
                 "from_python=lambda value: _nebius_timedelta_to_duration("
                 "value, lambda: REGISTRY.message_class("
                 f"{target_name!r}))",
-            )
+            ),
         )
     elif target_name == "google.rpc.Status":
         keywords.extend(
@@ -316,7 +316,7 @@ def _field_expression(
                 "from_python=lambda value: _nebius_request_status_to_status("
                 "value, lambda: REGISTRY.message_class("
                 f"{target_name!r}))",
-            )
+            ),
         )
     return f"{runtime_field}({', '.join([*arguments, *keywords])})"
 
@@ -324,6 +324,24 @@ def _field_expression(
 def _relative_registry(package: str, prefix: str) -> str:
     suffix = package.removeprefix(prefix + ".")
     return "." * (len(suffix.split(".")) + 1) + "_registry"
+
+
+def _relative_module(current: str, target: str) -> str:
+    current_parts = current.split(".")
+    target_parts = target.split(".")
+    common = 0
+    for current_part, target_part in zip(current_parts, target_parts):
+        if current_part != target_part:
+            break
+        common += 1
+    if common == 0:
+        raise GeneratorError(f"cannot import module {target!r} from {current!r}")
+    level = len(current_parts) - common + 1
+    return "." * level + ".".join(target_parts[common:])
+
+
+def _runtime_module(current: str, module: str, graph: Graph) -> str:
+    return _relative_module(current, f"{graph.options.runtime_prefix}.{module}")
 
 
 def _type_alias(package: str) -> str:
@@ -519,26 +537,26 @@ def _type_import_lines(
     }
 
     lines: list[str] = []
-    for target_package in sorted(runtime_type_packages):
-        lines.append(
-            _relative_type_import(
+    lines.extend(
+        _relative_type_import(
+            output_package,
+            graph.output_package(target_package),
+            _type_alias(target_package),
+        )
+        for target_package in sorted(runtime_type_packages)
+    )
+    typing_only_packages = set(type_packages) - runtime_type_packages
+    if typing_only_packages:
+        lines.append("if _NEBIUS_TYPE_CHECKING:")
+        lines.extend(
+            "    "
+            + _relative_type_import(
                 output_package,
                 graph.output_package(target_package),
                 _type_alias(target_package),
             )
+            for target_package in sorted(typing_only_packages)
         )
-    typing_only_packages = set(type_packages) - runtime_type_packages
-    if typing_only_packages:
-        lines.append("if _NEBIUS_TYPE_CHECKING:")
-        for target_package in sorted(typing_only_packages):
-            lines.append(
-                "    "
-                + _relative_type_import(
-                    output_package,
-                    graph.output_package(target_package),
-                    _type_alias(target_package),
-                )
-            )
         lines.append("")
     return lines
 
@@ -569,7 +587,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             '    """Protobuf message descriptor from the registry."""',
             "    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__",
             '    """Alias for code that expects a protobuf message descriptor."""',
-        ]
+        ],
     )
     if not message.proto.field:
         lines.append("    pass")
@@ -582,14 +600,16 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
         enum_target = graph.enums[f"{message.full_name}.{nested.name}"]
         child = enum_target.python_qualname.rsplit(".", 1)[-1]
         lines.append(f"    {child}: _NebiusTypeAlias = {_named_alias(enum_target.full_name)}")
-    for extension in sorted(
-        (item for item in graph.extensions.values() if item.scope == message.full_name),
-        key=lambda item: item.full_name,
-    ):
-        lines.append(
+    lines.extend(
+        (
             f"    {extension.python_name}: _NebiusClassVar[_NebiusExtension["
             f"{_extension_type(extension.proto, message.package, graph)}]]"
         )
+        for extension in sorted(
+            (item for item in graph.extensions.values() if item.scope == message.full_name),
+            key=lambda item: item.full_name,
+        )
+    )
     for index, oneof in enumerate(message.proto.oneof_decl):
         oneof_name = graph.oneof_python_name(message, oneof)
         fields = [
@@ -603,7 +623,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 "",
                 f"    class {base_name}(_NebiusOneOf):",
                 f"        name: str = {oneof.name!r}",
-            ]
+            ],
         )
         wrappers: list[str] = []
         for field in fields:
@@ -620,11 +640,8 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                     "",
                     "        @_NebiusProperty",
                     f"        def value(self) -> {field_type}:",
-                    "            return _nebius_cast("
-                    f"{field_type!r}, "
-                    f"self._message._get_field({field_constant}),"
-                    ")",
-                ]
+                    f"            return _nebius_cast({field_type!r}, self._message._get_field({field_constant}),)",
+                ],
             )
         union = " | ".join(wrappers) if wrappers else "None"
         lines.extend(
@@ -634,7 +651,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 f"    def {oneof_name}(self) -> {union} | None:",
                 f"        selected = self.which_field_in_oneof({oneof_name!r})",
                 "        match selected:",
-            ]
+            ],
         )
         for field, wrapper in zip(fields, wrappers):
             field_name = graph.field_python_name(message, field)
@@ -642,7 +659,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 [
                     f"            case {field_name!r}:",
                     f"                return self.{wrapper}(self)",
-                ]
+                ],
             )
         lines.extend(
             [
@@ -650,7 +667,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 "                return None",
                 "            case _:",
                 "                raise _NebiusOneOfMatchError(selected)",
-            ]
+            ],
         )
     constructor_fields = list(message.proto.field)
     used_names = {graph.field_python_name(message, field) for field in constructor_fields}
@@ -674,7 +691,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             "    ) -> None:",
             '        """Create a message from a source message and field values."""',
             f"        {values_name}: _NebiusDict[_NebiusStr, _NebiusObject] = {{}}",
-        ]
+        ],
     )
     if message_deprecation is not None:
         signature.append(_warning("Message", message.full_name, message_summary, "        "))
@@ -689,7 +706,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                     f"{message.full_name}.{field.name}",
                     field_deprecation.summary(),
                     "            ",
-                )
+                ),
             )
         if (
             field.type == descriptor_pb2.FieldDescriptorProto.TYPE_ENUM
@@ -709,7 +726,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                         f"{enum.full_name}.{enum_value.name} for field {message.full_name}.{field.name}",
                         value_deprecation.summary(),
                         "                ",
-                    )
+                    ),
                 )
         signature.append(f"            {values_name}[{name!r}] = {name}")
     signature.append(f"        super().__init__({initial_name}, **{values_name})")
@@ -735,7 +752,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 "",
                 "    @_NebiusProperty",
                 f"    def {name}(self) -> {getter_type}:",
-            ]
+            ],
         )
         _append_docstring(
             lines,
@@ -754,7 +771,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                     f"{message.full_name}.{field.name}",
                     field_summary,
                     "        ",
-                )
+                ),
             )
         lines.extend((f"        value = self._get_field({constant}, absent_is_none={absent_is_none!r})",))
         if (
@@ -765,7 +782,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
             lines.append(
                 f"        return _nebius_cast({getter_type!r}, "
                 "None if value is None else "
-                f"REGISTRY.enum_class({enum_name!r})(value))"
+                f"REGISTRY.enum_class({enum_name!r})(value))",
             )
         else:
             lines.append(f"        return _nebius_cast({getter_type!r}, value)")
@@ -775,7 +792,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 f"    @{name}.setter",
                 f"    def {name}(self, value: {setter_type}) -> None:",
                 f'        """Set or clear the generated ``{name}`` field."""',
-            ]
+            ],
         )
         if field_deprecation is not None:
             lines.append(
@@ -784,7 +801,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                     f"{message.full_name}.{field.name}",
                     field_summary,
                     "        ",
-                )
+                ),
             )
         if (
             field.type == descriptor_pb2.FieldDescriptorProto.TYPE_ENUM
@@ -804,7 +821,7 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                         f"{enum.full_name}.{enum_value.name} for field {message.full_name}.{field.name}",
                         value_deprecation.summary(),
                         "            ",
-                    )
+                    ),
                 )
         lines.append(f"        self._set_field({constant}, value)")
     mappings = {graph.field_python_name(message, field): field.name for field in constructor_fields}
@@ -818,26 +835,26 @@ def _message_source(message: MessageModel, graph: Graph) -> list[str]:
                 and field in constructor_fields
                 for field in message.proto.field
             )
-        }
+        },
     )
     mappings.update(
         {
             graph.messages[f"{message.full_name}.{nested.name}"].python_qualname.rsplit(".", 1)[-1]: nested.name
             for nested in message.proto.nested_type
-        }
+        },
     )
     mappings.update(
         {
             graph.enums[f"{message.full_name}.{nested.name}"].python_qualname.rsplit(".", 1)[-1]: nested.name
             for nested in message.proto.enum_type
-        }
+        },
     )
     lines.extend(
         [
             "",
             f"    __PY_TO_PB2__ = {mappings!r}",
             '    """Mapping from Python member names to protobuf names."""',
-        ]
+        ],
     )
     return lines
 
@@ -879,8 +896,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
         key=lambda item: item.full_name,
     )
     output_package = graph.output_package(package)
-    registry_import = _relative_registry(output_package, graph.options.package_prefix)
-    runtime = graph.options.runtime_package
+    registry_import = _relative_registry(output_package, graph.options.destination_prefix)
     package_implementations: set[str] = set()
     if package == "google.protobuf":
         package_implementations.update(
@@ -918,29 +934,32 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
         ")",
         "from typing_extensions import Unpack as _NebiusUnpack",
         "",
-        f"from {runtime}.aio.client import Client as _NebiusClient, "
+        f"from {_runtime_module(output_package, 'aio.client', graph)} import Client as _NebiusClient, "
         "ClientWithOperations as _NebiusClientWithOperations",
-        f"from {runtime}.aio.operation import Operation as _NebiusOperation",
-        f"from {runtime}.aio.request import Request as _NebiusRequest",
-        f"from {runtime}.aio.request_kwargs import "
+        f"from {_runtime_module(output_package, 'aio.operation', graph)} import Operation as _NebiusOperation",
+        f"from {_runtime_module(output_package, 'aio.request', graph)} import Request as _NebiusRequest",
+        f"from {_runtime_module(output_package, 'aio.request_kwargs', graph)} import "
         "RequestKwargs as _NebiusRequestKwargs, "
         "StreamRequestKwargs as _NebiusStreamRequestKwargs",
-        f"from {runtime}.aio.stream import StreamRequest as _NebiusStreamRequest",
-        f"from {runtime}.base.protos.codec import (",
+        f"from {_runtime_module(output_package, 'aio.stream', graph)} import StreamRequest as _NebiusStreamRequest",
+        f"from {_runtime_module(output_package, 'base.protos.codec', graph)} import (",
         "    BOOL, BYTES, DOUBLE, FIXED32, FIXED64, FLOAT, INT32, INT64,",
         "    SFIXED32, SFIXED64, SINT32, SINT64, STRING, UINT32, UINT64, enum_codec,",
         ")",
-        f"from {runtime}.base.protos.direct import (",
+        f"from {_runtime_module(output_package, 'base.protos.direct', graph)} import (",
         f"    {field_import}, Message, OneOf as _NebiusOneOf,",
         "    OneOfMatchError as _NebiusOneOfMatchError,",
         "    SerializableMessage as _NebiusSerializableMessage, message_codec,",
         ")",
-        f"from {runtime}.base.fieldmask_protobuf import ensure_reset_mask_in_metadata",
-        f"from {runtime}.base.protos.pb_enum import {enum_import}",
-        f"from {runtime}.base.protos.extensions import Extension as _NebiusExtension",
-        f"from {runtime}.base.protos.unset import Unset as _NEBIUS_UNSET, UnsetType as _NebiusUnsetType",
-        f"from {runtime}.aio.request_status import RequestStatus as _NebiusRequestStatus",
-        f"from {runtime}.base.protos.well_known_direct import (",
+        f"from {_runtime_module(output_package, 'base.fieldmask_protobuf', graph)} import "
+        "ensure_reset_mask_in_metadata",
+        f"from {_runtime_module(output_package, 'base.protos.pb_enum', graph)} import {enum_import}",
+        f"from {_runtime_module(output_package, 'base.protos.extensions', graph)} import Extension as _NebiusExtension",
+        f"from {_runtime_module(output_package, 'base.protos.unset', graph)} import "
+        "Unset as _NEBIUS_UNSET, UnsetType as _NebiusUnsetType",
+        f"from {_runtime_module(output_package, 'aio.request_status', graph)} import "
+        "RequestStatus as _NebiusRequestStatus",
+        f"from {_runtime_module(output_package, 'base.protos.well_known_direct', graph)} import (",
         "    datetime_to_timestamp as _nebius_datetime_to_timestamp,",
         "    duration_to_timedelta as _nebius_duration_to_timedelta,",
         "    request_status_to_status as _nebius_request_status_to_status,",
@@ -956,7 +975,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
     lines.extend(
         [
             "# @@nebius-section:enums@@",
-        ]
+        ],
     )
     for enum in enums:
         implementation = enum.implementation_name
@@ -983,7 +1002,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
                 '    """Protobuf enum descriptor from the registry."""',
                 "    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__",
                 '    """Alias for code that expects a protobuf enum descriptor."""',
-            ]
+            ],
         )
         for index, value in enumerate(enum.proto.value):
             value_name = graph.enum_value_python_name(enum, value)
@@ -1041,7 +1060,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
             f"{target}{extension_name}"
             + ("" if extension.scope is not None else f": {annotation}")
             + f" = _nebius_cast({annotation!r}, "
-            + f"EXTENSION_HANDLES[{extension.full_name!r}])"
+            + f"EXTENSION_HANDLES[{extension.full_name!r}])",
         )
     if extensions:
         lines.append("")
@@ -1095,14 +1114,14 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
                 "",
                 f"    __PB2_DESCRIPTOR__ = REGISTRY.service_descriptor({service.full_name!r})",
                 '    """Alias for code that expects a protobuf service descriptor."""',
-            ]
+            ],
         )
         if service_deprecation is not None:
             lines.extend(
                 [
                     f"    __service_deprecation_details__ = {service_summary!r}",
                     '    """Deprecation details emitted when the client is created."""',
-                ]
+                ],
             )
         if operation_method is not None:
             operation_name = operation_method.output_type.lstrip(".")
@@ -1115,7 +1134,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
                     '    """Client class that manages long-running operations."""',
                     f"    __operation_source_method__ = {operation_method.name!r}",
                     '    """RPC method that supplies the operation route."""',
-                ]
+                ],
             )
         for method_index, method in enumerate(service.proto.method):
             method_name = graph.method_python_name(service, method)
@@ -1152,7 +1171,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
                     f"        {request_argument},",
                     f"        **kwargs: _NebiusUnpack[{kwargs_type}],",
                     f"    ) -> {result_annotation}:",
-                ]
+                ],
             )
             method_deprecation = graph.annotations.deprecation(method.options, "method")
             method_summary = method_deprecation.summary() if method_deprecation is not None else ""
@@ -1174,7 +1193,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
                         f"{service.full_name}.{method.name}",
                         method_summary,
                         "        ",
-                    )
+                    ),
                 )
             if updater and not method.client_streaming:
                 lines.append("        kwargs['metadata'] = ensure_reset_mask_in_metadata(")
@@ -1194,7 +1213,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
                         f"            server_streaming={method.server_streaming!r},",
                         "            **kwargs,",
                         "        )",
-                    ]
+                    ],
                 )
                 continue
             lines.extend(
@@ -1203,7 +1222,7 @@ def _package_source(package: str, graph: Graph, source_files: frozenset[str] | N
                     f"            method={method.name!r},",
                     "            request=request,",
                     f"            result_pb2_class=REGISTRY.message_class({output_name!r}),",
-                ]
+                ],
             )
             if operation_output:
                 lines.append("            result_wrapper=_NebiusOperation,")
@@ -1232,8 +1251,8 @@ def package_source_files(package: str, graph: Graph) -> tuple[str, ...]:
                 *[item.source_file for item in graph.enums.values() if item.package == package],
                 *[item.source_file for item in graph.services.values() if item.package == package],
                 *[item.source_file for item in graph.extensions.values() if item.package == package],
-            }
-        )
+            },
+        ),
     )
 
 
@@ -1261,7 +1280,11 @@ def _split_package_fragment(source: str) -> tuple[str, dict[str, str]]:
     return "\n".join(header), {name: "\n".join(lines).strip("\n") for name, lines in sections.items()}
 
 
-def _package_models(package: str, source_files: frozenset[str], graph: Graph) -> tuple[
+def _package_models(
+    package: str,
+    source_files: frozenset[str],
+    graph: Graph,
+) -> tuple[
     tuple[MessageModel, ...],
     tuple[ServiceModel, ...],
     tuple[ExtensionModel, ...],
@@ -1373,7 +1396,7 @@ def _linked_package_source(
                     services,
                     extensions,
                     graph,
-                )
+                ),
             )
             if type_imports:
                 lines.extend(("\n".join(type_imports).rstrip(), ""))
@@ -1393,7 +1416,7 @@ def _linked_package_source(
             "# @@nebius-section:exports@@",
             f"__all__ = {sorted(exported)!r}",
             "",
-        )
+        ),
     )
     return "\n".join(lines), tuple(sorted(exported))
 
@@ -1497,13 +1520,15 @@ def _lazy_package_source(
             "",
             f"__all__ = {public_exports!r}",
             "",
-        ]
+        ],
     )
     return "\n".join(lines)
 
 
 def link_package_fragments(
-    package: str, fragments: Iterable[tuple[str, str]], graph: Graph
+    package: str,
+    fragments: Iterable[tuple[str, str]],
+    graph: Graph,
 ) -> tuple[GeneratedFile, ...]:
     """Merge source-file IR into one module or deterministic lazy shards."""
     ordered = sorted(fragments)
@@ -1547,7 +1572,7 @@ def link_package_fragments(
             GeneratedFile(
                 name=f"{output_directory}/{shard}.py",
                 content=shard_source,
-            )
+            ),
         )
         shard_metadata.append((shard, defined, exported))
     return (
@@ -1555,7 +1580,7 @@ def link_package_fragments(
             name=output_directory + "/__init__.py",
             content=_lazy_package_source(
                 shard_metadata,
-                _relative_registry(output_package, graph.options.package_prefix),
+                _relative_registry(output_package, graph.options.destination_prefix),
             ),
         ),
         *generated,
@@ -1568,7 +1593,7 @@ def registry_packages(graph: Graph) -> tuple[str, ...]:
 
 
 def _registry_fragment_source(package: str | None, graph: Graph) -> str:
-    runtime = graph.options.runtime_package
+    output_package = graph.options.destination_prefix if package is None else graph.output_package(package)
     public_packages = frozenset(packages(graph))
     package_files = (
         (file for file in graph.files.values() if file.package == package)
@@ -1584,10 +1609,10 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
         "",
         "from typing import Any as _NebiusAny",
         "",
-        f"from {runtime}.base.protos.extensions import (",
+        f"from {_runtime_module(output_package, 'base.protos.extensions', graph)} import (",
         "    Extension, ExtensionRegistry,",
         ")",
-        f"from {runtime}.base.protos.registry import (",
+        f"from {_runtime_module(output_package, 'base.protos.registry', graph)} import (",
         "    MessageReference, Registry, RegistryFragment,",
         ")",
         "",
@@ -1599,14 +1624,14 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
     if package_extensions:
         lines.extend(
             [
-                f"from {runtime}.base.protos.direct import message_codec",
-                f"from {runtime}.base.protos.codec import (",
+                f"from {_runtime_module(output_package, 'base.protos.direct', graph)} import message_codec",
+                f"from {_runtime_module(output_package, 'base.protos.codec', graph)} import (",
                 "    BOOL, BYTES, DOUBLE, FIXED32, FIXED64, FLOAT, INT32, INT64,",
                 "    SFIXED32, SFIXED64, SINT32, SINT64, STRING, UINT32, UINT64,",
                 "    enum_codec,",
                 ")",
                 "",
-            ]
+            ],
         )
     lines.append("EXTENDEES: tuple[tuple[str, tuple[tuple[int, int], ...]], ...] = (")
     for message in sorted(
@@ -1643,7 +1668,7 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
             f"    serialized_files={serialized!r},",
             ")",
             "",
-        ]
+        ],
     )
     lines.extend(
         [
@@ -1652,7 +1677,7 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
             "    EXTENSIONS: ExtensionRegistry,",
             "    EXTENSION_HANDLES: dict[str, Extension[_NebiusAny]],",
             ") -> None:",
-        ]
+        ],
     )
     if not package_extensions:
         lines.append("    pass")
@@ -1686,14 +1711,14 @@ def _registry_fragment_source(package: str | None, graph: Graph) -> str:
                 "    )",
                 f"    EXTENSIONS.register(_extension_{index})",
                 f"    EXTENSION_HANDLES[{extension.full_name!r}] = _extension_{index}",
-            ]
+            ],
         )
     lines.append("")
     return "\n".join(lines)
 
 
 def _registry_source(graph: Graph) -> str:
-    runtime = graph.options.runtime_package
+    output_package = graph.options.destination_prefix
     fragment_packages = registry_packages(graph)
     lines = [
         "# Generated by nebius_generator. DO NOT EDIT!",
@@ -1701,8 +1726,8 @@ def _registry_source(graph: Graph) -> str:
         "",
         "from typing import Any as _NebiusAny",
         "",
-        f"from {runtime}.base.protos.extensions import Extension, ExtensionRegistry",
-        f"from {runtime}.base.protos.registry import Registry",
+        f"from {_runtime_module(output_package, 'base.protos.extensions', graph)} import Extension, ExtensionRegistry",
+        f"from {_runtime_module(output_package, 'base.protos.registry', graph)} import Registry",
         "",
     ]
     has_root_fragment = any(file.package not in fragment_packages for file in graph.files.values())
@@ -1723,14 +1748,13 @@ def _registry_source(graph: Graph) -> str:
             "EXTENSIONS = ExtensionRegistry()",
             "EXTENSION_HANDLES: dict[str, Extension[_NebiusAny]] = {}",
             "",
-        ]
+        ],
     )
     for name in fragment_imports:
         lines.append(f"for _full_name, _ranges in {name}.EXTENDEES:")
         lines.append("    EXTENSIONS.add_extendee(_full_name, _ranges)")
     lines.append("")
-    for name in fragment_imports:
-        lines.append(f"{name}.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)")
+    lines.extend(f"{name}.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)" for name in fragment_imports)
     lines.extend(["EXTENSIONS.freeze()", ""])
     return "\n".join(lines)
 
@@ -1744,15 +1768,15 @@ def packages(graph: Graph) -> tuple[str, ...]:
                 *[item.package for item in graph.enums.values()],
                 *[item.package for item in graph.services.values()],
                 *[item.package for item in graph.extensions.values()],
-            }
-        )
+            },
+        ),
     )
 
 
 def emit_registry(graph: Graph) -> GeneratedFile:
     """Emit the namespace registry after the complete graph is linked."""
     return GeneratedFile(
-        name=graph.options.package_prefix.replace(".", "/") + "/_registry.py",
+        name=graph.options.destination_prefix.replace(".", "/") + "/_registry.py",
         content=_registry_source(graph),
     )
 
@@ -1764,9 +1788,9 @@ def emit_registry_fragments(graph: Graph) -> tuple[GeneratedFile, ...]:
     if any(file.package not in public_packages for file in graph.files.values()):
         generated.append(
             GeneratedFile(
-                name=(graph.options.package_prefix.replace(".", "/") + "/_registry_fragment.py"),
+                name=(graph.options.destination_prefix.replace(".", "/") + "/_registry_fragment.py"),
                 content=_registry_fragment_source(None, graph),
-            )
+            ),
         )
     for package in registry_packages(graph):
         output_directory = graph.output_package(package).replace(".", "/")
@@ -1774,7 +1798,7 @@ def emit_registry_fragments(graph: Graph) -> tuple[GeneratedFile, ...]:
             GeneratedFile(
                 name=output_directory + "/_registry_fragment.py",
                 content=_registry_fragment_source(package, graph),
-            )
+            ),
         )
     return tuple(generated)
 

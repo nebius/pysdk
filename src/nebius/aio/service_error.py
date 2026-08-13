@@ -15,18 +15,18 @@ from typing import TYPE_CHECKING, Any, cast
 
 from grpc import StatusCode
 
-from nebius.aio.request import RequestError as BaseError
-from nebius.aio.request_status import RequestStatus
+from .request import RequestError as BaseError
+from .request_status import RequestStatus
 
 if TYPE_CHECKING:
-    from nebius.base.protos.direct import Message
-    from nebius.base.protos.registry import Registry
+    from ..base.protos.direct import Message
+    from ..base.protos.registry import Registry
 
 _SERVICE_ERROR_NAMES = frozenset(
     {
         "nebius.common.v1.ServiceError",
         "nebius.common.error.v1alpha1.ServiceError",
-    }
+    },
 )
 
 
@@ -267,7 +267,10 @@ class RequestStatusExtended(RequestStatus):
     request_id: str
     trace_id: str
     _original_extended_state: tuple[tuple[StatusCode, str | None, tuple[bytes, ...]], tuple[bytes, ...]] | None = field(
-        default=None, init=False, repr=False, compare=False
+        default=None,
+        init=False,
+        repr=False,
+        compare=False,
     )
 
     def _extended_state(
@@ -319,7 +322,7 @@ class RequestStatusExtended(RequestStatus):
             raise ValueError("RPC status conversion requires an explicit or retained direct registry")
         current_state = self._extended_state()
         if self._raw_status is not None and self._original_extended_state is not None:
-            from nebius.aio.request_status import _localized_status
+            from .request_status import _localized_status
 
             ret = _localized_status(self._raw_status, selected)
             original_base = self._original_extended_state[0]

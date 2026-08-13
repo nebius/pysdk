@@ -166,7 +166,8 @@ def test_failed_first_rename_preserves_live_tree(tmp_path: Path, monkeypatch: py
 
 
 def test_check_mode_refuses_recovery_without_mutating_live_tree(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     _configure_paths(monkeypatch, tmp_path)
     monkeypatch.setattr(generate_api, "LOCK", tmp_path / "lock")
@@ -207,7 +208,8 @@ def test_check_mode_rejects_cache_overlapping_live_tree(tmp_path: Path, monkeypa
 
 
 def test_validate_only_generates_without_comparing_or_promoting(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     _configure_paths(monkeypatch, tmp_path)
     monkeypatch.setattr(generate_api, "LOCK", tmp_path / "lock")
@@ -233,7 +235,8 @@ def test_validate_only_generates_without_comparing_or_promoting(
 
 
 def test_update_regenerates_with_promoted_api_before_retiring_backup(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     _configure_paths(monkeypatch, tmp_path)
     monkeypatch.setattr(generate_api, "LOCK", tmp_path / "lock")
@@ -268,7 +271,8 @@ def test_update_regenerates_with_promoted_api_before_retiring_backup(
 
 
 def test_unchanged_update_still_promotes_and_regenerates_under_backup(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     _configure_paths(monkeypatch, tmp_path)
     monkeypatch.setattr(generate_api, "LOCK", tmp_path / "lock")
@@ -303,7 +307,8 @@ def test_unchanged_update_still_promotes_and_regenerates_under_backup(
 
 
 def test_update_restores_committed_api_when_promoted_generator_fails(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     _configure_paths(monkeypatch, tmp_path)
     monkeypatch.setattr(generate_api, "LOCK", tmp_path / "lock")

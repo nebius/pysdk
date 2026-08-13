@@ -12,7 +12,6 @@ refresh task. The implementation exposes two primary classes:
 
 Example
 -------
-
 Create an asynchronous renewable bearer from a named network bearer::
 
         async_bearer = AsynchronousRenewableFileCacheBearer(network_bearer)
@@ -27,7 +26,8 @@ from logging import getLogger
 from pathlib import Path
 from typing import Any, TypeVar, cast
 
-from nebius.aio.metrics import (
+from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ...metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
     AuthMetricsLike,
@@ -38,11 +38,6 @@ from nebius.aio.metrics import (
     metric_duration_seconds,
     metric_start,
 )
-from nebius.aio.token.token import Bearer as ParentBearer
-from nebius.aio.token.token import Receiver as ParentReceiver
-from nebius.aio.token.token import Token
-from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
-
 from ..options import (
     OPTION_MAX_RETRIES,
     OPTION_RENEW_REQUEST_TIMEOUT,
@@ -51,6 +46,9 @@ from ..options import (
     OPTION_REPORT_ERROR,
 )
 from ..renewable import RenewalError
+from ..token import Bearer as ParentBearer
+from ..token import Receiver as ParentReceiver
+from ..token import Token
 from .throttled_token_cache import ThrottledTokenCache
 
 log = getLogger(__name__)
@@ -65,7 +63,6 @@ class AsynchronousRenewableFileCacheReceiver(ParentReceiver):
 
     Example
     -------
-
     Constructing a receiver is normally done via the bearer's
     :meth:`AsynchronousRenewableFileCacheBearer.receiver` method::
 
@@ -74,6 +71,7 @@ class AsynchronousRenewableFileCacheReceiver(ParentReceiver):
     :param bearer: The owning :class:`AsynchronousRenewableFileCacheBearer`.
     :param max_retries: Maximum number of automatic retry attempts before
         giving up.
+
     """
 
     def __init__(
@@ -194,7 +192,6 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
 
     Example
     -------
-
     Wrap a custom bearer with a name and file cache::
 
         from nebius.sdk import SDK
@@ -223,6 +220,7 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
             credentials=cached_bearer,
             user_agent_prefix="example-application/1.0",
         )
+
     """
 
     def __init__(
@@ -302,7 +300,6 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
     @property
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
-
         return self._metrics.provider
 
     def _is_token_fresh(self, token: Token) -> bool:
@@ -398,7 +395,9 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
                 await wait_for(self._synchronous_can_proceed.wait(), timeout)
                 if OPTION_RENEW_REQUEST_TIMEOUT in options:  # type: ignore
                     try:
-                        self._renew_synchronous_timeout = float(options[OPTION_RENEW_REQUEST_TIMEOUT])  # type: ignore
+                        self._renew_synchronous_timeout = float(
+                            options[OPTION_RENEW_REQUEST_TIMEOUT],  # type: ignore
+                        )
                     except ValueError as err:
                         log.error(f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float: {err=}")
                 self._renew_synchronous_options = options.copy()  # type: ignore
@@ -509,7 +508,7 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         skip_initial_sleep_refresh = not wait_for_timeout
         while not self._is_stopped.is_set():
             log.debug(
-                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}"
+                f"Will refresh token after {retry_timeout} seconds, renewal attempt number {self._renewal_attempt}",
             )
             renew_task = self.bg_task(self._renew_requested.wait())
             sleep_task = self.bg_task(sleep(retry_timeout))
@@ -631,6 +630,5 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
 
     def set_metrics(self, metrics: AuthMetricsLike) -> None:
         """Attach auth metrics callbacks and propagate them to the source."""
-
         self._metrics.set_metrics(metrics)
         self._source = cast(ParentBearer, bind_auth_metrics(self._source, self._metrics))

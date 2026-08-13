@@ -39,7 +39,7 @@ def main() -> None:
 
     try:
         # Read pyproject.toml
-        with open(file_path, "r") as file:
+        with open(file_path) as file:
             data = tomlkit.parse(file.read())
 
         version = data["project"]["version"]  # type: ignore[unused-ignore,index]
@@ -51,7 +51,7 @@ def main() -> None:
         data["project"]["version"] = updated_version  # type: ignore[unused-ignore,index]
 
         # Read the version file and update only the version line
-        with open(version_file_path, "r") as version_file:
+        with open(version_file_path) as version_file:
             lines = version_file.readlines()
 
         for i, line in enumerate(lines):

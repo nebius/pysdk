@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import pytest
 from google.protobuf import descriptor_pb2, descriptor_pool
-
 from nebius.base.protos.codec import BOOL, BYTES, STRING
 from nebius.base.protos.direct import Field, Message
 from nebius.base.protos.reflection import Reflection

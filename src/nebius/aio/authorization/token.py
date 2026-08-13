@@ -5,8 +5,7 @@ authorization interfaces that fetches bearer tokens from a token provider
 and injects them into request metadata.
 """
 
-from nebius.base.metadata import Metadata
-
+from ...base.metadata import Metadata
 from ..token import token
 from .authorization import Authenticator, Provider
 
@@ -37,8 +36,7 @@ class TokenAuthenticator(Authenticator):
         timeout: float | None = None,
         options: dict[str, str] | None = None,
     ) -> None:
-        """Fetch a token from the receiver and set the ``authorization`` metadata
-        header.
+        """Fetch a token and set the ``authorization`` metadata header.
 
         The header is replaced (any existing value is removed) with a
         ``Bearer <token>`` value fetched from the receiver.
@@ -86,7 +84,6 @@ class TokenProvider(Provider):
 
     Example
     -------
-
     Give a bearer-backed provider to the SDK through ``credentials``::
 
         from nebius.aio.token.static import EnvBearer

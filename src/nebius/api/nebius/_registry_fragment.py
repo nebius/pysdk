@@ -5,15 +5,15 @@ from __future__ import annotations
 
 from typing import Any as _NebiusAny
 
-from nebius.base.protos.extensions import (
+from ...base.protos.extensions import (
     Extension, ExtensionRegistry,
 )
-from nebius.base.protos.registry import (
+from ...base.protos.registry import (
     MessageReference, Registry, RegistryFragment,
 )
 
-from nebius.base.protos.direct import message_codec
-from nebius.base.protos.codec import (
+from ...base.protos.direct import message_codec
+from ...base.protos.codec import (
     BOOL, BYTES, DOUBLE, FIXED32, FIXED64, FLOAT, INT32, INT64,
     SFIXED32, SFIXED64, SINT32, SINT64, STRING, UINT32, UINT64,
     enum_codec,

@@ -25,20 +25,19 @@ from typing import TYPE_CHECKING, Any, Generic, Protocol, TypeVar, cast
 from grpc import StatusCode
 from typing_extensions import Unpack
 
-from nebius.aio._task_context import dispose_unstarted_awaitable
-from nebius.aio.abc import ClientChannelInterface
-from nebius.aio.request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT, _authorization_deadline_applies, _validate_timeout
-from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
-from nebius.base.error import SDKError
-from nebius.base.metadata import Metadata
-from nebius.base.protos.unset import Unset, UnsetType
-from nebius.base.protos.well_known_direct import local_timezone
-
+from ..base.error import SDKError
+from ..base.metadata import Metadata
+from ..base.protos.unset import Unset, UnsetType
+from ..base.protos.well_known_direct import local_timezone
+from ._task_context import dispose_unstarted_awaitable
+from .abc import ClientChannelInterface
 from .constant_channel import Constant
+from .request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT, _authorization_deadline_applies, _validate_timeout
+from .request_kwargs import RequestKwargs, RequestKwargsForOperation
 from .request_status import RequestStatus
 
 if TYPE_CHECKING:
-    from nebius.api.nebius.common.v1 import ProgressTracker
+    from ..api.nebius.common.v1 import ProgressTracker
 
 
 class OperationMessage(Protocol):
@@ -74,7 +73,6 @@ class CurrentStep:
 
     Example
     -------
-
     Inspecting steps and progress::
 
         tracker = operation.progress_tracker()
@@ -85,6 +83,7 @@ class CurrentStep:
                     print(step.description())
                 else:
                     print(f"{step.description()}: {fraction:.0%}")
+
     """
 
     def __init__(self, step: object) -> None:
@@ -143,7 +142,6 @@ class OperationProgressTracker(Protocol):
 
     Example
     -------
-
     Reading overall progress::
 
         tracker = operation.progress_tracker()
@@ -155,6 +153,7 @@ class OperationProgressTracker(Protocol):
             time_fraction = tracker.time_fraction()
             if time_fraction is not None:
                 print(f"Time: {time_fraction:.0%}")
+
     """
 
     def description(self) -> str:
@@ -225,7 +224,6 @@ class Operation(Generic[OperationPb]):
 
     Example
     -------
-
     Operation from a service action (e.g., creating a bucket)::
 
         from nebius.sdk import SDK
@@ -276,6 +274,7 @@ class Operation(Generic[OperationPb]):
             # Manual update
             await operation.update()
             print(f"Operation status: {operation.status()}")
+
     """
 
     def __init__(
@@ -311,15 +310,13 @@ class Operation(Generic[OperationPb]):
 
     def _check_process(self) -> None:
         """Reject an operation inherited across ``fork`` before locking."""
-
         if os.getpid() != self._process_id:
             raise RuntimeError(
-                "You cannot use an SDK operation after a fork. Create SDK objects after the child process starts."
+                "You cannot use an SDK operation after a fork. Create SDK objects after the child process starts.",
             )
 
     def _operation_snapshot(self) -> OperationPb:
         """Return the current operation message under the state lock."""
-
         self._check_process()
         with self._state_lock:
             return self._operation
@@ -356,7 +353,6 @@ class Operation(Generic[OperationPb]):
 
         Example
         -------
-
         Polling with a single-line progress display::
 
             from asyncio import sleep
@@ -390,6 +386,7 @@ class Operation(Generic[OperationPb]):
                 await sleep(1)
 
             print()
+
         """
         return wrap_progress_tracker(self)
 
@@ -427,7 +424,6 @@ class Operation(Generic[OperationPb]):
             dispatch delay.
         :param kwargs: Additional request options for the operation service.
         """
-
         if self.done():
             return
         metadata = kwargs.get("metadata")
@@ -462,7 +458,6 @@ class Operation(Generic[OperationPb]):
 
         async def start_update() -> None:
             """Publish SDK-loop dispatch before the update starts."""
-
             nonlocal update_started
             with dispatch_state_lock:
                 update_started = True
@@ -480,7 +475,6 @@ class Operation(Generic[OperationPb]):
 
         def dispose_update_if_unstarted(_: object) -> None:
             """Dispose update work if its dispatch wrapper did not start."""
-
             with dispatch_state_lock:
                 if update_started:
                     return
@@ -500,7 +494,9 @@ class Operation(Generic[OperationPb]):
         caller_deadline = (
             authorization_deadline
             if authorization_applies is True
-            else request_deadline if authorization_applies is False else None
+            else request_deadline
+            if authorization_applies is False
+            else None
         )
         done = getattr(submitted, "done", None)
         dispatch_limits = [deadline for deadline in (request_deadline, authorization_deadline) if deadline is not None]
@@ -579,7 +575,6 @@ class Operation(Generic[OperationPb]):
             deadline captured before SDK-loop dispatch.
         :param kwargs: Request options for the operation service.
         """
-
         async with self._update_lock:
             if self.done():
                 return
@@ -767,7 +762,6 @@ class Operation(Generic[OperationPb]):
         :param poll_retries: Retry count for each polling request.
         :param kwargs: Additional request options for the operation service.
         """
-
         # Preserve the historical terminal fast path. In particular,
         # asyncio.wait_for(..., 0) cannot start a newly submitted coroutine,
         # even when that coroutine would immediately observe terminal state.
@@ -849,7 +843,6 @@ class Operation(Generic[OperationPb]):
         :param kwargs: Additional request options for the operation service.
         :raises TimeoutError: If the overall wait limit expires.
         """
-
         if deadline is None and timeout is not None:
             deadline = monotonic() + max(timeout, 0)
         if poll_iteration_timeout is None:
@@ -857,11 +850,10 @@ class Operation(Generic[OperationPb]):
                 poll_iteration_timeout = min(5, timeout)
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
-        from nebius.aio.service_error import RequestError as ServiceRequestError
+        from .service_error import RequestError as ServiceRequestError
 
         def _is_ignorable(err: Exception) -> bool:
             """Return whether one polling error is transient."""
-
             # TimeoutError raised locally or RequestError with DEADLINE_EXCEEDED
             if isinstance(err, TimeoutError):
                 return True
@@ -874,7 +866,6 @@ class Operation(Generic[OperationPb]):
 
         async def _safe_update() -> None:
             """Run one update and ignore only transient polling errors."""
-
             try:
                 update_kwargs: dict[str, Any] = {
                     **kwargs,
@@ -1017,7 +1008,6 @@ class _ProgressTrackerWrapper:
     @staticmethod
     def _tracker_from(op_proto: object) -> object | None:
         """Return a tracker from one stable operation snapshot."""
-
         if not _check_presence(op_proto, "progress_tracker"):
             return None
         return getattr(op_proto, "progress_tracker", None)
@@ -1137,12 +1127,12 @@ def wrap_progress_tracker(
 
     Example
     -------
-
     Using the helper directly::
 
         tracker = wrap_progress_tracker(operation)
         if tracker is not None:
             print(tracker.description())
+
     """
     if operation is None:
         return None
