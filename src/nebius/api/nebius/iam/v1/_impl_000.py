@@ -3416,7 +3416,7 @@ class SamlSettings(Message):
 
     @_NebiusProperty
     def force_authn(self) -> _NebiusBool:
-        'if "true", the identity provider MUST authenticate the presenter directly rather than rely on a previous security context.'
+        'If true, the SAML AuthnRequest asks the identity provider to authenticate the user instead of reusing an existing IdP session. (See\nSAML Core 2.0, section 3.4.1, ForceAuthn: https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) Limitations: the SAML\nresponse does not let verify whether the identity provider honored this request; support depends on the identity provider.'
         value = self._get_field(_NEBIUS_IAM_V1_SAMLSETTINGS_FORCE_AUTHN, absent_is_none=False)
         return _nebius_cast('_NebiusBool', value)
 

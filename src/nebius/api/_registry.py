@@ -33,16 +33,17 @@ from .nebius.mk8s.v1alpha1 import _registry_fragment as _fragment_022
 from .nebius.msp.mlflow.v1alpha1 import _registry_fragment as _fragment_023
 from .nebius.msp.postgresql.v1alpha1 import _registry_fragment as _fragment_024
 from .nebius.msp.postgresql.v1alpha1.config import _registry_fragment as _fragment_025
-from .nebius.msp.v1alpha1 import _registry_fragment as _fragment_026
-from .nebius.msp.v1alpha1.resource import _registry_fragment as _fragment_027
-from .nebius.mysterybox.v1 import _registry_fragment as _fragment_028
-from .nebius.quotas.v1 import _registry_fragment as _fragment_029
-from .nebius.registry.v1 import _registry_fragment as _fragment_030
-from .nebius.storage.v1 import _registry_fragment as _fragment_031
-from .nebius.storage.v1alpha1 import _registry_fragment as _fragment_032
-from .nebius.tunnel.v1 import _registry_fragment as _fragment_033
-from .nebius.vpc.v1 import _registry_fragment as _fragment_034
-from .nebius.vpc.v1alpha1 import _registry_fragment as _fragment_035
+from .nebius.msp.skypilot.v1alpha1 import _registry_fragment as _fragment_026
+from .nebius.msp.v1alpha1 import _registry_fragment as _fragment_027
+from .nebius.msp.v1alpha1.resource import _registry_fragment as _fragment_028
+from .nebius.mysterybox.v1 import _registry_fragment as _fragment_029
+from .nebius.quotas.v1 import _registry_fragment as _fragment_030
+from .nebius.registry.v1 import _registry_fragment as _fragment_031
+from .nebius.storage.v1 import _registry_fragment as _fragment_032
+from .nebius.storage.v1alpha1 import _registry_fragment as _fragment_033
+from .nebius.tunnel.v1 import _registry_fragment as _fragment_034
+from .nebius.vpc.v1 import _registry_fragment as _fragment_035
+from .nebius.vpc.v1alpha1 import _registry_fragment as _fragment_036
 
 REGISTRY = Registry.from_fragments((
     _fragment_root.FRAGMENT,
@@ -82,6 +83,7 @@ REGISTRY = Registry.from_fragments((
     _fragment_033.FRAGMENT,
     _fragment_034.FRAGMENT,
     _fragment_035.FRAGMENT,
+    _fragment_036.FRAGMENT,
 ))
 EXTENSIONS = ExtensionRegistry()
 EXTENSION_HANDLES: dict[str, Extension[_NebiusAny]] = {}
@@ -160,6 +162,8 @@ for _full_name, _ranges in _fragment_034.EXTENDEES:
     EXTENSIONS.add_extendee(_full_name, _ranges)
 for _full_name, _ranges in _fragment_035.EXTENDEES:
     EXTENSIONS.add_extendee(_full_name, _ranges)
+for _full_name, _ranges in _fragment_036.EXTENDEES:
+    EXTENSIONS.add_extendee(_full_name, _ranges)
 
 _fragment_root.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)
 _fragment_000.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)
@@ -198,4 +202,5 @@ _fragment_032.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)
 _fragment_033.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)
 _fragment_034.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)
 _fragment_035.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)
+_fragment_036.register_extensions(REGISTRY, EXTENSIONS, EXTENSION_HANDLES)
 EXTENSIONS.freeze()
