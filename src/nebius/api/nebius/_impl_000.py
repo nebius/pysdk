@@ -74,6 +74,8 @@ class FieldBehavior(Enum):
     'Indicates that an empty message and a null have different semantics.\nUsually, that field is a feature spec message: its empty message enables\nthat feature, and null disables it. Such a message is different from ``bool``\nbecause it already has some feature parameters, or they can be added later\nin a backward-compatible way.\nIMPORTANT: if the message itself is recursive, this behavior is forced.'
     NON_EMPTY_DEFAULT = 7
     "Indicates that an empty (default) value will be filled by the server.\nUsually, that field is a feature spec value, which by default is computed.\nValues marked with this annotation won't raise error if they are not set\nand the returned value is not equal to protobuf default.\n\nIMPORTANT:\nUpdating this value from explicit to default may not lead to Update call in\nsome tools (eg Terraform).\nCompound values (messages, lists and maps) may result in unpredictable\nupdates (see examples in guidelines)."
+    PUBLIC_OUTPUT_ONLY = 8
+    'The same as ``OUTPUT_ONLY``'
 _NebiusType_nebius_FieldBehavior_176dc0e9 = FieldBehavior
 
 class MethodBehavior(Enum):

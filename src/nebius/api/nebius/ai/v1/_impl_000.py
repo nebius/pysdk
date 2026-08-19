@@ -153,6 +153,20 @@ class EndpointStatus__State(Enum):
     'The endpoint is pulling an image (STARTING -> IMAGE_PULLING -> RUNNING).'
 _NebiusType_nebius_ai_v1_EndpointStatus_State_b69b77a3 = EndpointStatus__State
 
+class GetEndpointRequest__View(Enum):
+    'Controls whether sensitive injected-file content is included.'
+    __PROTO_FULL_NAME__ = 'nebius.ai.v1.GetEndpointRequest.View'
+    """Fully qualified protobuf enum name."""
+    __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
+    __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.ai.v1.GetEndpointRequest.View')
+    """Protobuf enum descriptor from the registry."""
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
+    VIEW_UNSPECIFIED = 0
+    SECRET = 1
+_NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f = GetEndpointRequest__View
+
 class JobInstanceStatus__State(Enum):
     'Job instance state.'
     __PROTO_FULL_NAME__ = 'nebius.ai.v1.JobInstanceStatus.State'
@@ -256,6 +270,20 @@ class JobStatus__State(Enum):
     IMAGE_PULLING = 10
     'The job is pulling an image (STARTING -> IMAGE_PULLING -> RUNNING).'
 _NebiusType_nebius_ai_v1_JobStatus_State_5e8652e9 = JobStatus__State
+
+class GetJobRequest__View(Enum):
+    'Controls whether sensitive injected-file content is included.'
+    __PROTO_FULL_NAME__ = 'nebius.ai.v1.GetJobRequest.View'
+    """Fully qualified protobuf enum name."""
+    __REGISTRY__ = REGISTRY
+    """Registry for this enum and its descriptor."""
+    __PROTO_DESCRIPTOR__ = REGISTRY.enum_descriptor('nebius.ai.v1.GetJobRequest.View')
+    """Protobuf enum descriptor from the registry."""
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+    """Alias for code that expects a protobuf enum descriptor."""
+    VIEW_UNSPECIFIED = 0
+    SECRET = 1
+_NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51 = GetJobRequest__View
 
 # @@nebius-section:messages@@
 class EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef(Message):
@@ -661,7 +689,7 @@ class EndpointSpec__FileInjection(Message):
 
     @_NebiusProperty
     def content(self) -> _NebiusBytes:
-        'File content. Between 1 byte and 64 KiB (one mystery box secret payload).\n\nNot returned by read methods.'
+        'File content. On create, must contain between 1 byte and 64 KiB\n(one mystery box secret payload).\nReturned only by Get with view SECRET.'
         value = self._get_field(_NEBIUS_AI_V1_ENDPOINTSPEC_FILEINJECTION_CONTENT, absent_is_none=False)
         return _nebius_cast('_NebiusBytes', value)
 
@@ -1436,7 +1464,7 @@ class EndpointSpec(Message):
 
     @_NebiusProperty
     def injected_files(self) -> _NebiusMutableSequence[_NebiusType_nebius_ai_v1_EndpointSpec_FileInjection_e13b533d]:
-        'Small config files injected into the container before the user process\nstarts. Intended for configs, not datasets.'
+        'Small config files injected into the container before the user process\nstarts. Intended for configs, not datasets. Read methods return target\npaths. File content is returned only by Get with view SECRET.'
         value = self._get_field(_NEBIUS_AI_V1_ENDPOINTSPEC_INJECTED_FILES, absent_is_none=False)
         return _nebius_cast('_NebiusMutableSequence[_NebiusType_nebius_ai_v1_EndpointSpec_FileInjection_e13b533d]', value)
 
@@ -1784,17 +1812,21 @@ class GetEndpointRequest(Message):
     """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
     """Alias for code that expects a protobuf message descriptor."""
+    View: _NebiusTypeAlias = _NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        view: _NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
+        if view is not _NEBIUS_UNSET:
+            values['view'] = view
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -1807,7 +1839,18 @@ class GetEndpointRequest(Message):
         """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_AI_V1_GETENDPOINTREQUEST_ID, value)
 
-    __PY_TO_PB2__ = {'id': 'id'}
+    @_NebiusProperty
+    def view(self) -> _NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f:
+        'SECRET includes injected file content and requires\nresource.aiendpoint.getSensitiveData.'
+        value = self._get_field(_NEBIUS_AI_V1_GETENDPOINTREQUEST_VIEW, absent_is_none=False)
+        return _nebius_cast('_NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f', None if value is None else REGISTRY.enum_class('nebius.ai.v1.GetEndpointRequest.View')(value))
+
+    @view.setter
+    def view(self, value: _NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f | None) -> None:
+        """Set or clear the generated ``view`` field."""
+        self._set_field(_NEBIUS_AI_V1_GETENDPOINTREQUEST_VIEW, value)
+
+    __PY_TO_PB2__ = {'id': 'id', 'view': 'view', 'View': 'View'}
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_ai_v1_GetEndpointRequest_6c2c87bd = GetEndpointRequest
 
@@ -2448,7 +2491,7 @@ class JobSpec__FileInjection(Message):
 
     @_NebiusProperty
     def content(self) -> _NebiusBytes:
-        'File content. Between 1 byte and 64 KiB (one mystery box secret payload).\n\nNot returned by read methods.'
+        'File content. On create, must contain between 1 byte and 64 KiB\n(one mystery box secret payload).\nReturned only by Get with view SECRET.'
         value = self._get_field(_NEBIUS_AI_V1_JOBSPEC_FILEINJECTION_CONTENT, absent_is_none=False)
         return _nebius_cast('_NebiusBytes', value)
 
@@ -3223,7 +3266,7 @@ class JobSpec(Message):
 
     @_NebiusProperty
     def injected_files(self) -> _NebiusMutableSequence[_NebiusType_nebius_ai_v1_JobSpec_FileInjection_4b487886]:
-        'Small config files injected into the container before the user process\nstarts. Intended for configs, not datasets.'
+        'Small config files injected into the container before the user process\nstarts. Intended for configs, not datasets. Read methods return target\npaths. File content is returned only by Get with view SECRET.'
         value = self._get_field(_NEBIUS_AI_V1_JOBSPEC_INJECTED_FILES, absent_is_none=False)
         return _nebius_cast('_NebiusMutableSequence[_NebiusType_nebius_ai_v1_JobSpec_FileInjection_4b487886]', value)
 
@@ -3638,17 +3681,21 @@ class GetJobRequest(Message):
     """Protobuf message descriptor from the registry."""
     __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
     """Alias for code that expects a protobuf message descriptor."""
+    View: _NebiusTypeAlias = _NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51
 
     def __init__(
         self,
         initial_message: _NebiusSerializableMessage | None = None,
         *,
         id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        view: _NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51 | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         """Create a message from a source message and field values."""
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if id is not _NEBIUS_UNSET:
             values['id'] = id
+        if view is not _NEBIUS_UNSET:
+            values['view'] = view
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -3661,7 +3708,18 @@ class GetJobRequest(Message):
         """Set or clear the generated ``id`` field."""
         self._set_field(_NEBIUS_AI_V1_GETJOBREQUEST_ID, value)
 
-    __PY_TO_PB2__ = {'id': 'id'}
+    @_NebiusProperty
+    def view(self) -> _NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51:
+        'SECRET includes injected file content and requires\nresource.aijob.getSensitiveData.'
+        value = self._get_field(_NEBIUS_AI_V1_GETJOBREQUEST_VIEW, absent_is_none=False)
+        return _nebius_cast('_NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51', None if value is None else REGISTRY.enum_class('nebius.ai.v1.GetJobRequest.View')(value))
+
+    @view.setter
+    def view(self, value: _NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51 | None) -> None:
+        """Set or clear the generated ``view`` field."""
+        self._set_field(_NEBIUS_AI_V1_GETJOBREQUEST_VIEW, value)
+
+    __PY_TO_PB2__ = {'id': 'id', 'view': 'view', 'View': 'View'}
     """Mapping from Python member names to protobuf names."""
 _NebiusType_nebius_ai_v1_GetJobRequest_c8180ffa = GetJobRequest
 
@@ -3929,7 +3987,8 @@ _NEBIUS_AI_V1_GETENDPOINTBYNAMEREQUEST_NAME = Field('name', 'name', 2, STRING, j
 GetEndpointByNameRequest.__FIELDS__ = (_NEBIUS_AI_V1_GETENDPOINTBYNAMEREQUEST_PARENT_ID, _NEBIUS_AI_V1_GETENDPOINTBYNAMEREQUEST_NAME)
 
 _NEBIUS_AI_V1_GETENDPOINTREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-GetEndpointRequest.__FIELDS__ = (_NEBIUS_AI_V1_GETENDPOINTREQUEST_ID,)
+_NEBIUS_AI_V1_GETENDPOINTREQUEST_VIEW = Field('view', 'view', 101, enum_codec((0, 1), default=0, closed=False, names={'VIEW_UNSPECIFIED': 0, 'SECRET': 1}, enum_type=lambda: REGISTRY.enum_class('nebius.ai.v1.GetEndpointRequest.View')), json_name='view')
+GetEndpointRequest.__FIELDS__ = (_NEBIUS_AI_V1_GETENDPOINTREQUEST_ID, _NEBIUS_AI_V1_GETENDPOINTREQUEST_VIEW)
 
 _NEBIUS_AI_V1_LISTENDPOINTSREQUEST_PARENT_ID = Field('parent_id', 'parent_id', 1, STRING, json_name='parentId')
 _NEBIUS_AI_V1_LISTENDPOINTSREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
@@ -4061,7 +4120,8 @@ _NEBIUS_AI_V1_GETJOBBYNAMEREQUEST_NAME = Field('name', 'name', 2, STRING, json_n
 GetJobByNameRequest.__FIELDS__ = (_NEBIUS_AI_V1_GETJOBBYNAMEREQUEST_PARENT_ID, _NEBIUS_AI_V1_GETJOBBYNAMEREQUEST_NAME)
 
 _NEBIUS_AI_V1_GETJOBREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
-GetJobRequest.__FIELDS__ = (_NEBIUS_AI_V1_GETJOBREQUEST_ID,)
+_NEBIUS_AI_V1_GETJOBREQUEST_VIEW = Field('view', 'view', 101, enum_codec((0, 1), default=0, closed=False, names={'VIEW_UNSPECIFIED': 0, 'SECRET': 1}, enum_type=lambda: REGISTRY.enum_class('nebius.ai.v1.GetJobRequest.View')), json_name='view')
+GetJobRequest.__FIELDS__ = (_NEBIUS_AI_V1_GETJOBREQUEST_ID, _NEBIUS_AI_V1_GETJOBREQUEST_VIEW)
 
 _NEBIUS_AI_V1_LISTJOBSREQUEST_PARENT_ID = Field('parent_id', 'parent_id', 1, STRING, json_name='parentId')
 _NEBIUS_AI_V1_LISTJOBSREQUEST_PAGE_SIZE = Field('page_size', 'page_size', 2, INT64, json_name='pageSize')
@@ -4105,6 +4165,9 @@ EndpointSpec__RegistryCredentials.__qualname__ = 'EndpointSpec.RegistryCredentia
 EndpointSpec__VolumeMount.__name__ = 'VolumeMount'
 EndpointSpec__VolumeMount.__qualname__ = 'EndpointSpec.VolumeMount'
 
+GetEndpointRequest__View.__name__ = 'View'
+GetEndpointRequest__View.__qualname__ = 'GetEndpointRequest.View'
+
 JobInstanceStatus__State.__name__ = 'State'
 JobInstanceStatus__State.__qualname__ = 'JobInstanceStatus.State'
 JobSpec__Port__Protocol.__name__ = 'Protocol'
@@ -4133,6 +4196,9 @@ JobSpec__RegistryCredentials.__name__ = 'RegistryCredentials'
 JobSpec__RegistryCredentials.__qualname__ = 'JobSpec.RegistryCredentials'
 JobSpec__VolumeMount.__name__ = 'VolumeMount'
 JobSpec__VolumeMount.__qualname__ = 'JobSpec.VolumeMount'
+
+GetJobRequest__View.__name__ = 'View'
+GetJobRequest__View.__qualname__ = 'GetJobRequest.View'
 
 # @@nebius-section:extensions@@
 # @@nebius-section:services@@
