@@ -62,7 +62,7 @@ def _start_loop() -> tuple[asyncio.AbstractEventLoop, Thread]:
     def run() -> None:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        ready.set_result(loop)
+        loop.call_soon(ready.set_result, loop)
         loop.run_forever()
         loop.close()
 
