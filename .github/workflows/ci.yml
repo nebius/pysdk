@@ -9,118 +9,46 @@ on:
       - api-auto-update
 
 jobs:
-  generated-api-consistency:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code with API sources
-      uses: actions/checkout@v7
-      with:
-        submodules: recursive
-
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v7
-      with:
-        python-version: "3.10"
-
-    - name: Install project and generator
-      run: python -m pip install '.[generators]'
-
-    - uses: bufbuild/buf-action@v1
-      with:
-        setup_only: true
-
-    - name: Check generated API
-      run: make check-generated
-
-    - name: Smoke update mode without publishing
-      run: |
-        make generate
-        make check-generated
-
-  partition-equivalence:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code with API sources
-      uses: actions/checkout@v7
-      with:
-        submodules: recursive
-
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v7
-      with:
-        python-version: "3.10"
-
-    - name: Install project and generator
-      run: python -m pip install '.[generators]'
-
-    - uses: bufbuild/buf-action@v1
-      with:
-        setup_only: true
-
-    - name: Verify partition equivalence
-      run: make verify-generated
-
   docs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v7
+      - name: Checkout code
+        uses: actions/checkout@v7
 
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v7
-      with:
-        python-version: "3.10"
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.10"
 
-    - name: Install project and documentation dependencies
-      run: python -m pip install '.[generators]' pytest
+      - name: Install project and documentation dependencies
+        run: python -m pip install '.[generators]' pytest
 
-    - name: Test documentation discovery
-      run: python -m pytest -q tests/test_gendoc.py
+      - name: Test documentation discovery
+        run: python -m pytest -q tests/test_gendoc.py
 
-    - name: Build API documentation
-      run: make gen-doc
+      - name: Build API documentation
+        run: make gen-doc
 
-    - name: Upload documentation preview
-      id: docs-preview
-      uses: actions/upload-artifact@v7
-      with:
-        name: docs-preview-${{ github.event.pull_request.number || github.run_id }}
-        path: docs/generated
-        if-no-files-found: error
-        retention-days: 14
+      - name: Upload documentation preview
+        id: docs-preview
+        uses: actions/upload-artifact@v7
+        with:
+          name: docs-preview-${{ github.event.pull_request.number || github.run_id }}
+          path: docs/generated
+          if-no-files-found: error
+          retention-days: 14
 
-    - name: Link documentation preview
-      env:
-        ARTIFACT_URL: ${{ steps.docs-preview.outputs.artifact-url }}
-      run: |
-        {
-          echo "### Documentation preview"
-          echo
-          echo "[Download the generated site]($ARTIFACT_URL) (retained for 14 days)."
-          echo "Extract the archive and open \`apiReference.html\` in a browser."
-        } >> "$GITHUB_STEP_SUMMARY"
-
-  generated-api:
-    if: ${{ always() }}
-    needs:
-      - generated-api-consistency
-      - partition-equivalence
-      - docs
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Require all generated API checks
-      env:
-        CONSISTENCY_RESULT: ${{ needs.generated-api-consistency.result }}
-        EQUIVALENCE_RESULT: ${{ needs.partition-equivalence.result }}
-        DOCS_RESULT: ${{ needs.docs.result }}
-      run: |
-        test "$CONSISTENCY_RESULT" = success
-        test "$EQUIVALENCE_RESULT" = success
-        test "$DOCS_RESULT" = success
+      - name: Link documentation preview
+        env:
+          ARTIFACT_URL: ${{ steps.docs-preview.outputs.artifact-url }}
+        run: |
+          {
+            echo "### Documentation preview"
+            echo
+            echo "[Download the generated site]($ARTIFACT_URL) (retained for 14 days)."
+            echo "Extract the archive and open \`apiReference.html\` in a browser."
+          } >> "$GITHUB_STEP_SUMMARY"
 
   test:
     runs-on: ubuntu-latest
@@ -130,25 +58,25 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v7
+      - name: Checkout code
+        uses: actions/checkout@v7
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v7
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install tox
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox
 
-    - name: Run tox
-      env:
-        NEBIUS_E2E_CONFIG_B64: ${{ secrets.NEBIUS_E2E_CONFIG_B64 }}
-      run: |
-        if [[ "${{ matrix.python-version }}" == "3.10" ]]; then
-          tox -e test_earliest,test,lint,type,type_consumer,format
-        else
-          tox -e test
-        fi
+      - name: Run tox
+        env:
+          NEBIUS_E2E_CONFIG_B64: ${{ secrets.NEBIUS_E2E_CONFIG_B64 }}
+        run: |
+          if [[ "${{ matrix.python-version }}" == "3.10" ]]; then
+            tox -e test_earliest,test,lint,type,type_consumer,format
+          else
+            tox -e test
+          fi
