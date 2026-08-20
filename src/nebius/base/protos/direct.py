@@ -979,7 +979,7 @@ class Message:
         if packed:
             writer = BinaryWriter()
             writer.write_tag(field.number, codec.wire_type)
-            writer.write_varint(value & 0xFFFFFFFF)
+            codec.write(writer, value)
             self._unknown_fields.append(writer.to_bytes())
         elif raw is not None:
             self._unknown_fields.append(raw)

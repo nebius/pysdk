@@ -985,7 +985,7 @@ def test_generated_compatibility_helpers_and_repr_redact_secrets() -> None:
     ]
 
 
-def test_required_fields_and_closed_declared_enums_match_reference() -> None:
+def test_required_fields_and_closed_declared_enums_follow_wire_spec() -> None:
     direct = Legacy()
     assert direct.FindInitializationErrors() == ["name"]
     assert not direct.IsInitialized()
@@ -1000,13 +1000,20 @@ def test_required_fields_and_closed_declared_enums_match_reference() -> None:
     writer.write_tag(LEGACY_NAME.number, STRING.wire_type)
     writer.write_string("set")
     writer.write_tag(LEGACY_STATES.number, 2)
-    writer.write_packed([0, 9, 1, -1], LEGACY_STATES.codec.write)
+    writer.write_packed([0, 9, 1, -1], BinaryWriter.write_int32)
     payload = writer.to_bytes()
     direct.ParseFromString(payload)
     assert direct.states == [0, 1]
     assert direct.IsInitialized()
-    expected = REFERENCE_LEGACY.FromString(payload).SerializeToString(deterministic=True)
-    assert direct.SerializeToString(deterministic=True) == expected
+    expected = BinaryWriter()
+    expected.write_tag(LEGACY_NAME.number, STRING.wire_type)
+    expected.write_string("set")
+    expected.write_tag(LEGACY_STATES.number, 2)
+    expected.write_packed([0, 1], BinaryWriter.write_int32)
+    for unknown in (9, -1):
+        expected.write_tag(LEGACY_STATES.number, LEGACY_STATES.codec.wire_type)
+        expected.write_int32(unknown)
+    assert direct.SerializeToString(deterministic=True) == expected.to_bytes()
 
 
 def test_required_fields_inside_message_extensions_are_reported() -> None:
