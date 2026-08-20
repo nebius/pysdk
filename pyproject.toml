@@ -303,6 +303,8 @@ html-viewsource-base="https://github.com/nebius/pysdk/tree/main"
 intersphinx = [
     "https://docs.python.org/3/objects.inv",
     "https://grpc.github.io/grpc/python/objects.inv",
+    "https://googleapis.dev/python/protobuf/latest/objects.inv",
+    "https://portalocker.readthedocs.io/en/latest/objects.inv",
 ]
 privacy = [
     "PRIVATE:nebius.api.nebius.common.*.OperationServiceClient",
