@@ -432,6 +432,60 @@ def test_generator_documents_framework_owned_members() -> None:
         assert documentation in common_source
 
 
+def test_generated_proto2_closed_enum_uses_reflected_int32_encoding(tmp_path: Path) -> None:
+    namespace = "closed_enum"
+    file_proto = descriptor_pb2.FileDescriptorProto(
+        name="legacy/state.proto",
+        package="legacy",
+        syntax="proto2",
+    )
+    state = file_proto.enum_type.add(name="State")
+    state.value.add(name="STATE_UNSPECIFIED", number=0)
+    state.value.add(name="STATE_READY", number=1)
+    message = file_proto.message_type.add(name="LegacyContainer")
+    states = message.field.add(
+        name="states",
+        number=1,
+        label=descriptor_pb2.FieldDescriptorProto.LABEL_REPEATED,
+        type=descriptor_pb2.FieldDescriptorProto.TYPE_ENUM,
+        type_name=".legacy.State",
+    )
+    states.options.packed = True
+    request = plugin_pb2.CodeGeneratorRequest(
+        proto_file=[file_proto],
+        file_to_generate=[file_proto.name],
+        parameter=f"destination_prefix={namespace}.generated,runtime_prefix={namespace}",
+    )
+
+    response = generate(request)
+
+    assert not response.error
+    materialize(tmp_path, namespace, response)
+    sys.path.insert(0, str(tmp_path))
+    try:
+        module = importlib.import_module(f"{namespace}.generated.legacy")
+        wire = importlib.import_module(f"{namespace}.base.protos.wire")
+        payload = wire.BinaryWriter()
+        payload.write_tag(1, 2)
+        payload.write_packed([0, 9, 1, -1], wire.BinaryWriter.write_int32)
+
+        parsed = module.LegacyContainer.FromString(payload.to_bytes())
+
+        assert parsed.states == [module.State.STATE_UNSPECIFIED, module.State.STATE_READY]
+        expected = wire.BinaryWriter()
+        expected.write_tag(1, 2)
+        expected.write_packed([0, 1], wire.BinaryWriter.write_int32)
+        for unknown in (9, -1):
+            expected.write_tag(1, 0)
+            expected.write_int32(unknown)
+        assert parsed.SerializeToString(deterministic=True) == expected.to_bytes()
+    finally:
+        sys.path.remove(str(tmp_path))
+        for name in tuple(sys.modules):
+            if name == namespace or name.startswith(namespace + "."):
+                sys.modules.pop(name)
+
+
 def _operation_request(namespace: str) -> plugin_pb2.CodeGeneratorRequest:
     request = _request(namespace)
     operation_file = descriptor_pb2.FileDescriptorProto(

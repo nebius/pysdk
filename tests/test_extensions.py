@@ -526,7 +526,17 @@ def test_closed_enum_invalid_values_follow_reference_unknown_rules() -> None:
     values, unknown = _decode(payload)
     assert not values.has(OPTIONAL_STATE)
     assert values.get(REPEATED_STATE) == [1, 2]
-    assert len(unknown) == 3
+    expected_unknown: list[bytes] = []
+    for extension, value in (
+        (OPTIONAL_STATE, 9),
+        (REPEATED_STATE, 9),
+        (REPEATED_STATE, -1),
+    ):
+        encoded = BinaryWriter()
+        encoded.write_tag(extension.number, extension.value_codec.wire_type)
+        encoded.write_int32(value)
+        expected_unknown.append(encoded.to_bytes())
+    assert unknown == expected_unknown
 
     encoded = BinaryWriter()
     values.write_to(encoded)

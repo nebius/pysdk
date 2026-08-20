@@ -342,7 +342,7 @@ class ExtensionValues:
                 if codec.closed_enum and codec.enum_values is not None and value not in codec.enum_values:
                     writer = BinaryWriter()
                     writer.write_tag(extension.number, codec.wire_type)
-                    writer.write_varint(value & 0xFFFFFFFF)
+                    codec.write(writer, value)
                     unknown.append(writer.to_bytes())
                 else:
                     values.append(codec.copy(value))
