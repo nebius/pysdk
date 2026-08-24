@@ -154,7 +154,7 @@ class EndpointStatus__State(Enum):
 _NebiusType_nebius_ai_v1_EndpointStatus_State_b69b77a3 = EndpointStatus__State
 
 class GetEndpointRequest__View(Enum):
-    'Controls whether sensitive injected-file content is included.'
+    'Controls whether injected-file content and unmasked inline S3 credential values are included.'
     __PROTO_FULL_NAME__ = 'nebius.ai.v1.GetEndpointRequest.View'
     """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
@@ -272,7 +272,7 @@ class JobStatus__State(Enum):
 _NebiusType_nebius_ai_v1_JobStatus_State_5e8652e9 = JobStatus__State
 
 class GetJobRequest__View(Enum):
-    'Controls whether sensitive injected-file content is included.'
+    'Controls whether injected-file content and unmasked inline S3 credential values are included.'
     __PROTO_FULL_NAME__ = 'nebius.ai.v1.GetJobRequest.View'
     """Fully qualified protobuf enum name."""
     __REGISTRY__ = REGISTRY
@@ -500,7 +500,7 @@ class EndpointSpec__VolumeMount__S3Config(Message):
 
     @_NebiusProperty
     def credentials(self) -> _NebiusType_nebius_ai_v1_EndpointSpec_VolumeMount_S3Config_S3Credentials_19e04a8b | None:
-        'Inline S3 credentials.'
+        'Inline S3 credentials.\nUnmasked values are returned only by Get with view SECRET.'
         value = self._get_field(_NEBIUS_AI_V1_ENDPOINTSPEC_VOLUMEMOUNT_S3CONFIG_CREDENTIALS, absent_is_none=True)
         return _nebius_cast('_NebiusType_nebius_ai_v1_EndpointSpec_VolumeMount_S3Config_S3Credentials_19e04a8b | None', value)
 
@@ -1841,7 +1841,7 @@ class GetEndpointRequest(Message):
 
     @_NebiusProperty
     def view(self) -> _NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f:
-        'SECRET includes injected file content and requires\nresource.aiendpoint.getSensitiveData.'
+        'SECRET includes injected-file content and unmasked inline S3 credentials and requires\nresource.aiendpoint.getSensitiveData.'
         value = self._get_field(_NEBIUS_AI_V1_GETENDPOINTREQUEST_VIEW, absent_is_none=False)
         return _nebius_cast('_NebiusType_nebius_ai_v1_GetEndpointRequest_View_a71aaf2f', None if value is None else REGISTRY.enum_class('nebius.ai.v1.GetEndpointRequest.View')(value))
 
@@ -2302,7 +2302,7 @@ class JobSpec__VolumeMount__S3Config(Message):
 
     @_NebiusProperty
     def credentials(self) -> _NebiusType_nebius_ai_v1_JobSpec_VolumeMount_S3Config_S3Credentials_2b5a2956 | None:
-        'Inline S3 credentials.'
+        'Inline S3 credentials.\nUnmasked values are returned only by Get with view SECRET.'
         value = self._get_field(_NEBIUS_AI_V1_JOBSPEC_VOLUMEMOUNT_S3CONFIG_CREDENTIALS, absent_is_none=True)
         return _nebius_cast('_NebiusType_nebius_ai_v1_JobSpec_VolumeMount_S3Config_S3Credentials_2b5a2956 | None', value)
 
@@ -3710,7 +3710,7 @@ class GetJobRequest(Message):
 
     @_NebiusProperty
     def view(self) -> _NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51:
-        'SECRET includes injected file content and requires\nresource.aijob.getSensitiveData.'
+        'SECRET includes injected-file content and unmasked inline S3 credentials and requires\nresource.aijob.getSensitiveData.'
         value = self._get_field(_NEBIUS_AI_V1_GETJOBREQUEST_VIEW, absent_is_none=False)
         return _nebius_cast('_NebiusType_nebius_ai_v1_GetJobRequest_View_cddc6a51', None if value is None else REGISTRY.enum_class('nebius.ai.v1.GetJobRequest.View')(value))
 
