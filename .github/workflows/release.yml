@@ -2,30 +2,100 @@ name: Release the new version
 
 on:
   push:
-    tags:
-    - "v*.*.*"
-  # workflow_call: # probably not necessary as the release will be triggered by the tag
-  workflow_dispatch: # if necessary to rerun the release job
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      publish_existing_tag:
+        description: Publish the package and documentation when the version tag already exists.
+        required: false
+        default: true
+        type: boolean
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
+  prepare-release:
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    outputs:
+      release_needed: ${{ steps.version.outputs.release_needed }}
+      version: ${{ steps.version.outputs.version }}
+      version_tag: ${{ steps.version.outputs.version_tag }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Fetch tags
+        run: git fetch --force --tags origin
+
+      - name: Read version and create tag if missing
+        id: version
+        env:
+          PUBLISH_EXISTING_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_existing_tag }}
+        run: |
+          project_version="$(sed -n 's/^version = "\(.*\)"$/\1/p' pyproject.toml)"
+          runtime_version="$(sed -n 's/^version = "\(.*\)"$/\1/p' src/nebius/base/version.py)"
+
+          if [ -z "$project_version" ] || [ "$project_version" != "$runtime_version" ]; then
+            echo "Project and runtime versions must be present and equal: project=$project_version runtime=$runtime_version" >&2
+            exit 1
+          fi
+
+          if ! printf '%s\n' "$project_version" | grep -Eq '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'; then
+            echo "Version must be semantic, got: $project_version" >&2
+            exit 1
+          fi
+
+          version_tag="v$project_version"
+          echo "version=$project_version" >> "$GITHUB_OUTPUT"
+          echo "version_tag=$version_tag" >> "$GITHUB_OUTPUT"
+
+          if git rev-parse -q --verify "refs/tags/$version_tag" >/dev/null; then
+            if [ "$PUBLISH_EXISTING_TAG" = "true" ]; then
+              echo "release_needed=true" >> "$GITHUB_OUTPUT"
+              echo "Tag $version_tag already exists, publishing the package and documentation."
+              exit 0
+            fi
+
+            echo "release_needed=false" >> "$GITHUB_OUTPUT"
+            echo "Tag $version_tag already exists, skipping release."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$version_tag" -m "Release $version_tag"
+          git push origin "refs/tags/$version_tag"
+          echo "release_needed=true" >> "$GITHUB_OUTPUT"
+
   pages:
-    name: Deploy docs to Github Pages
+    name: Deploy docs to GitHub Pages
+    needs: prepare-release
+    if: needs.prepare-release.outputs.release_needed == 'true'
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
     environment:
       name: github-pages
       url: ${{ steps.pages_deploy.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout release tag
         uses: actions/checkout@v7
+        with:
+          ref: refs/tags/${{ needs.prepare-release.outputs.version_tag }}
 
       - name: Set up Python
         uses: actions/setup-python@v7
@@ -35,11 +105,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .[generators]
+          pip install '.[docs]'
 
-      - name: Run generation script
-        run: |
-          make gen-doc
+      - name: Generate documentation
+        run: make gen-doc
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
@@ -47,7 +116,7 @@ jobs:
       - name: Upload pages
         uses: actions/upload-pages-artifact@v5
         with:
-          path: 'docs/generated'
+          path: docs/generated
 
       - name: Deploy to GitHub Pages
         id: pages_deploy
@@ -55,37 +124,47 @@ jobs:
 
   pypi:
     name: Upload release to PyPI
+    needs: prepare-release
+    if: needs.prepare-release.outputs.release_needed == 'true'
     runs-on: ubuntu-latest
     environment:
       name: pypi
       url: https://pypi.org/p/nebius
     permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      contents: read
+      id-token: write
     steps:
-      - name: Checkout
+      - name: Checkout release tag
         uses: actions/checkout@v7
+        with:
+          ref: refs/tags/${{ needs.prepare-release.outputs.version_tag }}
 
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
+      - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .
-          pip install twine build
+          pip install . build
 
       - name: Build a binary wheel and a source tarball
-        run: python3 -m build
+        run: python -m build
 
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
 
   notify-slack-on-failure:
     name: Notify Slack on failure
-    if: failure()
-    needs: [pypi, pages]
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    needs:
+      - prepare-release
+      - pages
+      - pypi
+    permissions: {}
     runs-on: ubuntu-latest
     steps:
       - name: Post text to a Slack channel
@@ -96,5 +175,7 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL }}
             text: |
-              🚨 Workflow *${{ github.workflow }}* failed on <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>
+              🚨 Release workflow *${{ github.workflow }}* failed on <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>
+              Version: `${{ needs.prepare-release.outputs.version || 'unknown' }}`
+              Tag: `${{ needs.prepare-release.outputs.version_tag || 'unknown' }}`
               <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>
