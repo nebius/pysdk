@@ -2,6 +2,15 @@
 
 We appreciate your interest in contributing! Here’s how you can get involved.
 
+## Important Note About Managed Sources
+
+Most Python sources under `src/nebius` are synchronized from the internal development repository. The publisher
+records this managed set in `.changes/pysdk-publish-managed-files.json` and may overwrite those files during the next
+publication.
+
+Please open an issue before proposing changes to managed sources. If a change is accepted, maintainers may apply it in
+the development repository and publish it back to this repository instead of merging the pull request directly.
+
 ## 🐞 Reporting Issues
 
 ### Security Vulnerabilities
@@ -34,19 +43,18 @@ To set up your development environment, ensure you have the following tools inst
 
 - Python 3.10 or later
 - Make
-- Buf CLI (for generating API from protos)
 - Python Setuptools (may be inside virtualenv)
 
 Then, install the module for edit with the required dependencies:
 
 ```bash
-pip install -e .[dev,generators]
+pip install -e .[dev,docs]
 ```
 
 On Windows, you will have to add another dependency:
 
 ```bash
-pip install -e .[dev,generators,windows]
+pip install -e .[dev,docs,windows]
 ```
 
 ## 🧪 Testing
@@ -79,12 +87,12 @@ Apply Ruff formatting and safe lint fixes with:
 tox -e fix
 ```
 
-## 📋 Makefile Commands
+## 📋 Documentation
 
-To see a list of available `make` commands, run:
+To generate the API documentation, run:
 
 ```bash
-make help
+make gen-doc
 ```
 
 

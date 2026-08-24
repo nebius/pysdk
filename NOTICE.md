@@ -81,18 +81,6 @@ This project uses third-party libraries under the following licenses:
   Licensed under the Python Software Foundation License, Version 2.0.
   https://github.com/python/typing_extensions
 
-- **grpcio-tools** (>=1.68.1)
-  Licensed under the Apache License, Version 2.0.
-  https://github.com/grpc/grpc
-
-- **mypy-protobuf** (>=3.6)
-  Licensed under the Apache License, Version 2.0.
-  https://github.com/nipunn1313/mypy-protobuf
-
-- **protovalidate** (>=0.5)
-  Licensed under the Apache License, Version 2.0.
-  https://github.com/bufbuild/protovalidate
-
 - **pydoctor** (>=24.11.2)
   Licensed under the MIT License.
   https://github.com/twisted/pydoctor
@@ -100,10 +88,6 @@ This project uses third-party libraries under the following licenses:
 - **beautifulsoup4** (>=4.12.3)
   Licensed under the MIT License.
   https://www.crummy.com/software/BeautifulSoup/
-
-- **m2r2** (>=0.3.4)
-  Licensed under the MIT License.
-  https://github.com/crossnox/m2r2
 
 ---
 

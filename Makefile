@@ -1,35 +1,6 @@
-# Directory for the submodule
-PROTO_DIR = nebius-api
-
-# Always execute these targets
-.PHONY: update-submodule compile-proto generate check-generated verify-generated update-proto gen-doc tag-ver tag-ver-push
-
-# Ensure that update-proto is the default target
-.DEFAULT_GOAL := update-proto
-
-update-submodule:
-	git submodule update --init --recursive --remote
-
-compile-proto:
-	python scripts/generate_api.py
-
-generate: compile-proto
-
-check-generated:
-	python scripts/generate_api.py --check
-
-verify-generated:
-	python scripts/generate_api.py --verify-partitions --jobs 2
-
-update-proto: update-submodule generate
+.PHONY: gen-doc
 
 gen-doc:
 	rm -rf docs/generated
 	PYTHONPATH=src pydoctor
 	python scripts/check_generated_docs.py docs/generated
-
-tag-ver:
-	src/scripts/tag_version.sh --no-push
-
-tag-ver-push:
-	src/scripts/tag_version.sh --push
