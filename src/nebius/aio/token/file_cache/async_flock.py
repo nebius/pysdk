@@ -23,10 +23,11 @@ Acquire a shared lock with a short timeout::
 """
 
 from asyncio import sleep
+from collections.abc import Callable
 from datetime import timedelta
 from pathlib import Path
 from time import time
-from typing import IO, Any, AnyStr
+from typing import IO, Any, AnyStr, cast
 
 from portalocker import Lock as PortalockerLock
 from portalocker.constants import LockFlags
@@ -102,7 +103,7 @@ class Lock:
         lock_flags |= LockFlags.NON_BLOCKING
         self.lock = PortalockerLock(
             self.file_path,
-            mode=self.mode,  # type: ignore[arg-type, unused-ignore]
+            mode=cast(Any, self.mode),
             timeout=0,
             flags=lock_flags,
             **self.fopen_kwargs,
@@ -144,4 +145,5 @@ class Lock:
         The release operation delegates to :mod:`portalocker` and does
         not re-raise exceptions to the caller.
         """
-        self.lock.release()  # type: ignore[no-untyped-call, unused-ignore]
+        release: Callable[[], None] = self.lock.release
+        release()

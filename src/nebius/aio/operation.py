@@ -35,6 +35,7 @@ from .constant_channel import Constant
 from .request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT, _authorization_deadline_applies, _validate_timeout
 from .request_kwargs import RequestKwargs, RequestKwargsForOperation
 from .request_status import RequestStatus
+from .route import Route
 
 if TYPE_CHECKING:
     from ..api.nebius.common.v1 import ProgressTracker
@@ -279,7 +280,7 @@ class Operation(Generic[OperationPb]):
 
     def __init__(
         self,
-        source_method: str,
+        source_method: str | Route,
         channel: ClientChannelInterface,
         operation: OperationPb,
     ) -> None:
@@ -701,8 +702,8 @@ class Operation(Generic[OperationPb]):
 
         The method repeatedly invokes :meth:`update` at the specified
         ``interval`` until the operation is done or the overall ``timeout`` is
-        reached. Certain transient errors (deadline exceeded) are treated as
-        ignorable and will be retried.
+        reached. Certain transient errors are treated as ignorable and will
+        be retried.
 
         :param interval: Positive, finite polling interval (seconds or
             timedelta). This value is ignored when the operation is already
@@ -850,11 +851,11 @@ class Operation(Generic[OperationPb]):
                 poll_iteration_timeout = min(5, timeout)
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
+
         from .service_error import RequestError as ServiceRequestError
 
         def _is_ignorable(err: Exception) -> bool:
             """Return whether one polling error is transient."""
-            # TimeoutError raised locally or RequestError with DEADLINE_EXCEEDED
             if isinstance(err, TimeoutError):
                 return True
             if isinstance(err, ServiceRequestError):

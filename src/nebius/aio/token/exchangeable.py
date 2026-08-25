@@ -22,6 +22,7 @@ Create a bearer with a preconfigured channel::
 
 """
 
+from asyncio import CancelledError, ensure_future, shield, wait_for
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
@@ -170,24 +171,38 @@ class Receiver(ParentReceiver):
         """
         self._trial += 1
         start = metric_start()
-        req = self._requester.get_exchange_token_request()
-
-        now = datetime.now(timezone.utc)
-
         log.debug(f"fetching new token, attempt: {self._trial}, timeout: {timeout}")
 
-        ret = None
-        try:
-            if isinstance(self._svc, Awaitable):
-                self._svc = await self._svc
-            ret = await self._svc.exchange(
+        async def exchange() -> tuple[object, datetime]:
+            req = await self._requester.get_exchange_token_request_async()
+            now = datetime.now(timezone.utc)
+            service = self._svc
+            if isinstance(service, Awaitable):
+                pending = ensure_future(service)
+                self._svc = pending
+                service = await shield(pending)
+                self._svc = service
+            response = await service.exchange(
                 req,
                 timeout=timeout,
                 auth_options={OPTION_TYPE: Types.DISABLE},
             )
+            return response, now
+
+        try:
+            if timeout is None:
+                ret, now = await exchange()
+            else:
+                # Match Go's single context: the fetch budget covers request
+                # construction (including external identity I/O) and the IAM
+                # token-exchange RPC together.
+                ret, now = await wait_for(exchange(), timeout)
         except AioRpcError as e:
             self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._trial)
             self._raise_request_error(e)
+        except CancelledError:
+            self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._trial)
+            raise
         except Exception:
             self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, self._trial)
             raise

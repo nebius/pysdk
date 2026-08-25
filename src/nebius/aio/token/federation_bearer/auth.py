@@ -64,7 +64,7 @@ async def open_browser(url: str) -> None:
         import subprocess
 
         subprocess.run(
-            ["cmd.exe", "/c", "start", url.replace("&", "^&")],  # noqa: S603,S607
+            ["cmd.exe", "/c", "start", url.replace("&", "^&")],  # noqa: S603,S607 -- required on WSL.
             check=True,
         )
     else:

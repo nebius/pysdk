@@ -33,11 +33,7 @@ from .abc import release_address_channel
 from .authorization.options import OPTION_TYPE, Types
 from .base import AddressChannel
 from .idempotency import ensure_key_in_metadata
-from .request import (
-    _authorization_deadline_applies,
-    _snapshot_request_input,
-    _validate_timeout,
-)
+from .request import _authorization_deadline_applies, _autofill_parent, _snapshot_request_input, _validate_timeout
 from .route import Route
 
 Req = TypeVar("Req")
@@ -106,9 +102,13 @@ class StreamRequest(Generic[Req, Res]):
         self._channel = channel
         self._route = route
         # A request iterator is stateful and cannot be cloned generically. A
-        # unary request, however, must be fixed before it crosses to the SDK
-        # loop so caller-side mutation cannot change what is transmitted.
-        self._request = request if client_streaming else _snapshot_request_input(request)
+        # unary request is snapshotted before defaults are filled, so stream
+        # construction cannot mutate caller-owned state.
+        if client_streaming:
+            self._request = request
+        else:
+            self._request = _snapshot_request_input(request)
+            _autofill_parent(self._request, route, channel)
         self._result_class = result_class
         self._client_streaming = client_streaming
         self._server_streaming = server_streaming
@@ -161,9 +161,16 @@ class StreamRequest(Generic[Req, Res]):
         return cast(bytes, serializer(deterministic=True))
 
     async def _authenticate(self) -> None:
+        with self._state_lock:
+            if self._authentication_finished:
+                return
+        if self._auth_options.get(OPTION_TYPE) == Types.DISABLE:
+            with self._state_lock:
+                self._authentication_finished = True
+            return
         provider_getter = getattr(self._channel, "get_authorization_provider", None)
         provider = provider_getter() if callable(provider_getter) else None
-        if provider is None or self._auth_options.get(OPTION_TYPE) == Types.DISABLE:
+        if provider is None:
             with self._state_lock:
                 self._authentication_finished = True
             return

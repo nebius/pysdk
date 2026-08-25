@@ -55,10 +55,10 @@ class KeepaliveOptions:
     variables. Omitted fields use SDK defaults. Set ``time_ms`` to ``0`` or pass
     ``keepalive=False`` to the channel constructor to disable SDK keepalive.
 
-    :param time_ms: Interval between client keepalive pings in milliseconds.
+    :ivar time_ms: Interval between client keepalive pings in milliseconds.
         ``0`` disables SDK keepalive.
-    :param timeout_ms: Timeout for a keepalive ping response in milliseconds.
-    :param permit_without_stream: Whether pings may be sent when there are no
+    :ivar timeout_ms: Timeout for a keepalive ping response in milliseconds.
+    :ivar permit_without_stream: Whether pings may be sent when there are no
         active RPC streams.
     """
 

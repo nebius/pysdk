@@ -450,7 +450,14 @@ class Config:
                         )
                     svc_id = self._profile["service-account-id"]
 
-                if svc_id is not None and "federated-subject-credentials-file-path" in self._profile:
+                if (
+                    svc_id
+                    and self._profile.get("federated-subject-credentials-file-path")
+                    and not self._profile.get("public-key-id")
+                    and not self._profile.get("private-key")
+                    and not self._profile.get("private-key-file-path")
+                    and not self._profile.get("service-account-credentials-file-path")
+                ):
                     if not isinstance(
                         self._profile["federated-subject-credentials-file-path"],
                         str,
@@ -469,12 +476,18 @@ class Config:
                         ),
                     )
 
-                if "service-account-credentials-file-path" in self._profile:
+                if self._profile.get("service-account-credentials-file-path"):
                     if not isinstance(self._profile["service-account-credentials-file-path"], str):
                         raise ConfigError("service-account-credentials-file-path should be a string")
-                    from ..base.service_account.credentials_file import (
-                        Reader as CredentialsFileReader,
-                    )
+                    if svc_id or self._profile.get("public-key-id"):
+                        raise ConfigError(
+                            "Incomplete service account configuration: provide either "
+                            "(service-account-id and federated-subject-credentials-file-path) "
+                            "OR (service-account-credentials-file-path) OR "
+                            "(service-account-id, public-key-id and one of "
+                            "private-key / private-key-file-path)",
+                        )
+                    from ..base.service_account.credentials_file import Reader as CredentialsFileReader
 
                     return finish(
                         "service-account",

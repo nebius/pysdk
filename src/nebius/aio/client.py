@@ -179,7 +179,12 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
         if self.__operation_service__ is None:
             self.__operation_service__ = self.__operation_service_class__(
                 Constant(
-                    self.__service_name__ + "." + self.__operation_source_method__,
+                    Route(
+                        service=self.__service_name__,
+                        method=self.__operation_source_method__,
+                        api_service_name=self.__api_service_name__,
+                        registry=self.__registry__,
+                    ),
                     self._channel,
                 ),
             )

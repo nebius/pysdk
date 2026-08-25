@@ -183,6 +183,20 @@ DEFAULT_AUTH_TIMEOUT = 15 * 60.0  # 15 minutes
 """Default timeout including the authorization and the request itself."""
 
 
+def _autofill_parent(request: object, route: Route, channel: object) -> None:
+    """Apply configured parent defaults to one request."""
+    parent_getter = getattr(channel, "parent_id", None)
+    parent = parent_getter() if callable(parent_getter) else None
+    if parent is not None:
+        if route.method in ("List", "GetByName"):
+            if hasattr(request, "parent_id") and getattr(request, "parent_id") == "":
+                setattr(request, "parent_id", parent)
+        elif route.method != "Update" and hasattr(request, "metadata"):
+            metadata = getattr(request, "metadata")
+            if hasattr(metadata, "parent_id") and metadata.parent_id == "":
+                metadata.parent_id = parent
+
+
 class Request(Generic[Req, Res]):
     """Contain an RPC invocation with retries and authorization.
 
@@ -619,15 +633,7 @@ class Request(Generic[Req, Res]):
             raise RequestError(f"Unsupported request type {type(req)}")
         if self._cancelled:
             raise RequestIsCancelledError
-        channel_parent_id = self._channel.parent_id()
-        if channel_parent_id is not None:
-            if self._method == "List" or self._method == "GetByName":
-                if hasattr(req, "parent_id") and req.parent_id == "":  # type: ignore[unused-ignore]
-                    req.parent_id = channel_parent_id  # type: ignore[unused-ignore]
-            elif self._method != "Update":
-                if hasattr(req, "metadata") and hasattr(req.metadata, "parent_id"):  # type: ignore[unused-ignore]
-                    if req.metadata.parent_id == "":  # type: ignore[unused-ignore]
-                        req.metadata.parent_id = channel_parent_id  # type: ignore[unused-ignore]
+        _autofill_parent(req, self._route, self._channel)
         self._sent = True
         if self._grpc_channel is None:
             routed = getattr(self._channel, "get_channel_by_route", None)
@@ -824,7 +830,7 @@ class Request(Generic[Req, Res]):
                 return UnfinishedRequestStatus.INITIALIZED
             return UnfinishedRequestStatus.SENT
 
-    def _structured_error_is_retriable(self, error: AioRpcError) -> bool:
+    def _structured_error_retry_decision(self, error: AioRpcError) -> bool | None:
         """Classify rich service retry hints before publishing finality.
 
         Native gRPC status codes alone are insufficient: a rich status can
@@ -842,18 +848,18 @@ class Request(Generic[Req, Res]):
 
             status = rpc_status_from_call(error, registry=self._registry)
             if status is None:
-                return False
+                return None
             extended = RequestStatusExtended.from_rpc_status(
                 status,
                 trace_id="",
                 request_id="",
                 registry=self._registry,
             )
-            return extended.is_retriable(deadline_retriable=True)
+            return extended.retry_hint()
         except Exception:
             # The normal conversion path below remains authoritative and will
             # surface malformed rich status instead of changing that contract.
-            return False
+            return None
 
     def _resolve_authorization_retry(self, retry: bool) -> bool:
         """Publish an authorization retry decision atomically.
@@ -1106,7 +1112,11 @@ class Request(Generic[Req, Res]):
             if timeout is not None and timeout <= 0:
                 raise TimeoutError("The request timed out before RPC dispatch.")
 
-            if self._per_retry_timeout is not None and (timeout is None or timeout > self._per_retry_timeout):
+            if (
+                (self._retries is None or self._retries > 0)
+                and self._per_retry_timeout is not None
+                and (timeout is None or timeout > self._per_retry_timeout)
+            ):
                 # Clip per-retry timeout by remaining overall deadline if present
                 per_attempt = self._per_retry_timeout
                 if deadline is not None:
@@ -1144,18 +1154,23 @@ class Request(Generic[Req, Res]):
                     # representation is being built. The retry branch below
                     # reopens cancellation before starting another attempt.
                     raw_code = e.code()
-                    raw_code_retriable = raw_code in (
-                        StatusCode.DEADLINE_EXCEEDED,
-                        StatusCode.RESOURCE_EXHAUSTED,
-                        StatusCode.UNAVAILABLE,
+                    structured_retry = self._structured_error_retry_decision(e)
+                    raw_code_retriable = (
+                        raw_code
+                        in (
+                            StatusCode.DEADLINE_EXCEEDED,
+                            StatusCode.RESOURCE_EXHAUSTED,
+                            StatusCode.UNAVAILABLE,
+                        )
+                        if structured_retry is None
+                        else structured_retry
                     )
                     retry_time_available = deadline is None or deadline > monotonic()
                     could_retry = (
                         retry_time_available
                         and (
                             raw_code_retriable
-                            or self._structured_error_is_retriable(e)
-                            or is_retriable_error(e, deadline_retriable=True)
+                            or (structured_retry is None and is_retriable_error(e, deadline_retriable=True))
                         )
                         and (self._retries is None or self._retries > attempt)
                     )
@@ -1344,6 +1359,9 @@ class Request(Generic[Req, Res]):
         :return: Deserialized or wrapped response value.
         """
         # If no provider or authorization explicitly disabled, just run the request
+        auth_type = self._auth_options.get(OPTION_TYPE, None)
+        if auth_type == Types.DISABLE:
+            return await self._retry_loop()
         runtime_provider = getattr(
             self._channel,
             "_get_runtime_authorization_provider",
@@ -1351,8 +1369,7 @@ class Request(Generic[Req, Res]):
         )
         provider = runtime_provider() if callable(runtime_provider) else self._channel.get_authorization_provider()
 
-        auth_type = self._auth_options.get(OPTION_TYPE, None)
-        if provider is None or auth_type == Types.DISABLE:
+        if provider is None:
             return await self._retry_loop()
 
         # Preserve the established independent clocks: queueing has already
@@ -1395,6 +1412,12 @@ class Request(Generic[Req, Res]):
             # Run the request retry loop; map UNAUTHENTICATED to re-auth attempts
             async def run_request_attempts() -> Res:
                 """Run RPC work while the independent request clock advances."""
+                # Go's auth interceptor re-enters the request-timeout
+                # interceptor after token renewal. Give every authenticated
+                # RPC cycle a fresh request budget; the outer auth deadline
+                # still caps authentication and all cycles together.
+                if self._timeout is not None:
+                    self._request_timeout_remaining = max(0.0, self._timeout)
                 self._resume_request_deadline()
                 try:
                     return await self._retry_loop(

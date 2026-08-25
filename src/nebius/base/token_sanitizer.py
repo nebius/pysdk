@@ -145,32 +145,24 @@ class TokenSanitizer:
 
 
 def sanitize_no_signature(token: str, prefix: str) -> str:
-    """Limit the visible payload of a token that has no signature.
-
-    Return the complete token if its payload is not too long. Otherwise,
-    replace the end of the payload with :data:`MASK_STRING`.
+    """Mask the complete payload of a token that has no signature.
 
     :param token: The full token string.
     :param prefix: The prefix of the token version.
     :returns: The sanitized token.
     """
-    payload: str = token[len(prefix) :]
-    if len(payload) <= MAX_VISIBLE_PAYLOAD_LENGTH:
-        return token
-    return token[: MAX_VISIBLE_PAYLOAD_LENGTH + len(prefix)] + MASK_STRING
+    del token
+    return prefix + MASK_STRING
 
 
 def sanitize_unrecognized(token: str) -> str:
-    """Limit the visible part of an unrecognized token.
-
-    Show the first part of the token and mask the remaining part.
+    """Mask an unrecognized token completely.
 
     :param token: The token string to sanitize.
     :returns: The sanitized token.
     """
-    if len(token) <= MAX_VISIBLE_PAYLOAD_LENGTH:
-        return token + MASK_STRING
-    return token[:MAX_VISIBLE_PAYLOAD_LENGTH] + MASK_STRING
+    del token
+    return MASK_STRING
 
 
 class TokenVersionExtractor(ABC):

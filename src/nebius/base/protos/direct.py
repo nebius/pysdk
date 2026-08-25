@@ -9,6 +9,7 @@ from collections.abc import Callable, Iterable, Iterator, Mapping, MutableMappin
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
+from logging import getLogger
 from typing import TYPE_CHECKING, Any, ClassVar, Protocol, TypeVar, cast
 
 from google.protobuf.message import DecodeError, EncodeError
@@ -28,6 +29,22 @@ M = TypeVar("M", bound="Message")
 V = TypeVar("V")
 
 _MISSING = object()
+_DEPRECATION_LOGGER = getLogger("deprecation")
+
+
+def deprecation_warning(
+    details: str,
+    symbol: str | None = None,
+    *,
+    kind: str | None = None,
+    stacklevel: int = 3,
+) -> None:
+    """Emit an SDK deprecation through the visible compatibility logger."""
+    prefix = "" if kind is None else kind + " "
+    message = details if symbol is None else f"{prefix}{symbol} is deprecated. {details}"
+    _DEPRECATION_LOGGER.warning(message, stack_info=True, stacklevel=stacklevel)
+
+
 _MESSAGE_HARD_MAX_DEPTH = 100
 _RESET_MASK_MAX_DEPTH = 1000
 _MESSAGE_DECODE_DEPTH: ContextVar[tuple[int, int] | None] = ContextVar("nebius_message_decode_depth", default=None)
@@ -206,6 +223,7 @@ class Field:
     repeated: bool = False
     packed: bool = False
     explicit_presence: bool = False
+    absent_is_none: bool = False
     required: bool = False
     oneof: str | None = None
     json_name: str | None = None
@@ -216,6 +234,8 @@ class Field:
     to_python: Callable[[Any], Any] | None = None
     from_python: Callable[[object], Any] | None = None
     public: bool = True
+    deprecation_details: str | None = None
+    enum_value_deprecations: Mapping[int, tuple[tuple[str, str], ...]] | None = None
 
     def default(self) -> Any:
         if self.default_factory is not None:
@@ -257,17 +277,39 @@ class Message:
     __PROTO_DESCRIPTOR__: ClassVar[Any] = None
     __PB2_DESCRIPTOR__: ClassVar[Any] = None
     __PY_TO_PB2__: ClassVar[dict[str, str]] = {}
+    __DEPRECATION_DETAILS__: ClassVar[str | None] = None
 
     def _nesting_limit(self) -> int:
         return min(self.__MAX_NESTING_DEPTH__, _MESSAGE_HARD_MAX_DEPTH)
 
-    def __init__(self, initial_message: object | None = None, **values: object) -> None:
+    def __init__(
+        self,
+        initial_message: object | None = None,
+        **values: object,
+    ) -> None:
         """Create a message from a source message and field values.
 
         :param initial_message: Generated or protobuf message to copy.
         :param values: Python field names and their initial values.
         :raises TypeError: If the initial message or a field name is incompatible.
         """
+        self._initialize(initial_message, values, skip_deprecation=False)
+
+    def _initialize(
+        self,
+        initial_message: object | None,
+        values: Mapping[str, object],
+        *,
+        skip_deprecation: bool,
+    ) -> None:
+        """Initialize message state, optionally suppressing generated warnings."""
+        if not skip_deprecation and self.__class__.__DEPRECATION_DETAILS__ is not None:
+            deprecation_warning(
+                self.__class__.__DEPRECATION_DETAILS__,
+                self.__class__.__PROTO_FULL_NAME__,
+                kind="Message",
+                stacklevel=4,
+            )
         self._values: dict[Field, Any] = {}
         self._present: set[Field] = set()
         self._oneofs: dict[str, Field] = {}
@@ -395,6 +437,13 @@ class Message:
         return cast(MapValues[Any, Any], value)
 
     def _get_field(self, field: Field, *, absent_is_none: bool = False) -> Any:
+        if field.deprecation_details is not None:
+            deprecation_warning(
+                field.deprecation_details,
+                f"{self.__class__.__PROTO_FULL_NAME__}.{field.proto_name}",
+                kind="Field",
+                stacklevel=4,
+            )
         if absent_is_none and field not in self._present:
             return None
         if field.map:
@@ -431,6 +480,13 @@ class Message:
         return view
 
     def _set_field(self, field: Field, value: object) -> None:
+        if field.deprecation_details is not None:
+            deprecation_warning(
+                field.deprecation_details,
+                f"{self.__class__.__PROTO_FULL_NAME__}.{field.proto_name}",
+                kind="Field",
+                stacklevel=4,
+            )
         if value is None:
             self._clear_state(field)
             self._record_reset(field)
@@ -460,6 +516,14 @@ class Message:
             return
         raw = field.from_python(value) if field.from_python is not None else value
         owned = field.codec.copy(field.codec.normalize(raw))
+        if field.enum_value_deprecations is not None:
+            for symbol, details in field.enum_value_deprecations.get(int(owned), ()):
+                deprecation_warning(
+                    details,
+                    f"{symbol} for field {self.__class__.__PROTO_FULL_NAME__}.{field.proto_name}",
+                    kind="Setting deprecated enum value",
+                    stacklevel=4,
+                )
         self._detach_child(field)
         self._select(field)
         self._values[field] = self._bind_child(field, owned)
@@ -818,7 +882,7 @@ class Message:
     def _from_string(cls: type[M], payload: bytes) -> M:
         """Deserialize internally without invoking generated user warnings."""
         message = cls.__new__(cls)
-        Message.__init__(message)
+        message._initialize(None, {}, skip_deprecation=True)
         message.ParseFromString(payload)
         return message
 

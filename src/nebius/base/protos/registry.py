@@ -87,7 +87,12 @@ class Registry:
         self._cache: dict[str, type[Message]] = {}
         self._enum_cache: dict[str, type[IntEnum]] = {}
         self._lock = RLock()
-        self.reflection = Reflection(serialized_files, self._decode_options) if serialized_files else None
+        self._reflection = Reflection(serialized_files, self._decode_options) if serialized_files else None
+
+    @property
+    def reflection(self) -> Reflection | None:
+        """Return descriptor metadata when the registry has serialized files."""
+        return self._reflection
 
     @classmethod
     def from_fragments(cls, fragments: Iterable[RegistryFragment]) -> Registry:

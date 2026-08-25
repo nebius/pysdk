@@ -87,10 +87,22 @@ class CallbackHandler:
         await self._set_code(code, state)
 
         if self._code and state == self._state:
-            return web.Response(text="Login is successful, you may close the browser tab and go to the console")
+            message = "Login is successful, you may close the browser tab and go to the console"
+            status = 200
+        else:
+            message = "Login is not successful, you may close the browser tab and try again"
+            status = 400
         return web.Response(
-            status=400,
-            text="Login is not successful, you may close the browser tab and try again",
+            status=status,
+            content_type="text/html",
+            text=f"""<!doctype html>
+<html>
+<body>
+<p>{message}</p>
+<script>setTimeout(() => window.close(), 10000);</script>
+</body>
+</html>
+""",
         )
 
     async def _set_code(self, code: str | None, state: str | None) -> None:
