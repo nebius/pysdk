@@ -108,12 +108,13 @@ class Metadata(MutableSequence[tuple[str, str]]):
             return [v for k, v in self._contents if k == index]
         raise TypeError("Index must be int, str or slice")
 
-    def __has__(self, key: str) -> bool:
-        """Return True if a key exists in the collection."""
-        key = key.lower()
-        for k, _ in self._contents:
-            if k == key:
-                return True
+    def __contains__(self, item: object) -> bool:
+        """Match a case-insensitive string key or normalized key/value tuple."""
+        if isinstance(item, str):
+            item = item.lower()
+            return any(current_key == item for current_key, _ in self._contents)
+        if isinstance(item, tuple) and len(item) == 2 and isinstance(item[0], str) and isinstance(item[1], str):
+            return (item[0].lower(), item[1]) in self._contents
         return False
 
     def __setitem__(

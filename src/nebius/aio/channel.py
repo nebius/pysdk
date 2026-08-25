@@ -43,6 +43,7 @@ from threading import Event as ThreadEvent
 from threading import Lock, RLock, Thread
 from time import monotonic
 from typing import Any, Concatenate, ParamSpec, TextIO, TypeVar, cast
+from warnings import warn
 from weakref import WeakSet, finalize, ref
 
 from google.protobuf.message import Message
@@ -67,11 +68,7 @@ from grpc.aio._channel import (
     secure_channel,  # type: ignore[unused-ignore]
 )
 from grpc.aio._interceptor import ClientInterceptor
-from grpc.aio._typing import (
-    ChannelArgumentType,
-    DeserializingFunction,
-    SerializingFunction,
-)
+from grpc.aio._typing import ChannelArgumentType, DeserializingFunction, SerializingFunction
 
 from ..base.constants import DOMAIN
 from ..base.error import SDKError
@@ -79,31 +76,14 @@ from ..base.metadata import Metadata
 from ..base.methods import service_from_method_name
 from ..base.options import COMPRESSION, INSECURE, pop_option
 from ..base.protos.registry import Registry
-from ..base.resolver import (
-    Chain,
-    Conventional,
-    Resolver,
-    TemplateExpander,
-    UnknownServiceError,
-)
+from ..base.resolver import Chain, Conventional, Resolver, TemplateExpander, UnknownServiceError
 from ..base.service_account.service_account import Reader as ServiceAccountReader
-from ..base.service_account.service_account import (
-    TokenRequester as TokenRequestReader,
-)
+from ..base.service_account.service_account import TokenRequester as TokenRequestReader
 from ..base.tls_certificates import get_system_certificates
 from ..base.version import version
 from ._metadata_type import MetadataType
-from ._runtime import (
-    AsyncRuntime,
-    CrossLoopAwaitable,
-    LoopExceptionHandler,
-    _validate_loop_exception_handler,
-)
-from ._task_context import (
-    bridge_awaitable,
-    close_rejected_sync_awaitable,
-    dispose_unstarted_awaitable,
-)
+from ._runtime import AsyncRuntime, CrossLoopAwaitable, LoopExceptionHandler, _validate_loop_exception_handler
+from ._task_context import bridge_awaitable, close_rejected_sync_awaitable, dispose_unstarted_awaitable
 from .abc import GracefulInterface
 from .authorization.authorization import Authenticator
 from .authorization.authorization import Provider as AuthorizationProvider
@@ -111,11 +91,7 @@ from .authorization.token import TokenProvider
 from .base import AddressChannel, ChannelBase
 from .cli_config import Config as ConfigReader
 from .idempotency import IdempotencyKeyInterceptor
-from .keepalive import (
-    KeepaliveOptions,
-    keepalive_channel_options,
-    keepalive_config_from_options,
-)
+from .keepalive import KeepaliveOptions, keepalive_channel_options, keepalive_config_from_options
 from .metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
@@ -1435,13 +1411,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     Async usage (recommended)::
 
-        async with Channel(...) as channel:
+        async with Channel(..., user_agent_prefix="my-app/1.0") as channel:
             # Use the channel or give it to generated service clients.
             pass
 
     Synchronous usage::
 
-        channel = Channel(...)
+        channel = Channel(..., user_agent_prefix="my-app/1.0")
         try:
             channel.run_sync(some_coroutine())
         finally:
@@ -1466,6 +1442,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     :param user_agent_prefix:
         Optional string prepended to the default SDK user-agent. The
+        prefix will become mandatory in a future release; omitting it emits
+        a :class:`FutureWarning`.
         final user-agent string follows the pattern
         ``"<user_agent_prefix> nebius-python-sdk/<version> (python/X.Y.Z)"``.
         Recommended format:
@@ -1750,18 +1728,35 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         --------
         Typical, minimal construction that reads token from environment:
 
-        >>> channel = Channel()
+        >>> channel = Channel(
+        ...     domain="api.example.invalid:443",
+        ...     user_agent_prefix="my-app/1.0",
+        ... )
 
         Using explicit static token:
 
-        >>> channel = Channel(credentials="MY_TOKEN")
+        >>> channel = Channel(
+        ...     credentials="MY_TOKEN",
+        ...     domain="api.example.invalid:443",
+        ...     user_agent_prefix="my-app/1.0",
+        ... )
 
         Creating channel from CLI config and a custom resolver:
 
         >>> from nebius.aio.cli_config import Config
-        >>> channel = Channel(config_reader=Config(), resolver=my_resolver)
+        >>> channel = Channel(
+        ...     config_reader=Config(),
+        ...     resolver=my_resolver,
+        ...     user_agent_prefix="my-app/1.0",
+        ... )
 
         """
+        if user_agent_prefix is None or not user_agent_prefix.strip():
+            warn(
+                "user_agent_prefix will become mandatory in a future release",
+                FutureWarning,
+                stacklevel=3,
+            )
         if loop_exception_handler is not None:
             _validate_loop_exception_handler(loop_exception_handler)
 
@@ -1817,15 +1812,22 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         ]()
         self._tasks_lock = Lock()
 
-        self._resolver: Resolver = Conventional()
-        self._route_custom_resolver: Resolver | None = None
+        default_resolver: Resolver = Conventional()
+        custom_resolvers: list[Resolver] = []
         if resolver is not None:
+            custom_resolvers.append(resolver)
+        self._route_custom_resolver: Resolver | None = None
+        if custom_resolvers:
+            custom_chain = Chain(*custom_resolvers)
             self._route_custom_resolver = TemplateExpander(
                 substitutions_full,
-                resolver,
+                custom_chain,
             )
-            self._resolver = Chain(resolver, self._resolver)
+            self._resolver: Resolver = Chain(custom_chain, default_resolver)
+        else:
+            self._resolver = default_resolver
         self._resolver = TemplateExpander(substitutions_full, self._resolver)
+        trusted_certs = b""
         if tls_credentials is None:
             root_ca = get_system_certificates()
             with open(root_ca, "rb") as f:
@@ -1877,9 +1879,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._authorization_provider: AuthorizationProvider | None = None
         if credentials is None:
             if credentials_file_name is not None:
-                from ..base.service_account.credentials_file import (
-                    Reader as CredentialsFileReader,
-                )
+                from ..base.service_account.credentials_file import Reader as CredentialsFileReader
 
                 credentials = CredentialsFileReader(credentials_file_name)
             elif (
@@ -1995,7 +1995,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
     ) -> AuthorizationProvider | None:
         """Return a private provider that uses the SDK event loop."""
-        provider = self._authorization_provider
+        provider = self.get_authorization_provider()
         if provider is None:
             return None
         return _RuntimeAuthorizationProvider(self, provider)
@@ -2741,7 +2741,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             from ..api._registry import REGISTRY
         except ImportError as error:
             raise SDKError("service stub has no direct-message registry") from error
-        return REGISTRY
+        return cast(Registry, REGISTRY)
 
     def get_addr_from_stub(self, service_stub_class: type[ServiceStub]) -> str:
         """Resolve the concrete address for a generated service stub class.

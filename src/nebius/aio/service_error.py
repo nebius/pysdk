@@ -409,15 +409,9 @@ class RequestStatusExtended(RequestStatus):
         a set of default gRPC status codes. When ``deadline_retriable`` is
         True the DEADLINE_EXCEEDED code is considered retriable.
         """
-        # Check service errors
-        for service_error in self.service_errors:
-            if hasattr(service_error, "retry_type"):
-                retry_type = service_error.retry_type
-                retry_name = getattr(retry_type, "name", None)
-                if retry_name == "CALL":
-                    return True
-                if retry_name in {"NOTHING", "UNIT_OF_WORK"}:
-                    return False
+        hint = self.retry_hint()
+        if hint is not None:
+            return hint
 
         # Check gRPC error codes
         if self.code in DefaultRetriableCodes:
@@ -430,6 +424,18 @@ class RequestStatusExtended(RequestStatus):
             return True
 
         return False
+
+    def retry_hint(self) -> bool | None:
+        """Return an explicit service retry decision, if one was supplied."""
+        for service_error in self.service_errors:
+            if hasattr(service_error, "retry_type"):
+                retry_type = service_error.retry_type
+                retry_name = getattr(retry_type, "name", None)
+                if retry_name == "CALL":
+                    return True
+                if retry_name in {"NOTHING", "UNIT_OF_WORK"}:
+                    return False
+        return None
 
 
 def is_retriable_error(err: Exception, deadline_retriable: bool = False) -> bool:

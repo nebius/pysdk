@@ -41,10 +41,7 @@ Using an existing reader/token requester::
 from datetime import timedelta
 
 from ...base.service_account.federated_credentials import FederatedCredentialsBearer as FederatedCredentialsReader
-from ...base.service_account.federated_credentials import (
-    FederatedCredentialsTokenRequester,
-    FileFederatedCredentials,
-)
+from ...base.service_account.federated_credentials import FederatedCredentialsTokenRequester, FileFederatedCredentials
 from ..abc import ClientChannelInterface
 from ..metrics import AuthMetricsLike, AuthMetricsRecorder, auth_metrics_recorder
 from .deferred_channel import DeferredChannel

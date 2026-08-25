@@ -13,6 +13,7 @@ from typing import TypeVar, cast
 from .abc import ClientChannelInterface
 from .authorization.authorization import Provider as AuthorizationProvider
 from .base import AddressChannel
+from .route import Route
 
 T = TypeVar("T")
 
@@ -28,7 +29,7 @@ class Constant(ClientChannelInterface):
 
     def __init__(
         self,
-        method: str,
+        method: str | Route,
         source: ClientChannelInterface,
         parent_id: str | None = None,
     ) -> None:
@@ -118,6 +119,11 @@ class Constant(ClientChannelInterface):
         :type method_name: str
         :returns: an :class:`AddressChannel` for the constant method
         """
+        if isinstance(self._method, Route):
+            routed = getattr(self._source, "get_channel_by_route", None)
+            if callable(routed):
+                return cast(AddressChannel, routed(self._method))
+            return self._source.get_channel_by_method(self._method.method_name)
         return self._source.get_channel_by_method(self._method)
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:

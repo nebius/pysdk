@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
-from typing import Any
+from typing import Any, cast
 
 import jwt
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
@@ -15,6 +15,14 @@ class TokenRequester(ABC):
     @abstractmethod
     def get_exchange_token_request(self) -> ExchangeTokenRequest:
         raise NotImplementedError("Method not implemented!")
+
+    async def get_exchange_token_request_async(self) -> ExchangeTokenRequest:
+        """Build an exchange request without blocking the SDK event loop.
+
+        Existing requesters construct their request entirely in memory and use
+        this default implementation. Network-backed requesters override it.
+        """
+        return self.get_exchange_token_request()
 
 
 class ServiceAccount(TokenRequester):
@@ -55,12 +63,7 @@ class ServiceAccount(TokenRequester):
 
         # Create the JWT token and sign it with RS256
         headers = {"kid": self.public_key_id}
-        signed_jwt = jwt.encode(
-            claims,
-            self.private_key,  # type: ignore[arg-type, unused-ignore]
-            algorithm="RS256",
-            headers=headers,
-        )
+        signed_jwt = jwt.encode(claims, cast(str, self.private_key), algorithm="RS256", headers=headers)
         log.debug("creating ExchangeTokenRequest for service account")
 
         # Return the ExchangeTokenRequest object

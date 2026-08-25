@@ -7,7 +7,7 @@ from threading import RLock
 from types import MappingProxyType
 from typing import Any, Generic, TypeVar
 
-from google.protobuf import descriptor_pb2, descriptor_pool
+from google.protobuf import descriptor_pb2
 
 P = TypeVar("P")
 OptionDecoder = Callable[[str, bytes], object]
@@ -170,6 +170,7 @@ class MessageDescriptor(_Facade[descriptor_pb2.DescriptorProto]):
         file: FileDescriptor,
         containing_type: MessageDescriptor | None,
     ) -> None:
+        self.is_map_entry = proto.options.map_entry
         super().__init__(
             owner,
             proto,
@@ -338,6 +339,10 @@ class FieldDescriptor(_Facade[descriptor_pb2.FieldDescriptorProto]):
         self.is_repeated = proto.label == self.LABEL_REPEATED
         self.is_required = proto.label == self.LABEL_REQUIRED
         self.is_packed = False
+        self.proto3_optional = proto.proto3_optional
+        self.has_optional_keyword = proto.proto3_optional or (
+            file.syntax == "proto2" and proto.label == self.LABEL_OPTIONAL
+        )
         self.cpp_type = _CPP_TYPES[proto.type]
 
 
@@ -397,7 +402,7 @@ class Reflection:
     def __init__(self, serialized_files: Sequence[bytes], decode_options: OptionDecoder):
         self.decode_options = decode_options
         self._serialized_files = tuple(serialized_files)
-        self._provider_pool: descriptor_pool.DescriptorPool | None = None
+        self._provider_pool: Any | None = None
         self._provider_lock = RLock()
         protos = [descriptor_pb2.FileDescriptorProto.FromString(raw) for raw in serialized_files]
         self.files_by_name: Mapping[str, FileDescriptor]
@@ -677,6 +682,11 @@ class Reflection:
         return _parse_integer_default(text) if text is not None else 0
 
     def provider(self, facade: _Facade[Any]) -> Any:
+        # Keep provider descriptors as an explicit, lazy compatibility bridge.
+        # Normal generated-message construction and RPC serialization use the
+        # SDK-owned descriptor graph and wire codecs instead.
+        from google.protobuf import descriptor_pool
+
         with self._provider_lock:
             if self._provider_pool is None:
                 pool = descriptor_pool.DescriptorPool()

@@ -1,5 +1,6 @@
 """Bearer for service-account impersonation via token exchange."""
 
+from asyncio import wait_for
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
@@ -62,17 +63,20 @@ class Receiver(ParentReceiver):
         """Fetch the source token and exchange it for an impersonated token."""
         self._trial += 1
         start = metric_start()
-        try:
+
+        async def fetch_chain() -> Token:
             actor = await self._source.fetch(timeout=timeout, options=options)
             now = datetime.now(timezone.utc)
             try:
-                token = await self._exchange(actor.token, now, timeout)
+                return await self._exchange(actor.token, now, timeout)
             except RequestError as err:
                 if not self._should_retry_actor(err, options):
                     raise
                 actor = await self._source.fetch(timeout=timeout, options=options)
-                now = datetime.now(timezone.utc)
-                token = await self._exchange(actor.token, now, timeout)
+                return await self._exchange(actor.token, datetime.now(timezone.utc), timeout)
+
+        try:
+            token = await fetch_chain() if timeout is None else await wait_for(fetch_chain(), timeout)
         except Exception:
             self._metrics.token_acquire_from_start(
                 METRIC_RESULT_ERROR,

@@ -1,22 +1,15 @@
 """PyDoctor support for the generated API namespace packages."""
 
+# mypy: disable-error-code=import-untyped
+
 import ast
 from inspect import Parameter, Signature
 from pathlib import Path
 from typing import Any, cast
 
-from docutils.nodes import Text  # type: ignore[import-untyped]
-from pydoctor.astbuilder import (  # type: ignore[import-untyped]
-    _AnnotationValueFormatter,
-)
-from pydoctor.model import (  # type: ignore[import-untyped]
-    Attribute,
-    Class,
-    Documentable,
-    Function,
-    Module,
-    Package,
-)
+from docutils.nodes import Text
+from pydoctor.astbuilder import _AnnotationValueFormatter
+from pydoctor.model import Attribute, Class, Documentable, Function, Module, Package
 from pydoctor.model import System as BaseSystem
 
 _EXPORT_SHARDS = "_NEBIUS_EXPORT_SHARDS"

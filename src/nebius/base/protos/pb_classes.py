@@ -292,7 +292,7 @@ class Message:
     def get_descriptor(cls) -> Descriptor:
         """Return the protobuf descriptor for this message class.
 
-        :returns: Protobuf :class:`Descriptor`.
+        :returns: Protobuf :class:`google.protobuf.descriptor.Descriptor`.
         :raises ValueError: If the descriptor is not configured.
         """
         if not hasattr(cls, "__PB2_DESCRIPTOR__") or cls.__PB2_DESCRIPTOR__ is None:  # type: ignore[unused-ignore]

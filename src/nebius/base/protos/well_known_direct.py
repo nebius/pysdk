@@ -4,12 +4,21 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from datetime import datetime, timedelta, timezone
-from typing import Any
+from typing import TYPE_CHECKING, Any, Protocol, runtime_checkable
+
+if TYPE_CHECKING:
+    from .registry import Registry
 
 local_timezone = datetime.now(timezone.utc).astimezone().tzinfo
 _EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 _TIMESTAMP_MIN_SECONDS = -62_135_596_800
 _TIMESTAMP_MAX_SECONDS = 253_402_300_799
+
+
+@runtime_checkable
+class _RequestStatusView(Protocol):
+    def to_rpc_status(self, *, registry: Registry | None = None) -> object:
+        """Convert this status view into a registry-local direct message."""
 
 
 def _protobuf_full_name(value: object) -> str | None:
@@ -97,7 +106,6 @@ def status_to_request_status(value: Any) -> Any:
 def request_status_to_status(value: object, factory: Callable[[], type[Any]]) -> Any:
     """Normalize an SDK/direct Status into the localized direct type."""
     message_type = factory()
-    to_rpc_status = getattr(value, "to_rpc_status", None)
-    if callable(to_rpc_status):
-        value = to_rpc_status(registry=message_type.__REGISTRY__)
+    if isinstance(value, _RequestStatusView):
+        value = value.to_rpc_status(registry=message_type.__REGISTRY__)
     return _coerce_direct_message(value, message_type, "status")
