@@ -127,7 +127,7 @@ class Lock:
                     self.file_path.touch(mode=self.create_mode, exist_ok=False)
                 except FileExistsError:
                     pass
-                return self.lock.acquire()
+                return cast(IO[AnyStr], self.lock.acquire())
             except AlreadyLocked:
                 if self.timeout is not None and time() - start > self.timeout:
                     raise TimeoutError(f"Failed to acquire lock on {self.file_path} after {self.timeout} seconds.")
