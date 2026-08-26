@@ -718,7 +718,9 @@ class GetDiskSnapshotRequest(_Message):
 
 class ListDiskSnapshotsRequest(_Message):
     @property
-    def parent_id(self) -> _builtins.str: ...
+    def parent_id(self) -> _builtins.str:
+        """Identifier of the parent resource"""
+        ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
@@ -1599,9 +1601,13 @@ class ImageSpec(_Message):
         def value(self) -> ImageSpec__SourceStorage: ...
 
     class __OneOfClass_source_source_disk_snapshot_id__(__OneOfClass_source__):
+        """Identifier of the disk snapshot to create the image from."""
+
         field: _Literal["source_disk_snapshot_id"] = ...
         @property
-        def value(self) -> _builtins.str: ...
+        def value(self) -> _builtins.str:
+            """Identifier of the disk snapshot to create the image from."""
+            ...
 
     @property
     def source(
@@ -1647,7 +1653,9 @@ class ImageSpec(_Message):
         """Set or clear the generated ``source_storage`` field."""
         ...
     @property
-    def source_disk_snapshot_id(self) -> _builtins.str | None: ...
+    def source_disk_snapshot_id(self) -> _builtins.str | None:
+        """Identifier of the disk snapshot to create the image from."""
+        ...
     @source_disk_snapshot_id.setter
     def source_disk_snapshot_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``source_disk_snapshot_id`` field."""
