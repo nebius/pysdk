@@ -81,7 +81,7 @@ _register_file(
 )
 _register_file(
     "nebius/common/v1/warning.proto",
-    b'\n\x1enebius/common/v1/warning.proto\x12\x10nebius.common.v1"A\n\x08Warnings\x125\n\x08warnings\x18\x01 \x03(\x0b2\x19.nebius.common.v1.WarningR\x08warnings"\xd3\x05\n\x07Warning\x128\n\x06target\x18\x01 \x01(\x0e2 .nebius.common.v1.Warning.TargetR\x06target\x122\n\x04code\x18\x02 \x01(\x0e2\x1e.nebius.common.v1.Warning.CodeR\x04code\x12\x18\n\x07summary\x18\x03 \x01(\tR\x07summary\x12)\n\x10summary_fallback\x18\x04 \x01(\tR\x0fsummaryFallback\x12\x18\n\x07details\x18\x05 \x01(\tR\x07details\x12)\n\x10details_fallback\x18\x06 \x01(\tR\x0fdetailsFallback\x12\x12\n\x04path\x18\x07 \x01(\tR\x04path"S\n\x06Target\x12\x16\n\x12TARGET_UNSPECIFIED\x10\x00\x12\x0e\n\nTARGET_CLI\x10\x01\x12\r\n\tTARGET_TF\x10\x02\x12\x12\n\x0eTARGET_CONSOLE\x10\x03"\xe6\x02\n\x04Code\x12\x14\n\x10CODE_UNSPECIFIED\x10\x00\x12 \n\x1cCODE_REGION_ROUTING_FAILOVER\x10\x01\x12 \n\x1cCODE_DEPRECATED_TOOL_VERSION\x10\x02\x12\x1c\n\x18CODE_DEPRECATED_ENDPOINT\x10\x03\x12\x19\n\x15CODE_DEPRECATED_PROTO\x10\x04\x12&\n"CODE_DEPRECATED_SPEC_VALUE_REQUEST\x10\x05\x12\'\n#CODE_DEPRECATED_SPEC_VALUE_RESPONSE\x10\x06\x12+\n\'CODE_NOT_RECOMMENDED_SPEC_VALUE_REQUEST\x10\x07\x12"\n\x1eCODE_INVALID_NEBIUS_ID_REQUEST\x10\x08\x12)\n%CODE_INVALID_NEBIUS_ID_FORMAT_REQUEST\x10\tBY\n\x17ai.nebius.pub.common.v1B\x0cWarningProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3',
+    b'\n\x1enebius/common/v1/warning.proto\x12\x10nebius.common.v1"A\n\x08Warnings\x125\n\x08warnings\x18\x01 \x03(\x0b2\x19.nebius.common.v1.WarningR\x08warnings"\xf5\x05\n\x07Warning\x128\n\x06target\x18\x01 \x01(\x0e2 .nebius.common.v1.Warning.TargetR\x06target\x122\n\x04code\x18\x02 \x01(\x0e2\x1e.nebius.common.v1.Warning.CodeR\x04code\x12\x18\n\x07summary\x18\x03 \x01(\tR\x07summary\x12)\n\x10summary_fallback\x18\x04 \x01(\tR\x0fsummaryFallback\x12\x18\n\x07details\x18\x05 \x01(\tR\x07details\x12)\n\x10details_fallback\x18\x06 \x01(\tR\x0fdetailsFallback\x12\x12\n\x04path\x18\x07 \x01(\tR\x04path"S\n\x06Target\x12\x16\n\x12TARGET_UNSPECIFIED\x10\x00\x12\x0e\n\nTARGET_CLI\x10\x01\x12\r\n\tTARGET_TF\x10\x02\x12\x12\n\x0eTARGET_CONSOLE\x10\x03"\x88\x03\n\x04Code\x12\x14\n\x10CODE_UNSPECIFIED\x10\x00\x12 \n\x1cCODE_REGION_ROUTING_FAILOVER\x10\x01\x12 \n\x1cCODE_DEPRECATED_TOOL_VERSION\x10\x02\x12\x1c\n\x18CODE_DEPRECATED_ENDPOINT\x10\x03\x12\x19\n\x15CODE_DEPRECATED_PROTO\x10\x04\x12&\n"CODE_DEPRECATED_SPEC_VALUE_REQUEST\x10\x05\x12\'\n#CODE_DEPRECATED_SPEC_VALUE_RESPONSE\x10\x06\x12+\n\'CODE_NOT_RECOMMENDED_SPEC_VALUE_REQUEST\x10\x07\x12"\n\x1eCODE_INVALID_NEBIUS_ID_REQUEST\x10\x08\x12)\n%CODE_INVALID_NEBIUS_ID_FORMAT_REQUEST\x10\t\x12 \n\x1cCODE_LIST_AGGREGATED_PARTIAL\x10\nBY\n\x17ai.nebius.pub.common.v1B\x0cWarningProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3',
 )
 
 ServiceError = _message_class(
@@ -811,6 +811,7 @@ Warning__Code = _enum_class(
         "CODE_NOT_RECOMMENDED_SPEC_VALUE_REQUEST": 7,
         "CODE_INVALID_NEBIUS_ID_REQUEST": 8,
         "CODE_INVALID_NEBIUS_ID_FORMAT_REQUEST": 9,
+        "CODE_LIST_AGGREGATED_PARTIAL": 10,
     },
 )
 Warning__Code.__module__ = __name__

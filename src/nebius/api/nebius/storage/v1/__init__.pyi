@@ -991,8 +991,43 @@ class InventorySpec(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class InventoryStatus__Error(_Enum):
+    NO_ERROR = ...
+    """No error."""
+    DESTINATION_BUCKET_NOT_FOUND = ...
+    """Destination bucket not found."""
+    PERMISSION_DENIED = ...
+    """Permission denied: you don't have permission to the destination bucket."""
+    INVALID_INTENT = ...
+    """Intent is invalid, does not exist or expired."""
+    QUOTA_EXCEEDED = ...
+    """Quota exceeded in destination."""
+
 class InventoryStatus(_Message):
-    def __init__(self, initial_message: _SerializableMessage | None = None) -> None:
+    Error: _TypeAlias = InventoryStatus__Error
+    @property
+    def last_success(self) -> _datetime | None:
+        """Timestamp of the last successful run."""
+        ...
+    @last_success.setter
+    def last_success(self, value: _datetime | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``last_success`` field."""
+        ...
+    @property
+    def error_code(self) -> InventoryStatus__Error:
+        """Error code, if the last run was not successful, otherwise NO\\_ERROR."""
+        ...
+    @error_code.setter
+    def error_code(self, value: InventoryStatus__Error | None) -> None:
+        """Set or clear the generated ``error_code`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        last_success: _datetime | _SerializableMessage | None | _UnsetType = ...,
+        error_code: InventoryStatus__Error | None | _UnsetType = ...,
+    ) -> None:
         """Create a message from a source message and field values."""
         ...
 
