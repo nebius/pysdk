@@ -97,7 +97,7 @@ _register_file(
 )
 _register_file(
     "nebius/storage/v1/inventory.proto",
-    b'\n!nebius/storage/v1/inventory.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xeb\x01\n\tInventory\x12X\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\x12\rstoragebucketR\x08metadata\x12<\n\x04spec\x18\x02 \x01(\x0b2 .nebius.storage.v1.InventorySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12@\n\x06status\x18\x03 \x01(\x0b2".nebius.storage.v1.InventoryStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x03"\xc7\x06\n\rInventorySpec\x12\x18\n\x07enabled\x18\x01 \x01(\x08R\x07enabled\x12#\n\rsource_prefix\x18\x02 \x01(\tR\x0csourcePrefix\x12L\n\x15destination_bucket_id\x18\x03 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x13destinationBucketId\x127\n\x12destination_prefix\x18\x04 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x02R\x11destinationPrefix\x12Z\n\routput_format\x18\x05 \x01(\x0e2-.nebius.storage.v1.InventorySpec.OutputFormatB\x06\xbaH\x03\xc8\x01\x01R\x0coutputFormat\x12/\n\x13noncurrent_versions\x18\x06 \x01(\x08R\x12noncurrentVersions\x12W\n\x0foptional_fields\x18\x07 \x03(\x0e2..nebius.storage.v1.InventorySpec.OptionalFieldR\x0eoptionalFields\x12M\n\x08schedule\x18\x08 \x01(\x0e2).nebius.storage.v1.InventorySpec.ScheduleB\x06\xbaH\x03\xc8\x01\x01R\x08schedule"O\n\x0cOutputFormat\x12\x1d\n\x19OUTPUT_FORMAT_UNSPECIFIED\x10\x00\x12\x0c\n\x08CSV_GZIP\x10\x01\x12\x12\n\x0ePARQUET_SNAPPY\x10\x02"\xac\x01\n\rOptionalField\x12\x1e\n\x1aOPTIONAL_FIELD_UNSPECIFIED\x10\x00\x12\x0f\n\x0bLAST_ACCESS\x10\x01\x12\x17\n\x13CHECKSUM_ALGORITHMS\x10\x02\x12\x14\n\x10INTELLIGENT_TIER\x10\x03\x12\x17\n\x13IS_MULTIPART_UPLOAD\x10\x04\x12\x18\n\x14LIFECYCLE_EXPIRATION\x10\x05\x12\x08\n\x04TAGS\x10\x06";\n\x08Schedule\x12\x18\n\x14SCHEDULE_UNSPECIFIED\x10\x00\x12\t\n\x05DAILY\x10\x01\x12\n\n\x06WEEKLY\x10\x02"\x11\n\x0fInventoryStatusB]\n\x18ai.nebius.pub.storage.v1B\x0eInventoryProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3',
+    b'\n!nebius/storage/v1/inventory.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xeb\x01\n\tInventory\x12X\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\x12\rstoragebucketR\x08metadata\x12<\n\x04spec\x18\x02 \x01(\x0b2 .nebius.storage.v1.InventorySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12@\n\x06status\x18\x03 \x01(\x0b2".nebius.storage.v1.InventoryStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x03"\xc7\x06\n\rInventorySpec\x12\x18\n\x07enabled\x18\x01 \x01(\x08R\x07enabled\x12#\n\rsource_prefix\x18\x02 \x01(\tR\x0csourcePrefix\x12L\n\x15destination_bucket_id\x18\x03 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x13destinationBucketId\x127\n\x12destination_prefix\x18\x04 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x02R\x11destinationPrefix\x12Z\n\routput_format\x18\x05 \x01(\x0e2-.nebius.storage.v1.InventorySpec.OutputFormatB\x06\xbaH\x03\xc8\x01\x01R\x0coutputFormat\x12/\n\x13noncurrent_versions\x18\x06 \x01(\x08R\x12noncurrentVersions\x12W\n\x0foptional_fields\x18\x07 \x03(\x0e2..nebius.storage.v1.InventorySpec.OptionalFieldR\x0eoptionalFields\x12M\n\x08schedule\x18\x08 \x01(\x0e2).nebius.storage.v1.InventorySpec.ScheduleB\x06\xbaH\x03\xc8\x01\x01R\x08schedule"O\n\x0cOutputFormat\x12\x1d\n\x19OUTPUT_FORMAT_UNSPECIFIED\x10\x00\x12\x0c\n\x08CSV_GZIP\x10\x01\x12\x12\n\x0ePARQUET_SNAPPY\x10\x02"\xac\x01\n\rOptionalField\x12\x1e\n\x1aOPTIONAL_FIELD_UNSPECIFIED\x10\x00\x12\x0f\n\x0bLAST_ACCESS\x10\x01\x12\x17\n\x13CHECKSUM_ALGORITHMS\x10\x02\x12\x14\n\x10INTELLIGENT_TIER\x10\x03\x12\x17\n\x13IS_MULTIPART_UPLOAD\x10\x04\x12\x18\n\x14LIFECYCLE_EXPIRATION\x10\x05\x12\x08\n\x04TAGS\x10\x06";\n\x08Schedule\x12\x18\n\x14SCHEDULE_UNSPECIFIED\x10\x00\x12\t\n\x05DAILY\x10\x01\x12\n\n\x06WEEKLY\x10\x02"\x91\x02\n\x0fInventoryStatus\x12=\n\x0clast_success\x18\x01 \x01(\x0b2\x1a.google.protobuf.TimestampR\x0blastSuccess\x12G\n\nerror_code\x18\x02 \x01(\x0e2(.nebius.storage.v1.InventoryStatus.ErrorR\terrorCode"v\n\x05Error\x12\x0c\n\x08NO_ERROR\x10\x00\x12 \n\x1cDESTINATION_BUCKET_NOT_FOUND\x10\x01\x12\x15\n\x11PERMISSION_DENIED\x10\x02\x12\x12\n\x0eINVALID_INTENT\x10\x03\x12\x12\n\x0eQUOTA_EXCEEDED\x10\x04B]\n\x18ai.nebius.pub.storage.v1B\x0eInventoryProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3',
 )
 _register_file(
     "nebius/storage/v1/inventory_service.proto",
@@ -605,9 +605,12 @@ setattr(InventorySpec, "Schedule", InventorySpec__Schedule)
 InventoryStatus = _message_class(
     "nebius.storage.v1.InventoryStatus",
     "InventoryStatus",
+    {"error_code": "error_code", "last_success": "last_success"},
     {},
-    {},
-    {},
+    {
+        "error_code": "Error code, if the last run was not successful, otherwise NO\\_ERROR.",
+        "last_success": "Timestamp of the last successful run.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -615,6 +618,20 @@ InventoryStatus = _message_class(
 )
 InventoryStatus.__module__ = __name__
 
+InventoryStatus__Error = _enum_class(
+    "nebius.storage.v1.InventoryStatus.Error",
+    "InventoryStatus__Error",
+    {
+        "NO_ERROR": 0,
+        "DESTINATION_BUCKET_NOT_FOUND": 1,
+        "PERMISSION_DENIED": 2,
+        "INVALID_INTENT": 3,
+        "QUOTA_EXCEEDED": 4,
+    },
+)
+InventoryStatus__Error.__module__ = __name__
+
+setattr(InventoryStatus, "Error", InventoryStatus__Error)
 GetInventoryRequest = _message_class(
     "nebius.storage.v1.GetInventoryRequest",
     "GetInventoryRequest",

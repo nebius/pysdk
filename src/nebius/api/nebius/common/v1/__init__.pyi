@@ -1438,6 +1438,8 @@ class Warning__Code(_Enum):
     """Nebius ID in the request has an invalid resource type."""
     CODE_INVALID_NEBIUS_ID_FORMAT_REQUEST = ...
     """Nebius ID in the request has an invalid format."""
+    CODE_LIST_AGGREGATED_PARTIAL = ...
+    """ListAggregated returned incomplete results because one or more regions could not be queried."""
 
 class Warning(_Message):
     Target: _TypeAlias = Warning__Target
