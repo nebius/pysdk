@@ -25,7 +25,7 @@ async def test_get_instance_error() -> None:
     )
     from nebius.base.options import INSECURE
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -89,7 +89,12 @@ async def test_get_instance_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -314,6 +319,7 @@ async def test_http2_52x_status_from_server_is_retried() -> None:
     socket = server.sockets[0]
     address = f"127.0.0.1:{socket.getsockname()[1]}"
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         resolver=Constant(address),
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -356,7 +362,7 @@ async def test_get_instance_retry() -> None:
     )
     from nebius.base.options import INSECURE
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -433,7 +439,12 @@ async def test_get_instance_retry() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -466,7 +477,7 @@ async def test_metadata_at_error() -> None:
     )
     from nebius.base.options import INSECURE
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -530,7 +541,12 @@ async def test_metadata_at_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -569,7 +585,7 @@ async def test_status_at_error() -> None:
     )
     from nebius.base.options import INSECURE
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -633,7 +649,12 @@ async def test_status_at_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -672,7 +693,7 @@ async def test_status_does_not_block_failed_call() -> None:
     )
     from nebius.base.options import INSECURE
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -736,7 +757,12 @@ async def test_status_does_not_block_failed_call() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
@@ -779,7 +805,7 @@ async def test_request_id_at_error() -> None:
     )
     from nebius.base.options import INSECURE
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -843,7 +869,12 @@ async def test_request_id_at_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)

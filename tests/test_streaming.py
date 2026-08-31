@@ -21,7 +21,7 @@ def test_concurrent_stream_cancel_racing_sdk_close_is_boolean_and_atomic() -> No
         def FromString(cls, data):  # noqa: N802
             return cls()
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     stream = StreamRequest(
         channel=channel,
         route=Route("acme.Service", "Watch"),
@@ -112,7 +112,7 @@ def test_stream_unary_native_completion_wins_before_wrapper_resumes() -> None:
         def stream_unary(self, path, serializer, deserializer):
             return lambda **kwargs: native_call
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = type(
         "Address",
         (),
@@ -176,7 +176,7 @@ def test_terminal_server_stream_cancel_still_releases_lease() -> None:
             native_cancel_calls += 1
             return False
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = object()
 
     def release(value: object | None, *, discard: bool = False) -> None:
@@ -219,7 +219,7 @@ def test_sdk_stream_cancel_during_route_resolution_never_opens_transport() -> No
             call_factory_used.set()
             raise AssertionError("A canceled stream must not open a transport.")
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = type(
         "Address",
         (),
@@ -287,7 +287,7 @@ async def test_stream_timeout_includes_sdk_loop_queueing(
     from nebius.aio.token.static import Bearer as StaticBearer
 
     credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
-    channel = SDKChannel(credentials=credentials)
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=credentials)
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -552,7 +552,7 @@ def test_stream_snapshots_unary_request_and_auth_options() -> None:
 
             return create
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = type(
         "Address",
         (),
@@ -603,7 +603,7 @@ def test_stream_request_timeout_excludes_slow_authentication() -> None:
         def authenticator(self) -> Authenticator:
             return Authenticator()
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     channel._authorization_provider = Provider()  # type: ignore[assignment]
     stream = StreamRequest(
         channel=channel,
@@ -724,7 +724,7 @@ def test_sdk_stream_bridges_foreign_loop_authenticator_future() -> None:
 
             return create
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = type(
         "Address",
         (),
@@ -805,7 +805,7 @@ def test_future_like_legacy_stream_does_not_charge_auth_to_request_clock() -> No
             """Return a callable that creates the test stream."""
             return lambda request, **kwargs: Call()
 
-    owner = SDKChannel(credentials=NoCredentials())
+    owner = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = type(
         "Address",
         (),
@@ -873,7 +873,7 @@ def test_stream_write_snapshots_request_before_sdk_loop_dispatch() -> None:
         def stream_unary(self, path, serializer, deserializer):
             return lambda **kwargs: call
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = type(
         "Address",
         (),
@@ -933,7 +933,7 @@ def test_prestart_stream_operation_cancellation_discards_override(
             opened.set()
             raise AssertionError("A canceled queued stream must not start.")
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     override = type(
         "Address",
         (),
@@ -1740,7 +1740,7 @@ async def test_server_stream_iterator_rejected_cleanup_discards_lease() -> None:
 
 def test_rejected_stream_close_aborts_only_on_owner_loop() -> None:
     """Rejected external cleanup cannot mutate asyncio state off-loop."""
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the stream close submission.")
     released = Event()
     abort_loops: list[asyncio.AbstractEventLoop] = []
@@ -1797,7 +1797,7 @@ def test_failed_async_stream_cancel_release_can_be_retried() -> None:
     successful_release = Event()
     release_calls = 0
 
-    channel = SDKChannel(credentials=NoCredentials())
+    channel = SDKChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = type(
         "Address",
         (),

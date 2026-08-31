@@ -92,7 +92,7 @@ def test_borrowed_loop_eager_task_factory_does_not_deadlock_submission() -> None
 
     loop.call_soon_threadsafe(configure)
     configured.result(timeout=5)
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
     try:
         assert channel.run_sync(asyncio.sleep(0, result=42), timeout=5) == 42
     finally:
@@ -103,7 +103,9 @@ def test_borrowed_loop_eager_task_factory_does_not_deadlock_submission() -> None
 
 
 def test_owned_runtime_threads_are_daemons_and_stop_on_close() -> None:
-    channel = Channel(credentials=NoCredentials(), executor_max_workers=3)
+    channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), executor_max_workers=3
+    )
     workers_ready = Barrier(4)
 
     async def start_workers() -> None:
@@ -140,6 +142,7 @@ def test_sdk_sets_owned_loop_exception_handler_before_return() -> None:
             reported.set_result((loop, context))
 
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         loop_exception_handler=handler,
     )
@@ -184,6 +187,7 @@ def test_sdk_reports_awaitable_returned_by_sync_exception_handler(
     if supplied_loop:
         loop, thread = _start_loop()
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         event_loop=loop,
         loop_exception_handler=handler,
@@ -242,6 +246,7 @@ def test_sdk_does_not_cancel_shared_awaitable_returned_by_exception_handler(
     if supplied_loop:
         loop, thread = _start_loop()
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         event_loop=loop,
         loop_exception_handler=handler,
@@ -315,6 +320,7 @@ def test_sdk_does_not_close_suspended_coroutine_returned_by_exception_handler() 
         return returned[0]
 
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         loop_exception_handler=handler,
     )
@@ -363,6 +369,7 @@ def test_sdk_rejects_async_loop_exception_handler_before_start() -> None:
         match="loop_exception_handler value must be a synchronous callable",
     ):
         SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             loop_exception_handler=handler,  # type: ignore[arg-type]
         )
@@ -389,6 +396,7 @@ def test_sdk_rejects_async_generator_exception_handler_before_start() -> None:
         match="loop_exception_handler value must be a synchronous callable",
     ):
         SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             loop_exception_handler=handler,  # type: ignore[arg-type]
         )
@@ -407,6 +415,7 @@ def test_sdk_rejects_noncallable_loop_exception_handler_before_start() -> None:
         match="loop_exception_handler value must be callable",
     ):
         SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             loop_exception_handler=object(),  # type: ignore[arg-type]
         )
@@ -444,6 +453,7 @@ def test_sdk_rejects_async_callable_handler_before_supplied_loop_setup(
             match="loop_exception_handler value must be a synchronous callable",
         ):
             SDK(
+                user_agent_prefix="nebius-python-sdk-tests/1.0",
                 credentials=NoCredentials(),
                 event_loop=loop,
                 loop_exception_handler=AsyncHandler(),  # type: ignore[arg-type]
@@ -471,6 +481,7 @@ def test_owned_handler_setter_failure_stops_runtime_threads(
     before = set(enumerate_threads())
     with pytest.raises(RuntimeError, match="rejected the exception handler"):
         SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             loop_exception_handler=handler,
         )
@@ -523,6 +534,7 @@ def test_sdk_sets_supplied_loop_exception_handler_on_owner_thread(
         handler_threads.append(current_thread().ident)
 
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         event_loop=loop,
         loop_exception_handler=handler,
@@ -576,11 +588,13 @@ def test_sdks_sharing_loop_keep_latest_exception_handler_after_close() -> None:
         retained_handler.set()
 
     first = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         event_loop=loop,
         loop_exception_handler=first_handler,
     )
     second = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         event_loop=loop,
         loop_exception_handler=second_handler,
@@ -650,6 +664,7 @@ def test_failed_supplied_loop_constructor_does_not_replace_handler(
     try:
         with pytest.raises(SDKError, match="Parent id is empty"):
             SDK(
+                user_agent_prefix="nebius-python-sdk-tests/1.0",
                 credentials=NoCredentials(),
                 event_loop=loop,
                 loop_exception_handler=replacement_handler,
@@ -874,6 +889,7 @@ def test_failed_handler_installation_closes_registered_bearer(
     try:
         with pytest.raises(RuntimeError, match="rejected the SDK exception handler"):
             SDK(
+                user_agent_prefix="nebius-python-sdk-tests/1.0",
                 credentials=Bearer(),
                 event_loop=loop,
                 loop_exception_handler=handler,
@@ -932,6 +948,7 @@ def test_failed_constructor_starts_shutdown_before_borrowed_cleanup_finishes(
 
     with pytest.raises(RuntimeError, match="rejected the SDK exception handler"):
         SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             event_loop=loop,
             loop_exception_handler=handler,
@@ -1130,6 +1147,7 @@ def test_interrupted_sdk_constructor_does_not_wait_for_borrowed_loop(
         """Run the interrupted constructor on an observable caller thread."""
         try:
             SDK(
+                user_agent_prefix="nebius-python-sdk-tests/1.0",
                 credentials=NoCredentials(),
                 event_loop=loop,
                 loop_exception_handler=replacement_handler,
@@ -1271,6 +1289,7 @@ def test_sdk_sets_supplied_loop_exception_handler_from_that_loop() -> None:
         """Construct the SDK on the supplied loop's thread."""
         try:
             sdk = SDK(
+                user_agent_prefix="nebius-python-sdk-tests/1.0",
                 credentials=NoCredentials(),
                 event_loop=loop,
                 loop_exception_handler=handler,
@@ -1296,7 +1315,9 @@ def test_sdk_sets_supplied_loop_exception_handler_from_that_loop() -> None:
 def test_owned_runtime_starts_executor_workers_lazily() -> None:
     """An unused SDK owns a pool but does not consume worker threads."""
     before = set(enumerate_threads())
-    channel = Channel(credentials=NoCredentials(), executor_max_workers=3)
+    channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), executor_max_workers=3
+    )
     try:
         created_workers = [
             thread for thread in set(enumerate_threads()) - before if thread.name.startswith("nebius-sdk-worker_")
@@ -1309,8 +1330,8 @@ def test_owned_runtime_starts_executor_workers_lazily() -> None:
 @pytest.mark.asyncio()
 async def test_default_sdks_run_on_independent_internal_loops_in_parallel() -> None:
     """Default SDK runtimes do not share loop threads or task context."""
-    first = Channel(credentials=NoCredentials())
-    second = Channel(credentials=NoCredentials())
+    first = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
+    second = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     both_running = Barrier(2)
 
     async def identify() -> tuple[int, int]:
@@ -1512,7 +1533,7 @@ def test_failed_channel_constructor_stops_its_runtime() -> None:
     before = set(enumerate_threads())
     retained_errors: list[BaseException] = []
     try:
-        Channel(credentials=NoCredentials(), parent_id="")
+        Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), parent_id="")
     except BaseException as error:
         retained_errors.append(error)
     assert retained_errors
@@ -1536,7 +1557,7 @@ def test_failed_channel_constructor_uses_graceful_async_shutdown(monkeypatch) ->
     monkeypatch.setattr(AsyncRuntime, "shutdown_async", observed_shutdown_async)
 
     with pytest.raises(Exception, match="Parent id is empty"):
-        Channel(credentials=NoCredentials(), parent_id="")
+        Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), parent_id="")
 
     assert called.is_set()
 
@@ -1554,6 +1575,7 @@ def test_channel_constructor_base_exception_stops_its_runtime() -> None:
     before = set(enumerate_threads())
     with pytest.raises(ConstructorAbort):
         Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             config_reader=ConfigReader(),  # type: ignore[arg-type]
         )
@@ -1584,6 +1606,7 @@ async def test_failed_channel_constructor_does_not_block_borrowed_loop(
 
     with pytest.raises(Exception, match="Parent id is empty"):
         Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             event_loop=asyncio.get_running_loop(),
             parent_id="",
@@ -1859,7 +1882,7 @@ def test_runtime_rejects_use_after_fork_without_hanging(
         "_invoke",
         invoke_without_transport,
     )
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     submitted = channel.run_async(asyncio.Event().wait())
     request = Request(
         channel,
@@ -1994,7 +2017,7 @@ def test_runtime_rejects_use_after_fork_without_hanging(
 
 def test_cross_loop_callback_runs_on_registration_loop() -> None:
     """Public completion callbacks retain Task-like loop affinity."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def register() -> tuple[int, int]:
         loop = asyncio.get_running_loop()
@@ -2144,7 +2167,7 @@ def test_completed_callback_releases_registration_context() -> None:
         "callback_payload",
         default=None,
     )
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def register():
         submitted = channel.run_async(asyncio.sleep(0, result=42))
@@ -2172,7 +2195,7 @@ def test_completed_callback_releases_registration_context() -> None:
 
 def test_completed_callback_rejects_closed_sdk_loop() -> None:
     """Registration fails promptly when no callback loop can run."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     submitted = channel.run_async(asyncio.sleep(0, result=42))
     assert submitted.result(timeout=5) == 42
     channel.sync_close(timeout=5)
@@ -2184,7 +2207,7 @@ def test_runtime_tracks_submission_before_task_can_start(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Runtime tracking is visible before submitted work can call close."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     tracking_entered = Event()
     release_tracking = Event()
     task_started = Event()
@@ -2229,7 +2252,7 @@ def test_runtime_tracks_submission_before_task_can_start(
 
 def test_pending_cross_loop_result_does_not_block_async_loop() -> None:
     """A synchronous pending-result read in async code fails promptly."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     release = Event()
 
     async def pending() -> int:
@@ -2263,7 +2286,7 @@ async def test_dispatch_gate_waiter_is_drained_after_cancellation(
     """Cancellation does not leave a dispatch-start waiter on the caller loop."""
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
 
@@ -2323,7 +2346,7 @@ async def test_dispatch_gate_waiter_is_drained_after_cancellation(
 def test_stopped_borrowed_loop_rejects_submission_promptly() -> None:
     """The caller must keep a supplied loop running until SDK close."""
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
     _stop_loop(loop, thread)
 
     with pytest.raises(RuntimeError, match="event loop is not running"):
@@ -2396,7 +2419,7 @@ def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
 def test_close_has_no_nested_cleanup_task_creation_boundary() -> None:
     """Close cleanup cannot be stranded by a second task-factory rejection."""
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
     resource_closed = Event()
 
     class Resource:
@@ -2456,7 +2479,7 @@ def test_borrowed_shutdown_watcher_start_failure_falls_back(
 
 def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
     """Two external loops can await one SDK submission handle."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     started = Event()
     release = Event()
 
@@ -2492,7 +2515,7 @@ def test_cross_loop_awaitable_can_be_shared_by_external_loops() -> None:
 @pytest.mark.asyncio()
 async def test_rejected_sync_wait_preserves_running_cross_loop_handle() -> None:
     """An invalid blocking wait cannot cancel independently scheduled work."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     started = Event()
     release = Event()
 
@@ -2521,7 +2544,7 @@ async def test_rejected_sync_wait_preserves_running_cross_loop_handle() -> None:
 
 def test_rejected_executor_sync_wait_preserves_running_handle() -> None:
     """An executor-worker rejection also leaves shared work untouched."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     started = Event()
     release = Event()
     errors: list[BaseException] = []
@@ -2559,8 +2582,12 @@ def test_rejected_executor_sync_wait_preserves_running_handle() -> None:
 
 def test_sdk_executor_rejects_synchronous_wait_on_another_sdk() -> None:
     """A worker cannot form a finite-pool wait cycle with another SDK."""
-    first = Channel(credentials=NoCredentials(), executor_max_workers=1)
-    second = Channel(credentials=NoCredentials(), executor_max_workers=1)
+    first = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), executor_max_workers=1
+    )
+    second = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), executor_max_workers=1
+    )
 
     def call_second() -> None:
         second.run_sync(asyncio.sleep(0))
@@ -2590,7 +2617,7 @@ def test_sdk_executor_rejects_synchronous_wait_on_another_sdk() -> None:
 
 
 def test_run_sync_is_safe_from_many_threads() -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     barrier = Barrier(11)
     results: list[int] = []
 
@@ -2612,7 +2639,7 @@ def test_run_sync_is_safe_from_many_threads() -> None:
 
 def test_completed_submission_handle_does_not_retain_input_awaitable() -> None:
     """A reusable result handle must not keep completed caller work alive."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     class Work:
         def __await__(self):
@@ -2636,7 +2663,7 @@ def test_completed_submission_handle_does_not_retain_input_awaitable() -> None:
 
 def test_submit_and_close_race_leaves_no_untracked_work() -> None:
     """Close waits until an accepted submission is registered for draining."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     tracking = Event()
     allow_tracking = Event()
     original_track = channel._runtime._track_submission
@@ -2685,7 +2712,7 @@ def test_submit_and_close_race_leaves_no_untracked_work() -> None:
 
 def test_foreign_loop_future_is_bridged() -> None:
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def create_future() -> asyncio.Future[int]:
         return asyncio.get_running_loop().create_future()
@@ -2704,7 +2731,7 @@ def test_pending_future_from_stopped_loop_fails_bridge_promptly() -> None:
     """A stopped owner loop cannot deliver a pending future's completion."""
     foreign_loop = asyncio.new_event_loop()
     source = foreign_loop.create_future()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     try:
         bridged = channel.run_async(source)
         with pytest.raises(
@@ -2722,7 +2749,7 @@ def test_completed_foreign_future_from_stopped_loop_fails_without_inspection() -
     foreign_loop = asyncio.new_event_loop()
     source = foreign_loop.create_future()
     source.set_result(42)
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     try:
         with pytest.raises(
             RuntimeError,
@@ -2737,7 +2764,7 @@ def test_completed_foreign_future_from_stopped_loop_fails_without_inspection() -
 def test_foreign_future_is_inspected_only_on_its_owner_loop() -> None:
     """Bridge setup, completion, and result reads preserve Future affinity."""
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     class StrictFuture(asyncio.Future[int]):
         def _check_owner(self) -> None:
@@ -2775,7 +2802,7 @@ def test_foreign_future_is_inspected_only_on_its_owner_loop() -> None:
 def test_cancelled_bridge_observes_completed_foreign_future_exception() -> None:
     """Bridge cancellation consumes a source error before releasing the source."""
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     owner_blocked = Event()
     release_owner = Event()
     exception_observed = Event()
@@ -2885,7 +2912,7 @@ def test_unstarted_custom_awaitable_is_not_closed_on_unknown_thread() -> None:
 
 def test_bg_task_bridges_foreign_loop_future() -> None:
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def create_future() -> asyncio.Future[int]:
         return asyncio.get_running_loop().create_future()
@@ -2902,7 +2929,7 @@ def test_bg_task_bridges_foreign_loop_future() -> None:
 
 
 def test_bg_task_pre_start_cancellation_closes_caller_coroutine() -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_entered = Event()
     unblock_loop = Event()
 
@@ -2928,7 +2955,7 @@ def test_bg_task_pre_start_cancellation_closes_caller_coroutine() -> None:
 
 def test_bg_task_start_failure_disposes_caller_awaitable() -> None:
     """Accepted background work is disposed if task creation later fails."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the background task.")
     disposed = Event()
 
@@ -2960,7 +2987,7 @@ def test_bg_task_start_failure_disposes_caller_awaitable() -> None:
 
 def test_bg_task_pre_start_cancellation_reaches_foreign_future() -> None:
     foreign_loop, foreign_thread = _start_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_entered = Event()
     unblock_loop = Event()
 
@@ -3001,7 +3028,7 @@ def test_bg_task_pre_start_cancellation_reaches_foreign_future() -> None:
 
 def test_bg_task_pre_start_disposal_consumes_foreign_future_exception() -> None:
     foreign_loop, foreign_thread = _start_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_entered = Event()
     unblock_loop = Event()
     loop_errors: list[dict[str, object]] = []
@@ -3044,7 +3071,7 @@ def test_bg_task_pre_start_disposal_consumes_foreign_future_exception() -> None:
 
 
 def test_bg_task_active_cancellation_does_not_force_close_awaitable() -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     started = Event()
 
     class ActiveAwaitable:
@@ -3074,8 +3101,8 @@ def test_bg_task_active_cancellation_does_not_force_close_awaitable() -> None:
 
 
 def test_runtime_pre_start_cancellation_reaches_cross_loop_handle() -> None:
-    source_channel = Channel(credentials=NoCredentials())
-    target_channel = Channel(credentials=NoCredentials())
+    source_channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
+    target_channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     source_started = Event()
     source_finalized = Event()
     target_entered = Event()
@@ -3110,7 +3137,7 @@ def test_runtime_pre_start_cancellation_reaches_cross_loop_handle() -> None:
 
 def test_runtime_rejects_resubmitting_current_handle() -> None:
     """A child wrapper cannot hide a pending self-await cycle."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     holder: Future[CrossLoopAwaitable[int]] = Future()
 
     async def parent() -> int:
@@ -3131,7 +3158,7 @@ def test_submission_failure_runs_threadsafe_disposal_hook_outside_locks(
     monkeypatch,
 ) -> None:
     """A thread-safe disposal hook may re-enter channel state on rejection."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     original_submit = channel._event_loop.call_soon_threadsafe
     closed: list[grpc.ChannelConnectivity] = []
 
@@ -3170,8 +3197,8 @@ def test_submission_failure_runs_threadsafe_disposal_hook_outside_locks(
 def test_context_submission_binding_isolated_for_sdks_sharing_loop() -> None:
     """Nested and concurrent SDK tasks keep runtime-specific ContextVars."""
     loop, thread = _start_loop()
-    first = Channel(credentials=NoCredentials(), event_loop=loop)
-    second = Channel(credentials=NoCredentials(), event_loop=loop)
+    first = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
+    second = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
 
     async def inspect_second() -> bool:
         own = second._runtime.protect_current_submission()
@@ -3199,7 +3226,7 @@ def test_context_submission_binding_isolated_for_sdks_sharing_loop() -> None:
 
 def test_close_cancels_bg_task_foreign_loop_future() -> None:
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def create_future() -> asyncio.Future[None]:
         return asyncio.get_running_loop().create_future()
@@ -3262,7 +3289,7 @@ def test_channel_close_preserves_cleanup_and_shutdown_failures(
     asynchronous: bool,
 ) -> None:
     """A runtime-shutdown error is chained behind the primary close error."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     close_error = RuntimeError("The channel cleanup failed.")
     shutdown_error = RuntimeError("The runtime shutdown failed.")
     close_future: Future[None] = Future()
@@ -3299,7 +3326,7 @@ def test_sync_close_preserves_terminal_timeout_error_identity(
     timeout_phase: str,
 ) -> None:
     """Completed cleanup timeouts are not mistaken for wait expiration."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     terminal_error = TimeoutError(f"The {timeout_phase} phase failed because its time limit expired.")
     close_future: Future[None] = Future()
     shutdown_future: Future[None] = Future()
@@ -3332,7 +3359,7 @@ def test_sync_close_preserves_terminal_timeout_error_identity(
 def test_supplied_loop_is_not_stopped_or_reconfigured() -> None:
     loop, thread = _start_loop()
     original_executor = getattr(loop, "_default_executor", None)
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
     try:
         assert channel.run_sync(asyncio.sleep(0, result=42), timeout=5) == 42
         channel.sync_close(timeout=5)
@@ -3368,7 +3395,7 @@ def test_public_authorization_provider_dispatches_to_internal_loop() -> None:
             return RecordingAuthenticator()
 
     configured_provider = RecordingProvider()
-    channel = Channel(credentials=configured_provider)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=configured_provider)
     try:
         provider = channel.get_authorization_provider()
         assert provider is configured_provider
@@ -3388,7 +3415,7 @@ def test_public_authorization_provider_dispatches_to_internal_loop() -> None:
 
 def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
     """A synchronous wait consumes the same one-shot claim as ``await``."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -3421,7 +3448,7 @@ def test_synchronous_wait_preserves_request_one_shot_contract() -> None:
 
 def test_request_wait_for_ready_default_and_native_option() -> None:
     """The public readiness option is initialized and reaches gRPC."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     observed: list[bool | None] = []
 
     class NativeChannel:
@@ -3588,7 +3615,7 @@ def test_synchronous_request_timeout_cancels_before_delayed_start(
     from nebius.aio.token.static import Bearer as StaticBearer
 
     credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
-    channel = Channel(credentials=credentials)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=credentials)
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -3629,7 +3656,7 @@ def test_synchronous_request_wait_uses_remaining_submission_deadline() -> None:
     loop_blocked = Event()
     release_loop = Event()
     rpc_started = Event()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -3708,7 +3735,7 @@ async def test_async_request_timeout_includes_sdk_loop_queueing(
     from nebius.aio.token.static import Bearer as StaticBearer
 
     credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
-    channel = Channel(credentials=credentials)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=credentials)
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -3753,7 +3780,7 @@ async def test_async_request_auth_timeout_only_applies_when_authorizing(
     loop_blocked = Event()
     release_loop = Event()
     credentials = StaticBearer("token") if disable_explicitly else NoCredentials()
-    channel = Channel(credentials=credentials)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=credentials)
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -3808,7 +3835,7 @@ async def test_request_timeout_excludes_slow_authentication() -> None:
         def authenticator(self) -> Authenticator:
             return SlowAuthenticator()
 
-    channel = Channel(credentials=SlowProvider())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=SlowProvider())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -3933,7 +3960,7 @@ async def test_token_timeout_includes_sdk_loop_queueing() -> None:
         def receiver(self):
             return Receiver()
 
-    channel = Channel(credentials=Bearer())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=Bearer())
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -3972,7 +3999,7 @@ async def test_token_options_are_snapshotted_before_sdk_loop_dispatch() -> None:
         def receiver(self):
             return Receiver()
 
-    channel = Channel(credentials=Bearer())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=Bearer())
 
     async def block_sdk_loop() -> None:
         loop_blocked.set()
@@ -4015,7 +4042,7 @@ def test_sync_token_options_are_snapshotted_before_run_sync() -> None:
         def receiver(self):
             return Receiver()
 
-    channel = Channel(credentials=Bearer())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=Bearer())
     original_run_sync = channel.run_sync
 
     def pause_run_sync(awaitable, timeout=None):
@@ -4074,7 +4101,7 @@ def test_sync_token_deadline_starts_before_run_sync_dispatch() -> None:
             """Return a receiver that records fetch calls."""
             return Receiver()
 
-    channel = Channel(credentials=Bearer())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=Bearer())
     original_run_sync = channel.run_sync
 
     def delay_run_sync(awaitable, timeout=None):
@@ -4108,7 +4135,7 @@ async def test_token_fetch_preserves_receiver_timeout_error() -> None:
         def receiver(self):
             return Receiver()
 
-    channel = Channel(credentials=Bearer())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=Bearer())
     try:
         with pytest.raises(TimeoutError, match="token receiver timed out") as raised:
             await channel.get_token(5)
@@ -4334,7 +4361,7 @@ def test_async_metric_callback_is_owned_and_cancelled_by_runtime() -> None:
             finally:
                 cancelled.set()
 
-    channel = Channel(credentials="token", metrics=Metrics())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials="token", metrics=Metrics())
     channel.get_token_sync(timeout=5)
     assert started.wait(timeout=5)
 
@@ -4352,7 +4379,7 @@ def test_sync_close_from_internal_loop_raises_without_deadlock(
     thread: Thread | None = None
     if supplied:
         loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
 
     async def attempt() -> None:
         with pytest.raises(LoopError, match="Await close"):
@@ -4377,7 +4404,7 @@ def test_sync_close_timeout_still_finishes_runtime_shutdown() -> None:
             while not self.release.is_set():
                 await asyncio.sleep(0)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     graceful = BlockingGraceful()
     channel._gracefuls.add(graceful)
     runtime_threads = [
@@ -4398,7 +4425,7 @@ def test_sync_close_timeout_still_finishes_runtime_shutdown() -> None:
 
 def test_close_rejects_submissions_before_queued_cleanup_starts() -> None:
     """The first close call publishes rejection before SDK-loop dispatch."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
 
@@ -4479,7 +4506,7 @@ def test_failed_first_close_submission_still_finalizes_runtime(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """A failed cleanup dispatch is cached and followed by runtime shutdown."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     original_submit = channel._runtime.submit
 
     def reject_close(awaitable, *, track=True):
@@ -4501,7 +4528,7 @@ def test_failed_first_close_submission_still_finalizes_runtime(
 
 
 def test_sync_close_timeout_covers_blocked_executor_shutdown() -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     worker_started = Event()
     release_worker = Event()
 
@@ -4525,7 +4552,7 @@ def test_sync_close_timeout_covers_blocked_executor_shutdown() -> None:
 
 def test_supplied_loop_close_cancels_and_drains_submissions() -> None:
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
     started = Event()
     finalized = Event()
     finalizer_steps: list[int] = []
@@ -4555,7 +4582,7 @@ def test_supplied_loop_close_cancels_and_drains_submissions() -> None:
 def test_close_cancels_nested_submission_finalizer_once() -> None:
     """Parent cancellation cannot recancel a child's async finalizer."""
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
     child_started = Event()
     child_finalized = Event()
     finalizer_steps: list[int] = []
@@ -4587,7 +4614,7 @@ def test_close_cancels_nested_submission_finalizer_once() -> None:
 
 def test_close_does_not_recancel_a_task_already_in_its_finalizer() -> None:
     loop, thread = _start_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
     started = Event()
     finalizer_started = Event()
     finalized = Event()
@@ -4616,7 +4643,7 @@ def test_close_does_not_recancel_a_task_already_in_its_finalizer() -> None:
 def test_internal_close_caller_completes_before_runtime_stops(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     callback_ran = Event()
     original_cancel_returning = channel._runtime._cancel_returning_task
 
@@ -4643,7 +4670,7 @@ def test_internal_close_caller_completes_before_runtime_stops(
 def test_internal_close_stops_continuation_on_its_next_await(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     close_returned = Event()
     callback_ran = Event()
     finalized = Event()
@@ -4688,7 +4715,7 @@ def test_internal_close_does_not_recancel_an_externally_cancelled_finalizer() ->
             while not self.release.is_set():
                 await asyncio.sleep(0)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     graceful = BlockingGraceful()
     channel._gracefuls.add(graceful)
     finalizer_started = Event()
@@ -4717,7 +4744,7 @@ def test_internal_close_does_not_recancel_an_externally_cancelled_finalizer() ->
 
 def test_repeated_failed_internal_close_still_starts_shutdown() -> None:
     """A completed close failure cannot retain a protected internal caller."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     close_error = RuntimeError("The cached channel cleanup failed.")
     close_future: Future[None] = Future()
     close_future.set_exception(close_error)
@@ -4746,7 +4773,7 @@ def test_repeated_failed_internal_close_still_starts_shutdown() -> None:
 
 def test_raw_child_close_does_not_receive_second_cancellation() -> None:
     """Shutdown preserves a cancelling inherited child's async finalizer."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     child_ready: Future[asyncio.Task[None]] = Future()
     finalizer_started = Event()
     finalized = Event()
@@ -4796,7 +4823,7 @@ def test_raw_child_cancelled_after_close_protection_is_not_recancelled() -> None
             while not self.release.is_set():
                 await asyncio.sleep(0)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     graceful = BlockingGraceful()
     channel._gracefuls.add(graceful)
     child_ready: Future[asyncio.Task[None]] = Future()
@@ -4838,7 +4865,7 @@ def test_raw_child_cancelled_after_close_protection_is_not_recancelled() -> None
 
 
 def test_run_sync_preserves_runtime_error_from_awaitable() -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def fail() -> None:
         raise RuntimeError("The test callable failed.")
@@ -4852,7 +4879,7 @@ def test_run_sync_preserves_runtime_error_from_awaitable() -> None:
 
 def test_run_sync_preserves_timeout_error_from_completed_awaitable() -> None:
     """An application's TimeoutError is not mistaken for a wait deadline."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     application_error = TimeoutError("The application task timed out.")
 
     async def fail() -> None:
@@ -4868,7 +4895,7 @@ def test_run_sync_preserves_timeout_error_from_completed_awaitable() -> None:
 
 def test_run_sync_translates_expired_wait_and_cancels_work() -> None:
     """A real synchronous wait deadline cancels and drains submitted work."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     started = Event()
     finalized = Event()
 
@@ -4890,7 +4917,7 @@ def test_run_sync_translates_expired_wait_and_cancels_work() -> None:
 
 def test_run_sync_keeps_deadline_classification_during_completion_race() -> None:
     """Completion after a wait expires cannot impersonate an application error."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     future: Future[int] = Future()
 
     class DeadlineRace(CrossLoopAwaitable[int]):
@@ -4936,6 +4963,7 @@ def test_constructor_config_metrics_run_on_internal_loop_and_are_drained(
 
     config = Config(config_file=config_file, no_env=True)
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         config_reader=config,
         credentials=NoCredentials(),
         metrics=Metrics(),
@@ -4954,7 +4982,7 @@ def test_deferred_credential_channel_future_is_bridged_from_foreign_loop() -> No
             raise AssertionError("The test must not create a request.")
 
     foreign_loop, foreign_thread = _start_loop()
-    sdk_channel = Channel(credentials=NoCredentials())
+    sdk_channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def create_future() -> asyncio.Future[Channel]:
         return asyncio.get_running_loop().create_future()
@@ -5016,7 +5044,7 @@ def test_low_level_deadline_includes_internal_queue_delay() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(transport, addr)  # type: ignore[arg-type]
 
-    channel = FakeChannel(credentials=NoCredentials())
+    channel = FakeChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     started = Event()
     release = Event()
 
@@ -5050,7 +5078,7 @@ def test_low_level_deadline_includes_internal_queue_delay() -> None:
 
 def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
     """An accepted call whose task is rejected settles every public gate."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     rejection = RuntimeError("The SDK rejected the low-level call task.")
     factory_installed = Event()
     release_installer = Event()
@@ -5097,7 +5125,7 @@ def test_low_level_task_start_failure_settles_call_and_accessors() -> None:
 
 def test_request_task_start_failure_releases_explicit_override() -> None:
     """An asynchronously rejected request releases its pre-leased transport."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the request task.")
     released = Event()
     release_calls: list[tuple[object | None, bool]] = []
@@ -5146,7 +5174,7 @@ def test_request_task_start_failure_releases_explicit_override() -> None:
 
 def test_request_start_rejection_closes_unleased_override_from_async_loop() -> None:
     """Async pre-start cleanup closes an unleased explicit transport."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the request task.")
     closed = Event()
 
@@ -5195,7 +5223,7 @@ def test_request_start_rejection_closes_unleased_override_from_async_loop() -> N
 
 def test_stream_task_start_failure_releases_explicit_override() -> None:
     """An asynchronously rejected stream operation releases its lease."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the stream task.")
     released = Event()
 
@@ -5239,7 +5267,7 @@ def test_stream_task_start_failure_releases_explicit_override() -> None:
 
 def test_later_stream_task_start_failure_keeps_active_transport() -> None:
     """Rejecting one later operation does not release the active stream."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     rejection = RuntimeError("The test rejected the later stream task.")
     release_calls: list[tuple[object | None, bool]] = []
 
@@ -5308,7 +5336,7 @@ def test_later_stream_task_start_failure_keeps_active_transport() -> None:
 
 
 def test_low_level_prestart_cancel_publishes_terminal_status() -> None:
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
 
@@ -5343,7 +5371,7 @@ def test_low_level_prestart_cancel_publishes_terminal_status() -> None:
 
 def test_low_level_awaiter_cancel_publishes_terminal_status() -> None:
     """Task cancellation must publish status even if the SDK call never starts."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
 
@@ -5439,7 +5467,7 @@ def test_low_level_active_cancel_skips_blocking_terminal_capture() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(BlockingTransport(), addr)  # type: ignore[arg-type]
 
-    channel = BlockingChannel(credentials=NoCredentials())
+    channel = BlockingChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda request: request.SerializeToString(),
@@ -5527,7 +5555,7 @@ def test_low_level_native_completion_wins_before_wrapper_resumes(
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda value: value.SerializeToString(),
@@ -5602,7 +5630,7 @@ def test_low_level_sync_terminal_accessor_failure_preserves_success() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda request: request.SerializeToString(),
@@ -5687,7 +5715,7 @@ def test_low_level_done_callback_observes_remote_cancellation() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda value: value.SerializeToString(),
@@ -5789,7 +5817,7 @@ def test_low_level_terminal_precedes_blocking_fatal_diagnostics() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda value: value.SerializeToString(),
@@ -5905,7 +5933,7 @@ def test_low_level_terminal_capture_bypasses_rejecting_task_factory(caplog) -> N
             """Create one wrapper owned by the SDK loop."""
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda value: value.SerializeToString(),
@@ -5978,7 +6006,7 @@ async def test_low_level_call_captures_async_debug_error_string() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda value: value.SerializeToString(),
@@ -6005,7 +6033,7 @@ def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
             call_factory_used.set()
             raise AssertionError("A canceled unary call must not open a transport.")
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(Transport(), "test-address")  # type: ignore[arg-type]
 
     def resolve(method: str) -> AddressChannel:
@@ -6042,7 +6070,7 @@ def test_low_level_cancel_during_resolution_never_opens_transport() -> None:
 def test_low_level_accessors_preserve_setup_failure_after_close() -> None:
     """Late accessors retain the call submission's authoritative failure."""
     setup_error = RuntimeError("The route resolution failed.")
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     def fail_resolution(method: str) -> AddressChannel:
         raise setup_error
@@ -6099,7 +6127,7 @@ def test_low_level_reentrant_cancel_discards_unpublished_call() -> None:
 
             return create
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(Transport(), "test-address")  # type: ignore[arg-type]
     channel.get_channel_by_method = lambda method: address  # type: ignore[method-assign]
 
@@ -6171,7 +6199,7 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(CompletedTransport(), addr)  # type: ignore[arg-type]
 
-    channel = CompletedChannel(credentials=NoCredentials())
+    channel = CompletedChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     call = channel.unary_unary(
         "/nebius.compute.v1.DiskService/Get",
         lambda request: request.SerializeToString(),
@@ -6269,7 +6297,7 @@ def test_low_level_completed_call_rejects_cancel_during_terminal_capture(
 
 def test_generated_request_ignores_stale_attempt_completion_callback() -> None:
     """A delayed old callback cannot suppress current-attempt cancellation."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6342,7 +6370,7 @@ def test_request_completion_bypasses_rejecting_task_factory(caplog) -> None:
             return ()
 
     completed_call = CompletedCall()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6394,7 +6422,7 @@ def test_generated_request_rejects_cancel_after_native_success() -> None:
         async def trailing_metadata(self) -> tuple[()]:
             return ()
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6522,7 +6550,7 @@ def test_generated_native_success_wins_before_wrapper_resumes(
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(Transport(), addr)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6587,7 +6615,7 @@ def test_generated_request_rejects_cancel_after_native_error() -> None:
 
             return result().__await__()
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6652,7 +6680,7 @@ def test_generated_done_state_includes_remote_cancellation() -> None:
 
             return result().__await__()
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6743,7 +6771,7 @@ def test_generated_request_accepts_cancel_while_deciding_to_retry(
 
             return result().__await__()
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6903,7 +6931,7 @@ def test_generated_request_discards_wrong_loop_override() -> None:
         "foreign.example:443",
         event_loop=foreign_loop,
     )
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     request: Request[GetDiskRequest, Disk] = Request(
         channel,
         "nebius.compute.v1.DiskService",
@@ -6927,7 +6955,7 @@ def test_generated_request_discards_wrong_loop_override() -> None:
 
 def test_request_inputs_are_snapshotted_at_first_submission() -> None:
     """External mutation after submission must not race SDK-loop processing."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     loop_blocked = Event()
     release_loop = Event()
 
@@ -6999,7 +7027,7 @@ def test_request_rejects_non_finite_timeouts(value: float, parameter: str) -> No
 @pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
 async def test_channel_rejects_non_finite_token_timeout(value: float) -> None:
     """Token dispatch rejects deadlines unsupported by asyncio and gRPC."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     try:
         with pytest.raises(
             ValueError,
@@ -7013,7 +7041,7 @@ async def test_channel_rejects_non_finite_token_timeout(value: float) -> None:
 @pytest.mark.parametrize("value", (float("nan"), float("inf"), float("-inf")))
 def test_low_level_call_rejects_non_finite_timeout(value: float) -> None:
     """Low-level cross-loop calls validate timeouts before submission."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     unary = channel.unary_unary("/acme.Service/Get")
     try:
         with pytest.raises(
@@ -7027,7 +7055,7 @@ def test_low_level_call_rejects_non_finite_timeout(value: float) -> None:
 
 def test_generated_update_payload_matches_eager_reset_mask() -> None:
     """Mutation after wrapper creation cannot invalidate reset-mask metadata."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     source = UpdateDiskRequest()
     source.spec.block_size_bytes = 4096
     pending = DiskServiceClient(channel).update(source)
@@ -7055,7 +7083,7 @@ def test_custom_copy_from_payload_retains_pass_through_compatibility() -> None:
         def SerializeToString(self) -> bytes:  # noqa: N802
             return self.value.encode()
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     payload = CustomPayload("stable")
     request: Request[CustomPayload, bool] = Request(
         channel,
@@ -7149,7 +7177,7 @@ def test_failed_unstarted_disposal_preserves_submission_error(
 def test_async_close_does_not_block_external_loop_needed_by_worker() -> None:
     async def run() -> None:
         external_loop = asyncio.get_running_loop()
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         worker_started = Event()
         worker_finished = Event()
 
@@ -7176,7 +7204,7 @@ def test_async_close_does_not_block_external_loop_needed_by_worker() -> None:
 
 def test_close_keeps_owned_loop_running_until_executor_drains() -> None:
     """An executor worker can finish one SDK-loop round trip during close."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     executor = channel._runtime._executor
     assert executor is not None
     original_shutdown = executor.shutdown
@@ -7216,7 +7244,9 @@ def test_close_keeps_owned_loop_running_until_executor_drains() -> None:
 
 def test_sync_sdk_calls_fail_fast_from_owned_executor_worker() -> None:
     """A worker cannot block on work that may need the same executor."""
-    channel = Channel(credentials=NoCredentials(), executor_max_workers=1)
+    channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), executor_max_workers=1
+    )
     errors: list[BaseException] = []
 
     def worker() -> None:
@@ -7248,7 +7278,7 @@ def test_sync_sdk_calls_fail_fast_from_owned_executor_worker() -> None:
 @pytest.mark.asyncio()
 async def test_operation_service_factories_do_not_block_async_callers() -> None:
     """Synchronous client factories defer source-address resolution."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     try:
         transport = channel.get_corresponding_operation_service(DiskServiceClient)
         assert callable(transport.Get)
@@ -7260,7 +7290,9 @@ async def test_operation_service_factories_do_not_block_async_callers() -> None:
 
 def test_cross_loop_handles_fail_fast_from_owned_executor_worker() -> None:
     """A worker cannot wait on a handle whose work may need that worker."""
-    channel = Channel(credentials=NoCredentials(), executor_max_workers=1)
+    channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), executor_max_workers=1
+    )
     errors: list[BaseException] = []
 
     async def wait_for_handle(handle: object) -> None:
@@ -7294,7 +7326,7 @@ def test_cross_loop_handles_fail_fast_from_owned_executor_worker() -> None:
 
 def test_submission_cannot_await_its_own_cross_loop_handle() -> None:
     """Self-await fails like native Task self-await instead of deadlocking."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     holder: Future[object] = Future()
 
     async def await_self() -> None:
@@ -7312,8 +7344,8 @@ def test_submission_cannot_await_its_own_cross_loop_handle() -> None:
 
 def test_submission_cannot_wrap_its_own_handle_on_another_runtime() -> None:
     """Cross-runtime wrapping cannot turn self-await into an A-B-A cycle."""
-    channel_a = Channel(credentials=NoCredentials())
-    channel_b = Channel(credentials=NoCredentials())
+    channel_a = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
+    channel_b = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     holder: Future[object] = Future()
 
     async def await_wrapped_self() -> None:
@@ -7332,7 +7364,7 @@ def test_submission_cannot_wrap_its_own_handle_on_another_runtime() -> None:
 
 def test_inherited_child_context_can_await_completed_parent_handle() -> None:
     """A child task's inherited marker is not self-await after parent completion."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     holder: Future[object] = Future()
     child_started = Event()
     release_child = Event()
@@ -7372,7 +7404,7 @@ def test_inherited_child_context_can_await_completed_parent_handle() -> None:
 def test_borrowed_loop_sync_close_from_external_async_loop_is_rejected() -> None:
     """Sync close cannot block a loop that borrowed SDK work may need."""
     sdk_loop, sdk_thread = _start_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=sdk_loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=sdk_loop)
 
     async def close_from_external_loop() -> None:
         with pytest.raises(LoopError, match="Await close"):
@@ -7390,7 +7422,7 @@ def test_sync_resolver_dispatch_from_external_async_loop_is_rejected() -> None:
     """A synchronous resolver cannot block an event loop it may depend on."""
 
     async def run() -> None:
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         try:
             with pytest.raises(LoopError, match="asynchronous context"):
                 channel.get_addr_from_service_name("example.Service")
@@ -7402,7 +7434,7 @@ def test_sync_resolver_dispatch_from_external_async_loop_is_rejected() -> None:
 
 def test_sync_close_from_external_async_context_preserves_loop_error() -> None:
     async def run() -> None:
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         with pytest.raises(LoopError, match="Await close"):
             channel.sync_close(timeout=0.1)
         await channel.close()
@@ -7455,7 +7487,7 @@ def test_external_close_does_not_cancel_concurrent_internal_close_result(
 
     async def run_once() -> None:
         """Run one synchronized close race."""
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         resource = _BlockingCloseResource()
         channel._gracefuls.add(resource)
         external_joined = _observe_external_close_join(channel, monkeypatch)
@@ -7488,7 +7520,7 @@ def test_sync_close_does_not_cancel_concurrent_internal_close_result(
 ) -> None:
     """A synchronous close preserves a protected internal close result."""
     for _ in range(20):
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         resource = _BlockingCloseResource()
         channel._gracefuls.add(resource)
         external_joined = _observe_external_close_join(channel, monkeypatch)

@@ -40,7 +40,9 @@ def _provider_name(cls: type[object]) -> str:
 
 def test_keepalive_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
     _clear_keepalive_env(monkeypatch)
-    channel = Channel(options=[(INSECURE, True)], credentials=NoCredentials())
+    channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", options=[(INSECURE, True)], credentials=NoCredentials()
+    )
     opts = _option_map(channel.get_address_options("127.0.0.1:1"))
 
     assert opts["grpc.keepalive_time_ms"] == DEFAULT_KEEPALIVE_TIME_MS
@@ -54,13 +56,16 @@ def test_keepalive_env_and_disable(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv(ENV_GRPC_KEEPALIVE_TIMEOUT, "12s")
     monkeypatch.setenv(ENV_GRPC_KEEPALIVE_PERMIT_WITHOUT_STREAM, "false")
 
-    channel = Channel(options=[(INSECURE, True)], credentials=NoCredentials())
+    channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", options=[(INSECURE, True)], credentials=NoCredentials()
+    )
     opts = _option_map(channel.get_address_options("127.0.0.1:1"))
     assert opts["grpc.keepalive_time_ms"] == 45_000
     assert opts["grpc.keepalive_timeout_ms"] == 12_000
     assert opts["grpc.keepalive_permit_without_calls"] == 0
 
     disabled = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
         keepalive=False,
@@ -69,6 +74,7 @@ def test_keepalive_env_and_disable(monkeypatch: pytest.MonkeyPatch) -> None:
     assert "grpc.keepalive_time_ms" not in disabled_opts
 
     zero_time = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
         keepalive=KeepaliveOptions(time_ms=0, timeout_ms=0),
@@ -80,6 +86,7 @@ def test_keepalive_env_and_disable(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_keepalive_user_options_override(monkeypatch: pytest.MonkeyPatch) -> None:
     _clear_keepalive_env(monkeypatch)
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True), ("grpc.keepalive_time_ms", 5)],
         credentials=NoCredentials(),
     )
@@ -91,11 +98,15 @@ def test_keepalive_invalid_env(monkeypatch: pytest.MonkeyPatch) -> None:
     _clear_keepalive_env(monkeypatch)
     monkeypatch.setenv(ENV_GRPC_KEEPALIVE_TIMEOUT, "0")
     with pytest.raises(ValueError, match="must be positive"):
-        Channel(options=[(INSECURE, True)], credentials=NoCredentials())
+        Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0", options=[(INSECURE, True)], credentials=NoCredentials()
+        )
 
     monkeypatch.setenv(ENV_GRPC_KEEPALIVE_TIMEOUT, "-1s")
     with pytest.raises(ValueError, match="must not be negative"):
-        Channel(options=[(INSECURE, True)], credentials=NoCredentials())
+        Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0", options=[(INSECURE, True)], credentials=NoCredentials()
+        )
 
 
 @pytest.mark.asyncio()
@@ -112,7 +123,9 @@ async def test_static_token_metrics() -> None:
         "test-token",
         datetime.now(timezone.utc) + timedelta(seconds=60),
     )
-    sdk = SDK(options=[(INSECURE, True)], credentials=token, metrics=metrics)
+    sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", options=[(INSECURE, True)], credentials=token, metrics=metrics
+    )
     metadata = Metadata()
 
     await sdk.get_authorization_provider().authenticator().authenticate(metadata)  # type: ignore[union-attr]
@@ -152,6 +165,7 @@ async def test_custom_bearer_metrics_provider_defaults_to_class_name() -> None:
 
     acquired = []
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=CustomBearer(),
         metrics={"token_acquire": acquired.append},
@@ -189,6 +203,7 @@ async def test_non_token_receiver_result_records_error_metric() -> None:
 
     acquired = []
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=BadBearer(),
         metrics={"token_acquire": acquired.append},
@@ -204,6 +219,7 @@ async def test_non_token_receiver_result_records_error_metric() -> None:
 async def test_naive_token_expiration_does_not_break_metrics() -> None:
     lifetimes = []
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=Token("test-token", datetime.now()),
         metrics={"token_lifetime": lifetimes.append},
@@ -222,6 +238,7 @@ async def test_metric_cancelled_error_does_not_break_auth() -> None:
         raise asyncio.CancelledError()
 
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=Token("test-token"),
         metrics={"token_acquire": raise_cancelled_error},
@@ -248,6 +265,7 @@ async def test_token_file_metrics(tmp_path) -> None:
         "token_acquire": acquired.append,
     }
     sdk = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=FileBearer(token_file),
         metrics=metrics,
@@ -317,6 +335,7 @@ def test_config_reader_metrics_replay_and_credentials_resolve(tmp_path) -> None:
 
     config = Config(config_file=config_file, no_env=True)
     SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         config_reader=config,
         metrics=metrics,

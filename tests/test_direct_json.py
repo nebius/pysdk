@@ -13,7 +13,8 @@ from nebius.base.protos.json_format import (
     message_to_json,
     parse_dict,
 )
-from test_direct_message import (
+
+from .test_direct_message import (
     REF_REQUIRED_EXTENSION,
     REFERENCE_CHILD,
     REFERENCE_EXTENSION_HOST,

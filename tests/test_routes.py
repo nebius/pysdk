@@ -51,7 +51,7 @@ def test_method_and_route_fallbacks_keep_public_resolver_override() -> None:
             resolver_loops.append(asyncio.get_running_loop())
             return f"{service_name}.custom:443"
 
-    channel = CustomChannel(credentials=NoCredentials())
+    channel = CustomChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     route = Route(service="acme.RouteService", method="Get")
     try:
         assert channel.get_addr_by_method("/acme.MethodService/Get") == "acme.MethodService.custom:443"

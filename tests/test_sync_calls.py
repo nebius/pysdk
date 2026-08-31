@@ -1,8 +1,9 @@
 # type: ignore
 import logging
 
-from grpc_service import add_service
 from nebius.aio import request
+
+from .grpc_service import add_service
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
@@ -102,6 +103,7 @@ def test_get_instance_sync() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             credentials=NoCredentials(),
@@ -222,6 +224,7 @@ def test_get_instance_timeout_sync() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             credentials=NoCredentials(),

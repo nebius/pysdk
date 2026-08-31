@@ -1288,7 +1288,9 @@ class GpuClusterStatus(_Message):
     @property
     def topology(self) -> __OneOfClass_topology_infiniband_topology_path__ | None: ...
     @property
-    def instances(self) -> _MutableSequence[_builtins.str]: ...
+    def instances(self) -> _MutableSequence[_builtins.str]:
+        """IDs of Compute instances that belong to this GPU cluster."""
+        ...
     @instances.setter
     def instances(self, value: _Iterable[_builtins.str] | None) -> None:
         """Set or clear the generated ``instances`` field."""
