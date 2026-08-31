@@ -2,8 +2,9 @@
 import logging
 
 import pytest
-from grpc_service import add_service
 from nebius.aio import request
+
+from .grpc_service import add_service
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
@@ -60,6 +61,7 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             credentials=NoCredentials(),
@@ -137,6 +139,7 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             event_loop=get_event_loop(),
@@ -218,6 +221,7 @@ async def test_get_instance_v2() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             credentials=NoCredentials(),
@@ -298,7 +302,12 @@ async def test_status_not_blocks_get_instance_v2() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         client = DiskServiceClient(channel)
         req = client.get(GetDiskRequest(id="foo-bar"))
 

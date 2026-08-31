@@ -28,7 +28,7 @@ async def test_credentials_updater() -> None:
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -97,6 +97,7 @@ async def test_credentials_updater() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             credentials=ServiceAccount(
@@ -150,7 +151,7 @@ async def test_credentials_updater_sync() -> None:
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -219,6 +220,7 @@ async def test_credentials_updater_sync() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             credentials=ServiceAccount(
@@ -290,7 +292,7 @@ async def test_credentials_updater_sync_error() -> None:
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -377,6 +379,7 @@ async def test_credentials_updater_sync_error() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=address,
             options=[(INSECURE, True)],
             credentials=ServiceAccount(

@@ -31,6 +31,16 @@ REGISTRY: _Registry
 EXTENSIONS: _ExtensionRegistry
 EXTENSION_HANDLES: dict[str, _Extension[_Any]]
 
+class ConnectionState(_Enum):
+    """ConnectionState reports whether the tunnel has an agent behind it. Values are\nprefixed because a top-level enum puts them in the package scope."""
+
+    CONNECTION_STATE_UNSPECIFIED = ...
+    """Proto3 zero value. A read of the tunnel never returns it; a mutation\nrecords it, because it reports the tunnel that was written."""
+    CONNECTION_STATE_DISCONNECTED = ...
+    """No agent is connected. Nothing the tunnel exposes is reachable."""
+    CONNECTION_STATE_CONNECTED = ...
+    """At least one agent is connected."""
+
 class Tunnel(_Message):
     """Tunnel represents a secure tunnel connection for applications.\nIt enables connectivity between applications and external services within a parent."""
     @property
@@ -126,12 +136,21 @@ class TunnelStatus(_Message):
     def services(self, value: _Iterable[ServiceStatus] | None) -> None:
         """Set or clear the generated ``services`` field."""
         ...
+    @property
+    def connection_state(self) -> ConnectionState:
+        """Whether any agent is connected to the tunnel now."""
+        ...
+    @connection_state.setter
+    def connection_state(self, value: ConnectionState | None) -> None:
+        """Set or clear the generated ``connection_state`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         state: TunnelStatus__State | None | _UnsetType = ...,
         services: _Iterable[ServiceStatus] | None | _UnsetType = ...,
+        connection_state: ConnectionState | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -353,6 +372,7 @@ class TunnelServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation
         ...
 
 __all__ = [
+    "ConnectionState",
     "CreateTunnelRequest",
     "DeleteTunnelRequest",
     "GetTunnelRequest",

@@ -49,7 +49,7 @@ _register_file(
 )
 _register_file(
     "nebius/tunnel/v1/tunnel.proto",
-    b'\n\x1dnebius/tunnel/v1/tunnel.proto\x12\x10nebius.tunnel.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xda\x01\n\x06Tunnel\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x128\n\x04spec\x18\x02 \x01(\x0b2\x1c.nebius.tunnel.v1.TunnelSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12<\n\x06status\x18\x03 \x01(\x0b2\x1e.nebius.tunnel.v1.TunnelStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02"X\n\nTunnelSpec\x12\x1e\n\x05title\x18\x01 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x02R\x05title\x12*\n\x0bdescription\x18\x02 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x08R\x0bdescription"\xbb\x01\n\x0cTunnelStatus\x12:\n\x05state\x18\x01 \x01(\x0e2$.nebius.tunnel.v1.TunnelStatus.StateR\x05state\x12;\n\x08services\x18\x02 \x03(\x0b2\x1f.nebius.tunnel.v1.ServiceStatusR\x08services"2\n\x05State\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07CREATED\x10\x01\x12\x0b\n\x07DELETED\x10\x02"?\n\rServiceStatus\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n\x08endpoint\x18\x02 \x01(\tR\x08endpointBX\n\x17ai.nebius.pub.tunnel.v1B\x0bTunnelProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/tunnel/v1b\x06proto3',
+    b'\n\x1dnebius/tunnel/v1/tunnel.proto\x12\x10nebius.tunnel.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xda\x01\n\x06Tunnel\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x128\n\x04spec\x18\x02 \x01(\x0b2\x1c.nebius.tunnel.v1.TunnelSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12<\n\x06status\x18\x03 \x01(\x0b2\x1e.nebius.tunnel.v1.TunnelStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02"X\n\nTunnelSpec\x12\x1e\n\x05title\x18\x01 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x02R\x05title\x12*\n\x0bdescription\x18\x02 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x08R\x0bdescription"\x89\x02\n\x0cTunnelStatus\x12:\n\x05state\x18\x01 \x01(\x0e2$.nebius.tunnel.v1.TunnelStatus.StateR\x05state\x12;\n\x08services\x18\x02 \x03(\x0b2\x1f.nebius.tunnel.v1.ServiceStatusR\x08services\x12L\n\x10connection_state\x18\x03 \x01(\x0e2!.nebius.tunnel.v1.ConnectionStateR\x0fconnectionState"2\n\x05State\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07CREATED\x10\x01\x12\x0b\n\x07DELETED\x10\x02"?\n\rServiceStatus\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n\x08endpoint\x18\x02 \x01(\tR\x08endpoint*v\n\x0fConnectionState\x12 \n\x1cCONNECTION_STATE_UNSPECIFIED\x10\x00\x12!\n\x1dCONNECTION_STATE_DISCONNECTED\x10\x01\x12\x1e\n\x1aCONNECTION_STATE_CONNECTED\x10\x02BX\n\x17ai.nebius.pub.tunnel.v1B\x0bTunnelProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/tunnel/v1b\x06proto3',
 )
 _register_file(
     "google/protobuf/any.proto",
@@ -71,6 +71,15 @@ _register_file(
     "nebius/tunnel/v1/tunnel_service.proto",
     b'\n%nebius/tunnel/v1/tunnel_service.proto\x12\x10nebius.tunnel.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1dnebius/tunnel/v1/tunnel.proto"*\n\x10GetTunnelRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id"\x98\x01\n\x11ListTunnelRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06filter\x18\x04 \x01(\tR\x06filter"m\n\x13ListTunnelsResponse\x12.\n\x05items\x18\x01 \x03(\x0b2\x18.nebius.tunnel.v1.TunnelR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\x95\x01\n\x13CreateTunnelRequest\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x120\n\x04spec\x18\x02 \x01(\x0b2\x1c.nebius.tunnel.v1.TunnelSpecR\x04spec"\x97\x01\n\x13UpdateTunnelRequest\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x128\n\x04spec\x18\x02 \x01(\x0b2\x1c.nebius.tunnel.v1.TunnelSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec"-\n\x13DeleteTunnelRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xac\x03\n\rTunnelService\x12C\n\x03Get\x12".nebius.tunnel.v1.GetTunnelRequest\x1a\x18.nebius.tunnel.v1.Tunnel\x12R\n\x04List\x12#.nebius.tunnel.v1.ListTunnelRequest\x1a%.nebius.tunnel.v1.ListTunnelsResponse\x12L\n\x06Create\x12%.nebius.tunnel.v1.CreateTunnelRequest\x1a\x1b.nebius.common.v1.Operation\x12L\n\x06Update\x12%.nebius.tunnel.v1.UpdateTunnelRequest\x1a\x1b.nebius.common.v1.Operation\x12L\n\x06Delete\x12%.nebius.tunnel.v1.DeleteTunnelRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x18\xbaJ\x15applicationtunnel.mktB_\n\x17ai.nebius.pub.tunnel.v1B\x12TunnelServiceProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/tunnel/v1b\x06proto3',
 )
+
+ConnectionState = _enum_class(
+    "nebius.tunnel.v1.ConnectionState",
+    "ConnectionState",
+    {"CONNECTION_STATE_UNSPECIFIED": 0, "CONNECTION_STATE_DISCONNECTED": 1, "CONNECTION_STATE_CONNECTED": 2},
+)
+ConnectionState.__module__ = __name__
+
+ConnectionState.__doc__ = "ConnectionState reports whether the tunnel has an agent behind it. Values are\nprefixed because a top-level enum puts them in the package scope."
 
 Tunnel = _message_class(
     "nebius.tunnel.v1.Tunnel",
@@ -112,9 +121,10 @@ TunnelSpec.__doc__ = "TunnelSpec defines the configuration for the tunnel."
 TunnelStatus = _message_class(
     "nebius.tunnel.v1.TunnelStatus",
     "TunnelStatus",
-    {"services": "services", "state": "state"},
+    {"connection_state": "connection_state", "services": "services", "state": "state"},
     {},
     {
+        "connection_state": "Whether any agent is connected to the tunnel now.",
         "services": "Services reachable through the tunnel. A service is listed while at least\none agent announces it, and follows the agents within about 30 seconds.",
         "state": "Current lifecycle state of the tunnel.",
     },
@@ -385,6 +395,7 @@ class TunnelServiceClient(_ClientWithOperations):
 _register_client("nebius.tunnel.v1.TunnelService", TunnelServiceClient)
 
 __all__ = [
+    "ConnectionState",
     "CreateTunnelRequest",
     "DeleteTunnelRequest",
     "GetTunnelRequest",

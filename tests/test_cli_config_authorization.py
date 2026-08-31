@@ -21,7 +21,7 @@ async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     class Compute:
         def __init__(self, expected_token: str) -> None:
@@ -47,6 +47,7 @@ async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:
             cfg_file.write_text(cfg_yaml)
 
             sdk = SDK(
+                user_agent_prefix="nebius-python-sdk-tests/1.0",
                 domain=f"localhost:{port}",
                 options=[(INSECURE, True)],
                 config_reader=Config(
@@ -79,6 +80,7 @@ profiles:
 """.strip(),
     )
     sdk1 = SDK(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         domain="localhost:0",
         options=[(INSECURE, True)],
         config_reader=Config(
@@ -132,7 +134,7 @@ async def test_service_account_variants(monkeypatch, tmp_path) -> None:
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     class Compute:
         async def List(self, request, context):  # noqa: N802 — GRPC method
@@ -176,6 +178,7 @@ async def test_service_account_variants(monkeypatch, tmp_path) -> None:
         )
         (cfg_dir / "config.yaml").write_text(cfg_inline)
         sdk = SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=f"localhost:{port}",
             options=[(INSECURE, True)],
             config_reader=Config(
@@ -218,6 +221,7 @@ profiles:
 """.strip()
         (cfg_dir / "config.yaml").write_text(cfg_creds)
         sdk2 = SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=f"localhost:{port}",
             options=[(INSECURE, True)],
             config_reader=Config(
@@ -246,6 +250,7 @@ profiles:
 """.strip()
         (cfg_dir / "config.yaml").write_text(cfg_fc)
         sdk3 = SDK(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=f"localhost:{port}",
             options=[(INSECURE, True)],
             config_reader=Config(
@@ -285,7 +290,7 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     code_value = "authcode"
     token_value = "tok123"
@@ -348,6 +353,7 @@ profiles:
 
             out = io.StringIO()
             sdk = SDK(
+                user_agent_prefix="nebius-python-sdk-tests/1.0",
                 domain=f"localhost:{port}",
                 options=[(INSECURE, True)],
                 config_reader=Config(

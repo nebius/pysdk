@@ -22,7 +22,7 @@ async def test_update_instance_v2() -> None:
     from nebius.base.options import INSECURE
     from nebius.base.version import version as sdk_version
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -121,7 +121,7 @@ async def test_update_list() -> None:
     )
     from nebius.base.options import INSECURE
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -171,7 +171,12 @@ async def test_update_list() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         from nebius.aio.operation import Operation
         from nebius.api.nebius.compute.v1 import (
             AttachedFilesystemSpec,

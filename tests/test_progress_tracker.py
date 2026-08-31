@@ -23,7 +23,7 @@ async def test_operation_progress_tracker_updates() -> None:
     from nebius.base.options import INSECURE
     from nebius.base.protos.well_known import local_timezone
 
-    from tests.grpc_service import add_service
+    from .grpc_service import add_service
 
     def to_local(dt: datetime) -> datetime:
         return dt.astimezone(local_timezone)
@@ -179,6 +179,7 @@ async def test_operation_progress_tracker_updates() -> None:
     channel = None
     try:
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain=f"localhost:{port}",
             options=[(INSECURE, True)],
             credentials=NoCredentials(),
@@ -275,6 +276,7 @@ async def test_operation_progress_tracker_mlflow_cluster_operation() -> None:
     channel = None
     try:
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             domain="localhost",
             options=[(INSECURE, True)],
             credentials=NoCredentials(),
@@ -299,7 +301,7 @@ async def test_concurrent_operation_updates_are_serialized() -> None:
     from nebius.api.google.rpc import Status
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -357,7 +359,7 @@ async def test_operation_wait_timeout_bounds_update_lock_acquisition() -> None:
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -392,7 +394,7 @@ async def test_operation_wait_timeout_includes_synchronous_admission_delay() -> 
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -439,7 +441,7 @@ async def test_operation_update_timeout_includes_sdk_loop_queueing(
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
     credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
-    channel = Channel(credentials=credentials)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=credentials)
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -482,7 +484,7 @@ async def test_authorized_operation_request_timeout_is_not_an_outer_deadline() -
     from nebius.aio.token.static import Bearer as StaticBearer
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=StaticBearer("token"))
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=StaticBearer("token"))
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -511,7 +513,7 @@ async def test_operation_update_rejects_non_finite_timeouts(
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -535,7 +537,7 @@ async def test_operation_wait_rejects_non_finite_timeout(value: float) -> None:
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -568,7 +570,7 @@ async def test_operation_disposes_coroutine_on_submission_rejection(
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -615,7 +617,7 @@ def test_operation_sync_update_uses_applicable_queue_deadline(
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
     credentials = StaticBearer("token") if authorization_enabled else NoCredentials()
-    channel = Channel(credentials=credentials)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=credentials)
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -660,7 +662,7 @@ def test_sync_operation_deadline_starts_before_run_sync_dispatch(method: str) ->
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -711,7 +713,7 @@ def test_sync_operation_options_are_snapshotted_before_run_sync(method: str) -> 
     from nebius.api.google.rpc import Status
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=StaticBearer("token"))
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=StaticBearer("token"))
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -793,7 +795,7 @@ def test_authorized_sync_operation_request_timeout_is_not_outer_deadline() -> No
     from nebius.aio.token.static import Bearer as StaticBearer
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=StaticBearer("token"))
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=StaticBearer("token"))
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -820,7 +822,7 @@ async def test_operation_update_snapshots_mutable_request_options() -> None:
     from nebius.api.google.rpc import Status
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -887,7 +889,7 @@ async def test_operation_wait_snapshots_mutable_poll_options() -> None:
     from nebius.api.google.rpc import Status
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -951,7 +953,7 @@ async def test_operation_update_preserves_service_timeout_error() -> None:
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -983,7 +985,7 @@ async def test_terminal_operation_wait_accepts_zero_timeout() -> None:
     from nebius.api.google.rpc import Status
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,
@@ -1006,7 +1008,7 @@ async def test_unfinished_operation_rejects_invalid_poll_interval(
     from nebius.aio.operation import Operation
     from nebius.api.nebius.common.v1 import Operation as OperationMessage
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     operation = Operation(
         ".nebius.common.v1.OperationService.Get",
         channel,

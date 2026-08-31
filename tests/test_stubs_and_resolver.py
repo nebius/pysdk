@@ -2,8 +2,9 @@
 import logging
 
 import pytest
-from grpc_service import add_service
 from nebius.aio import request
+
+from .grpc_service import add_service
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
 
@@ -59,7 +60,12 @@ async def test_get_instance() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         client = DiskServiceClient(channel)
 
         # Make a request
@@ -141,7 +147,12 @@ async def test_get_instance_timeout_change() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=Bearer("abc"))
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=Bearer("abc"),
+        )
         client = DiskServiceClient(channel)
 
         # Make a request
@@ -237,7 +248,12 @@ async def test_get_error() -> None:
     channel = None
     try:
         # Set up the client channel
-        channel = Channel(domain=address, options=[(INSECURE, True)], credentials=NoCredentials())
+        channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
+            domain=address,
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
         client = DiskServiceClient(channel)
 
         # Make a request
@@ -322,6 +338,7 @@ async def test_custom_resolver() -> None:
     try:
         # Set up the client channel
         channel = Channel(
+            user_agent_prefix="nebius-python-sdk-tests/1.0",
             credentials=NoCredentials(),
             resolver=Single("nebius.compute.v1.DiskService", address),
             options=[(INSECURE, True)],

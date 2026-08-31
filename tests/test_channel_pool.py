@@ -13,7 +13,6 @@ from weakref import ref
 import grpc
 import nebius.aio.channel as channel_module
 import pytest
-from grpc_service import add_service
 from nebius.aio.base import AddressChannel
 from nebius.aio.channel import Channel, ChannelClosedError, LoopError, NoCredentials
 from nebius.api.nebius.common.v1 import (
@@ -24,6 +23,8 @@ from nebius.api.nebius.common.v1 import (
 from nebius.api.nebius.compute.v1 import Disk, DiskServiceClient, GetDiskRequest
 from nebius.base.options import INSECURE
 from nebius.base.resolver import Resolver
+
+from .grpc_service import add_service
 
 
 def _start_event_loop() -> tuple[asyncio.AbstractEventLoop, Thread]:
@@ -59,6 +60,7 @@ async def _checkout(channel: Channel, address: str) -> AddressChannel:
 
 def test_pooled_channels_are_reused_through_the_internal_loop() -> None:
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -80,6 +82,7 @@ def test_pooled_channels_are_reused_through_the_internal_loop() -> None:
 def test_stale_wrapper_cannot_release_a_reused_transport() -> None:
     """A stale wrapper cannot reclaim or close the current transport lease."""
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -122,7 +125,7 @@ def test_failed_lease_factory_closes_untracked_transport(caplog) -> None:
             """Create a wrapper with a failing lease factory."""
             return BrokenLease(Transport(), addr, self._event_loop)  # type: ignore[arg-type]
 
-    channel = TestChannel(credentials=NoCredentials())
+    channel = TestChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = channel.get_channel_by_addr("broken-lease.example:443")
     try:
         channel.return_channel(address)
@@ -160,7 +163,7 @@ def test_lease_factory_cannot_reuse_a_tracked_wrapper(caplog) -> None:
             closed.set()
 
     transport = Transport()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     tracked = AddressChannel(  # type: ignore[arg-type]
         transport,
         "tracked-lease.example:443",
@@ -193,6 +196,7 @@ def test_lease_factory_cannot_reuse_a_tracked_wrapper(caplog) -> None:
 
 def test_idle_channel_is_owned_by_the_internal_loop_until_close() -> None:
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -223,6 +227,7 @@ def test_constructor_snapshots_mutable_channel_configuration() -> None:
         "snapshot.example:443": address_interceptor_values,
     }
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         credentials=NoCredentials(),
         options=global_options,
         address_options=address_options,
@@ -249,6 +254,7 @@ def test_constructor_snapshots_mutable_channel_configuration() -> None:
 def test_direct_pool_release_rejects_active_external_loop() -> None:
     """Synchronous release helpers must not block an asyncio loop."""
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -289,6 +295,7 @@ def test_generated_requests_use_loop_owned_pooled_channels() -> None:
     loop_a, thread_a = _start_event_loop()
     loop_b, thread_b = _start_event_loop()
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         domain=f"localhost:{port}",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -327,6 +334,7 @@ def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None
     loop_a, thread_a = _start_event_loop()
     loop_b, thread_b = _start_event_loop()
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         domain=f"localhost:{port}",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -393,6 +401,7 @@ def test_low_level_unary_call_snapshots_request_and_metadata() -> None:
     port = server.add_insecure_port("127.0.0.1:0")
     server.start()
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         domain=f"localhost:{port}",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -444,6 +453,7 @@ def test_low_level_unary_call_caches_debug_error_string() -> None:
     port = server.add_insecure_port("127.0.0.1:0")
     server.start()
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         domain=f"localhost:{port}",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -485,6 +495,7 @@ async def test_operation_service_factory_defers_and_executes_resolution() -> Non
     port = server.add_insecure_port("127.0.0.1:0")
     server.start()
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         domain=f"localhost:{port}",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -528,6 +539,7 @@ async def test_operation_service_adapter_retains_first_resolved_address() -> Non
     server.start()
     resolver = AlternatingResolver(f"localhost:{port}")
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         resolver=resolver,
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -554,7 +566,7 @@ def test_stopped_foreign_loop_transport_close_is_not_queued(caplog) -> None:
             close_called.set()
 
     owner_loop = asyncio.new_event_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address_channel = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "127.0.0.1:1",
@@ -593,7 +605,7 @@ def test_foreign_loop_stopping_after_close_dispatch_does_not_hang(
                 owner_loop,
             )
 
-    channel = ForeignChannel(credentials=NoCredentials())
+    channel = ForeignChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     channel.get_channel_by_addr("127.0.0.1:1")
     original_schedule = owner_loop.call_soon_threadsafe
 
@@ -653,7 +665,7 @@ def test_blocked_foreign_loop_transport_does_not_block_sdk_close() -> None:
                 owner_loop,
             )
 
-    channel = ForeignChannel(credentials=NoCredentials())
+    channel = ForeignChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     try:
         channel.get_channel_by_addr("blocked-owner.example:443")
         owner_loop.call_soon_threadsafe(block_owner_loop)
@@ -690,7 +702,7 @@ def test_close_log_identifies_each_failing_resource_type(
             """Raise the second cleanup error."""
             raise RuntimeError("The second test resource rejected the close request.")
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     channel._gracefuls.update((FirstResource(), SecondResource()))
     channel.sync_close(timeout=5)
 
@@ -714,7 +726,7 @@ def test_foreign_transport_close_accepts_general_owner_loop_awaitable() -> None:
             current_loop.call_soon(completion.set_result, None)
             return completion
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "foreign-awaitable.example:443",
@@ -744,7 +756,7 @@ def test_detached_foreign_close_does_not_retain_parent_channel() -> None:
             while not release_close.is_set():
                 await asyncio.sleep(0.001)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "detached-close.example:443",
@@ -805,7 +817,7 @@ def test_cross_thread_foreign_close_handle_is_retained_until_completion() -> Non
                 await asyncio.sleep(0.001)
             close_finished.set()
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "cross-thread-close.example:443",
@@ -853,7 +865,7 @@ def test_channel_close_does_not_duplicate_a_scheduled_transport_close(
             close_calls.append(grace)
             await asyncio.sleep(0.05)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address_channel = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "127.0.0.1:1",
@@ -921,7 +933,7 @@ def test_rejected_transport_close_task_does_not_strand_shutdown(
             """Record native transport cleanup."""
             close_called.set()
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "rejected-close-task.example:443",
@@ -969,7 +981,7 @@ def test_stopped_owner_loop_transport_is_not_closed_on_caller_loop(
         async def close(self, grace: float | None = None) -> None:
             close_loops.append(asyncio.get_running_loop())
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "stopped-owner-loop.example:443",
@@ -1002,7 +1014,7 @@ def test_close_snapshot_retires_transport_before_native_close() -> None:
             while not release_close.is_set():
                 await asyncio.sleep(0.001)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "snapshot-retirement.example:443",
@@ -1053,7 +1065,7 @@ def test_transport_in_flight_close_cannot_be_returned_to_pool() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return AddressChannel(transport, addr, self._event_loop)  # type: ignore[arg-type]
 
-    channel = RecordingChannel(credentials=NoCredentials())
+    channel = RecordingChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = channel.get_channel_by_addr("retired.example:443")
     try:
         channel.discard_channel(address)
@@ -1100,7 +1112,7 @@ def test_stale_returned_wrapper_cannot_discard_free_transport() -> None:
             created.append(wrapper)
             return wrapper
 
-    channel = RecordingChannel(credentials=NoCredentials())
+    channel = RecordingChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = channel.get_channel_by_addr("returned-discard.example:443")
     try:
         channel.return_channel(address)
@@ -1136,7 +1148,7 @@ def test_transport_retirement_wins_return_publication_race(
             while not release_close.is_set():
                 await asyncio.sleep(0.001)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "retirement-race.example:443",
@@ -1195,7 +1207,9 @@ def test_close_drains_transport_registered_after_cleanup_snapshot(
     supplied_thread: Thread | None = None
     if borrowed_loop:
         supplied_loop, supplied_thread = _start_event_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=supplied_loop)
+    channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=supplied_loop
+    )
     graceful_started = Event()
     release_graceful = Event()
     graceful_finished = Event()
@@ -1273,7 +1287,7 @@ def test_release_between_close_boundary_and_snapshot_closes_lease_once(
         async def close(self, grace: float | None = None) -> None:
             close_calls.append(grace)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "close-boundary.example:443",
@@ -1331,7 +1345,7 @@ def test_concurrent_foreign_release_schedules_one_close() -> None:
             while not release_close.is_set():
                 await asyncio.sleep(0.001)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "foreign-close.example:443",
@@ -1388,7 +1402,7 @@ def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
         accepted.append((callback, args))
 
     monkeypatch.setattr(owner_loop, "call_soon_threadsafe", strand_dispatch)
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "stranded-close.example:443",
@@ -1445,7 +1459,7 @@ def test_foreign_close_task_factory_rejection_disposes_coroutine(
         rejected.append(coro)
         raise RuntimeError("The test rejected the transport close task.")
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     monkeypatch.setattr(channel_module, "create_task", reject_task)
 
     async def discard_on_owner_loop() -> AddressChannel:
@@ -1498,7 +1512,7 @@ def test_stopped_foreign_loop_releases_real_detached_task() -> None:
     with channel_module._detached_foreign_close_tasks_lock:
         baseline = len(channel_module._detached_foreign_close_handles)
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "stopped-real-close.example:443",
@@ -1609,7 +1623,7 @@ def test_fallback_close_task_factory_rejection_settles_reservation(
             """Provide close work that the test task factory rejects."""
             return
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "fallback-task-rejection.example:443",
@@ -1714,7 +1728,7 @@ def test_async_release_failure_is_observed_and_retries_close(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
     """A started asynchronous release reports failure and retries cleanup."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         object(),
         "release-failure.example:443",
@@ -1757,7 +1771,7 @@ def test_unexpected_transport_close_submission_failure_is_not_retained(
         async def close(self, grace: float | None = None) -> None:
             return None
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address = AddressChannel(  # type: ignore[arg-type]
         Transport(),
         "rejected-close.example:443",
@@ -1794,6 +1808,7 @@ def test_generated_requests_complete_from_many_sync_threads() -> None:
     port = server.add_insecure_port("127.0.0.1:0")
     server.start()
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         domain=f"localhost:{port}",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
@@ -1823,6 +1838,7 @@ def test_generated_requests_complete_from_many_sync_threads() -> None:
 
 def test_pooled_channels_are_reused_on_the_same_event_loop() -> None:
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -1853,7 +1869,7 @@ def test_legacy_address_channel_factory_override_is_compatible() -> None:
         def create_address_channel(self, addr: str) -> AddressChannel:
             return LegacyAddressChannel(grpc.aio.insecure_channel(addr), addr)
 
-    channel = LegacyFactoryChannel(credentials=NoCredentials())
+    channel = LegacyFactoryChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     async def checkout_twice() -> tuple[AddressChannel, AddressChannel]:
         first = await _checkout(channel, "127.0.0.1:1")
@@ -1879,6 +1895,7 @@ def test_legacy_constructor_keeps_creation_loop_ownership() -> None:
     loop_a, thread_a = _start_event_loop()
     loop_b, thread_b = _start_event_loop()
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -1918,7 +1935,7 @@ def test_unknown_legacy_wrapper_is_not_pooled_without_a_running_loop() -> None:
             self.channel = object()  # type: ignore[assignment]
             self.address = "127.0.0.1:1"
 
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
 
     try:
         channel.return_channel(LegacyAddressChannel())
@@ -1940,7 +1957,7 @@ def test_discard_on_another_loop_does_not_block_close() -> None:
     release = Event()
     finished = Event()
     loop, thread = _start_event_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     address_channel = AddressChannel(  # type: ignore[arg-type]
         BlockingTransport(),
         "127.0.0.1:1",
@@ -1966,6 +1983,7 @@ def test_discard_on_another_loop_does_not_block_close() -> None:
 def test_pool_limit_remains_global_across_event_loops() -> None:
     address = "127.0.0.1:1"
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
         max_free_channels_per_address=1,
@@ -1987,6 +2005,7 @@ def test_pool_limit_remains_global_across_event_loops() -> None:
 def test_concurrent_returns_cannot_exceed_pool_limit() -> None:
     address = "127.0.0.1:1"
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
         max_free_channels_per_address=1,
@@ -2042,7 +2061,7 @@ def test_close_closes_a_checked_out_transport() -> None:
             return AddressChannel(transport, addr)  # type: ignore[arg-type]
 
     async def run() -> Channel:
-        channel = RecordingChannel(credentials=NoCredentials())
+        channel = RecordingChannel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         await _checkout(channel, "127.0.0.1:1")
 
         await channel.close()
@@ -2067,7 +2086,7 @@ def test_concurrent_close_runs_graceful_cleanup_once() -> None:
                 await asyncio.sleep(0)
 
     async def run() -> int:
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         graceful = BlockingGraceful()
         channel._gracefuls.add(graceful)
         first = asyncio.create_task(channel.close())
@@ -2098,7 +2117,7 @@ def test_concurrent_close_waits_across_event_loops() -> None:
 
     loop_a, thread_a = _start_event_loop()
     loop_b, thread_b = _start_event_loop()
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     graceful = BlockingGraceful()
     channel._gracefuls.add(graceful)
 
@@ -2131,7 +2150,7 @@ def test_cancelled_close_caller_does_not_cancel_cleanup() -> None:
                 await asyncio.sleep(0)
 
     async def run() -> int:
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         graceful = BlockingGraceful()
         channel._gracefuls.add(graceful)
         first = asyncio.create_task(channel.close())
@@ -2156,7 +2175,7 @@ def test_release_after_close_preserves_direct_api_behavior() -> None:
             self.close_calls += 1
 
     async def run() -> tuple[int, int]:
-        channel = Channel(credentials=NoCredentials())
+        channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
         await channel.close()
         loop = asyncio.get_running_loop()
         internal_transport = RecordingTransport()
@@ -2194,7 +2213,7 @@ def test_close_drains_scheduled_unpooled_transport(borrowed: bool) -> None:
     loop_thread: Thread | None = None
     if borrowed:
         loop, loop_thread = _start_event_loop()
-    channel = Channel(credentials=NoCredentials(), event_loop=loop)
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials(), event_loop=loop)
 
     class SlowTransport:
         async def close(self, grace: float | None = None) -> None:
@@ -2234,7 +2253,7 @@ def test_close_drains_scheduled_unpooled_transport(borrowed: bool) -> None:
 
 def test_get_close_dispatch_race_raises_channel_closed() -> None:
     """A close that wins after the pool check keeps the pool exception type."""
-    channel = Channel(credentials=NoCredentials())
+    channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     entered = Event()
     resume = Event()
     original_run_sync = channel._runtime.run_sync
@@ -2268,6 +2287,7 @@ def test_get_close_dispatch_race_raises_channel_closed() -> None:
 def test_return_close_dispatch_race_raises_channel_closed() -> None:
     """Direct return preserves ChannelClosedError when close wins dispatch."""
     channel = Channel(
+        user_agent_prefix="nebius-python-sdk-tests/1.0",
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -2318,7 +2338,7 @@ def test_release_does_not_close_a_reclaimed_lease_twice() -> None:
 
     class RecordingChannel(Channel):
         def __init__(self) -> None:
-            super().__init__(credentials=NoCredentials())
+            super().__init__(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
             self.transports = [internal_transport, direct_transport]
 
         def create_address_channel(self, addr: str) -> AddressChannel:
