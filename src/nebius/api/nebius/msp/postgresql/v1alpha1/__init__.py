@@ -257,6 +257,7 @@ ClusterSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["backup", "description", "network_id"],
 )
 ClusterSpec.__module__ = __name__
 
@@ -328,6 +329,7 @@ ConfigSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["version"],
 )
 ConfigSpec.__module__ = __name__
 
@@ -346,6 +348,7 @@ BootstrapSpec = _message_class(
     field_deprecation_details={},
     enum_value_deprecations={},
     sensitive_fields=["user_password"],
+    immutable_fields=["db_name", "user_name"],
 )
 BootstrapSpec.__module__ = __name__
 

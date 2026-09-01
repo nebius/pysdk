@@ -182,6 +182,7 @@ IPv4PrivateAllocationSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["cidr"],
 )
 IPv4PrivateAllocationSpec.__module__ = __name__
 
@@ -203,6 +204,7 @@ IPv4PublicAllocationSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["cidr"],
 )
 IPv4PublicAllocationSpec.__module__ = __name__
 
@@ -674,6 +676,7 @@ PoolSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["source_pool_id", "version", "visibility"],
 )
 PoolSpec.__module__ = __name__
 
@@ -875,6 +878,7 @@ RouteSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["destination", "next_hop"],
 )
 RouteSpec.__module__ = __name__
 
@@ -890,6 +894,7 @@ DestinationMatch = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["cidr"],
 )
 DestinationMatch.__module__ = __name__
 
@@ -1118,6 +1123,7 @@ RouteTableSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["network_id"],
 )
 RouteTableSpec.__module__ = __name__
 
@@ -1292,6 +1298,7 @@ SecurityGroupSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["network_id"],
 )
 SecurityGroupSpec.__module__ = __name__
 
@@ -1492,6 +1499,7 @@ SecurityRuleSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["access", "egress", "ingress", "priority", "protocol", "type"],
 )
 SecurityRuleSpec.__module__ = __name__
 

@@ -103,6 +103,7 @@ K8sReleaseSpec = _message_class(
     field_deprecation_details={},
     enum_value_deprecations={},
     sensitive_fields=["set", "values"],
+    immutable_fields=["application_name", "cluster_id", "namespace", "product_slug"],
 )
 K8sReleaseSpec.__module__ = __name__
 

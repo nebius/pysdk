@@ -150,6 +150,7 @@ IPv4PrivateAllocationSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["cidr", "pool_id", "subnet_id"],
 )
 IPv4PrivateAllocationSpec.__module__ = __name__
 
@@ -166,6 +167,7 @@ IPv4PublicAllocationSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["cidr", "pool_id"],
 )
 IPv4PublicAllocationSpec.__module__ = __name__
 
@@ -444,6 +446,7 @@ NetworkInterfaceSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["subnet_id"],
 )
 NetworkInterfaceSpec.__module__ = __name__
 
@@ -659,6 +662,7 @@ PoolSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["source_pool_id", "source_scope_id", "version"],
 )
 PoolSpec.__module__ = __name__
 

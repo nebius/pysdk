@@ -680,6 +680,7 @@ ResourceAdviceSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["fabric", "region"],
 )
 ResourceAdviceSpec.__module__ = __name__
 
@@ -699,6 +700,7 @@ ComputeInstanceDetails = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["platform", "preset"],
 )
 ComputeInstanceDetails.__module__ = __name__
 

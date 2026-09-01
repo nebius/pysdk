@@ -121,6 +121,7 @@ RecordSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["relative_name", "type"],
 )
 RecordSpec.__module__ = __name__
 
@@ -314,6 +315,7 @@ ZoneSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["domain_name"],
 )
 ZoneSpec.__module__ = __name__
 
@@ -331,6 +333,7 @@ VpcZoneScope = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["primary_network_id"],
 )
 VpcZoneScope.__module__ = __name__
 

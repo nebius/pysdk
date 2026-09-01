@@ -192,6 +192,7 @@ SecretSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["secret_version"],
 )
 SecretSpec.__module__ = __name__
 
@@ -371,6 +372,7 @@ SecretVersionSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["description", "payload"],
 )
 SecretVersionSpec.__module__ = __name__
 

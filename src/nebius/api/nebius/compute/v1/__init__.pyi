@@ -2117,7 +2117,7 @@ class InstanceSpec(_Message):
         ...
     @property
     def preemptible(self) -> PreemptibleSpec:
-        """Include these parameters to create a Preemptible VM and omit them to create a Regular VM\nFor details, see https://docs.nebius.com/compute/virtual-machines/preemptible"""
+        """Set this field to create a preemptible VM, or omit it to create a regular VM.\nFor details, see https://docs.nebius.com/compute/virtual-machines/preemptible\nA preemptible VM cannot be converted to a regular VM or vice versa. Once set, this field cannot be removed; if the\nVM was created without it, the field cannot be added later."""
         ...
     @preemptible.setter
     def preemptible(self, value: PreemptibleSpec | None) -> None:

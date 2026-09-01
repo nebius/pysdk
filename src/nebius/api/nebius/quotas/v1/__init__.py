@@ -85,6 +85,7 @@ QuotaAllowanceSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["region"],
 )
 QuotaAllowanceSpec.__module__ = __name__
 

@@ -236,6 +236,8 @@ class Field:
     public: bool = True
     deprecation_details: str | None = None
     enum_value_deprecations: Mapping[int, tuple[tuple[str, str], ...]] | None = None
+    immutable: bool = False
+    immutable_oneof: bool = False
 
     def default(self) -> Any:
         if self.default_factory is not None:
@@ -652,6 +654,7 @@ class Message:
     def get_full_update_reset_mask(self) -> Mask:
         """Create a reset mask from the current protobuf state."""
         result = Mask()
+
         pending: list[tuple[Message, Mask, int]] = [(self, result, 0)]
         while pending:
             message, reset_mask, depth = pending.pop()
@@ -660,33 +663,39 @@ class Message:
             for field in message.__FIELDS__:
                 key = FieldKey(field.proto_name)
                 value = message._values.get(field)
+                field_has_value = message._field_has_value(field, value)
+                if field.immutable or (field.immutable_oneof and not field_has_value):
+                    continue
                 field_mask = reset_mask.field_parts.get(key)
                 if field_mask is None:
                     field_mask = Mask()
 
-                if not message._field_has_value(field, value):
+                if not field_has_value:
                     reset_mask.field_parts[key] = field_mask
                     continue
 
                 if field.map:
                     if field.message:
-                        if field_mask.any is None:
-                            field_mask.any = Mask()
+                        inner_mask = field_mask.any
+                        if inner_mask is None:
+                            inner_mask = Mask()
+                        field_mask.any = inner_mask
                         reset_mask.field_parts[key] = field_mask
                         pending.extend(
-                            (cast(Message, item), field_mask.any, depth + 1)
+                            (cast(Message, item), inner_mask, depth + 1)
                             for item in cast(MapValues[Any, Any], value).values()
                         )
                     continue
 
                 if field.repeated:
                     if field.message:
-                        if field_mask.any is None:
-                            field_mask.any = Mask()
+                        inner_mask = field_mask.any
+                        if inner_mask is None:
+                            inner_mask = Mask()
+                        field_mask.any = inner_mask
                         reset_mask.field_parts[key] = field_mask
                         pending.extend(
-                            (cast(Message, item), field_mask.any, depth + 1)
-                            for item in cast(RepeatedValues[Any], value)
+                            (cast(Message, item), inner_mask, depth + 1) for item in cast(RepeatedValues[Any], value)
                         )
                     continue
 
@@ -697,6 +706,7 @@ class Message:
 
                 if value == field.default():
                     reset_mask.field_parts[key] = field_mask
+
         return result
 
     def _field_has_value(self, field: Field, value: Any) -> bool:

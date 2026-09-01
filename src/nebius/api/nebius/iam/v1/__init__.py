@@ -286,6 +286,7 @@ AccessKeySpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["account", "expires_at"],
 )
 AccessKeySpec.__module__ = __name__
 
@@ -524,6 +525,7 @@ AccessPermitSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["resource_id", "role"],
 )
 AccessPermitSpec.__module__ = __name__
 
@@ -636,6 +638,7 @@ AuthPublicKeySpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["account", "data", "expires_at"],
 )
 AuthPublicKeySpec.__module__ = __name__
 
@@ -1091,6 +1094,7 @@ FederationCertificateSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["data"],
 )
 FederationCertificateSpec.__module__ = __name__
 
@@ -1412,6 +1416,7 @@ GroupMembershipSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["member_id"],
 )
 GroupMembershipSpec.__module__ = __name__
 
@@ -2235,6 +2240,7 @@ StaticKeySpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["account"],
 )
 StaticKeySpec.__module__ = __name__
 

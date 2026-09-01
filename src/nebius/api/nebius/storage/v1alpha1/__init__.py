@@ -142,6 +142,7 @@ TransferSpec__SourceBucket = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["bucket_name", "endpoint", "prefix", "region"],
 )
 TransferSpec__SourceBucket.__module__ = __name__
 
@@ -166,6 +167,7 @@ TransferSpec__DestinationBucket = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["bucket_name", "endpoint", "prefix", "region"],
 )
 TransferSpec__DestinationBucket.__module__ = __name__
 

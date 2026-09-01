@@ -998,6 +998,7 @@ TransferSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["enable_deletes_in_destination", "overwrite_strategy", "touch_unmanaged"],
 )
 TransferSpec.__module__ = __name__
 
@@ -1087,6 +1088,8 @@ TransferSource = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["prefix"],
+    immutable_oneof_fields=["azure_blob_storage", "nebius", "s3_compatible"],
 )
 TransferSource.__module__ = __name__
 
@@ -1102,6 +1105,7 @@ TransferSource__NebiusProvider = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["bucket_name", "region"],
 )
 TransferSource__NebiusProvider.__module__ = __name__
 
@@ -1128,6 +1132,7 @@ TransferSource__S3CompatibleProvider = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["bucket_name", "endpoint", "region"],
 )
 TransferSource__S3CompatibleProvider.__module__ = __name__
 
@@ -1152,6 +1157,7 @@ TransferSource__AzureBlobStorageProvider = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["container_name", "endpoint"],
 )
 TransferSource__AzureBlobStorageProvider.__module__ = __name__
 
@@ -1168,6 +1174,8 @@ TransferDestination = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["prefix"],
+    immutable_oneof_fields=["nebius", "s3_compatible"],
 )
 TransferDestination.__module__ = __name__
 
@@ -1186,6 +1194,7 @@ TransferDestination__NebiusProvider = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["bucket_name", "region"],
 )
 TransferDestination__NebiusProvider.__module__ = __name__
 
@@ -1212,6 +1221,7 @@ TransferDestination__S3CompatibleProvider = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["bucket_name", "endpoint", "region"],
 )
 TransferDestination__S3CompatibleProvider.__module__ = __name__
 
