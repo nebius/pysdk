@@ -544,6 +544,8 @@ def _direct_field(
     *,
     sensitive: bool = False,
     credentials: bool = False,
+    immutable: bool = False,
+    immutable_oneof: bool = False,
     internal: bool = False,
 ) -> Field:
     map_key_codec: ValueCodec[Any] | None = None
@@ -581,6 +583,8 @@ def _direct_field(
         map_key_codec=map_key_codec,
         sensitive=sensitive,
         credentials=credentials,
+        immutable=immutable,
+        immutable_oneof=immutable_oneof,
         to_python=to_python,
         from_python=from_python,
         deprecation_details=deprecation_details,
@@ -729,6 +733,8 @@ def message_class(
     enum_value_deprecations: Mapping[str, Mapping[int, tuple[tuple[str, str], ...]]] | None = None,
     sensitive_fields: Collection[str] = (),
     credential_fields: Collection[str] = (),
+    immutable_fields: Collection[str] = (),
+    immutable_oneof_fields: Collection[str] = (),
     _exported: bool = True,
 ) -> type[Message]:
     """Create a direct SDK message class from a registered descriptor."""
@@ -753,6 +759,8 @@ def message_class(
             field_enum_value_deprecations.get(field.name),
             sensitive=field.name in sensitive_fields,
             credentials=field.name in credential_fields,
+            immutable=field.name in immutable_fields,
+            immutable_oneof=field.name in immutable_oneof_fields,
             internal=not _exported,
         )
         for field in descriptor.fields

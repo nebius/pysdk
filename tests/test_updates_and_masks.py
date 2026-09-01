@@ -142,10 +142,9 @@ async def test_update_list() -> None:
             mask = md.get("x-resetmask", "")
             assert mask == (
                 "metadata.(created_at,labels,name,parent_id,resource_version,updated_at),"
-                "spec.(boot_disk,cloud_init_user_data,filesystems,gpu_cluster,hostname,"
-                "local_disks,network_interfaces,nvl_instance_group_id,preemptible,"
-                "recovery_policy,reservation_policy,resources,secondary_disks,"
-                "service_account_id,stopped)"
+                "spec.(boot_disk,cloud_init_user_data,filesystems,hostname,local_disks,"
+                "network_interfaces,nvl_instance_group_id,preemptible,reservation_policy,"
+                "resources,secondary_disks,stopped)"
             )
 
             await context.send_initial_metadata(

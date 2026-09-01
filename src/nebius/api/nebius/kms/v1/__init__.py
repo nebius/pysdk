@@ -219,6 +219,7 @@ AsymmetricKeySpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["algorithm"],
 )
 AsymmetricKeySpec.__module__ = __name__
 
@@ -530,6 +531,7 @@ SymmetricKeySpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["algorithm"],
 )
 SymmetricKeySpec.__module__ = __name__
 

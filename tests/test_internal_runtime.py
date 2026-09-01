@@ -7057,13 +7057,13 @@ def test_generated_update_payload_matches_eager_reset_mask() -> None:
     """Mutation after wrapper creation cannot invalidate reset-mask metadata."""
     channel = Channel(user_agent_prefix="nebius-python-sdk-tests/1.0", credentials=NoCredentials())
     source = UpdateDiskRequest()
-    source.spec.block_size_bytes = 4096
+    source.spec.size_gibibytes = 4
     pending = DiskServiceClient(channel).update(source)
     reset_mask = pending.input_metadata().get_one("x-resetmask")
 
-    source.spec.block_size_bytes = None
+    source.spec.size_gibibytes = None
     try:
-        assert pending._input.spec.block_size_bytes == 4096
+        assert pending._input.spec.size_gibibytes == 4
         assert pending._input.get_full_update_reset_mask().marshal() == reset_mask
         assert source.get_full_update_reset_mask().marshal() != reset_mask
     finally:

@@ -143,6 +143,7 @@ class Message:
     __default: "Message|None" = None
     __sensitive_fields = dict[str, bool]()
     __credentials_fields = dict[str, bool]()
+    __immutable_fields = dict[str, tuple[bool, bool, str | None]]()
     __mask_functions__: dict[str, MaskFunction]
 
     def __init__(self, initial_message: PMessage | None):
@@ -177,6 +178,8 @@ class Message:
                 _ = desc.fields_by_name[el_pb2_key]
             except KeyError:
                 continue
+            if self._should_skip_immutable(el_key):
+                continue
             el = getattr(self, el_key)
 
             m_mask = Mask()
@@ -189,7 +192,7 @@ class Message:
                     m_mask = el.get_full_update_reset_mask()
 
             # empty mask is either already set, or not necessary here
-            if not m_mask.is_empty() or Message.is_default(self, el_key):
+            if not m_mask.is_empty() or isinstance(el, Message) or Message.is_default(self, el_key):
                 ret.field_parts[m_key] = m_mask
         return ret
 
@@ -249,6 +252,48 @@ class Message:
             is_creds = False
         cls.__credentials_fields[field_name] = is_creds
         return is_creds
+
+    @classmethod
+    def is_immutable(cls, field_name: str) -> bool:
+        """Return True if the field is immutable."""
+        directly_immutable, immutable_oneof, _ = cls._immutable_info(field_name)
+        return directly_immutable or immutable_oneof
+
+    @classmethod
+    def _immutable_info(cls, field_name: str) -> tuple[bool, bool, str | None]:
+        from google.protobuf.descriptor import FieldDescriptor
+
+        from ...api.nebius import FieldBehavior, field_behavior, oneof_behavior
+
+        fn_pb2 = cls.__PY_TO_PB2__[field_name]
+        desc = cls.get_descriptor()
+        field_desc: FieldDescriptor = desc.fields_by_name[fn_pb2]
+        cache_key = field_desc.full_name
+        if cache_key in cls.__immutable_fields:
+            return cls.__immutable_fields[cache_key]
+        oneof = field_desc.containing_oneof
+        try:
+            behaviors = field_desc.GetOptions().Extensions[cast(Any, field_behavior)]
+            directly_immutable = FieldBehavior.IMMUTABLE in behaviors
+            immutable_oneof = False
+            if not directly_immutable and oneof is not None:
+                behaviors = oneof.GetOptions().Extensions[cast(Any, oneof_behavior)]
+                immutable_oneof = FieldBehavior.IMMUTABLE in behaviors
+        except AttributeError:
+            directly_immutable = False
+            immutable_oneof = False
+        ret = directly_immutable, immutable_oneof, oneof.name if oneof is not None else None
+        cls.__immutable_fields[cache_key] = ret
+        return ret
+
+    def _should_skip_immutable(self, field_name: str) -> bool:
+        directly_immutable, immutable_oneof, oneof_name = self.__class__._immutable_info(field_name)
+        if directly_immutable:
+            return True
+        if not immutable_oneof or oneof_name is None:
+            return False
+        selected = self.which_field_in_oneof(oneof_name)
+        return selected != self.__class__.__PY_TO_PB2__[field_name]
 
     def __repr__(self) -> str:
         """Return a representation of the message with sensitive fields sanitized."""
@@ -612,14 +657,13 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
             for _, el in self.items():
                 if not isinstance(el, Message) and self._mask_function is None:
                     return Mask()
+                if ret.any is None:
+                    ret.any = Mask()
                 if self._mask_function is None:
                     m_mask = Message.get_full_update_reset_mask(el)  # type: ignore
                 else:
                     m_mask = self._mask_function(el)
-                if not m_mask.is_empty():
-                    if ret.any is None:
-                        ret.any = Mask()
-                    ret.any += m_mask
+                ret.any += m_mask
         else:
             ret.any = Mask()
         return ret

@@ -849,7 +849,7 @@ class NodeTemplate(_Message):
         ...
     @property
     def os(self) -> _builtins.str:
-        """OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.\nSupported platform / Kubernetes version / OS / driver presets combinations\n\n* ``gpu-l40s-a``, ``gpu-l40s-d``, ``gpu-h100-sxm``, ``gpu-h200-sxm``, ``cpu-e1``, ``cpu-e2``, ``cpu-d3``:\n\n  * ``drivers_preset``: ``\"\"``\n\n    * ``version``: 1.30 \u2192 ``\"ubuntu22.04\"``\n    * ``version``: 1.31 \u2192 ``\"ubuntu22.04\"`` (default), ``\"ubuntu24.04\"``\n* ``gpu-l40s-a``, ``gpu-l40s-d``, ``gpu-h100-sxm``, ``gpu-h200-sxm``:\n\n  * ``drivers_preset``: ``\"cuda12\"`` (CUDA 12.4)\n\n    * ``version``: 1.30, 1.31 \u2192 ``\"ubuntu22.04\"``\n  * ``drivers_preset``: ``\"cuda12.4\"``\n\n    * ``version``: 1.31 \u2192 ``\"ubuntu22.04\"``\n  * ``drivers_preset``: ``\"cuda12.8\"``\n\n    * ``version``: 1.31 \u2192 ``\"ubuntu24.04\"``\n* ``gpu-b200-sxm``:\n\n  * ``drivers_preset``: ``\"\"``\n\n    * ``version``: 1.30, 1.31 \u2192 ``\"ubuntu24.04\"``\n  * ``drivers_preset``: ``\"cuda12\"`` (CUDA 12.8)\n\n    * ``version``: 1.30, 1.31 \u2192 ``\"ubuntu24.04\"``\n  * ``drivers_preset``: ``\"cuda12.8\"``\n\n    * ``version``: 1.31 \u2192 ``\"ubuntu24.04\"``\n* ``gpu-b200-sxm-a``:\n\n  * ``drivers_preset``: ``\"\"``\n\n    * ``version``: 1.31 \u2192 ``\"ubuntu24.04\"``\n  * ``drivers_preset``: ``\"cuda12.8\"``\n\n    * ``version``: 1.31 \u2192 ``\"ubuntu24.04\"``"""
+        """OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.\nSupported OS depend on the platform and Kubernetes version.\nTo get the up-to-date list of supported OS for a given Kubernetes version and platform, run:\nnebius mk8s node-group get-compatibility-matrix --cluster-kubernetes-version VERSION --platform PLATFORM"""
         ...
     @os.setter
     def os(self, value: _builtins.str | None) -> None:
@@ -1011,7 +1011,7 @@ class GpuSettings(_Message):
     """GPU-related settings."""
     @property
     def drivers_preset(self) -> _builtins.str:
-        """Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.\nSupported presets for different platform / Kubernetes version combinations:\n\n* ``gpu-l40s-a``, ``gpu-l40s-d``, ``gpu-h100-sxm``, ``gpu-h200-sxm``:\n\n  * ``version``: 1.30 \u2192 ``\"cuda12\"`` (CUDA 12.4)\n  * ``version``: 1.31 \u2192 ``\"cuda12\"`` (CUDA 12.4), ``\"cuda12.4\"``, ``\"cuda12.8\"``\n* ``gpu-b200-sxm``:\n\n  * ``version``: 1.31 \u2192 ``\"cuda12\"`` (CUDA 12.8), ``\"cuda12.8\"``\n* ``gpu-b200-sxm-a``:\n\n  * ``version``: 1.31 \u2192 ``\"cuda12.8\"``"""
+        """Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.\nSupported presets depend on the platform and Kubernetes version.\nTo get the up-to-date list of supported presets for a given Kubernetes version and platform, run:\nnebius mk8s node-group get-compatibility-matrix --cluster-kubernetes-version VERSION --platform PLATFORM\nLeave empty for GPU nodes that do not have preinstalled drivers, including DRA-enabled node groups."""
         ...
     @drivers_preset.setter
     def drivers_preset(self, value: _builtins.str | None) -> None:

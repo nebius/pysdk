@@ -114,6 +114,7 @@ ClusterSpec = _message_class(
     field_deprecation_details={},
     enum_value_deprecations={},
     sensitive_fields=["admin_password"],
+    immutable_fields=["network_id"],
 )
 ClusterSpec.__module__ = __name__
 

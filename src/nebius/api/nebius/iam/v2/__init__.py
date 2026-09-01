@@ -129,6 +129,7 @@ AccessKeySpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["account", "expires_at", "secret_delivery_mode"],
 )
 AccessKeySpec.__module__ = __name__
 

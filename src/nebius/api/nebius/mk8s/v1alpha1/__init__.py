@@ -133,6 +133,7 @@ ControlPlaneSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["subnet_id"],
 )
 ControlPlaneSpec.__module__ = __name__
 
@@ -174,6 +175,7 @@ KubeNetworkSpec = _message_class(
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_fields=["service_cidrs"],
 )
 KubeNetworkSpec.__module__ = __name__
 
