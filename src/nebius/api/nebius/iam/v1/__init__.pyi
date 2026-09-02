@@ -4724,7 +4724,7 @@ class UserAccountStatus(_Message):
         ...
 
 class AccessKeyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """Access keys management [deprecated]\n\nSupported until 09/01/26. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API.\n\nThis class provides client methods for the ``nebius.iam.v1.AccessKeyService`` service."""
+    """Access keys management [deprecated]\n\nSupported until 10/01/26. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API.\n\nThis class provides client methods for the ``nebius.iam.v1.AccessKeyService`` service."""
     def create(
         self, request: CreateAccessKeyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateAccessKeyRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
