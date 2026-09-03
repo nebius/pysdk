@@ -638,6 +638,12 @@ class DiskSpec(_Message):
     def type(self, value: DiskSpec__DiskType | None) -> None:
         """Set or clear the generated ``type`` field."""
         ...
+    @property
+    def disk_encryption(self) -> DiskEncryption: ...
+    @disk_encryption.setter
+    def disk_encryption(self, value: DiskEncryption | None) -> None:
+        """Set or clear the generated ``disk_encryption`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -648,6 +654,28 @@ class DiskSpec(_Message):
         size_gibibytes: _builtins.int | None | _UnsetType = ...,
         block_size_bytes: _builtins.int | None | _UnsetType = ...,
         type: DiskSpec__DiskType | None | _UnsetType = ...,
+        disk_encryption: DiskEncryption | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DiskEncryption__DiskEncryptionType(_Enum):
+    DISK_ENCRYPTION_UNSPECIFIED = ...
+    DISK_ENCRYPTION_MANAGED = ...
+
+class DiskEncryption(_Message):
+    DiskEncryptionType: _TypeAlias = DiskEncryption__DiskEncryptionType
+    @property
+    def type(self) -> DiskEncryption__DiskEncryptionType: ...
+    @type.setter
+    def type(self, value: DiskEncryption__DiskEncryptionType | None) -> None:
+        """Set or clear the generated ``type`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        type: DiskEncryption__DiskEncryptionType | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -2053,6 +2081,7 @@ __all__ = [
     "CreateNodeGroupRequest",
     "DeleteClusterRequest",
     "DeleteNodeGroupRequest",
+    "DiskEncryption",
     "DiskSpec",
     "ExistingFilesystem",
     "GetClusterRequest",

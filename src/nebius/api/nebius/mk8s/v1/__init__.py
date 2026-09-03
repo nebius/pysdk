@@ -77,7 +77,7 @@ _register_file(
 )
 _register_file(
     "nebius/mk8s/v1/instance_template.proto",
-    b'\n&nebius/mk8s/v1/instance_template.proto\x12\x0enebius.mk8s.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto"\xc0\x03\n\x08DiskSpec\x12-\n\nsize_bytes\x18\x01 \x01(\x03B\x0c\xbaH\t"\x07(\x80\x80\x80\x80\x80\x02H\x00R\tsizeBytes\x123\n\x0esize_kibibytes\x18\x02 \x01(\x03B\n\xbaH\x07"\x05(\x80\x80\x80 H\x00R\rsizeKibibytes\x122\n\x0esize_mebibytes\x18\x03 \x01(\x03B\t\xbaH\x06"\x04(\x80\x80\x04H\x00R\rsizeMebibytes\x120\n\x0esize_gibibytes\x18\x04 \x01(\x03B\x07\xbaH\x04"\x02(@H\x00R\rsizeGibibytes\x12(\n\x10block_size_bytes\x18\x05 \x01(\x03R\x0eblockSizeBytes\x12;\n\x04type\x18\x06 \x01(\x0e2!.nebius.mk8s.v1.DiskSpec.DiskTypeB\x04\xbaJ\x01\x07R\x04type"t\n\x08DiskType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0f\n\x0bNETWORK_SSD\x10\x01\x12\x0f\n\x0bNETWORK_HDD\x10\x02\x12\x15\n\x11NETWORK_SSD_IO_M3\x10\x03\x12\x1e\n\x1aNETWORK_SSD_NON_REPLICATED\x10\x04B\r\n\x04size\x12\x05\xbaH\x02\x08\x01"\\\n\rResourcesSpec\x12"\n\x08platform\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x18\n\x06preset\x18\x02 \x01(\tH\x00R\x06presetB\r\n\x04size\x12\x05\xbaH\x02\x08\x01B^\n\x15ai.nebius.pub.mk8s.v1B\x15InstanceTemplateProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3',
+    b'\n&nebius/mk8s/v1/instance_template.proto\x12\x0enebius.mk8s.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto"\x89\x04\n\x08DiskSpec\x12-\n\nsize_bytes\x18\x01 \x01(\x03B\x0c\xbaH\t"\x07(\x80\x80\x80\x80\x80\x02H\x00R\tsizeBytes\x123\n\x0esize_kibibytes\x18\x02 \x01(\x03B\n\xbaH\x07"\x05(\x80\x80\x80 H\x00R\rsizeKibibytes\x122\n\x0esize_mebibytes\x18\x03 \x01(\x03B\t\xbaH\x06"\x04(\x80\x80\x04H\x00R\rsizeMebibytes\x120\n\x0esize_gibibytes\x18\x04 \x01(\x03B\x07\xbaH\x04"\x02(@H\x00R\rsizeGibibytes\x12(\n\x10block_size_bytes\x18\x05 \x01(\x03R\x0eblockSizeBytes\x12;\n\x04type\x18\x06 \x01(\x0e2!.nebius.mk8s.v1.DiskSpec.DiskTypeB\x04\xbaJ\x01\x07R\x04type\x12G\n\x0fdisk_encryption\x18\x0b \x01(\x0b2\x1e.nebius.mk8s.v1.DiskEncryptionR\x0ediskEncryption"t\n\x08DiskType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0f\n\x0bNETWORK_SSD\x10\x01\x12\x0f\n\x0bNETWORK_HDD\x10\x02\x12\x15\n\x11NETWORK_SSD_IO_M3\x10\x03\x12\x1e\n\x1aNETWORK_SSD_NON_REPLICATED\x10\x04B\r\n\x04size\x12\x05\xbaH\x02\x08\x01"\xab\x01\n\x0eDiskEncryption\x12E\n\x04type\x18\x01 \x01(\x0e21.nebius.mk8s.v1.DiskEncryption.DiskEncryptionTypeR\x04type"R\n\x12DiskEncryptionType\x12\x1f\n\x1bDISK_ENCRYPTION_UNSPECIFIED\x10\x00\x12\x1b\n\x17DISK_ENCRYPTION_MANAGED\x10\x01"\\\n\rResourcesSpec\x12"\n\x08platform\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x18\n\x06preset\x18\x02 \x01(\tH\x00R\x06presetB\r\n\x04size\x12\x05\xbaH\x02\x08\x01B^\n\x15ai.nebius.pub.mk8s.v1B\x15InstanceTemplateProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3',
 )
 _register_file(
     "nebius/mk8s/v1/node_group.proto",
@@ -426,6 +426,7 @@ DiskSpec = _message_class(
     "DiskSpec",
     {
         "block_size_bytes": "block_size_bytes",
+        "disk_encryption": "disk_encryption",
         "size_bytes": "size_bytes",
         "size_gibibytes": "size_gibibytes",
         "size_kibibytes": "size_kibibytes",
@@ -449,6 +450,27 @@ DiskSpec__DiskType = _enum_class(
 DiskSpec__DiskType.__module__ = __name__
 
 setattr(DiskSpec, "DiskType", DiskSpec__DiskType)
+DiskEncryption = _message_class(
+    "nebius.mk8s.v1.DiskEncryption",
+    "DiskEncryption",
+    {"type": "type"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+DiskEncryption.__module__ = __name__
+
+DiskEncryption__DiskEncryptionType = _enum_class(
+    "nebius.mk8s.v1.DiskEncryption.DiskEncryptionType",
+    "DiskEncryption__DiskEncryptionType",
+    {"DISK_ENCRYPTION_UNSPECIFIED": 0, "DISK_ENCRYPTION_MANAGED": 1},
+)
+DiskEncryption__DiskEncryptionType.__module__ = __name__
+
+setattr(DiskEncryption, "DiskEncryptionType", DiskEncryption__DiskEncryptionType)
 ResourcesSpec = _message_class(
     "nebius.mk8s.v1.ResourcesSpec",
     "ResourcesSpec",
@@ -1433,6 +1455,7 @@ __all__ = [
     "CreateNodeGroupRequest",
     "DeleteClusterRequest",
     "DeleteNodeGroupRequest",
+    "DiskEncryption",
     "DiskSpec",
     "ExistingFilesystem",
     "GetClusterRequest",
