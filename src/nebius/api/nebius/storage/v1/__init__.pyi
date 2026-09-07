@@ -85,8 +85,90 @@ class BucketSpec__ObjectAuditLogging(_Enum):
     ALL = ...
     """Logging enabled for all requests."""
 
+class BucketSpec__FilesystemBucketType(_Message):
+    @property
+    def filesystem_id(self) -> _builtins.str:
+        """Identifier of filesystem to be exposed via Object Storage API."""
+        ...
+    @filesystem_id.setter
+    def filesystem_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``filesystem_id`` field."""
+        ...
+    @property
+    def directory(self) -> _builtins.str:
+        """Directory within the filesystem that will be used as a root for the bucket.\nIf not empty, it must be an absolute normalized path (no ., .., or doubled /).\nEmpty value means that the bucket will be mounted at the filesystem root (/)."""
+        ...
+    @directory.setter
+    def directory(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``directory`` field."""
+        ...
+    @property
+    def uid(self) -> _builtins.int:
+        """UID that will be used for write operations to the filesystem.\nBy default, root user (UID=0, GID=0) is used."""
+        ...
+    @uid.setter
+    def uid(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``uid`` field."""
+        ...
+    @property
+    def gid(self) -> _builtins.int:
+        """GID that will be used for write operations to the filesystem.\nBy default, root user (UID=0, GID=0) is used."""
+        ...
+    @gid.setter
+    def gid(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``gid`` field."""
+        ...
+    @property
+    def file_mode(self) -> _builtins.str:
+        """Linux permissions that will be applied for uploaded files.\nPermissions are specified in octal format (one to four octal numbers), e.g. \"644\" or \"755\".\nThe default value is 644 (rw-r--r--)."""
+        ...
+    @file_mode.setter
+    def file_mode(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``file_mode`` field."""
+        ...
+    @property
+    def directory_mode(self) -> _builtins.str:
+        """Linux permissions that will be applied for uploaded directories.\nPermissions are specified in octal format (one to four octal numbers), e.g. \"644\" or \"755\".\nThe default value is 755 (rwxr-xr-x)."""
+        ...
+    @directory_mode.setter
+    def directory_mode(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``directory_mode`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        filesystem_id: _builtins.str | None | _UnsetType = ...,
+        directory: _builtins.str | None | _UnsetType = ...,
+        uid: _builtins.int | None | _UnsetType = ...,
+        gid: _builtins.int | None | _UnsetType = ...,
+        file_mode: _builtins.str | None | _UnsetType = ...,
+        directory_mode: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class BucketSpec(_Message):
     ObjectAuditLogging: _TypeAlias = BucketSpec__ObjectAuditLogging
+    FilesystemBucketType: _TypeAlias = BucketSpec__FilesystemBucketType
+    class __OneOfClass_bucket_type__(_OneOf):
+        """Bucket type allows to create non-regular object storage buckets."""
+
+        name: _Literal["bucket_type"] = ...
+
+    class __OneOfClass_bucket_type_filesystem_bucket__(__OneOfClass_bucket_type__):
+        """Bucket that uses the existing client's compute filesystem."""
+
+        field: _Literal["filesystem_bucket"] = ...
+        @property
+        def value(self) -> BucketSpec__FilesystemBucketType:
+            """Bucket that uses the existing client's compute filesystem."""
+            ...
+
+    @property
+    def bucket_type(self) -> __OneOfClass_bucket_type_filesystem_bucket__ | None:
+        """Bucket type allows to create non-regular object storage buckets."""
+        ...
     @property
     def versioning_policy(self) -> VersioningPolicy:
         """Supports transitions:\n\n* disabled -> enabled\n* disabled -> suspended\n* enabled <-> suspended"""
@@ -149,6 +231,14 @@ class BucketSpec(_Message):
     def bucket_policy(self, value: BucketPolicy | None) -> None:
         """Set or clear the generated ``bucket_policy`` field."""
         ...
+    @property
+    def filesystem_bucket(self) -> BucketSpec__FilesystemBucketType | None:
+        """Bucket that uses the existing client's compute filesystem."""
+        ...
+    @filesystem_bucket.setter
+    def filesystem_bucket(self, value: BucketSpec__FilesystemBucketType | None) -> None:
+        """Set or clear the generated ``filesystem_bucket`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -161,6 +251,7 @@ class BucketSpec(_Message):
         force_storage_class: _builtins.bool | None | _UnsetType = ...,
         object_audit_logging: BucketSpec__ObjectAuditLogging | None | _UnsetType = ...,
         bucket_policy: BucketPolicy | None | _UnsetType = ...,
+        filesystem_bucket: BucketSpec__FilesystemBucketType | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -181,9 +272,19 @@ class BucketStatus__SuspensionState(_Enum):
     NOT_SUSPENDED = ...
     SUSPENDED = ...
 
+class BucketStatus__BucketType(_Enum):
+    """BucketType is a type of the bucket."""
+
+    BUCKET_TYPE_UNSPECIFIED = ...
+    REGULAR = ...
+    """Regular object storage bucket."""
+    FILESYSTEM = ...
+    """Object storage bucket that is mounted to an existing compute filesystem."""
+
 class BucketStatus(_Message):
     State: _TypeAlias = BucketStatus__State
     SuspensionState: _TypeAlias = BucketStatus__SuspensionState
+    BucketType: _TypeAlias = BucketStatus__BucketType
     @property
     def counters(self) -> _MutableSequence[BucketCounters]: ...
     @counters.setter
@@ -250,6 +351,12 @@ class BucketStatus(_Message):
     def insecure_endpoint(self, value: InsecureEndpoint | None) -> None:
         """Set or clear the generated ``insecure_endpoint`` field."""
         ...
+    @property
+    def bucket_type(self) -> BucketStatus__BucketType: ...
+    @bucket_type.setter
+    def bucket_type(self, value: BucketStatus__BucketType | None) -> None:
+        """Set or clear the generated ``bucket_type`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -263,6 +370,7 @@ class BucketStatus(_Message):
         region: _builtins.str | None | _UnsetType = ...,
         anonymous_access_enabled: _builtins.bool | None | _UnsetType = ...,
         insecure_endpoint: InsecureEndpoint | None | _UnsetType = ...,
+        bucket_type: BucketStatus__BucketType | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -707,6 +815,106 @@ class ListBucketsRequest(_Message):
         ...
 
 class ListBucketsResponse(_Message):
+    @property
+    def items(self) -> _MutableSequence[Bucket]:
+        """List of buckets returned in the response. The field should be named as ``items`` for consistency."""
+        ...
+    @items.setter
+    def items(self, value: _Iterable[Bucket] | None) -> None:
+        """Set or clear the generated ``items`` field."""
+        ...
+    @property
+    def next_page_token(self) -> _builtins.str:
+        """Token for pagination, indicating the next set of results can be retrieved using this token."""
+        ...
+    @next_page_token.setter
+    def next_page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        items: _Iterable[Bucket] | None | _UnsetType = ...,
+        next_page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListBucketsWithFilterRequest__Filters(_Message):
+    @property
+    def bucket_type(self) -> BucketStatus__BucketType:
+        """If set, only buckets of the specified type will be returned. If not set, all bucket types will be returned."""
+        ...
+    @bucket_type.setter
+    def bucket_type(self, value: BucketStatus__BucketType | None) -> None:
+        """Set or clear the generated ``bucket_type`` field."""
+        ...
+    @property
+    def filesystem_id(self) -> _builtins.str:
+        """If not empty, only buckets mounted to the specified filesystem will be returned."""
+        ...
+    @filesystem_id.setter
+    def filesystem_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``filesystem_id`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        bucket_type: BucketStatus__BucketType | None | _UnsetType = ...,
+        filesystem_id: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListBucketsWithFilterRequest(_Message):
+    Filters: _TypeAlias = ListBucketsWithFilterRequest__Filters
+    @property
+    def parent_id(self) -> _builtins.str:
+        """Represents the container ID."""
+        ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int:
+        """Specifies the maximum number of items to return in the response."""
+        ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str:
+        """Token for pagination, allowing the retrieval of the next set of results."""
+        ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    @property
+    def filters(self) -> ListBucketsWithFilterRequest__Filters:
+        """Additional filters for buckets."""
+        ...
+    @filters.setter
+    def filters(self, value: ListBucketsWithFilterRequest__Filters | None) -> None:
+        """Set or clear the generated ``filters`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+        filters: ListBucketsWithFilterRequest__Filters | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListBucketsWithFilterResponse(_Message):
     @property
     def items(self) -> _MutableSequence[Bucket]:
         """List of buckets returned in the response. The field should be named as ``items`` for consistency."""
@@ -2815,6 +3023,11 @@ class BucketServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation
     ) -> _Request[ListBucketsRequest, ListBucketsResponse]:
         """The request object is returned without starting the RPC."""
         ...
+    def list_with_filter(
+        self, request: ListBucketsWithFilterRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListBucketsWithFilterRequest, ListBucketsWithFilterResponse]:
+        """ListWithFilter lists only buckets with specified filters (e.g. bucket\\_type and filesystem\\_id).\n\nThe request object is returned without starting the RPC."""
+        ...
     def create(
         self, request: CreateBucketRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateBucketRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
@@ -2960,6 +3173,8 @@ __all__ = [
     "LifecycleTransition",
     "ListBucketsRequest",
     "ListBucketsResponse",
+    "ListBucketsWithFilterRequest",
+    "ListBucketsWithFilterResponse",
     "ListInventoriesRequest",
     "ListInventoriesResponse",
     "ListTransfersRequest",
