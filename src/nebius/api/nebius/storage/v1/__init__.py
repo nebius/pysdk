@@ -73,7 +73,7 @@ _register_file(
 )
 _register_file(
     "nebius/storage/v1/bucket.proto",
-    b'\n\x1enebius/storage/v1/bucket.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/storage/v1/base.proto\x1a\'nebius/storage/v1/bucket_counters.proto\x1a%nebius/storage/v1/bucket_policy.proto\x1a\x1cnebius/storage/v1/cors.proto\x1a)nebius/storage/v1/insecure_endpoint.proto\x1a!nebius/storage/v1/lifecycle.proto"\xdc\x01\n\x06Bucket\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12=\n\x06status\x18\x03 \x01(\x0b2\x1f.nebius.storage.v1.BucketStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x03"\xc3\x05\n\nBucketSpec\x12V\n\x11versioning_policy\x18\x02 \x01(\x0e2#.nebius.storage.v1.VersioningPolicyB\x04\xbaJ\x01\x07R\x10versioningPolicy\x12$\n\x0emax_size_bytes\x18\x04 \x01(\x03R\x0cmaxSizeBytes\x12b\n\x17lifecycle_configuration\x18\x05 \x01(\x0b2).nebius.storage.v1.LifecycleConfigurationR\x16lifecycleConfiguration\x128\n\x04cors\x18\x08 \x01(\x0b2$.nebius.storage.v1.CORSConfigurationR\x04cors\x12S\n\x15default_storage_class\x18\t \x01(\x0e2\x1f.nebius.storage.v1.StorageClassR\x13defaultStorageClass\x12.\n\x13force_storage_class\x18\x0b \x01(\x08R\x11forceStorageClass\x12b\n\x14object_audit_logging\x18\x0c \x01(\x0e20.nebius.storage.v1.BucketSpec.ObjectAuditLoggingR\x12objectAuditLogging\x12D\n\rbucket_policy\x18\r \x01(\x0b2\x1f.nebius.storage.v1.BucketPolicyR\x0cbucketPolicy"^\n\x12ObjectAuditLogging\x12$\n OBJECT_AUDIT_LOGGING_UNSPECIFIED\x10\x00\x12\x08\n\x04NONE\x10\x01\x12\x0f\n\x0bMUTATE_ONLY\x10\x02\x12\x07\n\x03ALL\x10\x03J\x04\x08\x03\x10\x04J\x04\x08\n\x10\x0b"\xd8\x05\n\x0cBucketStatus\x12=\n\x08counters\x18\x01 \x03(\x0b2!.nebius.storage.v1.BucketCountersR\x08counters\x12;\n\x05state\x18\x02 \x01(\x0e2%.nebius.storage.v1.BucketStatus.StateR\x05state\x12Z\n\x10suspension_state\x18\x03 \x01(\x0e2/.nebius.storage.v1.BucketStatus.SuspensionStateR\x0fsuspensionState\x129\n\ndeleted_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\tdeletedAt\x125\n\x08purge_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampR\x07purgeAt\x12\x1f\n\x0bdomain_name\x18\x06 \x01(\tR\ndomainName\x12\x16\n\x06region\x18\x08 \x01(\tR\x06region\x128\n\x18anonymous_access_enabled\x18\t \x01(\x08R\x16anonymousAccessEnabled\x12P\n\x11insecure_endpoint\x18\n \x01(\x0b2#.nebius.storage.v1.InsecureEndpointR\x10insecureEndpoint"b\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\n\n\x06ACTIVE\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x04"U\n\x0fSuspensionState\x12 \n\x1cSUSPENSION_STATE_UNSPECIFIED\x10\x00\x12\x11\n\rNOT_SUSPENDED\x10\x01\x12\r\n\tSUSPENDED\x10\x02BZ\n\x18ai.nebius.pub.storage.v1B\x0bBucketProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3',
+    b"\n\x1enebius/storage/v1/bucket.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/storage/v1/base.proto\x1a'nebius/storage/v1/bucket_counters.proto\x1a%nebius/storage/v1/bucket_policy.proto\x1a\x1cnebius/storage/v1/cors.proto\x1a)nebius/storage/v1/insecure_endpoint.proto\x1a!nebius/storage/v1/lifecycle.proto\"\xdc\x01\n\x06Bucket\x12R\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12=\n\x06status\x18\x03 \x01(\x0b2\x1f.nebius.storage.v1.BucketStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x03\"\x8b\n\n\nBucketSpec\x12V\n\x11versioning_policy\x18\x02 \x01(\x0e2#.nebius.storage.v1.VersioningPolicyB\x04\xbaJ\x01\x07R\x10versioningPolicy\x12$\n\x0emax_size_bytes\x18\x04 \x01(\x03R\x0cmaxSizeBytes\x12b\n\x17lifecycle_configuration\x18\x05 \x01(\x0b2).nebius.storage.v1.LifecycleConfigurationR\x16lifecycleConfiguration\x128\n\x04cors\x18\x08 \x01(\x0b2$.nebius.storage.v1.CORSConfigurationR\x04cors\x12S\n\x15default_storage_class\x18\t \x01(\x0e2\x1f.nebius.storage.v1.StorageClassR\x13defaultStorageClass\x12.\n\x13force_storage_class\x18\x0b \x01(\x08R\x11forceStorageClass\x12b\n\x14object_audit_logging\x18\x0c \x01(\x0e20.nebius.storage.v1.BucketSpec.ObjectAuditLoggingR\x12objectAuditLogging\x12D\n\rbucket_policy\x18\r \x01(\x0b2\x1f.nebius.storage.v1.BucketPolicyR\x0cbucketPolicy\x12a\n\x11filesystem_bucket\x18\x1e \x01(\x0b22.nebius.storage.v1.BucketSpec.FilesystemBucketTypeH\x00R\x10filesystemBucket\x1a\xcd\x03\n\x14FilesystemBucketType\x12E\n\rfilesystem_id\x18\x01 \x01(\tB \xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x13\n\x11computefilesystemR\x0cfilesystemId\x12\"\n\tdirectory\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\tdirectory\x12\x1b\n\x03uid\x18\x03 \x01(\rB\t\xbaH\x06*\x04\x18\xff\xff\x03R\x03uid\x12\x1b\n\x03gid\x18\x04 \x01(\rB\t\xbaH\x06*\x04\x18\xff\xff\x03R\x03gid\x12\x81\x01\n\tfile_mode\x18\x05 \x01(\tBd\xbaHa\xba\x01^\n\x10file_permissions\x12\x1emust be valid file permissions\x1a*this == '' || this.matches('^[0-7]{1,4}$')R\x08fileMode\x12\x8b\x01\n\x0edirectory_mode\x18\x06 \x01(\tBd\xbaHa\xba\x01^\n\x10file_permissions\x12\x1emust be valid file permissions\x1a*this == '' || this.matches('^[0-7]{1,4}$')R\rdirectoryMode\"^\n\x12ObjectAuditLogging\x12$\n OBJECT_AUDIT_LOGGING_UNSPECIFIED\x10\x00\x12\x08\n\x04NONE\x10\x01\x12\x0f\n\x0bMUTATE_ONLY\x10\x02\x12\x07\n\x03ALL\x10\x03B\x13\n\x0bbucket_type\x12\x04\xbaJ\x01\x02J\x04\x08\x03\x10\x04J\x04\x08\n\x10\x0b\"\xed\x06\n\x0cBucketStatus\x12=\n\x08counters\x18\x01 \x03(\x0b2!.nebius.storage.v1.BucketCountersR\x08counters\x12;\n\x05state\x18\x02 \x01(\x0e2%.nebius.storage.v1.BucketStatus.StateR\x05state\x12Z\n\x10suspension_state\x18\x03 \x01(\x0e2/.nebius.storage.v1.BucketStatus.SuspensionStateR\x0fsuspensionState\x129\n\ndeleted_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\tdeletedAt\x125\n\x08purge_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampR\x07purgeAt\x12\x1f\n\x0bdomain_name\x18\x06 \x01(\tR\ndomainName\x12\x16\n\x06region\x18\x08 \x01(\tR\x06region\x128\n\x18anonymous_access_enabled\x18\t \x01(\x08R\x16anonymousAccessEnabled\x12P\n\x11insecure_endpoint\x18\n \x01(\x0b2#.nebius.storage.v1.InsecureEndpointR\x10insecureEndpoint\x12K\n\x0bbucket_type\x18\x0b \x01(\x0e2*.nebius.storage.v1.BucketStatus.BucketTypeR\nbucketType\"b\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\n\n\x06ACTIVE\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x04\"U\n\x0fSuspensionState\x12 \n\x1cSUSPENSION_STATE_UNSPECIFIED\x10\x00\x12\x11\n\rNOT_SUSPENDED\x10\x01\x12\r\n\tSUSPENDED\x10\x02\"F\n\nBucketType\x12\x1b\n\x17BUCKET_TYPE_UNSPECIFIED\x10\x00\x12\x0b\n\x07REGULAR\x10\x01\x12\x0e\n\nFILESYSTEM\x10\x02BZ\n\x18ai.nebius.pub.storage.v1B\x0bBucketProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3",
 )
 _register_file(
     "google/protobuf/any.proto",
@@ -93,7 +93,7 @@ _register_file(
 )
 _register_file(
     "nebius/storage/v1/bucket_service.proto",
-    b'\n&nebius/storage/v1/bucket_service.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/storage/v1/bucket.proto"B\n\x10GetBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02idJ\x04\x08\x02\x10\x03"e\n\x16GetBucketByNameRequest\x12)\n\tparent_id\x18\x01 \x01(\tB\x0c\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04nameJ\x04\x08\x03\x10\x04"\xa2\x01\n\x13CreateBucketRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x127\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecB\x04\xbaJ\x01\x07R\x04spec"\x9c\x01\n\x13UpdateBucketRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecR\x04spec"\xb6\x01\n\x13DeleteBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02id\x127\n\x08purge_at\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampH\x00R\x07purgeAt\x12-\n\x03ttl\x18\x04 \x01(\x0b2\x19.google.protobuf.DurationH\x00R\x03ttlB\x07\n\x05purgeJ\x04\x08\x02\x10\x03">\n\x12PurgeBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02id"A\n\x15UndeleteBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02id"\x9f\x01\n\x12ListBucketsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06filter\x18\x04 \x01(\tR\x06filterJ\x04\x08\x05\x10\x06"n\n\x13ListBucketsResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.storage.v1.BucketR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x9d\x05\n\rBucketService\x12E\n\x03Get\x12#.nebius.storage.v1.GetBucketRequest\x1a\x19.nebius.storage.v1.Bucket\x12Q\n\tGetByName\x12).nebius.storage.v1.GetBucketByNameRequest\x1a\x19.nebius.storage.v1.Bucket\x12U\n\x04List\x12%.nebius.storage.v1.ListBucketsRequest\x1a&.nebius.storage.v1.ListBucketsResponse\x12M\n\x06Create\x12&.nebius.storage.v1.CreateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.storage.v1.UpdateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Delete\x12&.nebius.storage.v1.DeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x05Purge\x12%.nebius.storage.v1.PurgeBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12Q\n\x08Undelete\x12(.nebius.storage.v1.UndeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0e\xbaJ\x0bcpl.storageBa\n\x18ai.nebius.pub.storage.v1B\x12BucketServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3',
+    b'\n&nebius/storage/v1/bucket_service.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/storage/v1/bucket.proto"B\n\x10GetBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02idJ\x04\x08\x02\x10\x03"e\n\x16GetBucketByNameRequest\x12)\n\tparent_id\x18\x01 \x01(\tB\x0c\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04nameJ\x04\x08\x03\x10\x04"\xa2\x01\n\x13CreateBucketRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x127\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecB\x04\xbaJ\x01\x07R\x04spec"\x9c\x01\n\x13UpdateBucketRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecR\x04spec"\xb6\x01\n\x13DeleteBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02id\x127\n\x08purge_at\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampH\x00R\x07purgeAt\x12-\n\x03ttl\x18\x04 \x01(\x0b2\x19.google.protobuf.DurationH\x00R\x03ttlB\x07\n\x05purgeJ\x04\x08\x02\x10\x03">\n\x12PurgeBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02id"A\n\x15UndeleteBucketRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02id"\x9f\x01\n\x12ListBucketsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06filter\x18\x04 \x01(\tR\x06filterJ\x04\x08\x05\x10\x06"n\n\x13ListBucketsResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.storage.v1.BucketR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\xf4\x02\n\x1cListBucketsWithFilterRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12Q\n\x07filters\x18\x04 \x01(\x0b27.nebius.storage.v1.ListBucketsWithFilterRequest.FiltersR\x07filters\x1a\x93\x01\n\x07Filters\x12K\n\x0bbucket_type\x18\x01 \x01(\x0e2*.nebius.storage.v1.BucketStatus.BucketTypeR\nbucketType\x12;\n\rfilesystem_id\x18\x02 \x01(\tB\x16\xe2J\x13\n\x11computefilesystemR\x0cfilesystemId"x\n\x1dListBucketsWithFilterResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.storage.v1.BucketR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x92\x06\n\rBucketService\x12E\n\x03Get\x12#.nebius.storage.v1.GetBucketRequest\x1a\x19.nebius.storage.v1.Bucket\x12Q\n\tGetByName\x12).nebius.storage.v1.GetBucketByNameRequest\x1a\x19.nebius.storage.v1.Bucket\x12U\n\x04List\x12%.nebius.storage.v1.ListBucketsRequest\x1a&.nebius.storage.v1.ListBucketsResponse\x12s\n\x0eListWithFilter\x12/.nebius.storage.v1.ListBucketsWithFilterRequest\x1a0.nebius.storage.v1.ListBucketsWithFilterResponse\x12M\n\x06Create\x12&.nebius.storage.v1.CreateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.storage.v1.UpdateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Delete\x12&.nebius.storage.v1.DeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x05Purge\x12%.nebius.storage.v1.PurgeBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12Q\n\x08Undelete\x12(.nebius.storage.v1.UndeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0e\xbaJ\x0bcpl.storageBa\n\x18ai.nebius.pub.storage.v1B\x12BucketServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3',
 )
 _register_file(
     "nebius/storage/v1/inventory.proto",
@@ -146,26 +146,29 @@ BucketSpec = _message_class(
         "bucket_policy": "bucket_policy",
         "cors": "cors",
         "default_storage_class": "default_storage_class",
+        "filesystem_bucket": "filesystem_bucket",
         "force_storage_class": "force_storage_class",
         "lifecycle_configuration": "lifecycle_configuration",
         "max_size_bytes": "max_size_bytes",
         "object_audit_logging": "object_audit_logging",
         "versioning_policy": "versioning_policy",
     },
-    {},
+    {"bucket_type": "bucket_type"},
     {
         "bucket_policy": "Bucket policy specifies granular permissions for a bucket.",
         "cors": "Cross-origin resource sharing configuration.",
         "default_storage_class": "Storage class to use by default for uploads to the bucket. It may be overridden by ``x-amz-storage-class`` header.\nIf not set - STANDARD is used as a default storage class.",
+        "filesystem_bucket": "Bucket that uses the existing client's compute filesystem.",
         "force_storage_class": "Flag to force usage of default\\_storage\\_class, ignoring ``x-amz-storage-class`` header.",
         "max_size_bytes": "Maximum bucket size.\nZero means unlimited.\nActual limit can be lower if customer doesn't have enough quota.\nReal bucket size can go a little higher if customer writes too fast.",
         "object_audit_logging": "Object audit logging specifies which requests must be logged - none, all or mutational only.",
         "versioning_policy": "Supports transitions:\n\n* disabled -> enabled\n* disabled -> suspended\n* enabled <-> suspended",
     },
-    {},
+    {"bucket_type": "Bucket type allows to create non-regular object storage buckets."},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
+    immutable_oneof_fields=["filesystem_bucket"],
 )
 BucketSpec.__module__ = __name__
 
@@ -177,11 +180,41 @@ BucketSpec__ObjectAuditLogging = _enum_class(
 BucketSpec__ObjectAuditLogging.__module__ = __name__
 
 setattr(BucketSpec, "ObjectAuditLogging", BucketSpec__ObjectAuditLogging)
+BucketSpec__FilesystemBucketType = _message_class(
+    "nebius.storage.v1.BucketSpec.FilesystemBucketType",
+    "BucketSpec__FilesystemBucketType",
+    {
+        "directory": "directory",
+        "directory_mode": "directory_mode",
+        "file_mode": "file_mode",
+        "filesystem_id": "filesystem_id",
+        "gid": "gid",
+        "uid": "uid",
+    },
+    {},
+    {
+        "directory": "Directory within the filesystem that will be used as a root for the bucket.\nIf not empty, it must be an absolute normalized path (no ., .., or doubled /).\nEmpty value means that the bucket will be mounted at the filesystem root (/).",
+        "directory_mode": 'Linux permissions that will be applied for uploaded directories.\nPermissions are specified in octal format (one to four octal numbers), e.g. "644" or "755".\nThe default value is 755 (rwxr-xr-x).',
+        "file_mode": 'Linux permissions that will be applied for uploaded files.\nPermissions are specified in octal format (one to four octal numbers), e.g. "644" or "755".\nThe default value is 644 (rw-r--r--).',
+        "filesystem_id": "Identifier of filesystem to be exposed via Object Storage API.",
+        "gid": "GID that will be used for write operations to the filesystem.\nBy default, root user (UID=0, GID=0) is used.",
+        "uid": "UID that will be used for write operations to the filesystem.\nBy default, root user (UID=0, GID=0) is used.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+    immutable_fields=["directory", "filesystem_id"],
+)
+BucketSpec__FilesystemBucketType.__module__ = __name__
+
+setattr(BucketSpec, "FilesystemBucketType", BucketSpec__FilesystemBucketType)
 BucketStatus = _message_class(
     "nebius.storage.v1.BucketStatus",
     "BucketStatus",
     {
         "anonymous_access_enabled": "anonymous_access_enabled",
+        "bucket_type": "bucket_type",
         "counters": "counters",
         "deleted_at": "deleted_at",
         "domain_name": "domain_name",
@@ -223,6 +256,16 @@ BucketStatus__SuspensionState = _enum_class(
 BucketStatus__SuspensionState.__module__ = __name__
 
 setattr(BucketStatus, "SuspensionState", BucketStatus__SuspensionState)
+BucketStatus__BucketType = _enum_class(
+    "nebius.storage.v1.BucketStatus.BucketType",
+    "BucketStatus__BucketType",
+    {"BUCKET_TYPE_UNSPECIFIED": 0, "REGULAR": 1, "FILESYSTEM": 2},
+)
+BucketStatus__BucketType.__module__ = __name__
+
+BucketStatus__BucketType.__doc__ = "BucketType is a type of the bucket."
+
+setattr(BucketStatus, "BucketType", BucketStatus__BucketType)
 CurrentBucketCounters = _message_class(
     "nebius.storage.v1.CurrentBucketCounters",
     "CurrentBucketCounters",
@@ -456,6 +499,57 @@ ListBucketsResponse = _message_class(
     enum_value_deprecations={},
 )
 ListBucketsResponse.__module__ = __name__
+
+ListBucketsWithFilterRequest = _message_class(
+    "nebius.storage.v1.ListBucketsWithFilterRequest",
+    "ListBucketsWithFilterRequest",
+    {"filters": "filters", "page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {
+        "filters": "Additional filters for buckets.",
+        "page_size": "Specifies the maximum number of items to return in the response.",
+        "page_token": "Token for pagination, allowing the retrieval of the next set of results.",
+        "parent_id": "Represents the container ID.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListBucketsWithFilterRequest.__module__ = __name__
+
+ListBucketsWithFilterRequest__Filters = _message_class(
+    "nebius.storage.v1.ListBucketsWithFilterRequest.Filters",
+    "ListBucketsWithFilterRequest__Filters",
+    {"bucket_type": "bucket_type", "filesystem_id": "filesystem_id"},
+    {},
+    {
+        "bucket_type": "If set, only buckets of the specified type will be returned. If not set, all bucket types will be returned.",
+        "filesystem_id": "If not empty, only buckets mounted to the specified filesystem will be returned.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListBucketsWithFilterRequest__Filters.__module__ = __name__
+
+setattr(ListBucketsWithFilterRequest, "Filters", ListBucketsWithFilterRequest__Filters)
+ListBucketsWithFilterResponse = _message_class(
+    "nebius.storage.v1.ListBucketsWithFilterResponse",
+    "ListBucketsWithFilterResponse",
+    {"items": "items", "next_page_token": "next_page_token"},
+    {},
+    {
+        "items": "List of buckets returned in the response. The field should be named as ``items`` for consistency.",
+        "next_page_token": "Token for pagination, indicating the next set of results can be retrieved using this token.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListBucketsWithFilterResponse.__module__ = __name__
 
 CORSConfiguration = _message_class(
     "nebius.storage.v1.CORSConfiguration",
@@ -1588,6 +1682,17 @@ class BucketServiceClient(_ClientWithOperations):
             "List", request, _REGISTRY.message_class("nebius.storage.v1.ListBucketsResponse"), **kwargs
         )
 
+    def list_with_filter(
+        self, request: ListBucketsWithFilterRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListBucketsWithFilterRequest, ListBucketsWithFilterResponse]:
+        "ListWithFilter lists only buckets with specified filters (e.g. bucket\\_type and filesystem\\_id).\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListWithFilter",
+            request,
+            _REGISTRY.message_class("nebius.storage.v1.ListBucketsWithFilterResponse"),
+            **kwargs,
+        )
+
     def create(
         self, request: CreateBucketRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateBucketRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
@@ -2064,6 +2169,8 @@ __all__ = [
     "LifecycleTransition",
     "ListBucketsRequest",
     "ListBucketsResponse",
+    "ListBucketsWithFilterRequest",
+    "ListBucketsWithFilterResponse",
     "ListInventoriesRequest",
     "ListInventoriesResponse",
     "ListTransfersRequest",
