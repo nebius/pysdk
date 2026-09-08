@@ -44,28 +44,12 @@ _register_file(
     b'\n\x18nebius/annotations.proto\x12\x06nebius\x1a google/protobuf/descriptor.proto"*\n\x14ServicePySDKSettings\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name")\n\x13MethodPySDKSettings\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name"(\n\x12FieldPySDKSettings\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name"*\n\x14MessagePySDKSettings\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name"(\n\x12OneofPySDKSettings\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name"\'\n\x11EnumPySDKSettings\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name",\n\x16EnumValuePySDKSettings\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name"\x82\x01\n\x12DeprecationDetails\x12!\n\x0ceffective_at\x18\x01 \x01(\tR\x0beffectiveAt\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12\'\n\x0fdescription_cli\x18\x03 \x01(\tR\x0edescriptionCli"W\n\x10NIDFieldSettings\x12\x1a\n\x08resource\x18\x01 \x03(\tR\x08resource\x12\'\n\x0fparent_resource\x18\x02 \x03(\tR\x0eparentResource"\x93\x01\n\x10SubfieldSettings\x12\x1d\n\nfield_path\x18\x01 \x01(\tR\tfieldPath\x12*\n\x03nid\x18\x02 \x01(\x0b2\x18.nebius.NIDFieldSettingsR\x03nid\x12$\n\x0bis_required\x18\x04 \x01(\x08H\x00R\nisRequired\x88\x01\x01B\x0e\n\x0c_is_required*c\n\x10ResourceBehavior\x12!\n\x1dRESOURCE_BEHAVIOR_UNSPECIFIED\x10\x00\x12\x0b\n\x07MOVABLE\x10\x01\x12\x0b\n\x07UNNAMED\x10\x02\x12\x12\n\x0eIMMUTABLE_NAME\x10\x03*\xba\x01\n\rFieldBehavior\x12\x1e\n\x1aFIELD_BEHAVIOR_UNSPECIFIED\x10\x00\x12\r\n\tIMMUTABLE\x10\x02\x12\x0e\n\nIDENTIFIER\x10\x03\x12\x0e\n\nINPUT_ONLY\x10\x04\x12\x0f\n\x0bOUTPUT_ONLY\x10\x05\x12\x1a\n\x16MEANINGFUL_EMPTY_VALUE\x10\x06\x12\x15\n\x11NON_EMPTY_DEFAULT\x10\x07\x12\x16\n\x12PUBLIC_OUTPUT_ONLY\x10\x08*s\n\x0eMethodBehavior\x12\x1f\n\x1bMETHOD_BEHAVIOR_UNSPECIFIED\x10\x00\x12\x12\n\x0eMETHOD_UPDATER\x10\x02\x12\x14\n\x10METHOD_PAGINATED\x10\x03\x12\x16\n\x12METHOD_WITHOUT_GET\x10\x04:s\n\x18file_deprecation_details\x12\x1c.google.protobuf.FileOptions\x18\xaa\t \x01(\x0b2\x1a.nebius.DeprecationDetailsR\x16fileDeprecationDetails:J\n\x10api_service_name\x12\x1f.google.protobuf.ServiceOptions\x18\xa7\t \x01(\tR\x0eapiServiceName:|\n\x1bservice_deprecation_details\x12\x1f.google.protobuf.ServiceOptions\x18\xaa\t \x01(\x0b2\x1a.nebius.DeprecationDetailsR\x19serviceDeprecationDetails:d\n\x0eservice_py_sdk\x12\x1f.google.protobuf.ServiceOptions\x18\xab\t \x01(\x0b2\x1c.nebius.ServicePySDKSettingsR\x0cservicePySdk:y\n\x1amethod_deprecation_details\x12\x1e.google.protobuf.MethodOptions\x18\xaa\t \x01(\x0b2\x1a.nebius.DeprecationDetailsR\x18methodDeprecationDetails:`\n\rmethod_py_sdk\x12\x1e.google.protobuf.MethodOptions\x18\xab\t \x01(\x0b2\x1b.nebius.MethodPySDKSettingsR\x0bmethodPySdk:`\n\x0fmethod_behavior\x12\x1e.google.protobuf.MethodOptions\x18\xad\t \x03(\x0e2\x16.nebius.MethodBehaviorR\x0emethodBehavior:`\n\x0erequest_fields\x12\x1e.google.protobuf.MethodOptions\x18\xae\t \x03(\x0b2\x18.nebius.SubfieldSettingsR\rrequestFields:g\n\x11resource_behavior\x12\x1f.google.protobuf.MessageOptions\x18\xa7\t \x03(\x0e2\x18.nebius.ResourceBehaviorR\x10resourceBehavior:|\n\x1bmessage_deprecation_details\x12\x1f.google.protobuf.MessageOptions\x18\xaa\t \x01(\x0b2\x1a.nebius.DeprecationDetailsR\x19messageDeprecationDetails:d\n\x0emessage_py_sdk\x12\x1f.google.protobuf.MessageOptions\x18\xab\t \x01(\x0b2\x1c.nebius.MessagePySDKSettingsR\x0cmessagePySdk:\\\n\x0efield_behavior\x12\x1d.google.protobuf.FieldOptions\x18\xa7\t \x03(\x0e2\x15.nebius.FieldBehaviorR\rfieldBehavior:<\n\tsensitive\x12\x1d.google.protobuf.FieldOptions\x18\xa8\t \x01(\x08R\tsensitive:@\n\x0bcredentials\x12\x1d.google.protobuf.FieldOptions\x18\xa9\t \x01(\x08R\x0bcredentials:v\n\x19field_deprecation_details\x12\x1d.google.protobuf.FieldOptions\x18\xaa\t \x01(\x0b2\x1a.nebius.DeprecationDetailsR\x17fieldDeprecationDetails:\\\n\x0cfield_py_sdk\x12\x1d.google.protobuf.FieldOptions\x18\xab\t \x01(\x0b2\x1a.nebius.FieldPySDKSettingsR\nfieldPySdk:J\n\x03nid\x12\x1d.google.protobuf.FieldOptions\x18\xac\t \x01(\x0b2\x18.nebius.NIDFieldSettingsR\x03nid:e\n\x11subfield_settings\x12\x1d.google.protobuf.FieldOptions\x18\xad\t \x03(\x0b2\x18.nebius.SubfieldSettingsR\x10subfieldSettings:\\\n\x0eoneof_behavior\x12\x1d.google.protobuf.OneofOptions\x18\xa7\t \x03(\x0e2\x15.nebius.FieldBehaviorR\roneofBehavior:\\\n\x0coneof_py_sdk\x12\x1d.google.protobuf.OneofOptions\x18\xa8\t \x01(\x0b2\x1a.nebius.OneofPySDKSettingsR\noneofPySdk:X\n\x0benum_py_sdk\x12\x1c.google.protobuf.EnumOptions\x18\xa7\t \x01(\x0b2\x19.nebius.EnumPySDKSettingsR\tenumPySdk:s\n\x18enum_deprecation_details\x12\x1c.google.protobuf.EnumOptions\x18\xaa\t \x01(\x0b2\x1a.nebius.DeprecationDetailsR\x16enumDeprecationDetails:\x83\x01\n\x1eenum_value_deprecation_details\x12!.google.protobuf.EnumValueOptions\x18\xaa\t \x01(\x0b2\x1a.nebius.DeprecationDetailsR\x1benumValueDeprecationDetails:m\n\x11enum_value_py_sdk\x12!.google.protobuf.EnumValueOptions\x18\xab\t \x01(\x0b2\x1e.nebius.EnumValuePySDKSettingsR\x0eenumValuePySdkBI\n\rai.nebius.pubB\x10AnnotationsProtoP\x01Z$github.com/nebius/gosdk/proto/nebiusb\x06proto3',
 )
 _register_file(
-    "nebius/common/v1/error.proto",
-    b'\n\x1cnebius/common/v1/error.proto\x12\x10nebius.common.v1"\xf7\t\n\x0cServiceError\x12\x18\n\x07service\x18\x01 \x01(\tR\x07service\x12\x12\n\x04code\x18\x02 \x01(\tR\x04code\x12?\n\x0bbad_request\x18d \x01(\x0b2\x1c.nebius.common.v1.BadRequestH\x00R\nbadRequest\x12R\n\x12bad_resource_state\x18n \x01(\x0b2".nebius.common.v1.BadResourceStateH\x00R\x10badResourceState\x12R\n\x12resource_not_found\x18o \x01(\x0b2".nebius.common.v1.ResourceNotFoundH\x00R\x10resourceNotFound\x12a\n\x17resource_already_exists\x18p \x01(\x0b2\'.nebius.common.v1.ResourceAlreadyExistsH\x00R\x15resourceAlreadyExists\x12@\n\x0cout_of_range\x18q \x01(\x0b2\x1c.nebius.common.v1.OutOfRangeH\x00R\noutOfRange\x12Q\n\x11permission_denied\x18x \x01(\x0b2".nebius.common.v1.PermissionDeniedH\x00R\x10permissionDenied\x12R\n\x11resource_conflict\x18\x82\x01 \x01(\x0b2".nebius.common.v1.ResourceConflictH\x00R\x10resourceConflict\x12R\n\x11operation_aborted\x18\x83\x01 \x01(\x0b2".nebius.common.v1.OperationAbortedH\x00R\x10operationAborted\x12U\n\x12operation_conflict\x18\x84\x01 \x01(\x0b2#.nebius.common.v1.OperationConflictH\x00R\x11operationConflict\x12P\n\x11too_many_requests\x18\x8c\x01 \x01(\x0b2!.nebius.common.v1.TooManyRequestsH\x00R\x0ftooManyRequests\x12F\n\rquota_failure\x18\x8d\x01 \x01(\x0b2\x1e.nebius.common.v1.QuotaFailureH\x00R\x0cquotaFailure\x12Y\n\x14not_enough_resources\x18\x8e\x01 \x01(\x0b2$.nebius.common.v1.NotEnoughResourcesH\x00R\x12notEnoughResources\x12I\n\x0einternal_error\x18\xe7\x07 \x01(\x0b2\x1f.nebius.common.v1.InternalErrorH\x00R\rinternalError\x12G\n\nretry_type\x18\x1e \x01(\x0e2(.nebius.common.v1.ServiceError.RetryTypeR\tretryType"E\n\tRetryType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x08\n\x04CALL\x10\x01\x12\x10\n\x0cUNIT_OF_WORK\x10\x02\x12\x0b\n\x07NOTHING\x10\x03B\t\n\x07details"\xb8\x01\n\nBadRequest\x12F\n\nviolations\x18\x01 \x03(\x0b2&.nebius.common.v1.BadRequest.ViolationR\nviolations\x1ab\n\tViolation\x12\x14\n\x05field\x18\x01 \x01(\tR\x05field\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\x12%\n\x0erelated_fields\x18\x03 \x03(\tR\rrelatedFields"M\n\x10BadResourceState\x12\x1f\n\x0bresource_id\x18\x01 \x01(\tR\nresourceId\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message"3\n\x10ResourceNotFound\x12\x1f\n\x0bresource_id\x18\x01 \x01(\tR\nresourceId"8\n\x15ResourceAlreadyExists\x12\x1f\n\x0bresource_id\x18\x01 \x01(\tR\nresourceId"M\n\x10ResourceConflict\x12\x1f\n\x0bresource_id\x18\x01 \x01(\tR\nresourceId\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message"\x8d\x01\n\x10OperationAborted\x12!\n\x0coperation_id\x18\x01 \x01(\tR\x0boperationId\x125\n\x17aborted_by_operation_id\x18\x02 \x01(\tR\x14abortedByOperationId\x12\x1f\n\x0bresource_id\x18\x03 \x01(\tR\nresourceId"n\n\x11OperationConflict\x128\n\x18conflicting_operation_id\x18\x01 \x01(\tR\x16conflictingOperationId\x12\x1f\n\x0bresource_id\x18\x02 \x01(\tR\nresourceId"@\n\nOutOfRange\x12\x1c\n\trequested\x18\x01 \x01(\tR\trequested\x12\x14\n\x05limit\x18\x02 \x01(\tR\x05limit"3\n\x10PermissionDenied\x12\x1f\n\x0bresource_id\x18\x01 \x01(\tR\nresourceId"I\n\rInternalError\x12\x1d\n\nrequest_id\x18\x01 \x01(\tR\trequestId\x12\x19\n\x08trace_id\x18\x02 \x01(\tR\x07traceId"/\n\x0fTooManyRequests\x12\x1c\n\tviolation\x18\x01 \x01(\tR\tviolation"\xc9\x01\n\x0cQuotaFailure\x12H\n\nviolations\x18\x01 \x03(\x0b2(.nebius.common.v1.QuotaFailure.ViolationR\nviolations\x1ao\n\tViolation\x12\x14\n\x05quota\x18\x01 \x01(\tR\x05quota\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\x12\x14\n\x05limit\x18\x03 \x01(\tR\x05limit\x12\x1c\n\trequested\x18\x04 \x01(\tR\trequested"\xce\x01\n\x12NotEnoughResources\x12N\n\nviolations\x18\x01 \x03(\x0b2..nebius.common.v1.NotEnoughResources.ViolationR\nviolations\x1ah\n\tViolation\x12#\n\rresource_type\x18\x01 \x01(\tR\x0cresourceType\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\x12\x1c\n\trequested\x18\x03 \x01(\tR\trequestedBW\n\x17ai.nebius.pub.common.v1B\nErrorProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3',
-)
-_register_file(
     "nebius/common/v1/metadata.proto",
     b'\n\x1fnebius/common/v1/metadata.proto\x12\x10nebius.common.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto"\xa4\x03\n\x10ResourceMetadata\x12\x14\n\x02id\x18\x01 \x01(\tB\x04\xbaJ\x01\x03R\x02id\x12#\n\tparent_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1c\n\x04name\x18\x03 \x01(\tB\x08\xbaH\x05r\x03(\x80\x08R\x04name\x122\n\x10resource_version\x18\x04 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x0fresourceVersion\x12?\n\ncreated_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampB\x04\xbaJ\x01\x05R\tcreatedAt\x12?\n\nupdated_at\x18\x06 \x01(\x0b2\x1a.google.protobuf.TimestampB\x04\xbaJ\x01\x05R\tupdatedAt\x12F\n\x06labels\x18\x07 \x03(\x0b2..nebius.common.v1.ResourceMetadata.LabelsEntryR\x06labels\x1a9\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x028\x01"X\n\x10GetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1f\n\x04name\x18\x02 \x01(\tB\x0b\xbaH\x08\xc8\x01\x01r\x03(\x80\x08R\x04nameBZ\n\x17ai.nebius.pub.common.v1B\rMetadataProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3',
 )
 _register_file(
-    "nebius/compute/v1/disk.proto",
-    b'\n\x1cnebius/compute/v1/disk.proto\x12\x11nebius.compute.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xbc\x01\n\x04Disk\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12/\n\x04spec\x18\x02 \x01(\x0b2\x1b.nebius.compute.v1.DiskSpecR\x04spec\x125\n\x06status\x18\x03 \x01(\x0b2\x1d.nebius.compute.v1.DiskStatusR\x06status"\x9f\x06\n\x08DiskSpec\x12\x1f\n\nsize_bytes\x18\x01 \x01(\x03H\x00R\tsizeBytes\x12\'\n\x0esize_kibibytes\x18\x02 \x01(\x03H\x00R\rsizeKibibytes\x12\'\n\x0esize_mebibytes\x18\x03 \x01(\x03H\x00R\rsizeMebibytes\x12\'\n\x0esize_gibibytes\x18\x04 \x01(\x03H\x00R\rsizeGibibytes\x12.\n\x10block_size_bytes\x18\x05 \x01(\x03B\x04\xbaJ\x01\x02R\x0eblockSizeBytes\x12D\n\x04type\x18\x06 \x01(\x0e2$.nebius.compute.v1.DiskSpec.DiskTypeB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x04type\x12?\n\x0fsource_image_id\x18\x08 \x01(\tB\x15\xbaJ\x01\x02\xe2J\x0e\n\x0ccomputeimageH\x01R\rsourceImageId\x12\\\n\x13source_image_family\x18\n \x01(\x0b2$.nebius.compute.v1.SourceImageFamilyB\x04\xbaJ\x01\x02H\x01R\x11sourceImageFamily\x12L\n\x12source_snapshot_id\x18\r \x01(\tB\x1c\xbaJ\x01\x02\xe2J\x15\n\x13computedisksnapshotH\x01R\x10sourceSnapshotId\x12P\n\x0fdisk_encryption\x18\x0b \x01(\x0b2!.nebius.compute.v1.DiskEncryptionB\x04\xbaJ\x01\x02R\x0ediskEncryption\x12\'\n\x0fforbid_deletion\x18\x0c \x01(\x08R\x0eforbidDeletion"t\n\x08DiskType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0f\n\x0bNETWORK_SSD\x10\x01\x12\x0f\n\x0bNETWORK_HDD\x10\x02\x12\x1e\n\x1aNETWORK_SSD_NON_REPLICATED\x10\x03\x12\x15\n\x11NETWORK_SSD_IO_M3\x10\x04B\r\n\x04size\x12\x05\xbaH\x02\x08\x01B\x08\n\x06sourceJ\x04\x08\x07\x10\x08J\x04\x08\t\x10\n"i\n\x11SourceImageFamily\x12)\n\x0cimage_family\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0bimageFamily\x12)\n\tparent_id\x18\x02 \x01(\tB\x0c\xe2J\t\n\x07projectR\x08parentId"\xd4\x07\n\nDiskStatus\x129\n\x05state\x18\x01 \x01(\x0e2#.nebius.compute.v1.DiskStatus.StateR\x05state\x12+\n\x11state_description\x18\x02 \x01(\tR\x10stateDescription\x12H\n\x15read_write_attachment\x18\x03 \x01(\tB\x14\xe2J\x11\n\x0fcomputeinstanceR\x13readWriteAttachment\x12H\n\x15read_only_attachments\x18\x04 \x03(\tB\x14\xe2J\x11\n\x0fcomputeinstanceR\x13readOnlyAttachments\x129\n\x0fsource_image_id\x18\x05 \x01(\tB\x11\xe2J\x0e\n\x0ccomputeimageR\rsourceImageId\x12\x1d\n\nsize_bytes\x18\x06 \x01(\x03R\tsizeBytes\x12 \n\x0breconciling\x18\x07 \x01(\x08R\x0breconciling\x12(\n\x10block_size_bytes\x18\x08 \x01(\x03R\x0eblockSizeBytes\x12{\n\x1dsource_image_cpu_architecture\x18\t \x01(\x0e28.nebius.compute.v1.DiskStatus.SourceImageCPUArchitectureR\x1asourceImageCpuArchitecture\x12F\n\nlock_state\x18\x0b \x01(\x0b2\'.nebius.compute.v1.DiskStatus.LockStateR\tlockState\x123\n\nmanaged_by\x18\x0c \x01(\tB\x14\xe2J\x11\n\x0fcomputeinstanceR\tmanagedBy\x1an\n\tLockState\x12)\n\x06images\x18\x01 \x03(\tB\x11\xe2J\x0e\n\x0ccomputeimageR\x06images\x126\n\tsnapshots\x18\x02 \x03(\tB\x18\xe2J\x15\n\x13computedisksnapshotR\tsnapshots"d\n\x05State\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x0c\n\x08DELETING\x10\x04\x12\t\n\x05ERROR\x10\x05\x12\n\n\x06BROKEN\x10\x06"T\n\x1aSourceImageCPUArchitecture\x12 \n\x1cSOURCE_IMAGE_CPU_UNSPECIFIED\x10\x00\x12\t\n\x05AMD64\x10\x01\x12\t\n\x05ARM64\x10\x02"\xae\x01\n\x0eDiskEncryption\x12H\n\x04type\x18\x01 \x01(\x0e24.nebius.compute.v1.DiskEncryption.DiskEncryptionTypeR\x04type"R\n\x12DiskEncryptionType\x12\x1f\n\x1bDISK_ENCRYPTION_UNSPECIFIED\x10\x00\x12\x1b\n\x17DISK_ENCRYPTION_MANAGED\x10\x01BX\n\x18ai.nebius.pub.compute.v1B\tDiskProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3',
-)
-_register_file(
-    "nebius/compute/v1/network_interface.proto",
-    b'\n)nebius/compute/v1/network_interface.proto\x12\x11nebius.compute.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto"\xaa\x03\n\x14NetworkInterfaceSpec\x125\n\tsubnet_id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12:\n\x04name\x18\x02 \x01(\tB&\xbaH\x1f\xc8\x01\x01r\x1a\x10\x01\x18<2\x14^[0-9a-z][0-9a-z-]*$\xbaJ\x01\x02R\x04name\x12H\n\nip_address\x18\x03 \x01(\x0b2\x1c.nebius.compute.v1.IPAddressB\x0b\xbaH\x03\xc8\x01\x01\xbaJ\x02\x06\x02R\tipAddress\x12T\n\x11public_ip_address\x18\x04 \x01(\x0b2".nebius.compute.v1.PublicIPAddressB\x04\xbaJ\x01\x06R\x0fpublicIpAddress\x124\n\x07aliases\x18\x06 \x03(\x0b2\x1a.nebius.compute.v1.IPAliasR\x07aliases\x12I\n\x0fsecurity_groups\x18\x07 \x03(\x0b2 .nebius.compute.v1.SecurityGroupR\x0esecurityGroups"D\n\tIPAddress\x127\n\rallocation_id\x18\x01 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationR\x0callocationId"r\n\x0fPublicIPAddress\x129\n\rallocation_id\x18\x01 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationH\x00R\x0callocationId\x12\x16\n\x06static\x18\x03 \x01(\x08R\x06staticB\x0c\n\nallocation"H\n\x07IPAlias\x12=\n\rallocation_id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x0callocationId"\x9f\x03\n\x16NetworkInterfaceStatus\x12\x14\n\x05index\x18\x01 \x01(\x05R\x05index\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12A\n\nip_address\x18\x03 \x01(\x0b2".nebius.compute.v1.IPAddressStatusR\tipAddress\x12T\n\x11public_ip_address\x18\x04 \x01(\x0b2(.nebius.compute.v1.PublicIPAddressStatusR\x0fpublicIpAddress\x12<\n\x07aliases\x18\x06 \x01(\x0b2".nebius.compute.v1.IPAliasesStatusR\x07aliases\x12\x1f\n\x0bmac_address\x18\x07 \x01(\tR\nmacAddress\x12\x12\n\x04fqdn\x18\t \x01(\tR\x04fqdn\x12O\n\x0fsecurity_groups\x18\n \x03(\x0b2&.nebius.compute.v1.SecurityGroupStatusR\x0esecurityGroups"d\n\x0fIPAddressStatus\x12\x18\n\x07address\x18\x01 \x01(\tR\x07address\x127\n\rallocation_id\x18\x02 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationR\x0callocationId"\x82\x01\n\x15PublicIPAddressStatus\x12\x18\n\x07address\x18\x01 \x01(\tR\x07address\x127\n\rallocation_id\x18\x02 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationR\x0callocationId\x12\x16\n\x06static\x18\x03 \x01(\x08R\x06static"\'\n\x0fIPAliasesStatus\x12\x14\n\x05cidrs\x18\x02 \x03(\tR\x05cidrs"6\n\rSecurityGroup\x12%\n\x02id\x18\x01 \x01(\tB\x15\xe2J\x12\n\x10vpcsecuritygroupR\x02id"<\n\x13SecurityGroupStatus\x12%\n\x02id\x18\x01 \x01(\tB\x15\xe2J\x12\n\x10vpcsecuritygroupR\x02idBd\n\x18ai.nebius.pub.compute.v1B\x15NetworkInterfaceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3',
-)
-_register_file(
-    "nebius/compute/v1/instance.proto",
-    b'\n nebius/compute/v1/instance.proto\x12\x11nebius.compute.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/compute/v1/disk.proto\x1a)nebius/compute/v1/network_interface.proto"\xc8\x01\n\x08Instance\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x1f.nebius.compute.v1.InstanceSpecR\x04spec\x129\n\x06status\x18\x03 \x01(\x0b2!.nebius.compute.v1.InstanceStatusR\x06status"\xb2\t\n\x0cInstanceSpec\x12E\n\x12service_account_id\x18\x01 \x01(\tB\x17\xbaJ\x01\x02\xe2J\x10\n\x0eserviceaccountR\x10serviceAccountId\x12F\n\tresources\x18\x02 \x01(\x0b2 .nebius.compute.v1.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\x12P\n\x0bgpu_cluster\x18\x03 \x01(\x0b2).nebius.compute.v1.InstanceGpuClusterSpecB\x04\xbaJ\x01\x02R\ngpuCluster\x12c\n\x12network_interfaces\x18\x04 \x03(\x0b2\'.nebius.compute.v1.NetworkInterfaceSpecB\x0b\xbaH\x08\xc8\x01\x01\x92\x01\x02\x10\x08R\x11networkInterfaces\x12H\n\tboot_disk\x18\x05 \x01(\x0b2#.nebius.compute.v1.AttachedDiskSpecB\x06\xbaH\x03\xc8\x01\x01R\x08bootDisk\x12L\n\x0fsecondary_disks\x18\x06 \x03(\x0b2#.nebius.compute.v1.AttachedDiskSpecR\x0esecondaryDisks\x12K\n\x0bfilesystems\x18\x07 \x03(\x0b2).nebius.compute.v1.AttachedFilesystemSpecR\x0bfilesystems\x12=\n\x14cloud_init_user_data\x18\x08 \x01(\tB\x0c\xbaH\x06r\x04\x18\x80\x80\x02\xc0J\x01R\x11cloudInitUserData\x12\x18\n\x07stopped\x18\r \x01(\x08R\x07stopped\x12X\n\x0frecovery_policy\x18\x0f \x01(\x0e2).nebius.compute.v1.InstanceRecoveryPolicyB\x04\xbaJ\x01\x02R\x0erecoveryPolicy\x12D\n\x0bpreemptible\x18\x13 \x01(\x0b2".nebius.compute.v1.PreemptibleSpecR\x0bpreemptible\x12\x93\x01\n\x08hostname\x18\x14 \x01(\tBw\xbaHt\xba\x01q\n\x0ehostname.valid\x12\x1evalue must be a valid hostname\x1a?this == \'\' || this.matches(\'^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$\')R\x08hostname\x12O\n\x15nvl_instance_group_id\x18\x15 \x01(\tB\x1c\xe2J\x19\n\x17computenvlinstancegroupR\x12nvlInstanceGroupId\x12S\n\x12reservation_policy\x18\x17 \x01(\x0b2$.nebius.compute.v1.ReservationPolicyR\x11reservationPolicy\x12B\n\x0blocal_disks\x18\x18 \x01(\x0b2!.nebius.compute.v1.LocalDisksSpecR\nlocalDisks"\x9b\x02\n\x0fPreemptibleSpec\x12d\n\ron_preemption\x18\x01 \x01(\x0e23.nebius.compute.v1.PreemptibleSpec.PreemptionPolicyB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x0conPreemption\x12s\n\x08priority\x18\x02 \x01(\x05BW\xbaJ\x01\x02\xd2JN\n\n2026-05-11\x12@it is deprecated and doesn\'t affect preemption behavior anymore.\x18\x01R\x08priority"-\n\x10PreemptionPolicy\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x08\n\x04STOP\x10\x01"`\n\rResourcesSpec\x12&\n\x08platform\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08platform\x12\x18\n\x06preset\x18\x02 \x01(\tH\x00R\x06presetB\r\n\x04size\x12\x05\xbaH\x02\x08\x01"@\n\x16InstanceGpuClusterSpec\x12&\n\x02id\x18\x01 \x01(\tB\x16\xe2J\x13\n\x11computegpuclusterR\x02id"\xeb\x02\n\x10AttachedDiskSpec\x12W\n\x0battach_mode\x18\x01 \x01(\x0e2..nebius.compute.v1.AttachedDiskSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12F\n\rexisting_disk\x18\x02 \x01(\x0b2\x1f.nebius.compute.v1.ExistingDiskH\x00R\x0cexistingDisk\x12C\n\x0cmanaged_disk\x18\x04 \x01(\x0b2\x1e.nebius.compute.v1.ManagedDiskH\x00R\x0bmanagedDisk\x12$\n\tdevice_id\x18\x03 \x01(\tB\x07\xbaH\x04r\x02\x18\x14R\x08deviceId"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02B\r\n\x04type\x12\x05\xbaH\x02\x08\x01"6\n\x0cExistingDisk\x12&\n\x02id\x18\x01 \x01(\tB\x16\xbaH\x03\xc8\x01\x01\xe2J\r\n\x0bcomputediskR\x02id"\xe1\x01\n\x0bManagedDisk\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12B\n\x06labels\x18\x02 \x03(\x0b2*.nebius.compute.v1.ManagedDisk.LabelsEntryR\x06labels\x127\n\x04spec\x18\x04 \x01(\x0b2\x1b.nebius.compute.v1.DiskSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x1a9\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x028\x01"B\n\x12ExistingFilesystem\x12,\n\x02id\x18\x01 \x01(\tB\x1c\xbaH\x03\xc8\x01\x01\xe2J\x13\n\x11computefilesystemR\x02id"\xc7\x02\n\x16AttachedFilesystemSpec\x12]\n\x0battach_mode\x18\x01 \x01(\x0e24.nebius.compute.v1.AttachedFilesystemSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12\'\n\tmount_tag\x18\x02 \x01(\tB\n\xbaH\x07\xc8\x01\x01r\x02\x18%R\x08mountTag\x12X\n\x13existing_filesystem\x18\x03 \x01(\x0b2%.nebius.compute.v1.ExistingFilesystemH\x00R\x12existingFilesystem"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02B\r\n\x04type\x12\x05\xbaH\x02\x08\x01"\xba\x05\n\x0eInstanceStatus\x12E\n\x05state\x18\x01 \x01(\x0e2/.nebius.compute.v1.InstanceStatus.InstanceStateR\x05state\x12X\n\x12network_interfaces\x18\x02 \x03(\x0b2).nebius.compute.v1.NetworkInterfaceStatusR\x11networkInterfaces\x12 \n\x0breconciling\x18\x05 \x01(\x08R\x0breconciling\x12I\n\x14maintenance_event_id\x18\x07 \x01(\tB\x17\xe2J\x14\n\x12computemaintenanceR\x12maintenanceEventId\x12s\n\x18infiniband_topology_path\x18\n \x01(\x0b27.nebius.compute.v1.InstanceStatusInfinibandTopologyPathH\x00R\x16infinibandTopologyPath\x12%\n\x0ereservation_id\x18\x0c \x01(\tR\rreservationId\x12R\n\x10disk_attachments\x18\r \x03(\x0b2\'.nebius.compute.v1.DiskAttachmentStatusR\x0fdiskAttachments"\x8b\x01\n\rInstanceState\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\x0c\n\x08UPDATING\x10\x02\x12\x0c\n\x08STARTING\x10\x03\x12\x0b\n\x07RUNNING\x10\x04\x12\x0c\n\x08STOPPING\x10\x05\x12\x0b\n\x07STOPPED\x10\x06\x12\x0c\n\x08DELETING\x10\x07\x12\t\n\x05ERROR\x10\x08B\x16\n\x14gpu_cluster_topologyJ\x04\x08\x06\x10\x07"k\n\x14DiskAttachmentStatus\x12 \n\x02id\x18\x01 \x01(\tB\x10\xe2J\r\n\x0bcomputediskR\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n\nis_managed\x18\x03 \x01(\x08R\tisManaged":\n$InstanceStatusInfinibandTopologyPath\x12\x12\n\x04path\x18\x01 \x03(\tR\x04path"\xad\x01\n\x11ReservationPolicy\x12C\n\x06policy\x18\x01 \x01(\x0e2+.nebius.compute.v1.ReservationPolicy.PolicyR\x06policy\x12\'\n\x0freservation_ids\x18\x02 \x03(\tR\x0ereservationIds"*\n\x06Policy\x12\x08\n\x04AUTO\x10\x00\x12\n\n\x06FORBID\x10\x01\x12\n\n\x06STRICT\x10\x02"}\n\x0eLocalDisksSpec\x12Y\n\x11passthrough_group\x18\x01 \x01(\x0b2*.nebius.compute.v1.PassthroughGroupRequestH\x00R\x10passthroughGroupB\x10\n\x07request\x12\x05\xbaH\x02\x08\x01"7\n\x17PassthroughGroupRequest\x12\x1c\n\trequested\x18\x01 \x01(\x08R\trequested*;\n\x16InstanceRecoveryPolicy\x12\x0b\n\x07RECOVER\x10\x00\x12\x08\n\x04FAIL\x10\x01\x12\n\n\x06ALWAYS\x10\x02B\\\n\x18ai.nebius.pub.compute.v1B\rInstanceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3',
-)
-_register_file(
-    "nebius/ai/v1/endpoint.proto",
-    b'\n\x1bnebius/ai/v1/endpoint.proto\x12\x0cnebius.ai.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1cnebius/common/v1/error.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/compute/v1/disk.proto\x1a nebius/compute/v1/instance.proto"\xd2\x01\n\x08Endpoint\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x126\n\x04spec\x18\x02 \x01(\x0b2\x1a.nebius.ai.v1.EndpointSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b2\x1c.nebius.ai.v1.EndpointStatusB\x04\xbaJ\x01\x05R\x06status"\x92\x1c\n\x0cEndpointSpec\x12\x1c\n\x05image\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05image\x12c\n\x15environment_variables\x18\x02 \x03(\x0b2..nebius.ai.v1.EndpointSpec.EnvironmentVariableR\x14environmentVariables\x125\n\x05ports\x18\x03 \x03(\x0b2\x1f.nebius.ai.v1.EndpointSpec.PortR\x05ports\x12+\n\x11container_command\x18\x04 \x01(\tR\x10containerCommand\x12\x12\n\x04args\x18\x05 \x01(\tR\x04args\x12)\n\x0bworking_dir\x18\x06 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x01R\nworkingDir\x12@\n\x07volumes\x18\x07 \x03(\x0b2&.nebius.ai.v1.EndpointSpec.VolumeMountR\x07volumes\x12a\n\x14registry_credentials\x18\n \x01(\x0b2..nebius.ai.v1.EndpointSpec.RegistryCredentialsR\x13registryCredentials\x12"\n\x08platform\x18\x14 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x1e\n\x06preset\x18\x15 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06preset\x12-\n\x0eshm_size_bytes\x18\x16 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x0cshmSizeBytes\x12?\n\x04disk\x18\x17 \x01(\x0b2#.nebius.ai.v1.EndpointSpec.DiskSpecB\x06\xbaH\x03\xc8\x01\x01R\x04disk\x121\n\tsubnet_id\x18\x18 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12\x1b\n\tpublic_ip\x18\x19 \x01(\x08R\x08publicIp\x12.\n\x13ssh_authorized_keys\x18\x1a \x03(\tR\x11sshAuthorizedKeys\x12 \n\x0bpreemptible\x18\x1b \x01(\x08R\x0bpreemptible\x12"\n\nauth_token\x18\x1e \x01(\tB\x03\xc0J\x01R\tauthToken\x12o\n\x1cauth_token_mysterybox_secret\x18\x1f \x01(\x0b2..nebius.ai.v1.EndpointSpec.MysteryBoxSecretRefR\x19authTokenMysteryboxSecret\x12U\n\x0einjected_files\x18  \x03(\x0b2(.nebius.ai.v1.EndpointSpec.FileInjectionB\x04\xbaJ\x01\x02R\rinjectedFiles\x1a\x90\x03\n\x13EnvironmentVariable\x126\n\x04name\x18\x01 \x01(\tB"\xbaH\x1f\xc8\x01\x01r\x1a2\x18^[a-zA-Z_][a-zA-Z0-9_]*$R\x04name\x12\x19\n\x05value\x18\x02 \x01(\tB\x03\xc0J\x01R\x05value\x12[\n\x11mysterybox_secret\x18\x03 \x01(\x0b2..nebius.ai.v1.EndpointSpec.MysteryBoxSecretRefR\x10mysteryboxSecret:\xc8\x01\xbaH\xc4\x01\x1a\xc1\x01\n\x18mysterybox_secret_if_set\x122mysterybox_secret must set secret_id or version_id\x1aq!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\'\x1a\xf4\x01\n\x04Port\x122\n\x0econtainer_port\x18\x01 \x01(\x05B\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x01R\rcontainerPort\x12(\n\thost_port\x18\x02 \x01(\x05B\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x00R\x08hostPort\x12L\n\x08protocol\x18\x03 \x01(\x0e2(.nebius.ai.v1.EndpointSpec.Port.ProtocolB\x06\xbaH\x03\xc8\x01\x01R\x08protocol"@\n\x08Protocol\x12\x18\n\x14PROTOCOL_UNSPECIFIED\x10\x00\x12\x08\n\x04HTTP\x10\x01\x12\x07\n\x03TCP\x10\x02\x12\x07\n\x03UDP\x10\x03\x1a\xed\x08\n\x0bVolumeMount\x12\x16\n\x06source\x18\x01 \x01(\tR\x06source\x12\x1f\n\x0bsource_path\x18\x02 \x01(\tR\nsourcePath\x12%\n\x0econtainer_path\x18\x03 \x01(\tR\rcontainerPath\x12G\n\x04mode\x18\x04 \x01(\x0e2+.nebius.ai.v1.EndpointSpec.VolumeMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode\x12N\n\ts3_config\x18\x05 \x01(\x0b2/.nebius.ai.v1.EndpointSpec.VolumeMount.S3ConfigH\x00R\x08s3Config\x1a\x96\x06\n\x08S3Config\x12"\n\x08endpoint\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08endpoint\x12\x1e\n\x06region\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06region\x12a\n\x0bcredentials\x18\x04 \x01(\x0b2=.nebius.ai.v1.EndpointSpec.VolumeMount.S3Config.S3CredentialsH\x00R\x0bcredentials\x12r\n\x11mysterybox_secret\x18\x05 \x01(\x0b2C.nebius.ai.v1.EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRefH\x00R\x10mysteryboxSecret\x1a\x9f\x01\n\rS3Credentials\x12-\n\raccess_key_id\x18\x01 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0baccessKeyId\x125\n\x11secret_access_key\x18\x02 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0fsecretAccessKey\x12(\n\rsession_token\x18\x03 \x01(\tB\x03\xc0J\x01R\x0csessionToken\x1al\n\x13MysteryBoxSecretRef\x12\'\n\tsecret_id\x18\x01 \x01(\tB\n\xe2J\x07\n\x05mbsecR\x08secretId\x12,\n\nversion_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08mbsecverR\tversionId:\xc8\x01\xbaH\xc4\x01\x1a\xc1\x01\n\x18mysterybox_secret_if_set\x122mysterybox_secret must set secret_id or version_id\x1aq!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\'B\x06\n\x04authJ\x04\x08\x02\x10\x03R\x06bucket";\n\x04Mode\x12\x14\n\x10MODE_UNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02B\x0f\n\rsource_config\x1ak\n\x08DiskSpec\x12@\n\x04type\x18\x01 \x01(\x0e2$.nebius.compute.v1.DiskSpec.DiskTypeB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12\x1d\n\nsize_bytes\x18\x02 \x01(\x03R\tsizeBytes\x1a\x8e\x01\n\x13RegistryCredentials\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x1f\n\x08password\x18\x02 \x01(\tB\x03\xc0J\x01R\x08password\x12:\n\x19mysterybox_secret_version\x18\x03 \x01(\tR\x17mysteryboxSecretVersion\x1a\x80\x01\n\rFileInjection\x12B\n\x0econtainer_path\x18\x01 \x01(\tB\x1b\xbaH\x18\xc8\x01\x01r\x132\x11^/[^/]+(/[^/]+)*$R\rcontainerPath\x12+\n\x07content\x18\x02 \x01(\x0cB\x11\xbaH\x0b\xd8\x01\x01z\x06\x10\x01\x18\x80\x80\x04\xc0J\x01R\x07content\x1aw\n\x13MysteryBoxSecretRef\x12\'\n\tsecret_id\x18\x01 \x01(\tB\n\xe2J\x07\n\x05mbsecR\x08secretId\x12,\n\nversion_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08mbsecverR\tversionIdJ\x04\x08\x03\x10\x04R\x03key:\x80\x02\xbaH\xfc\x01\x1a\xf9\x01\n#auth_token_mysterybox_secret_if_set\x12=auth_token_mysterybox_secret must set secret_id or version_id\x1a\x92\x01!has(this.auth_token_mysterybox_secret) || this.auth_token_mysterybox_secret.secret_id != \'\' || this.auth_token_mysterybox_secret.version_id != \'\'"\xc4\x03\n\x0eEndpointStatus\x12+\n\x11private_endpoints\x18\x01 \x03(\tR\x10privateEndpoints\x12)\n\x10public_endpoints\x18\x02 \x03(\tR\x0fpublicEndpoints\x12B\n\tinstances\x18\n \x03(\x0b2$.nebius.ai.v1.EndpointInstanceStatusR\tinstances\x128\n\x05state\x18\x14 \x01(\x0e2".nebius.ai.v1.EndpointStatus.StateR\x05state\x12G\n\rstate_details\x18\x15 \x01(\x0b2".nebius.ai.v1.EndpointStateDetailsR\x0cstateDetails"\x92\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0c\n\x08STOPPING\x10\x04\x12\x0c\n\x08DELETING\x10\x05\x12\x0b\n\x07STOPPED\x10\x06\x12\t\n\x05ERROR\x10\x08\x12\x11\n\rIMAGE_PULLING\x10\t"\x91\x01\n\x14EndpointStateDetails\x12\x1a\n\x04code\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04code\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\x12C\n\rservice_error\x18\x03 \x01(\x0b2\x1e.nebius.common.v1.ServiceErrorR\x0cserviceError"\xec\x03\n\x16EndpointInstanceStatus\x12H\n\x05state\x18\x01 \x01(\x0e2*.nebius.ai.v1.EndpointInstanceStatus.StateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x12D\n\x13compute_instance_id\x18\n \x01(\tB\x14\xe2J\x11\n\x0fcomputeinstanceR\x11computeInstanceId\x12e\n\x16compute_instance_state\x18\x0b \x01(\x0e2/.nebius.compute.v1.InstanceStatus.InstanceStateR\x14computeInstanceState\x12\x1d\n\nprivate_ip\x18\x0c \x01(\tR\tprivateIp\x12\x1b\n\tpublic_ip\x18\r \x01(\tR\x08publicIp"\x9e\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0c\n\x08STOPPING\x10\x04\x12\x0c\n\x08DELETING\x10\x05\x12\x0b\n\x07STOPPED\x10\x06\x12\n\n\x06FAILED\x10\x07\x12\t\n\x05ERROR\x10\x08\x12\x11\n\rIMAGE_PULLING\x10\tBR\n\x13ai.nebius.pub.ai.v1B\rEndpointProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3',
+    "nebius/monitoring/v1/recording_rule.proto",
+    b'\n)nebius/monitoring/v1/recording_rule.proto\x12\x14nebius.monitoring.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xe3\x01\n\rRecordingRule\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecR\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b2).nebius.monitoring.v1.RecordingRuleStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02"\x90\x02\n\x11RecordingRuleSpec\x12\x1e\n\x06bucket\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06bucket\x12\x1e\n\x06record\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06record\x12\x1a\n\x04expr\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04expr\x12^\n\rrecord_labels\x18\x04 \x03(\x0b29.nebius.monitoring.v1.RecordingRuleSpec.RecordLabelsEntryR\x0crecordLabels\x1a?\n\x11RecordLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x028\x01"\x15\n\x13RecordingRuleStatusBg\n\x1bai.nebius.pub.monitoring.v1B\x12RecordingRuleProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/monitoring/v1b\x06proto3',
 )
 _register_file(
     "google/protobuf/any.proto",
@@ -76,463 +60,57 @@ _register_file(
     b'\n\x17google/rpc/status.proto\x12\ngoogle.rpc\x1a\x19google/protobuf/any.proto"f\n\x06Status\x12\x12\n\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\x12.\n\x07details\x18\x03 \x03(\x0b2\x14.google.protobuf.AnyR\x07detailsBa\n\x0ecom.google.rpcB\x0bStatusProtoP\x01Z7google.golang.org/genproto/googleapis/rpc/status;status\xf8\x01\x01\xa2\x02\x03RPCb\x06proto3',
 )
 _register_file(
-    "nebius/common/v1/progress_tracker.proto",
-    b'\n\'nebius/common/v1/progress_tracker.proto\x12\x10nebius.common.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto"\xfe\x05\n\x0fProgressTracker\x12(\n\x0bdescription\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0bdescription\x12A\n\nstarted_at\x18\x02 \x01(\x0b2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tstartedAt\x12N\n\x15estimated_finished_at\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\x13estimatedFinishedAt\x12;\n\x0bfinished_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt\x12G\n\twork_done\x18\n \x01(\x0b2*.nebius.common.v1.ProgressTracker.WorkDoneR\x08workDone\x12<\n\x05steps\x18\x14 \x03(\x0b2&.nebius.common.v1.ProgressTracker.StepR\x05steps\x1an\n\x08WorkDone\x121\n\x10total_tick_count\x18\x01 \x01(\x03B\x07\xbaH\x04"\x02 \x00R\x0etotalTickCount\x12/\n\x0fdone_tick_count\x18\x02 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\rdoneTickCount\x1a\xf9\x01\n\x04Step\x12(\n\x0bdescription\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0bdescription\x12A\n\nstarted_at\x18\x02 \x01(\x0b2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tstartedAt\x12;\n\x0bfinished_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt\x12G\n\twork_done\x18\n \x01(\x0b2*.nebius.common.v1.ProgressTracker.WorkDoneR\x08workDoneBa\n\x17ai.nebius.pub.common.v1B\x14ProgressTrackerProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3',
+    "nebius/common/v1alpha1/operation.proto",
+    b'\n&nebius/common/v1alpha1/operation.proto\x12\x16nebius.common.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/rpc/status.proto\x1a\x18nebius/annotations.proto"\xfe\x05\n\tOperation\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x129\n\ncreated_at\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1d\n\ncreated_by\x18\x04 \x01(\tR\tcreatedBy\x12;\n\x0bfinished_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt\x12.\n\x07request\x18\x06 \x01(\x0b2\x14.google.protobuf.AnyR\x07request\x12|\n\x0frequest_headers\x18\x0b \x03(\x0b25.nebius.common.v1alpha1.Operation.RequestHeadersEntryB\x1c\xbaH\x19\x9a\x01\x16"\x14r\x122\x10^[a-z][-a-z\\.]*$R\x0erequestHeaders\x12\x1f\n\x0bresource_id\x18\x07 \x01(\tR\nresourceId\x120\n\x08resource\x18\x08 \x01(\x0b2\x14.google.protobuf.AnyR\x08resource\x129\n\rprogress_data\x18\t \x01(\x0b2\x14.google.protobuf.AnyR\x0cprogressData\x120\n\x06status\x18\n \x01(\x0b2\x12.google.rpc.StatusB\x04\xbaJ\x01\x06R\x06status\x1a(\n\x0erequest_header\x12\x16\n\x06values\x18\x01 \x03(\tR\x06values\x1as\n\x13RequestHeadersEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12F\n\x05value\x18\x02 \x01(\x0b20.nebius.common.v1alpha1.Operation.request_headerR\x05value:\x028\x01:\x1b\xd2J\x16\x12\x14migrate to common/v1\x18\x01B\x83\x01\xd2J\x16\x12\x14migrate to common/v1\n\x1dai.nebius.pub.common.v1alpha1B\x0eOperationProtoP\x01Z4github.com/nebius/gosdk/proto/nebius/common/v1alpha1\xb8\x01\x01b\x06proto3',
 )
 _register_file(
-    "nebius/common/v1/operation.proto",
-    b"\n nebius/common/v1/operation.proto\x12\x10nebius.common.v1\x1a\x1bbuf/validate/validate.proto\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/rpc/status.proto\x1a\x18nebius/annotations.proto\x1a'nebius/common/v1/progress_tracker.proto\"\xef\x05\n\tOperation\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x129\n\ncreated_at\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1d\n\ncreated_by\x18\x04 \x01(\tR\tcreatedBy\x12;\n\x0bfinished_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt\x12.\n\x07request\x18\x06 \x01(\x0b2\x14.google.protobuf.AnyR\x07request\x12v\n\x0frequest_headers\x18\x0b \x03(\x0b2/.nebius.common.v1.Operation.RequestHeadersEntryB\x1c\xbaH\x19\x9a\x01\x16\"\x14r\x122\x10^[a-z][-a-z\\.]*$R\x0erequestHeaders\x12\x1f\n\x0bresource_id\x18\x07 \x01(\tR\nresourceId\x120\n\x06status\x18\n \x01(\x0b2\x12.google.rpc.StatusB\x04\xbaJ\x01\x06R\x06status\x12L\n\x10progress_tracker\x18\x0c \x01(\x0b2!.nebius.common.v1.ProgressTrackerR\x0fprogressTracker\x129\n\rprogress_data\x18\t \x01(\x0b2\x14.google.protobuf.AnyR\x0cprogressData\x1a'\n\rRequestHeader\x12\x16\n\x06values\x18\x01 \x03(\tR\x06values\x1al\n\x13RequestHeadersEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12?\n\x05value\x18\x02 \x01(\x0b2).nebius.common.v1.Operation.RequestHeaderR\x05value:\x028\x01B[\n\x17ai.nebius.pub.common.v1B\x0eOperationProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3",
-)
-_register_file(
-    "nebius/ai/v1/endpoint_service.proto",
-    b'\n#nebius/ai/v1/endpoint_service.proto\x12\x0cnebius.ai.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1bnebius/ai/v1/endpoint.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto"\xaa\x01\n\x12GetEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\x12C\n\x04view\x18e \x01(\x0e2%.nebius.ai.v1.GetEndpointRequest.ViewB\x08\xbaH\x05\x82\x01\x02\x10\x01R\x04view"(\n\x04View\x12\x14\n\x10VIEW_UNSPECIFIED\x10\x00\x12\n\n\x06SECRET\x10\x01"g\n\x18GetEndpointByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"\x83\x01\n\x14ListEndpointsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\xbc\x01\n\x15CreateEndpointRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x126\n\x04spec\x18\x02 \x01(\x0b2\x1a.nebius.ai.v1.EndpointSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x17\n\x07dry_run\x18\x03 \x01(\x08R\x06dryRun">\n\x15DeleteEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id"=\n\x14StartEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id"?\n\x16RestartEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id"<\n\x13StopEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id"m\n\x15ListEndpointsResponse\x12,\n\x05items\x18\x01 \x03(\x0b2\x16.nebius.ai.v1.EndpointR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xf5\x04\n\x0fEndpointService\x12?\n\x03Get\x12 .nebius.ai.v1.GetEndpointRequest\x1a\x16.nebius.ai.v1.Endpoint\x12K\n\tGetByName\x12&.nebius.ai.v1.GetEndpointByNameRequest\x1a\x16.nebius.ai.v1.Endpoint\x12O\n\x04List\x12".nebius.ai.v1.ListEndpointsRequest\x1a#.nebius.ai.v1.ListEndpointsResponse\x12J\n\x06Create\x12#.nebius.ai.v1.CreateEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Delete\x12#.nebius.ai.v1.DeleteEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12H\n\x05Start\x12".nebius.ai.v1.StartEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12L\n\x07Restart\x12$.nebius.ai.v1.RestartEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12F\n\x04Stop\x12!.nebius.ai.v1.StopEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0b\xbaJ\x08apps.mspBY\n\x13ai.nebius.pub.ai.v1B\x14EndpointServiceProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3',
-)
-_register_file(
-    "nebius/ai/v1/job.proto",
-    b'\n\x16nebius/ai/v1/job.proto\x12\x0cnebius.ai.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1cnebius/common/v1/error.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/compute/v1/disk.proto\x1a nebius/compute/v1/instance.proto"\xc3\x01\n\x03Job\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x15.nebius.ai.v1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x125\n\x06status\x18\x03 \x01(\x0b2\x17.nebius.ai.v1.JobStatusB\x04\xbaJ\x01\x05R\x06status"\xab\x19\n\x07JobSpec\x12\x1c\n\x05image\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05image\x12^\n\x15environment_variables\x18\x02 \x03(\x0b2).nebius.ai.v1.JobSpec.EnvironmentVariableR\x14environmentVariables\x120\n\x05ports\x18\x03 \x03(\x0b2\x1a.nebius.ai.v1.JobSpec.PortR\x05ports\x12+\n\x11container_command\x18\x04 \x01(\tR\x10containerCommand\x12\x12\n\x04args\x18\x05 \x01(\tR\x04args\x12)\n\x0bworking_dir\x18\x06 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x01R\nworkingDir\x12;\n\x07volumes\x18\x07 \x03(\x0b2!.nebius.ai.v1.JobSpec.VolumeMountR\x07volumes\x12\\\n\x14registry_credentials\x18\n \x01(\x0b2).nebius.ai.v1.JobSpec.RegistryCredentialsR\x13registryCredentials\x12"\n\x08platform\x18\x14 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x1e\n\x06preset\x18\x15 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06preset\x12-\n\x0eshm_size_bytes\x18\x16 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x0cshmSizeBytes\x12:\n\x04disk\x18\x17 \x01(\x0b2\x1e.nebius.ai.v1.JobSpec.DiskSpecB\x06\xbaH\x03\xc8\x01\x01R\x04disk\x121\n\tsubnet_id\x18\x18 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12\x1b\n\tpublic_ip\x18\x19 \x01(\x08R\x08publicIp\x12.\n\x13ssh_authorized_keys\x18\x1a \x03(\tR\x11sshAuthorizedKeys\x12 \n\x0bpreemptible\x18\x1b \x01(\x08R\x0bpreemptible\x12;\n\x10restart_attempts\x18\x1e \x01(\x03B\x10\xbaH\r"\x0b(\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01R\x0frestartAttempts\x123\n\x07timeout\x18\x1f \x01(\x0b2\x19.google.protobuf.DurationR\x07timeout\x12P\n\x0einjected_files\x18  \x03(\x0b2#.nebius.ai.v1.JobSpec.FileInjectionB\x04\xbaJ\x01\x02R\rinjectedFiles\x1a\x8b\x03\n\x13EnvironmentVariable\x126\n\x04name\x18\x01 \x01(\tB"\xbaH\x1f\xc8\x01\x01r\x1a2\x18^[a-zA-Z_][a-zA-Z0-9_]*$R\x04name\x12\x19\n\x05value\x18\x02 \x01(\tB\x03\xc0J\x01R\x05value\x12V\n\x11mysterybox_secret\x18\x03 \x01(\x0b2).nebius.ai.v1.JobSpec.MysteryBoxSecretRefR\x10mysteryboxSecret:\xc8\x01\xbaH\xc4\x01\x1a\xc1\x01\n\x18mysterybox_secret_if_set\x122mysterybox_secret must set secret_id or version_id\x1aq!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\'\x1a\xef\x01\n\x04Port\x122\n\x0econtainer_port\x18\x01 \x01(\x05B\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x01R\rcontainerPort\x12(\n\thost_port\x18\x02 \x01(\x05B\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x00R\x08hostPort\x12G\n\x08protocol\x18\x03 \x01(\x0e2#.nebius.ai.v1.JobSpec.Port.ProtocolB\x06\xbaH\x03\xc8\x01\x01R\x08protocol"@\n\x08Protocol\x12\x18\n\x14PROTOCOL_UNSPECIFIED\x10\x00\x12\x08\n\x04HTTP\x10\x01\x12\x07\n\x03TCP\x10\x02\x12\x07\n\x03UDP\x10\x03\x1a\xd9\x08\n\x0bVolumeMount\x12\x16\n\x06source\x18\x01 \x01(\tR\x06source\x12\x1f\n\x0bsource_path\x18\x02 \x01(\tR\nsourcePath\x12%\n\x0econtainer_path\x18\x03 \x01(\tR\rcontainerPath\x12B\n\x04mode\x18\x04 \x01(\x0e2&.nebius.ai.v1.JobSpec.VolumeMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode\x12I\n\ts3_config\x18\x05 \x01(\x0b2*.nebius.ai.v1.JobSpec.VolumeMount.S3ConfigH\x00R\x08s3Config\x1a\x8c\x06\n\x08S3Config\x12"\n\x08endpoint\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08endpoint\x12\x1e\n\x06region\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06region\x12\\\n\x0bcredentials\x18\x04 \x01(\x0b28.nebius.ai.v1.JobSpec.VolumeMount.S3Config.S3CredentialsH\x00R\x0bcredentials\x12m\n\x11mysterybox_secret\x18\x05 \x01(\x0b2>.nebius.ai.v1.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRefH\x00R\x10mysteryboxSecret\x1a\x9f\x01\n\rS3Credentials\x12-\n\raccess_key_id\x18\x01 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0baccessKeyId\x125\n\x11secret_access_key\x18\x02 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0fsecretAccessKey\x12(\n\rsession_token\x18\x03 \x01(\tB\x03\xc0J\x01R\x0csessionToken\x1al\n\x13MysteryBoxSecretRef\x12\'\n\tsecret_id\x18\x01 \x01(\tB\n\xe2J\x07\n\x05mbsecR\x08secretId\x12,\n\nversion_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08mbsecverR\tversionId:\xc8\x01\xbaH\xc4\x01\x1a\xc1\x01\n\x18mysterybox_secret_if_set\x122mysterybox_secret must set secret_id or version_id\x1aq!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\'B\x06\n\x04authJ\x04\x08\x02\x10\x03R\x06bucket";\n\x04Mode\x12\x14\n\x10MODE_UNSPECIFIED\x10\x00\x12\x0e\n\nREAD_WRITE\x10\x01\x12\r\n\tREAD_ONLY\x10\x02B\x0f\n\rsource_config\x1ak\n\x08DiskSpec\x12@\n\x04type\x18\x01 \x01(\x0e2$.nebius.compute.v1.DiskSpec.DiskTypeB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12\x1d\n\nsize_bytes\x18\x02 \x01(\x03R\tsizeBytes\x1a\x8e\x01\n\x13RegistryCredentials\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x1f\n\x08password\x18\x02 \x01(\tB\x03\xc0J\x01R\x08password\x12:\n\x19mysterybox_secret_version\x18\x03 \x01(\tR\x17mysteryboxSecretVersion\x1a\x80\x01\n\rFileInjection\x12B\n\x0econtainer_path\x18\x01 \x01(\tB\x1b\xbaH\x18\xc8\x01\x01r\x132\x11^/[^/]+(/[^/]+)*$R\rcontainerPath\x12+\n\x07content\x18\x02 \x01(\x0cB\x11\xbaH\x0b\xd8\x01\x01z\x06\x10\x01\x18\x80\x80\x04\xc0J\x01R\x07content\x1aw\n\x13MysteryBoxSecretRef\x12\'\n\tsecret_id\x18\x01 \x01(\tB\n\xe2J\x07\n\x05mbsecR\x08secretId\x12,\n\nversion_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08mbsecverR\tversionIdJ\x04\x08\x03\x10\x04R\x03key"\xc7\x04\n\tJobStatus\x12+\n\x11private_endpoints\x18\x01 \x03(\tR\x10privateEndpoints\x12)\n\x10public_endpoints\x18\x02 \x03(\tR\x0fpublicEndpoints\x12=\n\tinstances\x18\n \x03(\x0b2\x1f.nebius.ai.v1.JobInstanceStatusR\tinstances\x123\n\x05state\x18\x14 \x01(\x0e2\x1d.nebius.ai.v1.JobStatus.StateR\x05state\x12B\n\rstate_details\x18\x15 \x01(\x0b2\x1d.nebius.ai.v1.JobStateDetailsR\x0cstateDetails\x129\n\nstarted_at\x18\x16 \x01(\x0b2\x1a.google.protobuf.TimestampR\tstartedAt\x12;\n\x0bfinished_at\x18\x17 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt"\xb1\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0e\n\nCANCELLING\x10\x04\x12\x0c\n\x08DELETING\x10\x05\x12\r\n\tCOMPLETED\x10\x06\x12\n\n\x06FAILED\x10\x07\x12\r\n\tCANCELLED\x10\x08\x12\t\n\x05ERROR\x10\t\x12\x11\n\rIMAGE_PULLING\x10\n"\x8c\x01\n\x0fJobStateDetails\x12\x1a\n\x04code\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04code\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\x12C\n\rservice_error\x18\x03 \x01(\x0b2\x1e.nebius.common.v1.ServiceErrorR\x0cserviceError"\x8d\x04\n\x11JobInstanceStatus\x12C\n\x05state\x18\x01 \x01(\x0e2%.nebius.ai.v1.JobInstanceStatus.StateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x12D\n\x13compute_instance_id\x18\n \x01(\tB\x14\xe2J\x11\n\x0fcomputeinstanceR\x11computeInstanceId\x12m\n\x16compute_instance_state\x18\x0b \x01(\x0e2/.nebius.compute.v1.InstanceStatus.InstanceStateB\x06\xbaH\x03\xc8\x01\x01R\x14computeInstanceState\x12\x1d\n\nprivate_ip\x18\x0c \x01(\tR\tprivateIp\x12\x1b\n\tpublic_ip\x18\r \x01(\tR\x08publicIp"\xc1\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0e\n\nCOMPLETING\x10\x04\x12\x0e\n\nCANCELLING\x10\x05\x12\x0c\n\x08DELETING\x10\x06\x12\r\n\tCOMPLETED\x10\x07\x12\n\n\x06FAILED\x10\x08\x12\r\n\tCANCELLED\x10\t\x12\t\n\x05ERROR\x10\n\x12\x11\n\rIMAGE_PULLING\x10\x0bBM\n\x13ai.nebius.pub.ai.v1B\x08JobProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3',
-)
-_register_file(
-    "nebius/ai/v1/job_service.proto",
-    b'\n\x1enebius/ai/v1/job_service.proto\x12\x0cnebius.ai.v1\x1a\x1bbuf/validate/validate.proto\x1a\x16nebius/ai/v1/job.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto"\x9b\x01\n\rGetJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05aijobR\x02id\x12>\n\x04view\x18e \x01(\x0e2 .nebius.ai.v1.GetJobRequest.ViewB\x08\xbaH\x05\x82\x01\x02\x10\x01R\x04view"(\n\x04View\x12\x14\n\x10VIEW_UNSPECIFIED\x10\x00\x12\n\n\x06SECRET\x10\x01"b\n\x13GetJobByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"~\n\x0fListJobsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\xb2\x01\n\x10CreateJobRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x15.nebius.ai.v1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x17\n\x07dry_run\x18\x03 \x01(\x08R\x06dryRun"4\n\x10DeleteJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05aijobR\x02id"4\n\x10CancelJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05aijobR\x02id"5\n\x11RestartJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05aijobR\x02id"c\n\x10ListJobsResponse\x12\'\n\x05items\x18\x01 \x03(\x0b2\x11.nebius.ai.v1.JobR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xf8\x03\n\nJobService\x125\n\x03Get\x12\x1b.nebius.ai.v1.GetJobRequest\x1a\x11.nebius.ai.v1.Job\x12A\n\tGetByName\x12!.nebius.ai.v1.GetJobByNameRequest\x1a\x11.nebius.ai.v1.Job\x12E\n\x04List\x12\x1d.nebius.ai.v1.ListJobsRequest\x1a\x1e.nebius.ai.v1.ListJobsResponse\x12E\n\x06Create\x12\x1e.nebius.ai.v1.CreateJobRequest\x1a\x1b.nebius.common.v1.Operation\x12E\n\x06Delete\x12\x1e.nebius.ai.v1.DeleteJobRequest\x1a\x1b.nebius.common.v1.Operation\x12E\n\x06Cancel\x12\x1e.nebius.ai.v1.CancelJobRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x07Restart\x12\x1f.nebius.ai.v1.RestartJobRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0b\xbaJ\x08apps.mspBT\n\x13ai.nebius.pub.ai.v1B\x0fJobServiceProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3',
+    "nebius/monitoring/v1/recording_rule_service.proto",
+    b'\n1nebius/monitoring/v1/recording_rule_service.proto\x12\x14nebius.monitoring.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a)nebius/monitoring/v1/recording_rule.proto"1\n\x17GetRecordingRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id"|\n\x19ListRecordingRulesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\x7f\n\x1aListRecordingRulesResponse\x129\n\x05items\x18\x01 \x03(\x0b2#.nebius.monitoring.v1.RecordingRuleR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\xa9\x01\n\x1aCreateRecordingRuleRequest\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12C\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec"\xa1\x01\n\x1aUpdateRecordingRuleRequest\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecR\x04spec"4\n\x1aDeleteRecordingRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\x88\x04\n\x14RecordingRuleService\x12Y\n\x03Get\x12-.nebius.monitoring.v1.GetRecordingRuleRequest\x1a#.nebius.monitoring.v1.RecordingRule\x12i\n\x04List\x12/.nebius.monitoring.v1.ListRecordingRulesRequest\x1a0.nebius.monitoring.v1.ListRecordingRulesResponse\x12]\n\x06Create\x120.nebius.monitoring.v1.CreateRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Update\x120.nebius.monitoring.v1.UpdateRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Delete\x120.nebius.monitoring.v1.DeleteRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\r\xbaJ\nmonitoringBn\n\x1bai.nebius.pub.monitoring.v1B\x19RecordingRuleServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/monitoring/v1b\x06proto3',
 )
 
-Endpoint = _message_class(
-    "nebius.ai.v1.Endpoint",
-    "Endpoint",
+RecordingRule = _message_class(
+    "nebius.monitoring.v1.RecordingRule",
+    "RecordingRule",
     {"metadata": "metadata", "spec": "spec", "status": "status"},
     {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-Endpoint.__module__ = __name__
-
-Endpoint.__doc__ = "Represents an endpoint with a specified workload."
-
-EndpointSpec = _message_class(
-    "nebius.ai.v1.EndpointSpec",
-    "EndpointSpec",
     {
-        "args": "args",
-        "auth_token": "auth_token",
-        "auth_token_mysterybox_secret": "auth_token_mysterybox_secret",
-        "container_command": "container_command",
-        "disk": "disk",
-        "environment_variables": "environment_variables",
-        "image": "image",
-        "injected_files": "injected_files",
-        "platform": "platform",
-        "ports": "ports",
-        "preemptible": "preemptible",
-        "preset": "preset",
-        "public_ip": "public_ip",
-        "registry_credentials": "registry_credentials",
-        "shm_size_bytes": "shm_size_bytes",
-        "ssh_authorized_keys": "ssh_authorized_keys",
-        "subnet_id": "subnet_id",
-        "volumes": "volumes",
-        "working_dir": "working_dir",
-    },
-    {},
-    {
-        "args": "The arguments to pass to the entrypoint command.",
-        "auth_token": "Authentication token needed to access the endpoint.\n\nAuthentication can only be enabled if the endpoint exposes one and only one HTTP port.\n\nMutually exclusive with ``auth_token_mysterybox_secret``.\nIf not provided, authentication will be disabled.",
-        "auth_token_mysterybox_secret": "Secret storing the authentication token.\nMutually exclusive with ``auth_token``.\nMust reference a secret payload containing ``AUTH_TOKEN``.",
-        "container_command": "The entrypoint command for the endpoint's container.",
-        "disk": "Disk spec for the main disk of the endpoint.",
-        "environment_variables": "Specifies the environment variables for the endpoint's container.",
-        "image": "The Docker image to use for the endpoint's container.",
-        "injected_files": "Small config files injected into the container before the user process\nstarts. Intended for configs, not datasets. Read methods return target\npaths. File content is returned only by Get with view SECRET.",
-        "platform": "Compute platform that the endpoint will be run on.",
-        "ports": "Specifies the ports that the endpoint exposes.",
-        "preemptible": "Whether to use a preemptible VM for the endpoint.\nPreemptible VMs are cheaper but can be stopped by the platform at any time.",
-        "preset": "Compute preset that the endpoint will be run on.",
-        "public_ip": "Whether to assign a public IP to the endpoint.",
-        "registry_credentials": "Registry credentials for private Docker registry.",
-        "shm_size_bytes": "Shared memory size in bytes for the endpoint's container.",
-        "ssh_authorized_keys": "Public keys to be authorized for SSH access to the job.",
-        "subnet_id": "Subnet ID where the endpoint will be deployed.",
-        "volumes": "Volumes to be mounted into the endpoint's container.",
-        "working_dir": "The working directory for the endpoint's container.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["auth_token"],
-    immutable_fields=["injected_files"],
-)
-EndpointSpec.__module__ = __name__
-
-EndpointSpec.__doc__ = "EndpointSpec defines a endpoint that will be run."
-
-EndpointSpec__EnvironmentVariable = _message_class(
-    "nebius.ai.v1.EndpointSpec.EnvironmentVariable",
-    "EndpointSpec__EnvironmentVariable",
-    {"mysterybox_secret": "mysterybox_secret", "name": "name", "value": "value"},
-    {},
-    {
-        "mysterybox_secret": "Secret storing the environment variable value.\nMutually exclusive with ``value``.\nThe value is read from the payload entry whose key matches the variable\nname, or the first entry when no such key exists.",
-        "name": "The name of the environment variable.",
-        "value": "Environment variable value.\nMutually exclusive with ``mysterybox_secret``.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["value"],
-)
-EndpointSpec__EnvironmentVariable.__module__ = __name__
-
-EndpointSpec__EnvironmentVariable.__doc__ = (
-    "EnvironmentVariable defines an environment variable for the endpoint's container."
-)
-
-setattr(EndpointSpec, "EnvironmentVariable", EndpointSpec__EnvironmentVariable)
-EndpointSpec__Port = _message_class(
-    "nebius.ai.v1.EndpointSpec.Port",
-    "EndpointSpec__Port",
-    {"container_port": "container_port", "host_port": "host_port", "protocol": "protocol"},
-    {},
-    {
-        "container_port": "Container port.",
-        "host_port": "Host port.\n\nIf not specified, will be same as container\\_port.",
-        "protocol": "Port's protocol.",
+        "metadata": "Metadata associated with the recording rule.",
+        "spec": "Specification of the recording rule.",
+        "status": "Current status of the recording rule.",
     },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-EndpointSpec__Port.__module__ = __name__
+RecordingRule.__module__ = __name__
 
-setattr(EndpointSpec, "Port", EndpointSpec__Port)
-EndpointSpec__Port__Protocol = _enum_class(
-    "nebius.ai.v1.EndpointSpec.Port.Protocol",
-    "EndpointSpec__Port__Protocol",
-    {"PROTOCOL_UNSPECIFIED": 0, "HTTP": 1, "TCP": 2, "UDP": 3},
-)
-EndpointSpec__Port__Protocol.__module__ = __name__
+RecordingRule.__doc__ = "A recording rule that writes the result of a MetricsQL expression evaluation."
 
-EndpointSpec__Port__Protocol.__doc__ = "Represents protocol of the endpoint's port which will be exposed."
-
-setattr(EndpointSpec__Port, "Protocol", EndpointSpec__Port__Protocol)
-EndpointSpec__VolumeMount = _message_class(
-    "nebius.ai.v1.EndpointSpec.VolumeMount",
-    "EndpointSpec__VolumeMount",
-    {
-        "container_path": "container_path",
-        "mode": "mode",
-        "s3_config": "s3_config",
-        "source": "source",
-        "source_path": "source_path",
-    },
-    {"source_config": "source_config"},
-    {
-        "container_path": "Path inside the endpoint's container where the volume is mounted.\n\nMust be an absolute path.",
-        "mode": "Mount mode.",
-        "source": 'Source of the volume mount.\n\nCan be a name or an ID of Nebius Storage bucket or filesystem,\nor an S3 URI (e.g. "s3://bucket-name") when using external S3 storage.',
-        "source_path": "Path inside the source volume.\n\nOptional.",
-    },
-    {"source_config": "Source Config"},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-EndpointSpec__VolumeMount.__module__ = __name__
-
-EndpointSpec__VolumeMount.__doc__ = "VolumeMount represents a volume mount for the endpoint's container."
-
-setattr(EndpointSpec, "VolumeMount", EndpointSpec__VolumeMount)
-EndpointSpec__VolumeMount__Mode = _enum_class(
-    "nebius.ai.v1.EndpointSpec.VolumeMount.Mode",
-    "EndpointSpec__VolumeMount__Mode",
-    {"MODE_UNSPECIFIED": 0, "READ_ONLY": 1, "READ_WRITE": 2},
-)
-EndpointSpec__VolumeMount__Mode.__module__ = __name__
-
-EndpointSpec__VolumeMount__Mode.__doc__ = "Mode that will be used to mount the volume."
-
-setattr(EndpointSpec__VolumeMount, "Mode", EndpointSpec__VolumeMount__Mode)
-EndpointSpec__VolumeMount__S3Config = _message_class(
-    "nebius.ai.v1.EndpointSpec.VolumeMount.S3Config",
-    "EndpointSpec__VolumeMount__S3Config",
-    {
-        "credentials": "credentials",
-        "endpoint": "endpoint",
-        "mysterybox_secret": "mysterybox_secret",
-        "region": "region",
-    },
-    {"auth": "auth"},
-    {
-        "credentials": "Inline S3 credentials.\nUnmasked values are returned only by Get with view SECRET.",
-        "endpoint": 'S3-compatible endpoint URL (e.g. "https://s3.amazonaws.com").',
-        "mysterybox_secret": "Reference to a MysteryBox secret containing S3 credentials.",
-        "region": "S3 region.",
-    },
-    {"auth": "Authentication method."},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-EndpointSpec__VolumeMount__S3Config.__module__ = __name__
-
-EndpointSpec__VolumeMount__S3Config.__doc__ = "Config for accessing an external S3-compatible storage.\n\nThe bucket name is specified in the ``source`` field as an S3 URI."
-
-setattr(EndpointSpec__VolumeMount, "S3Config", EndpointSpec__VolumeMount__S3Config)
-EndpointSpec__VolumeMount__S3Config__S3Credentials = _message_class(
-    "nebius.ai.v1.EndpointSpec.VolumeMount.S3Config.S3Credentials",
-    "EndpointSpec__VolumeMount__S3Config__S3Credentials",
-    {"access_key_id": "access_key_id", "secret_access_key": "secret_access_key", "session_token": "session_token"},
+RecordingRuleSpec = _message_class(
+    "nebius.monitoring.v1.RecordingRuleSpec",
+    "RecordingRuleSpec",
+    {"bucket": "bucket", "expr": "expr", "record": "record", "record_labels": "record_labels"},
     {},
     {
-        "access_key_id": "Access key ID.",
-        "secret_access_key": "Secret access key.",
-        "session_token": "Session token (optional, for temporary credentials).",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["access_key_id", "secret_access_key", "session_token"],
-)
-EndpointSpec__VolumeMount__S3Config__S3Credentials.__module__ = __name__
-
-EndpointSpec__VolumeMount__S3Config__S3Credentials.__doc__ = "Inline S3 credentials."
-
-setattr(EndpointSpec__VolumeMount__S3Config, "S3Credentials", EndpointSpec__VolumeMount__S3Config__S3Credentials)
-EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef = _message_class(
-    "nebius.ai.v1.EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef",
-    "EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef",
-    {"secret_id": "secret_id", "version_id": "version_id"},
-    {},
-    {"secret_id": "MysteryBox secret ID.", "version_id": "MysteryBox secret version ID."},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef.__module__ = __name__
-
-EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef.__doc__ = "Reference to a MysteryBox secret."
-
-setattr(
-    EndpointSpec__VolumeMount__S3Config, "MysteryBoxSecretRef", EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef
-)
-EndpointSpec__DiskSpec = _message_class(
-    "nebius.ai.v1.EndpointSpec.DiskSpec",
-    "EndpointSpec__DiskSpec",
-    {"size_bytes": "size_bytes", "type": "type"},
-    {},
-    {"size_bytes": "Disk size in bytes.", "type": "Disk type."},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-EndpointSpec__DiskSpec.__module__ = __name__
-
-setattr(EndpointSpec, "DiskSpec", EndpointSpec__DiskSpec)
-EndpointSpec__RegistryCredentials = _message_class(
-    "nebius.ai.v1.EndpointSpec.RegistryCredentials",
-    "EndpointSpec__RegistryCredentials",
-    {"mysterybox_secret_version": "mysterybox_secret_version", "password": "password", "username": "username"},
-    {},
-    {
-        "mysterybox_secret_version": 'Secret version storing the registry credentials.\nMust have keys "REGISTRY\\_USERNAME" and "REGISTRY\\_PASSWORD".',
-        "password": "Registry password for private Docker registry.",
-        "username": "Registry username for private Docker registry.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["password"],
-)
-EndpointSpec__RegistryCredentials.__module__ = __name__
-
-setattr(EndpointSpec, "RegistryCredentials", EndpointSpec__RegistryCredentials)
-EndpointSpec__FileInjection = _message_class(
-    "nebius.ai.v1.EndpointSpec.FileInjection",
-    "EndpointSpec__FileInjection",
-    {"container_path": "container_path", "content": "content"},
-    {},
-    {
-        "container_path": 'Absolute path inside the container where the content is written.\n\nMust be a clean absolute path: root, trailing slashes, empty path\nsegments, "." and ".." are not allowed.',
-        "content": "File content. On create, must contain between 1 byte and 64 KiB\n(one mystery box secret payload).\nReturned only by Get with view SECRET.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["content"],
-)
-EndpointSpec__FileInjection.__module__ = __name__
-
-EndpointSpec__FileInjection.__doc__ = "FileInjection materializes a small file inside the container at launch."
-
-setattr(EndpointSpec, "FileInjection", EndpointSpec__FileInjection)
-EndpointSpec__MysteryBoxSecretRef = _message_class(
-    "nebius.ai.v1.EndpointSpec.MysteryBoxSecretRef",
-    "EndpointSpec__MysteryBoxSecretRef",
-    {"secret_id": "secret_id", "version_id": "version_id"},
-    {},
-    {"secret_id": "MysteryBox secret ID.", "version_id": "MysteryBox secret version ID."},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-EndpointSpec__MysteryBoxSecretRef.__module__ = __name__
-
-EndpointSpec__MysteryBoxSecretRef.__doc__ = "Reference to a MysteryBox secret."
-
-setattr(EndpointSpec, "MysteryBoxSecretRef", EndpointSpec__MysteryBoxSecretRef)
-EndpointStatus = _message_class(
-    "nebius.ai.v1.EndpointStatus",
-    "EndpointStatus",
-    {
-        "instances": "instances",
-        "private_endpoints": "private_endpoints",
-        "public_endpoints": "public_endpoints",
-        "state": "state",
-        "state_details": "state_details",
-    },
-    {},
-    {
-        "instances": "Status of individual endpoint instances.",
-        "private_endpoints": "Private endpoints to access the workload.",
-        "public_endpoints": "Public endpoints to access the workload.",
-        "state": "State of the endpoint.",
-        "state_details": "Details of the endpoint's state.",
+        "bucket": "Bucket where the rule writes its resulting time series.",
+        "expr": "MetricsQL expression evaluated by the rule.",
+        "record": "Name of the resulting time series.",
+        "record_labels": "Labels added to the resulting time series.",
     },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-EndpointStatus.__module__ = __name__
+RecordingRuleSpec.__module__ = __name__
 
-EndpointStatus.__doc__ = "EndpointStatus represents the status of a VM app."
+RecordingRuleSpec.__doc__ = "Specification of a recording rule."
 
-EndpointStatus__State = _enum_class(
-    "nebius.ai.v1.EndpointStatus.State",
-    "EndpointStatus__State",
-    {
-        "STATE_UNSPECIFIED": 0,
-        "PROVISIONING": 1,
-        "STARTING": 2,
-        "RUNNING": 3,
-        "STOPPING": 4,
-        "DELETING": 5,
-        "STOPPED": 6,
-        "ERROR": 8,
-        "IMAGE_PULLING": 9,
-    },
-)
-EndpointStatus__State.__module__ = __name__
-
-EndpointStatus__State.__doc__ = "Endpoint state."
-
-setattr(EndpointStatus, "State", EndpointStatus__State)
-EndpointStateDetails = _message_class(
-    "nebius.ai.v1.EndpointStateDetails",
-    "EndpointStateDetails",
-    {"code": "code", "message": "message", "service_error": "service_error"},
+RecordingRuleStatus = _message_class(
+    "nebius.monitoring.v1.RecordingRuleStatus",
+    "RecordingRuleStatus",
     {},
-    {
-        "code": "Short state description.",
-        "message": "Detailed human-readable description.",
-        "service_error": "Structured error details for the failure, if available.\nFor quota-related failures, ``service_error.details.quota_failure``\nis populated with the quota violations.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-EndpointStateDetails.__module__ = __name__
-
-EndpointStateDetails.__doc__ = "Endpoint state details."
-
-EndpointInstanceStatus = _message_class(
-    "nebius.ai.v1.EndpointInstanceStatus",
-    "EndpointInstanceStatus",
-    {
-        "compute_instance_id": "compute_instance_id",
-        "compute_instance_state": "compute_instance_state",
-        "private_ip": "private_ip",
-        "public_ip": "public_ip",
-        "state": "state",
-    },
-    {},
-    {
-        "compute_instance_id": "ID of the compute instance running the endpoint.",
-        "compute_instance_state": "The current state of the compute instance.",
-        "private_ip": "Private IP address of the instance.",
-        "public_ip": "Public IP address of the instance.",
-        "state": "The current state of the endpoint's workload.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-EndpointInstanceStatus.__module__ = __name__
-
-EndpointInstanceStatus.__doc__ = "EndpointInstanceStatus represents the status of a endpoint instance."
-
-EndpointInstanceStatus__State = _enum_class(
-    "nebius.ai.v1.EndpointInstanceStatus.State",
-    "EndpointInstanceStatus__State",
-    {
-        "STATE_UNSPECIFIED": 0,
-        "PROVISIONING": 1,
-        "STARTING": 2,
-        "RUNNING": 3,
-        "STOPPING": 4,
-        "DELETING": 5,
-        "STOPPED": 6,
-        "FAILED": 7,
-        "ERROR": 8,
-        "IMAGE_PULLING": 9,
-    },
-)
-EndpointInstanceStatus__State.__module__ = __name__
-
-EndpointInstanceStatus__State.__doc__ = "Endpoint instance state."
-
-setattr(EndpointInstanceStatus, "State", EndpointInstanceStatus__State)
-GetEndpointRequest = _message_class(
-    "nebius.ai.v1.GetEndpointRequest",
-    "GetEndpointRequest",
-    {"id": "id", "view": "view"},
-    {},
-    {
-        "view": "SECRET includes injected-file content and unmasked inline S3 credentials and requires\nresource.aiendpoint.getSensitiveData."
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-GetEndpointRequest.__module__ = __name__
-
-GetEndpointRequest__View = _enum_class(
-    "nebius.ai.v1.GetEndpointRequest.View", "GetEndpointRequest__View", {"VIEW_UNSPECIFIED": 0, "SECRET": 1}
-)
-GetEndpointRequest__View.__module__ = __name__
-
-GetEndpointRequest__View.__doc__ = (
-    "Controls whether injected-file content and unmasked inline S3 credential values are included."
-)
-
-setattr(GetEndpointRequest, "View", GetEndpointRequest__View)
-GetEndpointByNameRequest = _message_class(
-    "nebius.ai.v1.GetEndpointByNameRequest",
-    "GetEndpointByNameRequest",
-    {"name": "name", "parent_id": "parent_id"},
     {},
     {},
     {},
@@ -540,627 +118,109 @@ GetEndpointByNameRequest = _message_class(
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-GetEndpointByNameRequest.__module__ = __name__
+RecordingRuleStatus.__module__ = __name__
 
-ListEndpointsRequest = _message_class(
-    "nebius.ai.v1.ListEndpointsRequest",
-    "ListEndpointsRequest",
+RecordingRuleStatus.__doc__ = "Current status of a recording rule."
+
+GetRecordingRuleRequest = _message_class(
+    "nebius.monitoring.v1.GetRecordingRuleRequest",
+    "GetRecordingRuleRequest",
+    {"id": "id"},
+    {},
+    {"id": "ID of the recording rule."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+GetRecordingRuleRequest.__module__ = __name__
+
+GetRecordingRuleRequest.__doc__ = "Request to get a recording rule."
+
+ListRecordingRulesRequest = _message_class(
+    "nebius.monitoring.v1.ListRecordingRulesRequest",
+    "ListRecordingRulesRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-ListEndpointsRequest.__module__ = __name__
-
-CreateEndpointRequest = _message_class(
-    "nebius.ai.v1.CreateEndpointRequest",
-    "CreateEndpointRequest",
-    {"dry_run": "dry_run", "metadata": "metadata", "spec": "spec"},
-    {},
-    {"dry_run": "Dry run creation of the endpoint."},
+    {
+        "page_size": "Maximum number of recording rules to return.",
+        "page_token": "Token that identifies the page of results to return.",
+        "parent_id": "ID of the parent workspace.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-CreateEndpointRequest.__module__ = __name__
+ListRecordingRulesRequest.__module__ = __name__
 
-DeleteEndpointRequest = _message_class(
-    "nebius.ai.v1.DeleteEndpointRequest",
-    "DeleteEndpointRequest",
-    {"id": "id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-DeleteEndpointRequest.__module__ = __name__
+ListRecordingRulesRequest.__doc__ = "Request to list recording rules."
 
-StartEndpointRequest = _message_class(
-    "nebius.ai.v1.StartEndpointRequest",
-    "StartEndpointRequest",
-    {"id": "id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-StartEndpointRequest.__module__ = __name__
-
-RestartEndpointRequest = _message_class(
-    "nebius.ai.v1.RestartEndpointRequest",
-    "RestartEndpointRequest",
-    {"id": "id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-RestartEndpointRequest.__module__ = __name__
-
-StopEndpointRequest = _message_class(
-    "nebius.ai.v1.StopEndpointRequest",
-    "StopEndpointRequest",
-    {"id": "id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-StopEndpointRequest.__module__ = __name__
-
-ListEndpointsResponse = _message_class(
-    "nebius.ai.v1.ListEndpointsResponse",
-    "ListEndpointsResponse",
+ListRecordingRulesResponse = _message_class(
+    "nebius.monitoring.v1.ListRecordingRulesResponse",
+    "ListRecordingRulesResponse",
     {"items": "items", "next_page_token": "next_page_token"},
     {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-ListEndpointsResponse.__module__ = __name__
-
-Job = _message_class(
-    "nebius.ai.v1.Job",
-    "Job",
-    {"metadata": "metadata", "spec": "spec", "status": "status"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-Job.__module__ = __name__
-
-Job.__doc__ = "Represents a job with a specified workload."
-
-JobSpec = _message_class(
-    "nebius.ai.v1.JobSpec",
-    "JobSpec",
     {
-        "args": "args",
-        "container_command": "container_command",
-        "disk": "disk",
-        "environment_variables": "environment_variables",
-        "image": "image",
-        "injected_files": "injected_files",
-        "platform": "platform",
-        "ports": "ports",
-        "preemptible": "preemptible",
-        "preset": "preset",
-        "public_ip": "public_ip",
-        "registry_credentials": "registry_credentials",
-        "restart_attempts": "restart_attempts",
-        "shm_size_bytes": "shm_size_bytes",
-        "ssh_authorized_keys": "ssh_authorized_keys",
-        "subnet_id": "subnet_id",
-        "timeout": "timeout",
-        "volumes": "volumes",
-        "working_dir": "working_dir",
-    },
-    {},
-    {
-        "args": "The arguments to pass to the entrypoint command.",
-        "container_command": "The entrypoint command for the job's container.",
-        "disk": "Disk spec for the main disk of the job.",
-        "environment_variables": "Specifies the environment variables for the job's container.",
-        "image": "The Docker image to use for the job's container.",
-        "injected_files": "Small config files injected into the container before the user process\nstarts. Intended for configs, not datasets. Read methods return target\npaths. File content is returned only by Get with view SECRET.",
-        "platform": "Compute platform that the job will be run on.",
-        "ports": "Specifies the ports that the job exposes.",
-        "preemptible": "Whether to use a preemptible VM for the job.\nPreemptible VMs are cheaper but can be stopped by the platform at any time.",
-        "preset": "Compute preset that the job will be run on.",
-        "public_ip": "Whether to assign a public IP to the job.",
-        "registry_credentials": "Registry credentials for private Docker registry.",
-        "restart_attempts": "Restart attempts for the job.",
-        "shm_size_bytes": "Shared memory size in bytes for the job's container.",
-        "ssh_authorized_keys": "Public keys to be authorized for SSH access to the job.",
-        "subnet_id": "Subnet ID where the job will be deployed.",
-        "timeout": "Job timeout.",
-        "volumes": "Volumes to be mounted into the job's container.",
-        "working_dir": "The working directory for the job's container.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    immutable_fields=["injected_files"],
-)
-JobSpec.__module__ = __name__
-
-JobSpec.__doc__ = "JobSpec defines a job that will be run."
-
-JobSpec__EnvironmentVariable = _message_class(
-    "nebius.ai.v1.JobSpec.EnvironmentVariable",
-    "JobSpec__EnvironmentVariable",
-    {"mysterybox_secret": "mysterybox_secret", "name": "name", "value": "value"},
-    {},
-    {
-        "mysterybox_secret": "Secret storing the environment variable value.\nMutually exclusive with ``value``.\nThe value is read from the payload entry whose key matches the variable\nname, or the first entry when no such key exists.",
-        "name": "The name of the environment variable.",
-        "value": "Environment variable value.\nMutually exclusive with ``mysterybox_secret``.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["value"],
-)
-JobSpec__EnvironmentVariable.__module__ = __name__
-
-JobSpec__EnvironmentVariable.__doc__ = (
-    "EnvironmentVariable defines an environment variable for the endpoint's container."
-)
-
-setattr(JobSpec, "EnvironmentVariable", JobSpec__EnvironmentVariable)
-JobSpec__Port = _message_class(
-    "nebius.ai.v1.JobSpec.Port",
-    "JobSpec__Port",
-    {"container_port": "container_port", "host_port": "host_port", "protocol": "protocol"},
-    {},
-    {
-        "container_port": "Container port.",
-        "host_port": "Host port.\n\nIf not specified, will be same as container\\_port.",
-        "protocol": "Port's protocol.",
+        "items": "Recording rules returned in the response.",
+        "next_page_token": "Token that identifies the next page of results.",
     },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-JobSpec__Port.__module__ = __name__
+ListRecordingRulesResponse.__module__ = __name__
 
-setattr(JobSpec, "Port", JobSpec__Port)
-JobSpec__Port__Protocol = _enum_class(
-    "nebius.ai.v1.JobSpec.Port.Protocol",
-    "JobSpec__Port__Protocol",
-    {"PROTOCOL_UNSPECIFIED": 0, "HTTP": 1, "TCP": 2, "UDP": 3},
-)
-JobSpec__Port__Protocol.__module__ = __name__
+ListRecordingRulesResponse.__doc__ = "Response containing recording rules under the specified parent."
 
-JobSpec__Port__Protocol.__doc__ = "Represents protocol of the job's port which will be exposed."
-
-setattr(JobSpec__Port, "Protocol", JobSpec__Port__Protocol)
-JobSpec__VolumeMount = _message_class(
-    "nebius.ai.v1.JobSpec.VolumeMount",
-    "JobSpec__VolumeMount",
-    {
-        "container_path": "container_path",
-        "mode": "mode",
-        "s3_config": "s3_config",
-        "source": "source",
-        "source_path": "source_path",
-    },
-    {"source_config": "source_config"},
-    {
-        "container_path": "Path inside the endpoint's container where the volume is mounted.\n\nMust be an absolute path.",
-        "mode": "Mount mode.",
-        "source": 'Source of the volume mount.\n\nCan be a name or an ID of Nebius Storage bucket or filesystem,\nor an S3 URI (e.g. "s3://bucket-name") when using external S3 storage.',
-        "source_path": "Path inside the source volume.\n\nOptional.",
-    },
-    {"source_config": "Source Config"},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-JobSpec__VolumeMount.__module__ = __name__
-
-JobSpec__VolumeMount.__doc__ = "VolumeMount represents a volume mount for the endpoint's container."
-
-setattr(JobSpec, "VolumeMount", JobSpec__VolumeMount)
-JobSpec__VolumeMount__Mode = _enum_class(
-    "nebius.ai.v1.JobSpec.VolumeMount.Mode",
-    "JobSpec__VolumeMount__Mode",
-    {"MODE_UNSPECIFIED": 0, "READ_WRITE": 1, "READ_ONLY": 2},
-)
-JobSpec__VolumeMount__Mode.__module__ = __name__
-
-JobSpec__VolumeMount__Mode.__doc__ = "Mode that will be used to mount the volume."
-
-setattr(JobSpec__VolumeMount, "Mode", JobSpec__VolumeMount__Mode)
-JobSpec__VolumeMount__S3Config = _message_class(
-    "nebius.ai.v1.JobSpec.VolumeMount.S3Config",
-    "JobSpec__VolumeMount__S3Config",
-    {
-        "credentials": "credentials",
-        "endpoint": "endpoint",
-        "mysterybox_secret": "mysterybox_secret",
-        "region": "region",
-    },
-    {"auth": "auth"},
-    {
-        "credentials": "Inline S3 credentials.\nUnmasked values are returned only by Get with view SECRET.",
-        "endpoint": 'S3-compatible endpoint URL (e.g. "https://s3.amazonaws.com").',
-        "mysterybox_secret": "Reference to a MysteryBox secret containing S3 credentials.",
-        "region": "S3 region.",
-    },
-    {"auth": "Authentication method."},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-JobSpec__VolumeMount__S3Config.__module__ = __name__
-
-JobSpec__VolumeMount__S3Config.__doc__ = "Config for accessing an external S3-compatible storage.\n\nThe bucket name is specified in the ``source`` field as an S3 URI."
-
-setattr(JobSpec__VolumeMount, "S3Config", JobSpec__VolumeMount__S3Config)
-JobSpec__VolumeMount__S3Config__S3Credentials = _message_class(
-    "nebius.ai.v1.JobSpec.VolumeMount.S3Config.S3Credentials",
-    "JobSpec__VolumeMount__S3Config__S3Credentials",
-    {"access_key_id": "access_key_id", "secret_access_key": "secret_access_key", "session_token": "session_token"},
+CreateRecordingRuleRequest = _message_class(
+    "nebius.monitoring.v1.CreateRecordingRuleRequest",
+    "CreateRecordingRuleRequest",
+    {"metadata": "metadata", "spec": "spec"},
     {},
     {
-        "access_key_id": "Access key ID.",
-        "secret_access_key": "Secret access key.",
-        "session_token": "Session token (optional, for temporary credentials).",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["access_key_id", "secret_access_key", "session_token"],
-)
-JobSpec__VolumeMount__S3Config__S3Credentials.__module__ = __name__
-
-JobSpec__VolumeMount__S3Config__S3Credentials.__doc__ = "Inline S3 credentials."
-
-setattr(JobSpec__VolumeMount__S3Config, "S3Credentials", JobSpec__VolumeMount__S3Config__S3Credentials)
-JobSpec__VolumeMount__S3Config__MysteryBoxSecretRef = _message_class(
-    "nebius.ai.v1.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef",
-    "JobSpec__VolumeMount__S3Config__MysteryBoxSecretRef",
-    {"secret_id": "secret_id", "version_id": "version_id"},
-    {},
-    {"secret_id": "MysteryBox secret ID.", "version_id": "MysteryBox secret version ID."},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-JobSpec__VolumeMount__S3Config__MysteryBoxSecretRef.__module__ = __name__
-
-JobSpec__VolumeMount__S3Config__MysteryBoxSecretRef.__doc__ = "Reference to a MysteryBox secret."
-
-setattr(JobSpec__VolumeMount__S3Config, "MysteryBoxSecretRef", JobSpec__VolumeMount__S3Config__MysteryBoxSecretRef)
-JobSpec__DiskSpec = _message_class(
-    "nebius.ai.v1.JobSpec.DiskSpec",
-    "JobSpec__DiskSpec",
-    {"size_bytes": "size_bytes", "type": "type"},
-    {},
-    {"size_bytes": "Disk size in bytes.", "type": "Disk type."},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-JobSpec__DiskSpec.__module__ = __name__
-
-setattr(JobSpec, "DiskSpec", JobSpec__DiskSpec)
-JobSpec__RegistryCredentials = _message_class(
-    "nebius.ai.v1.JobSpec.RegistryCredentials",
-    "JobSpec__RegistryCredentials",
-    {"mysterybox_secret_version": "mysterybox_secret_version", "password": "password", "username": "username"},
-    {},
-    {
-        "mysterybox_secret_version": 'Secret version storing the registry credentials.\nMust have keys "REGISTRY\\_USERNAME" and "REGISTRY\\_PASSWORD".',
-        "password": "Registry password for private Docker registry.",
-        "username": "Registry username for private Docker registry.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["password"],
-)
-JobSpec__RegistryCredentials.__module__ = __name__
-
-setattr(JobSpec, "RegistryCredentials", JobSpec__RegistryCredentials)
-JobSpec__FileInjection = _message_class(
-    "nebius.ai.v1.JobSpec.FileInjection",
-    "JobSpec__FileInjection",
-    {"container_path": "container_path", "content": "content"},
-    {},
-    {
-        "container_path": 'Absolute path inside the container where the content is written.\n\nMust be a clean absolute path: root, trailing slashes, empty path\nsegments, "." and ".." are not allowed.',
-        "content": "File content. On create, must contain between 1 byte and 64 KiB\n(one mystery box secret payload).\nReturned only by Get with view SECRET.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-    sensitive_fields=["content"],
-)
-JobSpec__FileInjection.__module__ = __name__
-
-JobSpec__FileInjection.__doc__ = "FileInjection materializes a small file inside the container at launch."
-
-setattr(JobSpec, "FileInjection", JobSpec__FileInjection)
-JobSpec__MysteryBoxSecretRef = _message_class(
-    "nebius.ai.v1.JobSpec.MysteryBoxSecretRef",
-    "JobSpec__MysteryBoxSecretRef",
-    {"secret_id": "secret_id", "version_id": "version_id"},
-    {},
-    {"secret_id": "MysteryBox secret ID.", "version_id": "MysteryBox secret version ID."},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-JobSpec__MysteryBoxSecretRef.__module__ = __name__
-
-JobSpec__MysteryBoxSecretRef.__doc__ = "Reference to a MysteryBox secret."
-
-setattr(JobSpec, "MysteryBoxSecretRef", JobSpec__MysteryBoxSecretRef)
-JobStatus = _message_class(
-    "nebius.ai.v1.JobStatus",
-    "JobStatus",
-    {
-        "finished_at": "finished_at",
-        "instances": "instances",
-        "private_endpoints": "private_endpoints",
-        "public_endpoints": "public_endpoints",
-        "started_at": "started_at",
-        "state": "state",
-        "state_details": "state_details",
-    },
-    {},
-    {
-        "finished_at": "Time when the job workload finished.",
-        "instances": "Status of individual job instances.",
-        "private_endpoints": "Private endpoints to access the workload.",
-        "public_endpoints": "Public endpoints to access the workload.",
-        "started_at": "Time when the job workload started.",
-        "state": "State of the job.",
-        "state_details": "Details of the job's state.",
+        "metadata": "Metadata for the recording rule to create.",
+        "spec": "Specification of the recording rule to create.",
     },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-JobStatus.__module__ = __name__
+CreateRecordingRuleRequest.__module__ = __name__
 
-JobStatus.__doc__ = "JobStatus represents the status of a VM app."
+CreateRecordingRuleRequest.__doc__ = "Request to create a recording rule."
 
-JobStatus__State = _enum_class(
-    "nebius.ai.v1.JobStatus.State",
-    "JobStatus__State",
-    {
-        "STATE_UNSPECIFIED": 0,
-        "PROVISIONING": 1,
-        "STARTING": 2,
-        "RUNNING": 3,
-        "CANCELLING": 4,
-        "DELETING": 5,
-        "COMPLETED": 6,
-        "FAILED": 7,
-        "CANCELLED": 8,
-        "ERROR": 9,
-        "IMAGE_PULLING": 10,
-    },
-)
-JobStatus__State.__module__ = __name__
-
-JobStatus__State.__doc__ = "Job state."
-
-setattr(JobStatus, "State", JobStatus__State)
-JobStateDetails = _message_class(
-    "nebius.ai.v1.JobStateDetails",
-    "JobStateDetails",
-    {"code": "code", "message": "message", "service_error": "service_error"},
+UpdateRecordingRuleRequest = _message_class(
+    "nebius.monitoring.v1.UpdateRecordingRuleRequest",
+    "UpdateRecordingRuleRequest",
+    {"metadata": "metadata", "spec": "spec"},
     {},
-    {
-        "code": "Short state description.",
-        "message": "Detailed human-readable description.",
-        "service_error": "Structured error details for the failure, if available.\nFor quota-related failures, ``service_error.details.quota_failure``\nis populated with the quota violations.",
-    },
+    {"metadata": "Metadata for the recording rule to update.", "spec": "Updated specification of the recording rule."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-JobStateDetails.__module__ = __name__
+UpdateRecordingRuleRequest.__module__ = __name__
 
-JobStateDetails.__doc__ = "Job state details."
+UpdateRecordingRuleRequest.__doc__ = "Request to update a recording rule."
 
-JobInstanceStatus = _message_class(
-    "nebius.ai.v1.JobInstanceStatus",
-    "JobInstanceStatus",
-    {
-        "compute_instance_id": "compute_instance_id",
-        "compute_instance_state": "compute_instance_state",
-        "private_ip": "private_ip",
-        "public_ip": "public_ip",
-        "state": "state",
-    },
-    {},
-    {
-        "compute_instance_id": "ID of the compute instance running the job.",
-        "compute_instance_state": "The current state of the compute instance.",
-        "private_ip": "Private IP address of the instance.",
-        "public_ip": "Public IP address of the instance.",
-        "state": "The current state of the job's workload.",
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-JobInstanceStatus.__module__ = __name__
-
-JobInstanceStatus.__doc__ = "JobInstanceStatus represents the status of a job instance."
-
-JobInstanceStatus__State = _enum_class(
-    "nebius.ai.v1.JobInstanceStatus.State",
-    "JobInstanceStatus__State",
-    {
-        "STATE_UNSPECIFIED": 0,
-        "PROVISIONING": 1,
-        "STARTING": 2,
-        "RUNNING": 3,
-        "COMPLETING": 4,
-        "CANCELLING": 5,
-        "DELETING": 6,
-        "COMPLETED": 7,
-        "FAILED": 8,
-        "CANCELLED": 9,
-        "ERROR": 10,
-        "IMAGE_PULLING": 11,
-    },
-)
-JobInstanceStatus__State.__module__ = __name__
-
-JobInstanceStatus__State.__doc__ = "Job instance state."
-
-setattr(JobInstanceStatus, "State", JobInstanceStatus__State)
-GetJobRequest = _message_class(
-    "nebius.ai.v1.GetJobRequest",
-    "GetJobRequest",
-    {"id": "id", "view": "view"},
-    {},
-    {
-        "view": "SECRET includes injected-file content and unmasked inline S3 credentials and requires\nresource.aijob.getSensitiveData."
-    },
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-GetJobRequest.__module__ = __name__
-
-GetJobRequest__View = _enum_class(
-    "nebius.ai.v1.GetJobRequest.View", "GetJobRequest__View", {"VIEW_UNSPECIFIED": 0, "SECRET": 1}
-)
-GetJobRequest__View.__module__ = __name__
-
-GetJobRequest__View.__doc__ = (
-    "Controls whether injected-file content and unmasked inline S3 credential values are included."
-)
-
-setattr(GetJobRequest, "View", GetJobRequest__View)
-GetJobByNameRequest = _message_class(
-    "nebius.ai.v1.GetJobByNameRequest",
-    "GetJobByNameRequest",
-    {"name": "name", "parent_id": "parent_id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-GetJobByNameRequest.__module__ = __name__
-
-ListJobsRequest = _message_class(
-    "nebius.ai.v1.ListJobsRequest",
-    "ListJobsRequest",
-    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-ListJobsRequest.__module__ = __name__
-
-CreateJobRequest = _message_class(
-    "nebius.ai.v1.CreateJobRequest",
-    "CreateJobRequest",
-    {"dry_run": "dry_run", "metadata": "metadata", "spec": "spec"},
-    {},
-    {"dry_run": "Dry run creation of the job."},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-CreateJobRequest.__module__ = __name__
-
-DeleteJobRequest = _message_class(
-    "nebius.ai.v1.DeleteJobRequest",
-    "DeleteJobRequest",
+DeleteRecordingRuleRequest = _message_class(
+    "nebius.monitoring.v1.DeleteRecordingRuleRequest",
+    "DeleteRecordingRuleRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the recording rule to delete."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
     enum_value_deprecations={},
 )
-DeleteJobRequest.__module__ = __name__
+DeleteRecordingRuleRequest.__module__ = __name__
 
-CancelJobRequest = _message_class(
-    "nebius.ai.v1.CancelJobRequest",
-    "CancelJobRequest",
-    {"id": "id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-CancelJobRequest.__module__ = __name__
-
-RestartJobRequest = _message_class(
-    "nebius.ai.v1.RestartJobRequest",
-    "RestartJobRequest",
-    {"id": "id"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-RestartJobRequest.__module__ = __name__
-
-ListJobsResponse = _message_class(
-    "nebius.ai.v1.ListJobsResponse",
-    "ListJobsResponse",
-    {"items": "items", "next_page_token": "next_page_token"},
-    {},
-    {},
-    {},
-    message_deprecation_details="",
-    field_deprecation_details={},
-    enum_value_deprecations={},
-)
-ListJobsResponse.__module__ = __name__
+DeleteRecordingRuleRequest.__doc__ = "Request to delete a recording rule."
 
 from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
 from .....aio.constant_channel import Constant as _Constant
@@ -1174,24 +234,24 @@ from .....base.fieldmask_protobuf import ensure_reset_mask_in_metadata as _ensur
 from typing_extensions import Unpack as _Unpack
 
 
-class EndpointServiceClient(_ClientWithOperations):
-    "Service to create/manage endpoints.\n\nThis class provides client methods for the ``nebius.ai.v1.EndpointService`` service."
+class RecordingRuleServiceClient(_ClientWithOperations):
+    "Service for managing recording rules.\n\nThis class provides client methods for the ``nebius.monitoring.v1.RecordingRuleService`` service."
 
-    __service_name__ = "nebius.ai.v1.EndpointService"
+    __service_name__ = "nebius.monitoring.v1.RecordingRuleService"
     """Fully qualified protobuf service name for RPC routes."""
-    __api_service_name__ = "apps.msp"
+    __api_service_name__ = "monitoring"
     """API gateway name for service routes."""
     __registry__ = _REGISTRY
     """Descriptor registry for request metadata."""
-    __PB2_DESCRIPTOR__ = _REGISTRY.service_descriptor("nebius.ai.v1.EndpointService")
+    __PB2_DESCRIPTOR__ = _REGISTRY.service_descriptor("nebius.monitoring.v1.RecordingRuleService")
     """Alias for code that expects a protobuf service descriptor."""
 
     @classmethod
     def get_descriptor(cls):
         """Return the protobuf service descriptor from the registry."""
-        return _REGISTRY.service_descriptor("nebius.ai.v1.EndpointService")
+        return _REGISTRY.service_descriptor("nebius.monitoring.v1.RecordingRuleService")
 
-    __operation_type__ = _REGISTRY.message_class("nebius.common.v1.Operation")
+    __operation_type__ = _REGISTRY.message_class("nebius.common.v1alpha1.Operation")
     """Message type representing a long-running operation."""
     __operation_source_method__ = "Create"
     """RPC method that supplies the operation route."""
@@ -1199,13 +259,13 @@ class EndpointServiceClient(_ClientWithOperations):
     def operation_service(self):
         """Return the client that manages long-running operations."""
         if self.__operation_service__ is None:
-            service_type = _REGISTRY.client_class("nebius.common.v1.OperationService")
+            service_type = _REGISTRY.client_class("nebius.common.v1alpha1.OperationService")
             self.__operation_service__ = service_type(
                 _Constant(
                     _Route(
-                        service="nebius.ai.v1.EndpointService",
+                        service="nebius.monitoring.v1.RecordingRuleService",
                         method="Create",
-                        api_service_name="apps.msp",
+                        api_service_name="monitoring",
                         registry=_REGISTRY,
                     ),
                     self._channel,
@@ -1214,36 +274,54 @@ class EndpointServiceClient(_ClientWithOperations):
         return self.__operation_service__
 
     def get(
-        self, request: GetEndpointRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[GetEndpointRequest, Endpoint]:
-        "Returns the specified endpoint.\n\nThe request object is returned without starting the RPC."
-        return super().request("Get", request, _REGISTRY.message_class("nebius.ai.v1.Endpoint"), **kwargs)
-
-    def get_by_name(
-        self, request: GetEndpointByNameRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[GetEndpointByNameRequest, Endpoint]:
-        "Returns the specified endpoint by name.\n\nThe request object is returned without starting the RPC."
-        return super().request("GetByName", request, _REGISTRY.message_class("nebius.ai.v1.Endpoint"), **kwargs)
+        self, request: GetRecordingRuleRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetRecordingRuleRequest, RecordingRule]:
+        "Returns the specified recording rule.\n\nThe request object is returned without starting the RPC."
+        return super().request("Get", request, _REGISTRY.message_class("nebius.monitoring.v1.RecordingRule"), **kwargs)
 
     def list(
-        self, request: ListEndpointsRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[ListEndpointsRequest, ListEndpointsResponse]:
-        "Retrieves a list of endpoints.\n\nThe request object is returned without starting the RPC."
-        return super().request("List", request, _REGISTRY.message_class("nebius.ai.v1.ListEndpointsResponse"), **kwargs)
+        self, request: ListRecordingRulesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListRecordingRulesRequest, ListRecordingRulesResponse]:
+        "Returns recording rules under the specified parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "List", request, _REGISTRY.message_class("nebius.monitoring.v1.ListRecordingRulesResponse"), **kwargs
+        )
 
     def create(
-        self, request: CreateEndpointRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[CreateEndpointRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Creates an endpoint.\n\nThe request object is returned without starting the RPC."
+        self, request: CreateRecordingRuleRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[CreateRecordingRuleRequest, _Operation[_REGISTRY.message_class("nebius.common.v1alpha1.Operation")]]:
+        "Creates a recording rule.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
+            _REGISTRY.message_class("nebius.common.v1alpha1.Operation"),
             result_wrapper=lambda _method, _channel, value: _Operation(
                 _Route(
-                    service="nebius.ai.v1.EndpointService",
+                    service="nebius.monitoring.v1.RecordingRuleService",
                     method="Create",
-                    api_service_name="apps.msp",
+                    api_service_name="monitoring",
+                    registry=_REGISTRY,
+                ),
+                _channel,
+                value,
+            ),
+            **kwargs,
+        )
+
+    def update(
+        self, request: UpdateRecordingRuleRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[UpdateRecordingRuleRequest, _Operation[_REGISTRY.message_class("nebius.common.v1alpha1.Operation")]]:
+        "Updates a recording rule.\n\nThe request object is returned without starting the RPC."
+        kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
+        return super().request(
+            "Update",
+            request,
+            _REGISTRY.message_class("nebius.common.v1alpha1.Operation"),
+            result_wrapper=lambda _method, _channel, value: _Operation(
+                _Route(
+                    service="nebius.monitoring.v1.RecordingRuleService",
+                    method="Update",
+                    api_service_name="monitoring",
                     registry=_REGISTRY,
                 ),
                 _channel,
@@ -1253,81 +331,18 @@ class EndpointServiceClient(_ClientWithOperations):
         )
 
     def delete(
-        self, request: DeleteEndpointRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[DeleteEndpointRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Deletes an endpoint.\n\nThe request object is returned without starting the RPC."
+        self, request: DeleteRecordingRuleRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[DeleteRecordingRuleRequest, _Operation[_REGISTRY.message_class("nebius.common.v1alpha1.Operation")]]:
+        "Deletes a recording rule.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
+            _REGISTRY.message_class("nebius.common.v1alpha1.Operation"),
             result_wrapper=lambda _method, _channel, value: _Operation(
                 _Route(
-                    service="nebius.ai.v1.EndpointService",
+                    service="nebius.monitoring.v1.RecordingRuleService",
                     method="Delete",
-                    api_service_name="apps.msp",
-                    registry=_REGISTRY,
-                ),
-                _channel,
-                value,
-            ),
-            **kwargs,
-        )
-
-    def start(
-        self, request: StartEndpointRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[StartEndpointRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Starts an endpoint.\n\nThe request object is returned without starting the RPC."
-        return super().request(
-            "Start",
-            request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
-            result_wrapper=lambda _method, _channel, value: _Operation(
-                _Route(
-                    service="nebius.ai.v1.EndpointService",
-                    method="Start",
-                    api_service_name="apps.msp",
-                    registry=_REGISTRY,
-                ),
-                _channel,
-                value,
-            ),
-            **kwargs,
-        )
-
-    def restart(
-        self, request: RestartEndpointRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[RestartEndpointRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Restarts an endpoint.\n\nThe request object is returned without starting the RPC."
-        return super().request(
-            "Restart",
-            request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
-            result_wrapper=lambda _method, _channel, value: _Operation(
-                _Route(
-                    service="nebius.ai.v1.EndpointService",
-                    method="Restart",
-                    api_service_name="apps.msp",
-                    registry=_REGISTRY,
-                ),
-                _channel,
-                value,
-            ),
-            **kwargs,
-        )
-
-    def stop(
-        self, request: StopEndpointRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[StopEndpointRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Stops an endpoint.\n\nThe request object is returned without starting the RPC."
-        return super().request(
-            "Stop",
-            request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
-            result_wrapper=lambda _method, _channel, value: _Operation(
-                _Route(
-                    service="nebius.ai.v1.EndpointService",
-                    method="Stop",
-                    api_service_name="apps.msp",
+                    api_service_name="monitoring",
                     registry=_REGISTRY,
                 ),
                 _channel,
@@ -1337,178 +352,17 @@ class EndpointServiceClient(_ClientWithOperations):
         )
 
 
-_register_client("nebius.ai.v1.EndpointService", EndpointServiceClient)
-
-from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
-from .....aio.constant_channel import Constant as _Constant
-from .....aio.operation import Operation as _Operation
-from .....aio.request import Request as _Request
-from .....aio.request_kwargs import RequestKwargs as _RequestKwargs, StreamRequestKwargs as _StreamRequestKwargs
-from .....aio.route import Route as _Route
-from .....aio.stream import StreamRequest as _StreamRequest
-from .....base.fieldmask_protobuf import ensure_reset_mask_in_metadata as _ensure_reset_mask_in_metadata
-
-from typing_extensions import Unpack as _Unpack
-
-
-class JobServiceClient(_ClientWithOperations):
-    "Service to create/manage jobs.\n\nThis class provides client methods for the ``nebius.ai.v1.JobService`` service."
-
-    __service_name__ = "nebius.ai.v1.JobService"
-    """Fully qualified protobuf service name for RPC routes."""
-    __api_service_name__ = "apps.msp"
-    """API gateway name for service routes."""
-    __registry__ = _REGISTRY
-    """Descriptor registry for request metadata."""
-    __PB2_DESCRIPTOR__ = _REGISTRY.service_descriptor("nebius.ai.v1.JobService")
-    """Alias for code that expects a protobuf service descriptor."""
-
-    @classmethod
-    def get_descriptor(cls):
-        """Return the protobuf service descriptor from the registry."""
-        return _REGISTRY.service_descriptor("nebius.ai.v1.JobService")
-
-    __operation_type__ = _REGISTRY.message_class("nebius.common.v1.Operation")
-    """Message type representing a long-running operation."""
-    __operation_source_method__ = "Create"
-    """RPC method that supplies the operation route."""
-
-    def operation_service(self):
-        """Return the client that manages long-running operations."""
-        if self.__operation_service__ is None:
-            service_type = _REGISTRY.client_class("nebius.common.v1.OperationService")
-            self.__operation_service__ = service_type(
-                _Constant(
-                    _Route(
-                        service="nebius.ai.v1.JobService",
-                        method="Create",
-                        api_service_name="apps.msp",
-                        registry=_REGISTRY,
-                    ),
-                    self._channel,
-                )
-            )
-        return self.__operation_service__
-
-    def get(self, request: GetJobRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetJobRequest, Job]:
-        "Returns the specified job.\n\nThe request object is returned without starting the RPC."
-        return super().request("Get", request, _REGISTRY.message_class("nebius.ai.v1.Job"), **kwargs)
-
-    def get_by_name(
-        self, request: GetJobByNameRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[GetJobByNameRequest, Job]:
-        "Returns the specified job by name.\n\nThe request object is returned without starting the RPC."
-        return super().request("GetByName", request, _REGISTRY.message_class("nebius.ai.v1.Job"), **kwargs)
-
-    def list(
-        self, request: ListJobsRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[ListJobsRequest, ListJobsResponse]:
-        "Retrieves a list of jobs.\n\nThe request object is returned without starting the RPC."
-        return super().request("List", request, _REGISTRY.message_class("nebius.ai.v1.ListJobsResponse"), **kwargs)
-
-    def create(
-        self, request: CreateJobRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[CreateJobRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Creates a job.\n\nThe request object is returned without starting the RPC."
-        return super().request(
-            "Create",
-            request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
-            result_wrapper=lambda _method, _channel, value: _Operation(
-                _Route(
-                    service="nebius.ai.v1.JobService", method="Create", api_service_name="apps.msp", registry=_REGISTRY
-                ),
-                _channel,
-                value,
-            ),
-            **kwargs,
-        )
-
-    def delete(
-        self, request: DeleteJobRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[DeleteJobRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Deletes a job.\n\nThe request object is returned without starting the RPC."
-        return super().request(
-            "Delete",
-            request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
-            result_wrapper=lambda _method, _channel, value: _Operation(
-                _Route(
-                    service="nebius.ai.v1.JobService", method="Delete", api_service_name="apps.msp", registry=_REGISTRY
-                ),
-                _channel,
-                value,
-            ),
-            **kwargs,
-        )
-
-    def cancel(
-        self, request: CancelJobRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[CancelJobRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Cancels a job.\n\nThe request object is returned without starting the RPC."
-        return super().request(
-            "Cancel",
-            request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
-            result_wrapper=lambda _method, _channel, value: _Operation(
-                _Route(
-                    service="nebius.ai.v1.JobService", method="Cancel", api_service_name="apps.msp", registry=_REGISTRY
-                ),
-                _channel,
-                value,
-            ),
-            **kwargs,
-        )
-
-    def restart(
-        self, request: RestartJobRequest, **kwargs: _Unpack[_RequestKwargs]
-    ) -> _Request[RestartJobRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Restarts a job.\n\nThe request object is returned without starting the RPC."
-        return super().request(
-            "Restart",
-            request,
-            _REGISTRY.message_class("nebius.common.v1.Operation"),
-            result_wrapper=lambda _method, _channel, value: _Operation(
-                _Route(
-                    service="nebius.ai.v1.JobService", method="Restart", api_service_name="apps.msp", registry=_REGISTRY
-                ),
-                _channel,
-                value,
-            ),
-            **kwargs,
-        )
-
-
-_register_client("nebius.ai.v1.JobService", JobServiceClient)
+_register_client("nebius.monitoring.v1.RecordingRuleService", RecordingRuleServiceClient)
 
 __all__ = [
-    "CancelJobRequest",
-    "CreateEndpointRequest",
-    "CreateJobRequest",
-    "DeleteEndpointRequest",
-    "DeleteJobRequest",
-    "Endpoint",
-    "EndpointInstanceStatus",
-    "EndpointServiceClient",
-    "EndpointSpec",
-    "EndpointStateDetails",
-    "EndpointStatus",
-    "GetEndpointByNameRequest",
-    "GetEndpointRequest",
-    "GetJobByNameRequest",
-    "GetJobRequest",
-    "Job",
-    "JobInstanceStatus",
-    "JobServiceClient",
-    "JobSpec",
-    "JobStateDetails",
-    "JobStatus",
-    "ListEndpointsRequest",
-    "ListEndpointsResponse",
-    "ListJobsRequest",
-    "ListJobsResponse",
-    "RestartEndpointRequest",
-    "RestartJobRequest",
-    "StartEndpointRequest",
-    "StopEndpointRequest",
+    "CreateRecordingRuleRequest",
+    "DeleteRecordingRuleRequest",
+    "GetRecordingRuleRequest",
+    "ListRecordingRulesRequest",
+    "ListRecordingRulesResponse",
+    "RecordingRule",
+    "RecordingRuleServiceClient",
+    "RecordingRuleSpec",
+    "RecordingRuleStatus",
+    "UpdateRecordingRuleRequest",
 ]
