@@ -2482,7 +2482,9 @@ class InstanceStatus(_Message):
         """Set or clear the generated ``reconciling`` field."""
         ...
     @property
-    def maintenance_event_id(self) -> _builtins.str: ...
+    def maintenance_event_id(self) -> _builtins.str:
+        """Identifier of the maintenance event associated with the instance, if any."""
+        ...
     @maintenance_event_id.setter
     def maintenance_event_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``maintenance_event_id`` field."""

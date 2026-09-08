@@ -99,6 +99,8 @@
     "src/nebius/api/nebius/mk8s/v1/__init__.pyi",
     "src/nebius/api/nebius/mk8s/v1alpha1/__init__.py",
     "src/nebius/api/nebius/mk8s/v1alpha1/__init__.pyi",
+    "src/nebius/api/nebius/monitoring/v1/__init__.py",
+    "src/nebius/api/nebius/monitoring/v1/__init__.pyi",
     "src/nebius/api/nebius/msp/mlflow/v1alpha1/__init__.py",
     "src/nebius/api/nebius/msp/mlflow/v1alpha1/__init__.pyi",
     "src/nebius/api/nebius/msp/postgresql/v1alpha1/__init__.py",
