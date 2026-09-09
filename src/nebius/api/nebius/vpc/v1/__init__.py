@@ -314,7 +314,7 @@ GetAllocationRequest = _message_class(
     "GetAllocationRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the allocation."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -327,7 +327,7 @@ GetAllocationByNameRequest = _message_class(
     "GetAllocationByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the project."},
+    {"name": "Name of the allocation.", "parent_id": "ID of the parent project."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -340,7 +340,11 @@ ListAllocationsRequest = _message_class(
     "ListAllocationsRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the project."},
+    {
+        "page_size": "Maximum number of allocations to return.",
+        "page_token": "Token to retrieve the next page of allocations.",
+        "parent_id": "ID of the parent project.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -353,7 +357,11 @@ ListAllocationsByPoolRequest = _message_class(
     "ListAllocationsByPoolRequest",
     {"page_size": "page_size", "page_token": "page_token", "pool_id": "pool_id"},
     {},
-    {},
+    {
+        "page_size": "Maximum number of allocations to return.",
+        "page_token": "Token to retrieve the next page of allocations.",
+        "pool_id": "ID of the source pool.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -366,7 +374,11 @@ ListAllocationsBySubnetRequest = _message_class(
     "ListAllocationsBySubnetRequest",
     {"page_size": "page_size", "page_token": "page_token", "subnet_id": "subnet_id"},
     {},
-    {},
+    {
+        "page_size": "Maximum number of allocations to return.",
+        "page_token": "Token to retrieve the next page of allocations.",
+        "subnet_id": "ID of the subnet.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -392,7 +404,7 @@ CreateAllocationRequest = _message_class(
     "CreateAllocationRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the allocation.", "spec": "Specification of the allocation."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -405,7 +417,7 @@ UpdateAllocationRequest = _message_class(
     "UpdateAllocationRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the allocation.", "spec": "Updated specification of the allocation."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -418,7 +430,7 @@ DeleteAllocationRequest = _message_class(
     "DeleteAllocationRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the allocation."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -528,7 +540,7 @@ GetNetworkRequest = _message_class(
     "GetNetworkRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the network."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -541,7 +553,7 @@ GetNetworkByNameRequest = _message_class(
     "GetNetworkByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the project."},
+    {"name": "Name of the network.", "parent_id": "ID of the parent project."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -554,7 +566,11 @@ ListNetworksRequest = _message_class(
     "ListNetworksRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the project."},
+    {
+        "page_size": "Maximum number of networks to return.",
+        "page_token": "Token to retrieve the next page of networks.",
+        "parent_id": "ID of the parent project.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -580,7 +596,7 @@ CreateNetworkRequest = _message_class(
     "CreateNetworkRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the network.", "spec": "Specification of the network."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -593,7 +609,7 @@ CreateDefaultNetworkRequest = _message_class(
     "CreateDefaultNetworkRequest",
     {"metadata": "metadata"},
     {},
-    {},
+    {"metadata": "Metadata of the default network."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -606,7 +622,7 @@ UpdateNetworkRequest = _message_class(
     "UpdateNetworkRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the network.", "spec": "Updated specification of the network."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -619,7 +635,7 @@ DeleteNetworkRequest = _message_class(
     "DeleteNetworkRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the network."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -746,7 +762,7 @@ GetPoolRequest = _message_class(
     "GetPoolRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the pool."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -759,7 +775,7 @@ GetPoolByNameRequest = _message_class(
     "GetPoolByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the project."},
+    {"name": "Name of the pool.", "parent_id": "ID of the parent project."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -772,7 +788,11 @@ ListPoolsRequest = _message_class(
     "ListPoolsRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the project."},
+    {
+        "page_size": "Maximum number of pools to return.",
+        "page_token": "Token to retrieve the next page of pools.",
+        "parent_id": "ID of the parent project.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -785,7 +805,11 @@ ListPoolsBySourcePoolRequest = _message_class(
     "ListPoolsBySourcePoolRequest",
     {"page_size": "page_size", "page_token": "page_token", "pool_id": "pool_id"},
     {},
-    {},
+    {
+        "page_size": "Maximum number of pools to return.",
+        "page_token": "Token to retrieve the next page of pools.",
+        "pool_id": "ID of the source pool.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -811,7 +835,7 @@ CreatePoolRequest = _message_class(
     "CreatePoolRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the pool.", "spec": "Specification of the pool."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -824,7 +848,7 @@ UpdatePoolRequest = _message_class(
     "UpdatePoolRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the pool.", "spec": "Updated specification of the pool."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -837,7 +861,7 @@ DeletePoolRequest = _message_class(
     "DeletePoolRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the pool."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1008,7 +1032,7 @@ GetRouteRequest = _message_class(
     "GetRouteRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the route."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1021,7 +1045,7 @@ GetRouteByNameRequest = _message_class(
     "GetRouteByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the RouteTable."},
+    {"name": "Name of the route.", "parent_id": "ID of the parent route table."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1034,7 +1058,11 @@ ListRoutesRequest = _message_class(
     "ListRoutesRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the RouteTable."},
+    {
+        "page_size": "Maximum number of routes to return.",
+        "page_token": "Token to retrieve the next page of routes.",
+        "parent_id": "ID of the parent route table.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1060,7 +1088,7 @@ CreateRouteRequest = _message_class(
     "CreateRouteRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the route.", "spec": "Specification of the route."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1073,7 +1101,7 @@ UpdateRouteRequest = _message_class(
     "UpdateRouteRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the route.", "spec": "Updated specification of the route."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1086,7 +1114,7 @@ DeleteRouteRequest = _message_class(
     "DeleteRouteRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the route."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1170,7 +1198,7 @@ GetRouteTableRequest = _message_class(
     "GetRouteTableRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the route table."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1183,7 +1211,7 @@ GetRouteTableByNameRequest = _message_class(
     "GetRouteTableByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the Project."},
+    {"name": "Name of the route table.", "parent_id": "ID of the parent project."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1196,7 +1224,11 @@ ListRouteTablesRequest = _message_class(
     "ListRouteTablesRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the Project."},
+    {
+        "page_size": "Maximum number of route tables to return.",
+        "page_token": "Token to retrieve the next page of route tables.",
+        "parent_id": "ID of the parent project.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1209,7 +1241,11 @@ ListRouteTablesByNetworkRequest = _message_class(
     "ListRouteTablesByNetworkRequest",
     {"network_id": "network_id", "page_size": "page_size", "page_token": "page_token"},
     {},
-    {},
+    {
+        "network_id": "ID of the network.",
+        "page_size": "Maximum number of route tables to return.",
+        "page_token": "Token to retrieve the next page of route tables.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1235,7 +1271,7 @@ CreateRouteTableRequest = _message_class(
     "CreateRouteTableRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the route table.", "spec": "Specification of the route table."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1248,7 +1284,7 @@ UpdateRouteTableRequest = _message_class(
     "UpdateRouteTableRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the route table.", "spec": "Updated specification of the route table."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1261,7 +1297,7 @@ DeleteRouteTableRequest = _message_class(
     "DeleteRouteTableRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the route table."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1331,7 +1367,7 @@ GetSecurityGroupRequest = _message_class(
     "GetSecurityGroupRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the security group."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1344,7 +1380,7 @@ GetSecurityGroupByNameRequest = _message_class(
     "GetSecurityGroupByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the Project."},
+    {"name": "Name of the security group.", "parent_id": "ID of the parent project."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1357,7 +1393,11 @@ ListSecurityGroupsRequest = _message_class(
     "ListSecurityGroupsRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the Project."},
+    {
+        "page_size": "Maximum number of security groups to return.",
+        "page_token": "Token to retrieve the next page of security groups.",
+        "parent_id": "ID of the parent project.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1370,7 +1410,11 @@ ListSecurityGroupsByNetworkRequest = _message_class(
     "ListSecurityGroupsByNetworkRequest",
     {"network_id": "network_id", "page_size": "page_size", "page_token": "page_token"},
     {},
-    {"network_id": "ID of the Network."},
+    {
+        "network_id": "ID of the network.",
+        "page_size": "Maximum number of security groups to return.",
+        "page_token": "Token to retrieve the next page of security groups.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1396,7 +1440,7 @@ CreateSecurityGroupRequest = _message_class(
     "CreateSecurityGroupRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the security group.", "spec": "Specification of the security group."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1409,7 +1453,7 @@ UpdateSecurityGroupRequest = _message_class(
     "UpdateSecurityGroupRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the security group.", "spec": "Updated specification of the security group."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1422,7 +1466,7 @@ DeleteSecurityGroupRequest = _message_class(
     "DeleteSecurityGroupRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the security group."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1601,7 +1645,7 @@ GetSecurityRuleRequest = _message_class(
     "GetSecurityRuleRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the security rule."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1614,7 +1658,7 @@ GetSecurityRuleByNameRequest = _message_class(
     "GetSecurityRuleByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the Security Group."},
+    {"name": "Name of the security rule.", "parent_id": "ID of the parent security group."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1627,7 +1671,11 @@ ListSecurityRulesRequest = _message_class(
     "ListSecurityRulesRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the Security Group."},
+    {
+        "page_size": "Maximum number of security rules to return.",
+        "page_token": "Token to retrieve the next page of security rules.",
+        "parent_id": "ID of the parent security group.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1653,7 +1701,7 @@ CreateSecurityRuleRequest = _message_class(
     "CreateSecurityRuleRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the security rule.", "spec": "Specification of the security rule."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1666,7 +1714,7 @@ UpdateSecurityRuleRequest = _message_class(
     "UpdateSecurityRuleRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the security rule.", "spec": "Updated specification of the security rule."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1679,7 +1727,7 @@ DeleteSecurityRuleRequest = _message_class(
     "DeleteSecurityRuleRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the security rule."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1868,7 +1916,7 @@ GetSubnetRequest = _message_class(
     "GetSubnetRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the subnet."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1881,7 +1929,7 @@ GetSubnetByNameRequest = _message_class(
     "GetSubnetByNameRequest",
     {"name": "name", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the project."},
+    {"name": "Name of the subnet.", "parent_id": "ID of the parent project."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1894,7 +1942,11 @@ ListSubnetsRequest = _message_class(
     "ListSubnetsRequest",
     {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "ID of the parent project."},
+    {
+        "page_size": "Maximum number of subnets to return.",
+        "page_token": "Token to retrieve the next page of subnets.",
+        "parent_id": "ID of the parent project.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1907,7 +1959,11 @@ ListSubnetsByNetworkRequest = _message_class(
     "ListSubnetsByNetworkRequest",
     {"network_id": "network_id", "page_size": "page_size", "page_token": "page_token"},
     {},
-    {},
+    {
+        "network_id": "ID of the network.",
+        "page_size": "Maximum number of subnets to return.",
+        "page_token": "Token to retrieve the next page of subnets.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1933,7 +1989,7 @@ CreateSubnetRequest = _message_class(
     "CreateSubnetRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Metadata of the subnet.", "spec": "Specification of the subnet."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1946,7 +2002,7 @@ UpdateSubnetRequest = _message_class(
     "UpdateSubnetRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the subnet.", "spec": "Updated specification of the subnet."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1959,7 +2015,7 @@ DeleteSubnetRequest = _message_class(
     "DeleteSubnetRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the subnet."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -2074,7 +2130,7 @@ GetTargetGroupRequest = _message_class(
     "GetTargetGroupRequest",
     {"id": "id"},
     {},
-    {},
+    {"id": "ID of the target group."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -2087,7 +2143,7 @@ UpdateTargetGroupRequest = _message_class(
     "UpdateTargetGroupRequest",
     {"metadata": "metadata", "spec": "spec"},
     {},
-    {},
+    {"metadata": "Updated metadata of the target group.", "spec": "Updated specification of the target group."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -2108,7 +2164,7 @@ from typing_extensions import Unpack as _Unpack
 
 
 class AllocationServiceClient(_ClientWithOperations):
-    "This class provides client methods for the ``nebius.vpc.v1.AllocationService`` service."
+    "AllocationService provides operations for managing allocations.\n\nThis class provides client methods for the ``nebius.vpc.v1.AllocationService`` service."
 
     __service_name__ = "nebius.vpc.v1.AllocationService"
     """Fully qualified protobuf service name for RPC routes."""
@@ -2149,19 +2205,19 @@ class AllocationServiceClient(_ClientWithOperations):
     def get(
         self, request: GetAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetAllocationRequest, Allocation]:
-        "The request object is returned without starting the RPC."
+        "Retrieves an allocation by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.Allocation"), **kwargs)
 
     def get_by_name(
         self, request: GetAllocationByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetAllocationByNameRequest, Allocation]:
-        "The request object is returned without starting the RPC."
+        "Retrieves an allocation by its name within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.Allocation"), **kwargs)
 
     def list(
         self, request: ListAllocationsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsRequest, ListAllocationsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists allocations within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "List", request, _REGISTRY.message_class("nebius.vpc.v1.ListAllocationsResponse"), **kwargs
         )
@@ -2169,7 +2225,7 @@ class AllocationServiceClient(_ClientWithOperations):
     def list_by_pool(
         self, request: ListAllocationsByPoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsByPoolRequest, ListAllocationsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists allocations from a specified pool.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "ListByPool", request, _REGISTRY.message_class("nebius.vpc.v1.ListAllocationsResponse"), **kwargs
         )
@@ -2177,7 +2233,7 @@ class AllocationServiceClient(_ClientWithOperations):
     def list_by_subnet(
         self, request: ListAllocationsBySubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsBySubnetRequest, ListAllocationsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists allocations available to a specified subnet, including unassigned allocations from compatible pools.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "ListBySubnet", request, _REGISTRY.message_class("nebius.vpc.v1.ListAllocationsResponse"), **kwargs
         )
@@ -2185,7 +2241,7 @@ class AllocationServiceClient(_ClientWithOperations):
     def create(
         self, request: CreateAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateAllocationRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new allocation with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -2206,7 +2262,7 @@ class AllocationServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdateAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateAllocationRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing allocation with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -2228,7 +2284,7 @@ class AllocationServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeleteAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteAllocationRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes an allocation by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -2262,7 +2318,7 @@ from typing_extensions import Unpack as _Unpack
 
 
 class NetworkServiceClient(_ClientWithOperations):
-    "This class provides client methods for the ``nebius.vpc.v1.NetworkService`` service."
+    "NetworkService provides operations for managing networks.\n\nThis class provides client methods for the ``nebius.vpc.v1.NetworkService`` service."
 
     __service_name__ = "nebius.vpc.v1.NetworkService"
     """Fully qualified protobuf service name for RPC routes."""
@@ -2303,25 +2359,25 @@ class NetworkServiceClient(_ClientWithOperations):
     def get(
         self, request: GetNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetNetworkRequest, Network]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a network by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.Network"), **kwargs)
 
     def get_by_name(
         self, request: GetNetworkByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetNetworkByNameRequest, Network]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a network by its name within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.Network"), **kwargs)
 
     def list(
         self, request: ListNetworksRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListNetworksRequest, ListNetworksResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists networks within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("List", request, _REGISTRY.message_class("nebius.vpc.v1.ListNetworksResponse"), **kwargs)
 
     def create(
         self, request: CreateNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateNetworkRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new network with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -2339,7 +2395,7 @@ class NetworkServiceClient(_ClientWithOperations):
     def create_default(
         self, request: CreateDefaultNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateDefaultNetworkRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a default network, subnet, pools, and route table for a specified project.\nCreates a default security group when that feature is enabled for the project.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "CreateDefault",
             request,
@@ -2360,7 +2416,7 @@ class NetworkServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdateNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateNetworkRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing network with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -2379,7 +2435,7 @@ class NetworkServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeleteNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteNetworkRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes a network by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -2410,7 +2466,7 @@ from typing_extensions import Unpack as _Unpack
 
 
 class PoolServiceClient(_ClientWithOperations):
-    "This class provides client methods for the ``nebius.vpc.v1.PoolService`` service."
+    "PoolService provides operations for managing pools.\n\nThis class provides client methods for the ``nebius.vpc.v1.PoolService`` service."
 
     __service_name__ = "nebius.vpc.v1.PoolService"
     """Fully qualified protobuf service name for RPC routes."""
@@ -2446,25 +2502,25 @@ class PoolServiceClient(_ClientWithOperations):
         return self.__operation_service__
 
     def get(self, request: GetPoolRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetPoolRequest, Pool]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a pool by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.Pool"), **kwargs)
 
     def get_by_name(
         self, request: GetPoolByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetPoolByNameRequest, Pool]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a pool by its name within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.Pool"), **kwargs)
 
     def list(
         self, request: ListPoolsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListPoolsRequest, ListPoolsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists pools within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("List", request, _REGISTRY.message_class("nebius.vpc.v1.ListPoolsResponse"), **kwargs)
 
     def list_by_source_pool(
         self, request: ListPoolsBySourcePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListPoolsBySourcePoolRequest, ListPoolsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists pools that use a specified pool as their source.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "ListBySourcePool", request, _REGISTRY.message_class("nebius.vpc.v1.ListPoolsResponse"), **kwargs
         )
@@ -2472,7 +2528,7 @@ class PoolServiceClient(_ClientWithOperations):
     def create(
         self, request: CreatePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreatePoolRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new pool with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -2490,7 +2546,7 @@ class PoolServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdatePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdatePoolRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing pool with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -2509,7 +2565,7 @@ class PoolServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeletePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeletePoolRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes a pool by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -2540,7 +2596,7 @@ from typing_extensions import Unpack as _Unpack
 
 
 class RouteServiceClient(_ClientWithOperations):
-    "This class provides client methods for the ``nebius.vpc.v1.RouteService`` service."
+    "RouteService provides operations for managing routes.\n\nThis class provides client methods for the ``nebius.vpc.v1.RouteService`` service."
 
     __service_name__ = "nebius.vpc.v1.RouteService"
     """Fully qualified protobuf service name for RPC routes."""
@@ -2579,25 +2635,25 @@ class RouteServiceClient(_ClientWithOperations):
         return self.__operation_service__
 
     def get(self, request: GetRouteRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetRouteRequest, Route]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a route by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.Route"), **kwargs)
 
     def get_by_name(
         self, request: GetRouteByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetRouteByNameRequest, Route]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a route by its name within a specified route table.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.Route"), **kwargs)
 
     def list(
         self, request: ListRoutesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRoutesRequest, ListRoutesResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists routes in a specified route table.\n\nThe request object is returned without starting the RPC."
         return super().request("List", request, _REGISTRY.message_class("nebius.vpc.v1.ListRoutesResponse"), **kwargs)
 
     def create(
         self, request: CreateRouteRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateRouteRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new route with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -2615,7 +2671,7 @@ class RouteServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdateRouteRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateRouteRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing route with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -2634,7 +2690,7 @@ class RouteServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeleteRouteRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteRouteRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes a route by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -2665,7 +2721,7 @@ from typing_extensions import Unpack as _Unpack
 
 
 class RouteTableServiceClient(_ClientWithOperations):
-    "This class provides client methods for the ``nebius.vpc.v1.RouteTableService`` service."
+    "RouteTableService provides operations for managing route tables.\n\nThis class provides client methods for the ``nebius.vpc.v1.RouteTableService`` service."
 
     __service_name__ = "nebius.vpc.v1.RouteTableService"
     """Fully qualified protobuf service name for RPC routes."""
@@ -2706,19 +2762,19 @@ class RouteTableServiceClient(_ClientWithOperations):
     def get(
         self, request: GetRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetRouteTableRequest, RouteTable]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a route table by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.RouteTable"), **kwargs)
 
     def get_by_name(
         self, request: GetRouteTableByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetRouteTableByNameRequest, RouteTable]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a route table by its name within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.RouteTable"), **kwargs)
 
     def list(
         self, request: ListRouteTablesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRouteTablesRequest, ListRouteTablesResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists route tables within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "List", request, _REGISTRY.message_class("nebius.vpc.v1.ListRouteTablesResponse"), **kwargs
         )
@@ -2726,7 +2782,7 @@ class RouteTableServiceClient(_ClientWithOperations):
     def list_by_network(
         self, request: ListRouteTablesByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRouteTablesByNetworkRequest, ListRouteTablesResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists route tables that belong to a specified network.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "ListByNetwork", request, _REGISTRY.message_class("nebius.vpc.v1.ListRouteTablesResponse"), **kwargs
         )
@@ -2734,7 +2790,7 @@ class RouteTableServiceClient(_ClientWithOperations):
     def create(
         self, request: CreateRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateRouteTableRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new route table with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -2755,7 +2811,7 @@ class RouteTableServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdateRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateRouteTableRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing route table with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -2777,7 +2833,7 @@ class RouteTableServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeleteRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteRouteTableRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes a route table by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -2852,19 +2908,19 @@ class SecurityGroupServiceClient(_ClientWithOperations):
     def get(
         self, request: GetSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityGroupRequest, SecurityGroup]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a security group by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.SecurityGroup"), **kwargs)
 
     def get_by_name(
         self, request: GetSecurityGroupByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityGroupByNameRequest, SecurityGroup]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a security group by its name within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.SecurityGroup"), **kwargs)
 
     def list(
         self, request: ListSecurityGroupsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSecurityGroupsRequest, ListSecurityGroupsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists security groups within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "List", request, _REGISTRY.message_class("nebius.vpc.v1.ListSecurityGroupsResponse"), **kwargs
         )
@@ -2872,7 +2928,7 @@ class SecurityGroupServiceClient(_ClientWithOperations):
     def list_by_network(
         self, request: ListSecurityGroupsByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSecurityGroupsByNetworkRequest, ListSecurityGroupsResponse]:
-        "Lists security groups in a specific network.\n\nThe request object is returned without starting the RPC."
+        "Lists security groups in a specified network.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "ListByNetwork", request, _REGISTRY.message_class("nebius.vpc.v1.ListSecurityGroupsResponse"), **kwargs
         )
@@ -2880,7 +2936,7 @@ class SecurityGroupServiceClient(_ClientWithOperations):
     def create(
         self, request: CreateSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateSecurityGroupRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new security group with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -2901,7 +2957,7 @@ class SecurityGroupServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdateSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateSecurityGroupRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing security group with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -2923,7 +2979,7 @@ class SecurityGroupServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeleteSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteSecurityGroupRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes a security group by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -2998,19 +3054,19 @@ class SecurityRuleServiceClient(_ClientWithOperations):
     def get(
         self, request: GetSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityRuleRequest, SecurityRule]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a security rule by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.SecurityRule"), **kwargs)
 
     def get_by_name(
         self, request: GetSecurityRuleByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityRuleByNameRequest, SecurityRule]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a security rule by its name within a specified security group.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.SecurityRule"), **kwargs)
 
     def list(
         self, request: ListSecurityRulesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSecurityRulesRequest, ListSecurityRulesResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists security rules in a specified security group.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "List", request, _REGISTRY.message_class("nebius.vpc.v1.ListSecurityRulesResponse"), **kwargs
         )
@@ -3018,7 +3074,7 @@ class SecurityRuleServiceClient(_ClientWithOperations):
     def create(
         self, request: CreateSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateSecurityRuleRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new security rule with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -3039,7 +3095,7 @@ class SecurityRuleServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdateSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateSecurityRuleRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing security rule with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -3061,7 +3117,7 @@ class SecurityRuleServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeleteSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteSecurityRuleRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes a security rule by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -3095,7 +3151,7 @@ from typing_extensions import Unpack as _Unpack
 
 
 class SubnetServiceClient(_ClientWithOperations):
-    "This class provides client methods for the ``nebius.vpc.v1.SubnetService`` service."
+    "SubnetService provides operations for managing subnets.\n\nThis class provides client methods for the ``nebius.vpc.v1.SubnetService`` service."
 
     __service_name__ = "nebius.vpc.v1.SubnetService"
     """Fully qualified protobuf service name for RPC routes."""
@@ -3134,25 +3190,25 @@ class SubnetServiceClient(_ClientWithOperations):
         return self.__operation_service__
 
     def get(self, request: GetSubnetRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetSubnetRequest, Subnet]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a subnet by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.Subnet"), **kwargs)
 
     def get_by_name(
         self, request: GetSubnetByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSubnetByNameRequest, Subnet]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a subnet by its name within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1.Subnet"), **kwargs)
 
     def list(
         self, request: ListSubnetsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSubnetsRequest, ListSubnetsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists subnets within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("List", request, _REGISTRY.message_class("nebius.vpc.v1.ListSubnetsResponse"), **kwargs)
 
     def list_by_network(
         self, request: ListSubnetsByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSubnetsByNetworkRequest, ListSubnetsResponse]:
-        "The request object is returned without starting the RPC."
+        "Lists subnets that belong to a specified network.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "ListByNetwork", request, _REGISTRY.message_class("nebius.vpc.v1.ListSubnetsResponse"), **kwargs
         )
@@ -3160,7 +3216,7 @@ class SubnetServiceClient(_ClientWithOperations):
     def create(
         self, request: CreateSubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateSubnetRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Creates a new subnet with the specified configuration.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -3178,7 +3234,7 @@ class SubnetServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdateSubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateSubnetRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing subnet with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
@@ -3197,7 +3253,7 @@ class SubnetServiceClient(_ClientWithOperations):
     def delete(
         self, request: DeleteSubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteSubnetRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Deletes a subnet by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Delete",
             request,
@@ -3228,7 +3284,7 @@ from typing_extensions import Unpack as _Unpack
 
 
 class TargetGroupServiceClient(_ClientWithOperations):
-    "This class provides client methods for the ``nebius.vpc.v1.TargetGroupService`` service."
+    "TargetGroupService provides operations for managing target groups.\n\nThis class provides client methods for the ``nebius.vpc.v1.TargetGroupService`` service."
 
     __service_name__ = "nebius.vpc.v1.TargetGroupService"
     """Fully qualified protobuf service name for RPC routes."""
@@ -3269,13 +3325,13 @@ class TargetGroupServiceClient(_ClientWithOperations):
     def get(
         self, request: GetTargetGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetTargetGroupRequest, TargetGroup]:
-        "The request object is returned without starting the RPC."
+        "Retrieves a target group by its ID.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.vpc.v1.TargetGroup"), **kwargs)
 
     def update(
         self, request: UpdateTargetGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateTargetGroupRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "The request object is returned without starting the RPC."
+        "Updates an existing target group with new configuration parameters.\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",
