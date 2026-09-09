@@ -67,7 +67,19 @@ timeout):
 """
 
 import sys
-from asyncio import FIRST_COMPLETED, CancelledError, Event, Future, Task, create_task, gather, sleep, wait, wait_for
+from asyncio import (
+    FIRST_COMPLETED,
+    CancelledError,
+    Event,
+    Future,
+    Task,
+    create_task,
+    gather,
+    shield,
+    sleep,
+    wait,
+    wait_for,
+)
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
@@ -390,12 +402,18 @@ class Bearer(ParentBearer):
                         log.error(f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float: {err=}")
                 self._renew_synchronous_options = options.copy()  # type: ignore
             if report_error or synchronous:
-                self._renewal_future = Future[Token]()
+                if self._renewal_future is None or self._renewal_future.done():
+                    self._renewal_future = Future[Token]()
+                    # Observe errors even if every waiter leaves before renewal finishes.
+                    self._renewal_future.add_done_callback(
+                        lambda future: None if future.cancelled() else future.exception()
+                    )
 
             self._renew_requested.set()
             if report_error or synchronous:
                 try:
-                    token = await wait_for(self._renewal_future, timeout)  # type: ignore
+                    # A caller's timeout or cancellation must not cancel the shared result.
+                    token = await wait_for(shield(self._renewal_future), timeout)  # type: ignore
                     self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
                     return token
                 except Exception:

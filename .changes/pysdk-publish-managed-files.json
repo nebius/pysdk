@@ -195,6 +195,7 @@
     "tests/test_metrics_scheduling.py",
     "tests/test_namespace_relocation.py",
     "tests/test_progress_tracker.py",
+    "tests/test_renewable_cancellation.py",
     "tests/test_revamp_compatibility.py",
     "tests/test_routes.py",
     "tests/test_streaming.py",

@@ -447,7 +447,9 @@ class LoadBalancerAssignment(_Message):
 
 class GetAllocationRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the allocation."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -461,14 +463,16 @@ class GetAllocationRequest(_Message):
 class GetAllocationByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the allocation."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -486,20 +490,24 @@ class GetAllocationByNameRequest(_Message):
 class ListAllocationsRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of allocations to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of allocations."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -517,19 +525,25 @@ class ListAllocationsRequest(_Message):
 
 class ListAllocationsByPoolRequest(_Message):
     @property
-    def pool_id(self) -> _builtins.str: ...
+    def pool_id(self) -> _builtins.str:
+        """ID of the source pool."""
+        ...
     @pool_id.setter
     def pool_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``pool_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of allocations to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of allocations."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -547,19 +561,25 @@ class ListAllocationsByPoolRequest(_Message):
 
 class ListAllocationsBySubnetRequest(_Message):
     @property
-    def subnet_id(self) -> _builtins.str: ...
+    def subnet_id(self) -> _builtins.str:
+        """ID of the subnet."""
+        ...
     @subnet_id.setter
     def subnet_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``subnet_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of allocations to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of allocations."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -600,13 +620,17 @@ class ListAllocationsResponse(_Message):
 
 class CreateAllocationRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the allocation."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> AllocationSpec: ...
+    def spec(self) -> AllocationSpec:
+        """Specification of the allocation."""
+        ...
     @spec.setter
     def spec(self, value: AllocationSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -623,13 +647,17 @@ class CreateAllocationRequest(_Message):
 
 class UpdateAllocationRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the allocation."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> AllocationSpec: ...
+    def spec(self) -> AllocationSpec:
+        """Updated specification of the allocation."""
+        ...
     @spec.setter
     def spec(self, value: AllocationSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -646,7 +674,9 @@ class UpdateAllocationRequest(_Message):
 
 class DeleteAllocationRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the allocation."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -810,7 +840,9 @@ class NetworkStatus(_Message):
 
 class GetNetworkRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the network."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -824,14 +856,16 @@ class GetNetworkRequest(_Message):
 class GetNetworkByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the network."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -849,20 +883,24 @@ class GetNetworkByNameRequest(_Message):
 class ListNetworksRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of networks to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of networks."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -903,13 +941,17 @@ class ListNetworksResponse(_Message):
 
 class CreateNetworkRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the network."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> NetworkSpec: ...
+    def spec(self) -> NetworkSpec:
+        """Specification of the network."""
+        ...
     @spec.setter
     def spec(self, value: NetworkSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -926,7 +968,9 @@ class CreateNetworkRequest(_Message):
 
 class CreateDefaultNetworkRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the default network."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
@@ -942,13 +986,17 @@ class CreateDefaultNetworkRequest(_Message):
 
 class UpdateNetworkRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the network."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> NetworkSpec: ...
+    def spec(self) -> NetworkSpec:
+        """Updated specification of the network."""
+        ...
     @spec.setter
     def spec(self, value: NetworkSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -965,7 +1013,9 @@ class UpdateNetworkRequest(_Message):
 
 class DeleteNetworkRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the network."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -1206,7 +1256,9 @@ class PoolAssignment(_Message):
 
 class GetPoolRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the pool."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -1220,14 +1272,16 @@ class GetPoolRequest(_Message):
 class GetPoolByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the pool."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -1245,20 +1299,24 @@ class GetPoolByNameRequest(_Message):
 class ListPoolsRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of pools to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of pools."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -1276,19 +1334,25 @@ class ListPoolsRequest(_Message):
 
 class ListPoolsBySourcePoolRequest(_Message):
     @property
-    def pool_id(self) -> _builtins.str: ...
+    def pool_id(self) -> _builtins.str:
+        """ID of the source pool."""
+        ...
     @pool_id.setter
     def pool_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``pool_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of pools to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of pools."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -1329,13 +1393,17 @@ class ListPoolsResponse(_Message):
 
 class CreatePoolRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the pool."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> PoolSpec: ...
+    def spec(self) -> PoolSpec:
+        """Specification of the pool."""
+        ...
     @spec.setter
     def spec(self, value: PoolSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -1352,13 +1420,17 @@ class CreatePoolRequest(_Message):
 
 class UpdatePoolRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the pool."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> PoolSpec: ...
+    def spec(self) -> PoolSpec:
+        """Updated specification of the pool."""
+        ...
     @spec.setter
     def spec(self, value: PoolSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -1375,7 +1447,9 @@ class UpdatePoolRequest(_Message):
 
 class DeletePoolRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the pool."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -1680,7 +1754,9 @@ class DefaultEgressGatewayState(_Message):
 
 class GetRouteRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the route."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -1694,14 +1770,16 @@ class GetRouteRequest(_Message):
 class GetRouteByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the RouteTable."""
+        """ID of the parent route table."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the route."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -1719,20 +1797,24 @@ class GetRouteByNameRequest(_Message):
 class ListRoutesRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the RouteTable."""
+        """ID of the parent route table."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of routes to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of routes."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -1773,13 +1855,17 @@ class ListRoutesResponse(_Message):
 
 class CreateRouteRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the route."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> RouteSpec: ...
+    def spec(self) -> RouteSpec:
+        """Specification of the route."""
+        ...
     @spec.setter
     def spec(self, value: RouteSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -1796,13 +1882,17 @@ class CreateRouteRequest(_Message):
 
 class UpdateRouteRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the route."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> RouteSpec: ...
+    def spec(self) -> RouteSpec:
+        """Updated specification of the route."""
+        ...
     @spec.setter
     def spec(self, value: RouteSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -1819,7 +1909,9 @@ class UpdateRouteRequest(_Message):
 
 class DeleteRouteRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the route."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -1950,7 +2042,9 @@ class RouteTableAssignment(_Message):
 
 class GetRouteTableRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the route table."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -1964,14 +2058,16 @@ class GetRouteTableRequest(_Message):
 class GetRouteTableByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the Project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the route table."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -1989,20 +2085,24 @@ class GetRouteTableByNameRequest(_Message):
 class ListRouteTablesRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the Project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of route tables to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of route tables."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -2020,19 +2120,25 @@ class ListRouteTablesRequest(_Message):
 
 class ListRouteTablesByNetworkRequest(_Message):
     @property
-    def network_id(self) -> _builtins.str: ...
+    def network_id(self) -> _builtins.str:
+        """ID of the network."""
+        ...
     @network_id.setter
     def network_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``network_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of route tables to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of route tables."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -2073,13 +2179,17 @@ class ListRouteTablesResponse(_Message):
 
 class CreateRouteTableRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the route table."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> RouteTableSpec: ...
+    def spec(self) -> RouteTableSpec:
+        """Specification of the route table."""
+        ...
     @spec.setter
     def spec(self, value: RouteTableSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -2096,13 +2206,17 @@ class CreateRouteTableRequest(_Message):
 
 class UpdateRouteTableRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the route table."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> RouteTableSpec: ...
+    def spec(self) -> RouteTableSpec:
+        """Updated specification of the route table."""
+        ...
     @spec.setter
     def spec(self, value: RouteTableSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -2119,7 +2233,9 @@ class UpdateRouteTableRequest(_Message):
 
 class DeleteRouteTableRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the route table."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -2223,7 +2339,9 @@ class SecurityGroupStatus(_Message):
 
 class GetSecurityGroupRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the security group."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -2237,14 +2355,16 @@ class GetSecurityGroupRequest(_Message):
 class GetSecurityGroupByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the Project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the security group."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -2262,20 +2382,24 @@ class GetSecurityGroupByNameRequest(_Message):
 class ListSecurityGroupsRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the Project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of security groups to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of security groups."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -2294,20 +2418,24 @@ class ListSecurityGroupsRequest(_Message):
 class ListSecurityGroupsByNetworkRequest(_Message):
     @property
     def network_id(self) -> _builtins.str:
-        """ID of the Network."""
+        """ID of the network."""
         ...
     @network_id.setter
     def network_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``network_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of security groups to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of security groups."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -2348,13 +2476,17 @@ class ListSecurityGroupsResponse(_Message):
 
 class CreateSecurityGroupRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the security group."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> SecurityGroupSpec: ...
+    def spec(self) -> SecurityGroupSpec:
+        """Specification of the security group."""
+        ...
     @spec.setter
     def spec(self, value: SecurityGroupSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -2371,13 +2503,17 @@ class CreateSecurityGroupRequest(_Message):
 
 class UpdateSecurityGroupRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the security group."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> SecurityGroupSpec: ...
+    def spec(self) -> SecurityGroupSpec:
+        """Updated specification of the security group."""
+        ...
     @spec.setter
     def spec(self, value: SecurityGroupSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -2394,7 +2530,9 @@ class UpdateSecurityGroupRequest(_Message):
 
 class DeleteSecurityGroupRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the security group."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -2723,7 +2861,9 @@ class RuleMatchStatus(_Message):
 
 class GetSecurityRuleRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the security rule."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -2737,14 +2877,16 @@ class GetSecurityRuleRequest(_Message):
 class GetSecurityRuleByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the Security Group."""
+        """ID of the parent security group."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the security rule."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -2762,20 +2904,24 @@ class GetSecurityRuleByNameRequest(_Message):
 class ListSecurityRulesRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the Security Group."""
+        """ID of the parent security group."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of security rules to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of security rules."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -2816,13 +2962,17 @@ class ListSecurityRulesResponse(_Message):
 
 class CreateSecurityRuleRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the security rule."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> SecurityRuleSpec: ...
+    def spec(self) -> SecurityRuleSpec:
+        """Specification of the security rule."""
+        ...
     @spec.setter
     def spec(self, value: SecurityRuleSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -2839,13 +2989,17 @@ class CreateSecurityRuleRequest(_Message):
 
 class UpdateSecurityRuleRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the security rule."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> SecurityRuleSpec: ...
+    def spec(self) -> SecurityRuleSpec:
+        """Updated specification of the security rule."""
+        ...
     @spec.setter
     def spec(self, value: SecurityRuleSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -2862,7 +3016,9 @@ class UpdateSecurityRuleRequest(_Message):
 
 class DeleteSecurityRuleRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the security rule."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -3193,7 +3349,9 @@ class SubnetAssociatedRouteTable(_Message):
 
 class GetSubnetRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the subnet."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -3207,14 +3365,16 @@ class GetSubnetRequest(_Message):
 class GetSubnetByNameRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the project."""
+        """ID of the parent project."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def name(self) -> _builtins.str: ...
+    def name(self) -> _builtins.str:
+        """Name of the subnet."""
+        ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``name`` field."""
@@ -3239,13 +3399,17 @@ class ListSubnetsRequest(_Message):
         """Set or clear the generated ``parent_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of subnets to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of subnets."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -3263,19 +3427,25 @@ class ListSubnetsRequest(_Message):
 
 class ListSubnetsByNetworkRequest(_Message):
     @property
-    def network_id(self) -> _builtins.str: ...
+    def network_id(self) -> _builtins.str:
+        """ID of the network."""
+        ...
     @network_id.setter
     def network_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``network_id`` field."""
         ...
     @property
-    def page_size(self) -> _builtins.int: ...
+    def page_size(self) -> _builtins.int:
+        """Maximum number of subnets to return."""
+        ...
     @page_size.setter
     def page_size(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``page_size`` field."""
         ...
     @property
-    def page_token(self) -> _builtins.str: ...
+    def page_token(self) -> _builtins.str:
+        """Token to retrieve the next page of subnets."""
+        ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -3316,13 +3486,17 @@ class ListSubnetsResponse(_Message):
 
 class CreateSubnetRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Metadata of the subnet."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> SubnetSpec: ...
+    def spec(self) -> SubnetSpec:
+        """Specification of the subnet."""
+        ...
     @spec.setter
     def spec(self, value: SubnetSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -3339,13 +3513,17 @@ class CreateSubnetRequest(_Message):
 
 class UpdateSubnetRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the subnet."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> SubnetSpec: ...
+    def spec(self) -> SubnetSpec:
+        """Updated specification of the subnet."""
+        ...
     @spec.setter
     def spec(self, value: SubnetSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -3362,7 +3540,9 @@ class UpdateSubnetRequest(_Message):
 
 class DeleteSubnetRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the subnet."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -3551,7 +3731,9 @@ class TargetStatus(_Message):
 
 class GetTargetGroupRequest(_Message):
     @property
-    def id(self) -> _builtins.str: ...
+    def id(self) -> _builtins.str:
+        """ID of the target group."""
+        ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
@@ -3564,13 +3746,17 @@ class GetTargetGroupRequest(_Message):
 
 class UpdateTargetGroupRequest(_Message):
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Updated metadata of the target group."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> TargetGroupSpec: ...
+    def spec(self) -> TargetGroupSpec:
+        """Updated specification of the target group."""
+        ...
     @spec.setter
     def spec(self, value: TargetGroupSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
@@ -3586,189 +3772,189 @@ class UpdateTargetGroupRequest(_Message):
         ...
 
 class AllocationServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.vpc.v1.AllocationService`` service."""
+    """AllocationService provides operations for managing allocations.\n\nThis class provides client methods for the ``nebius.vpc.v1.AllocationService`` service."""
     def get(
         self, request: GetAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetAllocationRequest, Allocation]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves an allocation by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetAllocationByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetAllocationByNameRequest, Allocation]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves an allocation by its name within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListAllocationsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsRequest, ListAllocationsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists allocations within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_pool(
         self, request: ListAllocationsByPoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsByPoolRequest, ListAllocationsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists allocations from a specified pool.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_subnet(
         self, request: ListAllocationsBySubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsBySubnetRequest, ListAllocationsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists allocations available to a specified subnet, including unassigned allocations from compatible pools.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreateAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateAllocationRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new allocation with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateAllocationRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing allocation with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeleteAllocationRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteAllocationRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes an allocation by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class NetworkServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.vpc.v1.NetworkService`` service."""
+    """NetworkService provides operations for managing networks.\n\nThis class provides client methods for the ``nebius.vpc.v1.NetworkService`` service."""
     def get(
         self, request: GetNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetNetworkRequest, Network]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a network by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetNetworkByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetNetworkByNameRequest, Network]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a network by its name within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListNetworksRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListNetworksRequest, ListNetworksResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists networks within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreateNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateNetworkRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new network with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def create_default(
         self, request: CreateDefaultNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateDefaultNetworkRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a default network, subnet, pools, and route table for a specified project.\nCreates a default security group when that feature is enabled for the project.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateNetworkRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing network with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeleteNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteNetworkRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes a network by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class PoolServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.vpc.v1.PoolService`` service."""
+    """PoolService provides operations for managing pools.\n\nThis class provides client methods for the ``nebius.vpc.v1.PoolService`` service."""
     def get(self, request: GetPoolRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetPoolRequest, Pool]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a pool by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetPoolByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetPoolByNameRequest, Pool]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a pool by its name within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListPoolsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListPoolsRequest, ListPoolsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists pools within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_source_pool(
         self, request: ListPoolsBySourcePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListPoolsBySourcePoolRequest, ListPoolsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists pools that use a specified pool as their source.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreatePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreatePoolRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new pool with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdatePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdatePoolRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing pool with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeletePoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeletePoolRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes a pool by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class RouteServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.vpc.v1.RouteService`` service."""
+    """RouteService provides operations for managing routes.\n\nThis class provides client methods for the ``nebius.vpc.v1.RouteService`` service."""
     def get(self, request: GetRouteRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetRouteRequest, Route]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a route by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetRouteByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetRouteByNameRequest, Route]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a route by its name within a specified route table.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListRoutesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRoutesRequest, ListRoutesResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists routes in a specified route table.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreateRouteRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateRouteRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new route with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateRouteRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateRouteRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing route with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeleteRouteRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteRouteRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes a route by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class RouteTableServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.vpc.v1.RouteTableService`` service."""
+    """RouteTableService provides operations for managing route tables.\n\nThis class provides client methods for the ``nebius.vpc.v1.RouteTableService`` service."""
     def get(
         self, request: GetRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetRouteTableRequest, RouteTable]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a route table by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetRouteTableByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetRouteTableByNameRequest, RouteTable]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a route table by its name within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListRouteTablesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRouteTablesRequest, ListRouteTablesResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists route tables within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_network(
         self, request: ListRouteTablesByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRouteTablesByNetworkRequest, ListRouteTablesResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists route tables that belong to a specified network.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreateRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateRouteTableRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new route table with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateRouteTableRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing route table with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeleteRouteTableRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteRouteTableRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes a route table by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class SecurityGroupServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
@@ -3776,37 +3962,37 @@ class SecurityGroupServiceClient(_ClientWithOperations[_type_nebius_common_v1_Op
     def get(
         self, request: GetSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityGroupRequest, SecurityGroup]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a security group by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetSecurityGroupByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityGroupByNameRequest, SecurityGroup]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a security group by its name within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListSecurityGroupsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSecurityGroupsRequest, ListSecurityGroupsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists security groups within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_network(
         self, request: ListSecurityGroupsByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSecurityGroupsByNetworkRequest, ListSecurityGroupsResponse]:
-        """Lists security groups in a specific network.\n\nThe request object is returned without starting the RPC."""
+        """Lists security groups in a specified network.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreateSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateSecurityGroupRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new security group with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateSecurityGroupRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing security group with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeleteSecurityGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteSecurityGroupRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes a security group by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class SecurityRuleServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
@@ -3814,81 +4000,81 @@ class SecurityRuleServiceClient(_ClientWithOperations[_type_nebius_common_v1_Ope
     def get(
         self, request: GetSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityRuleRequest, SecurityRule]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a security rule by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetSecurityRuleByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSecurityRuleByNameRequest, SecurityRule]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a security rule by its name within a specified security group.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListSecurityRulesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSecurityRulesRequest, ListSecurityRulesResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists security rules in a specified security group.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreateSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateSecurityRuleRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new security rule with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateSecurityRuleRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing security rule with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeleteSecurityRuleRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteSecurityRuleRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes a security rule by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class SubnetServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.vpc.v1.SubnetService`` service."""
+    """SubnetService provides operations for managing subnets.\n\nThis class provides client methods for the ``nebius.vpc.v1.SubnetService`` service."""
     def get(self, request: GetSubnetRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetSubnetRequest, Subnet]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a subnet by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def get_by_name(
         self, request: GetSubnetByNameRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetSubnetByNameRequest, Subnet]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a subnet by its name within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list(
         self, request: ListSubnetsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSubnetsRequest, ListSubnetsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists subnets within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_network(
         self, request: ListSubnetsByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSubnetsByNetworkRequest, ListSubnetsResponse]:
-        """The request object is returned without starting the RPC."""
+        """Lists subnets that belong to a specified network.\n\nThe request object is returned without starting the RPC."""
         ...
     def create(
         self, request: CreateSubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateSubnetRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Creates a new subnet with the specified configuration.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateSubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateSubnetRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing subnet with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeleteSubnetRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[DeleteSubnetRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Deletes a subnet by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
 
 class TargetGroupServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.vpc.v1.TargetGroupService`` service."""
+    """TargetGroupService provides operations for managing target groups.\n\nThis class provides client methods for the ``nebius.vpc.v1.TargetGroupService`` service."""
     def get(
         self, request: GetTargetGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetTargetGroupRequest, TargetGroup]:
-        """The request object is returned without starting the RPC."""
+        """Retrieves a target group by its ID.\n\nThe request object is returned without starting the RPC."""
         ...
     def update(
         self, request: UpdateTargetGroupRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdateTargetGroupRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """The request object is returned without starting the RPC."""
+        """Updates an existing target group with new configuration parameters.\n\nThe request object is returned without starting the RPC."""
         ...
 
 __all__ = [

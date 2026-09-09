@@ -6,7 +6,7 @@ import pytest
 
 @pytest.mark.asyncio()
 async def test_credentials_updater() -> None:
-    from asyncio import sleep
+    from asyncio import Future
 
     import grpc
     import grpc.aio
@@ -47,9 +47,10 @@ async def test_credentials_updater() -> None:
             context: grpc.aio.ServicerContext[ExchangeTokenRequest, CreateTokenResponse],
         ) -> CreateTokenResponse:
             nonlocal call
-            if call == 0:
-                call += 1
-                await sleep(6)
+            call += 1
+            if call == 1:
+                # Keep the first exchange pending until the client cancels it.
+                await Future()
             ret = CreateTokenResponse(
                 access_token="foo-bar",
                 expires_in=3600,
@@ -115,11 +116,13 @@ async def test_credentials_updater() -> None:
         client = DiskServiceClient(channel)
         upd = UpdateDiskRequest()
         upd.metadata.id = "foo-bar"
-        req = client.update(upd, auth_timeout=10.0)
+        # Allow for the five-second exchange timeout, retry delay, and CI load.
+        req = client.update(upd, auth_timeout=30.0)
 
         # Await response and metadata
         ret = await req
         assert isinstance(ret, Operation)
+        assert call >= 2
     finally:
         # Clean up
         if channel is not None:
@@ -129,7 +132,7 @@ async def test_credentials_updater() -> None:
 
 @pytest.mark.asyncio()
 async def test_credentials_updater_sync() -> None:
-    from asyncio import sleep
+    from asyncio import Future
 
     import grpc
     import grpc.aio
@@ -170,9 +173,10 @@ async def test_credentials_updater_sync() -> None:
             context: grpc.aio.ServicerContext[ExchangeTokenRequest, CreateTokenResponse],
         ) -> CreateTokenResponse:
             nonlocal call
-            if call == 0:
-                call += 1
-                await sleep(6)
+            call += 1
+            if call == 1:
+                # Keep the first exchange pending until the client cancels it.
+                await Future()
             ret = CreateTokenResponse(
                 access_token="foo-bar",
                 expires_in=3600,
@@ -245,7 +249,7 @@ async def test_credentials_updater_sync() -> None:
         upd.metadata.id = "foo-bar"
         req = client.update(
             upd,
-            auth_timeout=10.0,
+            auth_timeout=30.0,
             auth_options={
                 OPTION_RENEW_REQUIRED: "1",
                 OPTION_RENEW_SYNCHRONOUS: "1",
@@ -256,6 +260,7 @@ async def test_credentials_updater_sync() -> None:
         # Await response and metadata
         ret = await req
         assert isinstance(ret, Operation)
+        assert call >= 2
     finally:
         # Clean up
         if channel is not None:
