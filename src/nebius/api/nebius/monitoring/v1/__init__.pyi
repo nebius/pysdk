@@ -140,7 +140,7 @@ class ListRecordingRulesRequest(_Message):
     """Request to list recording rules."""
     @property
     def parent_id(self) -> _builtins.str:
-        """ID of the parent workspace."""
+        """ID of the parent."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
@@ -169,6 +169,33 @@ class ListRecordingRulesRequest(_Message):
         parent_id: _builtins.str | None | _UnsetType = ...,
         page_size: _builtins.int | None | _UnsetType = ...,
         page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class GetRecordingRuleByNameRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str:
+        """ID of the parent."""
+        ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def name(self) -> _builtins.str:
+        """Resource name, not the recorded metric name."""
+        ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        name: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -280,6 +307,11 @@ class RecordingRuleServiceClient(_ClientWithOperations[_type_nebius_common_v1alp
     ) -> _Request[GetRecordingRuleRequest, RecordingRule]:
         """Returns the specified recording rule.\n\nThe request object is returned without starting the RPC."""
         ...
+    def get_by_name(
+        self, request: GetRecordingRuleByNameRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetRecordingRuleByNameRequest, RecordingRule]:
+        """Returns a recording rule by its unique name within a parent.\n\nThe request object is returned without starting the RPC."""
+        ...
     def list(
         self, request: ListRecordingRulesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRecordingRulesRequest, ListRecordingRulesResponse]:
@@ -304,6 +336,7 @@ class RecordingRuleServiceClient(_ClientWithOperations[_type_nebius_common_v1alp
 __all__ = [
     "CreateRecordingRuleRequest",
     "DeleteRecordingRuleRequest",
+    "GetRecordingRuleByNameRequest",
     "GetRecordingRuleRequest",
     "ListRecordingRulesRequest",
     "ListRecordingRulesResponse",
