@@ -49,7 +49,7 @@ _register_file(
 )
 _register_file(
     "nebius/monitoring/v1/recording_rule.proto",
-    b'\n)nebius/monitoring/v1/recording_rule.proto\x12\x14nebius.monitoring.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xe3\x01\n\rRecordingRule\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecR\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b2).nebius.monitoring.v1.RecordingRuleStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02"\x90\x02\n\x11RecordingRuleSpec\x12\x1e\n\x06bucket\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06bucket\x12\x1e\n\x06record\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06record\x12\x1a\n\x04expr\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04expr\x12^\n\rrecord_labels\x18\x04 \x03(\x0b29.nebius.monitoring.v1.RecordingRuleSpec.RecordLabelsEntryR\x0crecordLabels\x1a?\n\x11RecordLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x028\x01"\x15\n\x13RecordingRuleStatusBg\n\x1bai.nebius.pub.monitoring.v1B\x12RecordingRuleProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/monitoring/v1b\x06proto3',
+    b'\n)nebius/monitoring/v1/recording_rule.proto\x12\x14nebius.monitoring.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xe9\x01\n\rRecordingRule\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecR\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b2).nebius.monitoring.v1.RecordingRuleStatusB\x04\xbaJ\x01\x05R\x06status"\x90\x02\n\x11RecordingRuleSpec\x12\x1e\n\x06bucket\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06bucket\x12\x1e\n\x06record\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06record\x12\x1a\n\x04expr\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04expr\x12^\n\rrecord_labels\x18\x04 \x03(\x0b29.nebius.monitoring.v1.RecordingRuleSpec.RecordLabelsEntryR\x0crecordLabels\x1a?\n\x11RecordLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x028\x01"\x15\n\x13RecordingRuleStatusBg\n\x1bai.nebius.pub.monitoring.v1B\x12RecordingRuleProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/monitoring/v1b\x06proto3',
 )
 _register_file(
     "google/protobuf/any.proto",
@@ -65,7 +65,7 @@ _register_file(
 )
 _register_file(
     "nebius/monitoring/v1/recording_rule_service.proto",
-    b'\n1nebius/monitoring/v1/recording_rule_service.proto\x12\x14nebius.monitoring.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a)nebius/monitoring/v1/recording_rule.proto"1\n\x17GetRecordingRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id"|\n\x19ListRecordingRulesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\x7f\n\x1aListRecordingRulesResponse\x129\n\x05items\x18\x01 \x03(\x0b2#.nebius.monitoring.v1.RecordingRuleR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\xa9\x01\n\x1aCreateRecordingRuleRequest\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12C\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec"\xa1\x01\n\x1aUpdateRecordingRuleRequest\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecR\x04spec"4\n\x1aDeleteRecordingRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\x88\x04\n\x14RecordingRuleService\x12Y\n\x03Get\x12-.nebius.monitoring.v1.GetRecordingRuleRequest\x1a#.nebius.monitoring.v1.RecordingRule\x12i\n\x04List\x12/.nebius.monitoring.v1.ListRecordingRulesRequest\x1a0.nebius.monitoring.v1.ListRecordingRulesResponse\x12]\n\x06Create\x120.nebius.monitoring.v1.CreateRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Update\x120.nebius.monitoring.v1.UpdateRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Delete\x120.nebius.monitoring.v1.DeleteRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\r\xbaJ\nmonitoringBn\n\x1bai.nebius.pub.monitoring.v1B\x19RecordingRuleServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/monitoring/v1b\x06proto3',
+    b'\n1nebius/monitoring/v1/recording_rule_service.proto\x12\x14nebius.monitoring.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a)nebius/monitoring/v1/recording_rule.proto"1\n\x17GetRecordingRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id"\x88\x01\n\x19ListRecordingRulesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"l\n\x1dGetRecordingRuleByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"\x7f\n\x1aListRecordingRulesResponse\x129\n\x05items\x18\x01 \x03(\x0b2#.nebius.monitoring.v1.RecordingRuleR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\xb5\x01\n\x1aCreateRecordingRuleRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12C\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec"\xad\x01\n\x1aUpdateRecordingRuleRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.monitoring.v1.RecordingRuleSpecR\x04spec"4\n\x1aDeleteRecordingRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xef\x04\n\x14RecordingRuleService\x12Y\n\x03Get\x12-.nebius.monitoring.v1.GetRecordingRuleRequest\x1a#.nebius.monitoring.v1.RecordingRule\x12e\n\tGetByName\x123.nebius.monitoring.v1.GetRecordingRuleByNameRequest\x1a#.nebius.monitoring.v1.RecordingRule\x12i\n\x04List\x12/.nebius.monitoring.v1.ListRecordingRulesRequest\x1a0.nebius.monitoring.v1.ListRecordingRulesResponse\x12]\n\x06Create\x120.nebius.monitoring.v1.CreateRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Update\x120.nebius.monitoring.v1.UpdateRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Delete\x120.nebius.monitoring.v1.DeleteRecordingRuleRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\r\xbaJ\nmonitoringBn\n\x1bai.nebius.pub.monitoring.v1B\x19RecordingRuleServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/monitoring/v1b\x06proto3',
 )
 
 RecordingRule = _message_class(
@@ -145,7 +145,7 @@ ListRecordingRulesRequest = _message_class(
     {
         "page_size": "Maximum number of recording rules to return.",
         "page_token": "Token that identifies the page of results to return.",
-        "parent_id": "ID of the parent workspace.",
+        "parent_id": "ID of the parent.",
     },
     {},
     message_deprecation_details="",
@@ -155,6 +155,19 @@ ListRecordingRulesRequest = _message_class(
 ListRecordingRulesRequest.__module__ = __name__
 
 ListRecordingRulesRequest.__doc__ = "Request to list recording rules."
+
+GetRecordingRuleByNameRequest = _message_class(
+    "nebius.monitoring.v1.GetRecordingRuleByNameRequest",
+    "GetRecordingRuleByNameRequest",
+    {"name": "name", "parent_id": "parent_id"},
+    {},
+    {"name": "Resource name, not the recorded metric name.", "parent_id": "ID of the parent."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+GetRecordingRuleByNameRequest.__module__ = __name__
 
 ListRecordingRulesResponse = _message_class(
     "nebius.monitoring.v1.ListRecordingRulesResponse",
@@ -279,6 +292,14 @@ class RecordingRuleServiceClient(_ClientWithOperations):
         "Returns the specified recording rule.\n\nThe request object is returned without starting the RPC."
         return super().request("Get", request, _REGISTRY.message_class("nebius.monitoring.v1.RecordingRule"), **kwargs)
 
+    def get_by_name(
+        self, request: GetRecordingRuleByNameRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetRecordingRuleByNameRequest, RecordingRule]:
+        "Returns a recording rule by its unique name within a parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "GetByName", request, _REGISTRY.message_class("nebius.monitoring.v1.RecordingRule"), **kwargs
+        )
+
     def list(
         self, request: ListRecordingRulesRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRecordingRulesRequest, ListRecordingRulesResponse]:
@@ -357,6 +378,7 @@ _register_client("nebius.monitoring.v1.RecordingRuleService", RecordingRuleServi
 __all__ = [
     "CreateRecordingRuleRequest",
     "DeleteRecordingRuleRequest",
+    "GetRecordingRuleByNameRequest",
     "GetRecordingRuleRequest",
     "ListRecordingRulesRequest",
     "ListRecordingRulesResponse",
