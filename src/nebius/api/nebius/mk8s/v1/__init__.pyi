@@ -922,6 +922,14 @@ class NodeTemplate(_Message):
         """Set or clear the generated ``service_account_id`` field."""
         ...
     @property
+    def instance_metadata(self) -> InstanceMetadataTemplate:
+        """Metadata propagated to the Compute Instances in the NodeGroup."""
+        ...
+    @instance_metadata.setter
+    def instance_metadata(self, value: InstanceMetadataTemplate | None) -> None:
+        """Set or clear the generated ``instance_metadata`` field."""
+        ...
+    @property
     def preemptible(self) -> PreemptibleSpec:
         """Configures whether the nodes in the group are preemptible.\nSet to empty value to enable preemptible nodes."""
         ...
@@ -976,6 +984,7 @@ class NodeTemplate(_Message):
         filesystems: _Iterable[AttachedFilesystemSpec] | None | _UnsetType = ...,
         cloud_init_user_data: _builtins.str | None | _UnsetType = ...,
         service_account_id: _builtins.str | None | _UnsetType = ...,
+        instance_metadata: InstanceMetadataTemplate | None | _UnsetType = ...,
         preemptible: PreemptibleSpec | None | _UnsetType = ...,
         nvlink: NVLinkSpec | None | _UnsetType = ...,
         reservation_policy: ReservationPolicy | None | _UnsetType = ...,
@@ -1045,11 +1054,20 @@ class GpuSettings(_Message):
     def drivers_preset(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``drivers_preset`` field."""
         ...
+    @property
+    def dra(self) -> _builtins.bool:
+        """Enables Dynamic Resource Allocation for this GPU node group.\nFor nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.\nFor GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet."""
+        ...
+    @dra.setter
+    def dra(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``dra`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         drivers_preset: _builtins.str | None | _UnsetType = ...,
+        dra: _builtins.bool | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -1202,6 +1220,24 @@ class NodeGroupAutoscalingSpec(_Message):
         *,
         min_node_count: _builtins.int | None | _UnsetType = ...,
         max_node_count: _builtins.int | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class InstanceMetadataTemplate(_Message):
+    @property
+    def labels(self) -> _MutableMapping[_builtins.str, _builtins.str]:
+        """Labels propagated into Compute Instance metadata.\nProvider-managed labels take precedence over user-provided instance labels."""
+        ...
+    @labels.setter
+    def labels(self, value: _Mapping[_builtins.str, _builtins.str] | None) -> None:
+        """Set or clear the generated ``labels`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        labels: _Mapping[_builtins.str, _builtins.str] | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -2089,6 +2125,7 @@ __all__ = [
     "GetNodeGroupRequest",
     "GpuClusterSpec",
     "GpuSettings",
+    "InstanceMetadataTemplate",
     "Karpenter",
     "KubeNetworkSpec",
     "ListClusterControlPlaneVersionsRequest",

@@ -3061,7 +3061,9 @@ class GetMaintenanceEventByInstanceRequest(_Message):
 
 class ListMaintenanceEventsRequest(_Message):
     @property
-    def parent_id(self) -> _builtins.str: ...
+    def parent_id(self) -> _builtins.str:
+        """Parent ID of maintenance events."""
+        ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""

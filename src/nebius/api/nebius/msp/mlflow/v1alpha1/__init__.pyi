@@ -391,6 +391,32 @@ class DeleteClusterRequest(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class StopClusterRequest(_Message):
+    @property
+    def id(self) -> _builtins.str: ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class StartClusterRequest(_Message):
+    @property
+    def id(self) -> _builtins.str: ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class ClusterServiceClient(_ClientWithOperations[_type_nebius_common_v1alpha1_Operation, _Any]):
     """This class provides client methods for the ``nebius.msp.mlflow.v1alpha1.ClusterService`` service."""
     def get(
@@ -418,6 +444,16 @@ class ClusterServiceClient(_ClientWithOperations[_type_nebius_common_v1alpha1_Op
     ) -> _Request[DeleteClusterRequest, _AsyncOperation[_type_nebius_common_v1alpha1_Operation]]:
         """Delete a cluster.\n\nThe request object is returned without starting the RPC."""
         ...
+    def stop(
+        self, request: StopClusterRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[StopClusterRequest, _AsyncOperation[_type_nebius_common_v1alpha1_Operation]]:
+        """Stops a cluster.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def start(
+        self, request: StartClusterRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[StartClusterRequest, _AsyncOperation[_type_nebius_common_v1alpha1_Operation]]:
+        """Starts a cluster.\n\nThe request object is returned without starting the RPC."""
+        ...
 
 __all__ = [
     "Cluster",
@@ -431,4 +467,6 @@ __all__ = [
     "ListClustersRequest",
     "ListClustersResponse",
     "MlflowClusterStatus",
+    "StartClusterRequest",
+    "StopClusterRequest",
 ]
