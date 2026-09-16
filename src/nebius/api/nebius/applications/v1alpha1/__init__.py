@@ -71,6 +71,18 @@ _register_file(
     "nebius/applications/v1alpha1/k8s_release_service.proto",
     b'\n6nebius/applications/v1alpha1/k8s_release_service.proto\x12\x1cnebius.applications.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a.nebius/applications/v1alpha1/k8s_release.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto"E\n\x14GetK8sReleaseRequest\x12-\n\x02id\x18\x01 \x01(\tB\x1d\xbaH\x03\xc8\x01\x01\xe2J\x14\n\x12applicationreleaseR\x02id"\xd4\x01\n\x16ListK8sReleasesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06filter\x18\x04 \x01(\tR\x06filter\x125\n\ncluster_id\x18\x05 \x01(\tB\x16\xbaH\x03\xc8\x01\x01\xe2J\r\n\x0bmk8sclusterR\tclusterId"\xa9\x01\n\x17CreateK8sReleaseRequest\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b2,.nebius.applications.v1alpha1.K8sReleaseSpecR\x04spec"\xa9\x01\n\x17UpdateK8sReleaseRequest\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b2,.nebius.applications.v1alpha1.K8sReleaseSpecR\x04spec"H\n\x17DeleteK8sReleaseRequest\x12-\n\x02id\x18\x01 \x01(\tB\x1d\xbaH\x03\xc8\x01\x01\xe2J\x14\n\x12applicationreleaseR\x02id"\x81\x01\n\x17ListK8sReleasesResponse\x12>\n\x05items\x18\x01 \x03(\x0b2(.nebius.applications.v1alpha1.K8sReleaseR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xa2\x04\n\x11K8sReleaseService\x12c\n\x03Get\x122.nebius.applications.v1alpha1.GetK8sReleaseRequest\x1a(.nebius.applications.v1alpha1.K8sRelease\x12s\n\x04List\x124.nebius.applications.v1alpha1.ListK8sReleasesRequest\x1a5.nebius.applications.v1alpha1.ListK8sReleasesResponse\x12\\\n\x06Create\x125.nebius.applications.v1alpha1.CreateK8sReleaseRequest\x1a\x1b.nebius.common.v1.Operation\x12\\\n\x06Update\x125.nebius.applications.v1alpha1.UpdateK8sReleaseRequest\x1a\x1b.nebius.common.v1.Operation\x12\\\n\x06Delete\x125.nebius.applications.v1alpha1.DeleteK8sReleaseRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x19\xbaJ\x16deployment-manager.mktB{\n#ai.nebius.pub.applications.v1alpha1B\x16K8SReleaseServiceProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/applications/v1alpha1b\x06proto3',
 )
+_register_file(
+    "nebius/applications/v1alpha1/vmapp.proto",
+    b'\n(nebius/applications/v1alpha1/vmapp.proto\x12\x1cnebius.applications.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto"\xcc\x11\n\x13ContainerDefinition\x121\n\x04name\x18\x01 \x01(\tB\x1d\xbaH\x1ar\x182\x16^[a-zA-Z0-9._-]{1,60}$R\x04name\x12\x1c\n\x05image\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05image\x12f\n\x15environment_variables\x18\x03 \x03(\x0b21.nebius.applications.v1alpha1.EnvironmentVariableR\x14environmentVariables\x12L\n\x05ports\x18\x04 \x03(\x0b26.nebius.applications.v1alpha1.ContainerDefinition.PortR\x05ports\x12R\n\x07volumes\x18\x05 \x03(\x0b28.nebius.applications.v1alpha1.ContainerDefinition.VolumeR\x07volumes\x12\x18\n\x07command\x18\x06 \x01(\tR\x07command\x12-\n\x0eshm_size_bytes\x18\x07 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x0cshmSizeBytes\x12_\n\x0cruntime_user\x18\x08 \x01(\x0b26.nebius.applications.v1alpha1.ContainerDefinition.UserB\x04\xbaJ\x01\x06R\x0bruntimeUser\x12)\n\x0bworking_dir\x18\t \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x01R\nworkingDir\x12\x1e\n\nprivileged\x18\n \x01(\x08R\nprivileged\x12\x1e\n\nentrypoint\x18\x0b \x01(\tR\nentrypoint\x12f\n\x0erestart_policy\x18\x0c \x01(\x0e2?.nebius.applications.v1alpha1.ContainerDefinition.RestartPolicyR\rrestartPolicy\x12&\n\x0cmax_attempts\x18\r \x01(\x03H\x01R\x0bmaxAttempts\x88\x01\x01\x12\x19\n\x08host_ipc\x18\x14 \x01(\x08R\x07hostIpc\x12!\n\x0chost_network\x18\x15 \x01(\x08R\x0bhostNetwork\x12\x1f\n\x0bexport_logs\x18\x16 \x01(\x08R\nexportLogs\x12\x1d\n\tgpu_count\x18\x1e \x01(\x03H\x00R\x08gpuCount\x12\x1b\n\x08all_gpus\x18\x1f \x01(\x08H\x00R\x07allGpus\x12+\n\x11registry_username\x18( \x01(\tR\x10registryUsername\x120\n\x11registry_password\x18) \x01(\tB\x03\xc0J\x01R\x10registryPassword\x12e\n\x0einjected_files\x18* \x03(\x0b2>.nebius.applications.v1alpha1.ContainerDefinition.InjectedFileR\rinjectedFiles\x1aH\n\x04User\x12\x1f\n\x03uid\x18\x01 \x01(\x03B\r\xbaH\n"\x08\x18\xff\xff\xff\xff\x0f(\x00R\x03uid\x12\x1f\n\x03gid\x18\x02 \x01(\x03B\r\xbaH\n"\x08\x18\xff\xff\xff\xff\x0f(\x00R\x03gid\x1a\x97\x02\n\x04Port\x12"\n\x04port\x18\x01 \x01(\x05B\x0e\xbaH\x0b\xc8\x01\x01\x1a\x06\x18\xff\xff\x03(\x01R\x04port\x12(\n\thost_port\x18\x02 \x01(\x05B\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x00R\x08hostPort\x12[\n\x08protocol\x18\x03 \x01(\x0e2?.nebius.applications.v1alpha1.ContainerDefinition.Port.ProtocolR\x08protocol\x12,\n\rendpoint_name\x18\x04 \x01(\tB\x07\xbaH\x04r\x02\x18@R\x0cendpointName"6\n\x08Protocol\x12\x18\n\x14PROTOCOL_UNSPECIFIED\x10\x00\x12\x07\n\x03TCP\x10\x01\x12\x07\n\x03UDP\x10\x02\x1a\x99\x04\n\x06Volume\x12-\n\x02id\x18\x01 \x01(\tB\x1d\xbaH\x1ar\x182\x16^[a-zA-Z0-9._-]{1,64}$R\x02id\x12%\n\nmount_path\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tmountPath\x12*\n\x0bdescription\x18\x03 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x01R\x0bdescription\x12E\n\tboot_disk\x18\n \x01(\x0b2&.nebius.applications.v1alpha1.BootDiskH\x00R\x08bootDisk\x12=\n\x04disk\x18\x0b \x01(\x0b2\'.nebius.applications.v1alpha1.DiskMountH\x00R\x04disk\x12O\n\nfilesystem\x18\x0c \x01(\x0b2-.nebius.applications.v1alpha1.FilesystemMountH\x00R\nfilesystem\x12Y\n\x0estorage_bucket\x18\r \x01(\x0b20.nebius.applications.v1alpha1.StorageBucketMountH\x00R\rstorageBucket\x12P\n\x0bexternal_s3\x18\x0e \x01(\x0b2-.nebius.applications.v1alpha1.ExternalS3MountH\x00R\nexternalS3B\t\n\x07storage\x1ad\n\x0cInjectedFile\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12%\n\x0econtainer_path\x18\x02 \x01(\tR\rcontainerPath\x12\x1d\n\x07content\x18\x03 \x01(\x0cB\x03\xc0J\x01R\x07content"V\n\rRestartPolicy\x12\x1e\n\x1aRESTART_POLICY_UNSPECIFIED\x10\x00\x12\n\n\x06ALWAYS\x10\x01\x12\x0e\n\nON_FAILURE\x10\x02\x12\t\n\x05NEVER\x10\x03B\x05\n\x03gpuB\x0f\n\r_max_attempts"\xa2\x01\n\x13EnvironmentVariable\x124\n\x03key\x18\x01 \x01(\tB"\xbaH\x1f\xc8\x01\x01r\x1a2\x18^[a-zA-Z_][a-zA-Z0-9_]*$R\x03key\x12\x16\n\x05value\x18\n \x01(\tH\x00R\x05value\x12.\n\x0fsensitive_value\x18\x0b \x01(\tB\x03\xc0J\x01H\x00R\x0esensitiveValueB\r\n\x04data\x12\x05\xbaH\x02\x08\x01"\n\n\x08BootDisk"\xba\x01\n\tDiskMount\x12&\n\x02id\x18\x01 \x01(\tB\x16\xbaH\x03\xc8\x01\x01\xe2J\r\n\x0bcomputediskR\x02id\x12H\n\x04mode\x18\x03 \x01(\x0e2,.nebius.applications.v1alpha1.DiskMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode";\n\x04Mode\x12\x14\n\x10MODE_UNSPECIFIED\x10\x00\x12\x0e\n\nREAD_WRITE\x10\x01\x12\r\n\tREAD_ONLY\x10\x02"\xcc\x01\n\x0fFilesystemMount\x12,\n\x02id\x18\x01 \x01(\tB\x1c\xbaH\x03\xc8\x01\x01\xe2J\x13\n\x11computefilesystemR\x02id\x12N\n\x04mode\x18\x03 \x01(\x0e22.nebius.applications.v1alpha1.FilesystemMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode";\n\x04Mode\x12\x14\n\x10MODE_UNSPECIFIED\x10\x00\x12\x0e\n\nREAD_WRITE\x10\x01\x12\r\n\tREAD_ONLY\x10\x02"\xce\x01\n\x12StorageBucketMount\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rstoragebucketR\x02id\x12Q\n\x04mode\x18\x03 \x01(\x0e25.nebius.applications.v1alpha1.StorageBucketMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode";\n\x04Mode\x12\x14\n\x10MODE_UNSPECIFIED\x10\x00\x12\x0e\n\nREAD_WRITE\x10\x01\x12\r\n\tREAD_ONLY\x10\x02"\xd0\x02\n\x0fExternalS3Mount\x12"\n\x08endpoint\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08endpoint\x12\x1e\n\x06bucket\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06bucket\x12-\n\raccess_key_id\x18\x03 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0baccessKeyId\x125\n\x11secret_access_key\x18\x04 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0fsecretAccessKey\x12(\n\rsession_token\x18\x05 \x01(\tB\x03\xc0J\x01R\x0csessionToken\x12Q\n\x04mode\x18\x06 \x01(\x0e25.nebius.applications.v1alpha1.StorageBucketMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode\x12\x16\n\x06region\x18\x07 \x01(\tR\x06regionBo\n#ai.nebius.pub.applications.v1alpha1B\nVmappProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/applications/v1alpha1b\x06proto3',
+)
+_register_file(
+    "nebius/applications/v1alpha1/vmapp_template.proto",
+    b'\n1nebius/applications/v1alpha1/vmapp_template.proto\x12\x1cnebius.applications.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a(nebius/applications/v1alpha1/vmapp.proto\x1a\x1fnebius/common/v1/metadata.proto"\xfb\x01\n\rVmAppTemplate\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12K\n\x04spec\x18\x02 \x01(\x0b2/.nebius.applications.v1alpha1.VmAppTemplateSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12U\n\x06status\x18\x03 \x01(\x0b21.nebius.applications.v1alpha1.VmAppTemplateStatusB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x05R\x06status"\xa8\x01\n\x11VmAppTemplateSpec\x12j\n\x12container_template\x18\x01 \x01(\x0b29.nebius.applications.v1alpha1.ContainerTemplateDefinitionH\x00R\x11containerTemplate\x12\x19\n\x04kind\x18\xe8\x07 \x01(\tB\x04\xbaJ\x01\x07R\x04kindB\x0c\n\ndefinition"\xad\x10\n\x1bContainerTemplateDefinition\x12 \n\x0bdescription\x18\x01 \x01(\tR\x0bdescription\x12\x19\n\x08icon_url\x18\x02 \x01(\tR\x07iconUrl\x12C\n\x06inputs\x18\x03 \x03(\x0b2+.nebius.applications.v1alpha1.TemplateInputR\x06inputs\x12Q\n\ncontainers\x18\x04 \x03(\x0b21.nebius.applications.v1alpha1.ContainerDefinitionR\ncontainers\x12`\n\x13supported_platforms\x18\x05 \x03(\x0b2/.nebius.applications.v1alpha1.SupportedPlatformR\x12supportedPlatforms\x12l\n\rsubstitutions\x18\x06 \x03(\x0b2F.nebius.applications.v1alpha1.ContainerTemplateDefinition.SubstitutionR\rsubstitutions\x1a\xac\x02\n\x0cSubstitution\x12-\n\x0econtainer_name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\rcontainerName\x12o\n\nconditions\x18\x02 \x03(\x0b2O.nebius.applications.v1alpha1.ContainerTemplateDefinition.SubstitutionConditionR\nconditions\x12|\n\noperations\x18\x03 \x03(\x0b2O.nebius.applications.v1alpha1.ContainerTemplateDefinition.SubstitutionOperationB\x0b\xbaH\x08\xc8\x01\x01\x92\x01\x02\x08\x01R\noperations\x1a\x82\x05\n\x15SubstitutionCondition\x12\x10\n\x03not\x18\x01 \x01(\x08R\x03not\x12\x1a\n\x08platform\x18\x02 \x01(\tR\x08platform\x12\x16\n\x06preset\x18\x03 \x01(\tR\x06preset\x12$\n\x0einput_field_id\x18\x04 \x01(\tR\x0cinputFieldId\x12<\n\x18input_field_value_string\x18\x05 \x01(\tH\x00R\x15inputFieldValueString\x88\x01\x01\x128\n\x16input_field_value_bool\x18\x06 \x01(\x08H\x01R\x13inputFieldValueBool\x88\x01\x01\x12:\n\x17input_field_value_int64\x18\x07 \x01(\x03H\x02R\x14inputFieldValueInt64\x88\x01\x01\x12<\n\x18input_field_value_double\x18\x08 \x01(\x01H\x03R\x15inputFieldValueDouble\x88\x01\x01\x128\n\x18environment_variable_key\x18\t \x01(\tR\x16environmentVariableKey\x12A\n\x1aenvironment_variable_value\x18\n \x01(\tH\x04R\x18environmentVariableValue\x88\x01\x01B\x1b\n\x19_input_field_value_stringB\x19\n\x17_input_field_value_boolB\x1a\n\x18_input_field_value_int64B\x1b\n\x19_input_field_value_doubleB\x1d\n\x1b_environment_variable_value\x1a\xb4\x05\n\x15SubstitutionOperation\x12\x18\n\x06remove\x18\x01 \x01(\x08H\x00R\x06remove\x121\n\x14set_from_input_field\x18\x02 \x01(\tH\x00R\x11setFromInputField\x12/\n\x13set_to_string_value\x18\x03 \x01(\tH\x00R\x10setToStringValue\x121\n\x14set_to_integer_value\x18\x04 \x01(\x03H\x00R\x11setToIntegerValue\x12S\n\x08set_user\x18\x05 \x01(\x0b26.nebius.applications.v1alpha1.ContainerDefinition.UserH\x00R\x07setUser\x12T\n\x14environment_variable\x18\n \x01(\tB\x1f\xbaH\x1cr\x1a2\x18^[a-zA-Z_][a-zA-Z0-9_]*$H\x01R\x13environmentVariable\x12g\n\x1esensitive_environment_variable\x18\x0b \x01(\tB\x1f\xbaH\x1cr\x1a2\x18^[a-zA-Z_][a-zA-Z0-9_]*$H\x01R\x1csensitiveEnvironmentVariable\x12\x16\n\x05image\x18\x0c \x01(\x08H\x01R\x05image\x12&\n\x0eshm_size_bytes\x18\r \x01(\x08H\x01R\x0cshmSizeBytes\x12-\n\x11container_command\x18\x0e \x01(\x08H\x01R\x10containerCommand\x12\'\n\x0econtainer_user\x18\x0f \x01(\x08H\x01R\rcontainerUser\x12\x1d\n\timage_tag\x18\x15 \x01(\x08H\x01R\x08imageTagB\x0f\n\x06action\x12\x05\xbaH\x02\x08\x01B\x0e\n\x05value\x12\x05\xbaH\x02\x08\x01"\xd7\x19\n\rTemplateInput\x12,\n\x02id\x18\x01 \x01(\tB\x1c\xbaH\x19\xc8\x01\x01r\x142\x12^[a-z0-9_.]{1,64}$R\x02id\x12\x1a\n\x08required\x18\x02 \x01(\x08R\x08required\x12\\\n\x0cstring_input\x18\n \x01(\x0b27.nebius.applications.v1alpha1.TemplateInput.StringInputH\x00R\x0bstringInput\x12i\n\x11enum_string_input\x18\x0b \x01(\x0b2;.nebius.applications.v1alpha1.TemplateInput.EnumStringInputH\x00R\x0fenumStringInput\x12_\n\rinteger_input\x18\x0c \x01(\x0b28.nebius.applications.v1alpha1.TemplateInput.IntegerInputH\x00R\x0cintegerInput\x12l\n\x12integer_unit_input\x18\r \x01(\x0b2<.nebius.applications.v1alpha1.TemplateInput.IntegerUnitInputH\x00R\x10integerUnitInput\x12_\n\rboolean_input\x18\x0e \x01(\x0b28.nebius.applications.v1alpha1.TemplateInput.BooleanInputH\x00R\x0cbooleanInput\x12l\n\x12text_content_input\x18\x0f \x01(\x0b2<.nebius.applications.v1alpha1.TemplateInput.TextContentInputH\x00R\x10textContentInput\x12\x87\x01\n\x1benvironment_variables_input\x18\x10 \x01(\x0b2E.nebius.applications.v1alpha1.TemplateInput.EnvironmentVariablesInputH\x00R\x19environmentVariablesInput\x12|\n\x18hugging_face_token_input\x18\x11 \x01(\x0b2A.nebius.applications.v1alpha1.TemplateInput.HuggingFaceTokenInputH\x00R\x15huggingFaceTokenInput\x12\x97\x01\n!docker_registry_credentials_input\x18\x12 \x01(\x0b2J.nebius.applications.v1alpha1.TemplateInput.DockerRegistryCredentialsInputH\x00R\x1edockerRegistryCredentialsInput\x12\x88\x01\n\x1cservice_account_mirror_input\x18\x13 \x01(\x0b2E.nebius.applications.v1alpha1.TemplateInput.ServiceAccountMirrorInputH\x00R\x19serviceAccountMirrorInput\x1a\xc1\x02\n\x0bStringInput\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12 \n\x0bplaceholder\x18\x03 \x01(\tR\x0bplaceholder\x12\x18\n\x07pattern\x18\x04 \x01(\tR\x07pattern\x12#\n\rdefault_value\x18\x05 \x01(\tR\x0cdefaultValue\x12\x1c\n\tsensitive\x18\x06 \x01(\x08R\tsensitive\x12\x1a\n\x08generate\x18\x07 \x01(\x08R\x08generate\x12\x1c\n\tmultiline\x18\x08 \x01(\x08R\tmultiline\x12\x18\n\x07tooltip\x18\t \x01(\tR\x07tooltip\x12!\n\x0cinput_prefix\x18\n \x01(\tR\x0binputPrefix\x1a\xb2\x02\n\x0fEnumStringInput\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12 \n\x0bplaceholder\x18\x03 \x01(\tR\x0bplaceholder\x12d\n\x07options\x18\x04 \x03(\x0b2B.nebius.applications.v1alpha1.TemplateInput.EnumStringInput.OptionB\x06\xbaH\x03\xc8\x01\x01R\x07options\x12#\n\rdefault_value\x18\x05 \x01(\tR\x0cdefaultValue\x1a4\n\x06Option\x12\x14\n\x05value\x18\x01 \x01(\tR\x05value\x12\x14\n\x05label\x18\x02 \x01(\tR\x05label\x1a\xf8\x01\n\x10IntegerUnitInput\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12\x12\n\x04unit\x18\x03 \x01(\tR\x04unit\x12\x1b\n\tmin_value\x18\x04 \x01(\x03R\x08minValue\x12\x1b\n\tmax_value\x18\x05 \x01(\x03R\x08maxValue\x12\x12\n\x04step\x18\x06 \x01(\x03R\x04step\x12#\n\rdefault_value\x18\x07 \x01(\x03R\x0cdefaultValue\x12\x1f\n\x0bmultiply_by\x18\x08 \x01(\x03R\nmultiplyBy\x1a\x89\x02\n\x0cIntegerInput\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12 \n\tmin_value\x18\x03 \x01(\x03H\x00R\x08minValue\x88\x01\x01\x12 \n\tmax_value\x18\x04 \x01(\x03H\x01R\x08maxValue\x88\x01\x01\x12(\n\rdefault_value\x18\x05 \x01(\x03H\x02R\x0cdefaultValue\x88\x01\x01\x12\x1f\n\x0bmultiply_by\x18\x06 \x01(\x03R\nmultiplyByB\x0c\n\n_min_valueB\x0c\n\n_max_valueB\x10\n\x0e_default_value\x1a\x9a\x02\n\x0cBooleanInput\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12#\n\rdefault_value\x18\x03 \x01(\x08R\x0cdefaultValue\x12f\n\tview_type\x18\x04 \x01(\x0e2A.nebius.applications.v1alpha1.TemplateInput.BooleanInput.ViewTypeB\x06\xbaH\x03\xc8\x01\x01R\x08viewType"?\n\x08ViewType\x12\x19\n\x15VIEW_TYPE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CHECKBOX\x10\x01\x12\n\n\x06SWITCH\x10\x02\x1ax\n\x10TextContentInput\x12\x18\n\x07content\x18\x01 \x01(\tR\x07content\x12 \n\x0cshow_in_form\x18\x02 \x01(\x08R\nshowInForm\x12(\n\x10show_in_overview\x18\x03 \x01(\x08R\x0eshowInOverview\x1aY\n\x19EnvironmentVariablesInput\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x1a\x8d\x01\n\x15HuggingFaceTokenInput\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12 \n\x0cshow_in_form\x18\x03 \x01(\x08R\nshowInForm\x12\x1c\n\tsensitive\x18\x04 \x01(\x08R\tsensitive\x1a\x96\x01\n\x1eDockerRegistryCredentialsInput\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x12 \n\x0cshow_in_form\x18\x03 \x01(\x08R\nshowInForm\x12\x1c\n\tsensitive\x18\x04 \x01(\x08R\tsensitive\x1a=\n\x19ServiceAccountMirrorInput\x12 \n\x0bdescription\x18\x01 \x01(\tR\x0bdescriptionB\x0e\n\x05input\x12\x05\xbaH\x02\x08\x01"\xa9\x02\n\x13VmAppTemplateStatus\x12 \n\x0bdescription\x18\x01 \x01(\tR\x0bdescription\x12\x19\n\x08icon_url\x18\x02 \x01(\tR\x07iconUrl\x12S\n\x0cinput_fields\x18\x03 \x03(\x0b20.nebius.applications.v1alpha1.TemplateInputFieldR\x0binputFields\x12`\n\x13supported_platforms\x18\x04 \x03(\x0b2/.nebius.applications.v1alpha1.SupportedPlatformR\x12supportedPlatforms\x12\x1e\n\ncategories\x18\x05 \x03(\tR\ncategories"\xe8\x02\n\x12TemplateInputField\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12Q\n\x04type\x18\x02 \x01(\x0e25.nebius.applications.v1alpha1.TemplateInputField.TypeB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name\x12 \n\x0bdescription\x18\x04 \x01(\tR\x0bdescription\x12\x1a\n\x08required\x18\x05 \x01(\x08R\x08required\x12\x1c\n\tsensitive\x18\x06 \x01(\x08R\tsensitive"w\n\x04Type\x12\x14\n\x10TYPE_UNSPECIFIED\x10\x00\x12\n\n\x06STRING\x10\x01\x12\x0b\n\x07INTEGER\x10\x02\x12\x0b\n\x07BOOLEAN\x10\x03\x12\x08\n\x04LIST\x10\x04\x12\n\n\x06STRUCT\x10\x05\x12\x1d\n\x19MYSTERYBOX_SECRET_VERSION\x10\x06"X\n\x11SupportedPlatform\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12+\n\x11supported_presets\x18\n \x03(\tR\x10supportedPresetsBw\n#ai.nebius.pub.applications.v1alpha1B\x12VmappTemplateProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/applications/v1alpha1b\x06proto3',
+)
+_register_file(
+    "nebius/applications/v1alpha1/vmapp_template_service.proto",
+    b'\n9nebius/applications/v1alpha1/vmapp_template_service.proto\x12\x1cnebius.applications.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a1nebius/applications/v1alpha1/vmapp_template.proto"1\n\x17GetVmAppTemplateRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id"\xf6\x01\n\x19ListVmAppTemplatesRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12 \n\x06search\x18\x04 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x02R\x06search\x12(\n\ncategories\x18\x05 \x03(\tB\x08\xbaH\x05\x92\x01\x02\x10\x05R\ncategories\x12\x1f\n\x0bglobal_only\x18\x07 \x01(\x08R\nglobalOnly\x12\x13\n\x04kind\x18\xe8\x07 \x01(\tR\x04kind"\x87\x01\n\x1aListVmAppTemplatesResponse\x12A\n\x05items\x18\x01 \x03(\x0b2+.nebius.applications.v1alpha1.VmAppTemplateR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x89\x02\n\x14VmAppTemplateService\x12i\n\x03Get\x125.nebius.applications.v1alpha1.GetVmAppTemplateRequest\x1a+.nebius.applications.v1alpha1.VmAppTemplate\x12y\n\x04List\x127.nebius.applications.v1alpha1.ListVmAppTemplatesRequest\x1a8.nebius.applications.v1alpha1.ListVmAppTemplatesResponse\x1a\x0b\xbaJ\x08apps.mspB~\n#ai.nebius.pub.applications.v1alpha1B\x19VmappTemplateServiceProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/applications/v1alpha1b\x06proto3',
+)
 
 K8sRelease = _message_class(
     "nebius.applications.v1alpha1.K8sRelease",
@@ -212,6 +224,920 @@ ListK8sReleasesResponse = _message_class(
 )
 ListK8sReleasesResponse.__module__ = __name__
 
+ContainerDefinition = _message_class(
+    "nebius.applications.v1alpha1.ContainerDefinition",
+    "ContainerDefinition",
+    {
+        "all_gpus": "all_gpus",
+        "command": "command",
+        "entrypoint": "entrypoint",
+        "environment_variables": "environment_variables",
+        "export_logs": "export_logs",
+        "gpu_count": "gpu_count",
+        "host_ipc": "host_ipc",
+        "host_network": "host_network",
+        "image": "image",
+        "injected_files": "injected_files",
+        "max_attempts": "max_attempts",
+        "name": "name",
+        "ports": "ports",
+        "privileged": "privileged",
+        "registry_password": "registry_password",
+        "registry_username": "registry_username",
+        "restart_policy": "restart_policy",
+        "runtime_user": "runtime_user",
+        "shm_size_bytes": "shm_size_bytes",
+        "volumes": "volumes",
+        "working_dir": "working_dir",
+    },
+    {"gpu": "gpu"},
+    {
+        "all_gpus": "If true, all available GPUs will be allocated to the container.",
+        "command": "The command for the container in shell-string format.\nIf not specified, the default entrypoint from the image will be used.",
+        "entrypoint": "The entrypoint for the container.",
+        "environment_variables": "Specifies the environment variables for the container.",
+        "export_logs": "Enables logs export to Nebius Observability.",
+        "gpu_count": "The number of GPUs to allocate to the container.",
+        "host_ipc": "Enables host IPC namespace sharing.",
+        "host_network": "Enables host network namespace sharing.",
+        "image": "The Docker image to use for the container.",
+        "injected_files": "Small files materialized inside the container before it starts.",
+        "max_attempts": "The maximum number of restart attempts for the ON\\_FAILURE restart policy.\nIf absent or zero, restarts have no limit. A positive value limits the number of restarts.\nOther restart policies ignore this field. Devlab templates must omit it.",
+        "name": "The name of the container. This name is should be unique within the VM app.\nIf not specified, it will be generated based on the image name.",
+        "ports": "Specifies the ports that the container exposes.",
+        "privileged": "If true, the container will be run in privileged mode.",
+        "registry_password": "The docker registry password to configure for the container.",
+        "registry_username": "The docker registry username to configure for the container.",
+        "restart_policy": 'The restart policy for the container.\nIf not specified, the default policy is "always".',
+        "runtime_user": "The user to run the container as.",
+        "shm_size_bytes": "Shared memory size in bytes.",
+        "volumes": "The volume to be mounted into the container.",
+        "working_dir": "The working directory for the container.",
+    },
+    {
+        "gpu": "GPU configuration for the container.\nIf not specified, the container will not have access to GPUs.\nIgnored if the compute instance does not have GPUs."
+    },
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+    sensitive_fields=["registry_password"],
+)
+ContainerDefinition.__module__ = __name__
+
+ContainerDefinition.__doc__ = "ContainerDefinition defines a container that will be run on the VM."
+
+ContainerDefinition__RestartPolicy = _enum_class(
+    "nebius.applications.v1alpha1.ContainerDefinition.RestartPolicy",
+    "ContainerDefinition__RestartPolicy",
+    {"RESTART_POLICY_UNSPECIFIED": 0, "ALWAYS": 1, "ON_FAILURE": 2, "NEVER": 3},
+)
+ContainerDefinition__RestartPolicy.__module__ = __name__
+
+setattr(ContainerDefinition, "RestartPolicy", ContainerDefinition__RestartPolicy)
+ContainerDefinition__User = _message_class(
+    "nebius.applications.v1alpha1.ContainerDefinition.User",
+    "ContainerDefinition__User",
+    {"gid": "gid", "uid": "uid"},
+    {},
+    {"gid": "The group ID to run the container as.", "uid": "The user ID to run the container as."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ContainerDefinition__User.__module__ = __name__
+
+setattr(ContainerDefinition, "User", ContainerDefinition__User)
+ContainerDefinition__Port = _message_class(
+    "nebius.applications.v1alpha1.ContainerDefinition.Port",
+    "ContainerDefinition__Port",
+    {"endpoint_name": "endpoint_name", "host_port": "host_port", "port": "port", "protocol": "protocol"},
+    {},
+    {
+        "endpoint_name": "The name of the endpoint for this port, which is used to identify the endpoint in the UI.",
+        "host_port": "The port on the host that the container port will be mapped to.\nIf not specified, the port will be mapped to the same port on the host.",
+        "port": "The port number of the container that needs to be exposed.",
+        "protocol": "The protocol used by the exposed port, either TCP or UDP.\nIf not specified, it defaults to TCP.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ContainerDefinition__Port.__module__ = __name__
+
+ContainerDefinition__Port.__doc__ = "Port defines a port that is exposed by the container."
+
+setattr(ContainerDefinition, "Port", ContainerDefinition__Port)
+ContainerDefinition__Port__Protocol = _enum_class(
+    "nebius.applications.v1alpha1.ContainerDefinition.Port.Protocol",
+    "ContainerDefinition__Port__Protocol",
+    {"PROTOCOL_UNSPECIFIED": 0, "TCP": 1, "UDP": 2},
+)
+ContainerDefinition__Port__Protocol.__module__ = __name__
+
+ContainerDefinition__Port__Protocol.__doc__ = "The transport protocol for the exposed port."
+
+setattr(ContainerDefinition__Port, "Protocol", ContainerDefinition__Port__Protocol)
+ContainerDefinition__Volume = _message_class(
+    "nebius.applications.v1alpha1.ContainerDefinition.Volume",
+    "ContainerDefinition__Volume",
+    {
+        "boot_disk": "boot_disk",
+        "description": "description",
+        "disk": "disk",
+        "external_s3": "external_s3",
+        "filesystem": "filesystem",
+        "id": "id",
+        "mount_path": "mount_path",
+        "storage_bucket": "storage_bucket",
+    },
+    {"storage": "storage"},
+    {
+        "boot_disk": "Virtual machine boot disk.",
+        "description": "The description of the volume.",
+        "disk": "Nebius Compute Disk.",
+        "external_s3": "External S3-compatible bucket.",
+        "filesystem": "Nebius Filesystem.",
+        "id": "The unique identifier of the volume.\nIf not specified, an ID will be generated.",
+        "mount_path": "The path in the container where the mounted volume will be available.",
+        "storage_bucket": "Nebius Storage Bucket.",
+    },
+    {"storage": "The storage of the volume.\nIf not specified, the volume will be mounted on the VM boot disk."},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ContainerDefinition__Volume.__module__ = __name__
+
+ContainerDefinition__Volume.__doc__ = "Volume defines a volume that will be mounted into the container."
+
+setattr(ContainerDefinition, "Volume", ContainerDefinition__Volume)
+ContainerDefinition__InjectedFile = _message_class(
+    "nebius.applications.v1alpha1.ContainerDefinition.InjectedFile",
+    "ContainerDefinition__InjectedFile",
+    {"container_path": "container_path", "content": "content", "id": "id"},
+    {},
+    {
+        "container_path": "Absolute path inside the container where the content is written.",
+        "content": "File content. Masked out of the stored definition by Sanitize(); the\nreal bytes live only in the mystery box data secret.",
+        "id": "Stable identifier within the container, used as the materialized\nfile's name under the agent state directory.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+    sensitive_fields=["content"],
+)
+ContainerDefinition__InjectedFile.__module__ = __name__
+
+ContainerDefinition__InjectedFile.__doc__ = "InjectedFile is a small file materialized inside the container at launch."
+
+setattr(ContainerDefinition, "InjectedFile", ContainerDefinition__InjectedFile)
+EnvironmentVariable = _message_class(
+    "nebius.applications.v1alpha1.EnvironmentVariable",
+    "EnvironmentVariable",
+    {"key": "key", "sensitive_value": "sensitive_value", "value": "value"},
+    {"data": "data"},
+    {"key": "The key of the environment variable.", "sensitive_value": "Sensitive value", "value": "Plain text value"},
+    {"data": "The value of the environment variable."},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+    sensitive_fields=["sensitive_value"],
+)
+EnvironmentVariable.__module__ = __name__
+
+EnvironmentVariable.__doc__ = "EnvironmentVariable defines an environment variable for the container."
+
+BootDisk = _message_class(
+    "nebius.applications.v1alpha1.BootDisk",
+    "BootDisk",
+    {},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+BootDisk.__module__ = __name__
+
+BootDisk.__doc__ = "BootDisk defines a boot disk path that will be mounted into the container."
+
+DiskMount = _message_class(
+    "nebius.applications.v1alpha1.DiskMount",
+    "DiskMount",
+    {"id": "id", "mode": "mode"},
+    {},
+    {"id": "ID of the compute disk to be mounted", "mode": "Mount mode."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+DiskMount.__module__ = __name__
+
+DiskMount__Mode = _enum_class(
+    "nebius.applications.v1alpha1.DiskMount.Mode",
+    "DiskMount__Mode",
+    {"MODE_UNSPECIFIED": 0, "READ_WRITE": 1, "READ_ONLY": 2},
+)
+DiskMount__Mode.__module__ = __name__
+
+DiskMount__Mode.__doc__ = "The access mode for the mounted disk."
+
+setattr(DiskMount, "Mode", DiskMount__Mode)
+FilesystemMount = _message_class(
+    "nebius.applications.v1alpha1.FilesystemMount",
+    "FilesystemMount",
+    {"id": "id", "mode": "mode"},
+    {},
+    {"id": "ID of the filesystem to be mounted", "mode": "Mount mode."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+FilesystemMount.__module__ = __name__
+
+FilesystemMount.__doc__ = "FilesystemMount defines a filesystem that will be mounted into the container."
+
+FilesystemMount__Mode = _enum_class(
+    "nebius.applications.v1alpha1.FilesystemMount.Mode",
+    "FilesystemMount__Mode",
+    {"MODE_UNSPECIFIED": 0, "READ_WRITE": 1, "READ_ONLY": 2},
+)
+FilesystemMount__Mode.__module__ = __name__
+
+FilesystemMount__Mode.__doc__ = "The access mode for the mounted filesystem."
+
+setattr(FilesystemMount, "Mode", FilesystemMount__Mode)
+StorageBucketMount = _message_class(
+    "nebius.applications.v1alpha1.StorageBucketMount",
+    "StorageBucketMount",
+    {"id": "id", "mode": "mode"},
+    {},
+    {"id": "ID of the storage bucket to be mounted", "mode": "Mount mode."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+StorageBucketMount.__module__ = __name__
+
+StorageBucketMount.__doc__ = "StorageBucketMount defines a storage bucket that will be mounted into the container."
+
+StorageBucketMount__Mode = _enum_class(
+    "nebius.applications.v1alpha1.StorageBucketMount.Mode",
+    "StorageBucketMount__Mode",
+    {"MODE_UNSPECIFIED": 0, "READ_WRITE": 1, "READ_ONLY": 2},
+)
+StorageBucketMount__Mode.__module__ = __name__
+
+StorageBucketMount__Mode.__doc__ = "The access mode for the mounted storage bucket."
+
+setattr(StorageBucketMount, "Mode", StorageBucketMount__Mode)
+ExternalS3Mount = _message_class(
+    "nebius.applications.v1alpha1.ExternalS3Mount",
+    "ExternalS3Mount",
+    {
+        "access_key_id": "access_key_id",
+        "bucket": "bucket",
+        "endpoint": "endpoint",
+        "mode": "mode",
+        "region": "region",
+        "secret_access_key": "secret_access_key",
+        "session_token": "session_token",
+    },
+    {},
+    {
+        "access_key_id": "Access key ID.",
+        "bucket": "Bucket name.",
+        "endpoint": "S3-compatible endpoint URL.",
+        "mode": "Mount mode.",
+        "region": "S3 region.",
+        "secret_access_key": "Secret access key.",
+        "session_token": "Session token (optional, for temporary credentials).",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+    sensitive_fields=["access_key_id", "secret_access_key", "session_token"],
+)
+ExternalS3Mount.__module__ = __name__
+
+ExternalS3Mount.__doc__ = (
+    "ExternalS3Mount defines an external S3-compatible bucket that will be mounted into the container."
+)
+
+VmAppTemplate = _message_class(
+    "nebius.applications.v1alpha1.VmAppTemplate",
+    "VmAppTemplate",
+    {"metadata": "metadata", "spec": "spec", "status": "status"},
+    {},
+    {
+        "metadata": "The template metadata.",
+        "spec": "The template specification.",
+        "status": "The template status and available inputs.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+VmAppTemplate.__module__ = __name__
+
+VmAppTemplate.__doc__ = "Represents a reusable VM app template."
+
+VmAppTemplateSpec = _message_class(
+    "nebius.applications.v1alpha1.VmAppTemplateSpec",
+    "VmAppTemplateSpec",
+    {"container_template": "container_template", "kind": "kind"},
+    {"definition": "definition"},
+    {
+        "container_template": "The container template definition.",
+        "kind": 'The template kind: "covm" or "devlab". The default is "covm".',
+    },
+    {"definition": "The definition of the VM app template."},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+VmAppTemplateSpec.__module__ = __name__
+
+ContainerTemplateDefinition = _message_class(
+    "nebius.applications.v1alpha1.ContainerTemplateDefinition",
+    "ContainerTemplateDefinition",
+    {
+        "containers": "containers",
+        "description": "description",
+        "icon_url": "icon_url",
+        "inputs": "inputs",
+        "substitutions": "substitutions",
+        "supported_platforms": "supported_platforms",
+    },
+    {},
+    {
+        "containers": "The container definitions for the VM app.",
+        "icon_url": "The URL of the template icon.",
+        "inputs": "The inputs that configure the template.",
+        "substitutions": "The substitutions to apply when their conditions match.",
+        "supported_platforms": "The platforms that the VM app supports.\nAn empty list allows all platforms.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ContainerTemplateDefinition.__module__ = __name__
+
+ContainerTemplateDefinition.__doc__ = (
+    "ContainerTemplateDefinition defines a template for a VM app that consists of one or more containers."
+)
+
+ContainerTemplateDefinition__Substitution = _message_class(
+    "nebius.applications.v1alpha1.ContainerTemplateDefinition.Substitution",
+    "ContainerTemplateDefinition__Substitution",
+    {"conditions": "conditions", "container_name": "container_name", "operations": "operations"},
+    {},
+    {
+        "conditions": "The conditions that permit this substitution. At least one condition must match.\nAn empty list applies the substitution unconditionally.",
+        "container_name": "The name of the container to modify.",
+        "operations": "The actions to apply in the listed order.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ContainerTemplateDefinition__Substitution.__module__ = __name__
+
+setattr(ContainerTemplateDefinition, "Substitution", ContainerTemplateDefinition__Substitution)
+ContainerTemplateDefinition__SubstitutionCondition = _message_class(
+    "nebius.applications.v1alpha1.ContainerTemplateDefinition.SubstitutionCondition",
+    "ContainerTemplateDefinition__SubstitutionCondition",
+    {
+        "environment_variable_key": "environment_variable_key",
+        "environment_variable_value": "environment_variable_value",
+        "input_field_id": "input_field_id",
+        "input_field_value_bool": "input_field_value_bool",
+        "input_field_value_double": "input_field_value_double",
+        "input_field_value_int64": "input_field_value_int64",
+        "input_field_value_string": "input_field_value_string",
+        "not": "not_",
+        "platform": "platform",
+        "preset": "preset",
+    },
+    {},
+    {
+        "environment_variable_key": "The environment variable key that must exist. An empty value adds no environment variable constraint.",
+        "environment_variable_value": "The non-sensitive environment variable value to match. Requires environment\\_variable\\_key.\nIf absent, only the key must exist. An empty string requires an empty variable value.",
+        "input_field_id": "The input field ID that must exist. An empty value adds no input constraint.\nSet at most one input\\_field\\_value\\_\\* field to require a non-sensitive input value to match.",
+        "input_field_value_bool": "The Boolean value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no Boolean value constraint. If false, the input must equal false.",
+        "input_field_value_double": "The floating-point value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no floating-point value constraint. If zero, the input must equal zero.",
+        "input_field_value_int64": "The integer value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no integer value constraint. If zero, the input must equal zero.",
+        "input_field_value_string": "The string value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no string value constraint. An empty string requires an empty input string.",
+        "not_": "Whether to negate the condition after evaluating all constraints.",
+        "platform": "The compute platform name to match. An empty value adds no platform constraint.",
+        "preset": "The compute preset name to match. An empty value adds no preset constraint.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ContainerTemplateDefinition__SubstitutionCondition.__module__ = __name__
+
+ContainerTemplateDefinition__SubstitutionCondition.__doc__ = "All specified constraints must match. Without constraints, the condition matches unconditionally before applying not."
+
+setattr(ContainerTemplateDefinition, "SubstitutionCondition", ContainerTemplateDefinition__SubstitutionCondition)
+ContainerTemplateDefinition__SubstitutionOperation = _message_class(
+    "nebius.applications.v1alpha1.ContainerTemplateDefinition.SubstitutionOperation",
+    "ContainerTemplateDefinition__SubstitutionOperation",
+    {
+        "container_command": "container_command",
+        "container_user": "container_user",
+        "environment_variable": "environment_variable",
+        "image": "image",
+        "image_tag": "image_tag",
+        "remove": "remove",
+        "sensitive_environment_variable": "sensitive_environment_variable",
+        "set_from_input_field": "set_from_input_field",
+        "set_to_integer_value": "set_to_integer_value",
+        "set_to_string_value": "set_to_string_value",
+        "set_user": "set_user",
+        "shm_size_bytes": "shm_size_bytes",
+    },
+    {"action": "action", "value": "value"},
+    {
+        "container_command": "The command to run in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``.",
+        "container_user": "The user to run the container as.\nAllowed values are: ``set_user``, ``remove``.",
+        "environment_variable": "The environment variable to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``.",
+        "image": "The image to use for the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``.",
+        "image_tag": "The image tag to use for the container. Replaces only the tag after the last colon.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``.",
+        "remove": "Remove the target value.",
+        "sensitive_environment_variable": "The sensitive environment variable to set in the container.\nAllowed actions are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``.",
+        "set_from_input_field": "The ID of the input field that supplies the value.",
+        "set_to_integer_value": "The integer value to use.",
+        "set_to_string_value": "The string value to use.",
+        "set_user": "The user to run the container as.",
+        "shm_size_bytes": "The shared memory size in bytes to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_integer_value``, ``remove``.",
+    },
+    {"action": "The action to perform on the selected container value.", "value": "The container value to modify."},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ContainerTemplateDefinition__SubstitutionOperation.__module__ = __name__
+
+setattr(ContainerTemplateDefinition, "SubstitutionOperation", ContainerTemplateDefinition__SubstitutionOperation)
+TemplateInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput",
+    "TemplateInput",
+    {
+        "boolean_input": "boolean_input",
+        "docker_registry_credentials_input": "docker_registry_credentials_input",
+        "enum_string_input": "enum_string_input",
+        "environment_variables_input": "environment_variables_input",
+        "hugging_face_token_input": "hugging_face_token_input",
+        "id": "id",
+        "integer_input": "integer_input",
+        "integer_unit_input": "integer_unit_input",
+        "required": "required",
+        "service_account_mirror_input": "service_account_mirror_input",
+        "string_input": "string_input",
+        "text_content_input": "text_content_input",
+    },
+    {"input": "input"},
+    {
+        "boolean_input": "A Boolean input.",
+        "docker_registry_credentials_input": "A Docker registry credential input.",
+        "enum_string_input": "A string input with predefined options.",
+        "environment_variables_input": "An environment variable input.",
+        "hugging_face_token_input": "A Hugging Face token input.",
+        "id": "The input ID. Template input values use this ID as their key.",
+        "integer_input": "An integer input.",
+        "integer_unit_input": "An integer input with a unit suffix.",
+        "required": "Whether the template requires a value for this input.",
+        "service_account_mirror_input": "A service account selector.",
+        "string_input": "A string input.",
+        "text_content_input": "A read-only text element.",
+    },
+    {"input": "The input type and its configuration."},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput.__module__ = __name__
+
+TemplateInput__StringInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.StringInput",
+    "TemplateInput__StringInput",
+    {
+        "default_value": "default_value",
+        "description": "description",
+        "generate": "generate",
+        "input_prefix": "input_prefix",
+        "multiline": "multiline",
+        "name": "name",
+        "pattern": "pattern",
+        "placeholder": "placeholder",
+        "sensitive": "sensitive",
+        "tooltip": "tooltip",
+    },
+    {},
+    {
+        "default_value": "The default input value.",
+        "generate": "Whether the form offers password generation for this sensitive input.",
+        "input_prefix": "The prefix to display before the input.",
+        "multiline": "Whether the form displays a multiline text input.",
+        "pattern": "The regular expression that validates the input value.",
+        "placeholder": "The placeholder text for the input.",
+        "sensitive": "Whether the input contains sensitive data.",
+        "tooltip": "The tooltip text for the input.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__StringInput.__module__ = __name__
+
+setattr(TemplateInput, "StringInput", TemplateInput__StringInput)
+TemplateInput__EnumStringInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.EnumStringInput",
+    "TemplateInput__EnumStringInput",
+    {
+        "default_value": "default_value",
+        "description": "description",
+        "name": "name",
+        "options": "options",
+        "placeholder": "placeholder",
+    },
+    {},
+    {
+        "default_value": "The default option value.",
+        "options": "The available input options.",
+        "placeholder": "The placeholder text for the input.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__EnumStringInput.__module__ = __name__
+
+TemplateInput__EnumStringInput.__doc__ = (
+    "EnumStringInput defines a string input with predefined options.\nWill be rendered as a dropdown in UI."
+)
+
+setattr(TemplateInput, "EnumStringInput", TemplateInput__EnumStringInput)
+TemplateInput__EnumStringInput__Option = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.EnumStringInput.Option",
+    "TemplateInput__EnumStringInput__Option",
+    {"label": "label", "value": "value"},
+    {},
+    {
+        "label": "The label for the option. An empty label uses the option value.",
+        "value": "The value of the option, which is used in the value of the input.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__EnumStringInput__Option.__module__ = __name__
+
+setattr(TemplateInput__EnumStringInput, "Option", TemplateInput__EnumStringInput__Option)
+TemplateInput__IntegerUnitInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.IntegerUnitInput",
+    "TemplateInput__IntegerUnitInput",
+    {
+        "default_value": "default_value",
+        "description": "description",
+        "max_value": "max_value",
+        "min_value": "min_value",
+        "multiply_by": "multiply_by",
+        "name": "name",
+        "step": "step",
+        "unit": "unit",
+    },
+    {},
+    {
+        "default_value": "The default input value before multiplication.",
+        "max_value": "The maximum input value before multiplication.",
+        "min_value": "The minimum input value before multiplication.",
+        "multiply_by": "The multiplication factor. Values less than one use a factor of one.",
+        "step": "The increment between valid input values, starting at min\\_value.",
+        "unit": "The unit suffix for the input value.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__IntegerUnitInput.__module__ = __name__
+
+TemplateInput__IntegerUnitInput.__doc__ = "IntegerUnitInput defines an integer input with a unit, bounds, step, and default value.\nThe form displays a slider with the unit suffix."
+
+setattr(TemplateInput, "IntegerUnitInput", TemplateInput__IntegerUnitInput)
+TemplateInput__IntegerInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.IntegerInput",
+    "TemplateInput__IntegerInput",
+    {
+        "default_value": "default_value",
+        "description": "description",
+        "max_value": "max_value",
+        "min_value": "min_value",
+        "multiply_by": "multiply_by",
+        "name": "name",
+    },
+    {},
+    {
+        "default_value": "The default for an omitted, non-required input before multiplication.\nIf absent, the input uses min\\_value, or zero when min\\_value is absent.\nIf zero, the default is zero, regardless of min\\_value. The bounds still apply.",
+        "max_value": "The maximum input value before multiplication.\nIf absent, no maximum applies. If zero, the input must be zero or less.",
+        "min_value": "The minimum input value before multiplication.\nIf absent, no minimum applies. If zero, the input must be zero or greater.",
+        "multiply_by": "The multiplication factor. Zero uses a factor of one.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__IntegerInput.__module__ = __name__
+
+TemplateInput__IntegerInput.__doc__ = "IntegerInput defines a simple integer field.\nThe form displays a text box."
+
+setattr(TemplateInput, "IntegerInput", TemplateInput__IntegerInput)
+TemplateInput__BooleanInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.BooleanInput",
+    "TemplateInput__BooleanInput",
+    {"default_value": "default_value", "description": "description", "name": "name", "view_type": "view_type"},
+    {},
+    {"default_value": "The default input value.", "view_type": "The form control type for the input."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__BooleanInput.__module__ = __name__
+
+TemplateInput__BooleanInput.__doc__ = "BooleanInput defines a Boolean field."
+
+setattr(TemplateInput, "BooleanInput", TemplateInput__BooleanInput)
+TemplateInput__BooleanInput__ViewType = _enum_class(
+    "nebius.applications.v1alpha1.TemplateInput.BooleanInput.ViewType",
+    "TemplateInput__BooleanInput__ViewType",
+    {"VIEW_TYPE_UNSPECIFIED": 0, "CHECKBOX": 1, "SWITCH": 2},
+)
+TemplateInput__BooleanInput__ViewType.__module__ = __name__
+
+setattr(TemplateInput__BooleanInput, "ViewType", TemplateInput__BooleanInput__ViewType)
+TemplateInput__TextContentInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.TextContentInput",
+    "TemplateInput__TextContentInput",
+    {"content": "content", "show_in_form": "show_in_form", "show_in_overview": "show_in_overview"},
+    {},
+    {
+        "content": "The content to display.",
+        "show_in_form": "If set to true, the field will be shown in the form.",
+        "show_in_overview": "If set to true, the field will be shown in the overview page after the VM app is created.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__TextContentInput.__module__ = __name__
+
+TemplateInput__TextContentInput.__doc__ = "TextContentInput defines a read-only text content field.\nWill be rendered as a text block in UI.\nCannot be optional."
+
+setattr(TemplateInput, "TextContentInput", TemplateInput__TextContentInput)
+TemplateInput__EnvironmentVariablesInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.EnvironmentVariablesInput",
+    "TemplateInput__EnvironmentVariablesInput",
+    {"description": "description", "name": "name"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__EnvironmentVariablesInput.__module__ = __name__
+
+TemplateInput__EnvironmentVariablesInput.__doc__ = (
+    "Environment variables input\nWill be rendered as a list of key-value pairs in UI.\nCannot be optional."
+)
+
+setattr(TemplateInput, "EnvironmentVariablesInput", TemplateInput__EnvironmentVariablesInput)
+TemplateInput__HuggingFaceTokenInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.HuggingFaceTokenInput",
+    "TemplateInput__HuggingFaceTokenInput",
+    {"description": "description", "name": "name", "sensitive": "sensitive", "show_in_form": "show_in_form"},
+    {},
+    {
+        "sensitive": "Whether the token contains sensitive data.",
+        "show_in_form": "If set to true, the field will be shown in the form.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__HuggingFaceTokenInput.__module__ = __name__
+
+TemplateInput__HuggingFaceTokenInput.__doc__ = "Hugging face token input\nWill be rendered as the form in UI."
+
+setattr(TemplateInput, "HuggingFaceTokenInput", TemplateInput__HuggingFaceTokenInput)
+TemplateInput__DockerRegistryCredentialsInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.DockerRegistryCredentialsInput",
+    "TemplateInput__DockerRegistryCredentialsInput",
+    {"description": "description", "name": "name", "sensitive": "sensitive", "show_in_form": "show_in_form"},
+    {},
+    {
+        "sensitive": "Whether the credentials contain sensitive data.",
+        "show_in_form": "If set to true, the field will be shown in the form.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__DockerRegistryCredentialsInput.__module__ = __name__
+
+TemplateInput__DockerRegistryCredentialsInput.__doc__ = (
+    "Docker Registry Credentials input\nWill be rendered as the form in UI."
+)
+
+setattr(TemplateInput, "DockerRegistryCredentialsInput", TemplateInput__DockerRegistryCredentialsInput)
+TemplateInput__ServiceAccountMirrorInput = _message_class(
+    "nebius.applications.v1alpha1.TemplateInput.ServiceAccountMirrorInput",
+    "TemplateInput__ServiceAccountMirrorInput",
+    {"description": "description"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInput__ServiceAccountMirrorInput.__module__ = __name__
+
+TemplateInput__ServiceAccountMirrorInput.__doc__ = (
+    "Service Account Mirror input\nWill be rendered as a service account selector in UI."
+)
+
+setattr(TemplateInput, "ServiceAccountMirrorInput", TemplateInput__ServiceAccountMirrorInput)
+VmAppTemplateStatus = _message_class(
+    "nebius.applications.v1alpha1.VmAppTemplateStatus",
+    "VmAppTemplateStatus",
+    {
+        "categories": "categories",
+        "description": "description",
+        "icon_url": "icon_url",
+        "input_fields": "input_fields",
+        "supported_platforms": "supported_platforms",
+    },
+    {},
+    {
+        "categories": "Categories that the template belongs to.",
+        "icon_url": "The URL of the template icon.",
+        "input_fields": "The fields that accept values for this template.",
+        "supported_platforms": "Supported platforms for the VM app template.\nIf empty, the VM app template is supported on all platforms.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+VmAppTemplateStatus.__module__ = __name__
+
+TemplateInputField = _message_class(
+    "nebius.applications.v1alpha1.TemplateInputField",
+    "TemplateInputField",
+    {
+        "description": "description",
+        "id": "id",
+        "name": "name",
+        "required": "required",
+        "sensitive": "sensitive",
+        "type": "type",
+    },
+    {},
+    {
+        "id": "The ID of the input field.",
+        "required": "Whether the template requires a value for this input.",
+        "sensitive": "Whether the input field contains sensitive data.",
+        "type": "The type of value that the input field accepts.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+TemplateInputField.__module__ = __name__
+
+TemplateInputField__Type = _enum_class(
+    "nebius.applications.v1alpha1.TemplateInputField.Type",
+    "TemplateInputField__Type",
+    {
+        "TYPE_UNSPECIFIED": 0,
+        "STRING": 1,
+        "INTEGER": 2,
+        "BOOLEAN": 3,
+        "LIST": 4,
+        "STRUCT": 5,
+        "MYSTERYBOX_SECRET_VERSION": 6,
+    },
+)
+TemplateInputField__Type.__module__ = __name__
+
+TemplateInputField__Type.__doc__ = "The types of template input values."
+
+setattr(TemplateInputField, "Type", TemplateInputField__Type)
+SupportedPlatform = _message_class(
+    "nebius.applications.v1alpha1.SupportedPlatform",
+    "SupportedPlatform",
+    {"id": "id", "supported_presets": "supported_presets"},
+    {},
+    {
+        "id": "The compute platform ID.",
+        "supported_presets": "Presets of the platform that are supported by the VM app template.\nIf empty, all presets are supported.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+SupportedPlatform.__module__ = __name__
+
+GetVmAppTemplateRequest = _message_class(
+    "nebius.applications.v1alpha1.GetVmAppTemplateRequest",
+    "GetVmAppTemplateRequest",
+    {"id": "id"},
+    {},
+    {"id": "The ID of the template to retrieve."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+GetVmAppTemplateRequest.__module__ = __name__
+
+GetVmAppTemplateRequest.__doc__ = "A request to retrieve a VM app template by ID."
+
+ListVmAppTemplatesRequest = _message_class(
+    "nebius.applications.v1alpha1.ListVmAppTemplatesRequest",
+    "ListVmAppTemplatesRequest",
+    {
+        "categories": "categories",
+        "global_only": "global_only",
+        "kind": "kind",
+        "page_size": "page_size",
+        "page_token": "page_token",
+        "parent_id": "parent_id",
+        "search": "search",
+    },
+    {},
+    {
+        "categories": "The categories to match. The response includes templates that match at least one category.",
+        "global_only": "Returns only global templates when true. The service ignores parent\\_id in this mode.\nGlobal catalog reads require authentication but do not require a resource permission.",
+        "kind": 'The template kind: "covm" or "devlab". The default is "covm".',
+        "page_size": "The requested page size. The service currently ignores this field and returns all matching templates.\nThe default value is 0.",
+        "page_token": "The pagination token. The service currently ignores this field. Leave it empty.",
+        "parent_id": "The project ID. The response includes templates from this project and the global catalog.\nRequired unless global\\_only is true.",
+        "search": "The text to find in template names and descriptions. The search is case-sensitive.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListVmAppTemplatesRequest.__module__ = __name__
+
+ListVmAppTemplatesRequest.__doc__ = "A request to list VM app templates."
+
+ListVmAppTemplatesResponse = _message_class(
+    "nebius.applications.v1alpha1.ListVmAppTemplatesResponse",
+    "ListVmAppTemplatesResponse",
+    {"items": "items", "next_page_token": "next_page_token"},
+    {},
+    {
+        "items": "All matching templates. The service currently returns the complete list without pagination.",
+        "next_page_token": "The token for the next page. Currently always empty because the service returns all matching templates.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListVmAppTemplatesResponse.__module__ = __name__
+
+ListVmAppTemplatesResponse.__doc__ = "The templates that match the list request."
+
 from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
 from .....aio.constant_channel import Constant as _Constant
 from .....aio.operation import Operation as _Operation
@@ -346,15 +1272,84 @@ class K8sReleaseServiceClient(_ClientWithOperations):
 
 _register_client("nebius.applications.v1alpha1.K8sReleaseService", K8sReleaseServiceClient)
 
+from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
+from .....aio.constant_channel import Constant as _Constant
+from .....aio.operation import Operation as _Operation
+from .....aio.request import Request as _Request
+from .....aio.request_kwargs import RequestKwargs as _RequestKwargs, StreamRequestKwargs as _StreamRequestKwargs
+from .....aio.route import Route as _Route
+from .....aio.stream import StreamRequest as _StreamRequest
+from .....base.fieldmask_protobuf import ensure_reset_mask_in_metadata as _ensure_reset_mask_in_metadata
+
+from typing_extensions import Unpack as _Unpack
+
+
+class VmAppTemplateServiceClient(_Client):
+    "Provides access to the VM app template catalog.\n\nThis class provides client methods for the ``nebius.applications.v1alpha1.VmAppTemplateService`` service."
+
+    __service_name__ = "nebius.applications.v1alpha1.VmAppTemplateService"
+    """Fully qualified protobuf service name for RPC routes."""
+    __api_service_name__ = "apps.msp"
+    """API gateway name for service routes."""
+    __registry__ = _REGISTRY
+    """Descriptor registry for request metadata."""
+    __PB2_DESCRIPTOR__ = _REGISTRY.service_descriptor("nebius.applications.v1alpha1.VmAppTemplateService")
+    """Alias for code that expects a protobuf service descriptor."""
+
+    @classmethod
+    def get_descriptor(cls):
+        """Return the protobuf service descriptor from the registry."""
+        return _REGISTRY.service_descriptor("nebius.applications.v1alpha1.VmAppTemplateService")
+
+    def get(
+        self, request: GetVmAppTemplateRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetVmAppTemplateRequest, VmAppTemplate]:
+        "Returns the specified VM app template.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "Get", request, _REGISTRY.message_class("nebius.applications.v1alpha1.VmAppTemplate"), **kwargs
+        )
+
+    def list(
+        self, request: ListVmAppTemplatesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListVmAppTemplatesRequest, ListVmAppTemplatesResponse]:
+        "Retrieves a list of VM app templates.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "List",
+            request,
+            _REGISTRY.message_class("nebius.applications.v1alpha1.ListVmAppTemplatesResponse"),
+            **kwargs,
+        )
+
+
+_register_client("nebius.applications.v1alpha1.VmAppTemplateService", VmAppTemplateServiceClient)
+
 __all__ = [
+    "BootDisk",
+    "ContainerDefinition",
+    "ContainerTemplateDefinition",
     "CreateK8sReleaseRequest",
     "DeleteK8sReleaseRequest",
+    "DiskMount",
+    "EnvironmentVariable",
+    "ExternalS3Mount",
+    "FilesystemMount",
     "GetK8sReleaseRequest",
+    "GetVmAppTemplateRequest",
     "K8sRelease",
     "K8sReleaseServiceClient",
     "K8sReleaseSpec",
     "K8sReleaseStatus",
     "ListK8sReleasesRequest",
     "ListK8sReleasesResponse",
+    "ListVmAppTemplatesRequest",
+    "ListVmAppTemplatesResponse",
+    "StorageBucketMount",
+    "SupportedPlatform",
+    "TemplateInput",
+    "TemplateInputField",
     "UpdateK8sReleaseRequest",
+    "VmAppTemplate",
+    "VmAppTemplateServiceClient",
+    "VmAppTemplateSpec",
+    "VmAppTemplateStatus",
 ]

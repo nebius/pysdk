@@ -189,6 +189,7 @@
     "tests/test_extensions.py",
     "tests/test_fieldmask.py",
     "tests/test_gendoc.py",
+    "tests/test_idempotency.py",
     "tests/test_internal_runtime.py",
     "tests/test_keepalive_metrics.py",
     "tests/test_methods.py",

@@ -49,7 +49,11 @@ def ensure_key_in_metadata(metadata: Metadata | GRPCMetadata) -> None:
 
     :param metadata: The metadata object to check and potentially modify.
     """
-    if HEADER not in metadata or metadata[HEADER] == "" or metadata[HEADER] == [""]:
+    try:
+        value = metadata[HEADER]
+    except KeyError:
+        value = ""
+    if not value or value == [""]:
         add_key_to_metadata(metadata)
 
 

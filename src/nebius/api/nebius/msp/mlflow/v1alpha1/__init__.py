@@ -69,7 +69,7 @@ _register_file(
 )
 _register_file(
     "nebius/msp/mlflow/v1alpha1/cluster_service.proto",
-    b'\n0nebius/msp/mlflow/v1alpha1/cluster_service.proto\x12\x1anebius.msp.mlflow.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a(nebius/msp/mlflow/v1alpha1/cluster.proto"6\n\x11GetClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id"Z\n\x17GetClusterByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\x81\x01\n\x14ListClustersResponse\x12A\n\x05items\x18\x01 \x03(\x0b2#.nebius.msp.mlflow.v1alpha1.ClusterB\x06\xbaH\x03\xc8\x01\x01R\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\xd3\x02\n\x14CreateClusterRequest\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12C\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.msp.mlflow.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec:\xad\x01\xbaH\xa9\x01\x1aZ\n\x12metadata.parent_id\x12&metadata.parent_id should not be empty\x1a\x1chas(this.metadata.parent_id)\x1aK\n\rmetadata.name\x12!metadata.name should not be empty\x1a\x17has(this.metadata.name)"9\n\x14DeleteClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id2\x8a\x04\n\x0eClusterService\x12Y\n\x03Get\x12-.nebius.msp.mlflow.v1alpha1.GetClusterRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12e\n\tGetByName\x123.nebius.msp.mlflow.v1alpha1.GetClusterByNameRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12i\n\x04List\x12/.nebius.msp.mlflow.v1alpha1.ListClustersRequest\x1a0.nebius.msp.mlflow.v1alpha1.ListClustersResponse\x12]\n\x06Create\x120.nebius.msp.mlflow.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Delete\x120.nebius.msp.mlflow.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\r\xbaJ\nmlflow.mspBt\n!ai.nebius.pub.msp.mlflow.v1alpha1B\x13ClusterServiceProtoP\x01Z8github.com/nebius/gosdk/proto/nebius/msp/mlflow/v1alpha1b\x06proto3',
+    b'\n0nebius/msp/mlflow/v1alpha1/cluster_service.proto\x12\x1anebius.msp.mlflow.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a(nebius/msp/mlflow/v1alpha1/cluster.proto"6\n\x11GetClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id"Z\n\x17GetClusterByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\x81\x01\n\x14ListClustersResponse\x12A\n\x05items\x18\x01 \x03(\x0b2#.nebius.msp.mlflow.v1alpha1.ClusterB\x06\xbaH\x03\xc8\x01\x01R\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\xd3\x02\n\x14CreateClusterRequest\x12F\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12C\n\x04spec\x18\x02 \x01(\x0b2\'.nebius.msp.mlflow.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec:\xad\x01\xbaH\xa9\x01\x1aZ\n\x12metadata.parent_id\x12&metadata.parent_id should not be empty\x1a\x1chas(this.metadata.parent_id)\x1aK\n\rmetadata.name\x12!metadata.name should not be empty\x1a\x17has(this.metadata.name)"9\n\x14DeleteClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id"7\n\x12StopClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id"8\n\x13StartClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id2\xc2\x05\n\x0eClusterService\x12Y\n\x03Get\x12-.nebius.msp.mlflow.v1alpha1.GetClusterRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12e\n\tGetByName\x123.nebius.msp.mlflow.v1alpha1.GetClusterByNameRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12i\n\x04List\x12/.nebius.msp.mlflow.v1alpha1.ListClustersRequest\x1a0.nebius.msp.mlflow.v1alpha1.ListClustersResponse\x12]\n\x06Create\x120.nebius.msp.mlflow.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06Delete\x120.nebius.msp.mlflow.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12Y\n\x04Stop\x12..nebius.msp.mlflow.v1alpha1.StopClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12[\n\x05Start\x12/.nebius.msp.mlflow.v1alpha1.StartClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\r\xbaJ\nmlflow.mspBt\n!ai.nebius.pub.msp.mlflow.v1alpha1B\x13ClusterServiceProtoP\x01Z8github.com/nebius/gosdk/proto/nebius/msp/mlflow/v1alpha1b\x06proto3',
 )
 
 Cluster = _message_class(
@@ -250,6 +250,32 @@ DeleteClusterRequest = _message_class(
 )
 DeleteClusterRequest.__module__ = __name__
 
+StopClusterRequest = _message_class(
+    "nebius.msp.mlflow.v1alpha1.StopClusterRequest",
+    "StopClusterRequest",
+    {"id": "id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+StopClusterRequest.__module__ = __name__
+
+StartClusterRequest = _message_class(
+    "nebius.msp.mlflow.v1alpha1.StartClusterRequest",
+    "StartClusterRequest",
+    {"id": "id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+StartClusterRequest.__module__ = __name__
+
 from ......aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
 from ......aio.constant_channel import Constant as _Constant
 from ......aio.operation import Operation as _Operation
@@ -365,6 +391,48 @@ class ClusterServiceClient(_ClientWithOperations):
             **kwargs,
         )
 
+    def stop(
+        self, request: StopClusterRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[StopClusterRequest, _Operation[_REGISTRY.message_class("nebius.common.v1alpha1.Operation")]]:
+        "Stops a cluster.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "Stop",
+            request,
+            _REGISTRY.message_class("nebius.common.v1alpha1.Operation"),
+            result_wrapper=lambda _method, _channel, value: _Operation(
+                _Route(
+                    service="nebius.msp.mlflow.v1alpha1.ClusterService",
+                    method="Stop",
+                    api_service_name="mlflow.msp",
+                    registry=_REGISTRY,
+                ),
+                _channel,
+                value,
+            ),
+            **kwargs,
+        )
+
+    def start(
+        self, request: StartClusterRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[StartClusterRequest, _Operation[_REGISTRY.message_class("nebius.common.v1alpha1.Operation")]]:
+        "Starts a cluster.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "Start",
+            request,
+            _REGISTRY.message_class("nebius.common.v1alpha1.Operation"),
+            result_wrapper=lambda _method, _channel, value: _Operation(
+                _Route(
+                    service="nebius.msp.mlflow.v1alpha1.ClusterService",
+                    method="Start",
+                    api_service_name="mlflow.msp",
+                    registry=_REGISTRY,
+                ),
+                _channel,
+                value,
+            ),
+            **kwargs,
+        )
+
 
 _register_client("nebius.msp.mlflow.v1alpha1.ClusterService", ClusterServiceClient)
 
@@ -380,4 +448,6 @@ __all__ = [
     "ListClustersRequest",
     "ListClustersResponse",
     "MlflowClusterStatus",
+    "StartClusterRequest",
+    "StopClusterRequest",
 ]
