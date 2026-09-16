@@ -4,6 +4,7 @@ The placeholder calls prevent network requests. An extractor channel records
 service metadata for the Nebius asynchronous SDK.
 """
 
+from collections.abc import AsyncIterable, Callable, Iterable
 from typing import Any, Protocol, TypeVar
 
 from google.protobuf.message import Message
@@ -16,7 +17,6 @@ from grpc.aio._base_channel import (
     UnaryStreamMultiCallable,
     UnaryUnaryMultiCallable,
 )
-from grpc.aio._typing import DeserializingFunction, RequestIterableType, SerializingFunction
 
 from ..base.error import SDKError
 from ..base.methods import service_from_method_name
@@ -85,7 +85,8 @@ class StubUS(UnaryStreamMultiCallable):  # type: ignore[unused-ignore,misc,type-
         raise NotATrueCallError
 
 
-class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
+# Older gRPC versions do not make streaming callables generic.
+class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc,type-arg]
     """Represent a stream-unary gRPC method during introspection.
 
     A call raises :class:`NotATrueCallError` and does not make an RPC.
@@ -93,7 +94,7 @@ class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
 
     def __call__(  # type: ignore[unused-ignore]
         self,
-        request_iterator: RequestIterableType | None = None,
+        request_iterator: Iterable[Any] | AsyncIterable[Any] | None = None,
         timeout: float | None = None,
         metadata: MetadataType | None = None,
         credentials: CallCredentials | None = None,
@@ -103,7 +104,7 @@ class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
         raise NotATrueCallError
 
 
-class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc]
+class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc,type-arg]
     """Represent a stream-stream gRPC method during introspection.
 
     A call raises :class:`NotATrueCallError` and does not make an RPC.
@@ -111,7 +112,7 @@ class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc]
 
     def __call__(  # type: ignore[unused-ignore]
         self,
-        request_iterator: RequestIterableType | None = None,
+        request_iterator: Iterable[Any] | AsyncIterable[Any] | None = None,
         timeout: float | None = None,
         metadata: MetadataType | None = None,
         credentials: CallCredentials | None = None,
@@ -146,8 +147,8 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
     def unary_unary(  # type: ignore[unused-ignore, override]
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
         _registered_method: bool | None = False,
     ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore, override]
         """Record a unary-unary method call and return a stub.
@@ -155,9 +156,9 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: ``SerializingFunction`` or ``None``
+        :type request_serializer: ``Callable[[Any], bytes]`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: ``DeserializingFunction`` or ``None``
+        :type response_deserializer: ``Callable[[bytes], Any]`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.
@@ -222,8 +223,8 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
     def unary_stream(  # type: ignore[override]
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
         _registered_method: bool | None = None,
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
         """Record a unary-stream method call and return a stub.
@@ -231,9 +232,9 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: ``SerializingFunction`` or ``None``
+        :type request_serializer: ``Callable[[Any], bytes]`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: ``DeserializingFunction`` or ``None``
+        :type response_deserializer: ``Callable[[bytes], Any]`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.
@@ -245,18 +246,18 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
     def stream_unary(  # type: ignore[override]
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
         _registered_method: bool | None = None,
-    ) -> StreamUnaryMultiCallable:
+    ) -> StreamUnaryMultiCallable:  # type: ignore[unused-ignore, type-arg]
         """Record a stream-unary method call and return a stub.
 
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: ``SerializingFunction`` or ``None``
+        :type request_serializer: ``Callable[[Any], bytes]`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: ``DeserializingFunction`` or ``None``
+        :type response_deserializer: ``Callable[[bytes], Any]`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.
@@ -268,18 +269,18 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
     def stream_stream(  # type: ignore[override]
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
         _registered_method: bool | None = None,
-    ) -> StreamStreamMultiCallable:
+    ) -> StreamStreamMultiCallable:  # type: ignore[unused-ignore, type-arg]
         """Record a stream-stream method call and return a stub.
 
         :param method: The method name.
         :type method: str
         :param request_serializer: Optional request serializer.
-        :type request_serializer: ``SerializingFunction`` or ``None``
+        :type request_serializer: ``Callable[[Any], bytes]`` or ``None``
         :param response_deserializer: Optional response deserializer.
-        :type response_deserializer: ``DeserializingFunction`` or ``None``
+        :type response_deserializer: ``Callable[[bytes], Any]`` or ``None``
         :param _registered_method: Whether the method is registered.
         :type _registered_method: bool or None
         :return: A stub callable.

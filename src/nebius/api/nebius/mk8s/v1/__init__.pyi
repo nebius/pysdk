@@ -27,6 +27,8 @@ from .....base.protos.unset import UnsetType as _UnsetType
 from ....google.protobuf import Empty as _type_google_protobuf_Empty
 from ...common.v1 import GetByNameRequest as _type_nebius_common_v1_GetByNameRequest
 from ...common.v1 import Operation as _type_nebius_common_v1_Operation
+from ...common.v1 import PreflightCheckContext as _type_nebius_common_v1_PreflightCheckContext
+from ...common.v1 import PreflightCheckDiagnostic as _type_nebius_common_v1_PreflightCheckDiagnostic
 from ...common.v1 import RecurrentResourceEvent as _type_nebius_common_v1_RecurrentResourceEvent
 from ...common.v1 import ResourceMetadata as _type_nebius_common_v1_ResourceMetadata
 
@@ -922,6 +924,14 @@ class NodeTemplate(_Message):
         """Set or clear the generated ``service_account_id`` field."""
         ...
     @property
+    def instance_metadata(self) -> InstanceMetadataTemplate:
+        """Metadata propagated to the Compute Instances in the NodeGroup."""
+        ...
+    @instance_metadata.setter
+    def instance_metadata(self, value: InstanceMetadataTemplate | None) -> None:
+        """Set or clear the generated ``instance_metadata`` field."""
+        ...
+    @property
     def preemptible(self) -> PreemptibleSpec:
         """Configures whether the nodes in the group are preemptible.\nSet to empty value to enable preemptible nodes."""
         ...
@@ -976,6 +986,7 @@ class NodeTemplate(_Message):
         filesystems: _Iterable[AttachedFilesystemSpec] | None | _UnsetType = ...,
         cloud_init_user_data: _builtins.str | None | _UnsetType = ...,
         service_account_id: _builtins.str | None | _UnsetType = ...,
+        instance_metadata: InstanceMetadataTemplate | None | _UnsetType = ...,
         preemptible: PreemptibleSpec | None | _UnsetType = ...,
         nvlink: NVLinkSpec | None | _UnsetType = ...,
         reservation_policy: ReservationPolicy | None | _UnsetType = ...,
@@ -1045,11 +1056,20 @@ class GpuSettings(_Message):
     def drivers_preset(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``drivers_preset`` field."""
         ...
+    @property
+    def dra(self) -> _builtins.bool:
+        """Enables Dynamic Resource Allocation for this GPU node group.\nFor nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.\nFor GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet."""
+        ...
+    @dra.setter
+    def dra(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``dra`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         drivers_preset: _builtins.str | None | _UnsetType = ...,
+        dra: _builtins.bool | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -1202,6 +1222,24 @@ class NodeGroupAutoscalingSpec(_Message):
         *,
         min_node_count: _builtins.int | None | _UnsetType = ...,
         max_node_count: _builtins.int | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class InstanceMetadataTemplate(_Message):
+    @property
+    def labels(self) -> _MutableMapping[_builtins.str, _builtins.str]:
+        """Labels propagated into Compute Instance metadata.\nProvider-managed labels take precedence over user-provided instance labels."""
+        ...
+    @labels.setter
+    def labels(self, value: _Mapping[_builtins.str, _builtins.str] | None) -> None:
+        """Set or clear the generated ``labels`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        labels: _Mapping[_builtins.str, _builtins.str] | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -1885,6 +1923,66 @@ class UpdateNodeGroupRequest(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class PreflightCheckNodeGroupRequest(_Message):
+    @property
+    def context(self) -> _type_nebius_common_v1_PreflightCheckContext: ...
+    @context.setter
+    def context(self, value: _type_nebius_common_v1_PreflightCheckContext | None) -> None:
+        """Set or clear the generated ``context`` field."""
+        ...
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> NodeGroupSpec: ...
+    @spec.setter
+    def spec(self, value: NodeGroupSpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        context: _type_nebius_common_v1_PreflightCheckContext | None | _UnsetType = ...,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: NodeGroupSpec | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class PreflightCheckNodeGroupResponse(_Message):
+    @property
+    def diagnostics(self) -> _MutableSequence[_type_nebius_common_v1_PreflightCheckDiagnostic]: ...
+    @diagnostics.setter
+    def diagnostics(self, value: _Iterable[_type_nebius_common_v1_PreflightCheckDiagnostic] | None) -> None:
+        """Set or clear the generated ``diagnostics`` field."""
+        ...
+    @property
+    def paths_require_recreate(self) -> _builtins.str: ...
+    @paths_require_recreate.setter
+    def paths_require_recreate(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``paths_require_recreate`` field."""
+        ...
+    @property
+    def requires_user_approval(self) -> _builtins.bool: ...
+    @requires_user_approval.setter
+    def requires_user_approval(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``requires_user_approval`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        diagnostics: _Iterable[_type_nebius_common_v1_PreflightCheckDiagnostic] | None | _UnsetType = ...,
+        paths_require_recreate: _builtins.str | None | _UnsetType = ...,
+        requires_user_approval: _builtins.bool | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class DeleteNodeGroupRequest(_Message):
     @property
     def id(self) -> _builtins.str: ...
@@ -2057,6 +2155,11 @@ class NodeGroupServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operat
     ) -> _Request[UpgradeNodeGroupRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
         """The request object is returned without starting the RPC."""
         ...
+    def preflight_check(
+        self, request: PreflightCheckNodeGroupRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[PreflightCheckNodeGroupRequest, PreflightCheckNodeGroupResponse]:
+        """The request object is returned without starting the RPC."""
+        ...
     def get_compatibility_matrix(
         self, request: GetNodeGroupCompatibilityMatrixRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetNodeGroupCompatibilityMatrixRequest, NodeGroupCompatibilityMatrix]:
@@ -2089,6 +2192,7 @@ __all__ = [
     "GetNodeGroupRequest",
     "GpuClusterSpec",
     "GpuSettings",
+    "InstanceMetadataTemplate",
     "Karpenter",
     "KubeNetworkSpec",
     "ListClusterControlPlaneVersionsRequest",
@@ -2118,6 +2222,8 @@ __all__ = [
     "PassthroughGroupRequest",
     "PercentOrCount",
     "PreemptibleSpec",
+    "PreflightCheckNodeGroupRequest",
+    "PreflightCheckNodeGroupResponse",
     "Problem",
     "ProgressData",
     "PublicEndpointSpec",

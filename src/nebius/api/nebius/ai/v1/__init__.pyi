@@ -24,6 +24,8 @@ from .....base.protos.extensions import ExtensionRegistry as _ExtensionRegistry
 from .....base.protos.pb_enum import Enum as _Enum
 from .....base.protos.registry import Registry as _Registry
 from .....base.protos.unset import UnsetType as _UnsetType
+from ....google.protobuf import Value as _type_google_protobuf_Value
+from ...common.v1 import GetByNameRequest as _type_nebius_common_v1_GetByNameRequest
 from ...common.v1 import Operation as _type_nebius_common_v1_Operation
 from ...common.v1 import ResourceMetadata as _type_nebius_common_v1_ResourceMetadata
 from ...common.v1 import ServiceError as _type_nebius_common_v1_ServiceError
@@ -33,6 +35,1015 @@ from ...compute.v1 import InstanceStatus__InstanceState as _type_nebius_compute_
 REGISTRY: _Registry
 EXTENSIONS: _ExtensionRegistry
 EXTENSION_HANDLES: dict[str, _Extension[_Any]]
+
+class Devlab(_Message):
+    """Represents an interactive development environment backed by Serverless infrastructure."""
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """The metadata of the Devlab."""
+        ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> DevlabSpec:
+        """The configuration of the Devlab."""
+        ...
+    @spec.setter
+    def spec(self, value: DevlabSpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    @property
+    def status(self) -> DevlabStatus:
+        """The current status of the Devlab."""
+        ...
+    @status.setter
+    def status(self, value: DevlabStatus | None) -> None:
+        """Set or clear the generated ``status`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: DevlabSpec | None | _UnsetType = ...,
+        status: DevlabStatus | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__EnvironmentVariable(_Message):
+    """EnvironmentVariable defines an environment variable for the Devlab's container."""
+    class __OneOfClass_value_source__(_OneOf):
+        name: _Literal["value_source"] = ...
+
+    class __OneOfClass_value_source_value__(__OneOfClass_value_source__):
+        """Environment variable value.\nThe unmasked value is returned only by Get with view SECRET."""
+
+        field: _Literal["value"] = ...
+        @property
+        def value(self) -> _builtins.str:
+            """Environment variable value.\nThe unmasked value is returned only by Get with view SECRET."""
+            ...
+
+    class __OneOfClass_value_source_mysterybox_secret__(__OneOfClass_value_source__):
+        """Secret storing the environment variable value.\nThe value is read from the payload entry whose key matches the variable\nname, or the first entry when no such key exists."""
+
+        field: _Literal["mysterybox_secret"] = ...
+        @property
+        def value(self) -> DevlabSpec__MysteryBoxSecretRef:
+            """Secret storing the environment variable value.\nThe value is read from the payload entry whose key matches the variable\nname, or the first entry when no such key exists."""
+            ...
+
+    @property
+    def value_source(
+        self,
+    ) -> __OneOfClass_value_source_value__ | __OneOfClass_value_source_mysterybox_secret__ | None: ...
+    @property
+    def name(self) -> _builtins.str:
+        """The name of the environment variable."""
+        ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def value(self) -> _builtins.str | None:
+        """Environment variable value.\nThe unmasked value is returned only by Get with view SECRET."""
+        ...
+    @value.setter
+    def value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``value`` field."""
+        ...
+    @property
+    def mysterybox_secret(self) -> DevlabSpec__MysteryBoxSecretRef | None:
+        """Secret storing the environment variable value.\nThe value is read from the payload entry whose key matches the variable\nname, or the first entry when no such key exists."""
+        ...
+    @mysterybox_secret.setter
+    def mysterybox_secret(self, value: DevlabSpec__MysteryBoxSecretRef | None) -> None:
+        """Set or clear the generated ``mysterybox_secret`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        value: _builtins.str | None | _UnsetType = ...,
+        mysterybox_secret: DevlabSpec__MysteryBoxSecretRef | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__Port__Protocol(_Enum):
+    """Represents protocol of the Devlab's port which will be exposed."""
+
+    PROTOCOL_UNSPECIFIED = ...
+    """No protocol selected. Specify HTTP, TCP, or UDP."""
+    HTTP = ...
+    """HTTP protocol."""
+    TCP = ...
+    """TCP protocol."""
+    UDP = ...
+    """UDP protocol."""
+
+class DevlabSpec__Port(_Message):
+    Protocol: _TypeAlias = DevlabSpec__Port__Protocol
+    @property
+    def container_port(self) -> _builtins.int:
+        """Container port."""
+        ...
+    @container_port.setter
+    def container_port(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``container_port`` field."""
+        ...
+    @property
+    def host_port(self) -> _builtins.int:
+        """Host port.\n\nSet to 0 to use the same value as container\\_port."""
+        ...
+    @host_port.setter
+    def host_port(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``host_port`` field."""
+        ...
+    @property
+    def protocol(self) -> DevlabSpec__Port__Protocol:
+        """Port's protocol."""
+        ...
+    @protocol.setter
+    def protocol(self, value: DevlabSpec__Port__Protocol | None) -> None:
+        """Set or clear the generated ``protocol`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        container_port: _builtins.int | None | _UnsetType = ...,
+        host_port: _builtins.int | None | _UnsetType = ...,
+        protocol: DevlabSpec__Port__Protocol | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__VolumeMount__Mode(_Enum):
+    """Mode that will be used to mount the volume."""
+
+    MODE_UNSPECIFIED = ...
+    """No mount mode selected. Specify READ\\_WRITE or READ\\_ONLY."""
+    READ_WRITE = ...
+    """Read-write mode."""
+    READ_ONLY = ...
+    """Read-only mode."""
+
+class DevlabSpec__VolumeMount__S3Config(_Message):
+    """Config for accessing an external S3-compatible storage.\n\nThe bucket name is specified in the ``source`` field as an S3 URI."""
+    @property
+    def endpoint(self) -> _builtins.str:
+        """S3-compatible endpoint URL (e.g. \"https://s3.amazonaws.com\")."""
+        ...
+    @endpoint.setter
+    def endpoint(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``endpoint`` field."""
+        ...
+    @property
+    def region(self) -> _builtins.str:
+        """S3 region."""
+        ...
+    @region.setter
+    def region(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``region`` field."""
+        ...
+    @property
+    def mysterybox_secret(self) -> DevlabSpec__MysteryBoxSecretRef:
+        """Reference to a MysteryBox secret containing S3 credentials."""
+        ...
+    @mysterybox_secret.setter
+    def mysterybox_secret(self, value: DevlabSpec__MysteryBoxSecretRef | None) -> None:
+        """Set or clear the generated ``mysterybox_secret`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        endpoint: _builtins.str | None | _UnsetType = ...,
+        region: _builtins.str | None | _UnsetType = ...,
+        mysterybox_secret: DevlabSpec__MysteryBoxSecretRef | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__VolumeMount(_Message):
+    """VolumeMount represents an extra volume mount for the Devlab container."""
+
+    Mode: _TypeAlias = DevlabSpec__VolumeMount__Mode
+    S3Config: _TypeAlias = DevlabSpec__VolumeMount__S3Config
+    class __OneOfClass_source_config__(_OneOf):
+        """Source Config"""
+
+        name: _Literal["source_config"] = ...
+
+    class __OneOfClass_source_config_s3_config__(__OneOfClass_source_config__):
+        field: _Literal["s3_config"] = ...
+        @property
+        def value(self) -> DevlabSpec__VolumeMount__S3Config: ...
+
+    @property
+    def source_config(self) -> __OneOfClass_source_config_s3_config__ | None:
+        """Source Config"""
+        ...
+    @property
+    def source(self) -> _builtins.str:
+        """Source of the volume mount.\n\nCan be a name or an ID of Nebius Storage bucket or filesystem,\nor an S3 URI (e.g. \"s3://bucket-name\") when using external S3 storage."""
+        ...
+    @source.setter
+    def source(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``source`` field."""
+        ...
+    @property
+    def source_path(self) -> _builtins.str:
+        """Path inside the source volume.\n\nOptional."""
+        ...
+    @source_path.setter
+    def source_path(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``source_path`` field."""
+        ...
+    @property
+    def container_path(self) -> _builtins.str:
+        """Path inside the Devlab container where the volume is mounted.\n\nMust be a clean absolute path: root, trailing slashes, empty path\nsegments, \".\" and \"..\" are not allowed."""
+        ...
+    @container_path.setter
+    def container_path(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``container_path`` field."""
+        ...
+    @property
+    def mode(self) -> DevlabSpec__VolumeMount__Mode:
+        """Mount mode."""
+        ...
+    @mode.setter
+    def mode(self, value: DevlabSpec__VolumeMount__Mode | None) -> None:
+        """Set or clear the generated ``mode`` field."""
+        ...
+    @property
+    def s3_config(self) -> DevlabSpec__VolumeMount__S3Config | None: ...
+    @s3_config.setter
+    def s3_config(self, value: DevlabSpec__VolumeMount__S3Config | None) -> None:
+        """Set or clear the generated ``s3_config`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        source: _builtins.str | None | _UnsetType = ...,
+        source_path: _builtins.str | None | _UnsetType = ...,
+        container_path: _builtins.str | None | _UnsetType = ...,
+        mode: DevlabSpec__VolumeMount__Mode | None | _UnsetType = ...,
+        s3_config: DevlabSpec__VolumeMount__S3Config | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__DiskSpec(_Message):
+    @property
+    def type(self) -> _type_nebius_compute_v1_DiskSpec_DiskType:
+        """Disk type."""
+        ...
+    @type.setter
+    def type(self, value: _type_nebius_compute_v1_DiskSpec_DiskType | None) -> None:
+        """Set or clear the generated ``type`` field."""
+        ...
+    @property
+    def size_bytes(self) -> _builtins.int:
+        """Disk size in bytes."""
+        ...
+    @size_bytes.setter
+    def size_bytes(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``size_bytes`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        type: _type_nebius_compute_v1_DiskSpec_DiskType | None | _UnsetType = ...,
+        size_bytes: _builtins.int | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__RegistryCredentials(_Message):
+    @property
+    def mysterybox_secret_version(self) -> _builtins.str:
+        """Secret version storing the registry credentials.\nMust have keys \"REGISTRY\\_USERNAME\" and \"REGISTRY\\_PASSWORD\"."""
+        ...
+    @mysterybox_secret_version.setter
+    def mysterybox_secret_version(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``mysterybox_secret_version`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        mysterybox_secret_version: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__Workspace(_Message):
+    @property
+    def container_path(self) -> _builtins.str:
+        """Path inside the Devlab container where the workspace is mounted.\n\nMust be a clean absolute path: root, trailing slashes, empty path\nsegments, \".\" and \"..\" are not allowed.\n\nRequired unless the Devlab is created from a template: the template\ndeclares the default workspace path, and a non-empty value overrides it."""
+        ...
+    @container_path.setter
+    def container_path(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``container_path`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        container_path: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__PrimaryRoute(_Message):
+    @property
+    def container_port(self) -> _builtins.int:
+        """Container port that serves the primary web UI."""
+        ...
+    @container_port.setter
+    def container_port(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``container_port`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        container_port: _builtins.int | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__FileInjection(_Message):
+    """FileInjection materializes a small file inside the container at launch."""
+    @property
+    def container_path(self) -> _builtins.str:
+        """Absolute path inside the container where the content is written.\n\nMust be a clean absolute path: root, trailing slashes, empty path\nsegments, \".\" and \"..\" are not allowed."""
+        ...
+    @container_path.setter
+    def container_path(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``container_path`` field."""
+        ...
+    @property
+    def content(self) -> _builtins.bytes:
+        """File content. On create, must contain between 1 byte and 64 KiB\n(one mystery box secret payload).\nReturned only by Get with view SECRET."""
+        ...
+    @content.setter
+    def content(self, value: _builtins.bytes | None) -> None:
+        """Set or clear the generated ``content`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        container_path: _builtins.str | None | _UnsetType = ...,
+        content: _builtins.bytes | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__Template(_Message):
+    """Reference to a VM app template the Devlab's container is rendered from."""
+    @property
+    def id(self) -> _builtins.str:
+        """VM app template ID."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def input_field_values(self) -> _MutableMapping[_builtins.str, _type_google_protobuf_Value]:
+        """The values for the template's input fields, keyed by each TemplateInputField.id.\nVmAppTemplateService.Get and List return these field definitions in VmAppTemplate.status.input\\_fields.\nEach value must match its field's type:\n\n* STRING: string\\_value. The value must satisfy the template's pattern, options, or unit format.\n* INTEGER: number\\_value with an integer value within the template's bounds.\n* BOOLEAN: bool\\_value.\n* MYSTERYBOX\\_SECRET\\_VERSION: string\\_value with the secret version ID.\n  null\\_value and absent entries both omit the input. Required inputs cannot be omitted.\n  Optional inputs use the defaults from the template's input definition.\n  Explicit false, 0, and empty strings are values, not omitted inputs. The template's validation still applies.\n  Object and list values are not supported. Unknown field IDs have no effect.\n  Read methods do not return this map."""
+        ...
+    @input_field_values.setter
+    def input_field_values(self, value: _Mapping[_builtins.str, _type_google_protobuf_Value] | None) -> None:
+        """Set or clear the generated ``input_field_values`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        input_field_values: _Mapping[_builtins.str, _type_google_protobuf_Value] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec__MysteryBoxSecretRef(_Message):
+    """Reference to a MysteryBox secret."""
+    @property
+    def secret_id(self) -> _builtins.str:
+        """MysteryBox secret ID."""
+        ...
+    @secret_id.setter
+    def secret_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``secret_id`` field."""
+        ...
+    @property
+    def version_id(self) -> _builtins.str:
+        """MysteryBox secret version ID."""
+        ...
+    @version_id.setter
+    def version_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``version_id`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        secret_id: _builtins.str | None | _UnsetType = ...,
+        version_id: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabSpec(_Message):
+    """DevlabSpec defines an interactive workload that will be run."""
+
+    EnvironmentVariable: _TypeAlias = DevlabSpec__EnvironmentVariable
+    Port: _TypeAlias = DevlabSpec__Port
+    VolumeMount: _TypeAlias = DevlabSpec__VolumeMount
+    DiskSpec: _TypeAlias = DevlabSpec__DiskSpec
+    RegistryCredentials: _TypeAlias = DevlabSpec__RegistryCredentials
+    Workspace: _TypeAlias = DevlabSpec__Workspace
+    PrimaryRoute: _TypeAlias = DevlabSpec__PrimaryRoute
+    FileInjection: _TypeAlias = DevlabSpec__FileInjection
+    Template: _TypeAlias = DevlabSpec__Template
+    MysteryBoxSecretRef: _TypeAlias = DevlabSpec__MysteryBoxSecretRef
+    @property
+    def image(self) -> _builtins.str:
+        """The Docker image to use for the Devlab's container.\n\nRequired unless ``template`` is set: the template declares the image."""
+        ...
+    @image.setter
+    def image(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``image`` field."""
+        ...
+    @property
+    def environment_variables(self) -> _MutableSequence[DevlabSpec__EnvironmentVariable]:
+        """Specifies the environment variables for the Devlab's container."""
+        ...
+    @environment_variables.setter
+    def environment_variables(self, value: _Iterable[DevlabSpec__EnvironmentVariable] | None) -> None:
+        """Set or clear the generated ``environment_variables`` field."""
+        ...
+    @property
+    def ports(self) -> _MutableSequence[DevlabSpec__Port]:
+        """Specifies the ports that the Devlab exposes."""
+        ...
+    @ports.setter
+    def ports(self, value: _Iterable[DevlabSpec__Port] | None) -> None:
+        """Set or clear the generated ``ports`` field."""
+        ...
+    @property
+    def container_command(self) -> _builtins.str:
+        """The entrypoint command for the Devlab's container."""
+        ...
+    @container_command.setter
+    def container_command(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``container_command`` field."""
+        ...
+    @property
+    def args(self) -> _builtins.str:
+        """The arguments to pass to the entrypoint command."""
+        ...
+    @args.setter
+    def args(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``args`` field."""
+        ...
+    @property
+    def working_dir(self) -> _builtins.str:
+        """The working directory for the Devlab's container."""
+        ...
+    @working_dir.setter
+    def working_dir(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``working_dir`` field."""
+        ...
+    @property
+    def volumes(self) -> _MutableSequence[DevlabSpec__VolumeMount]:
+        """Extra volumes to be mounted into the Devlab container."""
+        ...
+    @volumes.setter
+    def volumes(self, value: _Iterable[DevlabSpec__VolumeMount] | None) -> None:
+        """Set or clear the generated ``volumes`` field."""
+        ...
+    @property
+    def registry_credentials(self) -> DevlabSpec__RegistryCredentials:
+        """Registry credentials for private Docker registry."""
+        ...
+    @registry_credentials.setter
+    def registry_credentials(self, value: DevlabSpec__RegistryCredentials | None) -> None:
+        """Set or clear the generated ``registry_credentials`` field."""
+        ...
+    @property
+    def platform(self) -> _builtins.str:
+        """Compute platform that the Devlab will be run on."""
+        ...
+    @platform.setter
+    def platform(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``platform`` field."""
+        ...
+    @property
+    def preset(self) -> _builtins.str:
+        """Compute preset that the Devlab will be run on."""
+        ...
+    @preset.setter
+    def preset(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``preset`` field."""
+        ...
+    @property
+    def shm_size_bytes(self) -> _builtins.int:
+        """Shared memory size in bytes for the Devlab's container."""
+        ...
+    @shm_size_bytes.setter
+    def shm_size_bytes(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``shm_size_bytes`` field."""
+        ...
+    @property
+    def disk(self) -> DevlabSpec__DiskSpec:
+        """Disk spec for the main disk of the Devlab runtime VM."""
+        ...
+    @disk.setter
+    def disk(self, value: DevlabSpec__DiskSpec | None) -> None:
+        """Set or clear the generated ``disk`` field."""
+        ...
+    @property
+    def subnet_id(self) -> _builtins.str:
+        """Subnet ID where the Devlab will be deployed."""
+        ...
+    @subnet_id.setter
+    def subnet_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``subnet_id`` field."""
+        ...
+    @property
+    def public_ip(self) -> _builtins.bool:
+        """Whether to assign a public IP to the Devlab runtime VM."""
+        ...
+    @public_ip.setter
+    def public_ip(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``public_ip`` field."""
+        ...
+    @property
+    def ssh_authorized_keys(self) -> _MutableSequence[_builtins.str]:
+        """Public keys to be authorized for SSH access to the Devlab."""
+        ...
+    @ssh_authorized_keys.setter
+    def ssh_authorized_keys(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``ssh_authorized_keys`` field."""
+        ...
+    @property
+    def workspace(self) -> DevlabSpec__Workspace:
+        """Primary workspace storage for user state."""
+        ...
+    @workspace.setter
+    def workspace(self, value: DevlabSpec__Workspace | None) -> None:
+        """Set or clear the generated ``workspace`` field."""
+        ...
+    @property
+    def primary_route(self) -> DevlabSpec__PrimaryRoute:
+        """Primary web route exposed through the managed HTTPS endpoint.\n\nRequired unless ``template`` is set: the template declares the primary\nweb UI port."""
+        ...
+    @primary_route.setter
+    def primary_route(self, value: DevlabSpec__PrimaryRoute | None) -> None:
+        """Set or clear the generated ``primary_route`` field."""
+        ...
+    @property
+    def template(self) -> DevlabSpec__Template:
+        """Template that defines the Devlab's container.\n\nWhen set, the template declares the container shape: image, entrypoint\ncommand, arguments, working directory, ports, optional shared memory size,\nthe primary web route, and the default workspace path. The spec must leave\nimage, container command, arguments, working directory, and primary route\nempty. Environment variables and ports extend the template-declared ones,\n``workspace.container_path`` may override the template default, and\n\\ ``shm_size_bytes`` may be set only when the template leaves it unset.\n\nThe template is consumed at creation time: read methods return the\nrendered container shape instead of the template reference."""
+        ...
+    @template.setter
+    def template(self, value: DevlabSpec__Template | None) -> None:
+        """Set or clear the generated ``template`` field."""
+        ...
+    @property
+    def injected_files(self) -> _MutableSequence[DevlabSpec__FileInjection]:
+        """Small config files injected into the container before the user process\nstarts. Intended for configs, not datasets. Read methods return target\npaths. File content is returned only by Get with view SECRET."""
+        ...
+    @injected_files.setter
+    def injected_files(self, value: _Iterable[DevlabSpec__FileInjection] | None) -> None:
+        """Set or clear the generated ``injected_files`` field."""
+        ...
+    @property
+    def auth_token_mysterybox_secret(self) -> DevlabSpec__MysteryBoxSecretRef:
+        """The MysteryBox secret that contains the authentication token under the ``AUTH_TOKEN`` payload key.\nThis field enables an authentication proxy for the Devlab's HTTP ports.\nThe proxy rejects requests without an ``Authorization: Bearer <token>`` header that contains the matching token.\nIf absent, Serverless does not add this bearer-token check."""
+        ...
+    @auth_token_mysterybox_secret.setter
+    def auth_token_mysterybox_secret(self, value: DevlabSpec__MysteryBoxSecretRef | None) -> None:
+        """Set or clear the generated ``auth_token_mysterybox_secret`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        image: _builtins.str | None | _UnsetType = ...,
+        environment_variables: _Iterable[DevlabSpec__EnvironmentVariable] | None | _UnsetType = ...,
+        ports: _Iterable[DevlabSpec__Port] | None | _UnsetType = ...,
+        container_command: _builtins.str | None | _UnsetType = ...,
+        args: _builtins.str | None | _UnsetType = ...,
+        working_dir: _builtins.str | None | _UnsetType = ...,
+        volumes: _Iterable[DevlabSpec__VolumeMount] | None | _UnsetType = ...,
+        registry_credentials: DevlabSpec__RegistryCredentials | None | _UnsetType = ...,
+        platform: _builtins.str | None | _UnsetType = ...,
+        preset: _builtins.str | None | _UnsetType = ...,
+        shm_size_bytes: _builtins.int | None | _UnsetType = ...,
+        disk: DevlabSpec__DiskSpec | None | _UnsetType = ...,
+        subnet_id: _builtins.str | None | _UnsetType = ...,
+        public_ip: _builtins.bool | None | _UnsetType = ...,
+        ssh_authorized_keys: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        workspace: DevlabSpec__Workspace | None | _UnsetType = ...,
+        primary_route: DevlabSpec__PrimaryRoute | None | _UnsetType = ...,
+        template: DevlabSpec__Template | None | _UnsetType = ...,
+        injected_files: _Iterable[DevlabSpec__FileInjection] | None | _UnsetType = ...,
+        auth_token_mysterybox_secret: DevlabSpec__MysteryBoxSecretRef | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabStatus__State(_Enum):
+    """Devlab state."""
+
+    STATE_UNSPECIFIED = ...
+    """The service did not report the Devlab's state."""
+    PROVISIONING = ...
+    """The Devlab is creating resources."""
+    STARTING = ...
+    """The Devlab is being started."""
+    RUNNING = ...
+    """The Devlab is running."""
+    STOPPING = ...
+    """The Devlab is being stopped."""
+    DELETING = ...
+    """The Devlab is being deleted."""
+    STOPPED = ...
+    """The Devlab has been stopped."""
+    FAILED = ...
+    """The Devlab has failed."""
+    ERROR = ...
+    """The Devlab encountered an error."""
+    IMAGE_PULLING = ...
+    """The Devlab is pulling an image (STARTING -> IMAGE\\_PULLING -> RUNNING)."""
+
+class DevlabStatus(_Message):
+    """DevlabStatus represents the status of a Devlab."""
+
+    State: _TypeAlias = DevlabStatus__State
+    @property
+    def private_endpoints(self) -> _MutableSequence[_builtins.str]:
+        """Private endpoints to access the workload."""
+        ...
+    @private_endpoints.setter
+    def private_endpoints(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``private_endpoints`` field."""
+        ...
+    @property
+    def public_endpoints(self) -> _MutableSequence[_builtins.str]:
+        """Managed HTTPS/TLS URLs the workload is reachable at, one per routable port.\n\nPopulated only while the Devlab is RUNNING and its managed tunnel is ready;\nempty otherwise. The URLs are not bearer secrets \u2014 Tunna/IAM authorizes\naccess on use \u2014 so they are returned to any caller that may read the Devlab."""
+        ...
+    @public_endpoints.setter
+    def public_endpoints(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``public_endpoints`` field."""
+        ...
+    @property
+    def instances(self) -> _MutableSequence[DevlabInstanceStatus]:
+        """Status of individual Devlab runtime instances."""
+        ...
+    @instances.setter
+    def instances(self, value: _Iterable[DevlabInstanceStatus] | None) -> None:
+        """Set or clear the generated ``instances`` field."""
+        ...
+    @property
+    def state(self) -> DevlabStatus__State:
+        """State of the Devlab."""
+        ...
+    @state.setter
+    def state(self, value: DevlabStatus__State | None) -> None:
+        """Set or clear the generated ``state`` field."""
+        ...
+    @property
+    def state_details(self) -> DevlabStateDetails:
+        """Details of the Devlab's state."""
+        ...
+    @state_details.setter
+    def state_details(self, value: DevlabStateDetails | None) -> None:
+        """Set or clear the generated ``state_details`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        private_endpoints: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        public_endpoints: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        instances: _Iterable[DevlabInstanceStatus] | None | _UnsetType = ...,
+        state: DevlabStatus__State | None | _UnsetType = ...,
+        state_details: DevlabStateDetails | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabStateDetails(_Message):
+    """Devlab state details."""
+    @property
+    def code(self) -> _builtins.str:
+        """Short state description."""
+        ...
+    @code.setter
+    def code(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``code`` field."""
+        ...
+    @property
+    def message(self) -> _builtins.str:
+        """Detailed human-readable description."""
+        ...
+    @message.setter
+    def message(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``message`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        code: _builtins.str | None | _UnsetType = ...,
+        message: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DevlabInstanceStatus__State(_Enum):
+    """Devlab instance state."""
+
+    STATE_UNSPECIFIED = ...
+    """The service did not report the instance's state."""
+    PROVISIONING = ...
+    """The Devlab is creating resources."""
+    STARTING = ...
+    """The Devlab is being started."""
+    RUNNING = ...
+    """The Devlab is running."""
+    STOPPING = ...
+    """The Devlab is being stopped."""
+    DELETING = ...
+    """The Devlab is being deleted."""
+    STOPPED = ...
+    """The Devlab has been stopped."""
+    FAILED = ...
+    """The Devlab has failed."""
+    ERROR = ...
+    """The Devlab encountered an error."""
+    IMAGE_PULLING = ...
+    """The Devlab is pulling an image (STARTING -> IMAGE\\_PULLING -> RUNNING)."""
+
+class DevlabInstanceStatus(_Message):
+    """DevlabInstanceStatus represents the status of a Devlab runtime instance."""
+
+    State: _TypeAlias = DevlabInstanceStatus__State
+    @property
+    def state(self) -> DevlabInstanceStatus__State:
+        """The current state of the Devlab's workload."""
+        ...
+    @state.setter
+    def state(self, value: DevlabInstanceStatus__State | None) -> None:
+        """Set or clear the generated ``state`` field."""
+        ...
+    @property
+    def compute_instance_id(self) -> _builtins.str:
+        """ID of the compute instance running the Devlab."""
+        ...
+    @compute_instance_id.setter
+    def compute_instance_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``compute_instance_id`` field."""
+        ...
+    @property
+    def compute_instance_state(self) -> _type_nebius_compute_v1_InstanceStatus_InstanceState:
+        """The current state of the compute instance."""
+        ...
+    @compute_instance_state.setter
+    def compute_instance_state(self, value: _type_nebius_compute_v1_InstanceStatus_InstanceState | None) -> None:
+        """Set or clear the generated ``compute_instance_state`` field."""
+        ...
+    @property
+    def private_ip(self) -> _builtins.str:
+        """Private IP address of the instance."""
+        ...
+    @private_ip.setter
+    def private_ip(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``private_ip`` field."""
+        ...
+    @property
+    def public_ip(self) -> _builtins.str:
+        """Public IP address of the instance."""
+        ...
+    @public_ip.setter
+    def public_ip(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``public_ip`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        state: DevlabInstanceStatus__State | None | _UnsetType = ...,
+        compute_instance_id: _builtins.str | None | _UnsetType = ...,
+        compute_instance_state: _type_nebius_compute_v1_InstanceStatus_InstanceState | None | _UnsetType = ...,
+        private_ip: _builtins.str | None | _UnsetType = ...,
+        public_ip: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class GetDevlabRequest__View(_Enum):
+    """Controls which sensitive values the response includes."""
+
+    VIEW_UNSPECIFIED = ...
+    """Masks environment-variable values and omits injected-file content."""
+    SECRET = ...
+    """Includes unmasked environment-variable values and injected-file content.\nRequires the resource.devlab.getSensitiveData permission."""
+
+class GetDevlabRequest(_Message):
+    """A request to retrieve a Devlab by ID."""
+
+    View: _TypeAlias = GetDevlabRequest__View
+    @property
+    def id(self) -> _builtins.str:
+        """The ID of the Devlab to retrieve."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def view(self) -> GetDevlabRequest__View:
+        """The response view. The default is VIEW\\_UNSPECIFIED."""
+        ...
+    @view.setter
+    def view(self, value: GetDevlabRequest__View | None) -> None:
+        """Set or clear the generated ``view`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        view: GetDevlabRequest__View | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListDevlabsRequest(_Message):
+    """A request to list the Devlabs in a project."""
+    @property
+    def parent_id(self) -> _builtins.str:
+        """The ID of the project that contains the Devlabs."""
+        ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int:
+        """The maximum number of Devlabs to return. The default and maximum are 100.\nValues outside the range 1 to 100 use the default."""
+        ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str:
+        """The next\\_page\\_token from the previous response. Use an empty string for the first page.\nKeep parent\\_id unchanged when you request the next page."""
+        ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class CreateDevlabRequest(_Message):
+    """A request to create a Devlab."""
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """The metadata for the new Devlab."""
+        ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> DevlabSpec:
+        """The configuration for the new Devlab."""
+        ...
+    @spec.setter
+    def spec(self, value: DevlabSpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    @property
+    def dry_run(self) -> _builtins.bool:
+        """Validates the request without creating the Devlab."""
+        ...
+    @dry_run.setter
+    def dry_run(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``dry_run`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: DevlabSpec | None | _UnsetType = ...,
+        dry_run: _builtins.bool | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DeleteDevlabRequest(_Message):
+    """A request to delete a Devlab."""
+    @property
+    def id(self) -> _builtins.str:
+        """The ID of the Devlab to delete."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class RestartDevlabRequest(_Message):
+    """A request to restart a Devlab."""
+    @property
+    def id(self) -> _builtins.str:
+        """The ID of the Devlab to restart."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class StopDevlabRequest(_Message):
+    """A request to stop a Devlab."""
+    @property
+    def id(self) -> _builtins.str:
+        """The ID of the Devlab to stop."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListDevlabsResponse(_Message):
+    """A page of Devlabs from a project."""
+    @property
+    def items(self) -> _MutableSequence[Devlab]:
+        """The Devlabs in this page. The list can contain fewer items than page\\_size."""
+        ...
+    @items.setter
+    def items(self, value: _Iterable[Devlab] | None) -> None:
+        """Set or clear the generated ``items`` field."""
+        ...
+    @property
+    def next_page_token(self) -> _builtins.str:
+        """The token for the next page. An empty string indicates the end of the list."""
+        ...
+    @next_page_token.setter
+    def next_page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        items: _Iterable[Devlab] | None | _UnsetType = ...,
+        next_page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
 
 class Endpoint(_Message):
     """Represents an endpoint with a specified workload."""
@@ -2109,6 +3120,42 @@ class ListJobsResponse(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class DevlabServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
+    """Service to create/manage Devlabs.\n\nThis class provides client methods for the ``nebius.ai.v1.DevlabService`` service."""
+    def get(self, request: GetDevlabRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetDevlabRequest, Devlab]:
+        """Returns the specified Devlab.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def get_by_name(
+        self, request: _type_nebius_common_v1_GetByNameRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[_type_nebius_common_v1_GetByNameRequest, Devlab]:
+        """Returns the specified Devlab by name.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def list(
+        self, request: ListDevlabsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListDevlabsRequest, ListDevlabsResponse]:
+        """Retrieves a list of Devlabs.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def create(
+        self, request: CreateDevlabRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[CreateDevlabRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
+        """Creates a Devlab.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def delete(
+        self, request: DeleteDevlabRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[DeleteDevlabRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
+        """Deletes a Devlab.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def restart(
+        self, request: RestartDevlabRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[RestartDevlabRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
+        """Restarts a Devlab.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def stop(
+        self, request: StopDevlabRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[StopDevlabRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
+        """Stops a Devlab.\n\nThe request object is returned without starting the RPC."""
+        ...
+
 class EndpointServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
     """Service to create/manage endpoints.\n\nThis class provides client methods for the ``nebius.ai.v1.EndpointService`` service."""
     def get(
@@ -2190,16 +3237,25 @@ class JobServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _
 
 __all__ = [
     "CancelJobRequest",
+    "CreateDevlabRequest",
     "CreateEndpointRequest",
     "CreateJobRequest",
+    "DeleteDevlabRequest",
     "DeleteEndpointRequest",
     "DeleteJobRequest",
+    "Devlab",
+    "DevlabInstanceStatus",
+    "DevlabServiceClient",
+    "DevlabSpec",
+    "DevlabStateDetails",
+    "DevlabStatus",
     "Endpoint",
     "EndpointInstanceStatus",
     "EndpointServiceClient",
     "EndpointSpec",
     "EndpointStateDetails",
     "EndpointStatus",
+    "GetDevlabRequest",
     "GetEndpointByNameRequest",
     "GetEndpointRequest",
     "GetJobByNameRequest",
@@ -2210,12 +3266,16 @@ __all__ = [
     "JobSpec",
     "JobStateDetails",
     "JobStatus",
+    "ListDevlabsRequest",
+    "ListDevlabsResponse",
     "ListEndpointsRequest",
     "ListEndpointsResponse",
     "ListJobsRequest",
     "ListJobsResponse",
+    "RestartDevlabRequest",
     "RestartEndpointRequest",
     "RestartJobRequest",
     "StartEndpointRequest",
+    "StopDevlabRequest",
     "StopEndpointRequest",
 ]

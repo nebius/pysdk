@@ -56,6 +56,7 @@ from grpc import (
     ssl_channel_credentials,
 )
 from grpc.aio import Metadata as GrpcMetadata
+from grpc.aio import insecure_channel, secure_channel
 from grpc.aio._base_call import UnaryUnaryCall
 from grpc.aio._base_channel import (
     StreamStreamMultiCallable,
@@ -63,12 +64,8 @@ from grpc.aio._base_channel import (
     UnaryStreamMultiCallable,
     UnaryUnaryMultiCallable,
 )
-from grpc.aio._channel import (
-    insecure_channel,  # type: ignore[unused-ignore]
-    secure_channel,  # type: ignore[unused-ignore]
-)
 from grpc.aio._interceptor import ClientInterceptor
-from grpc.aio._typing import ChannelArgumentType, DeserializingFunction, SerializingFunction
+from grpc.aio._typing import ChannelArgumentType
 
 from ..base.constants import DOMAIN
 from ..base.error import SDKError
@@ -501,8 +498,8 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         channel: "Channel",
         method: str,
         request: Req,
-        request_serializer: SerializingFunction | None,
-        response_deserializer: DeserializingFunction | None,
+        request_serializer: Callable[[Any], bytes] | None,
+        response_deserializer: Callable[[bytes], Any] | None,
         timeout: float | None,
         metadata: MetadataType | None,
         credentials: CallCredentials | None,
@@ -544,7 +541,7 @@ class _CrossLoopUnaryUnaryCall(UnaryUnaryCall[Req, Res]):
         self._method = method
         self._timeout = _validate_timeout(timeout, "timeout")
         self._request: Any
-        self._request_serializer: SerializingFunction | None
+        self._request_serializer: Callable[[Any], bytes] | None
         request_snapshot = _snapshot_request_input(request)
         if request_serializer is None:
             self._request = (
@@ -1131,8 +1128,8 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         self,
         channel: "Channel",
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
     ) -> None:
         """Create a callable wrapper bound to an SDK :class:`AddressChannel`.
 
@@ -1219,8 +1216,8 @@ class _ServiceAddressChannel:
     def unary_unary(
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
     ) -> UnaryUnaryMultiCallable[Any, Any]:
         """Return a unary callable routed through the source service.
 
@@ -3538,7 +3535,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         opts = self.get_address_options(addr)
         opts, insecure = pop_option(opts, INSECURE, bool)
         opts, compression = pop_option(opts, COMPRESSION, Compression)
-        interceptors = self.get_address_interceptors(addr)
+        # grpc-stubs uses a placeholder type for public channel interceptors.
+        interceptors = cast(Any, self.get_address_interceptors(addr))
         if insecure:
             return AddressChannel(
                 insecure_channel(addr, opts, compression, interceptors),  # type: ignore[unused-ignore,no-any-return]
@@ -3561,8 +3559,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def unary_unary(  # type: ignore[unused-ignore,override]
         self,
         method_name: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
     ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore,override]
         """A method to support using SDK channel as gRPC Channel.
 
@@ -3571,10 +3569,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :type method_name: str
         :param request_serializer:
             A function that serializes a request message to bytes.
-        :type request_serializer: SerializingFunction | None
+        :type request_serializer: Callable[[Any], bytes] | None
         :param response_deserializer:
             A function that deserializes a response message from bytes.
-        :type response_deserializer: DeserializingFunction | None
+        :type response_deserializer: Callable[[bytes], Any] | None
         :return:
             A :class:`UnaryUnaryMultiCallable` object that can be used to make
             the call.
@@ -3642,8 +3640,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def unary_stream(  # type: ignore[unused-ignore,override]
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
         """Nebius Python SDK does not support streaming RPCs.
 
@@ -3654,9 +3652,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def stream_unary(  # type: ignore[unused-ignore,override]
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
-    ) -> StreamUnaryMultiCallable:
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
+    ) -> StreamUnaryMultiCallable:  # type: ignore[unused-ignore, type-arg]
         """Nebius Python SDK does not support streaming RPCs.
 
         :raises NotImplementedError:
@@ -3666,9 +3664,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def stream_stream(  # type: ignore[unused-ignore,override]
         self,
         method: str,
-        request_serializer: SerializingFunction | None = None,
-        response_deserializer: DeserializingFunction | None = None,
-    ) -> StreamStreamMultiCallable:
+        request_serializer: Callable[[Any], bytes] | None = None,
+        response_deserializer: Callable[[bytes], Any] | None = None,
+    ) -> StreamStreamMultiCallable:  # type: ignore[unused-ignore, type-arg]
         """Nebius Python SDK does not support streaming RPCs.
 
         :raises NotImplementedError:

@@ -283,6 +283,2364 @@ class ListK8sReleasesResponse(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class ContainerDefinition__RestartPolicy(_Enum):
+    RESTART_POLICY_UNSPECIFIED = ...
+    """No restart policy specified. Uses ALWAYS."""
+    ALWAYS = ...
+    """Restart the container whenever it stops."""
+    ON_FAILURE = ...
+    """Restart the container only when it exits with a non-zero exit code."""
+    NEVER = ...
+    """Do not restart the container when it stops."""
+
+class ContainerDefinition__User(_Message):
+    @property
+    def uid(self) -> _builtins.int:
+        """The user ID to run the container as."""
+        ...
+    @uid.setter
+    def uid(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``uid`` field."""
+        ...
+    @property
+    def gid(self) -> _builtins.int:
+        """The group ID to run the container as."""
+        ...
+    @gid.setter
+    def gid(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``gid`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        uid: _builtins.int | None | _UnsetType = ...,
+        gid: _builtins.int | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerDefinition__Port__Protocol(_Enum):
+    """The transport protocol for the exposed port."""
+
+    PROTOCOL_UNSPECIFIED = ...
+    """No protocol specified. Uses TCP."""
+    TCP = ...
+    """The Transmission Control Protocol."""
+    UDP = ...
+    """The User Datagram Protocol."""
+
+class ContainerDefinition__Port(_Message):
+    """Port defines a port that is exposed by the container."""
+
+    Protocol: _TypeAlias = ContainerDefinition__Port__Protocol
+    @property
+    def port(self) -> _builtins.int:
+        """The port number of the container that needs to be exposed."""
+        ...
+    @port.setter
+    def port(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``port`` field."""
+        ...
+    @property
+    def host_port(self) -> _builtins.int:
+        """The port on the host that the container port will be mapped to.\nIf not specified, the port will be mapped to the same port on the host."""
+        ...
+    @host_port.setter
+    def host_port(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``host_port`` field."""
+        ...
+    @property
+    def protocol(self) -> ContainerDefinition__Port__Protocol:
+        """The protocol used by the exposed port, either TCP or UDP.\nIf not specified, it defaults to TCP."""
+        ...
+    @protocol.setter
+    def protocol(self, value: ContainerDefinition__Port__Protocol | None) -> None:
+        """Set or clear the generated ``protocol`` field."""
+        ...
+    @property
+    def endpoint_name(self) -> _builtins.str:
+        """The name of the endpoint for this port, which is used to identify the endpoint in the UI."""
+        ...
+    @endpoint_name.setter
+    def endpoint_name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``endpoint_name`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        port: _builtins.int | None | _UnsetType = ...,
+        host_port: _builtins.int | None | _UnsetType = ...,
+        protocol: ContainerDefinition__Port__Protocol | None | _UnsetType = ...,
+        endpoint_name: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerDefinition__Volume(_Message):
+    """Volume defines a volume that will be mounted into the container."""
+    class __OneOfClass_storage__(_OneOf):
+        """The storage of the volume.\nIf not specified, the volume will be mounted on the VM boot disk."""
+
+        name: _Literal["storage"] = ...
+
+    class __OneOfClass_storage_boot_disk__(__OneOfClass_storage__):
+        """Virtual machine boot disk."""
+
+        field: _Literal["boot_disk"] = ...
+        @property
+        def value(self) -> BootDisk:
+            """Virtual machine boot disk."""
+            ...
+
+    class __OneOfClass_storage_disk__(__OneOfClass_storage__):
+        """Nebius Compute Disk."""
+
+        field: _Literal["disk"] = ...
+        @property
+        def value(self) -> DiskMount:
+            """Nebius Compute Disk."""
+            ...
+
+    class __OneOfClass_storage_filesystem__(__OneOfClass_storage__):
+        """Nebius Filesystem."""
+
+        field: _Literal["filesystem"] = ...
+        @property
+        def value(self) -> FilesystemMount:
+            """Nebius Filesystem."""
+            ...
+
+    class __OneOfClass_storage_storage_bucket__(__OneOfClass_storage__):
+        """Nebius Storage Bucket."""
+
+        field: _Literal["storage_bucket"] = ...
+        @property
+        def value(self) -> StorageBucketMount:
+            """Nebius Storage Bucket."""
+            ...
+
+    class __OneOfClass_storage_external_s3__(__OneOfClass_storage__):
+        """External S3-compatible bucket."""
+
+        field: _Literal["external_s3"] = ...
+        @property
+        def value(self) -> ExternalS3Mount:
+            """External S3-compatible bucket."""
+            ...
+
+    @property
+    def storage(
+        self,
+    ) -> (
+        __OneOfClass_storage_boot_disk__
+        | __OneOfClass_storage_disk__
+        | __OneOfClass_storage_filesystem__
+        | __OneOfClass_storage_storage_bucket__
+        | __OneOfClass_storage_external_s3__
+        | None
+    ):
+        """The storage of the volume.\nIf not specified, the volume will be mounted on the VM boot disk."""
+        ...
+    @property
+    def id(self) -> _builtins.str:
+        """The unique identifier of the volume.\nIf not specified, an ID will be generated."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def mount_path(self) -> _builtins.str:
+        """The path in the container where the mounted volume will be available."""
+        ...
+    @mount_path.setter
+    def mount_path(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``mount_path`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str:
+        """The description of the volume."""
+        ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def boot_disk(self) -> BootDisk | None:
+        """Virtual machine boot disk."""
+        ...
+    @boot_disk.setter
+    def boot_disk(self, value: BootDisk | None) -> None:
+        """Set or clear the generated ``boot_disk`` field."""
+        ...
+    @property
+    def disk(self) -> DiskMount | None:
+        """Nebius Compute Disk."""
+        ...
+    @disk.setter
+    def disk(self, value: DiskMount | None) -> None:
+        """Set or clear the generated ``disk`` field."""
+        ...
+    @property
+    def filesystem(self) -> FilesystemMount | None:
+        """Nebius Filesystem."""
+        ...
+    @filesystem.setter
+    def filesystem(self, value: FilesystemMount | None) -> None:
+        """Set or clear the generated ``filesystem`` field."""
+        ...
+    @property
+    def storage_bucket(self) -> StorageBucketMount | None:
+        """Nebius Storage Bucket."""
+        ...
+    @storage_bucket.setter
+    def storage_bucket(self, value: StorageBucketMount | None) -> None:
+        """Set or clear the generated ``storage_bucket`` field."""
+        ...
+    @property
+    def external_s3(self) -> ExternalS3Mount | None:
+        """External S3-compatible bucket."""
+        ...
+    @external_s3.setter
+    def external_s3(self, value: ExternalS3Mount | None) -> None:
+        """Set or clear the generated ``external_s3`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        mount_path: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        boot_disk: BootDisk | None | _UnsetType = ...,
+        disk: DiskMount | None | _UnsetType = ...,
+        filesystem: FilesystemMount | None | _UnsetType = ...,
+        storage_bucket: StorageBucketMount | None | _UnsetType = ...,
+        external_s3: ExternalS3Mount | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerDefinition__InjectedFile(_Message):
+    """InjectedFile is a small file materialized inside the container at launch."""
+    @property
+    def id(self) -> _builtins.str:
+        """Stable identifier within the container, used as the materialized\nfile's name under the agent state directory."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def container_path(self) -> _builtins.str:
+        """Absolute path inside the container where the content is written."""
+        ...
+    @container_path.setter
+    def container_path(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``container_path`` field."""
+        ...
+    @property
+    def content(self) -> _builtins.bytes:
+        """File content. Masked out of the stored definition by Sanitize(); the\nreal bytes live only in the mystery box data secret."""
+        ...
+    @content.setter
+    def content(self, value: _builtins.bytes | None) -> None:
+        """Set or clear the generated ``content`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        container_path: _builtins.str | None | _UnsetType = ...,
+        content: _builtins.bytes | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerDefinition(_Message):
+    """ContainerDefinition defines a container that will be run on the VM."""
+
+    RestartPolicy: _TypeAlias = ContainerDefinition__RestartPolicy
+    User: _TypeAlias = ContainerDefinition__User
+    Port: _TypeAlias = ContainerDefinition__Port
+    Volume: _TypeAlias = ContainerDefinition__Volume
+    InjectedFile: _TypeAlias = ContainerDefinition__InjectedFile
+    class __OneOfClass_gpu__(_OneOf):
+        """GPU configuration for the container.\nIf not specified, the container will not have access to GPUs.\nIgnored if the compute instance does not have GPUs."""
+
+        name: _Literal["gpu"] = ...
+
+    class __OneOfClass_gpu_gpu_count__(__OneOfClass_gpu__):
+        """The number of GPUs to allocate to the container."""
+
+        field: _Literal["gpu_count"] = ...
+        @property
+        def value(self) -> _builtins.int:
+            """The number of GPUs to allocate to the container."""
+            ...
+
+    class __OneOfClass_gpu_all_gpus__(__OneOfClass_gpu__):
+        """If true, all available GPUs will be allocated to the container."""
+
+        field: _Literal["all_gpus"] = ...
+        @property
+        def value(self) -> _builtins.bool:
+            """If true, all available GPUs will be allocated to the container."""
+            ...
+
+    @property
+    def gpu(self) -> __OneOfClass_gpu_gpu_count__ | __OneOfClass_gpu_all_gpus__ | None:
+        """GPU configuration for the container.\nIf not specified, the container will not have access to GPUs.\nIgnored if the compute instance does not have GPUs."""
+        ...
+    @property
+    def name(self) -> _builtins.str:
+        """The name of the container. This name is should be unique within the VM app.\nIf not specified, it will be generated based on the image name."""
+        ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def image(self) -> _builtins.str:
+        """The Docker image to use for the container."""
+        ...
+    @image.setter
+    def image(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``image`` field."""
+        ...
+    @property
+    def environment_variables(self) -> _MutableSequence[EnvironmentVariable]:
+        """Specifies the environment variables for the container."""
+        ...
+    @environment_variables.setter
+    def environment_variables(self, value: _Iterable[EnvironmentVariable] | None) -> None:
+        """Set or clear the generated ``environment_variables`` field."""
+        ...
+    @property
+    def ports(self) -> _MutableSequence[ContainerDefinition__Port]:
+        """Specifies the ports that the container exposes."""
+        ...
+    @ports.setter
+    def ports(self, value: _Iterable[ContainerDefinition__Port] | None) -> None:
+        """Set or clear the generated ``ports`` field."""
+        ...
+    @property
+    def volumes(self) -> _MutableSequence[ContainerDefinition__Volume]:
+        """The volume to be mounted into the container."""
+        ...
+    @volumes.setter
+    def volumes(self, value: _Iterable[ContainerDefinition__Volume] | None) -> None:
+        """Set or clear the generated ``volumes`` field."""
+        ...
+    @property
+    def command(self) -> _builtins.str:
+        """The command for the container in shell-string format.\nIf not specified, the default entrypoint from the image will be used."""
+        ...
+    @command.setter
+    def command(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``command`` field."""
+        ...
+    @property
+    def shm_size_bytes(self) -> _builtins.int:
+        """Shared memory size in bytes."""
+        ...
+    @shm_size_bytes.setter
+    def shm_size_bytes(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``shm_size_bytes`` field."""
+        ...
+    @property
+    def runtime_user(self) -> ContainerDefinition__User:
+        """The user to run the container as."""
+        ...
+    @runtime_user.setter
+    def runtime_user(self, value: ContainerDefinition__User | None) -> None:
+        """Set or clear the generated ``runtime_user`` field."""
+        ...
+    @property
+    def working_dir(self) -> _builtins.str:
+        """The working directory for the container."""
+        ...
+    @working_dir.setter
+    def working_dir(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``working_dir`` field."""
+        ...
+    @property
+    def privileged(self) -> _builtins.bool:
+        """If true, the container will be run in privileged mode."""
+        ...
+    @privileged.setter
+    def privileged(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``privileged`` field."""
+        ...
+    @property
+    def entrypoint(self) -> _builtins.str:
+        """The entrypoint for the container."""
+        ...
+    @entrypoint.setter
+    def entrypoint(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``entrypoint`` field."""
+        ...
+    @property
+    def restart_policy(self) -> ContainerDefinition__RestartPolicy:
+        """The restart policy for the container.\nIf not specified, the default policy is \"always\"."""
+        ...
+    @restart_policy.setter
+    def restart_policy(self, value: ContainerDefinition__RestartPolicy | None) -> None:
+        """Set or clear the generated ``restart_policy`` field."""
+        ...
+    @property
+    def max_attempts(self) -> _builtins.int | None:
+        """The maximum number of restart attempts for the ON\\_FAILURE restart policy.\nIf absent or zero, restarts have no limit. A positive value limits the number of restarts.\nOther restart policies ignore this field. Devlab templates must omit it."""
+        ...
+    @max_attempts.setter
+    def max_attempts(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``max_attempts`` field."""
+        ...
+    @property
+    def host_ipc(self) -> _builtins.bool:
+        """Enables host IPC namespace sharing."""
+        ...
+    @host_ipc.setter
+    def host_ipc(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``host_ipc`` field."""
+        ...
+    @property
+    def host_network(self) -> _builtins.bool:
+        """Enables host network namespace sharing."""
+        ...
+    @host_network.setter
+    def host_network(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``host_network`` field."""
+        ...
+    @property
+    def export_logs(self) -> _builtins.bool:
+        """Enables logs export to Nebius Observability."""
+        ...
+    @export_logs.setter
+    def export_logs(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``export_logs`` field."""
+        ...
+    @property
+    def gpu_count(self) -> _builtins.int | None:
+        """The number of GPUs to allocate to the container."""
+        ...
+    @gpu_count.setter
+    def gpu_count(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``gpu_count`` field."""
+        ...
+    @property
+    def all_gpus(self) -> _builtins.bool | None:
+        """If true, all available GPUs will be allocated to the container."""
+        ...
+    @all_gpus.setter
+    def all_gpus(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``all_gpus`` field."""
+        ...
+    @property
+    def registry_username(self) -> _builtins.str:
+        """The docker registry username to configure for the container."""
+        ...
+    @registry_username.setter
+    def registry_username(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``registry_username`` field."""
+        ...
+    @property
+    def registry_password(self) -> _builtins.str:
+        """The docker registry password to configure for the container."""
+        ...
+    @registry_password.setter
+    def registry_password(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``registry_password`` field."""
+        ...
+    @property
+    def injected_files(self) -> _MutableSequence[ContainerDefinition__InjectedFile]:
+        """Small files materialized inside the container before it starts."""
+        ...
+    @injected_files.setter
+    def injected_files(self, value: _Iterable[ContainerDefinition__InjectedFile] | None) -> None:
+        """Set or clear the generated ``injected_files`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        image: _builtins.str | None | _UnsetType = ...,
+        environment_variables: _Iterable[EnvironmentVariable] | None | _UnsetType = ...,
+        ports: _Iterable[ContainerDefinition__Port] | None | _UnsetType = ...,
+        volumes: _Iterable[ContainerDefinition__Volume] | None | _UnsetType = ...,
+        command: _builtins.str | None | _UnsetType = ...,
+        shm_size_bytes: _builtins.int | None | _UnsetType = ...,
+        runtime_user: ContainerDefinition__User | None | _UnsetType = ...,
+        working_dir: _builtins.str | None | _UnsetType = ...,
+        privileged: _builtins.bool | None | _UnsetType = ...,
+        entrypoint: _builtins.str | None | _UnsetType = ...,
+        restart_policy: ContainerDefinition__RestartPolicy | None | _UnsetType = ...,
+        max_attempts: _builtins.int | None | _UnsetType = ...,
+        host_ipc: _builtins.bool | None | _UnsetType = ...,
+        host_network: _builtins.bool | None | _UnsetType = ...,
+        export_logs: _builtins.bool | None | _UnsetType = ...,
+        gpu_count: _builtins.int | None | _UnsetType = ...,
+        all_gpus: _builtins.bool | None | _UnsetType = ...,
+        registry_username: _builtins.str | None | _UnsetType = ...,
+        registry_password: _builtins.str | None | _UnsetType = ...,
+        injected_files: _Iterable[ContainerDefinition__InjectedFile] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class EnvironmentVariable(_Message):
+    """EnvironmentVariable defines an environment variable for the container."""
+    class __OneOfClass_data__(_OneOf):
+        """The value of the environment variable."""
+
+        name: _Literal["data"] = ...
+
+    class __OneOfClass_data_value__(__OneOfClass_data__):
+        """Plain text value"""
+
+        field: _Literal["value"] = ...
+        @property
+        def value(self) -> _builtins.str:
+            """Plain text value"""
+            ...
+
+    class __OneOfClass_data_sensitive_value__(__OneOfClass_data__):
+        """Sensitive value"""
+
+        field: _Literal["sensitive_value"] = ...
+        @property
+        def value(self) -> _builtins.str:
+            """Sensitive value"""
+            ...
+
+    @property
+    def data(self) -> __OneOfClass_data_value__ | __OneOfClass_data_sensitive_value__ | None:
+        """The value of the environment variable."""
+        ...
+    @property
+    def key(self) -> _builtins.str:
+        """The key of the environment variable."""
+        ...
+    @key.setter
+    def key(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``key`` field."""
+        ...
+    @property
+    def value(self) -> _builtins.str | None:
+        """Plain text value"""
+        ...
+    @value.setter
+    def value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``value`` field."""
+        ...
+    @property
+    def sensitive_value(self) -> _builtins.str | None:
+        """Sensitive value"""
+        ...
+    @sensitive_value.setter
+    def sensitive_value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``sensitive_value`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        key: _builtins.str | None | _UnsetType = ...,
+        value: _builtins.str | None | _UnsetType = ...,
+        sensitive_value: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class BootDisk(_Message):
+    """BootDisk defines a boot disk path that will be mounted into the container."""
+    def __init__(self, initial_message: _SerializableMessage | None = None) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DiskMount__Mode(_Enum):
+    """The access mode for the mounted disk."""
+
+    MODE_UNSPECIFIED = ...
+    """No access mode specified. Specify READ\\_WRITE or READ\\_ONLY."""
+    READ_WRITE = ...
+    """Allow reads and writes."""
+    READ_ONLY = ...
+    """Allow reads only."""
+
+class DiskMount(_Message):
+    Mode: _TypeAlias = DiskMount__Mode
+    @property
+    def id(self) -> _builtins.str:
+        """ID of the compute disk to be mounted"""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def mode(self) -> DiskMount__Mode:
+        """Mount mode."""
+        ...
+    @mode.setter
+    def mode(self, value: DiskMount__Mode | None) -> None:
+        """Set or clear the generated ``mode`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        mode: DiskMount__Mode | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class FilesystemMount__Mode(_Enum):
+    """The access mode for the mounted filesystem."""
+
+    MODE_UNSPECIFIED = ...
+    """No access mode specified. Specify READ\\_WRITE or READ\\_ONLY."""
+    READ_WRITE = ...
+    """Allow reads and writes."""
+    READ_ONLY = ...
+    """Allow reads only."""
+
+class FilesystemMount(_Message):
+    """FilesystemMount defines a filesystem that will be mounted into the container."""
+
+    Mode: _TypeAlias = FilesystemMount__Mode
+    @property
+    def id(self) -> _builtins.str:
+        """ID of the filesystem to be mounted"""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def mode(self) -> FilesystemMount__Mode:
+        """Mount mode."""
+        ...
+    @mode.setter
+    def mode(self, value: FilesystemMount__Mode | None) -> None:
+        """Set or clear the generated ``mode`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        mode: FilesystemMount__Mode | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class StorageBucketMount__Mode(_Enum):
+    """The access mode for the mounted storage bucket."""
+
+    MODE_UNSPECIFIED = ...
+    """No access mode specified. Specify READ\\_WRITE or READ\\_ONLY."""
+    READ_WRITE = ...
+    """Allow reads and writes."""
+    READ_ONLY = ...
+    """Allow reads only."""
+
+class StorageBucketMount(_Message):
+    """StorageBucketMount defines a storage bucket that will be mounted into the container."""
+
+    Mode: _TypeAlias = StorageBucketMount__Mode
+    @property
+    def id(self) -> _builtins.str:
+        """ID of the storage bucket to be mounted"""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def mode(self) -> StorageBucketMount__Mode:
+        """Mount mode."""
+        ...
+    @mode.setter
+    def mode(self, value: StorageBucketMount__Mode | None) -> None:
+        """Set or clear the generated ``mode`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        mode: StorageBucketMount__Mode | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ExternalS3Mount(_Message):
+    """ExternalS3Mount defines an external S3-compatible bucket that will be mounted into the container."""
+    @property
+    def endpoint(self) -> _builtins.str:
+        """S3-compatible endpoint URL."""
+        ...
+    @endpoint.setter
+    def endpoint(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``endpoint`` field."""
+        ...
+    @property
+    def bucket(self) -> _builtins.str:
+        """Bucket name."""
+        ...
+    @bucket.setter
+    def bucket(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``bucket`` field."""
+        ...
+    @property
+    def access_key_id(self) -> _builtins.str:
+        """Access key ID."""
+        ...
+    @access_key_id.setter
+    def access_key_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``access_key_id`` field."""
+        ...
+    @property
+    def secret_access_key(self) -> _builtins.str:
+        """Secret access key."""
+        ...
+    @secret_access_key.setter
+    def secret_access_key(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``secret_access_key`` field."""
+        ...
+    @property
+    def session_token(self) -> _builtins.str:
+        """Session token (optional, for temporary credentials)."""
+        ...
+    @session_token.setter
+    def session_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``session_token`` field."""
+        ...
+    @property
+    def mode(self) -> StorageBucketMount__Mode:
+        """Mount mode."""
+        ...
+    @mode.setter
+    def mode(self, value: StorageBucketMount__Mode | None) -> None:
+        """Set or clear the generated ``mode`` field."""
+        ...
+    @property
+    def region(self) -> _builtins.str:
+        """S3 region."""
+        ...
+    @region.setter
+    def region(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``region`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        endpoint: _builtins.str | None | _UnsetType = ...,
+        bucket: _builtins.str | None | _UnsetType = ...,
+        access_key_id: _builtins.str | None | _UnsetType = ...,
+        secret_access_key: _builtins.str | None | _UnsetType = ...,
+        session_token: _builtins.str | None | _UnsetType = ...,
+        mode: StorageBucketMount__Mode | None | _UnsetType = ...,
+        region: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class VmAppTemplate(_Message):
+    """Represents a reusable VM app template."""
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """The template metadata."""
+        ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> VmAppTemplateSpec:
+        """The template specification."""
+        ...
+    @spec.setter
+    def spec(self, value: VmAppTemplateSpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    @property
+    def status(self) -> VmAppTemplateStatus:
+        """The template status and available inputs."""
+        ...
+    @status.setter
+    def status(self, value: VmAppTemplateStatus | None) -> None:
+        """Set or clear the generated ``status`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: VmAppTemplateSpec | None | _UnsetType = ...,
+        status: VmAppTemplateStatus | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class VmAppTemplateSpec(_Message):
+    class __OneOfClass_definition__(_OneOf):
+        """The definition of the VM app template."""
+
+        name: _Literal["definition"] = ...
+
+    class __OneOfClass_definition_container_template__(__OneOfClass_definition__):
+        """The container template definition."""
+
+        field: _Literal["container_template"] = ...
+        @property
+        def value(self) -> ContainerTemplateDefinition:
+            """The container template definition."""
+            ...
+
+    @property
+    def definition(self) -> __OneOfClass_definition_container_template__ | None:
+        """The definition of the VM app template."""
+        ...
+    @property
+    def container_template(self) -> ContainerTemplateDefinition | None:
+        """The container template definition."""
+        ...
+    @container_template.setter
+    def container_template(self, value: ContainerTemplateDefinition | None) -> None:
+        """Set or clear the generated ``container_template`` field."""
+        ...
+    @property
+    def kind(self) -> _builtins.str:
+        """The template kind: \"covm\" or \"devlab\". The default is \"covm\"."""
+        ...
+    @kind.setter
+    def kind(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``kind`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        container_template: ContainerTemplateDefinition | None | _UnsetType = ...,
+        kind: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerTemplateDefinition__Substitution(_Message):
+    @property
+    def container_name(self) -> _builtins.str:
+        """The name of the container to modify."""
+        ...
+    @container_name.setter
+    def container_name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``container_name`` field."""
+        ...
+    @property
+    def conditions(self) -> _MutableSequence[ContainerTemplateDefinition__SubstitutionCondition]:
+        """The conditions that permit this substitution. At least one condition must match.\nAn empty list applies the substitution unconditionally."""
+        ...
+    @conditions.setter
+    def conditions(self, value: _Iterable[ContainerTemplateDefinition__SubstitutionCondition] | None) -> None:
+        """Set or clear the generated ``conditions`` field."""
+        ...
+    @property
+    def operations(self) -> _MutableSequence[ContainerTemplateDefinition__SubstitutionOperation]:
+        """The actions to apply in the listed order."""
+        ...
+    @operations.setter
+    def operations(self, value: _Iterable[ContainerTemplateDefinition__SubstitutionOperation] | None) -> None:
+        """Set or clear the generated ``operations`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        container_name: _builtins.str | None | _UnsetType = ...,
+        conditions: _Iterable[ContainerTemplateDefinition__SubstitutionCondition] | None | _UnsetType = ...,
+        operations: _Iterable[ContainerTemplateDefinition__SubstitutionOperation] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerTemplateDefinition__SubstitutionCondition(_Message):
+    """All specified constraints must match. Without constraints, the condition matches unconditionally before applying not."""
+    @property
+    def not_(self) -> _builtins.bool:
+        """Whether to negate the condition after evaluating all constraints."""
+        ...
+    @not_.setter
+    def not_(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``not_`` field."""
+        ...
+    @property
+    def platform(self) -> _builtins.str:
+        """The compute platform name to match. An empty value adds no platform constraint."""
+        ...
+    @platform.setter
+    def platform(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``platform`` field."""
+        ...
+    @property
+    def preset(self) -> _builtins.str:
+        """The compute preset name to match. An empty value adds no preset constraint."""
+        ...
+    @preset.setter
+    def preset(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``preset`` field."""
+        ...
+    @property
+    def input_field_id(self) -> _builtins.str:
+        """The input field ID that must exist. An empty value adds no input constraint.\nSet at most one input\\_field\\_value\\_\\* field to require a non-sensitive input value to match."""
+        ...
+    @input_field_id.setter
+    def input_field_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``input_field_id`` field."""
+        ...
+    @property
+    def input_field_value_string(self) -> _builtins.str | None:
+        """The string value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no string value constraint. An empty string requires an empty input string."""
+        ...
+    @input_field_value_string.setter
+    def input_field_value_string(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``input_field_value_string`` field."""
+        ...
+    @property
+    def input_field_value_bool(self) -> _builtins.bool | None:
+        """The Boolean value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no Boolean value constraint. If false, the input must equal false."""
+        ...
+    @input_field_value_bool.setter
+    def input_field_value_bool(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``input_field_value_bool`` field."""
+        ...
+    @property
+    def input_field_value_int64(self) -> _builtins.int | None:
+        """The integer value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no integer value constraint. If zero, the input must equal zero."""
+        ...
+    @input_field_value_int64.setter
+    def input_field_value_int64(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``input_field_value_int64`` field."""
+        ...
+    @property
+    def input_field_value_double(self) -> _builtins.float | None:
+        """The floating-point value to match for input\\_field\\_id. Requires input\\_field\\_id.\nIf absent, this field adds no floating-point value constraint. If zero, the input must equal zero."""
+        ...
+    @input_field_value_double.setter
+    def input_field_value_double(self, value: _builtins.float | None) -> None:
+        """Set or clear the generated ``input_field_value_double`` field."""
+        ...
+    @property
+    def environment_variable_key(self) -> _builtins.str:
+        """The environment variable key that must exist. An empty value adds no environment variable constraint."""
+        ...
+    @environment_variable_key.setter
+    def environment_variable_key(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``environment_variable_key`` field."""
+        ...
+    @property
+    def environment_variable_value(self) -> _builtins.str | None:
+        """The non-sensitive environment variable value to match. Requires environment\\_variable\\_key.\nIf absent, only the key must exist. An empty string requires an empty variable value."""
+        ...
+    @environment_variable_value.setter
+    def environment_variable_value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``environment_variable_value`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        not_: _builtins.bool | None | _UnsetType = ...,
+        platform: _builtins.str | None | _UnsetType = ...,
+        preset: _builtins.str | None | _UnsetType = ...,
+        input_field_id: _builtins.str | None | _UnsetType = ...,
+        input_field_value_string: _builtins.str | None | _UnsetType = ...,
+        input_field_value_bool: _builtins.bool | None | _UnsetType = ...,
+        input_field_value_int64: _builtins.int | None | _UnsetType = ...,
+        input_field_value_double: _builtins.float | None | _UnsetType = ...,
+        environment_variable_key: _builtins.str | None | _UnsetType = ...,
+        environment_variable_value: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerTemplateDefinition__SubstitutionOperation(_Message):
+    class __OneOfClass_action__(_OneOf):
+        """The action to perform on the selected container value."""
+
+        name: _Literal["action"] = ...
+
+    class __OneOfClass_action_remove__(__OneOfClass_action__):
+        """Remove the target value."""
+
+        field: _Literal["remove"] = ...
+        @property
+        def value(self) -> _builtins.bool:
+            """Remove the target value."""
+            ...
+
+    class __OneOfClass_action_set_from_input_field__(__OneOfClass_action__):
+        """The ID of the input field that supplies the value."""
+
+        field: _Literal["set_from_input_field"] = ...
+        @property
+        def value(self) -> _builtins.str:
+            """The ID of the input field that supplies the value."""
+            ...
+
+    class __OneOfClass_action_set_to_string_value__(__OneOfClass_action__):
+        """The string value to use."""
+
+        field: _Literal["set_to_string_value"] = ...
+        @property
+        def value(self) -> _builtins.str:
+            """The string value to use."""
+            ...
+
+    class __OneOfClass_action_set_to_integer_value__(__OneOfClass_action__):
+        """The integer value to use."""
+
+        field: _Literal["set_to_integer_value"] = ...
+        @property
+        def value(self) -> _builtins.int:
+            """The integer value to use."""
+            ...
+
+    class __OneOfClass_action_set_user__(__OneOfClass_action__):
+        """The user to run the container as."""
+
+        field: _Literal["set_user"] = ...
+        @property
+        def value(self) -> ContainerDefinition__User:
+            """The user to run the container as."""
+            ...
+
+    @property
+    def action(
+        self,
+    ) -> (
+        __OneOfClass_action_remove__
+        | __OneOfClass_action_set_from_input_field__
+        | __OneOfClass_action_set_to_string_value__
+        | __OneOfClass_action_set_to_integer_value__
+        | __OneOfClass_action_set_user__
+        | None
+    ):
+        """The action to perform on the selected container value."""
+        ...
+    class __OneOfClass_value__(_OneOf):
+        """The container value to modify."""
+
+        name: _Literal["value"] = ...
+
+    class __OneOfClass_value_environment_variable__(__OneOfClass_value__):
+        """The environment variable to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``."""
+
+        field: _Literal["environment_variable"] = ...
+        @property
+        def value(self) -> _builtins.str:
+            """The environment variable to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``."""
+            ...
+
+    class __OneOfClass_value_sensitive_environment_variable__(__OneOfClass_value__):
+        """The sensitive environment variable to set in the container.\nAllowed actions are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``."""
+
+        field: _Literal["sensitive_environment_variable"] = ...
+        @property
+        def value(self) -> _builtins.str:
+            """The sensitive environment variable to set in the container.\nAllowed actions are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``."""
+            ...
+
+    class __OneOfClass_value_image__(__OneOfClass_value__):
+        """The image to use for the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``."""
+
+        field: _Literal["image"] = ...
+        @property
+        def value(self) -> _builtins.bool:
+            """The image to use for the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``."""
+            ...
+
+    class __OneOfClass_value_shm_size_bytes__(__OneOfClass_value__):
+        """The shared memory size in bytes to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_integer_value``, ``remove``."""
+
+        field: _Literal["shm_size_bytes"] = ...
+        @property
+        def value(self) -> _builtins.bool:
+            """The shared memory size in bytes to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_integer_value``, ``remove``."""
+            ...
+
+    class __OneOfClass_value_container_command__(__OneOfClass_value__):
+        """The command to run in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``."""
+
+        field: _Literal["container_command"] = ...
+        @property
+        def value(self) -> _builtins.bool:
+            """The command to run in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``."""
+            ...
+
+    class __OneOfClass_value_container_user__(__OneOfClass_value__):
+        """The user to run the container as.\nAllowed values are: ``set_user``, ``remove``."""
+
+        field: _Literal["container_user"] = ...
+        @property
+        def value(self) -> _builtins.bool:
+            """The user to run the container as.\nAllowed values are: ``set_user``, ``remove``."""
+            ...
+
+    class __OneOfClass_value_image_tag__(__OneOfClass_value__):
+        """The image tag to use for the container. Replaces only the tag after the last colon.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``."""
+
+        field: _Literal["image_tag"] = ...
+        @property
+        def value(self) -> _builtins.bool:
+            """The image tag to use for the container. Replaces only the tag after the last colon.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``."""
+            ...
+
+    @property
+    def value(
+        self,
+    ) -> (
+        __OneOfClass_value_environment_variable__
+        | __OneOfClass_value_sensitive_environment_variable__
+        | __OneOfClass_value_image__
+        | __OneOfClass_value_shm_size_bytes__
+        | __OneOfClass_value_container_command__
+        | __OneOfClass_value_container_user__
+        | __OneOfClass_value_image_tag__
+        | None
+    ):
+        """The container value to modify."""
+        ...
+    @property
+    def remove(self) -> _builtins.bool | None:
+        """Remove the target value."""
+        ...
+    @remove.setter
+    def remove(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``remove`` field."""
+        ...
+    @property
+    def set_from_input_field(self) -> _builtins.str | None:
+        """The ID of the input field that supplies the value."""
+        ...
+    @set_from_input_field.setter
+    def set_from_input_field(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``set_from_input_field`` field."""
+        ...
+    @property
+    def set_to_string_value(self) -> _builtins.str | None:
+        """The string value to use."""
+        ...
+    @set_to_string_value.setter
+    def set_to_string_value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``set_to_string_value`` field."""
+        ...
+    @property
+    def set_to_integer_value(self) -> _builtins.int | None:
+        """The integer value to use."""
+        ...
+    @set_to_integer_value.setter
+    def set_to_integer_value(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``set_to_integer_value`` field."""
+        ...
+    @property
+    def set_user(self) -> ContainerDefinition__User | None:
+        """The user to run the container as."""
+        ...
+    @set_user.setter
+    def set_user(self, value: ContainerDefinition__User | None) -> None:
+        """Set or clear the generated ``set_user`` field."""
+        ...
+    @property
+    def environment_variable(self) -> _builtins.str | None:
+        """The environment variable to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``."""
+        ...
+    @environment_variable.setter
+    def environment_variable(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``environment_variable`` field."""
+        ...
+    @property
+    def sensitive_environment_variable(self) -> _builtins.str | None:
+        """The sensitive environment variable to set in the container.\nAllowed actions are: ``set_from_input_field``, ``set_to_string_value``, ``set_to_integer_value``, ``remove``."""
+        ...
+    @sensitive_environment_variable.setter
+    def sensitive_environment_variable(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``sensitive_environment_variable`` field."""
+        ...
+    @property
+    def image(self) -> _builtins.bool | None:
+        """The image to use for the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``."""
+        ...
+    @image.setter
+    def image(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``image`` field."""
+        ...
+    @property
+    def shm_size_bytes(self) -> _builtins.bool | None:
+        """The shared memory size in bytes to set in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_integer_value``, ``remove``."""
+        ...
+    @shm_size_bytes.setter
+    def shm_size_bytes(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``shm_size_bytes`` field."""
+        ...
+    @property
+    def container_command(self) -> _builtins.bool | None:
+        """The command to run in the container.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``, ``remove``."""
+        ...
+    @container_command.setter
+    def container_command(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``container_command`` field."""
+        ...
+    @property
+    def container_user(self) -> _builtins.bool | None:
+        """The user to run the container as.\nAllowed values are: ``set_user``, ``remove``."""
+        ...
+    @container_user.setter
+    def container_user(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``container_user`` field."""
+        ...
+    @property
+    def image_tag(self) -> _builtins.bool | None:
+        """The image tag to use for the container. Replaces only the tag after the last colon.\nAllowed values are: ``set_from_input_field``, ``set_to_string_value``."""
+        ...
+    @image_tag.setter
+    def image_tag(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``image_tag`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        remove: _builtins.bool | None | _UnsetType = ...,
+        set_from_input_field: _builtins.str | None | _UnsetType = ...,
+        set_to_string_value: _builtins.str | None | _UnsetType = ...,
+        set_to_integer_value: _builtins.int | None | _UnsetType = ...,
+        set_user: ContainerDefinition__User | None | _UnsetType = ...,
+        environment_variable: _builtins.str | None | _UnsetType = ...,
+        sensitive_environment_variable: _builtins.str | None | _UnsetType = ...,
+        image: _builtins.bool | None | _UnsetType = ...,
+        shm_size_bytes: _builtins.bool | None | _UnsetType = ...,
+        container_command: _builtins.bool | None | _UnsetType = ...,
+        container_user: _builtins.bool | None | _UnsetType = ...,
+        image_tag: _builtins.bool | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ContainerTemplateDefinition(_Message):
+    """ContainerTemplateDefinition defines a template for a VM app that consists of one or more containers."""
+
+    Substitution: _TypeAlias = ContainerTemplateDefinition__Substitution
+    SubstitutionCondition: _TypeAlias = ContainerTemplateDefinition__SubstitutionCondition
+    SubstitutionOperation: _TypeAlias = ContainerTemplateDefinition__SubstitutionOperation
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def icon_url(self) -> _builtins.str:
+        """The URL of the template icon."""
+        ...
+    @icon_url.setter
+    def icon_url(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``icon_url`` field."""
+        ...
+    @property
+    def inputs(self) -> _MutableSequence[TemplateInput]:
+        """The inputs that configure the template."""
+        ...
+    @inputs.setter
+    def inputs(self, value: _Iterable[TemplateInput] | None) -> None:
+        """Set or clear the generated ``inputs`` field."""
+        ...
+    @property
+    def containers(self) -> _MutableSequence[ContainerDefinition]:
+        """The container definitions for the VM app."""
+        ...
+    @containers.setter
+    def containers(self, value: _Iterable[ContainerDefinition] | None) -> None:
+        """Set or clear the generated ``containers`` field."""
+        ...
+    @property
+    def supported_platforms(self) -> _MutableSequence[SupportedPlatform]:
+        """The platforms that the VM app supports.\nAn empty list allows all platforms."""
+        ...
+    @supported_platforms.setter
+    def supported_platforms(self, value: _Iterable[SupportedPlatform] | None) -> None:
+        """Set or clear the generated ``supported_platforms`` field."""
+        ...
+    @property
+    def substitutions(self) -> _MutableSequence[ContainerTemplateDefinition__Substitution]:
+        """The substitutions to apply when their conditions match."""
+        ...
+    @substitutions.setter
+    def substitutions(self, value: _Iterable[ContainerTemplateDefinition__Substitution] | None) -> None:
+        """Set or clear the generated ``substitutions`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        description: _builtins.str | None | _UnsetType = ...,
+        icon_url: _builtins.str | None | _UnsetType = ...,
+        inputs: _Iterable[TemplateInput] | None | _UnsetType = ...,
+        containers: _Iterable[ContainerDefinition] | None | _UnsetType = ...,
+        supported_platforms: _Iterable[SupportedPlatform] | None | _UnsetType = ...,
+        substitutions: _Iterable[ContainerTemplateDefinition__Substitution] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__StringInput(_Message):
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def placeholder(self) -> _builtins.str:
+        """The placeholder text for the input."""
+        ...
+    @placeholder.setter
+    def placeholder(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``placeholder`` field."""
+        ...
+    @property
+    def pattern(self) -> _builtins.str:
+        """The regular expression that validates the input value."""
+        ...
+    @pattern.setter
+    def pattern(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``pattern`` field."""
+        ...
+    @property
+    def default_value(self) -> _builtins.str:
+        """The default input value."""
+        ...
+    @default_value.setter
+    def default_value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``default_value`` field."""
+        ...
+    @property
+    def sensitive(self) -> _builtins.bool:
+        """Whether the input contains sensitive data."""
+        ...
+    @sensitive.setter
+    def sensitive(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``sensitive`` field."""
+        ...
+    @property
+    def generate(self) -> _builtins.bool:
+        """Whether the form offers password generation for this sensitive input."""
+        ...
+    @generate.setter
+    def generate(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``generate`` field."""
+        ...
+    @property
+    def multiline(self) -> _builtins.bool:
+        """Whether the form displays a multiline text input."""
+        ...
+    @multiline.setter
+    def multiline(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``multiline`` field."""
+        ...
+    @property
+    def tooltip(self) -> _builtins.str:
+        """The tooltip text for the input."""
+        ...
+    @tooltip.setter
+    def tooltip(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``tooltip`` field."""
+        ...
+    @property
+    def input_prefix(self) -> _builtins.str:
+        """The prefix to display before the input."""
+        ...
+    @input_prefix.setter
+    def input_prefix(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``input_prefix`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        placeholder: _builtins.str | None | _UnsetType = ...,
+        pattern: _builtins.str | None | _UnsetType = ...,
+        default_value: _builtins.str | None | _UnsetType = ...,
+        sensitive: _builtins.bool | None | _UnsetType = ...,
+        generate: _builtins.bool | None | _UnsetType = ...,
+        multiline: _builtins.bool | None | _UnsetType = ...,
+        tooltip: _builtins.str | None | _UnsetType = ...,
+        input_prefix: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__EnumStringInput__Option(_Message):
+    @property
+    def value(self) -> _builtins.str:
+        """The value of the option, which is used in the value of the input."""
+        ...
+    @value.setter
+    def value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``value`` field."""
+        ...
+    @property
+    def label(self) -> _builtins.str:
+        """The label for the option. An empty label uses the option value."""
+        ...
+    @label.setter
+    def label(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``label`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        value: _builtins.str | None | _UnsetType = ...,
+        label: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__EnumStringInput(_Message):
+    """EnumStringInput defines a string input with predefined options.\nWill be rendered as a dropdown in UI."""
+
+    Option: _TypeAlias = TemplateInput__EnumStringInput__Option
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def placeholder(self) -> _builtins.str:
+        """The placeholder text for the input."""
+        ...
+    @placeholder.setter
+    def placeholder(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``placeholder`` field."""
+        ...
+    @property
+    def options(self) -> _MutableSequence[TemplateInput__EnumStringInput__Option]:
+        """The available input options."""
+        ...
+    @options.setter
+    def options(self, value: _Iterable[TemplateInput__EnumStringInput__Option] | None) -> None:
+        """Set or clear the generated ``options`` field."""
+        ...
+    @property
+    def default_value(self) -> _builtins.str:
+        """The default option value."""
+        ...
+    @default_value.setter
+    def default_value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``default_value`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        placeholder: _builtins.str | None | _UnsetType = ...,
+        options: _Iterable[TemplateInput__EnumStringInput__Option] | None | _UnsetType = ...,
+        default_value: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__IntegerUnitInput(_Message):
+    """IntegerUnitInput defines an integer input with a unit, bounds, step, and default value.\nThe form displays a slider with the unit suffix."""
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def unit(self) -> _builtins.str:
+        """The unit suffix for the input value."""
+        ...
+    @unit.setter
+    def unit(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``unit`` field."""
+        ...
+    @property
+    def min_value(self) -> _builtins.int:
+        """The minimum input value before multiplication."""
+        ...
+    @min_value.setter
+    def min_value(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``min_value`` field."""
+        ...
+    @property
+    def max_value(self) -> _builtins.int:
+        """The maximum input value before multiplication."""
+        ...
+    @max_value.setter
+    def max_value(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``max_value`` field."""
+        ...
+    @property
+    def step(self) -> _builtins.int:
+        """The increment between valid input values, starting at min\\_value."""
+        ...
+    @step.setter
+    def step(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``step`` field."""
+        ...
+    @property
+    def default_value(self) -> _builtins.int:
+        """The default input value before multiplication."""
+        ...
+    @default_value.setter
+    def default_value(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``default_value`` field."""
+        ...
+    @property
+    def multiply_by(self) -> _builtins.int:
+        """The multiplication factor. Values less than one use a factor of one."""
+        ...
+    @multiply_by.setter
+    def multiply_by(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``multiply_by`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        unit: _builtins.str | None | _UnsetType = ...,
+        min_value: _builtins.int | None | _UnsetType = ...,
+        max_value: _builtins.int | None | _UnsetType = ...,
+        step: _builtins.int | None | _UnsetType = ...,
+        default_value: _builtins.int | None | _UnsetType = ...,
+        multiply_by: _builtins.int | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__IntegerInput(_Message):
+    """IntegerInput defines a simple integer field.\nThe form displays a text box."""
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def min_value(self) -> _builtins.int | None:
+        """The minimum input value before multiplication.\nIf absent, no minimum applies. If zero, the input must be zero or greater."""
+        ...
+    @min_value.setter
+    def min_value(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``min_value`` field."""
+        ...
+    @property
+    def max_value(self) -> _builtins.int | None:
+        """The maximum input value before multiplication.\nIf absent, no maximum applies. If zero, the input must be zero or less."""
+        ...
+    @max_value.setter
+    def max_value(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``max_value`` field."""
+        ...
+    @property
+    def default_value(self) -> _builtins.int | None:
+        """The default for an omitted, non-required input before multiplication.\nIf absent, the input uses min\\_value, or zero when min\\_value is absent.\nIf zero, the default is zero, regardless of min\\_value. The bounds still apply."""
+        ...
+    @default_value.setter
+    def default_value(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``default_value`` field."""
+        ...
+    @property
+    def multiply_by(self) -> _builtins.int:
+        """The multiplication factor. Zero uses a factor of one."""
+        ...
+    @multiply_by.setter
+    def multiply_by(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``multiply_by`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        min_value: _builtins.int | None | _UnsetType = ...,
+        max_value: _builtins.int | None | _UnsetType = ...,
+        default_value: _builtins.int | None | _UnsetType = ...,
+        multiply_by: _builtins.int | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__BooleanInput__ViewType(_Enum):
+    VIEW_TYPE_UNSPECIFIED = ...
+    """No form control type specified. Specify CHECKBOX or SWITCH."""
+    CHECKBOX = ...
+    """Display the Boolean input as a checkbox."""
+    SWITCH = ...
+    """Display the Boolean input as a toggle switch."""
+
+class TemplateInput__BooleanInput(_Message):
+    """BooleanInput defines a Boolean field."""
+
+    ViewType: _TypeAlias = TemplateInput__BooleanInput__ViewType
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def default_value(self) -> _builtins.bool:
+        """The default input value."""
+        ...
+    @default_value.setter
+    def default_value(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``default_value`` field."""
+        ...
+    @property
+    def view_type(self) -> TemplateInput__BooleanInput__ViewType:
+        """The form control type for the input."""
+        ...
+    @view_type.setter
+    def view_type(self, value: TemplateInput__BooleanInput__ViewType | None) -> None:
+        """Set or clear the generated ``view_type`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        default_value: _builtins.bool | None | _UnsetType = ...,
+        view_type: TemplateInput__BooleanInput__ViewType | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__TextContentInput(_Message):
+    """TextContentInput defines a read-only text content field.\nWill be rendered as a text block in UI.\nCannot be optional."""
+    @property
+    def content(self) -> _builtins.str:
+        """The content to display."""
+        ...
+    @content.setter
+    def content(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``content`` field."""
+        ...
+    @property
+    def show_in_form(self) -> _builtins.bool:
+        """If set to true, the field will be shown in the form."""
+        ...
+    @show_in_form.setter
+    def show_in_form(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``show_in_form`` field."""
+        ...
+    @property
+    def show_in_overview(self) -> _builtins.bool:
+        """If set to true, the field will be shown in the overview page after the VM app is created."""
+        ...
+    @show_in_overview.setter
+    def show_in_overview(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``show_in_overview`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        content: _builtins.str | None | _UnsetType = ...,
+        show_in_form: _builtins.bool | None | _UnsetType = ...,
+        show_in_overview: _builtins.bool | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__EnvironmentVariablesInput(_Message):
+    """Environment variables input\nWill be rendered as a list of key-value pairs in UI.\nCannot be optional."""
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__HuggingFaceTokenInput(_Message):
+    """Hugging face token input\nWill be rendered as the form in UI."""
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def show_in_form(self) -> _builtins.bool:
+        """If set to true, the field will be shown in the form."""
+        ...
+    @show_in_form.setter
+    def show_in_form(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``show_in_form`` field."""
+        ...
+    @property
+    def sensitive(self) -> _builtins.bool:
+        """Whether the token contains sensitive data."""
+        ...
+    @sensitive.setter
+    def sensitive(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``sensitive`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        show_in_form: _builtins.bool | None | _UnsetType = ...,
+        sensitive: _builtins.bool | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__DockerRegistryCredentialsInput(_Message):
+    """Docker Registry Credentials input\nWill be rendered as the form in UI."""
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def show_in_form(self) -> _builtins.bool:
+        """If set to true, the field will be shown in the form."""
+        ...
+    @show_in_form.setter
+    def show_in_form(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``show_in_form`` field."""
+        ...
+    @property
+    def sensitive(self) -> _builtins.bool:
+        """Whether the credentials contain sensitive data."""
+        ...
+    @sensitive.setter
+    def sensitive(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``sensitive`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        show_in_form: _builtins.bool | None | _UnsetType = ...,
+        sensitive: _builtins.bool | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput__ServiceAccountMirrorInput(_Message):
+    """Service Account Mirror input\nWill be rendered as a service account selector in UI."""
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        description: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInput(_Message):
+    StringInput: _TypeAlias = TemplateInput__StringInput
+    EnumStringInput: _TypeAlias = TemplateInput__EnumStringInput
+    IntegerUnitInput: _TypeAlias = TemplateInput__IntegerUnitInput
+    IntegerInput: _TypeAlias = TemplateInput__IntegerInput
+    BooleanInput: _TypeAlias = TemplateInput__BooleanInput
+    TextContentInput: _TypeAlias = TemplateInput__TextContentInput
+    EnvironmentVariablesInput: _TypeAlias = TemplateInput__EnvironmentVariablesInput
+    HuggingFaceTokenInput: _TypeAlias = TemplateInput__HuggingFaceTokenInput
+    DockerRegistryCredentialsInput: _TypeAlias = TemplateInput__DockerRegistryCredentialsInput
+    ServiceAccountMirrorInput: _TypeAlias = TemplateInput__ServiceAccountMirrorInput
+    class __OneOfClass_input__(_OneOf):
+        """The input type and its configuration."""
+
+        name: _Literal["input"] = ...
+
+    class __OneOfClass_input_string_input__(__OneOfClass_input__):
+        """A string input."""
+
+        field: _Literal["string_input"] = ...
+        @property
+        def value(self) -> TemplateInput__StringInput:
+            """A string input."""
+            ...
+
+    class __OneOfClass_input_enum_string_input__(__OneOfClass_input__):
+        """A string input with predefined options."""
+
+        field: _Literal["enum_string_input"] = ...
+        @property
+        def value(self) -> TemplateInput__EnumStringInput:
+            """A string input with predefined options."""
+            ...
+
+    class __OneOfClass_input_integer_input__(__OneOfClass_input__):
+        """An integer input."""
+
+        field: _Literal["integer_input"] = ...
+        @property
+        def value(self) -> TemplateInput__IntegerInput:
+            """An integer input."""
+            ...
+
+    class __OneOfClass_input_integer_unit_input__(__OneOfClass_input__):
+        """An integer input with a unit suffix."""
+
+        field: _Literal["integer_unit_input"] = ...
+        @property
+        def value(self) -> TemplateInput__IntegerUnitInput:
+            """An integer input with a unit suffix."""
+            ...
+
+    class __OneOfClass_input_boolean_input__(__OneOfClass_input__):
+        """A Boolean input."""
+
+        field: _Literal["boolean_input"] = ...
+        @property
+        def value(self) -> TemplateInput__BooleanInput:
+            """A Boolean input."""
+            ...
+
+    class __OneOfClass_input_text_content_input__(__OneOfClass_input__):
+        """A read-only text element."""
+
+        field: _Literal["text_content_input"] = ...
+        @property
+        def value(self) -> TemplateInput__TextContentInput:
+            """A read-only text element."""
+            ...
+
+    class __OneOfClass_input_environment_variables_input__(__OneOfClass_input__):
+        """An environment variable input."""
+
+        field: _Literal["environment_variables_input"] = ...
+        @property
+        def value(self) -> TemplateInput__EnvironmentVariablesInput:
+            """An environment variable input."""
+            ...
+
+    class __OneOfClass_input_hugging_face_token_input__(__OneOfClass_input__):
+        """A Hugging Face token input."""
+
+        field: _Literal["hugging_face_token_input"] = ...
+        @property
+        def value(self) -> TemplateInput__HuggingFaceTokenInput:
+            """A Hugging Face token input."""
+            ...
+
+    class __OneOfClass_input_docker_registry_credentials_input__(__OneOfClass_input__):
+        """A Docker registry credential input."""
+
+        field: _Literal["docker_registry_credentials_input"] = ...
+        @property
+        def value(self) -> TemplateInput__DockerRegistryCredentialsInput:
+            """A Docker registry credential input."""
+            ...
+
+    class __OneOfClass_input_service_account_mirror_input__(__OneOfClass_input__):
+        """A service account selector."""
+
+        field: _Literal["service_account_mirror_input"] = ...
+        @property
+        def value(self) -> TemplateInput__ServiceAccountMirrorInput:
+            """A service account selector."""
+            ...
+
+    @property
+    def input(
+        self,
+    ) -> (
+        __OneOfClass_input_string_input__
+        | __OneOfClass_input_enum_string_input__
+        | __OneOfClass_input_integer_input__
+        | __OneOfClass_input_integer_unit_input__
+        | __OneOfClass_input_boolean_input__
+        | __OneOfClass_input_text_content_input__
+        | __OneOfClass_input_environment_variables_input__
+        | __OneOfClass_input_hugging_face_token_input__
+        | __OneOfClass_input_docker_registry_credentials_input__
+        | __OneOfClass_input_service_account_mirror_input__
+        | None
+    ):
+        """The input type and its configuration."""
+        ...
+    @property
+    def id(self) -> _builtins.str:
+        """The input ID. Template input values use this ID as their key."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def required(self) -> _builtins.bool:
+        """Whether the template requires a value for this input."""
+        ...
+    @required.setter
+    def required(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``required`` field."""
+        ...
+    @property
+    def string_input(self) -> TemplateInput__StringInput | None:
+        """A string input."""
+        ...
+    @string_input.setter
+    def string_input(self, value: TemplateInput__StringInput | None) -> None:
+        """Set or clear the generated ``string_input`` field."""
+        ...
+    @property
+    def enum_string_input(self) -> TemplateInput__EnumStringInput | None:
+        """A string input with predefined options."""
+        ...
+    @enum_string_input.setter
+    def enum_string_input(self, value: TemplateInput__EnumStringInput | None) -> None:
+        """Set or clear the generated ``enum_string_input`` field."""
+        ...
+    @property
+    def integer_input(self) -> TemplateInput__IntegerInput | None:
+        """An integer input."""
+        ...
+    @integer_input.setter
+    def integer_input(self, value: TemplateInput__IntegerInput | None) -> None:
+        """Set or clear the generated ``integer_input`` field."""
+        ...
+    @property
+    def integer_unit_input(self) -> TemplateInput__IntegerUnitInput | None:
+        """An integer input with a unit suffix."""
+        ...
+    @integer_unit_input.setter
+    def integer_unit_input(self, value: TemplateInput__IntegerUnitInput | None) -> None:
+        """Set or clear the generated ``integer_unit_input`` field."""
+        ...
+    @property
+    def boolean_input(self) -> TemplateInput__BooleanInput | None:
+        """A Boolean input."""
+        ...
+    @boolean_input.setter
+    def boolean_input(self, value: TemplateInput__BooleanInput | None) -> None:
+        """Set or clear the generated ``boolean_input`` field."""
+        ...
+    @property
+    def text_content_input(self) -> TemplateInput__TextContentInput | None:
+        """A read-only text element."""
+        ...
+    @text_content_input.setter
+    def text_content_input(self, value: TemplateInput__TextContentInput | None) -> None:
+        """Set or clear the generated ``text_content_input`` field."""
+        ...
+    @property
+    def environment_variables_input(self) -> TemplateInput__EnvironmentVariablesInput | None:
+        """An environment variable input."""
+        ...
+    @environment_variables_input.setter
+    def environment_variables_input(self, value: TemplateInput__EnvironmentVariablesInput | None) -> None:
+        """Set or clear the generated ``environment_variables_input`` field."""
+        ...
+    @property
+    def hugging_face_token_input(self) -> TemplateInput__HuggingFaceTokenInput | None:
+        """A Hugging Face token input."""
+        ...
+    @hugging_face_token_input.setter
+    def hugging_face_token_input(self, value: TemplateInput__HuggingFaceTokenInput | None) -> None:
+        """Set or clear the generated ``hugging_face_token_input`` field."""
+        ...
+    @property
+    def docker_registry_credentials_input(self) -> TemplateInput__DockerRegistryCredentialsInput | None:
+        """A Docker registry credential input."""
+        ...
+    @docker_registry_credentials_input.setter
+    def docker_registry_credentials_input(self, value: TemplateInput__DockerRegistryCredentialsInput | None) -> None:
+        """Set or clear the generated ``docker_registry_credentials_input`` field."""
+        ...
+    @property
+    def service_account_mirror_input(self) -> TemplateInput__ServiceAccountMirrorInput | None:
+        """A service account selector."""
+        ...
+    @service_account_mirror_input.setter
+    def service_account_mirror_input(self, value: TemplateInput__ServiceAccountMirrorInput | None) -> None:
+        """Set or clear the generated ``service_account_mirror_input`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        required: _builtins.bool | None | _UnsetType = ...,
+        string_input: TemplateInput__StringInput | None | _UnsetType = ...,
+        enum_string_input: TemplateInput__EnumStringInput | None | _UnsetType = ...,
+        integer_input: TemplateInput__IntegerInput | None | _UnsetType = ...,
+        integer_unit_input: TemplateInput__IntegerUnitInput | None | _UnsetType = ...,
+        boolean_input: TemplateInput__BooleanInput | None | _UnsetType = ...,
+        text_content_input: TemplateInput__TextContentInput | None | _UnsetType = ...,
+        environment_variables_input: TemplateInput__EnvironmentVariablesInput | None | _UnsetType = ...,
+        hugging_face_token_input: TemplateInput__HuggingFaceTokenInput | None | _UnsetType = ...,
+        docker_registry_credentials_input: TemplateInput__DockerRegistryCredentialsInput | None | _UnsetType = ...,
+        service_account_mirror_input: TemplateInput__ServiceAccountMirrorInput | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class VmAppTemplateStatus(_Message):
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def icon_url(self) -> _builtins.str:
+        """The URL of the template icon."""
+        ...
+    @icon_url.setter
+    def icon_url(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``icon_url`` field."""
+        ...
+    @property
+    def input_fields(self) -> _MutableSequence[TemplateInputField]:
+        """The fields that accept values for this template."""
+        ...
+    @input_fields.setter
+    def input_fields(self, value: _Iterable[TemplateInputField] | None) -> None:
+        """Set or clear the generated ``input_fields`` field."""
+        ...
+    @property
+    def supported_platforms(self) -> _MutableSequence[SupportedPlatform]:
+        """Supported platforms for the VM app template.\nIf empty, the VM app template is supported on all platforms."""
+        ...
+    @supported_platforms.setter
+    def supported_platforms(self, value: _Iterable[SupportedPlatform] | None) -> None:
+        """Set or clear the generated ``supported_platforms`` field."""
+        ...
+    @property
+    def categories(self) -> _MutableSequence[_builtins.str]:
+        """Categories that the template belongs to."""
+        ...
+    @categories.setter
+    def categories(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``categories`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        description: _builtins.str | None | _UnsetType = ...,
+        icon_url: _builtins.str | None | _UnsetType = ...,
+        input_fields: _Iterable[TemplateInputField] | None | _UnsetType = ...,
+        supported_platforms: _Iterable[SupportedPlatform] | None | _UnsetType = ...,
+        categories: _Iterable[_builtins.str] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class TemplateInputField__Type(_Enum):
+    """The types of template input values."""
+
+    TYPE_UNSPECIFIED = ...
+    """No input type specified."""
+    STRING = ...
+    """A string value. Unit-based integers include their unit suffix in the string."""
+    INTEGER = ...
+    """A numeric value with no fractional part."""
+    BOOLEAN = ...
+    """A Boolean value."""
+    LIST = ...
+    """A list value. Current templates do not support this type."""
+    STRUCT = ...
+    """An object value. Current templates do not support this type."""
+    MYSTERYBOX_SECRET_VERSION = ...
+    """A string that identifies a MysteryBox secret version."""
+
+class TemplateInputField(_Message):
+    Type: _TypeAlias = TemplateInputField__Type
+    @property
+    def id(self) -> _builtins.str:
+        """The ID of the input field."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def type(self) -> TemplateInputField__Type:
+        """The type of value that the input field accepts."""
+        ...
+    @type.setter
+    def type(self, value: TemplateInputField__Type | None) -> None:
+        """Set or clear the generated ``type`` field."""
+        ...
+    @property
+    def name(self) -> _builtins.str: ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def description(self) -> _builtins.str: ...
+    @description.setter
+    def description(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``description`` field."""
+        ...
+    @property
+    def required(self) -> _builtins.bool:
+        """Whether the template requires a value for this input."""
+        ...
+    @required.setter
+    def required(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``required`` field."""
+        ...
+    @property
+    def sensitive(self) -> _builtins.bool:
+        """Whether the input field contains sensitive data."""
+        ...
+    @sensitive.setter
+    def sensitive(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``sensitive`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        type: TemplateInputField__Type | None | _UnsetType = ...,
+        name: _builtins.str | None | _UnsetType = ...,
+        description: _builtins.str | None | _UnsetType = ...,
+        required: _builtins.bool | None | _UnsetType = ...,
+        sensitive: _builtins.bool | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class SupportedPlatform(_Message):
+    @property
+    def id(self) -> _builtins.str:
+        """The compute platform ID."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    @property
+    def supported_presets(self) -> _MutableSequence[_builtins.str]:
+        """Presets of the platform that are supported by the VM app template.\nIf empty, all presets are supported."""
+        ...
+    @supported_presets.setter
+    def supported_presets(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``supported_presets`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        supported_presets: _Iterable[_builtins.str] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class GetVmAppTemplateRequest(_Message):
+    """A request to retrieve a VM app template by ID."""
+    @property
+    def id(self) -> _builtins.str:
+        """The ID of the template to retrieve."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListVmAppTemplatesRequest(_Message):
+    """A request to list VM app templates."""
+    @property
+    def parent_id(self) -> _builtins.str:
+        """The project ID. The response includes templates from this project and the global catalog.\nRequired unless global\\_only is true."""
+        ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int:
+        """The requested page size. The service currently ignores this field and returns all matching templates.\nThe default value is 0."""
+        ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str:
+        """The pagination token. The service currently ignores this field. Leave it empty."""
+        ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    @property
+    def search(self) -> _builtins.str:
+        """The text to find in template names and descriptions. The search is case-sensitive."""
+        ...
+    @search.setter
+    def search(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``search`` field."""
+        ...
+    @property
+    def categories(self) -> _MutableSequence[_builtins.str]:
+        """The categories to match. The response includes templates that match at least one category."""
+        ...
+    @categories.setter
+    def categories(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``categories`` field."""
+        ...
+    @property
+    def global_only(self) -> _builtins.bool:
+        """Returns only global templates when true. The service ignores parent\\_id in this mode.\nGlobal catalog reads require authentication but do not require a resource permission."""
+        ...
+    @global_only.setter
+    def global_only(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``global_only`` field."""
+        ...
+    @property
+    def kind(self) -> _builtins.str:
+        """The template kind: \"covm\" or \"devlab\". The default is \"covm\"."""
+        ...
+    @kind.setter
+    def kind(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``kind`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+        search: _builtins.str | None | _UnsetType = ...,
+        categories: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        global_only: _builtins.bool | None | _UnsetType = ...,
+        kind: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListVmAppTemplatesResponse(_Message):
+    """The templates that match the list request."""
+    @property
+    def items(self) -> _MutableSequence[VmAppTemplate]:
+        """All matching templates. The service currently returns the complete list without pagination."""
+        ...
+    @items.setter
+    def items(self, value: _Iterable[VmAppTemplate] | None) -> None:
+        """Set or clear the generated ``items`` field."""
+        ...
+    @property
+    def next_page_token(self) -> _builtins.str:
+        """The token for the next page. Currently always empty because the service returns all matching templates."""
+        ...
+    @next_page_token.setter
+    def next_page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        items: _Iterable[VmAppTemplate] | None | _UnsetType = ...,
+        next_page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class K8sReleaseServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
     """This class provides client methods for the ``nebius.applications.v1alpha1.K8sReleaseService`` service."""
     def get(
@@ -311,15 +2669,46 @@ class K8sReleaseServiceClient(_ClientWithOperations[_type_nebius_common_v1_Opera
         """The request object is returned without starting the RPC."""
         ...
 
+class VmAppTemplateServiceClient(_Client):
+    """Provides access to the VM app template catalog.\n\nThis class provides client methods for the ``nebius.applications.v1alpha1.VmAppTemplateService`` service."""
+    def get(
+        self, request: GetVmAppTemplateRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetVmAppTemplateRequest, VmAppTemplate]:
+        """Returns the specified VM app template.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def list(
+        self, request: ListVmAppTemplatesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListVmAppTemplatesRequest, ListVmAppTemplatesResponse]:
+        """Retrieves a list of VM app templates.\n\nThe request object is returned without starting the RPC."""
+        ...
+
 __all__ = [
+    "BootDisk",
+    "ContainerDefinition",
+    "ContainerTemplateDefinition",
     "CreateK8sReleaseRequest",
     "DeleteK8sReleaseRequest",
+    "DiskMount",
+    "EnvironmentVariable",
+    "ExternalS3Mount",
+    "FilesystemMount",
     "GetK8sReleaseRequest",
+    "GetVmAppTemplateRequest",
     "K8sRelease",
     "K8sReleaseServiceClient",
     "K8sReleaseSpec",
     "K8sReleaseStatus",
     "ListK8sReleasesRequest",
     "ListK8sReleasesResponse",
+    "ListVmAppTemplatesRequest",
+    "ListVmAppTemplatesResponse",
+    "StorageBucketMount",
+    "SupportedPlatform",
+    "TemplateInput",
+    "TemplateInputField",
     "UpdateK8sReleaseRequest",
+    "VmAppTemplate",
+    "VmAppTemplateServiceClient",
+    "VmAppTemplateSpec",
+    "VmAppTemplateStatus",
 ]
