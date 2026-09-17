@@ -11,6 +11,7 @@ on:
 jobs:
   docs:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
 
     steps:
       - name: Checkout code
@@ -54,6 +55,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
 
     strategy:
       matrix:
