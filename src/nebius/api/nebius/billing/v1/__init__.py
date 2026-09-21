@@ -63,6 +63,26 @@ _register_file(
     "nebius/billing/v1/calculator_service.proto",
     b'\n*nebius/billing/v1/calculator_service.proto\x12\x11nebius.billing.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a"nebius/billing/v1/calculator.proto\x1a"nebius/billing/v1/offer_type.proto"\xa3\x02\n\x14EstimateBatchRequest\x12N\n\x0eresource_specs\x18\x01 \x03(\x0b2\x1f.nebius.billing.v1.ResourceSpecB\x06\xbaH\x03\xc8\x01\x01R\rresourceSpecs\x12=\n\x0boffer_types\x18\n \x03(\x0e2\x1c.nebius.billing.v1.OfferTypeR\nofferTypes\x12\x1a\n\x08currency\x18\x0b \x01(\tR\x08currency\x12`\n\x17filter_aggregation_unit\x18\x14 \x01(\x0b2(.nebius.billing.v1.FilterAggregationUnitR\x15filterAggregationUnit"\xba\x01\n\x15EstimateBatchResponse\x12F\n\x0eresource_costs\x18\x01 \x03(\x0b2\x1f.nebius.billing.v1.ResourceCostR\rresourceCosts\x12=\n\x0btotal_costs\x18\n \x03(\x0b2\x1c.nebius.billing.v1.TotalCostR\ntotalCosts\x12\x1a\n\x08currency\x18\x14 \x01(\tR\x08currency2\x9d\x01\n\x11CalculatorService\x12b\n\rEstimateBatch\x12\'.nebius.billing.v1.EstimateBatchRequest\x1a(.nebius.billing.v1.EstimateBatchResponse\x1a$\xbaJ!api.calculator.billing-data-planeBe\n\x18ai.nebius.pub.billing.v1B\x16CalculatorServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/billing/v1b\x06proto3',
 )
+_register_file(
+    "nebius/billing/v1/pricing_policy.proto",
+    b'\n&nebius/billing/v1/pricing_policy.proto\x12\x11nebius.billing.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xeb\x01\n\rPricingPolicy\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b2$.nebius.billing.v1.PricingPolicySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12D\n\x06status\x18\x03 \x01(\x0b2&.nebius.billing.v1.PricingPolicyStatusB\x04\xbaJ\x01\x05R\x06status"\xbf\x01\n\x11PricingPolicySpec\x12f\n\x15compute_instance_spec\x18\x01 \x01(\x0b2&.nebius.billing.v1.ComputeInstanceSpecB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x13computeInstanceSpec\x12B\n\x07pricing\x18\x02 \x01(\x0b2 .nebius.billing.v1.PricingMethodB\x06\xbaH\x03\xc8\x01\x01R\x07pricing"d\n\x13ComputeInstanceSpec\x12:\n\x02v1\x18\x01 \x01(\x0b2(.nebius.billing.v1.ComputeInstanceSpecV1H\x00R\x02v1B\x11\n\x08versions\x12\x05\xbaH\x02\x08\x01";\n\x15ComputeInstanceSpecV1\x12"\n\x08platform\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform"e\n\rPricingMethod\x12A\n\x0cmax_price_v1\x18\x01 \x01(\x0b2\x1d.nebius.billing.v1.MaxPriceV1H\x00R\nmaxPriceV1B\x11\n\x08versions\x12\x05\xbaH\x02\x08\x01"1\n\nMaxPriceV1\x12#\n\tmax_price\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08maxPrice"\x82\x04\n\x13PricingPolicyStatus\x12B\n\x05state\x18\x01 \x01(\x0e2,.nebius.billing.v1.PricingPolicyStatus.StateR\x05state\x12\x1f\n\x06sku_id\x18\x02 \x01(\tB\x08\xe2J\x05\n\x03skuR\x05skuId\x12a\n\x10scheduling_state\x18\x03 \x01(\x0e26.nebius.billing.v1.PricingPolicyStatus.SchedulingStateR\x0fschedulingState\x12(\n\x10running_vm_count\x18\x04 \x01(\x03R\x0erunningVmCount\x12\x1a\n\x08currency\x18\x05 \x01(\tR\x08currency"l\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x12\n\x0eSTATE_CREATING\x10\x01\x12\x10\n\x0cSTATE_ACTIVE\x10\x02\x12\x12\n\x0eSTATE_DELETING\x10\x03\x12\x12\n\x0eSTATE_UPDATING\x10\x04"o\n\x0fSchedulingState\x12 \n\x1cSCHEDULING_STATE_UNSPECIFIED\x10\x00\x12\x1c\n\x18SCHEDULING_STATE_ALLOWED\x10\x01\x12\x1c\n\x18SCHEDULING_STATE_BLOCKED\x10\x02Ba\n\x18ai.nebius.pub.billing.v1B\x12PricingPolicyProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/billing/v1b\x06proto3',
+)
+_register_file(
+    "google/rpc/status.proto",
+    b'\n\x17google/rpc/status.proto\x12\ngoogle.rpc\x1a\x19google/protobuf/any.proto"f\n\x06Status\x12\x12\n\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\x12.\n\x07details\x18\x03 \x03(\x0b2\x14.google.protobuf.AnyR\x07detailsBa\n\x0ecom.google.rpcB\x0bStatusProtoP\x01Z7google.golang.org/genproto/googleapis/rpc/status;status\xf8\x01\x01\xa2\x02\x03RPCb\x06proto3',
+)
+_register_file(
+    "nebius/common/v1/progress_tracker.proto",
+    b'\n\'nebius/common/v1/progress_tracker.proto\x12\x10nebius.common.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto"\xfe\x05\n\x0fProgressTracker\x12(\n\x0bdescription\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0bdescription\x12A\n\nstarted_at\x18\x02 \x01(\x0b2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tstartedAt\x12N\n\x15estimated_finished_at\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\x13estimatedFinishedAt\x12;\n\x0bfinished_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt\x12G\n\twork_done\x18\n \x01(\x0b2*.nebius.common.v1.ProgressTracker.WorkDoneR\x08workDone\x12<\n\x05steps\x18\x14 \x03(\x0b2&.nebius.common.v1.ProgressTracker.StepR\x05steps\x1an\n\x08WorkDone\x121\n\x10total_tick_count\x18\x01 \x01(\x03B\x07\xbaH\x04"\x02 \x00R\x0etotalTickCount\x12/\n\x0fdone_tick_count\x18\x02 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\rdoneTickCount\x1a\xf9\x01\n\x04Step\x12(\n\x0bdescription\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0bdescription\x12A\n\nstarted_at\x18\x02 \x01(\x0b2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tstartedAt\x12;\n\x0bfinished_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt\x12G\n\twork_done\x18\n \x01(\x0b2*.nebius.common.v1.ProgressTracker.WorkDoneR\x08workDoneBa\n\x17ai.nebius.pub.common.v1B\x14ProgressTrackerProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3',
+)
+_register_file(
+    "nebius/common/v1/operation.proto",
+    b"\n nebius/common/v1/operation.proto\x12\x10nebius.common.v1\x1a\x1bbuf/validate/validate.proto\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/rpc/status.proto\x1a\x18nebius/annotations.proto\x1a'nebius/common/v1/progress_tracker.proto\"\xef\x05\n\tOperation\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12 \n\x0bdescription\x18\x02 \x01(\tR\x0bdescription\x129\n\ncreated_at\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1d\n\ncreated_by\x18\x04 \x01(\tR\tcreatedBy\x12;\n\x0bfinished_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampR\nfinishedAt\x12.\n\x07request\x18\x06 \x01(\x0b2\x14.google.protobuf.AnyR\x07request\x12v\n\x0frequest_headers\x18\x0b \x03(\x0b2/.nebius.common.v1.Operation.RequestHeadersEntryB\x1c\xbaH\x19\x9a\x01\x16\"\x14r\x122\x10^[a-z][-a-z\\.]*$R\x0erequestHeaders\x12\x1f\n\x0bresource_id\x18\x07 \x01(\tR\nresourceId\x120\n\x06status\x18\n \x01(\x0b2\x12.google.rpc.StatusB\x04\xbaJ\x01\x06R\x06status\x12L\n\x10progress_tracker\x18\x0c \x01(\x0b2!.nebius.common.v1.ProgressTrackerR\x0fprogressTracker\x129\n\rprogress_data\x18\t \x01(\x0b2\x14.google.protobuf.AnyR\x0cprogressData\x1a'\n\rRequestHeader\x12\x16\n\x06values\x18\x01 \x03(\tR\x06values\x1al\n\x13RequestHeadersEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12?\n\x05value\x18\x02 \x01(\x0b2).nebius.common.v1.Operation.RequestHeaderR\x05value:\x028\x01B[\n\x17ai.nebius.pub.common.v1B\x0eOperationProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3",
+)
+_register_file(
+    "nebius/billing/v1/pricing_policy_service.proto",
+    b'\n.nebius/billing/v1/pricing_policy_service.proto\x12\x11nebius.billing.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a&nebius/billing/v1/pricing_policy.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto"\xb2\x01\n\x1aCreatePricingPolicyRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b2$.nebius.billing.v1.PricingPolicySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec"G\n\x17GetPricingPolicyRequest\x12,\n\x02id\x18\x01 \x01(\tB\x1c\xbaH\x03\xc8\x01\x01\xbaJ\x01\x03\xe2J\x0f\n\rpricingpolicyR\x02id"\x89\x01\n\x1aListPricingPoliciesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"}\n\x1bListPricingPoliciesResponse\x126\n\x05items\x18\x01 \x03(\x0b2 .nebius.billing.v1.PricingPolicyR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"\xaa\x01\n\x1aUpdatePricingPolicyRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x128\n\x04spec\x18\x02 \x01(\x0b2$.nebius.billing.v1.PricingPolicySpecR\x04spec"J\n\x1aDeletePricingPolicyRequest\x12,\n\x02id\x18\x01 \x01(\tB\x1c\xbaH\x03\xc8\x01\x01\xbaJ\x01\x03\xe2J\x0f\n\rpricingpolicyR\x02id2\xc8\x04\n\x14PricingPolicyService\x12T\n\x06Create\x12-.nebius.billing.v1.CreatePricingPolicyRequest\x1a\x1b.nebius.common.v1.Operation\x12S\n\x03Get\x12*.nebius.billing.v1.GetPricingPolicyRequest\x1a .nebius.billing.v1.PricingPolicy\x12Q\n\tGetByName\x12".nebius.common.v1.GetByNameRequest\x1a .nebius.billing.v1.PricingPolicy\x12e\n\x04List\x12-.nebius.billing.v1.ListPricingPoliciesRequest\x1a..nebius.billing.v1.ListPricingPoliciesResponse\x12T\n\x06Update\x12-.nebius.billing.v1.UpdatePricingPolicyRequest\x1a\x1b.nebius.common.v1.Operation\x12T\n\x06Delete\x12-.nebius.billing.v1.DeletePricingPolicyRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x1f\xbaJ\x1cpricing-policies.billing-cplBh\n\x18ai.nebius.pub.billing.v1B\x19PricingPolicyServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/billing/v1b\x06proto3',
+)
 
 ResourceSpec = _message_class(
     "nebius.billing.v1.ResourceSpec",
@@ -373,6 +393,217 @@ OfferType.__module__ = __name__
 
 OfferType.__doc__ = "OfferType is a enum that specifies the type of offer."
 
+PricingPolicy = _message_class(
+    "nebius.billing.v1.PricingPolicy",
+    "PricingPolicy",
+    {"metadata": "metadata", "spec": "spec", "status": "status"},
+    {},
+    {
+        "metadata": "Parent is a project, immutable. Only VMs in that scope may\nreference the policy. Name is unique within the parent, renamable any time."
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+PricingPolicy.__module__ = __name__
+
+PricingPolicy.__doc__ = "How preemptible VMs are priced: a standing per-GPU bid for one (region, platform).\nOne policy backs any number of VMs, referenced by id from the preemptible spec.\nA VM without a policy is a price-taker and pays the market price."
+
+PricingPolicySpec = _message_class(
+    "nebius.billing.v1.PricingPolicySpec",
+    "PricingPolicySpec",
+    {"compute_instance_spec": "compute_instance_spec", "pricing": "pricing"},
+    {},
+    {"compute_instance_spec": "Preemptible compute instances the policy prices.", "pricing": "How the price is set."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+    immutable_fields=["compute_instance_spec"],
+)
+PricingPolicySpec.__module__ = __name__
+
+ComputeInstanceSpec = _message_class(
+    "nebius.billing.v1.ComputeInstanceSpec",
+    "ComputeInstanceSpec",
+    {"v1": "v1"},
+    {"versions": "versions"},
+    {"v1": "First version of the compute instance specification."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ComputeInstanceSpec.__module__ = __name__
+
+ComputeInstanceSpec.__doc__ = "Preemptible compute instances a pricing policy applies to."
+
+ComputeInstanceSpecV1 = _message_class(
+    "nebius.billing.v1.ComputeInstanceSpecV1",
+    "ComputeInstanceSpecV1",
+    {"platform": "platform"},
+    {},
+    {"platform": 'Compute platform. Example: "gpu-h100-sxm".'},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ComputeInstanceSpecV1.__module__ = __name__
+
+PricingMethod = _message_class(
+    "nebius.billing.v1.PricingMethod",
+    "PricingMethod",
+    {"max_price_v1": "max_price_v1"},
+    {"versions": "versions"},
+    {"max_price_v1": "Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+PricingMethod.__module__ = __name__
+
+PricingMethod.__doc__ = "How the price of a pricing policy is set."
+
+MaxPriceV1 = _message_class(
+    "nebius.billing.v1.MaxPriceV1",
+    "MaxPriceV1",
+    {"max_price": "max_price"},
+    {},
+    {
+        "max_price": 'Per-GPU hourly limit in USD, decimal string 3 digits precision. Example: "3.515".\nMust be within the allowed price range (OUT\\_OF\\_RANGE otherwise);\na value below the current market price is accepted but blocks scheduling.\nMutable only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise); the policy reports STATE\\_UPDATING and\nblocks scheduling while the change is applied.'
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+MaxPriceV1.__module__ = __name__
+
+MaxPriceV1.__doc__ = "Auction-bid pricing."
+
+PricingPolicyStatus = _message_class(
+    "nebius.billing.v1.PricingPolicyStatus",
+    "PricingPolicyStatus",
+    {
+        "currency": "currency",
+        "running_vm_count": "running_vm_count",
+        "scheduling_state": "scheduling_state",
+        "sku_id": "sku_id",
+        "state": "state",
+    },
+    {},
+    {
+        "currency": 'ISO 4217 currency code of max\\_price, e.g. "USD".',
+        "running_vm_count": "Number of VMs currently running under this policy. Nonzero blocks resource\nchanges and deletion.",
+        "scheduling_state": "Whether new VMs may currently start under this policy.",
+        "sku_id": "SKU resolved from the spec.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+PricingPolicyStatus.__module__ = __name__
+
+PricingPolicyStatus.__doc__ = "Observed state of a pricing policy."
+
+PricingPolicyStatus__State = _enum_class(
+    "nebius.billing.v1.PricingPolicyStatus.State",
+    "PricingPolicyStatus__State",
+    {"STATE_UNSPECIFIED": 0, "STATE_CREATING": 1, "STATE_ACTIVE": 2, "STATE_DELETING": 3, "STATE_UPDATING": 4},
+)
+PricingPolicyStatus__State.__module__ = __name__
+
+setattr(PricingPolicyStatus, "State", PricingPolicyStatus__State)
+PricingPolicyStatus__SchedulingState = _enum_class(
+    "nebius.billing.v1.PricingPolicyStatus.SchedulingState",
+    "PricingPolicyStatus__SchedulingState",
+    {"SCHEDULING_STATE_UNSPECIFIED": 0, "SCHEDULING_STATE_ALLOWED": 1, "SCHEDULING_STATE_BLOCKED": 2},
+)
+PricingPolicyStatus__SchedulingState.__module__ = __name__
+
+setattr(PricingPolicyStatus, "SchedulingState", PricingPolicyStatus__SchedulingState)
+CreatePricingPolicyRequest = _message_class(
+    "nebius.billing.v1.CreatePricingPolicyRequest",
+    "CreatePricingPolicyRequest",
+    {"metadata": "metadata", "spec": "spec"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+CreatePricingPolicyRequest.__module__ = __name__
+
+GetPricingPolicyRequest = _message_class(
+    "nebius.billing.v1.GetPricingPolicyRequest",
+    "GetPricingPolicyRequest",
+    {"id": "id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+GetPricingPolicyRequest.__module__ = __name__
+
+ListPricingPoliciesRequest = _message_class(
+    "nebius.billing.v1.ListPricingPoliciesRequest",
+    "ListPricingPoliciesRequest",
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListPricingPoliciesRequest.__module__ = __name__
+
+ListPricingPoliciesResponse = _message_class(
+    "nebius.billing.v1.ListPricingPoliciesResponse",
+    "ListPricingPoliciesResponse",
+    {"items": "items", "next_page_token": "next_page_token"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListPricingPoliciesResponse.__module__ = __name__
+
+UpdatePricingPolicyRequest = _message_class(
+    "nebius.billing.v1.UpdatePricingPolicyRequest",
+    "UpdatePricingPolicyRequest",
+    {"metadata": "metadata", "spec": "spec"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+UpdatePricingPolicyRequest.__module__ = __name__
+
+DeletePricingPolicyRequest = _message_class(
+    "nebius.billing.v1.DeletePricingPolicyRequest",
+    "DeletePricingPolicyRequest",
+    {"id": "id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+DeletePricingPolicyRequest.__module__ = __name__
+
 from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
 from .....aio.constant_channel import Constant as _Constant
 from .....aio.operation import Operation as _Operation
@@ -413,21 +644,175 @@ class CalculatorServiceClient(_Client):
 
 _register_client("nebius.billing.v1.CalculatorService", CalculatorServiceClient)
 
+from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
+from .....aio.constant_channel import Constant as _Constant
+from .....aio.operation import Operation as _Operation
+from .....aio.request import Request as _Request
+from .....aio.request_kwargs import RequestKwargs as _RequestKwargs, StreamRequestKwargs as _StreamRequestKwargs
+from .....aio.route import Route as _Route
+from .....aio.stream import StreamRequest as _StreamRequest
+from .....base.fieldmask_protobuf import ensure_reset_mask_in_metadata as _ensure_reset_mask_in_metadata
+
+from typing_extensions import Unpack as _Unpack
+
+
+class PricingPolicyServiceClient(_ClientWithOperations):
+    "Manages pricing policies for preemptible VMs.\nModifying methods return an Operation and support ``X-Idempotency-Key``;\nthe common ``common.v1.OperationService`` is implemented as well.\n\nThis class provides client methods for the ``nebius.billing.v1.PricingPolicyService`` service."
+
+    __service_name__ = "nebius.billing.v1.PricingPolicyService"
+    """Fully qualified protobuf service name for RPC routes."""
+    __api_service_name__ = "pricing-policies.billing-cpl"
+    """API gateway name for service routes."""
+    __registry__ = _REGISTRY
+    """Descriptor registry for request metadata."""
+    __PB2_DESCRIPTOR__ = _REGISTRY.service_descriptor("nebius.billing.v1.PricingPolicyService")
+    """Alias for code that expects a protobuf service descriptor."""
+
+    @classmethod
+    def get_descriptor(cls):
+        """Return the protobuf service descriptor from the registry."""
+        return _REGISTRY.service_descriptor("nebius.billing.v1.PricingPolicyService")
+
+    __operation_type__ = _REGISTRY.message_class("nebius.common.v1.Operation")
+    """Message type representing a long-running operation."""
+    __operation_source_method__ = "Create"
+    """RPC method that supplies the operation route."""
+
+    def operation_service(self):
+        """Return the client that manages long-running operations."""
+        if self.__operation_service__ is None:
+            service_type = _REGISTRY.client_class("nebius.common.v1.OperationService")
+            self.__operation_service__ = service_type(
+                _Constant(
+                    _Route(
+                        service="nebius.billing.v1.PricingPolicyService",
+                        method="Create",
+                        api_service_name="pricing-policies.billing-cpl",
+                        registry=_REGISTRY,
+                    ),
+                    self._channel,
+                )
+            )
+        return self.__operation_service__
+
+    def create(
+        self, request: CreatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[CreatePricingPolicyRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
+        "Creates a pricing policy. A bid outside the allowed price range fails\nwith OUT\\_OF\\_RANGE; below the current market price it is accepted but the\npolicy starts SCHEDULING\\_STATE\\_BLOCKED. Policies per tenant are\nquota-limited (RESOURCE\\_EXHAUSTED past the limit).\nThe Operation completes once the policy is ready to back VMs.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "Create",
+            request,
+            _REGISTRY.message_class("nebius.common.v1.Operation"),
+            result_wrapper=lambda _method, _channel, value: _Operation(
+                _Route(
+                    service="nebius.billing.v1.PricingPolicyService",
+                    method="Create",
+                    api_service_name="pricing-policies.billing-cpl",
+                    registry=_REGISTRY,
+                ),
+                _channel,
+                value,
+            ),
+            **kwargs,
+        )
+
+    def get(
+        self, request: GetPricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetPricingPolicyRequest, PricingPolicy]:
+        "The request object is returned without starting the RPC."
+        return super().request("Get", request, _REGISTRY.message_class("nebius.billing.v1.PricingPolicy"), **kwargs)
+
+    def get_by_name(
+        self, request: _REGISTRY.message_class("nebius.common.v1.GetByNameRequest"), **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[_REGISTRY.message_class("nebius.common.v1.GetByNameRequest"), PricingPolicy]:
+        "The request object is returned without starting the RPC."
+        return super().request(
+            "GetByName", request, _REGISTRY.message_class("nebius.billing.v1.PricingPolicy"), **kwargs
+        )
+
+    def list(
+        self, request: ListPricingPoliciesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListPricingPoliciesRequest, ListPricingPoliciesResponse]:
+        "The request object is returned without starting the RPC."
+        return super().request(
+            "List", request, _REGISTRY.message_class("nebius.billing.v1.ListPricingPoliciesResponse"), **kwargs
+        )
+
+    def update(
+        self, request: UpdatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[UpdatePricingPolicyRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
+        "Updates a pricing policy. ``metadata.name`` may change any time; the bid in\n\\ ``spec.pricing.max_price_v1`` only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise). Other spec fields are immutable\n(INVALID\\_ARGUMENT).\n\nThe request object is returned without starting the RPC."
+        kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
+        return super().request(
+            "Update",
+            request,
+            _REGISTRY.message_class("nebius.common.v1.Operation"),
+            result_wrapper=lambda _method, _channel, value: _Operation(
+                _Route(
+                    service="nebius.billing.v1.PricingPolicyService",
+                    method="Update",
+                    api_service_name="pricing-policies.billing-cpl",
+                    registry=_REGISTRY,
+                ),
+                _channel,
+                value,
+            ),
+            **kwargs,
+        )
+
+    def delete(
+        self, request: DeletePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[DeletePricingPolicyRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
+        "Deletes a pricing policy. Requires that no VM runs under the policy and\nnothing is being preempted (FAILED\\_PRECONDITION otherwise).\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "Delete",
+            request,
+            _REGISTRY.message_class("nebius.common.v1.Operation"),
+            result_wrapper=lambda _method, _channel, value: _Operation(
+                _Route(
+                    service="nebius.billing.v1.PricingPolicyService",
+                    method="Delete",
+                    api_service_name="pricing-policies.billing-cpl",
+                    registry=_REGISTRY,
+                ),
+                _channel,
+                value,
+            ),
+            **kwargs,
+        )
+
+
+_register_client("nebius.billing.v1.PricingPolicyService", PricingPolicyServiceClient)
+
 __all__ = [
     "AggregationUnit",
     "AutoscaleResourceCost",
     "CalculatorServiceClient",
+    "ComputeInstanceSpec",
+    "ComputeInstanceSpecV1",
     "CostBreakdown",
+    "CreatePricingPolicyRequest",
+    "DeletePricingPolicyRequest",
     "EstimateBatchRequest",
     "EstimateBatchResponse",
     "FilterAggregationUnit",
     "FixedInstanceResourceCost",
     "GeneralResourceCost",
     "GeneralTotalCost",
+    "GetPricingPolicyRequest",
+    "ListPricingPoliciesRequest",
+    "ListPricingPoliciesResponse",
+    "MaxPriceV1",
     "OfferType",
+    "PricingMethod",
+    "PricingPolicy",
+    "PricingPolicyServiceClient",
+    "PricingPolicySpec",
+    "PricingPolicyStatus",
     "RangeTotalCost",
     "ResourceCost",
     "ResourceSpec",
     "SkuCost",
     "TotalCost",
+    "UpdatePricingPolicyRequest",
 ]
