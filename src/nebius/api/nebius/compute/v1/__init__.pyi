@@ -2035,6 +2035,49 @@ class Instance(_Message):
         ...
 
 class InstanceSpec(_Message):
+    class __OneOfClass_pricing_model__(_OneOf):
+        """Default is on\\_demand."""
+
+        name: _Literal["pricing_model"] = ...
+
+    class __OneOfClass_pricing_model_on_demand__(__OneOfClass_pricing_model__):
+        """A regular, non-preemptible VM."""
+
+        field: _Literal["on_demand"] = ...
+        @property
+        def value(self) -> OnDemandSpec:
+            """A regular, non-preemptible VM."""
+            ...
+
+    class __OneOfClass_pricing_model_follows_spot_price__(__OneOfClass_pricing_model__):
+        """The preemptible VM accepts the current spot price."""
+
+        field: _Literal["follows_spot_price"] = ...
+        @property
+        def value(self) -> FollowsSpotPriceSpec:
+            """The preemptible VM accepts the current spot price."""
+            ...
+
+    class __OneOfClass_pricing_model_spot_pricing_policy__(__OneOfClass_pricing_model__):
+        """The preemptible VM accepts the current spot price unless it exceeds the maximum price specified by the selected\npricing policy. When the spot price exceeds that maximum price, the VM is preempted."""
+
+        field: _Literal["spot_pricing_policy"] = ...
+        @property
+        def value(self) -> SpotPricingPolicySpec:
+            """The preemptible VM accepts the current spot price unless it exceeds the maximum price specified by the selected\npricing policy. When the spot price exceeds that maximum price, the VM is preempted."""
+            ...
+
+    @property
+    def pricing_model(
+        self,
+    ) -> (
+        __OneOfClass_pricing_model_on_demand__
+        | __OneOfClass_pricing_model_follows_spot_price__
+        | __OneOfClass_pricing_model_spot_pricing_policy__
+        | None
+    ):
+        """Default is on\\_demand."""
+        ...
     @property
     def service_account_id(self) -> _builtins.str:
         """Unique identifier of the service account associated with this instance.\nFor details, see https://docs.nebius.com/iam/service-accounts/manage"""
@@ -2153,6 +2196,30 @@ class InstanceSpec(_Message):
     def local_disks(self, value: LocalDisksSpec | None) -> None:
         """Set or clear the generated ``local_disks`` field."""
         ...
+    @property
+    def on_demand(self) -> OnDemandSpec | None:
+        """A regular, non-preemptible VM."""
+        ...
+    @on_demand.setter
+    def on_demand(self, value: OnDemandSpec | None) -> None:
+        """Set or clear the generated ``on_demand`` field."""
+        ...
+    @property
+    def follows_spot_price(self) -> FollowsSpotPriceSpec | None:
+        """The preemptible VM accepts the current spot price."""
+        ...
+    @follows_spot_price.setter
+    def follows_spot_price(self, value: FollowsSpotPriceSpec | None) -> None:
+        """Set or clear the generated ``follows_spot_price`` field."""
+        ...
+    @property
+    def spot_pricing_policy(self) -> SpotPricingPolicySpec | None:
+        """The preemptible VM accepts the current spot price unless it exceeds the maximum price specified by the selected\npricing policy. When the spot price exceeds that maximum price, the VM is preempted."""
+        ...
+    @spot_pricing_policy.setter
+    def spot_pricing_policy(self, value: SpotPricingPolicySpec | None) -> None:
+        """Set or clear the generated ``spot_pricing_policy`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -2172,6 +2239,9 @@ class InstanceSpec(_Message):
         nvl_instance_group_id: _builtins.str | None | _UnsetType = ...,
         reservation_policy: ReservationPolicy | None | _UnsetType = ...,
         local_disks: LocalDisksSpec | None | _UnsetType = ...,
+        on_demand: OnDemandSpec | None | _UnsetType = ...,
+        follows_spot_price: FollowsSpotPriceSpec | None | _UnsetType = ...,
+        spot_pricing_policy: SpotPricingPolicySpec | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -2660,6 +2730,31 @@ class PassthroughGroupRequest(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class OnDemandSpec(_Message):
+    def __init__(self, initial_message: _SerializableMessage | None = None) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class FollowsSpotPriceSpec(_Message):
+    def __init__(self, initial_message: _SerializableMessage | None = None) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class SpotPricingPolicySpec(_Message):
+    @property
+    def id(self) -> _builtins.str:
+        """PricingPolicy ID used as the maximum agreed price for the preemptible VM."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class GetInstanceRequest(_Message):
     @property
     def id(self) -> _builtins.str: ...
@@ -2984,7 +3079,9 @@ class MaintenanceEventSpec(_Message):
 
 class MaintenanceEventStatus(_Message):
     @property
-    def maintenance_id(self) -> _builtins.str: ...
+    def maintenance_id(self) -> _builtins.str:
+        """ID of the maintenance event."""
+        ...
     @maintenance_id.setter
     def maintenance_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``maintenance_id`` field."""
@@ -3990,7 +4087,9 @@ class ListPlatformsRequest(_Message):
         """Set or clear the generated ``page_token`` field."""
         ...
     @property
-    def parent_id(self) -> _builtins.str: ...
+    def parent_id(self) -> _builtins.str:
+        """ID of the parent project for the platform request."""
+        ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
@@ -4399,6 +4498,7 @@ __all__ = [
     "FilesystemServiceClient",
     "FilesystemSpec",
     "FilesystemStatus",
+    "FollowsSpotPriceSpec",
     "GetDiskRequest",
     "GetDiskSnapshotRequest",
     "GetFilesystemRequest",
@@ -4467,6 +4567,7 @@ __all__ = [
     "NodeServiceClient",
     "NodeSetUnhealthyRequest",
     "NodeSetUnhealthyResponse",
+    "OnDemandSpec",
     "PassthroughGroupRequest",
     "Platform",
     "PlatformServiceClient",
@@ -4482,6 +4583,7 @@ __all__ = [
     "SecurityGroup",
     "SecurityGroupStatus",
     "SourceImageFamily",
+    "SpotPricingPolicySpec",
     "StartInstanceRequest",
     "StopInstanceRequest",
     "UpdateDiskRequest",

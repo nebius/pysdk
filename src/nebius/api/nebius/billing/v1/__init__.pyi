@@ -25,6 +25,8 @@ from .....base.protos.pb_enum import Enum as _Enum
 from .....base.protos.registry import Registry as _Registry
 from .....base.protos.unset import UnsetType as _UnsetType
 from ....google.protobuf import Any as _type_google_protobuf_Any
+from ...common.v1 import GetByNameRequest as _type_nebius_common_v1_GetByNameRequest
+from ...common.v1 import Operation as _type_nebius_common_v1_Operation
 from ...common.v1 import ResourceMetadata as _type_nebius_common_v1_ResourceMetadata
 
 REGISTRY: _Registry
@@ -613,6 +615,359 @@ class OfferType(_Enum):
     OFFER_TYPE_CONTRACT_PRICE = ...
     """Contract price is a special price for SKU."""
 
+class PricingPolicy(_Message):
+    """How preemptible VMs are priced: a standing per-GPU bid for one (region, platform).\nOne policy backs any number of VMs, referenced by id from the preemptible spec.\nA VM without a policy is a price-taker and pays the market price."""
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Parent is a project, immutable. Only VMs in that scope may\nreference the policy. Name is unique within the parent, renamable any time."""
+        ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> PricingPolicySpec: ...
+    @spec.setter
+    def spec(self, value: PricingPolicySpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    @property
+    def status(self) -> PricingPolicyStatus: ...
+    @status.setter
+    def status(self, value: PricingPolicyStatus | None) -> None:
+        """Set or clear the generated ``status`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: PricingPolicySpec | None | _UnsetType = ...,
+        status: PricingPolicyStatus | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class PricingPolicySpec(_Message):
+    @property
+    def compute_instance_spec(self) -> ComputeInstanceSpec:
+        """Preemptible compute instances the policy prices."""
+        ...
+    @compute_instance_spec.setter
+    def compute_instance_spec(self, value: ComputeInstanceSpec | None) -> None:
+        """Set or clear the generated ``compute_instance_spec`` field."""
+        ...
+    @property
+    def pricing(self) -> PricingMethod:
+        """How the price is set."""
+        ...
+    @pricing.setter
+    def pricing(self, value: PricingMethod | None) -> None:
+        """Set or clear the generated ``pricing`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        compute_instance_spec: ComputeInstanceSpec | None | _UnsetType = ...,
+        pricing: PricingMethod | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ComputeInstanceSpec(_Message):
+    """Preemptible compute instances a pricing policy applies to."""
+    class __OneOfClass_versions__(_OneOf):
+        name: _Literal["versions"] = ...
+
+    class __OneOfClass_versions_v1__(__OneOfClass_versions__):
+        """First version of the compute instance specification."""
+
+        field: _Literal["v1"] = ...
+        @property
+        def value(self) -> ComputeInstanceSpecV1:
+            """First version of the compute instance specification."""
+            ...
+
+    @property
+    def versions(self) -> __OneOfClass_versions_v1__ | None: ...
+    @property
+    def v1(self) -> ComputeInstanceSpecV1 | None:
+        """First version of the compute instance specification."""
+        ...
+    @v1.setter
+    def v1(self, value: ComputeInstanceSpecV1 | None) -> None:
+        """Set or clear the generated ``v1`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        v1: ComputeInstanceSpecV1 | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ComputeInstanceSpecV1(_Message):
+    @property
+    def platform(self) -> _builtins.str:
+        """Compute platform. Example: \"gpu-h100-sxm\"."""
+        ...
+    @platform.setter
+    def platform(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``platform`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, platform: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class PricingMethod(_Message):
+    """How the price of a pricing policy is set."""
+    class __OneOfClass_versions__(_OneOf):
+        name: _Literal["versions"] = ...
+
+    class __OneOfClass_versions_max_price_v1__(__OneOfClass_versions__):
+        """Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."""
+
+        field: _Literal["max_price_v1"] = ...
+        @property
+        def value(self) -> MaxPriceV1:
+            """Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."""
+            ...
+
+    @property
+    def versions(self) -> __OneOfClass_versions_max_price_v1__ | None: ...
+    @property
+    def max_price_v1(self) -> MaxPriceV1 | None:
+        """Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."""
+        ...
+    @max_price_v1.setter
+    def max_price_v1(self, value: MaxPriceV1 | None) -> None:
+        """Set or clear the generated ``max_price_v1`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, max_price_v1: MaxPriceV1 | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class MaxPriceV1(_Message):
+    """Auction-bid pricing."""
+    @property
+    def max_price(self) -> _builtins.str:
+        """Per-GPU hourly limit in USD, decimal string 3 digits precision. Example: \"3.515\".\nMust be within the allowed price range (OUT\\_OF\\_RANGE otherwise);\na value below the current market price is accepted but blocks scheduling.\nMutable only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise); the policy reports STATE\\_UPDATING and\nblocks scheduling while the change is applied."""
+        ...
+    @max_price.setter
+    def max_price(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``max_price`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, max_price: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class PricingPolicyStatus__State(_Enum):
+    STATE_UNSPECIFIED = ...
+    STATE_CREATING = ...
+    """Not ready yet; a VM referencing the policy gets a retryable error."""
+    STATE_ACTIVE = ...
+    """Ready; whether VMs may start is ``scheduling_state``."""
+    STATE_DELETING = ...
+    """Being deleted; does not accept new VMs."""
+    STATE_UPDATING = ...
+    """The bid is being changed; scheduling is blocked until the change lands."""
+
+class PricingPolicyStatus__SchedulingState(_Enum):
+    SCHEDULING_STATE_UNSPECIFIED = ...
+    SCHEDULING_STATE_ALLOWED = ...
+    """New VMs may start."""
+    SCHEDULING_STATE_BLOCKED = ...
+    """The max\\_price limit is below the current market price; VM creation succeeds once\nthe price falls to it."""
+
+class PricingPolicyStatus(_Message):
+    """Observed state of a pricing policy."""
+
+    State: _TypeAlias = PricingPolicyStatus__State
+    SchedulingState: _TypeAlias = PricingPolicyStatus__SchedulingState
+    @property
+    def state(self) -> PricingPolicyStatus__State: ...
+    @state.setter
+    def state(self, value: PricingPolicyStatus__State | None) -> None:
+        """Set or clear the generated ``state`` field."""
+        ...
+    @property
+    def sku_id(self) -> _builtins.str:
+        """SKU resolved from the spec."""
+        ...
+    @sku_id.setter
+    def sku_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``sku_id`` field."""
+        ...
+    @property
+    def scheduling_state(self) -> PricingPolicyStatus__SchedulingState:
+        """Whether new VMs may currently start under this policy."""
+        ...
+    @scheduling_state.setter
+    def scheduling_state(self, value: PricingPolicyStatus__SchedulingState | None) -> None:
+        """Set or clear the generated ``scheduling_state`` field."""
+        ...
+    @property
+    def running_vm_count(self) -> _builtins.int:
+        """Number of VMs currently running under this policy. Nonzero blocks resource\nchanges and deletion."""
+        ...
+    @running_vm_count.setter
+    def running_vm_count(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``running_vm_count`` field."""
+        ...
+    @property
+    def currency(self) -> _builtins.str:
+        """ISO 4217 currency code of max\\_price, e.g. \"USD\"."""
+        ...
+    @currency.setter
+    def currency(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``currency`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        state: PricingPolicyStatus__State | None | _UnsetType = ...,
+        sku_id: _builtins.str | None | _UnsetType = ...,
+        scheduling_state: PricingPolicyStatus__SchedulingState | None | _UnsetType = ...,
+        running_vm_count: _builtins.int | None | _UnsetType = ...,
+        currency: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class CreatePricingPolicyRequest(_Message):
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> PricingPolicySpec: ...
+    @spec.setter
+    def spec(self, value: PricingPolicySpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: PricingPolicySpec | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class GetPricingPolicyRequest(_Message):
+    @property
+    def id(self) -> _builtins.str: ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListPricingPoliciesRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str: ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int: ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str: ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListPricingPoliciesResponse(_Message):
+    @property
+    def items(self) -> _MutableSequence[PricingPolicy]: ...
+    @items.setter
+    def items(self, value: _Iterable[PricingPolicy] | None) -> None:
+        """Set or clear the generated ``items`` field."""
+        ...
+    @property
+    def next_page_token(self) -> _builtins.str: ...
+    @next_page_token.setter
+    def next_page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        items: _Iterable[PricingPolicy] | None | _UnsetType = ...,
+        next_page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class UpdatePricingPolicyRequest(_Message):
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> PricingPolicySpec: ...
+    @spec.setter
+    def spec(self, value: PricingPolicySpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: PricingPolicySpec | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class DeletePricingPolicyRequest(_Message):
+    @property
+    def id(self) -> _builtins.str: ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class CalculatorServiceClient(_Client):
     """Calculator service for estimating resource costs.\n\nThis class provides client methods for the ``nebius.billing.v1.CalculatorService`` service."""
     def estimate_batch(
@@ -621,21 +976,68 @@ class CalculatorServiceClient(_Client):
         """Estimates prices for multiple resources.\nReturns aggregated hourly and monthly cost estimates for all specified resources.\n\nThe request object is returned without starting the RPC."""
         ...
 
+class PricingPolicyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
+    """Manages pricing policies for preemptible VMs.\nModifying methods return an Operation and support ``X-Idempotency-Key``;\nthe common ``common.v1.OperationService`` is implemented as well.\n\nThis class provides client methods for the ``nebius.billing.v1.PricingPolicyService`` service."""
+    def create(
+        self, request: CreatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[CreatePricingPolicyRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
+        """Creates a pricing policy. A bid outside the allowed price range fails\nwith OUT\\_OF\\_RANGE; below the current market price it is accepted but the\npolicy starts SCHEDULING\\_STATE\\_BLOCKED. Policies per tenant are\nquota-limited (RESOURCE\\_EXHAUSTED past the limit).\nThe Operation completes once the policy is ready to back VMs.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def get(
+        self, request: GetPricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetPricingPolicyRequest, PricingPolicy]:
+        """The request object is returned without starting the RPC."""
+        ...
+    def get_by_name(
+        self, request: _type_nebius_common_v1_GetByNameRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[_type_nebius_common_v1_GetByNameRequest, PricingPolicy]:
+        """The request object is returned without starting the RPC."""
+        ...
+    def list(
+        self, request: ListPricingPoliciesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListPricingPoliciesRequest, ListPricingPoliciesResponse]:
+        """The request object is returned without starting the RPC."""
+        ...
+    def update(
+        self, request: UpdatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[UpdatePricingPolicyRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
+        """Updates a pricing policy. ``metadata.name`` may change any time; the bid in\n\\ ``spec.pricing.max_price_v1`` only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise). Other spec fields are immutable\n(INVALID\\_ARGUMENT).\n\nThe request object is returned without starting the RPC."""
+        ...
+    def delete(
+        self, request: DeletePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[DeletePricingPolicyRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
+        """Deletes a pricing policy. Requires that no VM runs under the policy and\nnothing is being preempted (FAILED\\_PRECONDITION otherwise).\n\nThe request object is returned without starting the RPC."""
+        ...
+
 __all__ = [
     "AggregationUnit",
     "AutoscaleResourceCost",
     "CalculatorServiceClient",
+    "ComputeInstanceSpec",
+    "ComputeInstanceSpecV1",
     "CostBreakdown",
+    "CreatePricingPolicyRequest",
+    "DeletePricingPolicyRequest",
     "EstimateBatchRequest",
     "EstimateBatchResponse",
     "FilterAggregationUnit",
     "FixedInstanceResourceCost",
     "GeneralResourceCost",
     "GeneralTotalCost",
+    "GetPricingPolicyRequest",
+    "ListPricingPoliciesRequest",
+    "ListPricingPoliciesResponse",
+    "MaxPriceV1",
     "OfferType",
+    "PricingMethod",
+    "PricingPolicy",
+    "PricingPolicyServiceClient",
+    "PricingPolicySpec",
+    "PricingPolicyStatus",
     "RangeTotalCost",
     "ResourceCost",
     "ResourceSpec",
     "SkuCost",
     "TotalCost",
+    "UpdatePricingPolicyRequest",
 ]

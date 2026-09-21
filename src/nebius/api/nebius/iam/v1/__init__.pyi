@@ -4724,7 +4724,7 @@ class UserAccountStatus(_Message):
         ...
 
 class AccessKeyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """Access keys management [deprecated]\n\nSupported until 10/01/26. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API.\n\nThis class provides client methods for the ``nebius.iam.v1.AccessKeyService`` service."""
+    """Access keys management [deprecated]\n\nSupported until 02/01/27. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API.\n\nThis class provides client methods for the ``nebius.iam.v1.AccessKeyService`` service."""
     def create(
         self, request: CreateAccessKeyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateAccessKeyRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
@@ -5062,7 +5062,7 @@ class ProfileServiceClient(_Client):
         ...
 
 class ProjectServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
-    """This class provides client methods for the ``nebius.iam.v1.ProjectService`` service."""
+    """Supported until 12/16/26. Project service v1 API is deprecated. Please use the v2 API instead. All projects remain accessible through the v2 API.\n\nThis class provides client methods for the ``nebius.iam.v1.ProjectService`` service."""
     def create(
         self, request: CreateProjectRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateProjectRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
@@ -5169,7 +5169,7 @@ class StaticKeyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operat
         ...
 
 class TenantServiceClient(_Client):
-    """This class provides client methods for the ``nebius.iam.v1.TenantService`` service."""
+    """Supported until 12/16/26. Tenant service v1 API is deprecated. Please use the v2 API instead. All tenants remain accessible through the v2 API.\n\nThis class provides client methods for the ``nebius.iam.v1.TenantService`` service."""
     def get(
         self, request: GetTenantRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetTenantRequest, Container]:

@@ -766,12 +766,21 @@ class DevlabStateDetails(_Message):
     def message(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``message`` field."""
         ...
+    @property
+    def service_error(self) -> _type_nebius_common_v1_ServiceError:
+        """Structured error details for the failure, if available."""
+        ...
+    @service_error.setter
+    def service_error(self, value: _type_nebius_common_v1_ServiceError | None) -> None:
+        """Set or clear the generated ``service_error`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         code: _builtins.str | None | _UnsetType = ...,
         message: _builtins.str | None | _UnsetType = ...,
+        service_error: _type_nebius_common_v1_ServiceError | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -1639,6 +1648,14 @@ class EndpointSpec(_Message):
         """Set or clear the generated ``preemptible`` field."""
         ...
     @property
+    def pricing_model(self) -> PricingModelSpec:
+        """Pricing model for the VM. Must match the preemptible flag: on\\_demand for non-preemptible VMs,\nfollows\\_spot\\_price or spot\\_pricing\\_policy for preemptible VMs."""
+        ...
+    @pricing_model.setter
+    def pricing_model(self, value: PricingModelSpec | None) -> None:
+        """Set or clear the generated ``pricing_model`` field."""
+        ...
+    @property
     def auth_token(self) -> _builtins.str:
         """Authentication token needed to access the endpoint.\n\nAuthentication can only be enabled if the endpoint exposes one and only one HTTP port.\n\nMutually exclusive with ``auth_token_mysterybox_secret``.\nIf not provided, authentication will be disabled."""
         ...
@@ -1682,6 +1699,7 @@ class EndpointSpec(_Message):
         public_ip: _builtins.bool | None | _UnsetType = ...,
         ssh_authorized_keys: _Iterable[_builtins.str] | None | _UnsetType = ...,
         preemptible: _builtins.bool | None | _UnsetType = ...,
+        pricing_model: PricingModelSpec | None | _UnsetType = ...,
         auth_token: _builtins.str | None | _UnsetType = ...,
         auth_token_mysterybox_secret: EndpointSpec__MysteryBoxSecretRef | None | _UnsetType = ...,
         injected_files: _Iterable[EndpointSpec__FileInjection] | None | _UnsetType = ...,
@@ -2670,6 +2688,14 @@ class JobSpec(_Message):
         """Set or clear the generated ``preemptible`` field."""
         ...
     @property
+    def pricing_model(self) -> PricingModelSpec:
+        """Pricing model for the VM. Must match the preemptible flag: on\\_demand for non-preemptible VMs,\nfollows\\_spot\\_price or spot\\_pricing\\_policy for preemptible VMs."""
+        ...
+    @pricing_model.setter
+    def pricing_model(self, value: PricingModelSpec | None) -> None:
+        """Set or clear the generated ``pricing_model`` field."""
+        ...
+    @property
     def restart_attempts(self) -> _builtins.int:
         """Restart attempts for the job."""
         ...
@@ -2713,6 +2739,7 @@ class JobSpec(_Message):
         public_ip: _builtins.bool | None | _UnsetType = ...,
         ssh_authorized_keys: _Iterable[_builtins.str] | None | _UnsetType = ...,
         preemptible: _builtins.bool | None | _UnsetType = ...,
+        pricing_model: PricingModelSpec | None | _UnsetType = ...,
         restart_attempts: _builtins.int | None | _UnsetType = ...,
         timeout: _timedelta | _SerializableMessage | None | _UnsetType = ...,
         injected_files: _Iterable[JobSpec__FileInjection] | None | _UnsetType = ...,
@@ -3120,6 +3147,107 @@ class ListJobsResponse(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class PricingModelSpec(_Message):
+    """PricingModelSpec defines how the workload's VM is priced.\nIt mirrors the pricing model of the Compute Instance API."""
+    class __OneOfClass_model__(_OneOf):
+        name: _Literal["model"] = ...
+
+    class __OneOfClass_model_on_demand__(__OneOfClass_model__):
+        """A regular, non-preemptible VM."""
+
+        field: _Literal["on_demand"] = ...
+        @property
+        def value(self) -> OnDemandSpec:
+            """A regular, non-preemptible VM."""
+            ...
+
+    class __OneOfClass_model_follows_spot_price__(__OneOfClass_model__):
+        """The preemptible VM accepts the current spot price."""
+
+        field: _Literal["follows_spot_price"] = ...
+        @property
+        def value(self) -> FollowsSpotPriceSpec:
+            """The preemptible VM accepts the current spot price."""
+            ...
+
+    class __OneOfClass_model_spot_pricing_policy__(__OneOfClass_model__):
+        """The preemptible VM accepts the current spot price unless it exceeds the maximum price specified by the selected\npricing policy. When the spot price exceeds that maximum price, the VM is preempted."""
+
+        field: _Literal["spot_pricing_policy"] = ...
+        @property
+        def value(self) -> SpotPricingPolicySpec:
+            """The preemptible VM accepts the current spot price unless it exceeds the maximum price specified by the selected\npricing policy. When the spot price exceeds that maximum price, the VM is preempted."""
+            ...
+
+    @property
+    def model(
+        self,
+    ) -> (
+        __OneOfClass_model_on_demand__
+        | __OneOfClass_model_follows_spot_price__
+        | __OneOfClass_model_spot_pricing_policy__
+        | None
+    ): ...
+    @property
+    def on_demand(self) -> OnDemandSpec | None:
+        """A regular, non-preemptible VM."""
+        ...
+    @on_demand.setter
+    def on_demand(self, value: OnDemandSpec | None) -> None:
+        """Set or clear the generated ``on_demand`` field."""
+        ...
+    @property
+    def follows_spot_price(self) -> FollowsSpotPriceSpec | None:
+        """The preemptible VM accepts the current spot price."""
+        ...
+    @follows_spot_price.setter
+    def follows_spot_price(self, value: FollowsSpotPriceSpec | None) -> None:
+        """Set or clear the generated ``follows_spot_price`` field."""
+        ...
+    @property
+    def spot_pricing_policy(self) -> SpotPricingPolicySpec | None:
+        """The preemptible VM accepts the current spot price unless it exceeds the maximum price specified by the selected\npricing policy. When the spot price exceeds that maximum price, the VM is preempted."""
+        ...
+    @spot_pricing_policy.setter
+    def spot_pricing_policy(self, value: SpotPricingPolicySpec | None) -> None:
+        """Set or clear the generated ``spot_pricing_policy`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        on_demand: OnDemandSpec | None | _UnsetType = ...,
+        follows_spot_price: FollowsSpotPriceSpec | None | _UnsetType = ...,
+        spot_pricing_policy: SpotPricingPolicySpec | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class OnDemandSpec(_Message):
+    def __init__(self, initial_message: _SerializableMessage | None = None) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class FollowsSpotPriceSpec(_Message):
+    def __init__(self, initial_message: _SerializableMessage | None = None) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class SpotPricingPolicySpec(_Message):
+    @property
+    def id(self) -> _builtins.str:
+        """PricingPolicy ID used as the maximum agreed price for the preemptible VM."""
+        ...
+    @id.setter
+    def id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class DevlabServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
     """Service to create/manage Devlabs.\n\nThis class provides client methods for the ``nebius.ai.v1.DevlabService`` service."""
     def get(self, request: GetDevlabRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetDevlabRequest, Devlab]:
@@ -3255,6 +3383,7 @@ __all__ = [
     "EndpointSpec",
     "EndpointStateDetails",
     "EndpointStatus",
+    "FollowsSpotPriceSpec",
     "GetDevlabRequest",
     "GetEndpointByNameRequest",
     "GetEndpointRequest",
@@ -3272,9 +3401,12 @@ __all__ = [
     "ListEndpointsResponse",
     "ListJobsRequest",
     "ListJobsResponse",
+    "OnDemandSpec",
+    "PricingModelSpec",
     "RestartDevlabRequest",
     "RestartEndpointRequest",
     "RestartJobRequest",
+    "SpotPricingPolicySpec",
     "StartEndpointRequest",
     "StopDevlabRequest",
     "StopEndpointRequest",
