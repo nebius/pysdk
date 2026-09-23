@@ -164,6 +164,10 @@ _register_file(
     b'\n&nebius/iam/v1/invitation_service.proto\x12\rnebius.iam.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/iam/v1/invitation.proto"\xdf\x01\n\x17CreateInvitationRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.iam.v1.InvitationSpecR\x04spec\x12\x17\n\x07no_send\x18\x03 \x01(\x08R\x06noSend\x128\n\nexpires_in\x18\x04 \x01(\x0b2\x19.google.protobuf.DurationR\texpiresIn".\n\x14GetInvitationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id"\x96\x01\n\x16ListInvitationsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x1b\n\x06filter\x18\x04 \x01(\tB\x03\xc0J\x01R\x06filter"r\n\x17ListInvitationsResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.iam.v1.InvitationR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"1\n\x17DeleteInvitationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id"\x8c\x01\n\x17UpdateInvitationRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.iam.v1.InvitationSpecR\x04spec"1\n\x17ResendInvitationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xf9\x03\n\x11InvitationService\x12M\n\x06Create\x12&.nebius.iam.v1.CreateInvitationRequest\x1a\x1b.nebius.common.v1.Operation\x12E\n\x03Get\x12#.nebius.iam.v1.GetInvitationRequest\x1a\x19.nebius.iam.v1.Invitation\x12U\n\x04List\x12%.nebius.iam.v1.ListInvitationsRequest\x1a&.nebius.iam.v1.ListInvitationsResponse\x12M\n\x06Delete\x12&.nebius.iam.v1.DeleteInvitationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.iam.v1.UpdateInvitationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Resend\x12&.nebius.iam.v1.ResendInvitationRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07cpl.iamB]\n\x14ai.nebius.pub.iam.v1B\x16InvitationServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3',
 )
 _register_file(
+    "nebius/iam/v1/invitation_web_console_service.proto",
+    b'\n2nebius/iam/v1/invitation_web_console_service.proto\x12\rnebius.iam.v1\x1a\x1egoogle/protobuf/duration.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1enebius/iam/v1/invitation.proto"\x84\x02\n\x1fCreateInvitationToGroupsRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.iam.v1.InvitationSpecR\x04spec\x12\x17\n\x07no_send\x18\x03 \x01(\x08R\x06noSend\x12\x1b\n\tgroup_ids\x18\x04 \x03(\tR\x08groupIds\x128\n\nexpires_in\x18\x05 \x01(\x0b2\x19.google.protobuf.DurationR\texpiresIn"2\n\x17AcceptInvitationRequest\x12\x17\n\x04code\x18\x01 \x01(\tB\x03\xc0J\x01R\x04codeBg\n\x14ai.nebius.pub.iam.v1B InvitationWebConsoleServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3',
+)
+_register_file(
     "nebius/iam/v1/profile_service.proto",
     b'\n#nebius/iam/v1/profile_service.proto\x12\rnebius.iam.v1\x1a\x18nebius/annotations.proto\x1a#nebius/iam/v1/service_account.proto\x1a\'nebius/iam/v1/tenant_user_account.proto\x1a nebius/iam/v1/user_account.proto"\x13\n\x11GetProfileRequest"\x90\x02\n\x12GetProfileResponse\x12?\n\x0cuser_profile\x18\x01 \x01(\x0b2\x1a.nebius.iam.v1.UserProfileH\x00R\x0buserProfile\x12^\n\x17service_account_profile\x18\x02 \x01(\x0b2$.nebius.iam.v1.ServiceAccountProfileH\x00R\x15serviceAccountProfile\x12N\n\x11anonymous_profile\x18\x03 \x01(\x0b2\x1f.nebius.iam.v1.AnonymousAccountH\x00R\x10anonymousProfileB\t\n\x07profile"\x96\x03\n\x0bUserProfile\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12M\n\x0ffederation_info\x18\x02 \x01(\x0b2$.nebius.iam.v1.UserAccountExternalIdR\x0efederationInfo\x12?\n\nattributes\x18\x03 \x01(\x0b2\x1d.nebius.iam.v1.UserAttributesH\x00R\nattributes\x12A\n\x10retrieving_error\x18\x04 \x01(\x0b2\x14.nebius.iam.v1.ErrorH\x00R\x0fretrievingError\x127\n\x07tenants\x18\x05 \x03(\x0b2\x1d.nebius.iam.v1.UserTenantInfoR\x07tenants\x12T\n\x12user_account_state\x18\x06 \x01(\x0e2&.nebius.iam.v1.UserAccountStatus.StateR\x10userAccountStateB\x15\n\x13attributes_optional"\xcb\x01\n\x0eUserTenantInfo\x12\x1b\n\ttenant_id\x18\x01 \x01(\tR\x08tenantId\x123\n\x16tenant_user_account_id\x18\x02 \x01(\tR\x13tenantUserAccountId\x12g\n\x19tenant_user_account_state\x18\x03 \x01(\x0e2,.nebius.iam.v1.TenantUserAccountStatus.StateR\x16tenantUserAccountState"J\n\x15ServiceAccountProfile\x121\n\x04info\x18\x01 \x01(\x0b2\x1d.nebius.iam.v1.ServiceAccountR\x04info"\x12\n\x10AnonymousAccount2h\n\x0eProfileService\x12J\n\x03Get\x12 .nebius.iam.v1.GetProfileRequest\x1a!.nebius.iam.v1.GetProfileResponse\x1a\n\xbaJ\x07cpl.iamBZ\n\x14ai.nebius.pub.iam.v1B\x13ProfileServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3',
 )
@@ -1739,8 +1743,10 @@ CreateInvitationRequest = _message_class(
     {"expires_in": "expires_in", "metadata": "metadata", "no_send": "no_send", "spec": "spec"},
     {},
     {
-        "expires_in": "How long the invitation remains valid after creation. If omitted, the service default is used.",
-        "no_send": "if set, no sending is attempted (it's supposed that later a Resend method is called)",
+        "expires_in": "Duration for which the invitation remains valid after creation.\nIf omitted, the service's default value is used.",
+        "metadata": "Invitation metadata.",
+        "no_send": "If set, no immediate sending is attempted (it is assumed that a Resend method will be called later).\n\nif set, no sending is attempted (it's supposed that later a Resend method is called)",
+        "spec": "Invitation specification.",
     },
     {},
     message_deprecation_details="",
@@ -1748,6 +1754,8 @@ CreateInvitationRequest = _message_class(
     enum_value_deprecations={},
 )
 CreateInvitationRequest.__module__ = __name__
+
+CreateInvitationRequest.__doc__ = "Request to create an invitation."
 
 GetInvitationRequest = _message_class(
     "nebius.iam.v1.GetInvitationRequest",
@@ -1827,6 +1835,49 @@ ResendInvitationRequest = _message_class(
     enum_value_deprecations={},
 )
 ResendInvitationRequest.__module__ = __name__
+
+CreateInvitationToGroupsRequest = _message_class(
+    "nebius.iam.v1.CreateInvitationToGroupsRequest",
+    "CreateInvitationToGroupsRequest",
+    {
+        "expires_in": "expires_in",
+        "group_ids": "group_ids",
+        "metadata": "metadata",
+        "no_send": "no_send",
+        "spec": "spec",
+    },
+    {},
+    {
+        "expires_in": "Duration for which the invitation remains valid after creation.\nIf omitted, the service's default value is used.",
+        "group_ids": "A set of group identifiers where a new provisional (invited) tenant user account must become a member.",
+        "metadata": "Invitation metadata.",
+        "no_send": "If set, no immediate sending is attempted (it is assumed that a Resend method will be called later).",
+        "spec": "Invitation specification.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+CreateInvitationToGroupsRequest.__module__ = __name__
+
+CreateInvitationToGroupsRequest.__doc__ = "Request to create an invitation to groups."
+
+AcceptInvitationRequest = _message_class(
+    "nebius.iam.v1.AcceptInvitationRequest",
+    "AcceptInvitationRequest",
+    {"code": "code"},
+    {},
+    {"code": "Invitation secret code."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+    sensitive_fields=["code"],
+)
+AcceptInvitationRequest.__module__ = __name__
+
+AcceptInvitationRequest.__doc__ = "Request to accept an invitation."
 
 GetProfileRequest = _message_class(
     "nebius.iam.v1.GetProfileRequest",
@@ -4929,6 +4980,7 @@ class TokenExchangeServiceClient(_Client):
 _register_client("nebius.iam.v1.TokenExchangeService", TokenExchangeServiceClient)
 
 __all__ = [
+    "AcceptInvitationRequest",
     "AccessKey",
     "AccessKeyServiceClient",
     "AccessKeySpec",
@@ -4959,6 +5011,7 @@ __all__ = [
     "CreateGroupMembershipRequest",
     "CreateGroupRequest",
     "CreateInvitationRequest",
+    "CreateInvitationToGroupsRequest",
     "CreateProjectRequest",
     "CreateServiceAccountRequest",
     "CreateTokenResponse",

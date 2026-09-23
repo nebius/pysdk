@@ -449,7 +449,7 @@ class StartRequest(_Message):
         ...
     @property
     def region(self) -> _builtins.str:
-        """Region to retrieve audit logs (e.g. eu-north2, us-central1, eu-west1)\nSee https://docs.nebius.com/overview/regions\nDefault: eu-north1\n\nDuring a transition period (until 13-08-2026), events are written to\nboth eu-north1 and their origin region.\nAfter that, events are only stored in their origin region, and this field becomes required."""
+        """Region to retrieve audit logs (e.g. eu-north2, us-central1, eu-west1)\nSee https://docs.nebius.com/overview/regions"""
         ...
     @region.setter
     def region(self, value: _builtins.str | None) -> None:
@@ -523,7 +523,7 @@ class ListRequest(_Message):
         ...
     @property
     def region(self) -> _builtins.str:
-        """Region to retrieve audit exports (e.g. eu-north2, us-central1, eu-west1)\nSee https://docs.nebius.com/overview/regions\nDefault: eu-north1\n\nAfter a transition period (13-08-2026) this field becomes required."""
+        """Region to retrieve audit exports (e.g. eu-north2, us-central1, eu-west1)\nSee https://docs.nebius.com/overview/regions"""
         ...
     @region.setter
     def region(self, value: _builtins.str | None) -> None:
@@ -627,7 +627,7 @@ class ListAuditEventRequest(_Message):
         ...
     @property
     def region(self) -> _builtins.str:
-        """Region to retrieve audit logs (e.g. eu-north2, us-central1, eu-west1)\nSee https://docs.nebius.com/overview/regions\nDefault: eu-north1\n\nDuring a transition period (until 13-08-2026), events are written to\nboth eu-north1 and their origin region.\nAfter that, events are only stored in their origin region, and this field becomes required."""
+        """Region to retrieve audit logs (e.g. eu-north2, us-central1, eu-west1)\nSee https://docs.nebius.com/overview/regions"""
         ...
     @region.setter
     def region(self, value: _builtins.str | None) -> None:
