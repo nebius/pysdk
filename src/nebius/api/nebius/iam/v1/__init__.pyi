@@ -2828,21 +2828,26 @@ class InvitationStatus(_Message):
         ...
 
 class CreateInvitationRequest(_Message):
+    """Request to create an invitation."""
     @property
-    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Invitation metadata."""
+        ...
     @metadata.setter
     def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> InvitationSpec: ...
+    def spec(self) -> InvitationSpec:
+        """Invitation specification."""
+        ...
     @spec.setter
     def spec(self, value: InvitationSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
         ...
     @property
     def no_send(self) -> _builtins.bool:
-        """if set, no sending is attempted (it's supposed that later a Resend method is called)"""
+        """If set, no immediate sending is attempted (it is assumed that a Resend method will be called later).\n\nif set, no sending is attempted (it's supposed that later a Resend method is called)"""
         ...
     @no_send.setter
     def no_send(self, value: _builtins.bool | None) -> None:
@@ -2850,7 +2855,7 @@ class CreateInvitationRequest(_Message):
         ...
     @property
     def expires_in(self) -> _timedelta | None:
-        """How long the invitation remains valid after creation. If omitted, the service default is used."""
+        """Duration for which the invitation remains valid after creation.\nIf omitted, the service's default value is used."""
         ...
     @expires_in.setter
     def expires_in(self, value: _timedelta | _SerializableMessage | None) -> None:
@@ -2986,6 +2991,77 @@ class ResendInvitationRequest(_Message):
         ...
     def __init__(
         self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class CreateInvitationToGroupsRequest(_Message):
+    """Request to create an invitation to groups."""
+    @property
+    def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
+        """Invitation metadata."""
+        ...
+    @metadata.setter
+    def metadata(self, value: _type_nebius_common_v1_ResourceMetadata | None) -> None:
+        """Set or clear the generated ``metadata`` field."""
+        ...
+    @property
+    def spec(self) -> InvitationSpec:
+        """Invitation specification."""
+        ...
+    @spec.setter
+    def spec(self, value: InvitationSpec | None) -> None:
+        """Set or clear the generated ``spec`` field."""
+        ...
+    @property
+    def no_send(self) -> _builtins.bool:
+        """If set, no immediate sending is attempted (it is assumed that a Resend method will be called later)."""
+        ...
+    @no_send.setter
+    def no_send(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``no_send`` field."""
+        ...
+    @property
+    def group_ids(self) -> _MutableSequence[_builtins.str]:
+        """A set of group identifiers where a new provisional (invited) tenant user account must become a member."""
+        ...
+    @group_ids.setter
+    def group_ids(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``group_ids`` field."""
+        ...
+    @property
+    def expires_in(self) -> _timedelta | None:
+        """Duration for which the invitation remains valid after creation.\nIf omitted, the service's default value is used."""
+        ...
+    @expires_in.setter
+    def expires_in(self, value: _timedelta | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``expires_in`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        metadata: _type_nebius_common_v1_ResourceMetadata | None | _UnsetType = ...,
+        spec: InvitationSpec | None | _UnsetType = ...,
+        no_send: _builtins.bool | None | _UnsetType = ...,
+        group_ids: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        expires_in: _timedelta | _SerializableMessage | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class AcceptInvitationRequest(_Message):
+    """Request to accept an invitation."""
+    @property
+    def code(self) -> _builtins.str:
+        """Invitation secret code."""
+        ...
+    @code.setter
+    def code(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``code`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, code: _builtins.str | None | _UnsetType = ...
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -5226,6 +5302,7 @@ class TokenExchangeServiceClient(_Client):
         ...
 
 __all__ = [
+    "AcceptInvitationRequest",
     "AccessKey",
     "AccessKeyServiceClient",
     "AccessKeySpec",
@@ -5256,6 +5333,7 @@ __all__ = [
     "CreateGroupMembershipRequest",
     "CreateGroupRequest",
     "CreateInvitationRequest",
+    "CreateInvitationToGroupsRequest",
     "CreateProjectRequest",
     "CreateServiceAccountRequest",
     "CreateTokenResponse",
