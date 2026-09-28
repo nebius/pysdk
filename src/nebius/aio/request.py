@@ -29,7 +29,6 @@ from asyncio import (
     wait_for,
     wrap_future,
 )
-from asyncio import TimeoutError as AsyncTimeoutError
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from concurrent.futures import Future as ConcurrentFuture
 from concurrent.futures import TimeoutError as ConcurrentTimeoutError
@@ -173,6 +172,10 @@ class RequestSentNoCallError(RequestError):
 
     def __init__(self) -> None:
         super().__init__("Request marked as sent without call.")
+
+
+class _RequestDeadlineExceededError(TimeoutError):
+    """Identify an SDK wait deadline without replacing a service exception."""
 
 
 DEFAULT_TIMEOUT = 60.0  # second
@@ -428,6 +431,7 @@ class Request(Generic[Req, Res]):
         self._retry_decision_pending = False
         self._native_attempt_terminal = False
         self._cancel_after_terminal_attempt = False
+        self._deadline_expired = False
         self._request_deadline: float | None = None
         self._request_timeout_remaining: float | None = None
         self._request_deadline_paused = False
@@ -529,6 +533,31 @@ class Request(Generic[Req, Res]):
             if cancelled:
                 self._cancelled = True
             return cancelled
+
+    def _expire_wait(self) -> bool:
+        """Return whether a completed attempt must publish its outcome.
+
+        The request lock orders expiry against native completion and retry decisions.
+        An unclassified native result keeps its wrapper alive, but cannot start another attempt.
+        """
+        with self._future_lock:
+            future = self._future
+            done = getattr(future, "done", None)
+            cancelled = getattr(future, "cancelled", None)
+            if callable(done) and done():
+                return not (callable(cancelled) and cancelled())
+            if self._native_terminal and not self._retry_decision_pending:
+                self._deadline_expired = True
+                return True
+            if self._native_attempt_terminal or (self._native_terminal and self._retry_decision_pending):
+                if not self._cancelled:
+                    self._deadline_expired = True
+                    self._cancelled = True
+                    self._cancel_after_terminal_attempt = True
+                return True
+            self.cancel()
+            # Completion can reach the shared future before cancellation takes effect.
+            return bool(callable(done) and done() and not (callable(cancelled) and cancelled()))
 
     def input_metadata(self) -> Metadata:
         """Return the metadata that will be sent with the request (mutable).
@@ -686,9 +715,10 @@ class Request(Generic[Req, Res]):
         uses authorization, its authorization budget. For a request that has
         already been submitted, use the remaining absolute submission deadline
         rather than granting a fresh timeout. If the runner raises
-        :class:`TimeoutError`, convert it to :class:`RequestError` with
-        ``DEADLINE_EXCEEDED``. Callers can then inspect all timeout failures in
-        the same way.
+        :class:`TimeoutError` before native completion, convert it to
+        :class:`RequestError` with ``DEADLINE_EXCEEDED``. A completed native
+        outcome remains authoritative, including errors from result processing.
+        Processing that outcome can finish after the deadline.
 
         :param func: awaitable to execute
         :returns: result of the awaitable
@@ -697,41 +727,46 @@ class Request(Generic[Req, Res]):
         direct_submission: CrossLoopAwaitable[Any] | None = None
         func_identity: object = func
         try:
-            if func_identity is self:
-                try:
-                    get_running_loop()
-                except RuntimeError:
-                    caller_loop_running = False
-                else:
-                    caller_loop_running = True
-                runtime = getattr(self._channel, "_runtime", None)
-                in_executor_thread = runtime.in_executor_thread() if runtime is not None else False
-                if caller_loop_running or in_executor_thread:
-                    return self._channel.run_sync(
-                        func,
-                        timeout=self._sync_wait_timeout(),
-                    )
-                # Only the built-in runtime is known to return a reusable
-                # cross-loop handle before the channel's synchronous runner
-                # starts. A legacy channel may drive its own private loop;
-                # creating its fallback Task here would bind that Task to the
-                # caller thread's policy loop instead.
-                if runtime is not None:
-                    submitted = self._ensure_submitted()
-                    if isinstance(submitted, CrossLoopAwaitable):
+            try:
+                get_running_loop()
+            except RuntimeError:
+                caller_loop_running = False
+            else:
+                caller_loop_running = True
+            runtime = getattr(self._channel, "_runtime", None)
+            in_executor_thread = runtime.in_executor_thread() if runtime is not None else False
+            submit = getattr(self._channel, "run_async", None)
+            if runtime is not None and callable(submit) and not caller_loop_running and not in_executor_thread:
+                # Legacy channels keep their own loop and synchronous runner.
+                # Built-in handles let every synchronous accessor arbitrate expiry before cancellation.
+                submitted = self._ensure_submitted() if func_identity is self else submit(func)
+                if isinstance(submitted, CrossLoopAwaitable):
+                    if func_identity is self:
                         self._claim_await()
-                        direct_submission = submitted
+                    direct_submission = submitted
+                    try:
                         return cast(T, submitted.result(self._sync_wait_timeout()))
+                    except (TimeoutError, ConcurrentTimeoutError) as error:
+                        if submitted.done() and not submitted.cancelled() and submitted.exception(timeout=0) is error:
+                            raise
+                        if self._expire_wait():
+                            return cast(T, submitted.result())
+                        submitted.cancel()
+                        raise
+                if func_identity is not self:
+                    return self._channel.run_sync(cast(Awaitable[T], submitted), timeout=self._sync_wait_timeout())
             return self._channel.run_sync(
                 func,
                 timeout=self._sync_wait_timeout(),
             )
         except (TimeoutError, ConcurrentTimeoutError) as e:
             if direct_submission is not None:
-                # ``Future.result(timeout)`` does not cancel pending work.
-                # Preserve the previous run_sync timeout contract through the
-                # request's terminal-aware cancellation gate.
-                self.cancel()
+                with self._future_lock:
+                    terminal = (
+                        self._native_terminal and not self._retry_decision_pending and not direct_submission.cancelled()
+                    )
+                if terminal and not isinstance(e, _RequestDeadlineExceededError):
+                    raise
             from .service_error import RequestError, RequestStatusExtended
 
             self._status = RequestStatusExtended(
@@ -1207,6 +1242,8 @@ class Request(Generic[Req, Res]):
                     )
                 )
                 with self._future_lock:
+                    if self._deadline_expired and not self._retry_decision_pending:
+                        retry = False
                     terminal_attempt = self._native_terminal or self._native_attempt_terminal
                     if terminal_attempt:
                         self._native_terminal = True
@@ -1337,7 +1374,7 @@ class Request(Generic[Req, Res]):
         """
         try:
             return await self._request_with_authorization_loop_impl()
-        except BaseException:
+        except BaseException as error:
             if self._grpc_channel is not None:
                 try:
                     self._release_grpc_channel(discard=self._call is not None and not self._native_terminal)
@@ -1346,6 +1383,8 @@ class Request(Generic[Req, Res]):
                         "The SDK could not release the request transport after setup failed.",
                         exc_info=release_error,
                     )
+            if isinstance(error, RequestIsCancelledError) and self._deadline_expired:
+                raise _RequestDeadlineExceededError("The request timed out.") from None
             raise
 
     async def _request_with_authorization_loop_impl(self) -> Res:
@@ -1524,7 +1563,7 @@ class Request(Generic[Req, Res]):
                     )
                     if deadline is not None
                 ]
-                self._dispatch_deadline = min(dispatch_limits) if authorization_applies is True else None
+                self._dispatch_deadline = min(dispatch_limits, default=None) if authorization_applies is True else None
                 dispatch_started: ConcurrentFuture[None] = ConcurrentFuture()
                 self._dispatch_started = dispatch_started
                 request_work = self._request_with_authorization_loop()
@@ -1630,7 +1669,7 @@ class Request(Generic[Req, Res]):
         raise RuntimeError("The request submission failed, but no error was available.")
 
     async def _await_result(self) -> Res:
-        """Await the request's shared submission and return its result."""
+        """Await the shared outcome, with completion-aware deadline arbitration."""
         future = self._ensure_submitted()
 
         async def wait_shared() -> Res:
@@ -1639,6 +1678,12 @@ class Request(Generic[Req, Res]):
             if callable(shielded_wait):
                 return cast(Res, await shielded_wait())
             return cast(Res, await shield(future))
+
+        async def expire(message: str) -> Res:
+            """Keep an authoritative outcome when completion wins the deadline."""
+            if self._expire_wait():
+                return await wait_shared()
+            raise _RequestDeadlineExceededError(message)
 
         try:
             done = getattr(future, "done", None)
@@ -1666,32 +1711,18 @@ class Request(Generic[Req, Res]):
                         if waiter in completed:
                             return await waiter
                     if not dispatch_started.done():
-                        waiter.cancel()
-                        self.cancel()
-                        raise TimeoutError("The request timed out before SDK-loop dispatch.")
+                        return await expire("The request timed out before SDK-loop dispatch.")
                 if deadline is None:
                     return await waiter
-                remaining = deadline - monotonic()
-                if remaining <= 0:
-                    self.cancel()
-                    raise TimeoutError("The request timed out.")
-                return await wait_for(waiter, timeout=remaining)
-            except CancelledError:
-                self.cancel()
+                completed, _ = await wait((waiter,), timeout=max(0.0, deadline - monotonic()))
+                if waiter in completed:
+                    return await waiter
+                return await expire("The request timed out.")
+            finally:
                 waiter.cancel()
                 await gather(waiter, return_exceptions=True)
-                raise
-            except (AsyncTimeoutError, TimeoutError) as error:
-                if waiter.done() and not waiter.cancelled():
-                    terminal_error = waiter.exception()
-                    if terminal_error is error:
-                        raise
-                self.cancel()
-                raise TimeoutError("The request timed out.") from None
         except CancelledError:
-            # Shield prevents asyncio from cancelling the shared future
-            # directly. Route propagation through the request state machine,
-            # which rejects cancellation after native terminal completion.
+            # Caller cancellation still propagates through the native completion gate.
             self.cancel()
             raise
 

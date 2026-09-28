@@ -283,7 +283,7 @@ AuditEventExportParams = _message_class(
     {},
     {
         "event_type": "Type of audit event to filter by.",
-        "filter": "Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nproject\\_region.name\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus",
+        "filter": "Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus",
         "from_": "Returns results with a timestamp greater than or equal to this value.",
         "to": "Returns results with a timestamp lower than this value.",
     },
@@ -418,7 +418,7 @@ ListAuditEventRequest = _message_class(
     {},
     {
         "event_type": "Type of audit event to filter by.",
-        "filter": "Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.name\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nproject\\_region.name\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus",
+        "filter": "Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.name\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus",
         "parent_id": "A tenant id must be provided",
         "region": "Region to retrieve audit logs (e.g. eu-north2, us-central1, eu-west1)\nSee https://docs.nebius.com/overview/regions",
     },

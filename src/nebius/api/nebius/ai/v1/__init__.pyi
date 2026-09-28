@@ -577,7 +577,7 @@ class DevlabSpec(_Message):
         ...
     @property
     def subnet_id(self) -> _builtins.str:
-        """Subnet ID where the Devlab will be deployed."""
+        """Subnet ID where the Devlab will be deployed.\nIf omitted, the service uses the project's default subnet in the workload region."""
         ...
     @subnet_id.setter
     def subnet_id(self, value: _builtins.str | None) -> None:
@@ -1617,7 +1617,7 @@ class EndpointSpec(_Message):
         ...
     @property
     def subnet_id(self) -> _builtins.str:
-        """Subnet ID where the endpoint will be deployed."""
+        """Subnet ID where the endpoint will be deployed.\nIf omitted, the service uses the project's default subnet in the workload region."""
         ...
     @subnet_id.setter
     def subnet_id(self, value: _builtins.str | None) -> None:
@@ -2657,7 +2657,7 @@ class JobSpec(_Message):
         ...
     @property
     def subnet_id(self) -> _builtins.str:
-        """Subnet ID where the job will be deployed."""
+        """Subnet ID where the job will be deployed.\nIf omitted, the service uses the project's default subnet in the workload region."""
         ...
     @subnet_id.setter
     def subnet_id(self, value: _builtins.str | None) -> None:

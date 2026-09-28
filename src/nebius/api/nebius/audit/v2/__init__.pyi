@@ -350,7 +350,7 @@ class AuditEventExportParams(_Message):
         ...
     @property
     def filter(self) -> _builtins.str:
-        """Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nproject\\_region.name\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus"""
+        """Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus"""
         ...
     @filter.setter
     def filter(self, value: _builtins.str | None) -> None:
@@ -611,7 +611,7 @@ class ListAuditEventRequest(_Message):
         ...
     @property
     def filter(self) -> _builtins.str:
-        """Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.name\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nproject\\_region.name\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus"""
+        """Example:\nservice.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')\n\nSupported filters:\n\"=\" - equals\n\"!=\" - not equals\n\":\" - contains\nregex - regular expression\n\nFields that can be used for filtering:\naction\nauthentication.static\\_key\\_credential.id\nauthentication.subject.name\nauthentication.subject.service\\_account\\_id\nauthentication.subject.tenant\\_user\\_id\nauthentication.token\\_credential.masked\\_token\nresource.hierarchy.id\nresource.hierarchy.name\nresource.metadata.id\nresource.metadata.name\nresource.metadata.type\nservice.name\ntype\nstatus"""
         ...
     @filter.setter
     def filter(self, value: _builtins.str | None) -> None:

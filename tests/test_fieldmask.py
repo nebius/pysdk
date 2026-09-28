@@ -4,7 +4,11 @@ import pytest
 from nebius.aio import request
 from pytest_subtests import SubTests
 
-request.DEFAULT_AUTH_TIMEOUT = 5.0
+
+@pytest.fixture(autouse=True)
+def short_auth_timeout(monkeypatch):
+    """Limit this module's tests without changing other modules."""
+    monkeypatch.setattr(request, "DEFAULT_AUTH_TIMEOUT", 5.0)
 
 
 def test_fieldkey() -> None:
