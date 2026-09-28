@@ -175,7 +175,7 @@ class ControlPlaneEndpointsSpec(_Message):
 class PublicEndpointSpec(_Message):
     @property
     def allowed_cidrs(self) -> _MutableSequence[_builtins.str]:
-        """List of CIDR blocks from which access to public endpoint is allowed.\nIf field is not set, or list is empty, it means that access is not restricted at all."""
+        """List of CIDR blocks from which access to public endpoint is allowed.\nIf field is not set, or list is empty, it means that access is not restricted at all.\nYou can specify a maximum of 8 CIDRs."""
         ...
     @allowed_cidrs.setter
     def allowed_cidrs(self, value: _Iterable[_builtins.str] | None) -> None:
