@@ -9,11 +9,11 @@ structure for code generated from service definitions.
 """
 
 from collections.abc import AsyncIterable, Callable, Iterable
-from logging import getLogger
 from typing import Any, Generic, TypeVar
 
 from typing_extensions import Unpack
 
+from ..base.protos.direct import deprecation_warning
 from .abc import ClientChannelInterface as Channel
 from .constant_channel import Constant
 from .request import Request
@@ -55,10 +55,10 @@ class Client:
         self._channel = channel
 
         if self.__service_deprecation_details__ is not None:
-            getLogger("deprecation").warning(
-                f"Service {self.__service_name__} is deprecated. {self.__service_deprecation_details__}",
-                stack_info=True,
-                stacklevel=2,
+            deprecation_warning(
+                self.__service_deprecation_details__,
+                self.__service_name__,
+                kind="Service",
             )
 
     def request(

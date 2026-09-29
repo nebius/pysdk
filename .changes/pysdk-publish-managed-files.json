@@ -176,6 +176,7 @@
     "tests/test_cli_config_authorization.py",
     "tests/test_config_loading.py",
     "tests/test_credentials.py",
+    "tests/test_deprecation.py",
     "tests/test_direct_enum.py",
     "tests/test_direct_json.py",
     "tests/test_direct_message.py",

@@ -9,7 +9,9 @@ from collections.abc import Callable, Iterable, Iterator, Mapping, MutableMappin
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
-from logging import getLogger
+from inspect import currentframe
+from logging import WARNING, getLogger
+from threading import Lock
 from typing import TYPE_CHECKING, Any, ClassVar, Protocol, TypeVar, cast
 
 from google.protobuf.message import DecodeError, EncodeError
@@ -30,6 +32,20 @@ V = TypeVar("V")
 
 _MISSING = object()
 _DEPRECATION_LOGGER = getLogger("deprecation")
+_DEPRECATION_SUPPRESSED: ContextVar[bool] = ContextVar("nebius_deprecation_suppressed", default=False)
+_DEPRECATION_SEEN: set[tuple[str | None, str | None, str]] = set()
+_DEPRECATION_LOCK = Lock()
+_SDK_MODULE_PREFIX = __name__.removesuffix(".base.protos.direct") + "."
+
+
+@contextmanager
+def suppress_deprecation_warnings() -> Iterator[None]:
+    """Suppress diagnostics for server data and SDK-internal actions in this context."""
+    token = _DEPRECATION_SUPPRESSED.set(True)
+    try:
+        yield
+    finally:
+        _DEPRECATION_SUPPRESSED.reset(token)
 
 
 def deprecation_warning(
@@ -37,12 +53,32 @@ def deprecation_warning(
     symbol: str | None = None,
     *,
     kind: str | None = None,
-    stacklevel: int = 3,
+    stacklevel: int | None = None,
 ) -> None:
-    """Emit an SDK deprecation through the visible compatibility logger."""
+    """Warn once per deprecated symbol and identify the caller outside the SDK."""
+    if _DEPRECATION_SUPPRESSED.get() or not _DEPRECATION_LOGGER.isEnabledFor(WARNING):
+        return
+    key = (kind, symbol, details)
+    with _DEPRECATION_LOCK:
+        if key in _DEPRECATION_SEEN:
+            return
+        _DEPRECATION_SEEN.add(key)
     prefix = "" if kind is None else kind + " "
     message = details if symbol is None else f"{prefix}{symbol} is deprecated. {details}"
-    _DEPRECATION_LOGGER.warning(message, stack_info=True, stacklevel=stacklevel)
+    if stacklevel is None:
+        stacklevel = 1
+        frame = currentframe()
+        try:
+            while frame is not None:
+                module = frame.f_globals.get("__name__", "")
+                # SDK containers also execute methods inherited from collection mixins.
+                if not module.startswith(_SDK_MODULE_PREFIX) and module not in {"_collections_abc", "collections.abc"}:
+                    break
+                stacklevel += 1
+                frame = frame.f_back
+        finally:
+            del frame
+    _DEPRECATION_LOGGER.warning(message, stacklevel=stacklevel)
 
 
 _MESSAGE_HARD_MAX_DEPTH = 100
@@ -310,7 +346,6 @@ class Message:
                 self.__class__.__DEPRECATION_DETAILS__,
                 self.__class__.__PROTO_FULL_NAME__,
                 kind="Message",
-                stacklevel=4,
             )
         self._values: dict[Field, Any] = {}
         self._present: set[Field] = set()
@@ -377,9 +412,16 @@ class Message:
     def _bind_mutation(self, callback: Callable[[], None]) -> None:
         self._on_mutation = callback
 
-    def _notify(self) -> None:
-        if self._mutation_suspended == 0 and self._on_mutation is not None:
-            self._on_mutation()
+    def _notify(self, field: Field | None = None) -> None:
+        if self._mutation_suspended == 0:
+            if field is not None and field.deprecation_details is not None:
+                deprecation_warning(
+                    field.deprecation_details,
+                    f"{self.__class__.__PROTO_FULL_NAME__}.{field.proto_name}",
+                    kind="Field",
+                )
+            if self._on_mutation is not None:
+                self._on_mutation()
 
     @contextmanager
     def _suspend_mutation(self) -> Iterator[None]:
@@ -420,12 +462,12 @@ class Message:
 
     def _child_changed(self, field: Field) -> None:
         self._select(field)
-        self._notify()
+        self._notify(field)
 
     def _repeated(self, field: Field) -> RepeatedValues[Any]:
         value = self._values.get(field)
         if value is None:
-            value = RepeatedValues(field.codec, self._notify)
+            value = RepeatedValues(field.codec, lambda: self._notify(field))
             self._values[field] = value
         return cast(RepeatedValues[Any], value)
 
@@ -434,18 +476,11 @@ class Message:
         if value is None:
             if field.map_key_codec is None:
                 raise TypeError("field is not a map")
-            value = MapValues(field.map_key_codec, field.codec, self._notify)
+            value = MapValues(field.map_key_codec, field.codec, lambda: self._notify(field))
             self._values[field] = value
         return cast(MapValues[Any, Any], value)
 
     def _get_field(self, field: Field, *, absent_is_none: bool = False) -> Any:
-        if field.deprecation_details is not None:
-            deprecation_warning(
-                field.deprecation_details,
-                f"{self.__class__.__PROTO_FULL_NAME__}.{field.proto_name}",
-                kind="Field",
-                stacklevel=4,
-            )
         if absent_is_none and field not in self._present:
             return None
         if field.map:
@@ -457,7 +492,8 @@ class Message:
         if field in self._values:
             value = self._values[field]
         elif field.message:
-            value = self._bind_child(field, field.default())
+            with suppress_deprecation_warnings():
+                value = self._bind_child(field, field.default())
             self._values[field] = value
         else:
             return field.default()
@@ -487,7 +523,6 @@ class Message:
                 field.deprecation_details,
                 f"{self.__class__.__PROTO_FULL_NAME__}.{field.proto_name}",
                 kind="Field",
-                stacklevel=4,
             )
         if value is None:
             self._clear_state(field)
@@ -524,7 +559,6 @@ class Message:
                     details,
                     f"{symbol} for field {self.__class__.__PROTO_FULL_NAME__}.{field.proto_name}",
                     kind="Setting deprecated enum value",
-                    stacklevel=4,
                 )
         self._detach_child(field)
         self._select(field)
@@ -884,9 +918,7 @@ class Message:
         :param payload: Serialized protobuf message.
         :raises DecodeError: If the payload is invalid or nesting is too deep.
         """
-        message = cls()
-        message.ParseFromString(payload)
-        return message
+        return cls._from_string(payload)
 
     @classmethod
     def _from_string(cls: type[M], payload: bytes) -> M:
@@ -902,8 +934,9 @@ class Message:
         :returns: Number of bytes consumed.
         :raises DecodeError: If the payload is invalid or nesting is too deep.
         """
-        self.Clear()
-        return self.MergeFromString(payload)
+        with suppress_deprecation_warnings():
+            self.Clear()
+            return self.MergeFromString(payload)
 
     def MergeFromString(self, payload: bytes) -> int:
         """Merge protobuf wire-format bytes into this message.
@@ -917,7 +950,8 @@ class Message:
             raise DecodeError("protobuf message nesting exceeds the configured limit")
         token = _MESSAGE_DECODE_DEPTH.set((depth + 1, limit))
         try:
-            return self._merge_from_string(payload)
+            with suppress_deprecation_warnings():
+                return self._merge_from_string(payload)
         finally:
             _MESSAGE_DECODE_DEPTH.reset(token)
 
@@ -1273,8 +1307,9 @@ def message_codec(message_type: Callable[[], type[M]]) -> ValueCodec[M]:
         return value
 
     def clone(value: M) -> M:
-        copied = resolve()()
-        copied.CopyFrom(value)
+        with suppress_deprecation_warnings():
+            copied = resolve()()
+            copied.CopyFrom(value)
         return copied
 
     def merge(destination: M, source: M) -> M:

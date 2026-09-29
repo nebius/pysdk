@@ -27,6 +27,7 @@ from typing_extensions import Unpack
 
 from ..base.error import SDKError
 from ..base.metadata import Metadata
+from ..base.protos.direct import suppress_deprecation_warnings
 from ..base.protos.unset import Unset, UnsetType
 from ..base.protos.well_known_direct import local_timezone
 from ._task_context import dispose_unstarted_awaitable
@@ -302,7 +303,8 @@ class Operation(Generic[OperationPb]):
         service_type = getattr(module, "OperationServiceClient", None)
         if service_type is None:
             raise SDKError(f"Operation service for {full_name} is not generated.")
-        self._service = service_type(Constant(source_method, channel))
+        with suppress_deprecation_warnings():
+            self._service = service_type(Constant(source_method, channel))
         self._get_request_obj = get_type
         self._operation = operation
         self._state_lock = Lock()
@@ -591,10 +593,11 @@ class Operation(Generic[OperationPb]):
                     raise TimeoutError("The operation update authorization timed out before dispatch.")
                 kwargs["auth_timeout"] = authorization_timeout
 
-            req = self._service.get(
-                self._get_request_obj(id=self.id),
-                **kwargs,
-            )
+            with suppress_deprecation_warnings():
+                req = self._service.get(
+                    self._get_request_obj(id=self.id),
+                    **kwargs,
+                )
             new_op = await req
             self._set_new_operation(cast(OperationPb, new_op._operation))
 

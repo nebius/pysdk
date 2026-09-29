@@ -163,14 +163,6 @@ class AuditEvent(_Message):
     def status(self, value: Status | None) -> None:
         """Set or clear the generated ``status`` field."""
         ...
-    @property
-    def project_region(self) -> Region:
-        """Region of an application\n\nRegion should be tied to a resource, not to a project."""
-        ...
-    @project_region.setter
-    def project_region(self, value: Region | None) -> None:
-        """Set or clear the generated ``project_region`` field."""
-        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -189,7 +181,6 @@ class AuditEvent(_Message):
         request: Request | None | _UnsetType = ...,
         response: Response | None | _UnsetType = ...,
         status: Status | None | _UnsetType = ...,
-        project_region: Region | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -810,21 +801,6 @@ class Federation(_Message):
         """Create a message from a source message and field values."""
         ...
 
-class Region(_Message):
-    @property
-    def name(self) -> _builtins.str:
-        """Region name"""
-        ...
-    @name.setter
-    def name(self, value: _builtins.str | None) -> None:
-        """Set or clear the generated ``name`` field."""
-        ...
-    def __init__(
-        self, initial_message: _SerializableMessage | None = None, *, name: _builtins.str | None | _UnsetType = ...
-    ) -> None:
-        """Create a message from a source message and field values."""
-        ...
-
 class Request(_Message):
     @property
     def client_ip(self) -> _builtins.str:
@@ -1180,7 +1156,6 @@ __all__ = [
     "ListAuditEventResponse",
     "ListRequest",
     "NebiusObjectStorageDestination",
-    "Region",
     "Request",
     "Resource",
     "ResourceMetadata",

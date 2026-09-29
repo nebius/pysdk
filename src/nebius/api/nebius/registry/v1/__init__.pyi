@@ -441,8 +441,18 @@ class DeleteRegistryRequest(_Message):
     def id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``id`` field."""
         ...
+    @property
+    def force(self) -> _builtins.bool: ...
+    @force.setter
+    def force(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``force`` field."""
+        ...
     def __init__(
-        self, initial_message: _SerializableMessage | None = None, *, id: _builtins.str | None | _UnsetType = ...
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        id: _builtins.str | None | _UnsetType = ...,
+        force: _builtins.bool | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...

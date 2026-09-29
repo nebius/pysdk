@@ -5,6 +5,22 @@ import pytest
 
 
 @pytest.mark.asyncio()
+async def test_static_token_logging(caplog: pytest.LogCaptureFixture) -> None:
+    from nebius.aio.token.static import Bearer
+
+    raw = "ne1payload.secret-signature"
+    bearer = Bearer(raw)
+    receiver = bearer.receiver()
+    with caplog.at_level(logging.DEBUG):
+        token = await receiver.fetch()
+        logging.getLogger(__name__).debug("credentials: %s; receiver: %r; token: %s", bearer, receiver, token)
+
+    assert "secret-signature" not in caplog.text
+    assert "ne1payload.**" in caplog.text
+    assert token.token == raw
+
+
+@pytest.mark.asyncio()
 async def test_credentials_updater() -> None:
     from asyncio import Future
 
