@@ -1054,7 +1054,7 @@ GetImageLatestByFamilyRequest = _message_class(
     "GetImageLatestByFamilyRequest",
     {"image_family": "image_family", "parent_id": "parent_id"},
     {},
-    {"parent_id": "default 'project-{region}public-images'"},
+    {"parent_id": "The default is ``project-{region}public-images``."},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -1281,7 +1281,7 @@ AttachedDiskSpec = _message_class(
     },
     {"type": "type"},
     {
-        "device_id": "Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device\\_id}' as a device path in mount command.",
+        "device_id": "Specifies the user-defined device identifier.\nUse ``/dev/disk/by-id/virtio-{device_id}`` as the device path in a mount command.",
         "existing_disk": "Attach an existing disk.\n\nLifecycle:\n\n* The disk is preserved when the instance is deleted (it will be detached).\n\nSwitching to a managed disk:\n\n* To delete the disk together with the instance, switch to ManagedDisk in the instance spec.\n* For the switch, ``ManagedDisk.name`` MUST match the current disk ``name``\n  (see DiskService.Get for the disk referenced by ``ExistingDisk.id``).\n* When converting an ExistingDisk to a ManagedDisk, you must provide ``ManagedDisk.name`` and ``ManagedDisk.spec``\n  exactly as they are currently defined in the disk resource.\n  Obtain the current values via ``DiskService.Get`` and copy them verbatim.\n  If ``ManagedDisk.spec`` differs from the current disk spec, the instance update will fail.",
         "managed_disk": "Attach a managed disk.\n\nLifecycle:\n\n* The disk is deleted when the instance is deleted.\n\nSemantics:\n\n* Specifying a ManagedDisk expresses an intent to have that managed disk attached.\n* If this intent cannot be satisfied, the entire operation fails.\n* You can check the intent status in ``instance.status.disk_attachments``.\n\nUpdates and matching:\n\n* Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.\n* During updates, disks are matched by ``name``.\n\nRenaming and data loss:\n\n* Changing the disk ``name`` triggers disk replacement (create a new disk and delete the old one),\n  which causes data loss.\n* To rename a managed disk safely:\n\n  #. switch it to ExistingDisk in the instance spec, and\n  #. update/rename it via DiskService.\n\nConflicts:\n\n* Instance create/update fails if there is already a disk with the same ``name``.\n  as requested by any ManagedDisk.\n\nFinding the disk ID:\n\n* The disk ID is available in ``instance.status.disk_attachments`` after it is created.\n  Use ``DiskAttachmentStatus.name`` to find the desired disk which matches ``name``.\n\nSwitching to an existing (non-managed) disk:\n\n* To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,\n  use the disk ID from ``instance.status.disk_attachments``.\n\nDeletion protection:\n\n* Switching ExistingDisk to ManagedDisk fails if ``Disk.spec.deletion_protection`` is enabled.\n* Deleting an instance that has a ManagedDisk fails if ``Disk.spec.deletion_protection`` is enabled.",
     },

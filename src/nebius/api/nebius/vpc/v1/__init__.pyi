@@ -523,6 +523,36 @@ class ListAllocationsRequest(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class ListAggregatedAllocationsRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str: ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int: ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str: ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class ListAllocationsByPoolRequest(_Message):
     @property
     def pool_id(self) -> _builtins.str:
@@ -901,6 +931,36 @@ class ListNetworksRequest(_Message):
     def page_token(self) -> _builtins.str:
         """Token to retrieve the next page of networks."""
         ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListAggregatedNetworksRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str: ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int: ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str: ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -1317,6 +1377,36 @@ class ListPoolsRequest(_Message):
     def page_token(self) -> _builtins.str:
         """Token to retrieve the next page of pools."""
         ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListAggregatedPoolsRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str: ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int: ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str: ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -2118,6 +2208,36 @@ class ListRouteTablesRequest(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class ListAggregatedRouteTablesRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str: ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int: ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str: ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class ListRouteTablesByNetworkRequest(_Message):
     @property
     def network_id(self) -> _builtins.str:
@@ -2400,6 +2520,36 @@ class ListSecurityGroupsRequest(_Message):
     def page_token(self) -> _builtins.str:
         """Token to retrieve the next page of security groups."""
         ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListAggregatedSecurityGroupsRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str: ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int: ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str: ...
     @page_token.setter
     def page_token(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``page_token`` field."""
@@ -3425,6 +3575,36 @@ class ListSubnetsRequest(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class ListAggregatedSubnetsRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str: ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def page_size(self) -> _builtins.int: ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str: ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class ListSubnetsByNetworkRequest(_Message):
     @property
     def network_id(self) -> _builtins.str:
@@ -3788,6 +3968,11 @@ class AllocationServiceClient(_ClientWithOperations[_type_nebius_common_v1_Opera
     ) -> _Request[ListAllocationsRequest, ListAllocationsResponse]:
         """Lists allocations within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
+    def list_aggregated(
+        self, request: ListAggregatedAllocationsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedAllocationsRequest, ListAllocationsResponse]:
+        """Lists allocations across regions for the specified parent.\n\nThe request object is returned without starting the RPC."""
+        ...
     def list_by_pool(
         self, request: ListAllocationsByPoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsByPoolRequest, ListAllocationsResponse]:
@@ -3831,6 +4016,11 @@ class NetworkServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operatio
     ) -> _Request[ListNetworksRequest, ListNetworksResponse]:
         """Lists networks within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
+    def list_aggregated(
+        self, request: ListAggregatedNetworksRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedNetworksRequest, ListNetworksResponse]:
+        """Lists networks across regions for the specified parent.\n\nThe request object is returned without starting the RPC."""
+        ...
     def create(
         self, request: CreateNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateNetworkRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
@@ -3866,6 +4056,11 @@ class PoolServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, 
         self, request: ListPoolsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListPoolsRequest, ListPoolsResponse]:
         """Lists pools within a specified parent.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def list_aggregated(
+        self, request: ListAggregatedPoolsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedPoolsRequest, ListPoolsResponse]:
+        """Lists pools across regions for the specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_source_pool(
         self, request: ListPoolsBySourcePoolRequest, **kwargs: _Unpack[_RequestKwargs]
@@ -3936,6 +4131,11 @@ class RouteTableServiceClient(_ClientWithOperations[_type_nebius_common_v1_Opera
     ) -> _Request[ListRouteTablesRequest, ListRouteTablesResponse]:
         """Lists route tables within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
+    def list_aggregated(
+        self, request: ListAggregatedRouteTablesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedRouteTablesRequest, ListRouteTablesResponse]:
+        """Lists route tables across regions for the specified parent.\n\nThe request object is returned without starting the RPC."""
+        ...
     def list_by_network(
         self, request: ListRouteTablesByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRouteTablesByNetworkRequest, ListRouteTablesResponse]:
@@ -3973,6 +4173,11 @@ class SecurityGroupServiceClient(_ClientWithOperations[_type_nebius_common_v1_Op
         self, request: ListSecurityGroupsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSecurityGroupsRequest, ListSecurityGroupsResponse]:
         """Lists security groups within a specified parent.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def list_aggregated(
+        self, request: ListAggregatedSecurityGroupsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedSecurityGroupsRequest, ListSecurityGroupsResponse]:
+        """Lists security groups across regions for the specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_network(
         self, request: ListSecurityGroupsByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
@@ -4042,6 +4247,11 @@ class SubnetServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation
         self, request: ListSubnetsRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSubnetsRequest, ListSubnetsResponse]:
         """Lists subnets within a specified parent.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def list_aggregated(
+        self, request: ListAggregatedSubnetsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedSubnetsRequest, ListSubnetsResponse]:
+        """Lists subnets across regions for the specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
     def list_by_network(
         self, request: ListSubnetsByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
@@ -4132,6 +4342,12 @@ __all__ = [
     "IPv4PublicSubnetPools",
     "IpVersion",
     "IpVisibility",
+    "ListAggregatedAllocationsRequest",
+    "ListAggregatedNetworksRequest",
+    "ListAggregatedPoolsRequest",
+    "ListAggregatedRouteTablesRequest",
+    "ListAggregatedSecurityGroupsRequest",
+    "ListAggregatedSubnetsRequest",
     "ListAllocationsByPoolRequest",
     "ListAllocationsBySubnetRequest",
     "ListAllocationsRequest",

@@ -4416,7 +4416,7 @@ class TenantUserAccountStatus(_Message):
 class GetTenantUserAccountRequest(_Message):
     @property
     def id(self) -> _builtins.str:
-        """tenant user account id like 'tenantuseraccount-{region}someuniquesuffix'"""
+        """Tenant user account ID, such as ``tenantuseraccount-{region}someuniquesuffix``."""
         ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
@@ -4527,7 +4527,7 @@ class UnblockTenantUserAccountRequest(_Message):
 class GetTenantUserAccountWithAttributesRequest(_Message):
     @property
     def id(self) -> _builtins.str:
-        """tenant user account id like 'tenantuseraccount-{region}someuniquesuffix'"""
+        """Tenant user account ID, such as ``tenantuseraccount-{region}someuniquesuffix``."""
         ...
     @id.setter
     def id(self, value: _builtins.str | None) -> None:
@@ -4542,7 +4542,7 @@ class GetTenantUserAccountWithAttributesRequest(_Message):
 class ListTenantUserAccountsWithAttributesRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
-        """Represents the tenant ID like 'tenant-{region}someuniquesuffix'"""
+        """Represents the tenant ID, such as ``tenant-{region}someuniquesuffix``."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
