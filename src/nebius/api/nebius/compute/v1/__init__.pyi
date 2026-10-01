@@ -1830,7 +1830,7 @@ class GetImageLatestByFamilyRequest(_Message):
         ...
     @property
     def parent_id(self) -> _builtins.str:
-        """default 'project-{region}public-images'"""
+        """The default is ``project-{region}public-images``."""
         ...
     @parent_id.setter
     def parent_id(self, value: _builtins.str | None) -> None:
@@ -2380,7 +2380,7 @@ class AttachedDiskSpec(_Message):
         ...
     @property
     def device_id(self) -> _builtins.str:
-        """Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device\\_id}' as a device path in mount command."""
+        """Specifies the user-defined device identifier.\nUse ``/dev/disk/by-id/virtio-{device_id}`` as the device path in a mount command."""
         ...
     @device_id.setter
     def device_id(self, value: _builtins.str | None) -> None:

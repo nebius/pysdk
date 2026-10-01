@@ -73,7 +73,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1/allocation_service.proto",
-    b"\n&nebius/vpc/v1/allocation_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/vpc/v1/allocation.proto\"@\n\x14GetAllocationRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x02id\"i\n\x1aGetAllocationByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x85\x01\n\x16ListAllocationsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x87\x01\n\x1cListAllocationsByPoolRequest\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8f\x01\n\x1eListAllocationsBySubnetRequest\x121\n\tsubnet_id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListAllocationsResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.vpc.v1.AllocationR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xed\x02\n\x17CreateAllocationRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.AllocationSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xe2\x02\n\x17UpdateAllocationRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.AllocationSpecR\x04spec\"C\n\x17DeleteAllocationRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x02id2\xc3\x05\n\x11AllocationService\x12E\n\x03Get\x12#.nebius.vpc.v1.GetAllocationRequest\x1a\x19.nebius.vpc.v1.Allocation\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetAllocationByNameRequest\x1a\x19.nebius.vpc.v1.Allocation\x12U\n\x04List\x12%.nebius.vpc.v1.ListAllocationsRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12a\n\nListByPool\x12+.nebius.vpc.v1.ListAllocationsByPoolRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12e\n\x0cListBySubnet\x12-.nebius.vpc.v1.ListAllocationsBySubnetRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12M\n\x06Create\x12&.nebius.vpc.v1.CreateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Delete\x12&.nebius.vpc.v1.DeleteAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB]\n\x14ai.nebius.pub.vpc.v1B\x16AllocationServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
+    b"\n&nebius/vpc/v1/allocation_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/vpc/v1/allocation.proto\"@\n\x14GetAllocationRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x02id\"i\n\x1aGetAllocationByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x85\x01\n\x16ListAllocationsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8f\x01\n ListAggregatedAllocationsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x87\x01\n\x1cListAllocationsByPoolRequest\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8f\x01\n\x1eListAllocationsBySubnetRequest\x121\n\tsubnet_id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListAllocationsResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.vpc.v1.AllocationR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xed\x02\n\x17CreateAllocationRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.AllocationSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xe2\x02\n\x17UpdateAllocationRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.AllocationSpecR\x04spec\"C\n\x17DeleteAllocationRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x02id2\xae\x06\n\x11AllocationService\x12E\n\x03Get\x12#.nebius.vpc.v1.GetAllocationRequest\x1a\x19.nebius.vpc.v1.Allocation\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetAllocationByNameRequest\x1a\x19.nebius.vpc.v1.Allocation\x12U\n\x04List\x12%.nebius.vpc.v1.ListAllocationsRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12i\n\x0eListAggregated\x12/.nebius.vpc.v1.ListAggregatedAllocationsRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12a\n\nListByPool\x12+.nebius.vpc.v1.ListAllocationsByPoolRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12e\n\x0cListBySubnet\x12-.nebius.vpc.v1.ListAllocationsBySubnetRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12M\n\x06Create\x12&.nebius.vpc.v1.CreateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Delete\x12&.nebius.vpc.v1.DeleteAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB]\n\x14ai.nebius.pub.vpc.v1B\x16AllocationServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
 )
 _register_file(
     "nebius/vpc/v1/network.proto",
@@ -81,11 +81,11 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1/network_service.proto",
-    b"\n#nebius/vpc/v1/network_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1bnebius/vpc/v1/network.proto\":\n\x11GetNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id\"f\n\x17GetNetworkByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x82\x01\n\x13ListNetworksRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"l\n\x14ListNetworksResponse\x12,\n\x05items\x18\x01 \x03(\x0b2\x16.nebius.vpc.v1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xdf\x02\n\x14CreateNetworkRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b2\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\"\xb6\x02\n\x1bCreateDefaultNetworkRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\"\xdc\x02\n\x14UpdateNetworkRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b2\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\"=\n\x14DeleteNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id2\xb5\x04\n\x0eNetworkService\x12?\n\x03Get\x12 .nebius.vpc.v1.GetNetworkRequest\x1a\x16.nebius.vpc.v1.Network\x12K\n\tGetByName\x12&.nebius.vpc.v1.GetNetworkByNameRequest\x1a\x16.nebius.vpc.v1.Network\x12O\n\x04List\x12\".nebius.vpc.v1.ListNetworksRequest\x1a#.nebius.vpc.v1.ListNetworksResponse\x12J\n\x06Create\x12#.nebius.vpc.v1.CreateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12X\n\rCreateDefault\x12*.nebius.vpc.v1.CreateDefaultNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Update\x12#.nebius.vpc.v1.UpdateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Delete\x12#.nebius.vpc.v1.DeleteNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBZ\n\x14ai.nebius.pub.vpc.v1B\x13NetworkServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
+    b"\n#nebius/vpc/v1/network_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1bnebius/vpc/v1/network.proto\":\n\x11GetNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id\"f\n\x17GetNetworkByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x82\x01\n\x13ListNetworksRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8c\x01\n\x1dListAggregatedNetworksRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"l\n\x14ListNetworksResponse\x12,\n\x05items\x18\x01 \x03(\x0b2\x16.nebius.vpc.v1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xdf\x02\n\x14CreateNetworkRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b2\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\"\xb6\x02\n\x1bCreateDefaultNetworkRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\"\xdc\x02\n\x14UpdateNetworkRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b2\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\"=\n\x14DeleteNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id2\x9a\x05\n\x0eNetworkService\x12?\n\x03Get\x12 .nebius.vpc.v1.GetNetworkRequest\x1a\x16.nebius.vpc.v1.Network\x12K\n\tGetByName\x12&.nebius.vpc.v1.GetNetworkByNameRequest\x1a\x16.nebius.vpc.v1.Network\x12O\n\x04List\x12\".nebius.vpc.v1.ListNetworksRequest\x1a#.nebius.vpc.v1.ListNetworksResponse\x12c\n\x0eListAggregated\x12,.nebius.vpc.v1.ListAggregatedNetworksRequest\x1a#.nebius.vpc.v1.ListNetworksResponse\x12J\n\x06Create\x12#.nebius.vpc.v1.CreateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12X\n\rCreateDefault\x12*.nebius.vpc.v1.CreateDefaultNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Update\x12#.nebius.vpc.v1.UpdateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Delete\x12#.nebius.vpc.v1.DeleteNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBZ\n\x14ai.nebius.pub.vpc.v1B\x13NetworkServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
 )
 _register_file(
     "nebius/vpc/v1/pool_service.proto",
-    b"\n nebius/vpc/v1/pool_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x18nebius/vpc/v1/pool.proto\"4\n\x0eGetPoolRequest\x12\"\n\x02id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x02id\"c\n\x14GetPoolByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x7f\n\x10ListPoolsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x87\x01\n\x1cListPoolsBySourcePoolRequest\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"f\n\x11ListPoolsResponse\x12)\n\x05items\x18\x01 \x03(\x0b2\x13.nebius.vpc.v1.PoolR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe1\x02\n\x11CreatePoolRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x17.nebius.vpc.v1.PoolSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xd6\x02\n\x11UpdatePoolRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x12+\n\x04spec\x18\x02 \x01(\x0b2\x17.nebius.vpc.v1.PoolSpecR\x04spec\"7\n\x11DeletePoolRequest\x12\"\n\x02id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x02id2\xa0\x04\n\x0bPoolService\x129\n\x03Get\x12\x1d.nebius.vpc.v1.GetPoolRequest\x1a\x13.nebius.vpc.v1.Pool\x12E\n\tGetByName\x12#.nebius.vpc.v1.GetPoolByNameRequest\x1a\x13.nebius.vpc.v1.Pool\x12I\n\x04List\x12\x1f.nebius.vpc.v1.ListPoolsRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12a\n\x10ListBySourcePool\x12+.nebius.vpc.v1.ListPoolsBySourcePoolRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12G\n\x06Create\x12 .nebius.vpc.v1.CreatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06Update\x12 .nebius.vpc.v1.UpdatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06Delete\x12 .nebius.vpc.v1.DeletePoolRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBW\n\x14ai.nebius.pub.vpc.v1B\x10PoolServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
+    b"\n nebius/vpc/v1/pool_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x18nebius/vpc/v1/pool.proto\"4\n\x0eGetPoolRequest\x12\"\n\x02id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x02id\"c\n\x14GetPoolByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x7f\n\x10ListPoolsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x89\x01\n\x1aListAggregatedPoolsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x87\x01\n\x1cListPoolsBySourcePoolRequest\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"f\n\x11ListPoolsResponse\x12)\n\x05items\x18\x01 \x03(\x0b2\x13.nebius.vpc.v1.PoolR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe1\x02\n\x11CreatePoolRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x17.nebius.vpc.v1.PoolSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xd6\x02\n\x11UpdatePoolRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x12+\n\x04spec\x18\x02 \x01(\x0b2\x17.nebius.vpc.v1.PoolSpecR\x04spec\"7\n\x11DeletePoolRequest\x12\"\n\x02id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x02id2\xff\x04\n\x0bPoolService\x129\n\x03Get\x12\x1d.nebius.vpc.v1.GetPoolRequest\x1a\x13.nebius.vpc.v1.Pool\x12E\n\tGetByName\x12#.nebius.vpc.v1.GetPoolByNameRequest\x1a\x13.nebius.vpc.v1.Pool\x12I\n\x04List\x12\x1f.nebius.vpc.v1.ListPoolsRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12]\n\x0eListAggregated\x12).nebius.vpc.v1.ListAggregatedPoolsRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12a\n\x10ListBySourcePool\x12+.nebius.vpc.v1.ListPoolsBySourcePoolRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12G\n\x06Create\x12 .nebius.vpc.v1.CreatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06Update\x12 .nebius.vpc.v1.UpdatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06Delete\x12 .nebius.vpc.v1.DeletePoolRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBW\n\x14ai.nebius.pub.vpc.v1B\x10PoolServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
 )
 _register_file(
     "nebius/vpc/v1/route.proto",
@@ -101,7 +101,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1/route_table_service.proto",
-    b"\n'nebius/vpc/v1/route_table_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1fnebius/vpc/v1/route_table.proto\"@\n\x14GetRouteTableRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcroutetableR\x02id\"i\n\x1aGetRouteTableByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x85\x01\n\x16ListRouteTablesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x93\x01\n\x1fListRouteTablesByNetworkRequest\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListRouteTablesResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.vpc.v1.RouteTableR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xed\x02\n\x17CreateRouteTableRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.RouteTableSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xe2\x02\n\x17UpdateRouteTableRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\"C\n\x17DeleteRouteTableRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcroutetableR\x02id2\xe2\x04\n\x11RouteTableService\x12E\n\x03Get\x12#.nebius.vpc.v1.GetRouteTableRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetRouteTableByNameRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12U\n\x04List\x12%.nebius.vpc.v1.ListRouteTablesRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12g\n\rListByNetwork\x12..nebius.vpc.v1.ListRouteTablesByNetworkRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12M\n\x06Create\x12&.nebius.vpc.v1.CreateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Delete\x12&.nebius.vpc.v1.DeleteRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB]\n\x14ai.nebius.pub.vpc.v1B\x16RouteTableServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
+    b"\n'nebius/vpc/v1/route_table_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1fnebius/vpc/v1/route_table.proto\"@\n\x14GetRouteTableRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcroutetableR\x02id\"i\n\x1aGetRouteTableByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x85\x01\n\x16ListRouteTablesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8f\x01\n ListAggregatedRouteTablesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x93\x01\n\x1fListRouteTablesByNetworkRequest\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListRouteTablesResponse\x12/\n\x05items\x18\x01 \x03(\x0b2\x19.nebius.vpc.v1.RouteTableR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xed\x02\n\x17CreateRouteTableRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.RouteTableSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xe2\x02\n\x17UpdateRouteTableRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\"C\n\x17DeleteRouteTableRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcroutetableR\x02id2\xcd\x05\n\x11RouteTableService\x12E\n\x03Get\x12#.nebius.vpc.v1.GetRouteTableRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetRouteTableByNameRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12U\n\x04List\x12%.nebius.vpc.v1.ListRouteTablesRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12i\n\x0eListAggregated\x12/.nebius.vpc.v1.ListAggregatedRouteTablesRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12g\n\rListByNetwork\x12..nebius.vpc.v1.ListRouteTablesByNetworkRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12M\n\x06Create\x12&.nebius.vpc.v1.CreateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Delete\x12&.nebius.vpc.v1.DeleteRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB]\n\x14ai.nebius.pub.vpc.v1B\x16RouteTableServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
 )
 _register_file(
     "nebius/vpc/v1/security_group.proto",
@@ -109,7 +109,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1/security_group_service.proto",
-    b"\n*nebius/vpc/v1/security_group_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\"nebius/vpc/v1/security_group.proto\"F\n\x17GetSecurityGroupRequest\x12+\n\x02id\x18\x01 \x01(\tB\x1b\xbaH\x03\xc8\x01\x01\xe2J\x12\n\x10vpcsecuritygroupR\x02id\"l\n\x1dGetSecurityGroupByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x88\x01\n\x19ListSecurityGroupsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x96\x01\n\"ListSecurityGroupsByNetworkRequest\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"x\n\x1aListSecurityGroupsResponse\x122\n\x05items\x18\x01 \x03(\x0b2\x1c.nebius.vpc.v1.SecurityGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xf3\x02\n\x1aCreateSecurityGroupRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12<\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1.SecurityGroupSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xe8\x02\n\x1aUpdateSecurityGroupRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x124\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1.SecurityGroupSpecR\x04spec\"I\n\x1aDeleteSecurityGroupRequest\x12+\n\x02id\x18\x01 \x01(\tB\x1b\xbaH\x03\xc8\x01\x01\xe2J\x12\n\x10vpcsecuritygroupR\x02id2\x86\x05\n\x14SecurityGroupService\x12K\n\x03Get\x12&.nebius.vpc.v1.GetSecurityGroupRequest\x1a\x1c.nebius.vpc.v1.SecurityGroup\x12W\n\tGetByName\x12,.nebius.vpc.v1.GetSecurityGroupByNameRequest\x1a\x1c.nebius.vpc.v1.SecurityGroup\x12[\n\x04List\x12(.nebius.vpc.v1.ListSecurityGroupsRequest\x1a).nebius.vpc.v1.ListSecurityGroupsResponse\x12m\n\rListByNetwork\x121.nebius.vpc.v1.ListSecurityGroupsByNetworkRequest\x1a).nebius.vpc.v1.ListSecurityGroupsResponse\x12P\n\x06Create\x12).nebius.vpc.v1.CreateSecurityGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12P\n\x06Update\x12).nebius.vpc.v1.UpdateSecurityGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12P\n\x06Delete\x12).nebius.vpc.v1.DeleteSecurityGroupRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB`\n\x14ai.nebius.pub.vpc.v1B\x19SecurityGroupServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
+    b"\n*nebius/vpc/v1/security_group_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\"nebius/vpc/v1/security_group.proto\"F\n\x17GetSecurityGroupRequest\x12+\n\x02id\x18\x01 \x01(\tB\x1b\xbaH\x03\xc8\x01\x01\xe2J\x12\n\x10vpcsecuritygroupR\x02id\"l\n\x1dGetSecurityGroupByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x88\x01\n\x19ListSecurityGroupsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x92\x01\n#ListAggregatedSecurityGroupsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x96\x01\n\"ListSecurityGroupsByNetworkRequest\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"x\n\x1aListSecurityGroupsResponse\x122\n\x05items\x18\x01 \x03(\x0b2\x1c.nebius.vpc.v1.SecurityGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xf3\x02\n\x1aCreateSecurityGroupRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12<\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1.SecurityGroupSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xe8\x02\n\x1aUpdateSecurityGroupRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x124\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1.SecurityGroupSpecR\x04spec\"I\n\x1aDeleteSecurityGroupRequest\x12+\n\x02id\x18\x01 \x01(\tB\x1b\xbaH\x03\xc8\x01\x01\xe2J\x12\n\x10vpcsecuritygroupR\x02id2\xf7\x05\n\x14SecurityGroupService\x12K\n\x03Get\x12&.nebius.vpc.v1.GetSecurityGroupRequest\x1a\x1c.nebius.vpc.v1.SecurityGroup\x12W\n\tGetByName\x12,.nebius.vpc.v1.GetSecurityGroupByNameRequest\x1a\x1c.nebius.vpc.v1.SecurityGroup\x12[\n\x04List\x12(.nebius.vpc.v1.ListSecurityGroupsRequest\x1a).nebius.vpc.v1.ListSecurityGroupsResponse\x12o\n\x0eListAggregated\x122.nebius.vpc.v1.ListAggregatedSecurityGroupsRequest\x1a).nebius.vpc.v1.ListSecurityGroupsResponse\x12m\n\rListByNetwork\x121.nebius.vpc.v1.ListSecurityGroupsByNetworkRequest\x1a).nebius.vpc.v1.ListSecurityGroupsResponse\x12P\n\x06Create\x12).nebius.vpc.v1.CreateSecurityGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12P\n\x06Update\x12).nebius.vpc.v1.UpdateSecurityGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12P\n\x06Delete\x12).nebius.vpc.v1.DeleteSecurityGroupRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB`\n\x14ai.nebius.pub.vpc.v1B\x19SecurityGroupServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
 )
 _register_file(
     "nebius/vpc/v1/security_rule.proto",
@@ -125,7 +125,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1/subnet_service.proto",
-    b"\n\"nebius/vpc/v1/subnet_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1anebius/vpc/v1/subnet.proto\"8\n\x10GetSubnetRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x02id\"e\n\x16GetSubnetByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x81\x01\n\x12ListSubnetsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8f\x01\n\x1bListSubnetsByNetworkRequest\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"j\n\x13ListSubnetsResponse\x12+\n\x05items\x18\x01 \x03(\x0b2\x15.nebius.vpc.v1.SubnetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe5\x02\n\x13CreateSubnetRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x125\n\x04spec\x18\x02 \x01(\x0b2\x19.nebius.vpc.v1.SubnetSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xda\x02\n\x13UpdateSubnetRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x12-\n\x04spec\x18\x02 \x01(\x0b2\x19.nebius.vpc.v1.SubnetSpecR\x04spec\"5\n\x13DeleteSubnetRequest\x12\x1e\n\x02id\x18\x01 \x01(\tB\x0e\xe2J\x0b\n\tvpcsubnetR\x02id2\xb2\x04\n\rSubnetService\x12=\n\x03Get\x12\x1f.nebius.vpc.v1.GetSubnetRequest\x1a\x15.nebius.vpc.v1.Subnet\x12I\n\tGetByName\x12%.nebius.vpc.v1.GetSubnetByNameRequest\x1a\x15.nebius.vpc.v1.Subnet\x12M\n\x04List\x12!.nebius.vpc.v1.ListSubnetsRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12_\n\rListByNetwork\x12*.nebius.vpc.v1.ListSubnetsByNetworkRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12I\n\x06Create\x12\".nebius.vpc.v1.CreateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06Update\x12\".nebius.vpc.v1.UpdateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06Delete\x12\".nebius.vpc.v1.DeleteSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBY\n\x14ai.nebius.pub.vpc.v1B\x12SubnetServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
+    b"\n\"nebius/vpc/v1/subnet_service.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1anebius/vpc/v1/subnet.proto\"8\n\x10GetSubnetRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x02id\"e\n\x16GetSubnetByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x81\x01\n\x12ListSubnetsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8b\x01\n\x1cListAggregatedSubnetsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8f\x01\n\x1bListSubnetsByNetworkRequest\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"j\n\x13ListSubnetsResponse\x12+\n\x05items\x18\x01 \x03(\x0b2\x15.nebius.vpc.v1.SubnetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe5\x02\n\x13CreateSubnetRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x125\n\x04spec\x18\x02 \x01(\x0b2\x19.nebius.vpc.v1.SubnetSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xda\x02\n\x13UpdateSubnetRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s'name' must start with a letter or digit, allow '-', '_', '.', '/', and have a length between 2 and 255 characters.\x1a8this.name.matches('^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$')\xe2J\t\x12\x07projectR\x08metadata\x12-\n\x04spec\x18\x02 \x01(\x0b2\x19.nebius.vpc.v1.SubnetSpecR\x04spec\"5\n\x13DeleteSubnetRequest\x12\x1e\n\x02id\x18\x01 \x01(\tB\x0e\xe2J\x0b\n\tvpcsubnetR\x02id2\x95\x05\n\rSubnetService\x12=\n\x03Get\x12\x1f.nebius.vpc.v1.GetSubnetRequest\x1a\x15.nebius.vpc.v1.Subnet\x12I\n\tGetByName\x12%.nebius.vpc.v1.GetSubnetByNameRequest\x1a\x15.nebius.vpc.v1.Subnet\x12M\n\x04List\x12!.nebius.vpc.v1.ListSubnetsRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12a\n\x0eListAggregated\x12+.nebius.vpc.v1.ListAggregatedSubnetsRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12_\n\rListByNetwork\x12*.nebius.vpc.v1.ListSubnetsByNetworkRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12I\n\x06Create\x12\".nebius.vpc.v1.CreateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06Update\x12\".nebius.vpc.v1.UpdateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06Delete\x12\".nebius.vpc.v1.DeleteSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBY\n\x14ai.nebius.pub.vpc.v1B\x12SubnetServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3",
 )
 _register_file(
     "nebius/vpc/v1/target_group.proto",
@@ -351,6 +351,19 @@ ListAllocationsRequest = _message_class(
     enum_value_deprecations={},
 )
 ListAllocationsRequest.__module__ = __name__
+
+ListAggregatedAllocationsRequest = _message_class(
+    "nebius.vpc.v1.ListAggregatedAllocationsRequest",
+    "ListAggregatedAllocationsRequest",
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListAggregatedAllocationsRequest.__module__ = __name__
 
 ListAllocationsByPoolRequest = _message_class(
     "nebius.vpc.v1.ListAllocationsByPoolRequest",
@@ -578,6 +591,19 @@ ListNetworksRequest = _message_class(
 )
 ListNetworksRequest.__module__ = __name__
 
+ListAggregatedNetworksRequest = _message_class(
+    "nebius.vpc.v1.ListAggregatedNetworksRequest",
+    "ListAggregatedNetworksRequest",
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListAggregatedNetworksRequest.__module__ = __name__
+
 ListNetworksResponse = _message_class(
     "nebius.vpc.v1.ListNetworksResponse",
     "ListNetworksResponse",
@@ -799,6 +825,19 @@ ListPoolsRequest = _message_class(
     enum_value_deprecations={},
 )
 ListPoolsRequest.__module__ = __name__
+
+ListAggregatedPoolsRequest = _message_class(
+    "nebius.vpc.v1.ListAggregatedPoolsRequest",
+    "ListAggregatedPoolsRequest",
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListAggregatedPoolsRequest.__module__ = __name__
 
 ListPoolsBySourcePoolRequest = _message_class(
     "nebius.vpc.v1.ListPoolsBySourcePoolRequest",
@@ -1236,6 +1275,19 @@ ListRouteTablesRequest = _message_class(
 )
 ListRouteTablesRequest.__module__ = __name__
 
+ListAggregatedRouteTablesRequest = _message_class(
+    "nebius.vpc.v1.ListAggregatedRouteTablesRequest",
+    "ListAggregatedRouteTablesRequest",
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListAggregatedRouteTablesRequest.__module__ = __name__
+
 ListRouteTablesByNetworkRequest = _message_class(
     "nebius.vpc.v1.ListRouteTablesByNetworkRequest",
     "ListRouteTablesByNetworkRequest",
@@ -1404,6 +1456,19 @@ ListSecurityGroupsRequest = _message_class(
     enum_value_deprecations={},
 )
 ListSecurityGroupsRequest.__module__ = __name__
+
+ListAggregatedSecurityGroupsRequest = _message_class(
+    "nebius.vpc.v1.ListAggregatedSecurityGroupsRequest",
+    "ListAggregatedSecurityGroupsRequest",
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListAggregatedSecurityGroupsRequest.__module__ = __name__
 
 ListSecurityGroupsByNetworkRequest = _message_class(
     "nebius.vpc.v1.ListSecurityGroupsByNetworkRequest",
@@ -1954,6 +2019,19 @@ ListSubnetsRequest = _message_class(
 )
 ListSubnetsRequest.__module__ = __name__
 
+ListAggregatedSubnetsRequest = _message_class(
+    "nebius.vpc.v1.ListAggregatedSubnetsRequest",
+    "ListAggregatedSubnetsRequest",
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListAggregatedSubnetsRequest.__module__ = __name__
+
 ListSubnetsByNetworkRequest = _message_class(
     "nebius.vpc.v1.ListSubnetsByNetworkRequest",
     "ListSubnetsByNetworkRequest",
@@ -2222,6 +2300,14 @@ class AllocationServiceClient(_ClientWithOperations):
             "List", request, _REGISTRY.message_class("nebius.vpc.v1.ListAllocationsResponse"), **kwargs
         )
 
+    def list_aggregated(
+        self, request: ListAggregatedAllocationsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedAllocationsRequest, ListAllocationsResponse]:
+        "Lists allocations across regions for the specified parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListAggregated", request, _REGISTRY.message_class("nebius.vpc.v1.ListAllocationsResponse"), **kwargs
+        )
+
     def list_by_pool(
         self, request: ListAllocationsByPoolRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAllocationsByPoolRequest, ListAllocationsResponse]:
@@ -2374,6 +2460,14 @@ class NetworkServiceClient(_ClientWithOperations):
         "Lists networks within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("List", request, _REGISTRY.message_class("nebius.vpc.v1.ListNetworksResponse"), **kwargs)
 
+    def list_aggregated(
+        self, request: ListAggregatedNetworksRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedNetworksRequest, ListNetworksResponse]:
+        "Lists networks across regions for the specified parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListAggregated", request, _REGISTRY.message_class("nebius.vpc.v1.ListNetworksResponse"), **kwargs
+        )
+
     def create(
         self, request: CreateNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreateNetworkRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
@@ -2516,6 +2610,14 @@ class PoolServiceClient(_ClientWithOperations):
     ) -> _Request[ListPoolsRequest, ListPoolsResponse]:
         "Lists pools within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("List", request, _REGISTRY.message_class("nebius.vpc.v1.ListPoolsResponse"), **kwargs)
+
+    def list_aggregated(
+        self, request: ListAggregatedPoolsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedPoolsRequest, ListPoolsResponse]:
+        "Lists pools across regions for the specified parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListAggregated", request, _REGISTRY.message_class("nebius.vpc.v1.ListPoolsResponse"), **kwargs
+        )
 
     def list_by_source_pool(
         self, request: ListPoolsBySourcePoolRequest, **kwargs: _Unpack[_RequestKwargs]
@@ -2779,6 +2881,14 @@ class RouteTableServiceClient(_ClientWithOperations):
             "List", request, _REGISTRY.message_class("nebius.vpc.v1.ListRouteTablesResponse"), **kwargs
         )
 
+    def list_aggregated(
+        self, request: ListAggregatedRouteTablesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedRouteTablesRequest, ListRouteTablesResponse]:
+        "Lists route tables across regions for the specified parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListAggregated", request, _REGISTRY.message_class("nebius.vpc.v1.ListRouteTablesResponse"), **kwargs
+        )
+
     def list_by_network(
         self, request: ListRouteTablesByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListRouteTablesByNetworkRequest, ListRouteTablesResponse]:
@@ -2923,6 +3033,14 @@ class SecurityGroupServiceClient(_ClientWithOperations):
         "Lists security groups within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "List", request, _REGISTRY.message_class("nebius.vpc.v1.ListSecurityGroupsResponse"), **kwargs
+        )
+
+    def list_aggregated(
+        self, request: ListAggregatedSecurityGroupsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedSecurityGroupsRequest, ListSecurityGroupsResponse]:
+        "Lists security groups across regions for the specified parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListAggregated", request, _REGISTRY.message_class("nebius.vpc.v1.ListSecurityGroupsResponse"), **kwargs
         )
 
     def list_by_network(
@@ -3205,6 +3323,14 @@ class SubnetServiceClient(_ClientWithOperations):
         "Lists subnets within a specified parent.\n\nThe request object is returned without starting the RPC."
         return super().request("List", request, _REGISTRY.message_class("nebius.vpc.v1.ListSubnetsResponse"), **kwargs)
 
+    def list_aggregated(
+        self, request: ListAggregatedSubnetsRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListAggregatedSubnetsRequest, ListSubnetsResponse]:
+        "Lists subnets across regions for the specified parent.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListAggregated", request, _REGISTRY.message_class("nebius.vpc.v1.ListSubnetsResponse"), **kwargs
+        )
+
     def list_by_network(
         self, request: ListSubnetsByNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListSubnetsByNetworkRequest, ListSubnetsResponse]:
@@ -3408,6 +3534,12 @@ __all__ = [
     "IPv4PublicSubnetPools",
     "IpVersion",
     "IpVisibility",
+    "ListAggregatedAllocationsRequest",
+    "ListAggregatedNetworksRequest",
+    "ListAggregatedPoolsRequest",
+    "ListAggregatedRouteTablesRequest",
+    "ListAggregatedSecurityGroupsRequest",
+    "ListAggregatedSubnetsRequest",
     "ListAllocationsByPoolRequest",
     "ListAllocationsBySubnetRequest",
     "ListAllocationsRequest",
