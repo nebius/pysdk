@@ -2381,7 +2381,7 @@ class JobSpec__VolumeMount(_Message):
         ...
     @property
     def source(self) -> _builtins.str:
-        """Source of the volume mount.\n\nCan be a name or an ID of Nebius Storage bucket or filesystem,\nor an S3 URI (e.g. \"s3://bucket-name\") when using external S3 storage."""
+        """Source of the volume mount.\n\nUse a Nebius Storage bucket ID or Compute filesystem ID for managed storage.\nUse an S3 URI (e.g. \"s3://bucket-name\") with s3\\_config for external S3 storage."""
         ...
     @source.setter
     def source(self, value: _builtins.str | None) -> None:
@@ -2625,7 +2625,7 @@ class JobSpec(_Message):
         ...
     @property
     def platform(self) -> _builtins.str:
-        """Compute platform that the job will be run on."""
+        """Compute platform for the job."""
         ...
     @platform.setter
     def platform(self, value: _builtins.str | None) -> None:
@@ -2633,7 +2633,7 @@ class JobSpec(_Message):
         ...
     @property
     def preset(self) -> _builtins.str:
-        """Compute preset that the job will be run on."""
+        """Compute preset for the job."""
         ...
     @preset.setter
     def preset(self, value: _builtins.str | None) -> None:
@@ -2649,7 +2649,7 @@ class JobSpec(_Message):
         ...
     @property
     def disk(self) -> JobSpec__DiskSpec:
-        """Disk spec for the main disk of the job."""
+        """Main disk for the job."""
         ...
     @disk.setter
     def disk(self, value: JobSpec__DiskSpec | None) -> None:
