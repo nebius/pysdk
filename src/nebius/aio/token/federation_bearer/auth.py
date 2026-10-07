@@ -24,6 +24,9 @@ from .server import CallbackHandler
 
 log = getLogger(__name__)
 
+DEFAULT_LOGIN_TIMEOUT: float = 300
+"""Default timeout in seconds for the interactive login flow."""
+
 
 @dataclass
 class GetTokenResult:
@@ -78,7 +81,7 @@ async def get_code(
     pkce_code: PKCE,
     writer: TextIO | None = None,
     no_browser_open: bool = False,
-    timeout: float | None = 300,
+    timeout: float | None = DEFAULT_LOGIN_TIMEOUT,
 ) -> tuple[str, str]:
     """Obtain authorization code via OAuth callback.
 
@@ -223,7 +226,7 @@ async def authorize(
     federation_id: str,
     writer: TextIO | None = None,
     no_browser_open: bool = False,
-    timeout: float | None = 300,
+    timeout: float | None = DEFAULT_LOGIN_TIMEOUT,
     ssl_ctx: ssl.SSLContext | None = None,
 ) -> GetTokenResult:
     """Perform full OAuth authorization flow and return access token.

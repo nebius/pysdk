@@ -38,6 +38,9 @@ TOKEN_EXCHANGE_SUBJECT_IDENTIFIER_TYPE = "urn:nebius:params:oauth:token-type:sub
 sanitizer = TokenSanitizer.access_token_sanitizer()
 log = getLogger(__name__)
 
+EXCHANGE_ALLOWANCE = timedelta(seconds=5)
+"""Time for the token exchange call after the actor token is available."""
+
 
 class Receiver(ParentReceiver):
     """Receiver that exchanges an actor token for an impersonated token."""
@@ -198,6 +201,20 @@ class Bearer(ParentBearer):
         return f"impersonated/{self._service_account_id}/{source_name}"
 
     @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the actor token budget plus the exchange allowance.
+
+        Return ``None`` when the actor bearer has no budget or when that budget
+        is not positive, so a fetch that fails at once is not extended.
+        """
+        actor = self._source.acquisition_budget
+        if actor is None or actor <= timedelta(0):
+            return None
+        if actor > timedelta.max - EXCHANGE_ALLOWANCE:
+            return timedelta.max
+        return actor + EXCHANGE_ALLOWANCE
+
+    @property
     def metrics_provider(self) -> str:
         """Return the auth metric provider label."""
         return self._metrics.provider
@@ -253,7 +270,14 @@ class Bearer(ParentBearer):
 
 
 class CachedBearer(ParentBearer):
-    """Cache impersonated tokens in memory."""
+    """Cache impersonated tokens in memory.
+
+    :param refresh_request_timeout: Budget for one impersonation fetch. The
+        budget covers the actor token and the exchange. ``None`` selects the
+        automatic budget on each fetch: the
+        :attr:`Bearer.acquisition_budget` of the impersonation bearer, or the
+        default of 5 seconds.
+    """
 
     def __init__(
         self,
@@ -262,6 +286,7 @@ class CachedBearer(ParentBearer):
         channel: ClientChannelInterface | DeferredChannel | None = None,
         max_retries: int = 2,
         metrics: AuthMetricsLike = None,
+        refresh_request_timeout: timedelta | None = None,
     ) -> None:
         """Create a cached impersonation bearer."""
         from .renewable import Bearer as RenewableBearer
@@ -277,6 +302,7 @@ class CachedBearer(ParentBearer):
             RenewableBearer(
                 self._impersonated,
                 max_retries=max_retries,
+                refresh_request_timeout=refresh_request_timeout,
                 metrics=metrics,
                 provider="impersonated",
             ),
@@ -287,6 +313,11 @@ class CachedBearer(ParentBearer):
     def wrapped(self) -> ParentBearer | None:
         """Return the cached bearer chain."""
         return self._source
+
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the budget of the cached bearer chain."""
+        return self._source.acquisition_budget
 
     def receiver(self) -> ParentReceiver:
         """Return a receiver from the cached bearer chain."""

@@ -110,6 +110,9 @@ from .token import Token
 
 log = getLogger(__name__)
 
+DEFAULT_REFRESH_REQUEST_TIMEOUT = timedelta(seconds=5)
+"""Default timeout of one refresh request to the wrapped bearer."""
+
 
 class RenewalError(SDKError):
     """Base exception raised for renewal-related failures.
@@ -268,7 +271,10 @@ class Bearer(ParentBearer):
     :param retry_timeout_exponent: Exponential backoff base used to
         grow retry delays between attempts.
     :param refresh_request_timeout: Timeout used for individual
-        refresh requests when contacting the inner bearer.
+        refresh requests when contacting the inner bearer. ``None`` selects
+        the automatic budget on each refresh: the positive
+        :attr:`nebius.aio.token.token.Bearer.acquisition_budget` of the inner
+        bearer, or the default of 5 seconds.
     :param metrics: Optional auth metrics callbacks. The recorder is also bound
         to the wrapped source bearer when possible so token acquisition and
         refresh/cache metrics share one callback sink.
@@ -285,7 +291,7 @@ class Bearer(ParentBearer):
         initial_retry_timeout: timedelta = timedelta(seconds=1),
         max_retry_timeout: timedelta = timedelta(minutes=1),
         retry_timeout_exponent: float = 1.5,
-        refresh_request_timeout: timedelta = timedelta(seconds=5),
+        refresh_request_timeout: timedelta | None = DEFAULT_REFRESH_REQUEST_TIMEOUT,
         metrics: AuthMetricsLike = None,
         provider: str | None = None,
     ) -> None:
@@ -328,6 +334,26 @@ class Bearer(ParentBearer):
     def metrics_provider(self) -> str:
         """Return the metric provider label."""
         return self._metrics.provider
+
+    @property
+    def refresh_request_timeout(self) -> timedelta:
+        """Return the timeout of one refresh request to the wrapped bearer.
+
+        An explicit timeout is returned as is, also when it is zero or negative.
+        In the automatic mode the positive budget of the wrapped bearer is
+        returned, or the default of 5 seconds.
+        """
+        if self._refresh_request_timeout is not None:
+            return self._refresh_request_timeout
+        budget = self._source.acquisition_budget
+        if budget is not None and budget > timedelta(0):
+            return budget
+        return DEFAULT_REFRESH_REQUEST_TIMEOUT
+
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the refresh request timeout: this bearer bounds each refresh."""
+        return self.refresh_request_timeout
 
     def bg_task(self, coro: Awaitable[T]) -> Task[None]:
         """Run a coroutine without awaiting or tracking, and log exceptions.
@@ -449,7 +475,7 @@ class Bearer(ParentBearer):
         log.debug(f"refreshing token, attempt {self._renewal_attempt}")
         self._break_previous_attempt.clear()
         self._synchronous_can_proceed.clear()
-        timeout = self._refresh_request_timeout.total_seconds()
+        timeout = self.refresh_request_timeout.total_seconds()
         if self._renew_synchronous_timeout is not None:
             timeout = self._renew_synchronous_timeout
             self._renew_synchronous_timeout = None

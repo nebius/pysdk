@@ -1649,7 +1649,7 @@ class EndpointSpec(_Message):
         ...
     @property
     def pricing_model(self) -> PricingModelSpec:
-        """Pricing model for the VM. Must match the preemptible flag: on\\_demand for non-preemptible VMs,\nfollows\\_spot\\_price or spot\\_pricing\\_policy for preemptible VMs."""
+        """Pricing model for the VM. Must match the preemptible flag.\nPreemptible VMs require follows\\_spot\\_price or spot\\_pricing\\_policy.\nRegular VMs use on\\_demand or omit this field."""
         ...
     @pricing_model.setter
     def pricing_model(self, value: PricingModelSpec | None) -> None:
@@ -2689,7 +2689,7 @@ class JobSpec(_Message):
         ...
     @property
     def pricing_model(self) -> PricingModelSpec:
-        """Pricing model for the VM. Must match the preemptible flag: on\\_demand for non-preemptible VMs,\nfollows\\_spot\\_price or spot\\_pricing\\_policy for preemptible VMs."""
+        """Pricing model for the VM. Must match the preemptible flag.\nPreemptible VMs require follows\\_spot\\_price or spot\\_pricing\\_policy.\nRegular VMs use on\\_demand or omit this field."""
         ...
     @pricing_model.setter
     def pricing_model(self, value: PricingModelSpec | None) -> None:

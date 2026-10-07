@@ -307,6 +307,18 @@ class Bearer(ParentBearer):
     def name(self) -> str:
         return f"federation/{self._federation_endpoint}/{self._federation_id}/{self._profile_name}"
 
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the default login budget that this bearer offers to a cache.
+
+        The receiver does not enforce this value. It forwards the ``timeout`` of
+        the fetch to the login flow as is, and a fetch without a timeout waits
+        for the login without a bound.
+        """
+        from .auth import DEFAULT_LOGIN_TIMEOUT
+
+        return timedelta(seconds=DEFAULT_LOGIN_TIMEOUT)
+
     def receiver(self) -> ParentReceiver:
         """Return a new :class:`Receiver` bound to this bearer's configuration.
 

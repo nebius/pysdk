@@ -193,6 +193,11 @@ class FederationBearer(ParentBearer):
         """Return the wrapped bearer instance."""
         return self._source
 
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the login timeout of the renewable cache that drives the login."""
+        return self._source.acquisition_budget
+
     def receiver(self) -> "Receiver":
         """Return a receiver from the underlying renewable file cache bearer."""
         return self._source.receiver()

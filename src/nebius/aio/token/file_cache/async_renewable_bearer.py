@@ -302,6 +302,16 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         """Return the metric provider label."""
         return self._metrics.provider
 
+    @property
+    def refresh_request_timeout(self) -> timedelta:
+        """Return the timeout of one refresh request to the wrapped bearer."""
+        return self._refresh_request_timeout
+
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the refresh request timeout: this cache bounds each refresh."""
+        return self._refresh_request_timeout
+
     def _is_token_fresh(self, token: Token) -> bool:
         if token.is_expired():
             return False

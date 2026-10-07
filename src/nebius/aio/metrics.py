@@ -34,7 +34,7 @@ from asyncio import CancelledError, Task, create_task, get_running_loop, wait_fo
 from asyncio import run as asyncio_run
 from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from inspect import isawaitable
 from math import isfinite
 from threading import Lock
@@ -597,6 +597,11 @@ class _InstrumentedBearer(_TokenBearer):
     def wrapped(self) -> _TokenBearer:
         """Return the wrapped bearer."""
         return self._bearer
+
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the budget of the wrapped bearer."""
+        return self._bearer.acquisition_budget
 
     @property
     def metrics_provider(self) -> str:

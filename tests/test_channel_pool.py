@@ -1390,7 +1390,8 @@ def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
     accepted: list[tuple[object, tuple[object, ...]]] = []
     original_schedule = owner_loop.call_soon_threadsafe
     with channel_module._detached_foreign_close_tasks_lock:
-        baseline = len(channel_module._detached_foreign_close_handles)
+        # Earlier handles can disappear during cleanup. Keep only weak references.
+        baseline = channel_module._detached_foreign_close_handles.copy()
 
     class Transport:
         async def close(self, grace: float | None = None) -> None:
@@ -1415,7 +1416,7 @@ def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
         assert not owner_thread.is_alive()
         assert len(accepted) == 1
         with channel_module._detached_foreign_close_tasks_lock:
-            assert len(channel_module._detached_foreign_close_handles) == baseline
+            assert channel_module._detached_foreign_close_handles <= baseline
     finally:
         channel.sync_close(timeout=5)
         if owner_thread.is_alive():
@@ -1439,7 +1440,7 @@ def test_stranded_foreign_close_dispatch_has_no_sdk_reservation(
     assert address_reference() is None
     assert loop_reference() is None
     with channel_module._detached_foreign_close_tasks_lock:
-        assert len(channel_module._detached_foreign_close_handles) == baseline
+        assert channel_module._detached_foreign_close_handles <= baseline
 
 
 def test_foreign_close_task_factory_rejection_disposes_coroutine(

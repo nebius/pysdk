@@ -254,6 +254,11 @@ class RenewableFileCacheBearer(ParentBearer):
         """Return the metric provider label."""
         return self.metrics.provider
 
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the budget of the wrapped bearer: this cache adds no bound."""
+        return self._bearer.acquisition_budget
+
     def _is_token_fresh(self, token: Token) -> bool:
         if token.is_expired():
             return False
