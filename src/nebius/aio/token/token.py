@@ -39,7 +39,7 @@ concrete implementations) the SDK creates per-request receivers with
 """
 
 from abc import ABC, abstractmethod
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from ...base.token_sanitizer import TokenSanitizer
@@ -383,6 +383,21 @@ class Bearer(ABC):
         """
         return None
 
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return how long one fetch through this bearer can take, or `None`.
+
+        A cache that bounds a shared fetch asks only its immediate bearer for
+        the budget. A bearer that owns an operation timeout returns it. A bearer
+        that adds an operation to a wrapped bearer returns the composed budget.
+        A transparent wrapper returns the budget of the wrapped bearer. The
+        default is `None`: the bearer declares no budget, and a cache uses its
+        own default. A non-positive budget means that the fetch fails at once.
+
+        :rtype: :class:`datetime.timedelta` or `None`
+        """
+        return None
+
     async def close(self, grace: float | None = None) -> None:
         """Close the bearer and any wrapped resources.
 
@@ -460,6 +475,11 @@ class NamedBearer(Bearer):
         :rtype: `str`
         """
         return self._name
+
+    @property
+    def acquisition_budget(self) -> timedelta | None:
+        """Return the budget of the wrapped bearer."""
+        return self._wrapped.acquisition_budget
 
     def receiver(self) -> Receiver:
         """Delegate to the wrapped bearer to obtain a receiver.
