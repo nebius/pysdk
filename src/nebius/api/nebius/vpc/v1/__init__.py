@@ -97,7 +97,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1/route_table.proto",
-    b'\n\x1fnebius/vpc/v1/route_table.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xc6\x01\n\nRouteTable\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\x127\n\x06status\x18\x03 \x01(\x0b2\x1f.nebius.vpc.v1.RouteTableStatusR\x06status"J\n\x0eRouteTableSpec\x128\n\nnetwork_id\x18\x01 \x01(\tB\x19\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0c\n\nvpcnetworkR\tnetworkId"\xd9\x01\n\x10RouteTableStatus\x12;\n\x05state\x18\x01 \x01(\x0e2%.nebius.vpc.v1.RouteTableStatus.StateR\x05state\x12\x18\n\x07default\x18\x02 \x01(\x08R\x07default\x12C\n\nassignment\x18\x03 \x01(\x0b2#.nebius.vpc.v1.RouteTableAssignmentR\nassignment")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\n"@\n\x14RouteTableAssignment\x12(\n\x07subnets\x18\x01 \x03(\tB\x0e\xe2J\x0b\n\tvpcsubnetR\x07subnetsBV\n\x14ai.nebius.pub.vpc.v1B\x0fRouteTableProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3',
+    b'\n\x1fnebius/vpc/v1/route_table.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xc6\x01\n\nRouteTable\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x121\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\x127\n\x06status\x18\x03 \x01(\x0b2\x1f.nebius.vpc.v1.RouteTableStatusR\x06status"J\n\x0eRouteTableSpec\x128\n\nnetwork_id\x18\x01 \x01(\tB\x19\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0c\n\nvpcnetworkR\tnetworkId"\x92\x02\n\x10RouteTableStatus\x12;\n\x05state\x18\x01 \x01(\x0e2%.nebius.vpc.v1.RouteTableStatus.StateR\x05state\x12\x18\n\x07default\x18\x02 \x01(\x08R\x07default\x12C\n\nassignment\x18\x03 \x01(\x0b2#.nebius.vpc.v1.RouteTableAssignmentR\nassignment"b\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\n\x12\x0c\n\x08CREATING\x10\x01\x12\x0f\n\x0bRECONCILING\x10\x02\x12\x0c\n\x08DELETING\x10\x03\x12\n\n\x06FAILED\x10\x04"@\n\x14RouteTableAssignment\x12(\n\x07subnets\x18\x01 \x03(\tB\x0e\xe2J\x0b\n\tvpcsubnetR\x07subnetsBV\n\x14ai.nebius.pub.vpc.v1B\x0fRouteTableProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3',
 )
 _register_file(
     "nebius/vpc/v1/route_table_service.proto",
@@ -1212,7 +1212,9 @@ RouteTableStatus = _message_class(
 RouteTableStatus.__module__ = __name__
 
 RouteTableStatus__State = _enum_class(
-    "nebius.vpc.v1.RouteTableStatus.State", "RouteTableStatus__State", {"STATE_UNSPECIFIED": 0, "READY": 10}
+    "nebius.vpc.v1.RouteTableStatus.State",
+    "RouteTableStatus__State",
+    {"STATE_UNSPECIFIED": 0, "READY": 10, "CREATING": 1, "RECONCILING": 2, "DELETING": 3, "FAILED": 4},
 )
 RouteTableStatus__State.__module__ = __name__
 
