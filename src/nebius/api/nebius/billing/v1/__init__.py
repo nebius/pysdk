@@ -408,7 +408,7 @@ PricingPolicy = _message_class(
 )
 PricingPolicy.__module__ = __name__
 
-PricingPolicy.__doc__ = "How preemptible VMs are priced: a standing per-GPU bid for one (region, platform).\nOne policy backs any number of VMs, referenced by id from the preemptible spec.\nA VM without a policy is a price-taker and pays the market price."
+PricingPolicy.__doc__ = "How preemptible VMs are priced: a per-GPU maximum price for one (region, platform).\nOne policy backs any number of VMs, referenced by id from the preemptible spec.\nA VM without a policy is a price-taker and pays the market price."
 
 PricingPolicySpec = _message_class(
     "nebius.billing.v1.PricingPolicySpec",
@@ -457,7 +457,9 @@ PricingMethod = _message_class(
     "PricingMethod",
     {"max_price_v1": "max_price_v1"},
     {"versions": "versions"},
-    {"max_price_v1": "Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."},
+    {
+        "max_price_v1": "Maximum price: the per-GPU ``max_price`` sets the priority of the policy's\nVMs for scheduling and preemption."
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -482,7 +484,7 @@ MaxPriceV1 = _message_class(
 )
 MaxPriceV1.__module__ = __name__
 
-MaxPriceV1.__doc__ = "Auction-bid pricing."
+MaxPriceV1.__doc__ = "Pricing with a per-GPU maximum price."
 
 PricingPolicyStatus = _message_class(
     "nebius.billing.v1.PricingPolicyStatus",
@@ -698,7 +700,7 @@ class PricingPolicyServiceClient(_ClientWithOperations):
     def create(
         self, request: CreatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreatePricingPolicyRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Creates a pricing policy. A bid outside the allowed price range fails\nwith OUT\\_OF\\_RANGE; below the current market price it is accepted but the\npolicy starts SCHEDULING\\_STATE\\_BLOCKED. Policies per tenant are\nquota-limited (RESOURCE\\_EXHAUSTED past the limit).\nThe Operation completes once the policy is ready to back VMs.\n\nThe request object is returned without starting the RPC."
+        "Creates a pricing policy. A max\\_price outside the allowed price range fails\nwith OUT\\_OF\\_RANGE; below the current market price it is accepted but the\npolicy starts SCHEDULING\\_STATE\\_BLOCKED. Policies per tenant are\nquota-limited (RESOURCE\\_EXHAUSTED past the limit).\nThe Operation completes once the policy is ready to back VMs.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "Create",
             request,
@@ -741,7 +743,7 @@ class PricingPolicyServiceClient(_ClientWithOperations):
     def update(
         self, request: UpdatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdatePricingPolicyRequest, _Operation[_REGISTRY.message_class("nebius.common.v1.Operation")]]:
-        "Updates a pricing policy. ``metadata.name`` may change any time; the bid in\n\\ ``spec.pricing.max_price_v1`` only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise). Other spec fields are immutable\n(INVALID\\_ARGUMENT).\n\nThe request object is returned without starting the RPC."
+        "Updates a pricing policy. ``metadata.name`` may change any time; the max\\_price in\n\\ ``spec.pricing.max_price_v1`` only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise). Other spec fields are immutable\n(INVALID\\_ARGUMENT).\n\nThe request object is returned without starting the RPC."
         kwargs["metadata"] = _ensure_reset_mask_in_metadata(request, kwargs.get("metadata"))
         return super().request(
             "Update",

@@ -616,7 +616,7 @@ class OfferType(_Enum):
     """Contract price is a special price for SKU."""
 
 class PricingPolicy(_Message):
-    """How preemptible VMs are priced: a standing per-GPU bid for one (region, platform).\nOne policy backs any number of VMs, referenced by id from the preemptible spec.\nA VM without a policy is a price-taker and pays the market price."""
+    """How preemptible VMs are priced: a per-GPU maximum price for one (region, platform).\nOne policy backs any number of VMs, referenced by id from the preemptible spec.\nA VM without a policy is a price-taker and pays the market price."""
     @property
     def metadata(self) -> _type_nebius_common_v1_ResourceMetadata:
         """Parent is a project, immutable. Only VMs in that scope may\nreference the policy. Name is unique within the parent, renamable any time."""
@@ -729,19 +729,19 @@ class PricingMethod(_Message):
         name: _Literal["versions"] = ...
 
     class __OneOfClass_versions_max_price_v1__(__OneOfClass_versions__):
-        """Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."""
+        """Maximum price: the per-GPU ``max_price`` sets the priority of the policy's\nVMs for scheduling and preemption."""
 
         field: _Literal["max_price_v1"] = ...
         @property
         def value(self) -> MaxPriceV1:
-            """Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."""
+            """Maximum price: the per-GPU ``max_price`` sets the priority of the policy's\nVMs for scheduling and preemption."""
             ...
 
     @property
     def versions(self) -> __OneOfClass_versions_max_price_v1__ | None: ...
     @property
     def max_price_v1(self) -> MaxPriceV1 | None:
-        """Auction bid: the per-GPU ``max_price`` ranks the policy's VMs for\nscheduling and preemption."""
+        """Maximum price: the per-GPU ``max_price`` sets the priority of the policy's\nVMs for scheduling and preemption."""
         ...
     @max_price_v1.setter
     def max_price_v1(self, value: MaxPriceV1 | None) -> None:
@@ -754,7 +754,7 @@ class PricingMethod(_Message):
         ...
 
 class MaxPriceV1(_Message):
-    """Auction-bid pricing."""
+    """Pricing with a per-GPU maximum price."""
     @property
     def max_price(self) -> _builtins.str:
         """Per-GPU hourly limit in USD, decimal string 3 digits precision. Example: \"3.515\".\nMust be within the allowed price range (OUT\\_OF\\_RANGE otherwise);\na value below the current market price is accepted but blocks scheduling.\nMutable only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise); the policy reports STATE\\_UPDATING and\nblocks scheduling while the change is applied."""
@@ -778,7 +778,7 @@ class PricingPolicyStatus__State(_Enum):
     STATE_DELETING = ...
     """Being deleted; does not accept new VMs."""
     STATE_UPDATING = ...
-    """The bid is being changed; scheduling is blocked until the change lands.\nThe state can last while a market price change is applied to the segment."""
+    """The max\\_price is being changed; scheduling is blocked until the change\nis applied.\nThe state can last while a market price change is applied to the segment."""
 
 class PricingPolicyStatus__SchedulingState(_Enum):
     SCHEDULING_STATE_UNSPECIFIED = ...
@@ -981,7 +981,7 @@ class PricingPolicyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Op
     def create(
         self, request: CreatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[CreatePricingPolicyRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """Creates a pricing policy. A bid outside the allowed price range fails\nwith OUT\\_OF\\_RANGE; below the current market price it is accepted but the\npolicy starts SCHEDULING\\_STATE\\_BLOCKED. Policies per tenant are\nquota-limited (RESOURCE\\_EXHAUSTED past the limit).\nThe Operation completes once the policy is ready to back VMs.\n\nThe request object is returned without starting the RPC."""
+        """Creates a pricing policy. A max\\_price outside the allowed price range fails\nwith OUT\\_OF\\_RANGE; below the current market price it is accepted but the\npolicy starts SCHEDULING\\_STATE\\_BLOCKED. Policies per tenant are\nquota-limited (RESOURCE\\_EXHAUSTED past the limit).\nThe Operation completes once the policy is ready to back VMs.\n\nThe request object is returned without starting the RPC."""
         ...
     def get(
         self, request: GetPricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
@@ -1001,7 +1001,7 @@ class PricingPolicyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Op
     def update(
         self, request: UpdatePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[UpdatePricingPolicyRequest, _AsyncOperation[_type_nebius_common_v1_Operation]]:
-        """Updates a pricing policy. ``metadata.name`` may change any time; the bid in\n\\ ``spec.pricing.max_price_v1`` only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise). Other spec fields are immutable\n(INVALID\\_ARGUMENT).\n\nThe request object is returned without starting the RPC."""
+        """Updates a pricing policy. ``metadata.name`` may change any time; the max\\_price in\n\\ ``spec.pricing.max_price_v1`` only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise). Other spec fields are immutable\n(INVALID\\_ARGUMENT).\n\nThe request object is returned without starting the RPC."""
         ...
     def delete(
         self, request: DeletePricingPolicyRequest, **kwargs: _Unpack[_RequestKwargs]

@@ -193,7 +193,7 @@ class AsymmetricAlgorithm(_Enum):
     """RSA encryption with RSA-4096 key, OAEP padding and SHA-256."""
 
 class AsymmetricKey(_Message):
-    """An asymmetric KMS key that may contain several versions of the cryptographic material."""
+    """An asymmetric KMS key that contains at most one key pair."""
     @property
     def metadata(self) -> _type_nebius_common_v1_ResourceMetadata: ...
     @metadata.setter
@@ -257,7 +257,7 @@ class AsymmetricKeySpec(_Message):
 class AsymmetricKeyStatus(_Message):
     @property
     def state(self) -> KeyState:
-        """State (ACTIVE, SCHEDULED\\_FOR\\_DELETION)"""
+        """State (ACTIVE, SCHEDULED\\_FOR\\_DELETION)."""
         ...
     @state.setter
     def state(self, value: KeyState | None) -> None:
@@ -545,6 +545,7 @@ class KeyState(_Enum):
     """Key is active, ready for use"""
     SCHEDULED_FOR_DELETION = ...
     """Key is scheduled for deletion."""
+    PENDING_IMPORT = ...
 
 class SymmetricEncryptRequest(_Message):
     @property
