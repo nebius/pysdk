@@ -321,7 +321,8 @@ class Config:
 
         1. An environment-provided token bearer (if present and enabled).
         2. A token file specified by ``token-file`` in the profile.
-        3. The profile's ``auth-type`` which may be ``federation`` or
+        3. A metadata endpoint specified by ``token-endpoint`` in the profile.
+        4. The profile's ``auth-type`` which may be ``federation`` or
            ``service account`` and will create the corresponding bearer
            implementation.
 
@@ -386,6 +387,25 @@ class Config:
                 )
             except Exception:
                 fail("token-file", start)
+                raise
+        if "token-endpoint" in self._profile and self._profile["token-endpoint"] != "":
+            start = metric_start()
+            from .token.imds import Bearer as IMDSBearer
+
+            try:
+                endpoint = self._profile["token-endpoint"]
+                if not isinstance(endpoint, str):
+                    raise ConfigError(f"Token endpoint should be a string, got {type(endpoint)}.")
+                return finish(
+                    "imds",
+                    start,
+                    cast(
+                        Credentials,
+                        bind_auth_metrics(IMDSBearer(endpoint), self._auth_metrics),
+                    ),
+                )
+            except Exception:
+                fail("imds", start)
                 raise
         if "auth-type" not in self._profile:
             start = metric_start()

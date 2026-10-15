@@ -571,7 +571,8 @@ class _InstrumentedReceiver(_TokenReceiver):
 
     def _reported_attempt(self) -> int:
         """Use a receiver's internal transport-attempt count when supplied."""
-        return self._attempt
+        attempt = getattr(self._receiver, "_metric_attempt", None)
+        return attempt if isinstance(attempt, int) and attempt > 0 else self._attempt
 
     async def fetch(self, timeout: float | None = None, options: dict[str, str] | None = None) -> _Token:
         """Fetch a token and record the result."""

@@ -53,7 +53,7 @@ _register_file(
 )
 _register_file(
     "nebius/kms/v1/key_state.proto",
-    b"\n\x1dnebius/kms/v1/key_state.proto\x12\rnebius.kms.v1*M\n\x08KeyState\x12\x19\n\x15KEY_STATE_UNSPECIFIED\x10\x00\x12\n\n\x06ACTIVE\x10\x01\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x02BT\n\x14ai.nebius.pub.kms.v1B\rKeyStateProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/kms/v1b\x06proto3",
+    b"\n\x1dnebius/kms/v1/key_state.proto\x12\rnebius.kms.v1*a\n\x08KeyState\x12\x19\n\x15KEY_STATE_UNSPECIFIED\x10\x00\x12\n\n\x06ACTIVE\x10\x01\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x02\x12\x12\n\x0ePENDING_IMPORT\x10\x03BT\n\x14ai.nebius.pub.kms.v1B\rKeyStateProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/kms/v1b\x06proto3",
 )
 _register_file(
     "nebius/kms/v1/asymmetric_key.proto",
@@ -204,7 +204,7 @@ AsymmetricKey = _message_class(
 )
 AsymmetricKey.__module__ = __name__
 
-AsymmetricKey.__doc__ = "An asymmetric KMS key that may contain several versions of the cryptographic material."
+AsymmetricKey.__doc__ = "An asymmetric KMS key that contains at most one key pair."
 
 AsymmetricKeySpec = _message_class(
     "nebius.kms.v1.AsymmetricKeySpec",
@@ -231,7 +231,7 @@ AsymmetricKeyStatus = _message_class(
     {
         "deleted_at": "Time when the key was scheduled for deletion.",
         "purge_at": "Time when the key will be permanently deleted.",
-        "state": "State (ACTIVE, SCHEDULED\\_FOR\\_DELETION)",
+        "state": "State (ACTIVE, SCHEDULED\\_FOR\\_DELETION).",
     },
     {},
     message_deprecation_details="",
@@ -381,7 +381,9 @@ UndeleteAsymmetricKeyRequest = _message_class(
 UndeleteAsymmetricKeyRequest.__module__ = __name__
 
 KeyState = _enum_class(
-    "nebius.kms.v1.KeyState", "KeyState", {"KEY_STATE_UNSPECIFIED": 0, "ACTIVE": 1, "SCHEDULED_FOR_DELETION": 2}
+    "nebius.kms.v1.KeyState",
+    "KeyState",
+    {"KEY_STATE_UNSPECIFIED": 0, "ACTIVE": 1, "SCHEDULED_FOR_DELETION": 2, "PENDING_IMPORT": 3},
 )
 KeyState.__module__ = __name__
 

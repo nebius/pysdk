@@ -296,6 +296,12 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
 
     from .grpc_service import add_service
 
+    async def unexpected_browser_open(url: str) -> None:
+        pytest.fail("The no-browser option must prevent automatic browser launch.")
+
+    from nebius.aio.token.federation_bearer import auth as federation_auth
+
+    monkeypatch.setattr(federation_auth, "open_browser", unexpected_browser_open)
     code_value = "authcode"
     token_value = "tok123"
 

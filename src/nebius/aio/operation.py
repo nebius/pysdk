@@ -37,6 +37,8 @@ from .request import DEFAULT_AUTH_TIMEOUT, DEFAULT_TIMEOUT, _authorization_deadl
 from .request_kwargs import RequestKwargs, RequestKwargsForOperation
 from .request_status import RequestStatus
 from .route import Route
+from .service_error import RequestError as ServiceRequestError
+from .service_error import RequestStatusExtended
 
 if TYPE_CHECKING:
     from ..api.nebius.common.v1 import ProgressTracker
@@ -61,6 +63,46 @@ Either :class:`nebius.api.nebius.common.v1.Operation` or
 :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf classes.
 """
 T = TypeVar("T")
+
+
+class OperationError(ServiceRequestError):
+    """A terminal operation completed with a non-OK status."""
+
+    def __init__(self, operation: Operation[Any]) -> None:
+        self.operation = operation
+        status = operation.status()
+        if status is None:
+            status = RequestStatusExtended(
+                code=StatusCode.UNKNOWN,
+                message=None,
+                details=[],
+                service_errors=[],
+                request_id="",
+                trace_id="",
+            )
+        elif not isinstance(status, RequestStatusExtended):
+            if status.registry is not None:
+                status = RequestStatusExtended.from_rpc_status(
+                    status.to_rpc_status(),
+                    request_id=status.request_id,
+                    trace_id=status.trace_id,
+                    registry=status.registry,
+                )
+            else:
+                status = RequestStatusExtended(
+                    code=status.code,
+                    message=status.message,
+                    details=list(status.details),
+                    service_errors=[],
+                    request_id=status.request_id,
+                    trace_id=status.trace_id,
+                )
+        self.code = status.code
+        self.message = status.message
+        super().__init__(status)
+
+    def __str__(self) -> str:
+        return f"operation failed [id={self.operation.id}, code={self.code.value[0]}]: {self.message or ''}"
 
 
 class CurrentStep:
@@ -323,6 +365,11 @@ class Operation(Generic[OperationPb]):
         self._check_process()
         with self._state_lock:
             return self._operation
+
+    def _raise_if_failed(self) -> None:
+        """Raise an operation error for a failed terminal state."""
+        if self.done() and not self.successful():
+            raise OperationError(self)
 
     def __repr__(self) -> str:
         """Return a compact string representation useful for debugging."""
@@ -620,6 +667,7 @@ class Operation(Generic[OperationPb]):
         """
         self._check_process()
         if self.done():
+            self._raise_if_failed()
             return None
         metadata = kwargs.get("metadata")
         if metadata is not None:
@@ -729,6 +777,7 @@ class Operation(Generic[OperationPb]):
             details. Mutable metadata and authorization options are copied
             before polling is submitted to the SDK event loop.
 
+        :raises OperationError: When the operation completes with a non-OK status.
         :raises TimeoutError: when the overall timeout is exceeded
         :raises ValueError: When an unfinished operation receives a
             non-positive/non-finite polling interval or a non-finite overall
@@ -770,6 +819,7 @@ class Operation(Generic[OperationPb]):
         # asyncio.wait_for(..., 0) cannot start a newly submitted coroutine,
         # even when that coroutine would immediately observe terminal state.
         if self.done():
+            self._raise_if_failed()
             return
         _validate_timeout(timeout, "timeout")
         if isinstance(interval, timedelta):
@@ -855,8 +905,6 @@ class Operation(Generic[OperationPb]):
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
 
-        from .service_error import RequestError as ServiceRequestError
-
         def _is_ignorable(err: Exception) -> bool:
             """Return whether one polling error is transient."""
             if isinstance(err, TimeoutError):
@@ -906,6 +954,7 @@ class Operation(Generic[OperationPb]):
             if deadline is not None and monotonic() >= deadline:
                 raise TimeoutError("The operation wait timed out.")
             await _safe_update()
+        self._raise_if_failed()
 
     def _set_new_operation(self, operation: OperationPb) -> None:
         """Replace the wrapped operation object with a new instance.
