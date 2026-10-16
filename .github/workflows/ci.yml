@@ -80,7 +80,7 @@ jobs:
       - name: Install dependencies
         run: |
           python scripts/ci.py install --upgrade pip
-          python scripts/ci.py install tox==4.65.5
+          python scripts/ci.py install tox==4.65.0
 
       - name: Run tox
         env:
@@ -108,7 +108,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Install tox
-        run: python scripts/ci.py install tox==4.65.5
+        run: python scripts/ci.py install tox==4.65.0
       - name: Run tox
         run: python scripts/ci.py tox ${{ matrix.tox-env }}
 
