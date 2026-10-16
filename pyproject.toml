@@ -163,6 +163,9 @@ requires = ["tox>=4.23"]
 env_list = ["test", "lint", "type", "type_consumer", "format"]
 isolated_build = true
 
+[tool.tox.env_run_base]
+pass_env = ["PIP_*", "PYTHONFAULTHANDLER"]
+
 [tool.tox.env]
 [tool.tox.env.test]
 description = "Run tests with pytest"
@@ -185,6 +188,8 @@ deps = [
 ]
 commands = [["pytest","-vv","--full-trace"]]
 passenv = [
+    "PIP_*",
+    "PYTHONFAULTHANDLER",
     "NEBIUS_E2E_CONFIG_FILE",
     "NEBIUS_E2E_CONFIG_B64",
     "NEBIUS_PROFILE",
@@ -217,6 +222,8 @@ deps = [
 ]
 commands = [["pytest","-vv"]]
 passenv = [
+    "PIP_*",
+    "PYTHONFAULTHANDLER",
     "NEBIUS_E2E_CONFIG_FILE",
     "NEBIUS_E2E_CONFIG_B64",
     "NEBIUS_PROFILE",
