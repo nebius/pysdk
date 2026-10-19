@@ -73,7 +73,7 @@ _register_file(
 )
 _register_file(
     "nebius/storage/v1/bucket.proto",
-    b"\n\x1enebius/storage/v1/bucket.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/storage/v1/base.proto\x1a'nebius/storage/v1/bucket_counters.proto\x1a%nebius/storage/v1/bucket_policy.proto\x1a\x1cnebius/storage/v1/cors.proto\x1a)nebius/storage/v1/insecure_endpoint.proto\x1a!nebius/storage/v1/lifecycle.proto\"\xdc\x01\n\x06Bucket\x12R\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12=\n\x06status\x18\x03 \x01(\x0b2\x1f.nebius.storage.v1.BucketStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x03\"\x91\n\n\nBucketSpec\x12V\n\x11versioning_policy\x18\x02 \x01(\x0e2#.nebius.storage.v1.VersioningPolicyB\x04\xbaJ\x01\x07R\x10versioningPolicy\x12$\n\x0emax_size_bytes\x18\x04 \x01(\x03R\x0cmaxSizeBytes\x12b\n\x17lifecycle_configuration\x18\x05 \x01(\x0b2).nebius.storage.v1.LifecycleConfigurationR\x16lifecycleConfiguration\x128\n\x04cors\x18\x08 \x01(\x0b2$.nebius.storage.v1.CORSConfigurationR\x04cors\x12S\n\x15default_storage_class\x18\t \x01(\x0e2\x1f.nebius.storage.v1.StorageClassR\x13defaultStorageClass\x12.\n\x13force_storage_class\x18\x0b \x01(\x08R\x11forceStorageClass\x12b\n\x14object_audit_logging\x18\x0c \x01(\x0e20.nebius.storage.v1.BucketSpec.ObjectAuditLoggingR\x12objectAuditLogging\x12D\n\rbucket_policy\x18\r \x01(\x0b2\x1f.nebius.storage.v1.BucketPolicyR\x0cbucketPolicy\x12a\n\x11filesystem_bucket\x18\x1e \x01(\x0b22.nebius.storage.v1.BucketSpec.FilesystemBucketTypeH\x00R\x10filesystemBucket\x1a\xcd\x03\n\x14FilesystemBucketType\x12E\n\rfilesystem_id\x18\x01 \x01(\tB \xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x13\n\x11computefilesystemR\x0cfilesystemId\x12\"\n\tdirectory\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\tdirectory\x12\x1b\n\x03uid\x18\x03 \x01(\rB\t\xbaH\x06*\x04\x18\xff\xff\x03R\x03uid\x12\x1b\n\x03gid\x18\x04 \x01(\rB\t\xbaH\x06*\x04\x18\xff\xff\x03R\x03gid\x12\x81\x01\n\tfile_mode\x18\x05 \x01(\tBd\xbaHa\xba\x01^\n\x10file_permissions\x12\x1emust be valid file permissions\x1a*this == '' || this.matches('^[0-7]{1,4}$')R\x08fileMode\x12\x8b\x01\n\x0edirectory_mode\x18\x06 \x01(\tBd\xbaHa\xba\x01^\n\x10file_permissions\x12\x1emust be valid file permissions\x1a*this == '' || this.matches('^[0-7]{1,4}$')R\rdirectoryMode\"^\n\x12ObjectAuditLogging\x12$\n OBJECT_AUDIT_LOGGING_UNSPECIFIED\x10\x00\x12\x08\n\x04NONE\x10\x01\x12\x0f\n\x0bMUTATE_ONLY\x10\x02\x12\x07\n\x03ALL\x10\x03B\x13\n\x0bbucket_type\x12\x04\xbaJ\x01\x02J\x04\x08\x03\x10\x04J\x04\x08\n\x10\x0bJ\x04\x08\x0e\x10\x0f\"\xed\x06\n\x0cBucketStatus\x12=\n\x08counters\x18\x01 \x03(\x0b2!.nebius.storage.v1.BucketCountersR\x08counters\x12;\n\x05state\x18\x02 \x01(\x0e2%.nebius.storage.v1.BucketStatus.StateR\x05state\x12Z\n\x10suspension_state\x18\x03 \x01(\x0e2/.nebius.storage.v1.BucketStatus.SuspensionStateR\x0fsuspensionState\x129\n\ndeleted_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\tdeletedAt\x125\n\x08purge_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampR\x07purgeAt\x12\x1f\n\x0bdomain_name\x18\x06 \x01(\tR\ndomainName\x12\x16\n\x06region\x18\x08 \x01(\tR\x06region\x128\n\x18anonymous_access_enabled\x18\t \x01(\x08R\x16anonymousAccessEnabled\x12P\n\x11insecure_endpoint\x18\n \x01(\x0b2#.nebius.storage.v1.InsecureEndpointR\x10insecureEndpoint\x12K\n\x0bbucket_type\x18\x0b \x01(\x0e2*.nebius.storage.v1.BucketStatus.BucketTypeR\nbucketType\"b\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\n\n\x06ACTIVE\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x04\"U\n\x0fSuspensionState\x12 \n\x1cSUSPENSION_STATE_UNSPECIFIED\x10\x00\x12\x11\n\rNOT_SUSPENDED\x10\x01\x12\r\n\tSUSPENDED\x10\x02\"F\n\nBucketType\x12\x1b\n\x17BUCKET_TYPE_UNSPECIFIED\x10\x00\x12\x0b\n\x07REGULAR\x10\x01\x12\x0e\n\nFILESYSTEM\x10\x02BZ\n\x18ai.nebius.pub.storage.v1B\x0bBucketProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3",
+    b'\n\x1enebius/storage/v1/bucket.proto\x12\x11nebius.storage.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/storage/v1/base.proto\x1a\'nebius/storage/v1/bucket_counters.proto\x1a%nebius/storage/v1/bucket_policy.proto\x1a\x1cnebius/storage/v1/cors.proto\x1a)nebius/storage/v1/insecure_endpoint.proto\x1a!nebius/storage/v1/lifecycle.proto"\xdc\x01\n\x06Bucket\x12R\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x129\n\x04spec\x18\x02 \x01(\x0b2\x1d.nebius.storage.v1.BucketSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12=\n\x06status\x18\x03 \x01(\x0b2\x1f.nebius.storage.v1.BucketStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x03"\xde\n\n\nBucketSpec\x12V\n\x11versioning_policy\x18\x02 \x01(\x0e2#.nebius.storage.v1.VersioningPolicyB\x04\xbaJ\x01\x07R\x10versioningPolicy\x12$\n\x0emax_size_bytes\x18\x04 \x01(\x03R\x0cmaxSizeBytes\x12b\n\x17lifecycle_configuration\x18\x05 \x01(\x0b2).nebius.storage.v1.LifecycleConfigurationR\x16lifecycleConfiguration\x128\n\x04cors\x18\x08 \x01(\x0b2$.nebius.storage.v1.CORSConfigurationR\x04cors\x12S\n\x15default_storage_class\x18\t \x01(\x0e2\x1f.nebius.storage.v1.StorageClassR\x13defaultStorageClass\x12.\n\x13force_storage_class\x18\x0b \x01(\x08R\x11forceStorageClass\x12b\n\x14object_audit_logging\x18\x0c \x01(\x0e20.nebius.storage.v1.BucketSpec.ObjectAuditLoggingR\x12objectAuditLogging\x12D\n\rbucket_policy\x18\r \x01(\x0b2\x1f.nebius.storage.v1.BucketPolicyR\x0cbucketPolicy\x12a\n\x11filesystem_bucket\x18\x1e \x01(\x0b22.nebius.storage.v1.BucketSpec.FilesystemBucketTypeH\x00R\x10filesystemBucket\x12K\n\x0blast_access\x18\x0f \x01(\x0b2*.nebius.storage.v1.LastAccessConfigurationR\nlastAccess\x1a\xcd\x03\n\x14FilesystemBucketType\x12E\n\rfilesystem_id\x18\x01 \x01(\tB \xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x13\n\x11computefilesystemR\x0cfilesystemId\x12"\n\tdirectory\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\tdirectory\x12\x1b\n\x03uid\x18\x03 \x01(\rB\t\xbaH\x06*\x04\x18\xff\xff\x03R\x03uid\x12\x1b\n\x03gid\x18\x04 \x01(\rB\t\xbaH\x06*\x04\x18\xff\xff\x03R\x03gid\x12\x81\x01\n\tfile_mode\x18\x05 \x01(\tBd\xbaHa\xba\x01^\n\x10file_permissions\x12\x1emust be valid file permissions\x1a*this == \'\' || this.matches(\'^[0-7]{1,4}$\')R\x08fileMode\x12\x8b\x01\n\x0edirectory_mode\x18\x06 \x01(\tBd\xbaHa\xba\x01^\n\x10file_permissions\x12\x1emust be valid file permissions\x1a*this == \'\' || this.matches(\'^[0-7]{1,4}$\')R\rdirectoryMode"^\n\x12ObjectAuditLogging\x12$\n OBJECT_AUDIT_LOGGING_UNSPECIFIED\x10\x00\x12\x08\n\x04NONE\x10\x01\x12\x0f\n\x0bMUTATE_ONLY\x10\x02\x12\x07\n\x03ALL\x10\x03B\x13\n\x0bbucket_type\x12\x04\xbaJ\x01\x02J\x04\x08\x03\x10\x04J\x04\x08\n\x10\x0bJ\x04\x08\x0e\x10\x0f"\xed\x06\n\x0cBucketStatus\x12=\n\x08counters\x18\x01 \x03(\x0b2!.nebius.storage.v1.BucketCountersR\x08counters\x12;\n\x05state\x18\x02 \x01(\x0e2%.nebius.storage.v1.BucketStatus.StateR\x05state\x12Z\n\x10suspension_state\x18\x03 \x01(\x0e2/.nebius.storage.v1.BucketStatus.SuspensionStateR\x0fsuspensionState\x129\n\ndeleted_at\x18\x04 \x01(\x0b2\x1a.google.protobuf.TimestampR\tdeletedAt\x125\n\x08purge_at\x18\x05 \x01(\x0b2\x1a.google.protobuf.TimestampR\x07purgeAt\x12\x1f\n\x0bdomain_name\x18\x06 \x01(\tR\ndomainName\x12\x16\n\x06region\x18\x08 \x01(\tR\x06region\x128\n\x18anonymous_access_enabled\x18\t \x01(\x08R\x16anonymousAccessEnabled\x12P\n\x11insecure_endpoint\x18\n \x01(\x0b2#.nebius.storage.v1.InsecureEndpointR\x10insecureEndpoint\x12K\n\x0bbucket_type\x18\x0b \x01(\x0e2*.nebius.storage.v1.BucketStatus.BucketTypeR\nbucketType"b\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\n\n\x06ACTIVE\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x04"U\n\x0fSuspensionState\x12 \n\x1cSUSPENSION_STATE_UNSPECIFIED\x10\x00\x12\x11\n\rNOT_SUSPENDED\x10\x01\x12\r\n\tSUSPENDED\x10\x02"F\n\nBucketType\x12\x1b\n\x17BUCKET_TYPE_UNSPECIFIED\x10\x00\x12\x0b\n\x07REGULAR\x10\x01\x12\x0e\n\nFILESYSTEM\x10\x02"\xac\x04\n\x17LastAccessConfiguration\x12^\n\nconditions\x18\x01 \x03(\x0b24.nebius.storage.v1.LastAccessConfiguration.ConditionB\x08\xbaH\x05\x92\x01\x02\x10\nR\nconditions\x1a\xb0\x03\n\tCondition\x12U\n\x04type\x18\x01 \x01(\x0e29.nebius.storage.v1.LastAccessConfiguration.Condition.TypeB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12_\n\x07methods\x18\x02 \x03(\x0e2;.nebius.storage.v1.LastAccessConfiguration.Condition.MethodB\x08\xbaH\x05\x92\x01\x02\x10\nR\x07methods\x120\n\x0buser_agents\x18\x03 \x03(\tB\x0f\xbaH\x0c\x92\x01\t\x10\n"\x05r\x03\x18\xc8\x01R\nuserAgents"6\n\x04Type\x12\x14\n\x10TYPE_UNSPECIFIED\x10\x00\x12\x0b\n\x07INCLUDE\x10\x01\x12\x0b\n\x07EXCLUDE\x10\x02"\x80\x01\n\x06Method\x12\x16\n\x12METHOD_UNSPECIFIED\x10\x00\x12\x0e\n\nGET_OBJECT\x10\x01\x12\x0f\n\x0bHEAD_OBJECT\x10\x02\x12\x16\n\x12GET_OBJECT_TAGGING\x10\x03\x12\x0f\n\x0bCOPY_OBJECT\x10\x04\x12\x14\n\x10UPLOAD_PART_COPY\x10\x05BZ\n\x18ai.nebius.pub.storage.v1B\x0bBucketProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3',
 )
 _register_file(
     "google/protobuf/any.proto",
@@ -148,6 +148,7 @@ BucketSpec = _message_class(
         "default_storage_class": "default_storage_class",
         "filesystem_bucket": "filesystem_bucket",
         "force_storage_class": "force_storage_class",
+        "last_access": "last_access",
         "lifecycle_configuration": "lifecycle_configuration",
         "max_size_bytes": "max_size_bytes",
         "object_audit_logging": "object_audit_logging",
@@ -160,6 +161,7 @@ BucketSpec = _message_class(
         "default_storage_class": "Storage class to use by default for uploads to the bucket. It may be overridden by ``x-amz-storage-class`` header.\nIf not set - STANDARD is used as a default storage class.",
         "filesystem_bucket": "Bucket that uses the existing client's compute filesystem.",
         "force_storage_class": "Flag to force usage of default\\_storage\\_class, ignoring ``x-amz-storage-class`` header.",
+        "last_access": "Specifies which requests are included in Last Access tracking, if Last Access tracking is enabled.\nIt does not itself enable Last Access tracking.\nA non-empty ``last_access`` overrides ``lifecycle_configuration.last_access_filter``.",
         "max_size_bytes": "Maximum bucket size.\nZero means unlimited.\nActual limit can be lower if customer doesn't have enough quota.\nReal bucket size can go a little higher if customer writes too fast.",
         "object_audit_logging": "Object audit logging specifies which requests must be logged - none, all or mutational only.",
         "versioning_policy": "Supports transitions:\n\n* disabled -> enabled\n* disabled -> suspended\n* enabled <-> suspended",
@@ -266,6 +268,67 @@ BucketStatus__BucketType.__module__ = __name__
 BucketStatus__BucketType.__doc__ = "BucketType is a type of the bucket."
 
 setattr(BucketStatus, "BucketType", BucketStatus__BucketType)
+LastAccessConfiguration = _message_class(
+    "nebius.storage.v1.LastAccessConfiguration",
+    "LastAccessConfiguration",
+    {"conditions": "conditions"},
+    {},
+    {
+        "conditions": "A request is included in Last Access tracking if:\n\n* The first condition matching the request has ``INCLUDE`` type.\n  OR\n* The request doesn't match any conditions"
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+LastAccessConfiguration.__module__ = __name__
+
+LastAccessConfiguration.__doc__ = "Specifies which requests are included in Last Access tracking."
+
+LastAccessConfiguration__Condition = _message_class(
+    "nebius.storage.v1.LastAccessConfiguration.Condition",
+    "LastAccessConfiguration__Condition",
+    {"methods": "methods", "type": "type", "user_agents": "user_agents"},
+    {},
+    {
+        "methods": "The s3 methods to match.\nAn empty list matches all methods",
+        "user_agents": "User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.\nAn empty list matches all user agents.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+LastAccessConfiguration__Condition.__module__ = __name__
+
+LastAccessConfiguration__Condition.__doc__ = (
+    "Specifies conditions to include or exclude request from Last Access tracking."
+)
+
+setattr(LastAccessConfiguration, "Condition", LastAccessConfiguration__Condition)
+LastAccessConfiguration__Condition__Type = _enum_class(
+    "nebius.storage.v1.LastAccessConfiguration.Condition.Type",
+    "LastAccessConfiguration__Condition__Type",
+    {"TYPE_UNSPECIFIED": 0, "INCLUDE": 1, "EXCLUDE": 2},
+)
+LastAccessConfiguration__Condition__Type.__module__ = __name__
+
+setattr(LastAccessConfiguration__Condition, "Type", LastAccessConfiguration__Condition__Type)
+LastAccessConfiguration__Condition__Method = _enum_class(
+    "nebius.storage.v1.LastAccessConfiguration.Condition.Method",
+    "LastAccessConfiguration__Condition__Method",
+    {
+        "METHOD_UNSPECIFIED": 0,
+        "GET_OBJECT": 1,
+        "HEAD_OBJECT": 2,
+        "GET_OBJECT_TAGGING": 3,
+        "COPY_OBJECT": 4,
+        "UPLOAD_PART_COPY": 5,
+    },
+)
+LastAccessConfiguration__Condition__Method.__module__ = __name__
+
+setattr(LastAccessConfiguration__Condition, "Method", LastAccessConfiguration__Condition__Method)
 CurrentBucketCounters = _message_class(
     "nebius.storage.v1.CurrentBucketCounters",
     "CurrentBucketCounters",
@@ -2158,6 +2221,7 @@ __all__ = [
     "InventoryServiceClient",
     "InventorySpec",
     "InventoryStatus",
+    "LastAccessConfiguration",
     "LifecycleAbortIncompleteMultipartUpload",
     "LifecycleAccessFilter",
     "LifecycleConfiguration",
