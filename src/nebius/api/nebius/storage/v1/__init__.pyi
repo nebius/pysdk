@@ -239,6 +239,14 @@ class BucketSpec(_Message):
     def filesystem_bucket(self, value: BucketSpec__FilesystemBucketType | None) -> None:
         """Set or clear the generated ``filesystem_bucket`` field."""
         ...
+    @property
+    def last_access(self) -> LastAccessConfiguration:
+        """Specifies which requests are included in Last Access tracking, if Last Access tracking is enabled.\nIt does not itself enable Last Access tracking.\nA non-empty ``last_access`` overrides ``lifecycle_configuration.last_access_filter``."""
+        ...
+    @last_access.setter
+    def last_access(self, value: LastAccessConfiguration | None) -> None:
+        """Set or clear the generated ``last_access`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -252,6 +260,7 @@ class BucketSpec(_Message):
         object_audit_logging: BucketSpec__ObjectAuditLogging | None | _UnsetType = ...,
         bucket_policy: BucketPolicy | None | _UnsetType = ...,
         filesystem_bucket: BucketSpec__FilesystemBucketType | None | _UnsetType = ...,
+        last_access: LastAccessConfiguration | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -371,6 +380,82 @@ class BucketStatus(_Message):
         anonymous_access_enabled: _builtins.bool | None | _UnsetType = ...,
         insecure_endpoint: InsecureEndpoint | None | _UnsetType = ...,
         bucket_type: BucketStatus__BucketType | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class LastAccessConfiguration__Condition__Type(_Enum):
+    TYPE_UNSPECIFIED = ...
+    INCLUDE = ...
+    """If an include type condition is the first condition that the request match, the request will be included in\n\\ ``days_since_last_access`` calculation."""
+    EXCLUDE = ...
+    """If an exclude type condition is the first condition that the request match, the request will be ignored in ``days_since_last_access``\ncalculation."""
+
+class LastAccessConfiguration__Condition__Method(_Enum):
+    METHOD_UNSPECIFIED = ...
+    GET_OBJECT = ...
+    HEAD_OBJECT = ...
+    GET_OBJECT_TAGGING = ...
+    COPY_OBJECT = ...
+    """Copy object method reads the source object.\nWe account for those operations as source object accesses when calculating ``days_since_last_access`` for source object."""
+    UPLOAD_PART_COPY = ...
+    """Upload part copy method reads the source object.\nWe account for those operations as source object accesses when calculating ``days_since_last_access`` for source object."""
+
+class LastAccessConfiguration__Condition(_Message):
+    """Specifies conditions to include or exclude request from Last Access tracking."""
+
+    Type: _TypeAlias = LastAccessConfiguration__Condition__Type
+    Method: _TypeAlias = LastAccessConfiguration__Condition__Method
+    @property
+    def type(self) -> LastAccessConfiguration__Condition__Type: ...
+    @type.setter
+    def type(self, value: LastAccessConfiguration__Condition__Type | None) -> None:
+        """Set or clear the generated ``type`` field."""
+        ...
+    @property
+    def methods(self) -> _MutableSequence[LastAccessConfiguration__Condition__Method]:
+        """The s3 methods to match.\nAn empty list matches all methods"""
+        ...
+    @methods.setter
+    def methods(self, value: _Iterable[LastAccessConfiguration__Condition__Method] | None) -> None:
+        """Set or clear the generated ``methods`` field."""
+        ...
+    @property
+    def user_agents(self) -> _MutableSequence[_builtins.str]:
+        """User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.\nAn empty list matches all user agents."""
+        ...
+    @user_agents.setter
+    def user_agents(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``user_agents`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        type: LastAccessConfiguration__Condition__Type | None | _UnsetType = ...,
+        methods: _Iterable[LastAccessConfiguration__Condition__Method] | None | _UnsetType = ...,
+        user_agents: _Iterable[_builtins.str] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class LastAccessConfiguration(_Message):
+    """Specifies which requests are included in Last Access tracking."""
+
+    Condition: _TypeAlias = LastAccessConfiguration__Condition
+    @property
+    def conditions(self) -> _MutableSequence[LastAccessConfiguration__Condition]:
+        """A request is included in Last Access tracking if:\n\n* The first condition matching the request has ``INCLUDE`` type.\n  OR\n* The request doesn't match any conditions"""
+        ...
+    @conditions.setter
+    def conditions(self, value: _Iterable[LastAccessConfiguration__Condition] | None) -> None:
+        """Set or clear the generated ``conditions`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        conditions: _Iterable[LastAccessConfiguration__Condition] | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -3162,6 +3247,7 @@ __all__ = [
     "InventoryServiceClient",
     "InventorySpec",
     "InventoryStatus",
+    "LastAccessConfiguration",
     "LifecycleAbortIncompleteMultipartUpload",
     "LifecycleAccessFilter",
     "LifecycleConfiguration",
