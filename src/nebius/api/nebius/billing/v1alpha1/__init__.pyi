@@ -612,6 +612,460 @@ class ListOneTimeExportsResponse(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class SpotPrice(_Message):
+    """Spot market price of one GPU on a compute platform in a region."""
+    @property
+    def sku_id(self) -> _builtins.str:
+        """SKU ID. Example: \"sku-e00n3z6y6hl94aqgig8ft\"."""
+        ...
+    @sku_id.setter
+    def sku_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``sku_id`` field."""
+        ...
+    @property
+    def product_title(self) -> _builtins.str:
+        """Product title. Example: \"Preemptible NVIDIA\u00ae B200 NVLink\"."""
+        ...
+    @product_title.setter
+    def product_title(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``product_title`` field."""
+        ...
+    @property
+    def region(self) -> _builtins.str:
+        """Region name. Example: \"eu-north1\"."""
+        ...
+    @region.setter
+    def region(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``region`` field."""
+        ...
+    @property
+    def compute_instance(self) -> SpotPriceComputeInstance:
+        """Compute instance that the price applies to."""
+        ...
+    @compute_instance.setter
+    def compute_instance(self, value: SpotPriceComputeInstance | None) -> None:
+        """Set or clear the generated ``compute_instance`` field."""
+        ...
+    @property
+    def price(self) -> SpotPriceValue:
+        """Price for one unit."""
+        ...
+    @price.setter
+    def price(self, value: SpotPriceValue | None) -> None:
+        """Set or clear the generated ``price`` field."""
+        ...
+    @property
+    def effective_time(self) -> _datetime | None:
+        """Time when the price takes effect."""
+        ...
+    @effective_time.setter
+    def effective_time(self, value: _datetime | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``effective_time`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        sku_id: _builtins.str | None | _UnsetType = ...,
+        product_title: _builtins.str | None | _UnsetType = ...,
+        region: _builtins.str | None | _UnsetType = ...,
+        compute_instance: SpotPriceComputeInstance | None | _UnsetType = ...,
+        price: SpotPriceValue | None | _UnsetType = ...,
+        effective_time: _datetime | _SerializableMessage | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class SpotPriceComputeInstance(_Message):
+    """Compute instance of a spot market."""
+    @property
+    def platform(self) -> _builtins.str:
+        """Compute platform. Example: \"gpu-b200-sxm\"."""
+        ...
+    @platform.setter
+    def platform(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``platform`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, platform: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class SpotPriceValue(_Message):
+    """Price for one unit."""
+    @property
+    def value(self) -> _builtins.str:
+        """Decimal string. Example: \"2.89\"."""
+        ...
+    @value.setter
+    def value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``value`` field."""
+        ...
+    @property
+    def currency(self) -> _builtins.str:
+        """Currency code. Example: \"usd\"."""
+        ...
+    @currency.setter
+    def currency(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``currency`` field."""
+        ...
+    @property
+    def unit_title(self) -> _builtins.str:
+        """Unit title. Example: \"GPU hour\"."""
+        ...
+    @unit_title.setter
+    def unit_title(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``unit_title`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        value: _builtins.str | None | _UnsetType = ...,
+        currency: _builtins.str | None | _UnsetType = ...,
+        unit_title: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class SpotPriceSeries(_Message):
+    """Spot market prices of one SKU at regular time steps."""
+    @property
+    def sku_id(self) -> _builtins.str:
+        """SKU ID. Example: \"sku-e00n3z6y6hl94aqgig8ft\"."""
+        ...
+    @sku_id.setter
+    def sku_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``sku_id`` field."""
+        ...
+    @property
+    def product_title(self) -> _builtins.str:
+        """Product title. Example: \"Preemptible NVIDIA\u00ae B200 NVLink\"."""
+        ...
+    @product_title.setter
+    def product_title(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``product_title`` field."""
+        ...
+    @property
+    def region(self) -> _builtins.str:
+        """Region name. Example: \"eu-north1\"."""
+        ...
+    @region.setter
+    def region(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``region`` field."""
+        ...
+    @property
+    def compute_instance(self) -> SpotPriceComputeInstance:
+        """Compute instance that the prices apply to."""
+        ...
+    @compute_instance.setter
+    def compute_instance(self, value: SpotPriceComputeInstance | None) -> None:
+        """Set or clear the generated ``compute_instance`` field."""
+        ...
+    @property
+    def currency(self) -> _builtins.str:
+        """Currency code. Example: \"usd\"."""
+        ...
+    @currency.setter
+    def currency(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``currency`` field."""
+        ...
+    @property
+    def unit_title(self) -> _builtins.str:
+        """Unit title. Example: \"GPU hour\"."""
+        ...
+    @unit_title.setter
+    def unit_title(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``unit_title`` field."""
+        ...
+    @property
+    def points(self) -> _MutableSequence[SpotPricePoint]:
+        """Prices, oldest first."""
+        ...
+    @points.setter
+    def points(self, value: _Iterable[SpotPricePoint] | None) -> None:
+        """Set or clear the generated ``points`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        sku_id: _builtins.str | None | _UnsetType = ...,
+        product_title: _builtins.str | None | _UnsetType = ...,
+        region: _builtins.str | None | _UnsetType = ...,
+        compute_instance: SpotPriceComputeInstance | None | _UnsetType = ...,
+        currency: _builtins.str | None | _UnsetType = ...,
+        unit_title: _builtins.str | None | _UnsetType = ...,
+        points: _Iterable[SpotPricePoint] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class SpotPricePoint(_Message):
+    """Spot market price at one time step."""
+    @property
+    def timestamp(self) -> _datetime | None:
+        """End of the time step. Example: \"2026-10-14T13:00:00Z\" for the hour from 12:00 to 13:00."""
+        ...
+    @timestamp.setter
+    def timestamp(self, value: _datetime | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``timestamp`` field."""
+        ...
+    @property
+    def value(self) -> _builtins.str:
+        """Decimal string. Example: \"2.89\"."""
+        ...
+    @value.setter
+    def value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``value`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        timestamp: _datetime | _SerializableMessage | None | _UnsetType = ...,
+        value: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListSpotPricesRequest(_Message):
+    @property
+    def page_size(self) -> _builtins.int:
+        """Maximum number of items in the response. Default: 100."""
+        ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str:
+        """Token from next\\_page\\_token of the previous response."""
+        ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListSpotPricesResponse(_Message):
+    @property
+    def items(self) -> _MutableSequence[SpotPrice]:
+        """Current spot prices, sorted by region and sku\\_id."""
+        ...
+    @items.setter
+    def items(self, value: _Iterable[SpotPrice] | None) -> None:
+        """Set or clear the generated ``items`` field."""
+        ...
+    @property
+    def next_page_token(self) -> _builtins.str:
+        """Token for the next page. Empty on the last page."""
+        ...
+    @next_page_token.setter
+    def next_page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
+        ...
+    @property
+    def snapshot_time(self) -> _datetime | None:
+        """Time when the prices in the response were taken.\nIf the prices were taken at different times, the field has the earliest time."""
+        ...
+    @snapshot_time.setter
+    def snapshot_time(self, value: _datetime | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``snapshot_time`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        items: _Iterable[SpotPrice] | None | _UnsetType = ...,
+        next_page_token: _builtins.str | None | _UnsetType = ...,
+        snapshot_time: _datetime | _SerializableMessage | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListSpotPriceSeriesRequest__Filters(_Message):
+    """Filters of the series."""
+    @property
+    def sku_ids(self) -> _MutableSequence[_builtins.str]:
+        """SKU IDs from List, up to 100. Default: all SKUs."""
+        ...
+    @sku_ids.setter
+    def sku_ids(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``sku_ids`` field."""
+        ...
+    @property
+    def start_time(self) -> _datetime | None:
+        """Start of the time interval. Must be within the last 30 days."""
+        ...
+    @start_time.setter
+    def start_time(self, value: _datetime | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``start_time`` field."""
+        ...
+    @property
+    def end_time(self) -> _datetime | None:
+        """End of the time interval, exclusive. Default: current time.\nExample: with HOUR\\_1, the interval from 12:00 to 15:00 gives the points 13:00, 14:00 and 15:00."""
+        ...
+    @end_time.setter
+    def end_time(self, value: _datetime | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``end_time`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        sku_ids: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        start_time: _datetime | _SerializableMessage | None | _UnsetType = ...,
+        end_time: _datetime | _SerializableMessage | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListSpotPriceSeriesRequest__Aggregation__Granularity(_Enum):
+    """Length of a time step."""
+
+    GRANULARITY_UNSPECIFIED = ...
+    """Not specified."""
+    GRANULARITY_MINUTE_15 = ...
+    """15 minutes. Allowed for a time interval of up to 7 days."""
+    GRANULARITY_HOUR_1 = ...
+    """1 hour."""
+
+class ListSpotPriceSeriesRequest__Aggregation__Method(_Enum):
+    """Price of a time step."""
+
+    METHOD_UNSPECIFIED = ...
+    """Not specified."""
+    METHOD_FIRST_PRICE = ...
+    """First price in the time step."""
+    METHOD_LAST_PRICE = ...
+    """Last price in the time step."""
+    METHOD_AVG_PRICE = ...
+    """Mean of the prices in the time step, not weighted by time."""
+
+class ListSpotPriceSeriesRequest__Aggregation(_Message):
+    """Aggregation of the prices at each time step."""
+
+    Granularity: _TypeAlias = ListSpotPriceSeriesRequest__Aggregation__Granularity
+    Method: _TypeAlias = ListSpotPriceSeriesRequest__Aggregation__Method
+    @property
+    def granularity(self) -> ListSpotPriceSeriesRequest__Aggregation__Granularity:
+        """Length of a time step."""
+        ...
+    @granularity.setter
+    def granularity(self, value: ListSpotPriceSeriesRequest__Aggregation__Granularity | None) -> None:
+        """Set or clear the generated ``granularity`` field."""
+        ...
+    @property
+    def method(self) -> ListSpotPriceSeriesRequest__Aggregation__Method:
+        """Price of a time step."""
+        ...
+    @method.setter
+    def method(self, value: ListSpotPriceSeriesRequest__Aggregation__Method | None) -> None:
+        """Set or clear the generated ``method`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        granularity: ListSpotPriceSeriesRequest__Aggregation__Granularity | None | _UnsetType = ...,
+        method: ListSpotPriceSeriesRequest__Aggregation__Method | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListSpotPriceSeriesRequest(_Message):
+    Filters: _TypeAlias = ListSpotPriceSeriesRequest__Filters
+    Aggregation: _TypeAlias = ListSpotPriceSeriesRequest__Aggregation
+    @property
+    def page_size(self) -> _builtins.int:
+        """Maximum number of series in the response. Default: 100."""
+        ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str:
+        """Token from next\\_page\\_token of the previous response."""
+        ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
+    @property
+    def filters(self) -> ListSpotPriceSeriesRequest__Filters:
+        """Filters of the series."""
+        ...
+    @filters.setter
+    def filters(self, value: ListSpotPriceSeriesRequest__Filters | None) -> None:
+        """Set or clear the generated ``filters`` field."""
+        ...
+    @property
+    def aggregation(self) -> ListSpotPriceSeriesRequest__Aggregation:
+        """Aggregation of the prices at each time step."""
+        ...
+    @aggregation.setter
+    def aggregation(self, value: ListSpotPriceSeriesRequest__Aggregation | None) -> None:
+        """Set or clear the generated ``aggregation`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
+        filters: ListSpotPriceSeriesRequest__Filters | None | _UnsetType = ...,
+        aggregation: ListSpotPriceSeriesRequest__Aggregation | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListSpotPriceSeriesResponse(_Message):
+    @property
+    def items(self) -> _MutableSequence[SpotPriceSeries]:
+        """Price series, sorted by region and sku\\_id."""
+        ...
+    @items.setter
+    def items(self, value: _Iterable[SpotPriceSeries] | None) -> None:
+        """Set or clear the generated ``items`` field."""
+        ...
+    @property
+    def next_page_token(self) -> _builtins.str:
+        """Token for the next page. Empty on the last page."""
+        ...
+    @next_page_token.setter
+    def next_page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
+        ...
+    @property
+    def snapshot_time(self) -> _datetime | None:
+        """Time when the prices in the response were taken.\nIf the prices were taken at different times, the field has the earliest time."""
+        ...
+    @snapshot_time.setter
+    def snapshot_time(self, value: _datetime | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``snapshot_time`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        items: _Iterable[SpotPriceSeries] | None | _UnsetType = ...,
+        next_page_token: _builtins.str | None | _UnsetType = ...,
+        snapshot_time: _datetime | _SerializableMessage | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class CalculatorServiceClient(_Client):
     """Calculator service for estimating resource costs.\n\nThis class provides client methods for the ``nebius.billing.v1alpha1.CalculatorService`` service."""
     def estimate(
@@ -645,6 +1099,19 @@ class OneTimeExportServiceClient(
         """Lists one-time exports for a given contract.\n\nThe request object is returned without starting the RPC."""
         ...
 
+class SpotPriceServiceClient(_Client):
+    """Spot market prices of GPU compute platforms.\n\nThis class provides client methods for the ``nebius.billing.v1alpha1.SpotPriceService`` service."""
+    def list(
+        self, request: ListSpotPricesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListSpotPricesRequest, ListSpotPricesResponse]:
+        """Lists the current spot prices, one item for each SKU. Authentication is not required.\n\nThe request object is returned without starting the RPC."""
+        ...
+    def list_series(
+        self, request: ListSpotPriceSeriesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListSpotPriceSeriesRequest, ListSpotPriceSeriesResponse]:
+        """Lists the spot prices at regular time steps, one series for each SKU. Authentication is not required.\n\nThe request object is returned without starting the RPC."""
+        ...
+
 __all__ = [
     "CalculatorServiceClient",
     "CostBreakdown",
@@ -659,6 +1126,10 @@ __all__ = [
     "GetOneTimeExportRequest",
     "ListOneTimeExportsRequest",
     "ListOneTimeExportsResponse",
+    "ListSpotPriceSeriesRequest",
+    "ListSpotPriceSeriesResponse",
+    "ListSpotPricesRequest",
+    "ListSpotPricesResponse",
     "OfferType",
     "OneTimeExport",
     "OneTimeExportServiceClient",
@@ -668,4 +1139,10 @@ __all__ = [
     "OneTimeExportStatus",
     "ResourceGroupCost",
     "ResourceSpec",
+    "SpotPrice",
+    "SpotPriceComputeInstance",
+    "SpotPricePoint",
+    "SpotPriceSeries",
+    "SpotPriceServiceClient",
+    "SpotPriceValue",
 ]

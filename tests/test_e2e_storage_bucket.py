@@ -7,6 +7,7 @@ the file is invalid, the test will be skipped.
 
 import base64
 import binascii
+import logging
 import os
 import random
 import string
@@ -27,6 +28,8 @@ from nebius.api.nebius.storage.v1 import (
     VersioningPolicy,
 )
 from nebius.sdk import SDK
+
+logger = logging.getLogger(__name__)
 
 
 def _generate_random_string(length: int = 8) -> str:
@@ -121,6 +124,7 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
         bucket_service = BucketServiceClient(sdk)
         bucket_id = None
 
+        phase = "create"
         async with sdk:
             try:
                 # Create bucket
@@ -135,11 +139,14 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
                 )
 
                 create_operation = await bucket_service.create(create_request)
+                logger.info("Storage E2E create operation: %s", create_operation.id)
+                phase = "wait for create"
                 await create_operation.wait()
                 bucket_id = create_operation.resource_id
 
                 assert bucket_id is not None, "Bucket creation should return a valid bucket ID"
 
+                phase = "get"
                 # Get bucket by ID
                 get_request = GetBucketRequest(id=bucket_id)
                 bucket = await bucket_service.get(get_request)
@@ -149,6 +156,7 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
                 assert bucket.spec.versioning_policy == VersioningPolicy.DISABLED
                 assert bucket.spec.max_size_bytes == 4096
 
+                phase = "list"
                 # List buckets and find our bucket
                 list_request = ListBucketsRequest(parent_id=parent_id)
                 buckets_response = await bucket_service.list(list_request)
@@ -163,12 +171,19 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
                 assert found_bucket is not None, f"Bucket {bucket_id} should be found in the list"
                 assert found_bucket.metadata.name == bucket_name
 
+                phase = "delete"
                 delete_request = DeleteBucketRequest(id=bucket_id)
                 delete_operation = await bucket_service.delete(delete_request)
                 await delete_operation.wait()
                 bucket_id = None  # Reset bucket_id after deletion
 
-            except Exception as e:
+            except Exception:
+                logger.exception(
+                    "Storage E2E failed: phase=%s bucket=%s id=%s",
+                    phase,
+                    bucket_name,
+                    bucket_id,
+                )
                 # If test fails, still try to cleanup
                 if bucket_id:
                     try:
@@ -178,7 +193,7 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
                     except Exception as cleanup_error:
                         # Log cleanup error but don't fail the test
                         print(f"Warning: Failed to cleanup bucket {bucket_id}: {cleanup_error}")
-                raise e
+                raise
 
     finally:
         # Cleanup temporary config file if created from base64

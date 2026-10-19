@@ -22,7 +22,7 @@ from nebius.api.nebius.common.v1 import (
 )
 from nebius.api.nebius.compute.v1 import Disk, DiskServiceClient, GetDiskRequest
 from nebius.base.options import INSECURE
-from nebius.base.resolver import Resolver
+from nebius.base.resolver import Constant, Resolver
 
 from .grpc_service import add_service
 
@@ -296,7 +296,7 @@ def test_generated_requests_use_loop_owned_pooled_channels() -> None:
     loop_b, thread_b = _start_event_loop()
     channel = Channel(
         user_agent_prefix="nebius-python-sdk-tests/1.0",
-        domain=f"localhost:{port}",
+        resolver=Constant(f"127.0.0.1:{port}"),
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -335,7 +335,7 @@ def test_low_level_unary_call_and_terminal_status_cross_external_loops() -> None
     loop_b, thread_b = _start_event_loop()
     channel = Channel(
         user_agent_prefix="nebius-python-sdk-tests/1.0",
-        domain=f"localhost:{port}",
+        resolver=Constant(f"127.0.0.1:{port}"),
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -402,7 +402,7 @@ def test_low_level_unary_call_snapshots_request_and_metadata() -> None:
     server.start()
     channel = Channel(
         user_agent_prefix="nebius-python-sdk-tests/1.0",
-        domain=f"localhost:{port}",
+        resolver=Constant(f"127.0.0.1:{port}"),
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -454,7 +454,7 @@ def test_low_level_unary_call_caches_debug_error_string() -> None:
     server.start()
     channel = Channel(
         user_agent_prefix="nebius-python-sdk-tests/1.0",
-        domain=f"localhost:{port}",
+        resolver=Constant(f"127.0.0.1:{port}"),
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -496,7 +496,7 @@ async def test_operation_service_factory_defers_and_executes_resolution() -> Non
     server.start()
     channel = Channel(
         user_agent_prefix="nebius-python-sdk-tests/1.0",
-        domain=f"localhost:{port}",
+        resolver=Constant(f"127.0.0.1:{port}"),
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )
@@ -537,7 +537,7 @@ async def test_operation_service_adapter_retains_first_resolved_address() -> Non
     add_service(server, OperationServiceClient, MockOperationService())
     port = server.add_insecure_port("127.0.0.1:0")
     server.start()
-    resolver = AlternatingResolver(f"localhost:{port}")
+    resolver = AlternatingResolver(f"127.0.0.1:{port}")
     channel = Channel(
         user_agent_prefix="nebius-python-sdk-tests/1.0",
         resolver=resolver,
@@ -1810,7 +1810,7 @@ def test_generated_requests_complete_from_many_sync_threads() -> None:
     server.start()
     channel = Channel(
         user_agent_prefix="nebius-python-sdk-tests/1.0",
-        domain=f"localhost:{port}",
+        resolver=Constant(f"127.0.0.1:{port}"),
         options=[(INSECURE, True)],
         credentials=NoCredentials(),
     )

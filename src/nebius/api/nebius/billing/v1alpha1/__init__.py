@@ -127,6 +127,14 @@ _register_file(
     "nebius/billing/v1alpha1/one_time_export_service.proto",
     b'\n5nebius/billing/v1alpha1/one_time_export_service.proto\x12\x17nebius.billing.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a-nebius/billing/v1alpha1/one_time_export.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto"\xb9\x01\n\x1aCreateOneTimeExportRequest\x12S\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x13\xbaH\x03\xc8\x01\x01\xe2J\n\x12\x08contractR\x08metadata\x12F\n\x04spec\x18\x02 \x01(\x0b2*.nebius.billing.v1alpha1.OneTimeExportSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec"N\n\x17GetOneTimeExportRequest\x123\n\x02id\x18\x01 \x01(\tB#\xbaH\x03\xc8\x01\x01\xbaJ\x01\x03\xe2J\x16\n\x14billingonetimeexportR\x02id"\x89\x01\n\x19ListOneTimeExportsRequest\x120\n\tparent_id\x18\x01 \x01(\tB\x13\xbaH\x03\xc8\x01\x01\xe2J\n\n\x08contractR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\x82\x01\n\x1aListOneTimeExportsResponse\x12<\n\x05items\x18\x01 \x03(\x0b2&.nebius.billing.v1alpha1.OneTimeExportR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xf7\x02\n\x14OneTimeExportService\x12Z\n\x06Create\x123.nebius.billing.v1alpha1.CreateOneTimeExportRequest\x1a\x1b.nebius.common.v1.Operation\x12_\n\x03Get\x120.nebius.billing.v1alpha1.GetOneTimeExportRequest\x1a&.nebius.billing.v1alpha1.OneTimeExport\x12o\n\x04List\x122.nebius.billing.v1alpha1.ListOneTimeExportsRequest\x1a3.nebius.billing.v1alpha1.ListOneTimeExportsResponse\x1a1\xbaJ.api.billing-report-exporter.billing-data-planeBt\n\x1eai.nebius.pub.billing.v1alpha1B\x19OneTimeExportServiceProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/billing/v1alpha1b\x06proto3',
 )
+_register_file(
+    "nebius/billing/v1alpha1/spot_price.proto",
+    b'\n(nebius/billing/v1alpha1/spot_price.proto\x12\x17nebius.billing.v1alpha1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto"\xc9\x02\n\tSpotPrice\x12\x1f\n\x06sku_id\x18\x01 \x01(\tB\x08\xe2J\x05\n\x03skuR\x05skuId\x12#\n\rproduct_title\x18\x02 \x01(\tR\x0cproductTitle\x12\x16\n\x06region\x18\x03 \x01(\tR\x06region\x12\\\n\x10compute_instance\x18\x04 \x01(\x0b21.nebius.billing.v1alpha1.SpotPriceComputeInstanceR\x0fcomputeInstance\x12=\n\x05price\x18\x05 \x01(\x0b2\'.nebius.billing.v1alpha1.SpotPriceValueR\x05price\x12A\n\x0eeffective_time\x18\x06 \x01(\x0b2\x1a.google.protobuf.TimestampR\reffectiveTime"6\n\x18SpotPriceComputeInstance\x12\x1a\n\x08platform\x18\x01 \x01(\tR\x08platform"a\n\x0eSpotPriceValue\x12\x14\n\x05value\x18\x01 \x01(\tR\x05value\x12\x1a\n\x08currency\x18\x02 \x01(\tR\x08currency\x12\x1d\n\nunit_title\x18\x03 \x01(\tR\tunitTitle"\xc9\x02\n\x0fSpotPriceSeries\x12\x1f\n\x06sku_id\x18\x01 \x01(\tB\x08\xe2J\x05\n\x03skuR\x05skuId\x12#\n\rproduct_title\x18\x02 \x01(\tR\x0cproductTitle\x12\x16\n\x06region\x18\x03 \x01(\tR\x06region\x12\\\n\x10compute_instance\x18\x04 \x01(\x0b21.nebius.billing.v1alpha1.SpotPriceComputeInstanceR\x0fcomputeInstance\x12\x1a\n\x08currency\x18\x05 \x01(\tR\x08currency\x12\x1d\n\nunit_title\x18\x06 \x01(\tR\tunitTitle\x12?\n\x06points\x18\x07 \x03(\x0b2\'.nebius.billing.v1alpha1.SpotPricePointR\x06points"`\n\x0eSpotPricePoint\x128\n\ttimestamp\x18\x01 \x01(\x0b2\x1a.google.protobuf.TimestampR\ttimestamp\x12\x14\n\x05value\x18\x02 \x01(\tR\x05valueBi\n\x1eai.nebius.pub.billing.v1alpha1B\x0eSpotPriceProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/billing/v1alpha1b\x06proto3',
+)
+_register_file(
+    "nebius/billing/v1alpha1/spot_price_service.proto",
+    b'\n0nebius/billing/v1alpha1/spot_price_service.proto\x12\x17nebius.billing.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a(nebius/billing/v1alpha1/spot_price.proto"\\\n\x15ListSpotPricesRequest\x12$\n\tpage_size\x18\x02 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\xbb\x01\n\x16ListSpotPricesResponse\x128\n\x05items\x18\x01 \x03(\x0b2".nebius.billing.v1alpha1.SpotPriceR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12?\n\rsnapshot_time\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\x0csnapshotTime"\x91\x07\n\x1aListSpotPriceSeriesRequest\x12$\n\tpage_size\x18\x02 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12]\n\x07filters\x18\x04 \x01(\x0b2;.nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.FiltersB\x06\xbaH\x03\xc8\x01\x01R\x07filters\x12i\n\x0baggregation\x18\x05 \x01(\x0b2?.nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.AggregationB\x06\xbaH\x03\xc8\x01\x01R\x0baggregation\x1a\xae\x01\n\x07Filters\x12)\n\x07sku_ids\x18\x01 \x03(\tB\x10\xbaH\x05\x92\x01\x02\x10d\xe2J\x05\n\x03skuR\x06skuIds\x12A\n\nstart_time\x18\x02 \x01(\x0b2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tstartTime\x125\n\x08end_time\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\x07endTime\x1a\xb2\x03\n\x0bAggregation\x12u\n\x0bgranularity\x18\x01 \x01(\x0e2K.nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.Aggregation.GranularityB\x06\xbaH\x03\xc8\x01\x01R\x0bgranularity\x12f\n\x06method\x18\x02 \x01(\x0e2F.nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.Aggregation.MethodB\x06\xbaH\x03\xc8\x01\x01R\x06method"]\n\x0bGranularity\x12\x1b\n\x17GRANULARITY_UNSPECIFIED\x10\x00\x12\x19\n\x15GRANULARITY_MINUTE_15\x10\x01\x12\x16\n\x12GRANULARITY_HOUR_1\x10\x02"e\n\x06Method\x12\x16\n\x12METHOD_UNSPECIFIED\x10\x00\x12\x16\n\x12METHOD_FIRST_PRICE\x10\x01\x12\x15\n\x11METHOD_LAST_PRICE\x10\x02\x12\x14\n\x10METHOD_AVG_PRICE\x10\x03"\xc6\x01\n\x1bListSpotPriceSeriesResponse\x12>\n\x05items\x18\x01 \x03(\x0b2(.nebius.billing.v1alpha1.SpotPriceSeriesR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12?\n\rsnapshot_time\x18\x03 \x01(\x0b2\x1a.google.protobuf.TimestampR\x0csnapshotTime2\x9b\x02\n\x10SpotPriceService\x12g\n\x04List\x12..nebius.billing.v1alpha1.ListSpotPricesRequest\x1a/.nebius.billing.v1alpha1.ListSpotPricesResponse\x12}\n\nListSeries\x123.nebius.billing.v1alpha1.ListSpotPriceSeriesRequest\x1a4.nebius.billing.v1alpha1.ListSpotPriceSeriesResponse"\x04\xeaJ\x01\x03\x1a\x1f\xbaJ\x1cpricing-policies.billing-cplBp\n\x1eai.nebius.pub.billing.v1alpha1B\x15SpotPriceServiceProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/billing/v1alpha1b\x06proto3',
+)
 
 ExportFormat = _enum_class(
     "nebius.billing.v1alpha1.ExportFormat",
@@ -444,6 +452,242 @@ ListOneTimeExportsResponse = _message_class(
 )
 ListOneTimeExportsResponse.__module__ = __name__
 
+SpotPrice = _message_class(
+    "nebius.billing.v1alpha1.SpotPrice",
+    "SpotPrice",
+    {
+        "compute_instance": "compute_instance",
+        "effective_time": "effective_time",
+        "price": "price",
+        "product_title": "product_title",
+        "region": "region",
+        "sku_id": "sku_id",
+    },
+    {},
+    {
+        "compute_instance": "Compute instance that the price applies to.",
+        "effective_time": "Time when the price takes effect.",
+        "price": "Price for one unit.",
+        "product_title": 'Product title. Example: "Preemptible NVIDIA\u00ae B200 NVLink".',
+        "region": 'Region name. Example: "eu-north1".',
+        "sku_id": 'SKU ID. Example: "sku-e00n3z6y6hl94aqgig8ft".',
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+SpotPrice.__module__ = __name__
+
+SpotPrice.__doc__ = "Spot market price of one GPU on a compute platform in a region."
+
+SpotPriceComputeInstance = _message_class(
+    "nebius.billing.v1alpha1.SpotPriceComputeInstance",
+    "SpotPriceComputeInstance",
+    {"platform": "platform"},
+    {},
+    {"platform": 'Compute platform. Example: "gpu-b200-sxm".'},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+SpotPriceComputeInstance.__module__ = __name__
+
+SpotPriceComputeInstance.__doc__ = "Compute instance of a spot market."
+
+SpotPriceValue = _message_class(
+    "nebius.billing.v1alpha1.SpotPriceValue",
+    "SpotPriceValue",
+    {"currency": "currency", "unit_title": "unit_title", "value": "value"},
+    {},
+    {
+        "currency": 'Currency code. Example: "usd".',
+        "unit_title": 'Unit title. Example: "GPU hour".',
+        "value": 'Decimal string. Example: "2.89".',
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+SpotPriceValue.__module__ = __name__
+
+SpotPriceValue.__doc__ = "Price for one unit."
+
+SpotPriceSeries = _message_class(
+    "nebius.billing.v1alpha1.SpotPriceSeries",
+    "SpotPriceSeries",
+    {
+        "compute_instance": "compute_instance",
+        "currency": "currency",
+        "points": "points",
+        "product_title": "product_title",
+        "region": "region",
+        "sku_id": "sku_id",
+        "unit_title": "unit_title",
+    },
+    {},
+    {
+        "compute_instance": "Compute instance that the prices apply to.",
+        "currency": 'Currency code. Example: "usd".',
+        "points": "Prices, oldest first.",
+        "product_title": 'Product title. Example: "Preemptible NVIDIA\u00ae B200 NVLink".',
+        "region": 'Region name. Example: "eu-north1".',
+        "sku_id": 'SKU ID. Example: "sku-e00n3z6y6hl94aqgig8ft".',
+        "unit_title": 'Unit title. Example: "GPU hour".',
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+SpotPriceSeries.__module__ = __name__
+
+SpotPriceSeries.__doc__ = "Spot market prices of one SKU at regular time steps."
+
+SpotPricePoint = _message_class(
+    "nebius.billing.v1alpha1.SpotPricePoint",
+    "SpotPricePoint",
+    {"timestamp": "timestamp", "value": "value"},
+    {},
+    {
+        "timestamp": 'End of the time step. Example: "2026-10-14T13:00:00Z" for the hour from 12:00 to 13:00.',
+        "value": 'Decimal string. Example: "2.89".',
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+SpotPricePoint.__module__ = __name__
+
+SpotPricePoint.__doc__ = "Spot market price at one time step."
+
+ListSpotPricesRequest = _message_class(
+    "nebius.billing.v1alpha1.ListSpotPricesRequest",
+    "ListSpotPricesRequest",
+    {"page_size": "page_size", "page_token": "page_token"},
+    {},
+    {
+        "page_size": "Maximum number of items in the response. Default: 100.",
+        "page_token": "Token from next\\_page\\_token of the previous response.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListSpotPricesRequest.__module__ = __name__
+
+ListSpotPricesResponse = _message_class(
+    "nebius.billing.v1alpha1.ListSpotPricesResponse",
+    "ListSpotPricesResponse",
+    {"items": "items", "next_page_token": "next_page_token", "snapshot_time": "snapshot_time"},
+    {},
+    {
+        "items": "Current spot prices, sorted by region and sku\\_id.",
+        "next_page_token": "Token for the next page. Empty on the last page.",
+        "snapshot_time": "Time when the prices in the response were taken.\nIf the prices were taken at different times, the field has the earliest time.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListSpotPricesResponse.__module__ = __name__
+
+ListSpotPriceSeriesRequest = _message_class(
+    "nebius.billing.v1alpha1.ListSpotPriceSeriesRequest",
+    "ListSpotPriceSeriesRequest",
+    {"aggregation": "aggregation", "filters": "filters", "page_size": "page_size", "page_token": "page_token"},
+    {},
+    {
+        "aggregation": "Aggregation of the prices at each time step.",
+        "filters": "Filters of the series.",
+        "page_size": "Maximum number of series in the response. Default: 100.",
+        "page_token": "Token from next\\_page\\_token of the previous response.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListSpotPriceSeriesRequest.__module__ = __name__
+
+ListSpotPriceSeriesRequest__Filters = _message_class(
+    "nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.Filters",
+    "ListSpotPriceSeriesRequest__Filters",
+    {"end_time": "end_time", "sku_ids": "sku_ids", "start_time": "start_time"},
+    {},
+    {
+        "end_time": "End of the time interval, exclusive. Default: current time.\nExample: with HOUR\\_1, the interval from 12:00 to 15:00 gives the points 13:00, 14:00 and 15:00.",
+        "sku_ids": "SKU IDs from List, up to 100. Default: all SKUs.",
+        "start_time": "Start of the time interval. Must be within the last 30 days.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListSpotPriceSeriesRequest__Filters.__module__ = __name__
+
+ListSpotPriceSeriesRequest__Filters.__doc__ = "Filters of the series."
+
+setattr(ListSpotPriceSeriesRequest, "Filters", ListSpotPriceSeriesRequest__Filters)
+ListSpotPriceSeriesRequest__Aggregation = _message_class(
+    "nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.Aggregation",
+    "ListSpotPriceSeriesRequest__Aggregation",
+    {"granularity": "granularity", "method": "method"},
+    {},
+    {"granularity": "Length of a time step.", "method": "Price of a time step."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListSpotPriceSeriesRequest__Aggregation.__module__ = __name__
+
+ListSpotPriceSeriesRequest__Aggregation.__doc__ = "Aggregation of the prices at each time step."
+
+setattr(ListSpotPriceSeriesRequest, "Aggregation", ListSpotPriceSeriesRequest__Aggregation)
+ListSpotPriceSeriesRequest__Aggregation__Granularity = _enum_class(
+    "nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.Aggregation.Granularity",
+    "ListSpotPriceSeriesRequest__Aggregation__Granularity",
+    {"GRANULARITY_UNSPECIFIED": 0, "GRANULARITY_MINUTE_15": 1, "GRANULARITY_HOUR_1": 2},
+)
+ListSpotPriceSeriesRequest__Aggregation__Granularity.__module__ = __name__
+
+ListSpotPriceSeriesRequest__Aggregation__Granularity.__doc__ = "Length of a time step."
+
+setattr(ListSpotPriceSeriesRequest__Aggregation, "Granularity", ListSpotPriceSeriesRequest__Aggregation__Granularity)
+ListSpotPriceSeriesRequest__Aggregation__Method = _enum_class(
+    "nebius.billing.v1alpha1.ListSpotPriceSeriesRequest.Aggregation.Method",
+    "ListSpotPriceSeriesRequest__Aggregation__Method",
+    {"METHOD_UNSPECIFIED": 0, "METHOD_FIRST_PRICE": 1, "METHOD_LAST_PRICE": 2, "METHOD_AVG_PRICE": 3},
+)
+ListSpotPriceSeriesRequest__Aggregation__Method.__module__ = __name__
+
+ListSpotPriceSeriesRequest__Aggregation__Method.__doc__ = "Price of a time step."
+
+setattr(ListSpotPriceSeriesRequest__Aggregation, "Method", ListSpotPriceSeriesRequest__Aggregation__Method)
+ListSpotPriceSeriesResponse = _message_class(
+    "nebius.billing.v1alpha1.ListSpotPriceSeriesResponse",
+    "ListSpotPriceSeriesResponse",
+    {"items": "items", "next_page_token": "next_page_token", "snapshot_time": "snapshot_time"},
+    {},
+    {
+        "items": "Price series, sorted by region and sku\\_id.",
+        "next_page_token": "Token for the next page. Empty on the last page.",
+        "snapshot_time": "Time when the prices in the response were taken.\nIf the prices were taken at different times, the field has the earliest time.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ListSpotPriceSeriesResponse.__module__ = __name__
+
 from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
 from .....aio.constant_channel import Constant as _Constant
 from .....aio.operation import Operation as _Operation
@@ -583,6 +827,57 @@ class OneTimeExportServiceClient(_ClientWithOperations):
 
 _register_client("nebius.billing.v1alpha1.OneTimeExportService", OneTimeExportServiceClient)
 
+from .....aio.client import Client as _Client, ClientWithOperations as _ClientWithOperations
+from .....aio.constant_channel import Constant as _Constant
+from .....aio.operation import Operation as _Operation
+from .....aio.request import Request as _Request
+from .....aio.request_kwargs import RequestKwargs as _RequestKwargs, StreamRequestKwargs as _StreamRequestKwargs
+from .....aio.route import Route as _Route
+from .....aio.stream import StreamRequest as _StreamRequest
+from .....base.fieldmask_protobuf import ensure_reset_mask_in_metadata as _ensure_reset_mask_in_metadata
+
+from typing_extensions import Unpack as _Unpack
+
+
+class SpotPriceServiceClient(_Client):
+    "Spot market prices of GPU compute platforms.\n\nThis class provides client methods for the ``nebius.billing.v1alpha1.SpotPriceService`` service."
+
+    __service_name__ = "nebius.billing.v1alpha1.SpotPriceService"
+    """Fully qualified protobuf service name for RPC routes."""
+    __api_service_name__ = "pricing-policies.billing-cpl"
+    """API gateway name for service routes."""
+    __registry__ = _REGISTRY
+    """Descriptor registry for request metadata."""
+    __PB2_DESCRIPTOR__ = _REGISTRY.service_descriptor("nebius.billing.v1alpha1.SpotPriceService")
+    """Alias for code that expects a protobuf service descriptor."""
+
+    @classmethod
+    def get_descriptor(cls):
+        """Return the protobuf service descriptor from the registry."""
+        return _REGISTRY.service_descriptor("nebius.billing.v1alpha1.SpotPriceService")
+
+    def list(
+        self, request: ListSpotPricesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListSpotPricesRequest, ListSpotPricesResponse]:
+        "Lists the current spot prices, one item for each SKU. Authentication is not required.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "List", request, _REGISTRY.message_class("nebius.billing.v1alpha1.ListSpotPricesResponse"), **kwargs
+        )
+
+    def list_series(
+        self, request: ListSpotPriceSeriesRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListSpotPriceSeriesRequest, ListSpotPriceSeriesResponse]:
+        "Lists the spot prices at regular time steps, one series for each SKU. Authentication is not required.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "ListSeries",
+            request,
+            _REGISTRY.message_class("nebius.billing.v1alpha1.ListSpotPriceSeriesResponse"),
+            **kwargs,
+        )
+
+
+_register_client("nebius.billing.v1alpha1.SpotPriceService", SpotPriceServiceClient)
+
 __all__ = [
     "CalculatorServiceClient",
     "CostBreakdown",
@@ -597,6 +892,10 @@ __all__ = [
     "GetOneTimeExportRequest",
     "ListOneTimeExportsRequest",
     "ListOneTimeExportsResponse",
+    "ListSpotPriceSeriesRequest",
+    "ListSpotPriceSeriesResponse",
+    "ListSpotPricesRequest",
+    "ListSpotPricesResponse",
     "OfferType",
     "OneTimeExport",
     "OneTimeExportServiceClient",
@@ -606,4 +905,10 @@ __all__ = [
     "OneTimeExportStatus",
     "ResourceGroupCost",
     "ResourceSpec",
+    "SpotPrice",
+    "SpotPriceComputeInstance",
+    "SpotPricePoint",
+    "SpotPriceSeries",
+    "SpotPriceServiceClient",
+    "SpotPriceValue",
 ]
