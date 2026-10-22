@@ -94,6 +94,18 @@ class SDK(Channel):
           finally:
               sdk.sync_close()
 
+    Always close the SDK. Explicit close is the deterministic contract. An SDK
+    that is dropped without close falls back to a garbage-collection finalizer.
+    The finalizer stops the SDK's own token renewal, closes idle pooled
+    transports, and shuts down the SDK loop and executor threads. The SDK does
+    not hold strong references from its internal bearers back to itself, so
+    renewal alone does not keep a dropped SDK alive. The fallback has limits.
+    Collection time depends on the Python garbage collector. Clients, requests,
+    operations, and user-supplied bearers or deferred channel futures that hold
+    the SDK keep it alive. A supplied loop that has stopped cannot run the
+    fallback cleanup. Cleanup also closes supplied bearers. Do not reuse them
+    after their SDK becomes unreachable. Close methods must cooperate with cancellation.
+
     To use a caller-owned loop, pass an already-running ``event_loop``. Closing
     the SDK does not stop or reconfigure a supplied loop or its default
     executor. Do not fill that executor with synchronous SDK waits: custom SDK

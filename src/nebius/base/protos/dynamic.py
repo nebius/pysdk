@@ -535,6 +535,12 @@ def _has_optional_keyword(field: FieldDescriptor) -> bool:
     return field.proto3_optional
 
 
+def _default_factory_for(descriptor: FieldDescriptor, codec: ValueCodec[Any]) -> Callable[[], Any]:
+    if descriptor.has_default_value and not _is_repeated(descriptor) and descriptor.message_type is None:
+        return lambda: codec.normalize(descriptor.default_value)
+    return codec.default
+
+
 def _direct_field(
     descriptor: FieldDescriptor,
     python_name: str,
@@ -558,11 +564,13 @@ def _direct_field(
         repeated = False
     to_python, from_python = _well_known_adapters(codec_descriptor, internal=internal)
     optional_keyword = _has_optional_keyword(descriptor)
+    codec = _codec_for(codec_descriptor, internal=internal)
     return Field(
         descriptor.name,
         python_name,
         descriptor.number,
-        _codec_for(codec_descriptor, internal=internal),
+        codec,
+        default_factory=_default_factory_for(descriptor, codec),
         repeated=repeated,
         packed=bool(getattr(descriptor, "is_packed", False)),
         # Message fields have protobuf presence, but the direct Python API
@@ -1026,7 +1034,7 @@ def extension(full_name: str) -> Extension[Any]:
             extendee.full_name,
             descriptor.number,
             codec,
-            codec.default,
+            _default_factory_for(descriptor, codec),
             repeated=_is_repeated(descriptor),
             packed=bool(getattr(descriptor, "is_packed", False)),
         )

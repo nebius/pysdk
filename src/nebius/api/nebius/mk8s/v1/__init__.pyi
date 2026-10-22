@@ -382,7 +382,9 @@ class GetClusterRequest(_Message):
         """Set or clear the generated ``id`` field."""
         ...
     @property
-    def resource_version(self) -> _builtins.str: ...
+    def resource_version(self) -> _builtins.str:
+        """This field is ignored. Omit it from requests."""
+        ...
     @resource_version.setter
     def resource_version(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``resource_version`` field."""
@@ -1921,7 +1923,9 @@ class GetNodeGroupRequest(_Message):
         """Set or clear the generated ``id`` field."""
         ...
     @property
-    def resource_version(self) -> _builtins.str: ...
+    def resource_version(self) -> _builtins.str:
+        """This field is ignored. Omit it from requests."""
+        ...
     @resource_version.setter
     def resource_version(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``resource_version`` field."""

@@ -2389,7 +2389,7 @@ def test_repeated_shutdown_does_not_block_borrowed_owner_loop() -> None:
         _stop_loop(loop, thread)
 
 
-def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
+def test_borrowed_shutdown_bypasses_rejecting_task_factory() -> None:
     """A rejecting custom task factory cannot strand shutdown completion."""
     loop, thread = _start_loop()
     runtime = AsyncRuntime(loop, 2)
@@ -2408,9 +2408,9 @@ def test_borrowed_shutdown_reports_rejected_preparation_task() -> None:
     assert factory_installed.wait(timeout=5)
     try:
         with pytest.raises(RuntimeError, match="The test rejected the shutdown task"):
-            runtime.shutdown_async().result(timeout=5)
-        with pytest.raises(RuntimeError, match="The test rejected the shutdown task"):
-            runtime.shutdown_async().result(timeout=5)
+            runtime.submit(asyncio.sleep(0)).result(timeout=5)
+        assert runtime.shutdown_async().result(timeout=5) is None
+        assert runtime.shutdown_async().result(timeout=5) is None
         assert loop.is_running()
     finally:
         _stop_loop(loop, thread)

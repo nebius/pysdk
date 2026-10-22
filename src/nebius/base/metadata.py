@@ -128,10 +128,19 @@ class Metadata(MutableSequence[tuple[str, str]]):
                 self._contents[index] = (value[0].lower(), value[1])
                 return
             else:
-                TypeError("If index is int, value must be Tuple[str,str]")
+                raise TypeError("If index is int, value must be Tuple[str,str]")
         if isinstance(index, slice):
-            for i, v in zip(range(len(self))[index], value):  # type: ignore[unused-ignore]
-                self[i] = v
+            entries = []
+            for entry in value:
+                if not (
+                    isinstance(entry, tuple)
+                    and len(entry) == 2
+                    and isinstance(entry[0], str)
+                    and isinstance(entry[1], str)
+                ):
+                    raise TypeError("If index is slice, value must be Iterable[Tuple[str,str]]")
+                entries.append((entry[0].lower(), entry[1]))
+            self._contents[index] = entries
             return
         if isinstance(index, str):  # type: ignore[unused-ignore]
             index = index.lower()

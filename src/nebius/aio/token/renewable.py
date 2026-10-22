@@ -75,6 +75,7 @@ from asyncio import (
     Task,
     create_task,
     gather,
+    get_running_loop,
     shield,
     sleep,
     wait,
@@ -86,6 +87,7 @@ from logging import getLogger
 from typing import Any, TypeVar, cast
 
 from ...base.error import SDKError
+from .._task_context import dispose_unstarted_awaitable
 from ..metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
@@ -112,6 +114,16 @@ log = getLogger(__name__)
 
 DEFAULT_REFRESH_REQUEST_TIMEOUT = timedelta(seconds=5)
 """Default timeout of one refresh request to the wrapped bearer."""
+
+
+async def _cancel_children(*tasks: Task[Any]) -> None:
+    """Cancel child tasks and wait for their cleanup to finish.
+
+    :param tasks: Tasks started by a renewal attempt.
+    """
+    for task in tasks:
+        task.cancel()
+    await gather(*tasks, return_exceptions=True)
 
 
 class RenewalError(SDKError):
@@ -387,6 +399,9 @@ class Bearer(ParentBearer):
         synchronous renewal is requested the caller waits for a new token
         to be fetched (or for the request timeout to expire).
 
+        A caller that joins an in-flight renewal uses that renewal's options
+        and request timeout. The caller's own ``timeout`` still limits its wait.
+
         :param timeout: Optional timeout in seconds for waiting for a token.
         :param options: Optional mapping of request flags. Recognized
             keys include:
@@ -416,7 +431,8 @@ class Bearer(ParentBearer):
         must_renew = self.is_renewal_required() or required
         if must_renew:
             log.debug(f"renewal required, timeout {timeout}")
-            if synchronous:
+            join_renewal = self._renewal_future is not None and not self._renewal_future.done()
+            if synchronous and not join_renewal:
                 self._break_previous_attempt.set()
                 await wait_for(self._synchronous_can_proceed.wait(), timeout)
                 if OPTION_RENEW_REQUEST_TIMEOUT in options:  # type: ignore
@@ -430,16 +446,14 @@ class Bearer(ParentBearer):
             if report_error or synchronous:
                 if self._renewal_future is None or self._renewal_future.done():
                     self._renewal_future = Future[Token]()
-                    # Observe errors even if every waiter leaves before renewal finishes.
-                    self._renewal_future.add_done_callback(
-                        lambda future: None if future.cancelled() else future.exception()
-                    )
+                    self._renewal_future.add_done_callback(self._discard_renewal_future)
 
+            renewal_future = self._renewal_future
             self._renew_requested.set()
             if report_error or synchronous:
                 try:
                     # A caller's timeout or cancellation must not cancel the shared result.
-                    token = await wait_for(shield(self._renewal_future), timeout)  # type: ignore
+                    token = await wait_for(shield(renewal_future), timeout)  # type: ignore
                     self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
                     return token
                 except Exception:
@@ -462,6 +476,23 @@ class Bearer(ParentBearer):
             self._metrics.cache_hit()
         return self._cache
 
+    def _discard_renewal_future(self, future: Future[Token]) -> None:
+        """Observe and drop a settled shared renewal result.
+
+        Observing the error prevents an unretrieved-exception warning when
+        every waiter leaves before renewal finishes. Dropping the future
+        matters for garbage collection: a waiter re-raises the same exception
+        object, and its traceback then references the waiter's frames,
+        including the channel. The renewal task must not keep that chain alive
+        through this bearer.
+
+        :param future: Settled shared renewal result.
+        """
+        if not future.cancelled():
+            future.exception()
+        if self._renewal_future is future:
+            self._renewal_future = None
+
     async def _fetch_once(self) -> Token:
         """Fetch a single token from the inner bearer.
 
@@ -481,10 +512,20 @@ class Bearer(ParentBearer):
             self._renew_synchronous_timeout = None
         token_task = create_task(self._source.receiver().fetch(timeout))
         breaker_task = create_task(self._break_previous_attempt.wait())
-        _done, pending = await wait(
-            [token_task, breaker_task],
-            return_when=FIRST_COMPLETED,
-        )
+        try:
+            _done, pending = await wait(
+                [token_task, breaker_task],
+                return_when=FIRST_COMPLETED,
+            )
+        except CancelledError:
+            # ``wait`` leaves its children running. On close, the source
+            # fetch must observe cancellation and finish its cleanup before
+            # this task completes, even on a caller-owned loop that stays up.
+            try:
+                await _cancel_children(token_task, breaker_task)
+            finally:
+                self._synchronous_can_proceed.set()
+            raise
         self._renew_requested.clear()
         self._synchronous_can_proceed.set()
         for t in pending:
@@ -508,6 +549,7 @@ class Bearer(ParentBearer):
         """
         log.debug("refresh task started")
         record_refresh = False
+        retry_timeout = self._initial_retry_timeout.total_seconds()
         while not self._is_stopped.is_set():
             refresh_start = metric_start()
             try:
@@ -533,9 +575,8 @@ class Bearer(ParentBearer):
                 if self._renewal_attempt <= 1 or abs(self._retry_timeout_exponent - 1) < 1e-9:
                     retry_timeout = self._initial_retry_timeout.total_seconds()
                 else:
-                    mul = self._retry_timeout_exponent ** (self._renewal_attempt - 1)
                     retry_timeout = min(
-                        self._initial_retry_timeout.total_seconds() * mul,
+                        retry_timeout * self._retry_timeout_exponent,
                         self._max_retry_timeout.total_seconds(),
                     )
                 if record_refresh:
@@ -567,7 +608,12 @@ class Bearer(ParentBearer):
         :param grace: Optional graceful shutdown timeout forwarded to the
             inner bearer's :meth:`close` method.
         """
-        source_close = create_task(self._source.close(grace=grace))
+        source_work = self._source.close(grace=grace)
+        try:
+            source_close = Task(source_work, loop=get_running_loop())
+        except BaseException:
+            dispose_unstarted_awaitable(source_work)
+            raise
         self.stop()
         for task in self._tasks:
             task.cancel()

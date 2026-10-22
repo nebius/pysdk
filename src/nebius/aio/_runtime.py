@@ -211,7 +211,31 @@ def _in_sdk_executor_thread() -> bool:
     return bool(getattr(_sdk_executor_worker, "active", False))
 
 
-_current_submission: ContextVar[tuple[AsyncRuntime, CrossLoopAwaitable[Any]] | None] = ContextVar(
+class _SubmissionBinding:
+    """Runtime and submission bound to one SDK task context.
+
+    The submission is held weakly. A child task copies the context of the
+    submission that created it and can outlive that submission, for example
+    a token renewal task started from a request. A strong reference would
+    keep the finished submission, its exception, the traceback, and every
+    caller frame in that traceback alive for as long as the child task runs.
+    A running submission is always held strongly by its caller or by runtime
+    tracking, so the weak reference resolves while it matters.
+    """
+
+    __slots__ = ("_submitted_ref", "runtime")
+
+    def __init__(self, runtime: AsyncRuntime, submitted: CrossLoopAwaitable[Any]) -> None:
+        self.runtime = runtime
+        self._submitted_ref = weakref.ref(submitted)
+
+    @property
+    def submitted(self) -> CrossLoopAwaitable[Any] | None:
+        """Return the bound submission, or ``None`` after it was collected."""
+        return self._submitted_ref()
+
+
+_current_submission: ContextVar[_SubmissionBinding | None] = ContextVar(
     "nebius_sdk_current_submission",
     default=None,
 )
@@ -766,7 +790,7 @@ class CrossLoopAwaitable(Generic[T]):
         """
         self._check_process()
         binding = _current_submission.get()
-        if binding is not None and binding[1] is self and not self._future.done():
+        if binding is not None and binding.submitted is self and not self._future.done():
             raise RuntimeError("A task cannot await its own SDK submission handle.")
         self._reject_executor_wait()
         loop = asyncio.get_running_loop()
@@ -1122,6 +1146,7 @@ class AsyncRuntime:
         awaitable: Awaitable[T],
         *,
         track: bool = True,
+        bypass_task_factory: bool = False,
     ) -> CrossLoopAwaitable[T]:
         """Submit an awaitable to the SDK event loop.
 
@@ -1133,6 +1158,7 @@ class AsyncRuntime:
         :param track: Track the submission for cancellation during close.
             Set this value to ``False`` only for shutdown work that the runtime
             must protect.
+        :param bypass_task_factory: Use a native task for lifecycle cleanup.
         :return: Cross-loop awaitable for the result.
         :raises RuntimeError: If runtime close has started.
         """
@@ -1143,7 +1169,11 @@ class AsyncRuntime:
             )
         self._reject_self_submission(awaitable)
         try:
-            return self._submit_without_disposal(awaitable, track=track)
+            return self._submit_without_disposal(
+                awaitable,
+                track=track,
+                bypass_task_factory=bypass_task_factory,
+            )
         except BaseException:
             # Custom close/cancellation hooks can re-enter SDK lifecycle APIs.
             # Run them only after the runtime admission lock is released.
@@ -1164,7 +1194,7 @@ class AsyncRuntime:
         if (
             isinstance(awaitable, CrossLoopAwaitable)
             and binding is not None
-            and binding[1] is awaitable
+            and binding.submitted is awaitable
             and not awaitable.done()
         ):
             # Wrapping the current handle would hide direct self-await behind
@@ -1180,6 +1210,7 @@ class AsyncRuntime:
         awaitable: Awaitable[T],
         *,
         track: bool = True,
+        bypass_task_factory: bool = False,
     ) -> CrossLoopAwaitable[T]:
         """Admit SDK work without invoking caller cleanup hooks on failure.
 
@@ -1189,6 +1220,7 @@ class AsyncRuntime:
 
         :param awaitable: Work to schedule.
         :param track: Track the submission for normal close cancellation.
+        :param bypass_task_factory: Use a native task for lifecycle cleanup.
         :return: Cross-loop awaitable for the result.
         :raises RuntimeError: If the runtime is closing or its loop stopped.
         """
@@ -1209,12 +1241,14 @@ class AsyncRuntime:
                         awaitable,
                         protect_task=not track,
                         track=track,
+                        bypass_task_factory=bypass_task_factory,
                     )
             elif rejection is None:
                 submitted = self._submit_to_loop(
                     awaitable,
                     protect_task=not track,
                     track=track,
+                    bypass_task_factory=bypass_task_factory,
                 )
         if rejection is not None:
             raise rejection
@@ -1226,6 +1260,7 @@ class AsyncRuntime:
         *,
         protect_task: bool = False,
         track: bool = True,
+        bypass_task_factory: bool = False,
     ) -> CrossLoopAwaitable[T]:
         """Schedule an awaitable on the SDK event loop.
 
@@ -1234,6 +1269,7 @@ class AsyncRuntime:
             cancellation.
         :param track: Add the public handle to runtime tracking before the
             task can start.
+        :param bypass_task_factory: Use a native task for lifecycle cleanup.
         :return: Cross-loop awaitable for the result.
         """
         event_loop = self._loop
@@ -1255,7 +1291,7 @@ class AsyncRuntime:
             with state_lock:
                 started = True
                 current_work = work[0]
-            token = _current_submission.set((self, submitted))
+            token = _current_submission.set(_SubmissionBinding(self, submitted))
             try:
                 return await self._run_awaitable(
                     current_work,
@@ -1347,7 +1383,11 @@ class AsyncRuntime:
 
             runner = run()
             try:
-                created_task = event_loop.create_task(runner)
+                if bypass_task_factory:
+                    # Lifecycle cleanup must not depend on a user task factory.
+                    created_task = asyncio.Task(runner, loop=event_loop)
+                else:
+                    created_task = event_loop.create_task(runner)
             except BaseException as start_error:
                 runner.close()
                 with state_lock:
@@ -1416,20 +1456,27 @@ class AsyncRuntime:
         except RuntimeError:
             pass
 
+    def in_submission_context(self) -> bool:
+        """Check runtime ownership independently of the parent handle's lifetime."""
+        binding = _current_submission.get()
+        return binding is not None and binding.runtime is self
+
     def protect_current_submission(self) -> CrossLoopAwaitable[Any] | None:
         """Protect the current internal close caller from normal cancellation.
 
-        :return: Current submission, or ``None`` if the caller is not a
-            runtime submission.
+        Inherited child tasks remain protected after their parent handle expires.
+
+        :return: Current submission, or ``None`` if its handle is unavailable.
         """
         binding = _current_submission.get()
-        submitted = binding[1] if binding is not None and binding[0] is self else None
+        submitted = binding.submitted if binding is not None and binding.runtime is self else None
         task = asyncio.current_task() if self.in_event_loop() else None
-        if submitted is not None:
-            with self._submissions_lock:
-                if submitted in self._submissions:
-                    self._protected_submissions.add(submitted)
-            self._notify_protected_state_change()
+        if binding is not None and binding.runtime is self:
+            if submitted is not None:
+                with self._submissions_lock:
+                    if submitted in self._submissions:
+                        self._protected_submissions.add(submitted)
+                self._notify_protected_state_change()
             if task is not None:
                 first_protection = task not in self._protected_tasks
                 self._protected_tasks.add(task)
@@ -1477,7 +1524,7 @@ class AsyncRuntime:
         between the caller and runtime shutdown.
         """
         binding = _current_submission.get()
-        submitted = binding[1] if binding is not None and binding[0] is self else None
+        submitted = binding.submitted if binding is not None and binding.runtime is self else None
         if submitted is not None:
             with self._submissions_lock:
                 if submitted in self._protected_submissions:
@@ -1688,7 +1735,7 @@ class AsyncRuntime:
         if task is not None:
             self._active_tasks.add(task)
             binding = _current_submission.get()
-            submitted = binding[1] if binding is not None and binding[0] is self else None
+            submitted = binding.submitted if binding is not None and binding.runtime is self else None
             if submitted is not None:
                 self._task_submissions[task] = submitted
             if protect_task:
@@ -1957,7 +2004,7 @@ class AsyncRuntime:
                 return
         preparation = self._prepare_shutdown()
         try:
-            self._loop.create_task(preparation)
+            asyncio.Task(preparation, loop=self._loop)
         except BaseException as error:
             dispose_unstarted_awaitable(preparation)
             with self._shutdown_prepare_lock:
@@ -2013,6 +2060,9 @@ class AsyncRuntime:
             # publishing runtime shutdown completion.
             await self.cancel_submissions()
             if self._owned:
+                # The private loop is shutting down; async-generator cleanup
+                # must not depend on a user task factory.
+                self._loop.set_task_factory(None)
                 # Match asyncio.run ordering while this loop can still make
                 # progress: cancel raw untracked tasks, close async generators,
                 # then drain the default executor. A worker can use
@@ -2117,6 +2167,8 @@ class AsyncRuntime:
 
     def _cancel_remaining_tasks(self) -> None:
         """Cancel and drain tasks before an owned loop closes."""
+        # This loop is closing permanently; factories cannot veto final cleanup.
+        self._loop.set_task_factory(None)
         pending = asyncio.all_tasks(self._loop)
         for task in pending:
             task.cancel()
