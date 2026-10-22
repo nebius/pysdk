@@ -185,7 +185,7 @@ class RenewableFileCacheBearer(ParentBearer):
     Wrap a custom bearer with a name and file cache::
 
         from nebius.sdk import SDK
-        from nebius.aio.token.token import Bearer, Receiver, Token
+        from nebius.aio.token.token import NamedBearer, Bearer, Receiver, Token
         from nebius.aio.token.file_cache.renewable_bearer import (
             RenewableFileCacheBearer
         )
@@ -203,7 +203,8 @@ class RenewableFileCacheBearer(ParentBearer):
                 return False
 
         custom_bearer = SomeCustomHeavyLoadBearer()
-        cached_bearer = RenewableFileCacheBearer(custom_bearer)
+        named_bearer = NamedBearer(custom_bearer, "heavy-load-bearer")
+        cached_bearer = RenewableFileCacheBearer(named_bearer)
 
         sdk = SDK(
             credentials=cached_bearer,

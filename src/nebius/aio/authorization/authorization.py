@@ -105,11 +105,14 @@ class Provider(ABC):
     Give a provider to the SDK through the ``credentials`` parameter::
 
         from nebius.sdk import SDK
-        from nebius.aio.authorization import Authenticator, Provider
+        from nebius.aio.authorization.authorization import Authenticator, Provider
 
         class MyAuthenticator(Authenticator):
             async def authenticate(self, metadata, timeout=None, options=None):
                 metadata.add("Authorization", "Bearer my-static-token")
+
+            def can_retry(self, err, options=None) -> bool:
+                return False
 
         class MyProvider(Provider):
             def authenticator(self):

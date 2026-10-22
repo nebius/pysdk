@@ -558,7 +558,7 @@ VmAppTemplateSpec = _message_class(
     {"definition": "definition"},
     {
         "container_template": "The container template definition.",
-        "kind": 'The template kind: "covm" or "devlab". The default is "covm".',
+        "kind": 'The template kind: "devlab" or legacy "covm".\nAn empty value represents the legacy "covm" kind.\nNew templates must use "devlab".',
     },
     {"definition": "The definition of the VM app template."},
     message_deprecation_details="",
@@ -1105,7 +1105,7 @@ ListVmAppTemplatesRequest = _message_class(
     {
         "categories": "The categories to match. The response includes templates that match at least one category.",
         "global_only": "Returns only global templates when true. The service ignores parent\\_id in this mode.\nGlobal catalog reads require authentication but do not require a resource permission.",
-        "kind": 'The template kind: "covm" or "devlab". The default is "covm".',
+        "kind": 'The template kind filter: "devlab" or legacy "covm".\nAn empty value selects legacy "covm" templates.',
         "page_size": "The requested page size. The service currently ignores this field and returns all matching templates.\nThe default value is 0.",
         "page_token": "The pagination token. The service currently ignores this field. Leave it empty.",
         "parent_id": "The project ID. The response includes templates from this project and the global catalog.\nRequired unless global\\_only is true.",

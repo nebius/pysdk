@@ -19,7 +19,20 @@ Create an asynchronous renewable bearer from a named network bearer::
 
 """
 
-from asyncio import FIRST_COMPLETED, CancelledError, Event, Future, Task, create_task, gather, sleep, wait, wait_for
+from asyncio import (
+    FIRST_COMPLETED,
+    CancelledError,
+    Event,
+    Future,
+    Task,
+    create_task,
+    gather,
+    get_running_loop,
+    shield,
+    sleep,
+    wait,
+    wait_for,
+)
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
@@ -27,6 +40,7 @@ from pathlib import Path
 from typing import Any, TypeVar, cast
 
 from ....base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
+from ..._task_context import dispose_unstarted_awaitable
 from ...metrics import (
     METRIC_RESULT_ERROR,
     METRIC_RESULT_SUCCESS,
@@ -45,7 +59,7 @@ from ..options import (
     OPTION_RENEW_SYNCHRONOUS,
     OPTION_REPORT_ERROR,
 )
-from ..renewable import RenewalError
+from ..renewable import RenewalError, _cancel_children
 from ..token import Bearer as ParentBearer
 from ..token import Receiver as ParentReceiver
 from ..token import Token
@@ -355,6 +369,9 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         asynchronously by the background refresh loop or synchronously if the
         caller requests it via provided options.
 
+        Concurrent waiters share one renewal result. A timeout or cancellation
+        stops only the caller's wait.
+
         Supported options
         -----------------
         - :data:`OPTION_RENEW_REQUIRED` -- Force a renewal even if a cached token
@@ -365,6 +382,9 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
           caller via the returned future.
         - :data:`OPTION_RENEW_REQUEST_TIMEOUT` -- When performing a synchronous
           request, this value (string float) can override the request timeout.
+
+        A caller that joins an in-flight renewal uses that renewal's options
+        and request timeout. The caller's own ``timeout`` still limits its wait.
 
         :param timeout: Timeout in seconds for synchronous waits.
         :param options: Optional dictionary of string options (see above).
@@ -400,7 +420,8 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         must_renew = self.is_renewal_required() or required
         if must_renew:
             log.debug(f"renewal required, timeout {timeout}")
-            if synchronous:
+            join_renewal = self._renewal_future is not None and not self._renewal_future.done()
+            if synchronous and not join_renewal:
                 self._break_previous_attempt.set()
                 await wait_for(self._synchronous_can_proceed.wait(), timeout)
                 if OPTION_RENEW_REQUEST_TIMEOUT in options:  # type: ignore
@@ -412,12 +433,15 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
                         log.error(f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float: {err=}")
                 self._renew_synchronous_options = options.copy()  # type: ignore
             if report_error or synchronous:
-                self._renewal_future = Future[Token]()
+                if self._renewal_future is None or self._renewal_future.done():
+                    self._renewal_future = Future[Token]()
+                    self._renewal_future.add_done_callback(self._discard_renewal_future)
 
+            renewal_future = self._renewal_future
             self._renew_requested.set()
             if report_error or synchronous:
                 try:
-                    token = await wait_for(self._renewal_future, timeout)  # type: ignore
+                    token = await wait_for(shield(renewal_future), timeout)  # type: ignore
                     self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
                     return token
                 except Exception:
@@ -443,6 +467,20 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
             self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
         return tok
 
+    def _discard_renewal_future(self, future: Future[Token]) -> None:
+        """Drop a settled shared renewal result.
+
+        A waiter re-raises the same exception object, and its traceback then
+        references the waiter's frames, including the channel. The renewal
+        task must not keep that chain alive through this bearer.
+
+        :param future: Settled shared renewal result.
+        """
+        if not future.cancelled():
+            future.exception()
+        if self._renewal_future is future:
+            self._renewal_future = None
+
     async def _fetch_once(self) -> Token:
         """Perform a single token refresh attempt.
 
@@ -453,6 +491,7 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
 
         :returns: The newly fetched :class:`Token`.
         """
+        self._renewal_attempt += 1
         tok = None
         log.debug(f"refreshing token, attempt {self._renewal_attempt}")
         self._break_previous_attempt.clear()
@@ -463,10 +502,20 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
             self._renew_synchronous_timeout = None
         token_task = create_task(self._source.receiver().fetch(timeout))
         breaker_task = create_task(self._break_previous_attempt.wait())
-        _done, pending = await wait(
-            [token_task, breaker_task],
-            return_when=FIRST_COMPLETED,
-        )
+        try:
+            _done, pending = await wait(
+                [token_task, breaker_task],
+                return_when=FIRST_COMPLETED,
+            )
+        except CancelledError:
+            # ``wait`` leaves its children running. On close, the source
+            # fetch must observe cancellation and finish its cleanup before
+            # this task completes, even on a caller-owned loop that stays up.
+            try:
+                await _cancel_children(token_task, breaker_task)
+            finally:
+                self._synchronous_can_proceed.set()
+            raise
         self._renew_requested.clear()
         self._synchronous_can_proceed.set()
         for t in pending:
@@ -555,9 +604,8 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
                 if self._renewal_attempt <= 1 or abs(self._retry_timeout_exponent - 1) < 1e-9:
                     retry_timeout = self._initial_retry_timeout.total_seconds()
                 else:
-                    mul = self._retry_timeout_exponent ** (self._renewal_attempt - 1)
                     retry_timeout = min(
-                        self._initial_retry_timeout.total_seconds() * mul,
+                        retry_timeout * self._retry_timeout_exponent,
                         self._max_retry_timeout.total_seconds(),
                     )
                 if record_refresh:
@@ -580,7 +628,12 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         :param grace: Optional grace period forwarded to the wrapped
             bearer's :meth:`close` method.
         """
-        source_close = create_task(self._source.close(grace=grace))
+        source_work = self._source.close(grace=grace)
+        try:
+            source_close = Task(source_work, loop=get_running_loop())
+        except BaseException:
+            dispose_unstarted_awaitable(source_work)
+            raise
         self.stop()
         for task in self._tasks:
             task.cancel()

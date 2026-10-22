@@ -81,7 +81,7 @@ from ..base.version import version
 from ._metadata_type import MetadataType
 from ._runtime import AsyncRuntime, CrossLoopAwaitable, LoopExceptionHandler, _validate_loop_exception_handler
 from ._task_context import bridge_awaitable, close_rejected_sync_awaitable, dispose_unstarted_awaitable
-from .abc import GracefulInterface
+from .abc import ClientChannelInterface, GracefulInterface
 from .authorization.authorization import Authenticator
 from .authorization.authorization import Provider as AuthorizationProvider
 from .authorization.token import TokenProvider
@@ -221,6 +221,8 @@ def _start_detached_foreign_close(
     owner_loop: AbstractEventLoop,
     name: str,
     completion: ConcurrentFuture[None] | None = None,
+    *,
+    bypass_task_factory: bool = False,
 ) -> bool:
     """Start and retain detached close work on the current owner loop.
 
@@ -232,10 +234,13 @@ def _start_detached_foreign_close(
     :param owner_loop: Running loop that owns ``close_coro``.
     :param name: Diagnostic task name.
     :param completion: Optional SDK lifecycle reservation to settle on failure.
+    :param bypass_task_factory: Use a native task for lifecycle cleanup.
     :return: ``True`` if task creation succeeded.
     """
     try:
-        task = create_task(close_coro, name=name)
+        task = (
+            Task(close_coro, loop=owner_loop, name=name) if bypass_task_factory else create_task(close_coro, name=name)
+        )
     except BaseException as error:
         dispose_unstarted_awaitable(close_coro)
         logger.error(
@@ -257,6 +262,8 @@ def _schedule_detached_close_factory(
     owner_loop: AbstractEventLoop,
     name: str,
     completion: ConcurrentFuture[None] | None = None,
+    *,
+    bypass_task_factory: bool = False,
 ) -> bool:
     """Create detached close work only after its owner loop executes.
 
@@ -269,6 +276,7 @@ def _schedule_detached_close_factory(
     :param owner_loop: Event loop that owns the close work.
     :param name: Diagnostic task name.
     :param completion: Optional SDK lifecycle reservation.
+    :param bypass_task_factory: Use a native task for lifecycle cleanup.
     :return: ``True`` if the loop accepted or started the close work.
     """
 
@@ -287,7 +295,13 @@ def _schedule_detached_close_factory(
                 except ConcurrentInvalidStateError:
                     pass
             return False
-        return _start_detached_foreign_close(close_coro, owner_loop, name, completion)
+        return _start_detached_foreign_close(
+            close_coro,
+            owner_loop,
+            name,
+            completion,
+            bypass_task_factory=bypass_task_factory,
+        )
 
     def start() -> None:
         """Run the close factory from a thread-safe loop callback."""
@@ -379,17 +393,208 @@ def _monitor_transport_closes() -> None:
                 pass
 
 
-def _finalize_runtime(runtime: AsyncRuntime, process_id: int) -> None:
-    """Shut down a runtime only in the process that created it.
+class _WeakChannel:
+    """Forward channel calls through a weak reference.
 
-    Threads and locks do not survive ``fork`` coherently. A child finalizer
-    must therefore avoid touching inherited runtime state.
+    Internal token bearers run background renewal tasks on the SDK event
+    loop. A strong channel reference from those tasks would keep a dropped
+    channel reachable forever, because the loop thread keeps the loop and its
+    tasks alive. Bearers that the channel creates for itself receive this
+    handle instead. Calls fail with :class:`ChannelClosedError` after the
+    channel is collected.
+    """
+
+    def __init__(self, channel: "Channel") -> None:
+        self._channel_ref = ref(channel)
+
+    def _get_channel(self) -> "Channel":
+        channel = self._channel_ref()
+        if channel is None:
+            raise ChannelClosedError(
+                "The SDK was garbage collected. Keep a reference to the SDK while it is in use.",
+            )
+        return channel
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._get_channel(), name)
+
+    # Explicit methods also support runtime protocol checks on Python 3.12.
+    def get_channel_by_method(self, method_name: str) -> AddressChannel:
+        return self._get_channel().get_channel_by_method(method_name)
+
+    def return_channel(self, chan: AddressChannel | None) -> None:
+        self._get_channel().return_channel(chan)
+
+    def discard_channel(self, chan: AddressChannel | None) -> None:
+        self._get_channel().discard_channel(chan)
+
+    def get_authorization_provider(
+        self,
+    ) -> AuthorizationProvider | None:
+        return self._get_channel().get_authorization_provider()
+
+    def parent_id(self) -> str | None:
+        return self._get_channel().parent_id()
+
+    def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
+        try:
+            channel = self._get_channel()
+        except ChannelClosedError:
+            close_rejected_sync_awaitable(awaitable)
+            raise
+        return channel.run_sync(awaitable, timeout)
+
+    def _release_channel_soon(self, chan: AddressChannel | None, *, discard: bool = False) -> None:
+        """Release without blocking, including after channel collection."""
+        channel = self._channel_ref()
+        if channel is not None:
+            channel._release_channel_soon(chan, discard=discard)
+        else:
+            self.release_channel(chan, discard=discard)
+
+    def release_channel(self, chan: AddressChannel | None, *, discard: bool = False) -> None:
+        """Close a returned lease when its parent channel was collected."""
+        channel = self._channel_ref()
+        if channel is not None:
+            channel.release_channel(chan, discard=discard)
+            return
+        if chan is None or not chan._retire_by_sdk():
+            return
+        owner_loop = chan.event_loop
+        if owner_loop is None:
+            try:
+                owner_loop = get_running_loop()
+            except RuntimeError:
+                pass
+        if owner_loop is None or not owner_loop.is_running():
+            logger.warning("The SDK cannot close an orphan transport because its owner loop stopped.")
+            return
+
+        async def close() -> None:
+            try:
+                await chan.channel.close(None)
+                chan._mark_closed_by_sdk()
+            except CancelledError:
+                pass
+            except Exception as error:
+                logger.error("The SDK could not close an orphan transport.", exc_info=error)
+
+        _schedule_detached_close_factory(
+            close,
+            owner_loop,
+            "nebius-orphan-transport-close",
+            bypass_task_factory=True,
+        )
+
+
+_FINALIZER_GRACE = 5.0
+
+
+def _finalize_channel(
+    runtime: AsyncRuntime,
+    process_id: int,
+    gracefuls: set[GracefulInterface],
+    free_channels: dict[str, list[AddressChannel]],
+    channel_pool_lock: Lock,
+) -> None:
+    """Release resources of a channel that was dropped without ``close()``.
+
+    This is a best-effort fallback. :meth:`Channel.close` remains the
+    deterministic contract. The finalizer stops registered bearers, closes
+    free pooled transports that belong to the SDK loop, and shuts the runtime
+    down. It runs only in the process that created the runtime, because
+    threads and locks do not survive ``fork`` coherently. After an explicit
+    close every step is a no-op.
+
+    The arguments must not reference the channel. A reference would keep the
+    channel alive and the finalizer would never run.
 
     :param runtime: Runtime owned by the finalized channel.
     :param process_id: Process that created ``runtime``.
+    :param gracefuls: Bearers and other closeable components of the channel.
+    :param free_channels: Pooled transports that no request holds.
+    :param channel_pool_lock: Lock that guards ``free_channels``.
     """
-    if os.getpid() == process_id:
+    if os.getpid() != process_id:
+        return
+
+    async def cleanup() -> None:
+        """Close bearers and idle transports, then shut the runtime down."""
+        try:
+            current_loop = get_running_loop()
+            with channel_pool_lock:
+                transports = [chan for chans in free_channels.values() for chan in chans]
+                free_channels.clear()
+            closes = list[Awaitable[Any]]()
+            for graceful in list(gracefuls):
+                try:
+                    closes.append(graceful.close(None))
+                except BaseException as error:
+                    logger.error("The SDK finalizer could not start closing a resource.", exc_info=error)
+            for chan in transports:
+                owner_loop = chan.event_loop
+                if owner_loop is None or owner_loop is current_loop:
+                    closes.append(chan.channel.close(None))
+                elif owner_loop.is_running():
+
+                    def close_transport(chan: AddressChannel = chan) -> Coroutine[Any, Any, None]:
+                        return chan.channel.close(None)
+
+                    _schedule_detached_close_factory(
+                        close_transport,
+                        owner_loop,
+                        "nebius-finalized-transport-close",
+                        bypass_task_factory=True,
+                    )
+                else:
+                    logger.warning("The SDK cannot close a finalized transport because its owner loop stopped.")
+
+            async def wait_for_close(close_work: Awaitable[Any]) -> Any:
+                return await close_work
+
+            scheduled = list[Task[Any]]()
+            for close_work in closes:
+                wrapper = wait_for_close(close_work)
+                try:
+                    scheduled.append(Task(wrapper, loop=current_loop))
+                except BaseException as error:
+                    dispose_unstarted_awaitable(wrapper)
+                    dispose_unstarted_awaitable(close_work)
+                    logger.error("The SDK finalizer could not schedule a resource close.", exc_info=error)
+            try:
+                # The grace period requires close methods to cooperate with cancellation.
+                results = await wait_for(gather(*scheduled, return_exceptions=True), _FINALIZER_GRACE)
+            except AsyncTimeoutError:
+                logger.error("The SDK finalizer timed out while closing resources.")
+                results = []
+            for result in results:
+                if isinstance(result, BaseException) and not isinstance(result, CancelledError):
+                    logger.error("The SDK finalizer could not close a resource.", exc_info=result)
+        finally:
+            runtime.shutdown_async()
+
+    def finish(completed: CrossLoopAwaitable[None]) -> None:
+        """Observe cleanup failure and always start runtime shutdown."""
+        try:
+            completed._result()
+        except (CancelledError, ConcurrentCancelledError):
+            logger.warning("The SDK finalizer cleanup stopped before it finished.")
+        except BaseException as error:
+            logger.error("The SDK finalizer could not finish cleanup.", exc_info=error)
+        finally:
+            runtime.shutdown_async()
+
+    try:
+        submitted = runtime.submit(cleanup(), track=False, bypass_task_factory=True)
+    except BaseException:
+        # The runtime is already closing, or its loop cannot accept work.
+        # Runtime shutdown cancels loop tasks, including token renewal.
         runtime.shutdown_async()
+    else:
+        submitted._add_internal_done_callback(finish)
+        # Shutdown drains protected cleanup and watches a supplied loop for stops.
+        shutdown = runtime.shutdown_async()
+        shutdown._add_internal_done_callback(lambda _: submitted.cancel())
 
 
 def _shutdown_runtime_on_init_failure(
@@ -1766,12 +1971,23 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             loop_exception_handler=(loop_exception_handler if event_loop is None else None),
         )
         self._event_loop = self._runtime.event_loop
+        self._gracefuls = set[GracefulInterface]()
+        self._free_channels = dict[str, list[AddressChannel]]()
+        self._channel_pool_lock = Lock()
+        # Fallback cleanup for a channel dropped without close(). The
+        # finalizer arguments must not reference ``self``.
         self._runtime_finalizer = finalize(
             self,
-            _finalize_runtime,
+            _finalize_channel,
             self._runtime,
             self._process_id,
+            self._gracefuls,
+            self._free_channels,
+            self._channel_pool_lock,
         )
+        # Internal bearers hold this weak handle instead of ``self``. See
+        # ``_WeakChannel``.
+        weak_self: ClientChannelInterface = _WeakChannel(self)
         self._close_submit_lock = Lock()
         self._close_handle: CrossLoopAwaitable[None] | None = None
         self._closed = False
@@ -1801,7 +2017,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._max_free_channels_per_address = max_free_channels_per_address
 
-        self._gracefuls = set[GracefulInterface]()
         self._tasks = set[Any]()
         self._transport_closes = dict[
             int,
@@ -1832,9 +2047,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             tls_credentials = ssl_channel_credentials(root_certificates=trusted_certs)
         self._tls_credentials = tls_credentials
 
-        self._free_channels = dict[str, list[AddressChannel]]()
         self._leased_channels = dict[int, AddressChannel]()
-        self._channel_pool_lock = Lock()
         self._close_completion: ConcurrentFuture[None] | None = None
         self._close_task: Task[None] | None = None
         self._channel_lifecycle_ready = True
@@ -1897,7 +2110,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 try:
                     credentials = self._runtime.call_with_context(
                         config_reader.get_credentials,
-                        self,
+                        weak_self,
                         writer=federation_invitation_writer,
                         no_browser_open=federation_invitation_no_browser_open,
                     )
@@ -1930,11 +2143,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
             credentials = ServiceAccountBearer(
                 credentials,
-                self,
+                weak_self,
                 metrics=self._auth_metrics,
             )
         if isinstance(credentials, TokenRequestReader):
-            exchange = exchangeable.Bearer(credentials, self, metrics=self._auth_metrics)
+            exchange = exchangeable.Bearer(credentials, weak_self, metrics=self._auth_metrics)
             cache = renewable.Bearer(exchange, metrics=self._auth_metrics)
             credentials = cache
         if isinstance(credentials, TokenBearer):
@@ -2433,7 +2646,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             raise LoopError(
                 "An SDK executor worker cannot close the SDK. Start and await close() outside the SDK executor.",
             )
-        current_submission = self._runtime.protect_current_submission()
+        internal_caller = self._runtime.in_event_loop() and self._runtime.in_submission_context()
+        current_submission = self._runtime.protect_current_submission() if internal_caller else None
         closing = self._get_close_handle(grace)
         try:
             await shield(closing)
@@ -2445,12 +2659,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 # Runtime shutdown must not inject a second cancellation into
                 # the caller's asynchronous finalizer.
                 self._runtime.mark_current_task_cancelling()
-            if current_submission is None and closing.done():
+            if not internal_caller and closing.done():
                 try:
                     await shield(self._runtime.shutdown_async())
                 except BaseException as shutdown_error:
                     raise close_error from shutdown_error
-            elif current_submission is not None:
+            elif internal_caller:
                 self._shutdown_after_internal_caller(
                     current_submission,
                     closing,
@@ -2459,7 +2673,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             else:
                 closing._add_internal_done_callback(lambda _: self._runtime.shutdown_async())
             raise
-        if current_submission is None:
+        if not internal_caller:
             await shield(self._runtime.shutdown_async())
         else:
             self._shutdown_after_internal_caller(

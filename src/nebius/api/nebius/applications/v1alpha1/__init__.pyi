@@ -1119,7 +1119,7 @@ class VmAppTemplateSpec(_Message):
         ...
     @property
     def kind(self) -> _builtins.str:
-        """The template kind: \"covm\" or \"devlab\". The default is \"covm\"."""
+        """The template kind: \"devlab\" or legacy \"covm\".\nAn empty value represents the legacy \"covm\" kind.\nNew templates must use \"devlab\"."""
         ...
     @kind.setter
     def kind(self, value: _builtins.str | None) -> None:
@@ -2592,7 +2592,7 @@ class ListVmAppTemplatesRequest(_Message):
         ...
     @property
     def kind(self) -> _builtins.str:
-        """The template kind: \"covm\" or \"devlab\". The default is \"covm\"."""
+        """The template kind filter: \"devlab\" or legacy \"covm\".\nAn empty value selects legacy \"covm\" templates."""
         ...
     @kind.setter
     def kind(self, value: _builtins.str | None) -> None:

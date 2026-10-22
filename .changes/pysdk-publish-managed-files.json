@@ -173,6 +173,8 @@
     "tests/__init__.py",
     "tests/grpc_service.py",
     "tests/test_async_calls.py",
+    "tests/test_audit_fixes.py",
+    "tests/test_autoclose.py",
     "tests/test_channel_pool.py",
     "tests/test_cli_config_authorization.py",
     "tests/test_config_loading.py",
