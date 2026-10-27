@@ -1625,7 +1625,7 @@ RuleIngress = _message_class(
     {},
     {
         "destination_ports": "List of destination ports to which the rule applies.\nOptional. Empty list means any port.\nValid range: 1\u201365535.\nMaximum of 8 ports can be specified.",
-        "source_cidrs": "CIDR blocks as the source.\nOptional. Empty list means any address.\nMust be a valid IPv4\nMaximum of 8 CIDRs can be specified.",
+        "source_cidrs": "CIDR blocks as the source.\nOptional. Empty list means any address.\nEach value must be a valid IPv4 CIDR.\nSpecify at most 8 CIDRs.",
         "source_security_group_id": "ID of the referenced Security Group as the source.",
     },
     {},
@@ -1647,7 +1647,7 @@ RuleEgress = _message_class(
     },
     {},
     {
-        "destination_cidrs": "CIDR blocks as the destination.\nOptional. Empty list means any address.\nMust be a valid IPv4.\nMaximum of 8 CIDRs can be specified.",
+        "destination_cidrs": "CIDR blocks as the destination.\nOptional. Empty list means any address.\nEach value must be a valid IPv4 CIDR.\nSpecify at most 8 CIDRs.",
         "destination_ports": "List of ports to which the rule applies.\nOptional. Empty list means any port.\nValid range: 1\u201365535.\nMaximum of 8 ports can be specified.",
         "destination_security_group_id": "ID of the referenced Security Group as the destination.",
     },
