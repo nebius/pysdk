@@ -2858,7 +2858,7 @@ class RuleIngress(_Message):
         ...
     @property
     def source_cidrs(self) -> _MutableSequence[_builtins.str]:
-        """CIDR blocks as the source.\nOptional. Empty list means any address.\nMust be a valid IPv4\nMaximum of 8 CIDRs can be specified."""
+        """CIDR blocks as the source.\nOptional. Empty list means any address.\nEach value must be a valid IPv4 CIDR.\nSpecify at most 8 CIDRs."""
         ...
     @source_cidrs.setter
     def source_cidrs(self, value: _Iterable[_builtins.str] | None) -> None:
@@ -2895,7 +2895,7 @@ class RuleEgress(_Message):
         ...
     @property
     def destination_cidrs(self) -> _MutableSequence[_builtins.str]:
-        """CIDR blocks as the destination.\nOptional. Empty list means any address.\nMust be a valid IPv4.\nMaximum of 8 CIDRs can be specified."""
+        """CIDR blocks as the destination.\nOptional. Empty list means any address.\nEach value must be a valid IPv4 CIDR.\nSpecify at most 8 CIDRs."""
         ...
     @destination_cidrs.setter
     def destination_cidrs(self, value: _Iterable[_builtins.str] | None) -> None:
