@@ -777,7 +777,7 @@ def message_class(
         "__module__": None,
         "__PROTO_FULL_NAME__": full_name,
         "__REGISTRY__": REGISTRY,
-        "__EXTENSION_REGISTRY__": _EXTENSIONS,
+        "__EXTENSION_REGISTRY__": _EXTENSIONS if descriptor.is_extendable else None,
         "__PROTO_DESCRIPTOR__": REGISTRY.message_descriptor(full_name),
         "__PB2_DESCRIPTOR__": REGISTRY.message_descriptor(full_name),
         "__PY_TO_PB2__": {
