@@ -1548,7 +1548,7 @@ class ContainerTemplateDefinition(_Message):
         ...
     @property
     def icon_url(self) -> _builtins.str:
-        """The URL of the template icon."""
+        """The template icon URL for light mode and clients without theme support."""
         ...
     @icon_url.setter
     def icon_url(self, value: _builtins.str | None) -> None:
@@ -1586,6 +1586,14 @@ class ContainerTemplateDefinition(_Message):
     def substitutions(self, value: _Iterable[ContainerTemplateDefinition__Substitution] | None) -> None:
         """Set or clear the generated ``substitutions`` field."""
         ...
+    @property
+    def dark_icon_url(self) -> _builtins.str:
+        """The template icon URL for dark mode. Use icon\\_url when this value is empty."""
+        ...
+    @dark_icon_url.setter
+    def dark_icon_url(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``dark_icon_url`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -1596,6 +1604,7 @@ class ContainerTemplateDefinition(_Message):
         containers: _Iterable[ContainerDefinition] | None | _UnsetType = ...,
         supported_platforms: _Iterable[SupportedPlatform] | None | _UnsetType = ...,
         substitutions: _Iterable[ContainerTemplateDefinition__Substitution] | None | _UnsetType = ...,
+        dark_icon_url: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -2376,7 +2385,7 @@ class VmAppTemplateStatus(_Message):
         ...
     @property
     def icon_url(self) -> _builtins.str:
-        """The URL of the template icon."""
+        """The template icon URL for light mode and clients without theme support."""
         ...
     @icon_url.setter
     def icon_url(self, value: _builtins.str | None) -> None:
@@ -2406,6 +2415,14 @@ class VmAppTemplateStatus(_Message):
     def categories(self, value: _Iterable[_builtins.str] | None) -> None:
         """Set or clear the generated ``categories`` field."""
         ...
+    @property
+    def dark_icon_url(self) -> _builtins.str:
+        """The template icon URL for dark mode. Use icon\\_url when this value is empty."""
+        ...
+    @dark_icon_url.setter
+    def dark_icon_url(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``dark_icon_url`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -2415,6 +2432,7 @@ class VmAppTemplateStatus(_Message):
         input_fields: _Iterable[TemplateInputField] | None | _UnsetType = ...,
         supported_platforms: _Iterable[SupportedPlatform] | None | _UnsetType = ...,
         categories: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        dark_icon_url: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...

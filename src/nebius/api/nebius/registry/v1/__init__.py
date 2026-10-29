@@ -200,7 +200,7 @@ RegistrySpec = _message_class(
     "RegistrySpec",
     {"description": "description", "images_count": "images_count"},
     {},
-    {"images_count": "Registry.Type type = 2;"},
+    {},
     {},
     message_deprecation_details="",
     field_deprecation_details={},
