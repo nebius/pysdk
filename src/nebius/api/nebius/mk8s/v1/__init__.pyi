@@ -102,7 +102,7 @@ class ControlPlaneSpec(_Message):
         ...
     @property
     def subnet_id(self) -> _builtins.str:
-        """Nebius VPC Subnet ID where control plane instances will be located.\nAlso will be default NodeGroup subnet."""
+        """Nebius VPC Subnet ID where control plane instances will be located.\nIf it isn't specified default network of the parent container will be used.\nAlso will be default NodeGroup subnet."""
         ...
     @subnet_id.setter
     def subnet_id(self, value: _builtins.str | None) -> None:

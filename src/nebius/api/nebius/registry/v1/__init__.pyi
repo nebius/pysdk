@@ -259,9 +259,7 @@ class RegistrySpec(_Message):
         """Set or clear the generated ``description`` field."""
         ...
     @property
-    def images_count(self) -> _builtins.int:
-        """Registry.Type type = 2;"""
-        ...
+    def images_count(self) -> _builtins.int: ...
     @images_count.setter
     def images_count(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``images_count`` field."""
