@@ -598,6 +598,14 @@ class QuotaFailure__Violation(_Message):
     def requested(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``requested`` field."""
         ...
+    @property
+    def region(self) -> _builtins.str:
+        """Region for the violation, if known. E.g. \"eu-north1\"."""
+        ...
+    @region.setter
+    def region(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``region`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -606,6 +614,7 @@ class QuotaFailure__Violation(_Message):
         message: _builtins.str | None | _UnsetType = ...,
         limit: _builtins.str | None | _UnsetType = ...,
         requested: _builtins.str | None | _UnsetType = ...,
+        region: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
