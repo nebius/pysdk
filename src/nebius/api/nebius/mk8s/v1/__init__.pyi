@@ -1040,6 +1040,14 @@ class NodeTemplate(_Message):
     def spot_pricing_policy(self, value: SpotPricingPolicySpec | None) -> None:
         """Set or clear the generated ``spot_pricing_policy`` field."""
         ...
+    @property
+    def container_runtime(self) -> ContainerRuntime:
+        """Configures container runtime for the node group."""
+        ...
+    @container_runtime.setter
+    def container_runtime(self, value: ContainerRuntime | None) -> None:
+        """Set or clear the generated ``container_runtime`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -1064,6 +1072,7 @@ class NodeTemplate(_Message):
         on_demand: OnDemandSpec | None | _UnsetType = ...,
         follows_spot_price: FollowsSpotPriceSpec | None | _UnsetType = ...,
         spot_pricing_policy: SpotPricingPolicySpec | None | _UnsetType = ...,
+        container_runtime: ContainerRuntime | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -1784,6 +1793,37 @@ class NodeGroupStatus(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class ContainerRuntime__SOCIPullMode(_Enum):
+    """Image pull modes for SOCI Snapshotter"""
+
+    SOCI_PULL_MODE_UNSPECIFIED = ...
+    """Uses the default containerd pull."""
+    LAZY = ...
+    """Uses SOCI Snapshotter to fetch image layers on demand."""
+    PARALLEL = ...
+    """Uses SOCI Snapshotter to download and unpack image layers in parallel."""
+
+class ContainerRuntime(_Message):
+    """Configures container runtime for the node group."""
+
+    SOCIPullMode: _TypeAlias = ContainerRuntime__SOCIPullMode
+    @property
+    def soci_pull_mode(self) -> ContainerRuntime__SOCIPullMode:
+        """Uses SOCI Snapshotter to pull images."""
+        ...
+    @soci_pull_mode.setter
+    def soci_pull_mode(self, value: ContainerRuntime__SOCIPullMode | None) -> None:
+        """Set or clear the generated ``soci_pull_mode`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        soci_pull_mode: ContainerRuntime__SOCIPullMode | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class GetNodeGroupCompatibilityMatrixRequest(_Message):
     @property
     def cluster_kubernetes_version(self) -> _builtins.str:
@@ -2274,6 +2314,7 @@ __all__ = [
     "ClusterSpec",
     "ClusterStatus",
     "ConditionStatus",
+    "ContainerRuntime",
     "ControlPlaneEndpointsSpec",
     "ControlPlaneSpec",
     "ControlPlaneStatus",
