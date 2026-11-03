@@ -4887,6 +4887,11 @@ class AuthPublicKeyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Op
     ) -> _Request[GetAuthPublicKeyRequest, AuthPublicKey]:
         """The request object is returned without starting the RPC."""
         ...
+    def get_by_name(
+        self, request: _type_nebius_common_v1_GetByNameRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[_type_nebius_common_v1_GetByNameRequest, AuthPublicKey]:
+        """The request object is returned without starting the RPC."""
+        ...
     def list(
         self, request: ListAuthPublicKeyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListAuthPublicKeyRequest, ListAuthPublicKeyResponse]:

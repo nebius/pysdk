@@ -641,12 +641,21 @@ class NetworkStatus(_Message):
     def scope_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``scope_id`` field."""
         ...
+    @property
+    def default(self) -> _builtins.bool:
+        """Indicates whether this is the project's default network."""
+        ...
+    @default.setter
+    def default(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``default`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         state: NetworkStatus__State | None | _UnsetType = ...,
         scope_id: _builtins.str | None | _UnsetType = ...,
+        default: _builtins.bool | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -1718,12 +1727,21 @@ class SubnetStatus(_Message):
     def ipv4_cidrs(self, value: _Iterable[_builtins.str] | None) -> None:
         """Set or clear the generated ``ipv4_cidrs`` field."""
         ...
+    @property
+    def default(self) -> _builtins.bool:
+        """Indicates whether this is the network's default subnet."""
+        ...
+    @default.setter
+    def default(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``default`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         state: SubnetStatus__State | None | _UnsetType = ...,
         ipv4_cidrs: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        default: _builtins.bool | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...

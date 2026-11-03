@@ -359,7 +359,9 @@ class CreateClusterRequest(_Message):
         """Set or clear the generated ``metadata`` field."""
         ...
     @property
-    def spec(self) -> ClusterSpec: ...
+    def spec(self) -> ClusterSpec:
+        """Specification of a cluster to create. If spec is not specified cluster will be created within default network of the specified parent\nproject."""
+        ...
     @spec.setter
     def spec(self, value: ClusterSpec | None) -> None:
         """Set or clear the generated ``spec`` field."""
