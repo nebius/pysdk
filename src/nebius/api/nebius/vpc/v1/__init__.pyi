@@ -851,6 +851,14 @@ class NetworkStatus(_Message):
         """Set or clear the generated ``state`` field."""
         ...
     @property
+    def default(self) -> _builtins.bool:
+        """Indicates whether this is the project's default network."""
+        ...
+    @default.setter
+    def default(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``default`` field."""
+        ...
+    @property
     def default_route_table_id(self) -> _builtins.str:
         """ID of the network's default route table."""
         ...
@@ -863,6 +871,7 @@ class NetworkStatus(_Message):
         initial_message: _SerializableMessage | None = None,
         *,
         state: NetworkStatus__State | None | _UnsetType = ...,
+        default: _builtins.bool | None | _UnsetType = ...,
         default_route_table_id: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
@@ -3422,6 +3431,14 @@ class SubnetStatus(_Message):
         """Set or clear the generated ``route_table`` field."""
         ...
     @property
+    def default(self) -> _builtins.bool:
+        """Indicates whether this is the network's default subnet."""
+        ...
+    @default.setter
+    def default(self, value: _builtins.bool | None) -> None:
+        """Set or clear the generated ``default`` field."""
+        ...
+    @property
     def ipv4_private_pools(self) -> _MutableSequence[SubnetStatusPool]:
         """Private IPv4 pools available for allocations in this subnet."""
         ...
@@ -3445,6 +3462,7 @@ class SubnetStatus(_Message):
         ipv4_private_cidrs: _Iterable[_builtins.str] | None | _UnsetType = ...,
         ipv4_public_cidrs: _Iterable[_builtins.str] | None | _UnsetType = ...,
         route_table: SubnetAssociatedRouteTable | None | _UnsetType = ...,
+        default: _builtins.bool | None | _UnsetType = ...,
         ipv4_private_pools: _Iterable[SubnetStatusPool] | None | _UnsetType = ...,
         ipv4_public_pools: _Iterable[SubnetStatusPool] | None | _UnsetType = ...,
     ) -> None:

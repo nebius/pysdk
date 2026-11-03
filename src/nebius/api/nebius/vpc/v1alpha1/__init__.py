@@ -73,7 +73,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1alpha1/network.proto",
-    b'\n!nebius/vpc/v1alpha1/network.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xc9\x01\n\x07Network\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x124\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1alpha1.NetworkSpecR\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b2".nebius.vpc.v1alpha1.NetworkStatusR\x06status"E\n\x0bNetworkSpec\x126\n\x05pools\x18\x01 \x03(\x0b2 .nebius.vpc.v1alpha1.NetworkPoolR\x05pools":\n\x0bNetworkPool\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId"\xc0\x01\n\rNetworkStatus\x12>\n\x05state\x18\x01 \x01(\x0e2(.nebius.vpc.v1alpha1.NetworkStatus.StateR\x05state\x12(\n\x08scope_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08vpcscopeR\x07scopeId"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08DELETING\x10\x03B_\n\x1aai.nebius.pub.vpc.v1alpha1B\x0cNetworkProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
+    b'\n!nebius/vpc/v1alpha1/network.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xc9\x01\n\x07Network\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x124\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1alpha1.NetworkSpecR\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b2".nebius.vpc.v1alpha1.NetworkStatusR\x06status"E\n\x0bNetworkSpec\x126\n\x05pools\x18\x01 \x03(\x0b2 .nebius.vpc.v1alpha1.NetworkPoolR\x05pools":\n\x0bNetworkPool\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId"\xda\x01\n\rNetworkStatus\x12>\n\x05state\x18\x01 \x01(\x0e2(.nebius.vpc.v1alpha1.NetworkStatus.StateR\x05state\x12(\n\x08scope_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08vpcscopeR\x07scopeId\x12\x18\n\x07default\x18\x03 \x01(\x08R\x07default"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08DELETING\x10\x03B_\n\x1aai.nebius.pub.vpc.v1alpha1B\x0cNetworkProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
 )
 _register_file(
     "nebius/vpc/v1alpha1/network_interface.proto",
@@ -97,7 +97,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1alpha1/subnet.proto",
-    b'\n nebius/vpc/v1alpha1/subnet.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1enebius/vpc/v1alpha1/pool.proto"\xc6\x01\n\x06Subnet\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetSpecR\x04spec\x129\n\x06status\x18\x03 \x01(\x0b2!.nebius.vpc.v1alpha1.SubnetStatusR\x06status"\xad\x01\n\nSubnetSpec\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12=\n\x05pools\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetPoolB\x06\xbaH\x03\xc8\x01\x01R\x05pools\x12*\n\x11enable_egress_nat\x18\x03 \x01(\x08R\x0fenableEgressNat"\x7f\n\nSubnetPool\x129\n\x04spec\x18\x01 \x01(\x0b2#.nebius.vpc.v1alpha1.SubnetPoolSpecH\x00R\x04spec\x12\'\n\x07pool_id\x18\x02 \x01(\tB\x0c\xe2J\t\n\x07vpcpoolH\x00R\x06poolIdB\r\n\x04pool\x12\x05\xbaH\x02\x08\x01"\x89\x01\n\x0eSubnetPoolSpec\x12@\n\x07version\x18\x01 \x01(\x0e2\x1e.nebius.vpc.v1alpha1.IpVersionB\x06\xbaH\x03\xc8\x01\x01R\x07version\x125\n\x05cidrs\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetCidrR\x05cidrs"\xa0\x03\n\nSubnetCidr\x12\x9d\x02\n\x04cidr\x18\x01 \x01(\tB\x88\x02\xbaH\x84\x02\xba\x01\xac\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1agthis == \'\' || this.matches(\'^/([0-9]|[1-9][0-9]|1[0-2][0-8])$\') || this.isIp() || this.isIpPrefix(true)\xba\x01N\n\x0fstring.ip_empty\x12/value is empty, which is not a valid IP address\x1a\nthis != \'\'\xc8\x01\x01R\x04cidr\x12@\n\x05state\x18\x02 \x01(\x0e2".nebius.vpc.v1alpha1.PoolCidrStateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x120\n\x0callowed_mask\x18\x03 \x01(\x03B\r\xbaH\n\xc8\x01\x01"\x05\x18\x80\x01(\x00R\x0ballowedMask"\xb3\x01\n\x0cSubnetStatus\x12=\n\x05state\x18\x01 \x01(\x0e2\'.nebius.vpc.v1alpha1.SubnetStatus.StateR\x05state\x12\x1d\n\nipv4_cidrs\x18\x02 \x03(\tR\tipv4Cidrs"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08DELETING\x10\x03B^\n\x1aai.nebius.pub.vpc.v1alpha1B\x0bSubnetProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
+    b'\n nebius/vpc/v1alpha1/subnet.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1enebius/vpc/v1alpha1/pool.proto"\xc6\x01\n\x06Subnet\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetSpecR\x04spec\x129\n\x06status\x18\x03 \x01(\x0b2!.nebius.vpc.v1alpha1.SubnetStatusR\x06status"\xad\x01\n\nSubnetSpec\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12=\n\x05pools\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetPoolB\x06\xbaH\x03\xc8\x01\x01R\x05pools\x12*\n\x11enable_egress_nat\x18\x03 \x01(\x08R\x0fenableEgressNat"\x7f\n\nSubnetPool\x129\n\x04spec\x18\x01 \x01(\x0b2#.nebius.vpc.v1alpha1.SubnetPoolSpecH\x00R\x04spec\x12\'\n\x07pool_id\x18\x02 \x01(\tB\x0c\xe2J\t\n\x07vpcpoolH\x00R\x06poolIdB\r\n\x04pool\x12\x05\xbaH\x02\x08\x01"\x89\x01\n\x0eSubnetPoolSpec\x12@\n\x07version\x18\x01 \x01(\x0e2\x1e.nebius.vpc.v1alpha1.IpVersionB\x06\xbaH\x03\xc8\x01\x01R\x07version\x125\n\x05cidrs\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetCidrR\x05cidrs"\xa0\x03\n\nSubnetCidr\x12\x9d\x02\n\x04cidr\x18\x01 \x01(\tB\x88\x02\xbaH\x84\x02\xba\x01\xac\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1agthis == \'\' || this.matches(\'^/([0-9]|[1-9][0-9]|1[0-2][0-8])$\') || this.isIp() || this.isIpPrefix(true)\xba\x01N\n\x0fstring.ip_empty\x12/value is empty, which is not a valid IP address\x1a\nthis != \'\'\xc8\x01\x01R\x04cidr\x12@\n\x05state\x18\x02 \x01(\x0e2".nebius.vpc.v1alpha1.PoolCidrStateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x120\n\x0callowed_mask\x18\x03 \x01(\x03B\r\xbaH\n\xc8\x01\x01"\x05\x18\x80\x01(\x00R\x0ballowedMask"\xcd\x01\n\x0cSubnetStatus\x12=\n\x05state\x18\x01 \x01(\x0e2\'.nebius.vpc.v1alpha1.SubnetStatus.StateR\x05state\x12\x1d\n\nipv4_cidrs\x18\x02 \x03(\tR\tipv4Cidrs\x12\x18\n\x07default\x18\x04 \x01(\x08R\x07default"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08DELETING\x10\x03B^\n\x1aai.nebius.pub.vpc.v1alpha1B\x0bSubnetProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
 )
 _register_file(
     "nebius/vpc/v1alpha1/subnet_service.proto",
@@ -404,9 +404,13 @@ NetworkPool.__module__ = __name__
 NetworkStatus = _message_class(
     "nebius.vpc.v1alpha1.NetworkStatus",
     "NetworkStatus",
-    {"scope_id": "scope_id", "state": "state"},
+    {"default": "default", "scope_id": "scope_id", "state": "state"},
     {},
-    {"scope_id": "Scope ID of all pools", "state": "Current state of the network."},
+    {
+        "default": "Indicates whether this is the project's default network.",
+        "scope_id": "Scope ID of all pools",
+        "state": "Current state of the network.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -949,9 +953,13 @@ SubnetCidr.__module__ = __name__
 SubnetStatus = _message_class(
     "nebius.vpc.v1alpha1.SubnetStatus",
     "SubnetStatus",
-    {"ipv4_cidrs": "ipv4_cidrs", "state": "state"},
+    {"default": "default", "ipv4_cidrs": "ipv4_cidrs", "state": "state"},
     {},
-    {"ipv4_cidrs": "CIDR blocks.", "state": "Current state of the subnet."},
+    {
+        "default": "Indicates whether this is the network's default subnet.",
+        "ipv4_cidrs": "CIDR blocks.",
+        "state": "Current state of the subnet.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},

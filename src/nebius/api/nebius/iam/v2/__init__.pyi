@@ -24,6 +24,7 @@ from .....base.protos.extensions import ExtensionRegistry as _ExtensionRegistry
 from .....base.protos.pb_enum import Enum as _Enum
 from .....base.protos.registry import Registry as _Registry
 from .....base.protos.unset import UnsetType as _UnsetType
+from ...common.v1 import GetByNameRequest as _type_nebius_common_v1_GetByNameRequest
 from ...common.v1 import Operation as _type_nebius_common_v1_Operation
 from ...common.v1 import ResourceMetadata as _type_nebius_common_v1_ResourceMetadata
 from ..v1 import Account as _type_nebius_iam_v1_Account
@@ -954,6 +955,11 @@ class AccessKeyServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operat
     def get(
         self, request: GetAccessKeyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[GetAccessKeyRequest, AccessKey]:
+        """The request object is returned without starting the RPC."""
+        ...
+    def get_by_name(
+        self, request: _type_nebius_common_v1_GetByNameRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[_type_nebius_common_v1_GetByNameRequest, AccessKey]:
         """The request object is returned without starting the RPC."""
         ...
     def get_secret(
