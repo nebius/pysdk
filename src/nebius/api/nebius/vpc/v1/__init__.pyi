@@ -919,6 +919,44 @@ class GetNetworkByNameRequest(_Message):
         """Create a message from a source message and field values."""
         ...
 
+class GetDefaultNetworkRequest(_Message):
+    @property
+    def parent_id(self) -> _builtins.str:
+        """ID of the parent project."""
+        ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    def __init__(
+        self, initial_message: _SerializableMessage | None = None, *, parent_id: _builtins.str | None | _UnsetType = ...
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class GetDefaultNetworkResponse(_Message):
+    @property
+    def network(self) -> Network: ...
+    @network.setter
+    def network(self, value: Network | None) -> None:
+        """Set or clear the generated ``network`` field."""
+        ...
+    @property
+    def subnet(self) -> Subnet: ...
+    @subnet.setter
+    def subnet(self, value: Subnet | None) -> None:
+        """Set or clear the generated ``subnet`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        network: Network | None | _UnsetType = ...,
+        subnet: Subnet | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
 class ListNetworksRequest(_Message):
     @property
     def parent_id(self) -> _builtins.str:
@@ -4037,6 +4075,11 @@ class NetworkServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operatio
     ) -> _Request[GetNetworkByNameRequest, Network]:
         """Retrieves a network by its name within a specified parent.\n\nThe request object is returned without starting the RPC."""
         ...
+    def get_default(
+        self, request: GetDefaultNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetDefaultNetworkRequest, GetDefaultNetworkResponse]:
+        """Retrieves the default network and its default subnet for a specified project.\n\nThe request object is returned without starting the RPC."""
+        ...
     def list(
         self, request: ListNetworksRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListNetworksRequest, ListNetworksResponse]:
@@ -4345,6 +4388,8 @@ __all__ = [
     "DestinationMatch",
     "GetAllocationByNameRequest",
     "GetAllocationRequest",
+    "GetDefaultNetworkRequest",
+    "GetDefaultNetworkResponse",
     "GetNetworkByNameRequest",
     "GetNetworkRequest",
     "GetPoolByNameRequest",

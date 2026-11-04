@@ -140,6 +140,14 @@ class ControlPlaneSpec(_Message):
     def karpenter(self, value: Karpenter | None) -> None:
         """Set or clear the generated ``karpenter`` field."""
         ...
+    @property
+    def authentication(self) -> AuthenticationSpec:
+        """Configures customer JWT authentication. Requires Kubernetes 1.34 and a compatible control-plane infra version."""
+        ...
+    @authentication.setter
+    def authentication(self, value: AuthenticationSpec | None) -> None:
+        """Set or clear the generated ``authentication`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -150,6 +158,259 @@ class ControlPlaneSpec(_Message):
         etcd_cluster_size: _builtins.int | None | _UnsetType = ...,
         audit_logs: AuditLogsSpec | None | _UnsetType = ...,
         karpenter: Karpenter | None | _UnsetType = ...,
+        authentication: AuthenticationSpec | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class AuthenticationSpec(_Message):
+    @property
+    def oidc(self) -> _MutableSequence[OIDCProvider]:
+        """Configures OIDC providers for Kubernetes user authentication."""
+        ...
+    @oidc.setter
+    def oidc(self, value: _Iterable[OIDCProvider] | None) -> None:
+        """Set or clear the generated ``oidc`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        oidc: _Iterable[OIDCProvider] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class OIDCProvider(_Message):
+    @property
+    def name(self) -> _builtins.str:
+        """Identifies this provider within the cluster configuration."""
+        ...
+    @name.setter
+    def name(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``name`` field."""
+        ...
+    @property
+    def issuer(self) -> OIDCIssuer:
+        """Defines the issuer for accepted tokens."""
+        ...
+    @issuer.setter
+    def issuer(self, value: OIDCIssuer | None) -> None:
+        """Set or clear the generated ``issuer`` field."""
+        ...
+    @property
+    def claim_mappings(self) -> ClaimMappings:
+        """Maps token claims to Kubernetes user attributes."""
+        ...
+    @claim_mappings.setter
+    def claim_mappings(self, value: ClaimMappings | None) -> None:
+        """Set or clear the generated ``claim_mappings`` field."""
+        ...
+    @property
+    def claim_validation_rules(self) -> _MutableSequence[ClaimValidationRule]:
+        """Validates token claims before Kubernetes authenticates the user."""
+        ...
+    @claim_validation_rules.setter
+    def claim_validation_rules(self, value: _Iterable[ClaimValidationRule] | None) -> None:
+        """Set or clear the generated ``claim_validation_rules`` field."""
+        ...
+    @property
+    def user_validation_rules(self) -> _MutableSequence[CELValidationRule]:
+        """Validates the mapped Kubernetes user information."""
+        ...
+    @user_validation_rules.setter
+    def user_validation_rules(self, value: _Iterable[CELValidationRule] | None) -> None:
+        """Set or clear the generated ``user_validation_rules`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        name: _builtins.str | None | _UnsetType = ...,
+        issuer: OIDCIssuer | None | _UnsetType = ...,
+        claim_mappings: ClaimMappings | None | _UnsetType = ...,
+        claim_validation_rules: _Iterable[ClaimValidationRule] | None | _UnsetType = ...,
+        user_validation_rules: _Iterable[CELValidationRule] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class OIDCIssuer(_Message):
+    @property
+    def url(self) -> _builtins.str:
+        """Identifies the issuer and must match the token ``iss`` claim."""
+        ...
+    @url.setter
+    def url(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``url`` field."""
+        ...
+    @property
+    def audiences(self) -> _MutableSequence[_builtins.str]:
+        """Lists the token audiences that this issuer accepts, for example, ``[\"kubernetes\", \"dashboard\"]``."""
+        ...
+    @audiences.setter
+    def audiences(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``audiences`` field."""
+        ...
+    @property
+    def discovery_url(self) -> _builtins.str:
+        """Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL."""
+        ...
+    @discovery_url.setter
+    def discovery_url(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``discovery_url`` field."""
+        ...
+    @property
+    def certificate_authority(self) -> _builtins.str:
+        """PEM CA bundle for discovery and JWKS. Omission uses system trust."""
+        ...
+    @certificate_authority.setter
+    def certificate_authority(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``certificate_authority`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        url: _builtins.str | None | _UnsetType = ...,
+        audiences: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        discovery_url: _builtins.str | None | _UnsetType = ...,
+        certificate_authority: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ClaimMappings(_Message):
+    @property
+    def username(self) -> PrefixedClaimMapping:
+        """Maps token claims to the Kubernetes username."""
+        ...
+    @username.setter
+    def username(self, value: PrefixedClaimMapping | None) -> None:
+        """Set or clear the generated ``username`` field."""
+        ...
+    @property
+    def groups(self) -> PrefixedClaimMapping:
+        """Maps token claims to Kubernetes groups. Omission disables group mapping."""
+        ...
+    @groups.setter
+    def groups(self, value: PrefixedClaimMapping | None) -> None:
+        """Set or clear the generated ``groups`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        username: PrefixedClaimMapping | None | _UnsetType = ...,
+        groups: PrefixedClaimMapping | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class PrefixedClaimMapping(_Message):
+    @property
+    def claim(self) -> _builtins.str:
+        """Names the token claim to map."""
+        ...
+    @claim.setter
+    def claim(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``claim`` field."""
+        ...
+    @property
+    def prefix(self) -> _builtins.str | None:
+        """Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value."""
+        ...
+    @prefix.setter
+    def prefix(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``prefix`` field."""
+        ...
+    @property
+    def expression(self) -> _builtins.str:
+        """Maps token claims with a CEL expression."""
+        ...
+    @expression.setter
+    def expression(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``expression`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        claim: _builtins.str | None | _UnsetType = ...,
+        prefix: _builtins.str | None | _UnsetType = ...,
+        expression: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ClaimValidationRule(_Message):
+    @property
+    def claim(self) -> _builtins.str:
+        """Names the token claim that must match required\\_value exactly."""
+        ...
+    @claim.setter
+    def claim(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``claim`` field."""
+        ...
+    @property
+    def required_value(self) -> _builtins.str:
+        """An omitted value matches an empty string, following upstream behavior."""
+        ...
+    @required_value.setter
+    def required_value(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``required_value`` field."""
+        ...
+    @property
+    def expression(self) -> _builtins.str:
+        """Validates token claims with CEL. The expression must evaluate to true."""
+        ...
+    @expression.setter
+    def expression(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``expression`` field."""
+        ...
+    @property
+    def message(self) -> _builtins.str:
+        """Describes a failed CEL validation."""
+        ...
+    @message.setter
+    def message(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``message`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        claim: _builtins.str | None | _UnsetType = ...,
+        required_value: _builtins.str | None | _UnsetType = ...,
+        expression: _builtins.str | None | _UnsetType = ...,
+        message: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class CELValidationRule(_Message):
+    @property
+    def expression(self) -> _builtins.str:
+        """Validates the mapped Kubernetes user information with CEL."""
+        ...
+    @expression.setter
+    def expression(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``expression`` field."""
+        ...
+    @property
+    def message(self) -> _builtins.str:
+        """Describes a failed CEL validation."""
+        ...
+    @message.setter
+    def message(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``message`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        expression: _builtins.str | None | _UnsetType = ...,
+        message: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -2310,6 +2571,10 @@ class NodeGroupServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operat
 __all__ = [
     "AttachedFilesystemSpec",
     "AuditLogsSpec",
+    "AuthenticationSpec",
+    "CELValidationRule",
+    "ClaimMappings",
+    "ClaimValidationRule",
     "Cluster",
     "ClusterControlPlaneVersion",
     "ClusterServiceClient",
@@ -2362,10 +2627,13 @@ __all__ = [
     "NodeMetadataTemplate",
     "NodeTaint",
     "NodeTemplate",
+    "OIDCIssuer",
+    "OIDCProvider",
     "OnDemandSpec",
     "PassthroughGroupRequest",
     "PercentOrCount",
     "PreemptibleSpec",
+    "PrefixedClaimMapping",
     "PreflightCheckNodeGroupRequest",
     "PreflightCheckNodeGroupResponse",
     "Problem",

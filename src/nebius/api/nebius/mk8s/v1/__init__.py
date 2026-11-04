@@ -61,7 +61,7 @@ _register_file(
 )
 _register_file(
     "nebius/mk8s/v1/cluster.proto",
-    b'\n\x1cnebius/mk8s/v1/cluster.proto\x12\x0enebius.mk8s.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a%nebius/common/v1/resource_event.proto"\xb2\x04\n\x07Cluster\x12\xbe\x03\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\xfd\x02\xbaH\xed\x02\xba\x01\x81\x02\n\rmetadata_name\x12|\'name\' must be 1 to 63 characters long and use only letters, digits, \'-\', or \'_\', starting and ending with a letter or digit\x1arsize(this.name) >= 1 && size(this.name) <= 63 && this.name.matches(\'^(([A-Za-z0-9][-A-Za-z0-9_]*)?[A-Za-z0-9])?$\')\xba\x01e\n\x12metadata_parent_id\x123\'parent_id\' must be no more than 63 characters long\x1a\x1asize(this.parent_id) <= 63\xe2J\t\x12\x07projectR\x08metadata\x12/\n\x04spec\x18\x02 \x01(\x0b2\x1b.nebius.mk8s.v1.ClusterSpecR\x04spec\x125\n\x06status\x18\x03 \x01(\x0b2\x1d.nebius.mk8s.v1.ClusterStatusR\x06status"\xa0\x01\n\x0bClusterSpec\x12M\n\rcontrol_plane\x18\x02 \x01(\x0b2 .nebius.mk8s.v1.ControlPlaneSpecB\x06\xbaH\x03\xc8\x01\x01R\x0ccontrolPlane\x12B\n\x0ckube_network\x18\x03 \x01(\x0b2\x1f.nebius.mk8s.v1.KubeNetworkSpecR\x0bkubeNetwork"\xf7\x02\n\x10ControlPlaneSpec\x12,\n\x07version\x18\x01 \x01(\tB\x12\xbaH\x0fr\r2\x0b|^\\d\\.\\d\\d$R\x07version\x120\n\tsubnet_id\x18\x02 \x01(\tB\x13\xbaJ\x02\x07\x02\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12G\n\tendpoints\x18\x03 \x01(\x0b2).nebius.mk8s.v1.ControlPlaneEndpointsSpecR\tendpoints\x127\n\x11etcd_cluster_size\x18\x04 \x01(\x03B\x0b\xbaH\x08"\x060\x000\x010\x03R\x0fetcdClusterSize\x12B\n\naudit_logs\x18\x05 \x01(\x0b2\x1d.nebius.mk8s.v1.AuditLogsSpecB\x04\xbaJ\x01\x06R\tauditLogs\x12=\n\tkarpenter\x18\x06 \x01(\x0b2\x19.nebius.mk8s.v1.KarpenterB\x04\xbaJ\x01\x06R\tkarpenter"n\n\x19ControlPlaneEndpointsSpec\x12Q\n\x0fpublic_endpoint\x18\x01 \x01(\x0b2".nebius.mk8s.v1.PublicEndpointSpecB\x04\xbaJ\x01\x06R\x0epublicEndpoint"\x8f\x02\n\x12PublicEndpointSpec\x12\xf8\x01\n\rallowed_cidrs\x18\x02 \x03(\tB\xd2\x01\xbaH\xce\x01\x92\x01\xca\x01\x10d"\xc5\x01\xba\x01\xc1\x01\n\x16string.valid_ipv4_cidr\x12\x8c\x01Value must be a valid IPv4 CIDR, the prefix must have all zeros for the masked bits of the prefix (e.g. `127.0.0.0/16`, not `127.0.0.1/16`).\x1a\x18this.isIpPrefix(4, true)R\x0callowedCidrs"\xd1\x01\n\x0fKubeNetworkSpec\x12\xbd\x01\n\rservice_cidrs\x18\x01 \x03(\tB\x97\x01\xbaH\x8f\x01\xba\x01\x86\x01\n\x11string.valid_cidr\x12?value must be a CIDR block or prefix length from "/12" to "/28"\x1a0this.all(x, x.matches(\'^(.*)/(1[2-9]|2[0-8])$\'))\x92\x01\x02\x10\x01\xbaJ\x01\x02R\x0cserviceCidrs"\x0f\n\rAuditLogsSpec"\x0b\n\tKarpenter"\xc4\x02\n\rClusterStatus\x129\n\x05state\x18\x01 \x01(\x0e2#.nebius.mk8s.v1.ClusterStatus.StateR\x05state\x12G\n\rcontrol_plane\x18\x02 \x01(\x0b2".nebius.mk8s.v1.ControlPlaneStatusR\x0ccontrolPlane\x12@\n\x06events\x18\x03 \x03(\x0b2(.nebius.common.v1.RecurrentResourceEventR\x06events\x12 \n\x0breconciling\x18d \x01(\x08R\x0breconciling"K\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0b\n\x07RUNNING\x10\x02\x12\x0c\n\x08DELETING\x10\x03"\xe1\x01\n\x12ControlPlaneStatus\x12\x18\n\x07version\x18\x01 \x01(\tR\x07version\x12I\n\tendpoints\x18\x02 \x01(\x0b2+.nebius.mk8s.v1.ControlPlaneStatusEndpointsR\tendpoints\x12*\n\x11etcd_cluster_size\x18\x03 \x01(\x03R\x0fetcdClusterSize\x12:\n\x04auth\x18d \x01(\x0b2&.nebius.mk8s.v1.ControlPlaneStatusAuthR\x04auth"q\n\x1bControlPlaneStatusEndpoints\x12\'\n\x0fpublic_endpoint\x18\x01 \x01(\tR\x0epublicEndpoint\x12)\n\x10private_endpoint\x18\x02 \x01(\tR\x0fprivateEndpoint"N\n\x16ControlPlaneStatusAuth\x124\n\x16cluster_ca_certificate\x18\x01 \x01(\tR\x14clusterCaCertificateBU\n\x15ai.nebius.pub.mk8s.v1B\x0cClusterProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3',
+    b"\n\x1cnebius/mk8s/v1/cluster.proto\x12\x0enebius.mk8s.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a%nebius/common/v1/resource_event.proto\"\xb2\x04\n\x07Cluster\x12\xbe\x03\n\x08metadata\x18\x01 \x01(\x0b2\".nebius.common.v1.ResourceMetadataB\xfd\x02\xbaH\xed\x02\xba\x01\x81\x02\n\rmetadata_name\x12|'name' must be 1 to 63 characters long and use only letters, digits, '-', or '_', starting and ending with a letter or digit\x1arsize(this.name) >= 1 && size(this.name) <= 63 && this.name.matches('^(([A-Za-z0-9][-A-Za-z0-9_]*)?[A-Za-z0-9])?$')\xba\x01e\n\x12metadata_parent_id\x123'parent_id' must be no more than 63 characters long\x1a\x1asize(this.parent_id) <= 63\xe2J\t\x12\x07projectR\x08metadata\x12/\n\x04spec\x18\x02 \x01(\x0b2\x1b.nebius.mk8s.v1.ClusterSpecR\x04spec\x125\n\x06status\x18\x03 \x01(\x0b2\x1d.nebius.mk8s.v1.ClusterStatusR\x06status\"\xa0\x01\n\x0bClusterSpec\x12M\n\rcontrol_plane\x18\x02 \x01(\x0b2 .nebius.mk8s.v1.ControlPlaneSpecB\x06\xbaH\x03\xc8\x01\x01R\x0ccontrolPlane\x12B\n\x0ckube_network\x18\x03 \x01(\x0b2\x1f.nebius.mk8s.v1.KubeNetworkSpecR\x0bkubeNetwork\"\xc3\x03\n\x10ControlPlaneSpec\x12,\n\x07version\x18\x01 \x01(\tB\x12\xbaH\x0fr\r2\x0b|^\\d\\.\\d\\d$R\x07version\x120\n\tsubnet_id\x18\x02 \x01(\tB\x13\xbaJ\x02\x07\x02\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12G\n\tendpoints\x18\x03 \x01(\x0b2).nebius.mk8s.v1.ControlPlaneEndpointsSpecR\tendpoints\x127\n\x11etcd_cluster_size\x18\x04 \x01(\x03B\x0b\xbaH\x08\"\x060\x000\x010\x03R\x0fetcdClusterSize\x12B\n\naudit_logs\x18\x05 \x01(\x0b2\x1d.nebius.mk8s.v1.AuditLogsSpecB\x04\xbaJ\x01\x06R\tauditLogs\x12=\n\tkarpenter\x18\x06 \x01(\x0b2\x19.nebius.mk8s.v1.KarpenterB\x04\xbaJ\x01\x06R\tkarpenter\x12J\n\x0eauthentication\x18\x07 \x01(\x0b2\".nebius.mk8s.v1.AuthenticationSpecR\x0eauthentication\"P\n\x12AuthenticationSpec\x12:\n\x04oidc\x18\x01 \x03(\x0b2\x1c.nebius.mk8s.v1.OIDCProviderB\x08\xbaH\x05\x92\x01\x02\x10@R\x04oidc\"\xe7\x02\n\x0cOIDCProvider\x12\x1b\n\x04name\x18\x01 \x01(\tB\x07\xbaH\x04r\x02\x10\x01R\x04name\x12:\n\x06issuer\x18\x02 \x01(\x0b2\x1a.nebius.mk8s.v1.OIDCIssuerB\x06\xbaH\x03\xc8\x01\x01R\x06issuer\x12L\n\x0eclaim_mappings\x18\x03 \x01(\x0b2\x1d.nebius.mk8s.v1.ClaimMappingsB\x06\xbaH\x03\xc8\x01\x01R\rclaimMappings\x12Y\n\x16claim_validation_rules\x18\x04 \x03(\x0b2#.nebius.mk8s.v1.ClaimValidationRuleR\x14claimValidationRules\x12U\n\x15user_validation_rules\x18\x05 \x03(\x0b2!.nebius.mk8s.v1.CELValidationRuleR\x13userValidationRules\"\xb1\x01\n\nOIDCIssuer\x12\x19\n\x03url\x18\x01 \x01(\tB\x07\xbaH\x04r\x02\x10\x01R\x03url\x12.\n\taudiences\x18\x02 \x03(\tB\x10\xbaH\r\x92\x01\n\x08\x01\x18\x01\"\x04r\x02\x10\x01R\taudiences\x12#\n\rdiscovery_url\x18\x03 \x01(\tR\x0cdiscoveryUrl\x123\n\x15certificate_authority\x18\x04 \x01(\tR\x14certificateAuthority\"\x97\x01\n\rClaimMappings\x12H\n\x08username\x18\x01 \x01(\x0b2$.nebius.mk8s.v1.PrefixedClaimMappingB\x06\xbaH\x03\xc8\x01\x01R\x08username\x12<\n\x06groups\x18\x02 \x01(\x0b2$.nebius.mk8s.v1.PrefixedClaimMappingR\x06groups\"\xe1\x02\n\x14PrefixedClaimMapping\x12\x14\n\x05claim\x18\x01 \x01(\tR\x05claim\x12\x1b\n\x06prefix\x18\x02 \x01(\tH\x00R\x06prefix\x88\x01\x01\x12\x1e\n\nexpression\x18\x03 \x01(\tR\nexpression:\xea\x01\xbaH\xe6\x01\x1av\n\x1aclaim_expression_exclusive\x12)Configure either a claim or an expression\x1a-(this.claim != '') != (this.expression != '')\x1al\n\x1bexpression_prefix_exclusive\x12!An expression cannot use a prefix\x1a*this.expression == '' || !has(this.prefix)B\t\n\x07_prefix\"\xdf\x03\n\x13ClaimValidationRule\x12\x14\n\x05claim\x18\x01 \x01(\tR\x05claim\x12%\n\x0erequired_value\x18\x02 \x01(\tR\rrequiredValue\x12\x1e\n\nexpression\x18\x03 \x01(\tR\nexpression\x12\x18\n\x07message\x18\x04 \x01(\tR\x07message:\xd0\x02\xbaH\xcc\x02\x1a\x81\x01\n\x15claim_validation_rule\x129Configure either an exact claim match or a CEL expression\x1a-(this.claim != '') != (this.expression != '')\x1a\xc5\x01\n\x17claim_validation_fields\x12HExact matches cannot use messages; expressions cannot use required_value\x1a`(this.claim == '' || this.message == '') && (this.expression == '' || this.required_value == '')\"V\n\x11CELValidationRule\x12'\n\nexpression\x18\x01 \x01(\tB\x07\xbaH\x04r\x02\x10\x01R\nexpression\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\"n\n\x19ControlPlaneEndpointsSpec\x12Q\n\x0fpublic_endpoint\x18\x01 \x01(\x0b2\".nebius.mk8s.v1.PublicEndpointSpecB\x04\xbaJ\x01\x06R\x0epublicEndpoint\"\x8f\x02\n\x12PublicEndpointSpec\x12\xf8\x01\n\rallowed_cidrs\x18\x02 \x03(\tB\xd2\x01\xbaH\xce\x01\x92\x01\xca\x01\x10d\"\xc5\x01\xba\x01\xc1\x01\n\x16string.valid_ipv4_cidr\x12\x8c\x01Value must be a valid IPv4 CIDR, the prefix must have all zeros for the masked bits of the prefix (e.g. `127.0.0.0/16`, not `127.0.0.1/16`).\x1a\x18this.isIpPrefix(4, true)R\x0callowedCidrs\"\xd1\x01\n\x0fKubeNetworkSpec\x12\xbd\x01\n\rservice_cidrs\x18\x01 \x03(\tB\x97\x01\xbaH\x8f\x01\xba\x01\x86\x01\n\x11string.valid_cidr\x12?value must be a CIDR block or prefix length from \"/12\" to \"/28\"\x1a0this.all(x, x.matches('^(.*)/(1[2-9]|2[0-8])$'))\x92\x01\x02\x10\x01\xbaJ\x01\x02R\x0cserviceCidrs\"\x0f\n\rAuditLogsSpec\"\x0b\n\tKarpenter\"\xc4\x02\n\rClusterStatus\x129\n\x05state\x18\x01 \x01(\x0e2#.nebius.mk8s.v1.ClusterStatus.StateR\x05state\x12G\n\rcontrol_plane\x18\x02 \x01(\x0b2\".nebius.mk8s.v1.ControlPlaneStatusR\x0ccontrolPlane\x12@\n\x06events\x18\x03 \x03(\x0b2(.nebius.common.v1.RecurrentResourceEventR\x06events\x12 \n\x0breconciling\x18d \x01(\x08R\x0breconciling\"K\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0b\n\x07RUNNING\x10\x02\x12\x0c\n\x08DELETING\x10\x03\"\xe1\x01\n\x12ControlPlaneStatus\x12\x18\n\x07version\x18\x01 \x01(\tR\x07version\x12I\n\tendpoints\x18\x02 \x01(\x0b2+.nebius.mk8s.v1.ControlPlaneStatusEndpointsR\tendpoints\x12*\n\x11etcd_cluster_size\x18\x03 \x01(\x03R\x0fetcdClusterSize\x12:\n\x04auth\x18d \x01(\x0b2&.nebius.mk8s.v1.ControlPlaneStatusAuthR\x04auth\"q\n\x1bControlPlaneStatusEndpoints\x12'\n\x0fpublic_endpoint\x18\x01 \x01(\tR\x0epublicEndpoint\x12)\n\x10private_endpoint\x18\x02 \x01(\tR\x0fprivateEndpoint\"N\n\x16ControlPlaneStatusAuth\x124\n\x16cluster_ca_certificate\x18\x01 \x01(\tR\x14clusterCaCertificateBU\n\x15ai.nebius.pub.mk8s.v1B\x0cClusterProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3",
 )
 _register_file(
     "nebius/common/v1/progress_tracker.proto",
@@ -131,6 +131,7 @@ ControlPlaneSpec = _message_class(
     "ControlPlaneSpec",
     {
         "audit_logs": "audit_logs",
+        "authentication": "authentication",
         "endpoints": "endpoints",
         "etcd_cluster_size": "etcd_cluster_size",
         "karpenter": "karpenter",
@@ -140,6 +141,7 @@ ControlPlaneSpec = _message_class(
     {},
     {
         "audit_logs": "Specify configuration of the pushing k8s audit logs into service logs and show it in the UI.\nBy default cluster will be created without it.",
+        "authentication": "Configures customer JWT authentication. Requires Kubernetes 1.34 and a compatible control-plane infra version.",
         "endpoints": "Specification of endpoints of cluster control plane.",
         "etcd_cluster_size": 'Number of instances in etcd cluster.\n3 by default.\nControl plane with ``etcd_cluster_size: 3`` called "Highly Available" ("HA"), because it\'s Kubernetes API\nwill be available despite a failure of one control plane instance.',
         "karpenter": "Enables installation of the Karpenter inside a cluster.\nKarpenter will be installed as a helm chart inside cluster\nso it requires creation of at least one CPU public node group.\n\nPlease note that there is no feature parity between Karpenter node pools and\npublic node groups.\nBy default cluster will be created without it.",
@@ -153,6 +155,134 @@ ControlPlaneSpec = _message_class(
     immutable_fields=["subnet_id"],
 )
 ControlPlaneSpec.__module__ = __name__
+
+AuthenticationSpec = _message_class(
+    "nebius.mk8s.v1.AuthenticationSpec",
+    "AuthenticationSpec",
+    {"oidc": "oidc"},
+    {},
+    {"oidc": "Configures OIDC providers for Kubernetes user authentication."},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+AuthenticationSpec.__module__ = __name__
+
+OIDCProvider = _message_class(
+    "nebius.mk8s.v1.OIDCProvider",
+    "OIDCProvider",
+    {
+        "claim_mappings": "claim_mappings",
+        "claim_validation_rules": "claim_validation_rules",
+        "issuer": "issuer",
+        "name": "name",
+        "user_validation_rules": "user_validation_rules",
+    },
+    {},
+    {
+        "claim_mappings": "Maps token claims to Kubernetes user attributes.",
+        "claim_validation_rules": "Validates token claims before Kubernetes authenticates the user.",
+        "issuer": "Defines the issuer for accepted tokens.",
+        "name": "Identifies this provider within the cluster configuration.",
+        "user_validation_rules": "Validates the mapped Kubernetes user information.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+OIDCProvider.__module__ = __name__
+
+OIDCIssuer = _message_class(
+    "nebius.mk8s.v1.OIDCIssuer",
+    "OIDCIssuer",
+    {
+        "audiences": "audiences",
+        "certificate_authority": "certificate_authority",
+        "discovery_url": "discovery_url",
+        "url": "url",
+    },
+    {},
+    {
+        "audiences": 'Lists the token audiences that this issuer accepts, for example, ``["kubernetes", "dashboard"]``.',
+        "certificate_authority": "PEM CA bundle for discovery and JWKS. Omission uses system trust.",
+        "discovery_url": "Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.",
+        "url": "Identifies the issuer and must match the token ``iss`` claim.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+OIDCIssuer.__module__ = __name__
+
+ClaimMappings = _message_class(
+    "nebius.mk8s.v1.ClaimMappings",
+    "ClaimMappings",
+    {"groups": "groups", "username": "username"},
+    {},
+    {
+        "groups": "Maps token claims to Kubernetes groups. Omission disables group mapping.",
+        "username": "Maps token claims to the Kubernetes username.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ClaimMappings.__module__ = __name__
+
+PrefixedClaimMapping = _message_class(
+    "nebius.mk8s.v1.PrefixedClaimMapping",
+    "PrefixedClaimMapping",
+    {"claim": "claim", "expression": "expression", "prefix": "prefix"},
+    {},
+    {
+        "claim": "Names the token claim to map.",
+        "expression": "Maps token claims with a CEL expression.",
+        "prefix": "Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+PrefixedClaimMapping.__module__ = __name__
+
+ClaimValidationRule = _message_class(
+    "nebius.mk8s.v1.ClaimValidationRule",
+    "ClaimValidationRule",
+    {"claim": "claim", "expression": "expression", "message": "message", "required_value": "required_value"},
+    {},
+    {
+        "claim": "Names the token claim that must match required\\_value exactly.",
+        "expression": "Validates token claims with CEL. The expression must evaluate to true.",
+        "message": "Describes a failed CEL validation.",
+        "required_value": "An omitted value matches an empty string, following upstream behavior.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+ClaimValidationRule.__module__ = __name__
+
+CELValidationRule = _message_class(
+    "nebius.mk8s.v1.CELValidationRule",
+    "CELValidationRule",
+    {"expression": "expression", "message": "message"},
+    {},
+    {
+        "expression": "Validates the mapped Kubernetes user information with CEL.",
+        "message": "Describes a failed CEL validation.",
+    },
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+CELValidationRule.__module__ = __name__
 
 ControlPlaneEndpointsSpec = _message_class(
     "nebius.mk8s.v1.ControlPlaneEndpointsSpec",
@@ -1577,6 +1707,10 @@ _register_client("nebius.mk8s.v1.NodeGroupService", NodeGroupServiceClient)
 __all__ = [
     "AttachedFilesystemSpec",
     "AuditLogsSpec",
+    "AuthenticationSpec",
+    "CELValidationRule",
+    "ClaimMappings",
+    "ClaimValidationRule",
     "Cluster",
     "ClusterControlPlaneVersion",
     "ClusterServiceClient",
@@ -1629,10 +1763,13 @@ __all__ = [
     "NodeMetadataTemplate",
     "NodeTaint",
     "NodeTemplate",
+    "OIDCIssuer",
+    "OIDCProvider",
     "OnDemandSpec",
     "PassthroughGroupRequest",
     "PercentOrCount",
     "PreemptibleSpec",
+    "PrefixedClaimMapping",
     "PreflightCheckNodeGroupRequest",
     "PreflightCheckNodeGroupResponse",
     "Problem",

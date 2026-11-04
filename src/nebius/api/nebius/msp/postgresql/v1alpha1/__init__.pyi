@@ -319,7 +319,7 @@ class ClusterSpec(_Message):
         ...
     @property
     def network_id(self) -> _builtins.str:
-        """Network ID in which the cluster is created."""
+        """Network ID in which the cluster is created.\nIf omitted through the public API, the project's default network is used or created."""
         ...
     @network_id.setter
     def network_id(self, value: _builtins.str | None) -> None:
