@@ -80,8 +80,12 @@ _register_file(
     b'\n+nebius/vpc/v1alpha1/network_interface.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto"\xd4\x02\n\x14NetworkInterfaceSpec\x12/\n\tsubnet_id\x18\x01 \x01(\tB\x12\xbaJ\x01\x02\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x126\n\x04name\x18\x02 \x01(\tB"\xbaH\x1f\xc8\x01\x01r\x1a\x10\x01\x18<2\x14^[0-9a-z][0-9a-z-]*$R\x04name\x12C\n\nip_address\x18\x03 \x01(\x0b2\x1e.nebius.vpc.v1alpha1.IPAddressB\x04\xbaJ\x01\x06R\tipAddress\x12V\n\x11public_ip_address\x18\x04 \x01(\x0b2$.nebius.vpc.v1alpha1.PublicIPAddressB\x04\xbaJ\x01\x06R\x0fpublicIpAddress\x126\n\x07aliases\x18\x06 \x03(\x0b2\x1c.nebius.vpc.v1alpha1.IPAliasR\x07aliases"D\n\tIPAddress\x127\n\rallocation_id\x18\x01 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationR\x0callocationId"r\n\x0fPublicIPAddress\x129\n\rallocation_id\x18\x01 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationH\x00R\x0callocationId\x12\x16\n\x06static\x18\x03 \x01(\x08R\x06staticB\x0c\n\nallocation"H\n\x07IPAlias\x12=\n\rallocation_id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x0callocationId"\xed\x02\n\x16NetworkInterfaceStatus\x12\x14\n\x05index\x18\x01 \x01(\x05R\x05index\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12C\n\nip_address\x18\x03 \x01(\x0b2$.nebius.vpc.v1alpha1.IPAddressStatusR\tipAddress\x12V\n\x11public_ip_address\x18\x04 \x01(\x0b2*.nebius.vpc.v1alpha1.PublicIPAddressStatusR\x0fpublicIpAddress\x12>\n\x07aliases\x18\x06 \x01(\x0b2$.nebius.vpc.v1alpha1.IPAliasesStatusR\x07aliases\x12\x1f\n\x0bmac_address\x18\x07 \x01(\tR\nmacAddress\x12+\n\tsubnet_id\x18\n \x01(\tB\x0e\xe2J\x0b\n\tvpcsubnetR\x08subnetId"d\n\x0fIPAddressStatus\x12\x18\n\x07address\x18\x01 \x01(\tR\x07address\x127\n\rallocation_id\x18\x02 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationR\x0callocationId"j\n\x15PublicIPAddressStatus\x12\x18\n\x07address\x18\x01 \x01(\tR\x07address\x127\n\rallocation_id\x18\x02 \x01(\tB\x12\xe2J\x0f\n\rvpcallocationR\x0callocationId"\'\n\x0fIPAliasesStatus\x12\x14\n\x05cidrs\x18\x02 \x03(\tR\x05cidrsBh\n\x1aai.nebius.pub.vpc.v1alpha1B\x15NetworkInterfaceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
 )
 _register_file(
+    "nebius/vpc/v1alpha1/subnet.proto",
+    b'\n nebius/vpc/v1alpha1/subnet.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1enebius/vpc/v1alpha1/pool.proto"\xc6\x01\n\x06Subnet\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetSpecR\x04spec\x129\n\x06status\x18\x03 \x01(\x0b2!.nebius.vpc.v1alpha1.SubnetStatusR\x06status"\xad\x01\n\nSubnetSpec\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12=\n\x05pools\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetPoolB\x06\xbaH\x03\xc8\x01\x01R\x05pools\x12*\n\x11enable_egress_nat\x18\x03 \x01(\x08R\x0fenableEgressNat"\x7f\n\nSubnetPool\x129\n\x04spec\x18\x01 \x01(\x0b2#.nebius.vpc.v1alpha1.SubnetPoolSpecH\x00R\x04spec\x12\'\n\x07pool_id\x18\x02 \x01(\tB\x0c\xe2J\t\n\x07vpcpoolH\x00R\x06poolIdB\r\n\x04pool\x12\x05\xbaH\x02\x08\x01"\x89\x01\n\x0eSubnetPoolSpec\x12@\n\x07version\x18\x01 \x01(\x0e2\x1e.nebius.vpc.v1alpha1.IpVersionB\x06\xbaH\x03\xc8\x01\x01R\x07version\x125\n\x05cidrs\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetCidrR\x05cidrs"\xa0\x03\n\nSubnetCidr\x12\x9d\x02\n\x04cidr\x18\x01 \x01(\tB\x88\x02\xbaH\x84\x02\xba\x01\xac\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1agthis == \'\' || this.matches(\'^/([0-9]|[1-9][0-9]|1[0-2][0-8])$\') || this.isIp() || this.isIpPrefix(true)\xba\x01N\n\x0fstring.ip_empty\x12/value is empty, which is not a valid IP address\x1a\nthis != \'\'\xc8\x01\x01R\x04cidr\x12@\n\x05state\x18\x02 \x01(\x0e2".nebius.vpc.v1alpha1.PoolCidrStateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x120\n\x0callowed_mask\x18\x03 \x01(\x03B\r\xbaH\n\xc8\x01\x01"\x05\x18\x80\x01(\x00R\x0ballowedMask"\xcd\x01\n\x0cSubnetStatus\x12=\n\x05state\x18\x01 \x01(\x0e2\'.nebius.vpc.v1alpha1.SubnetStatus.StateR\x05state\x12\x1d\n\nipv4_cidrs\x18\x02 \x03(\tR\tipv4Cidrs\x12\x18\n\x07default\x18\x04 \x01(\x08R\x07default"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08DELETING\x10\x03B^\n\x1aai.nebius.pub.vpc.v1alpha1B\x0bSubnetProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
+)
+_register_file(
     "nebius/vpc/v1alpha1/network_service.proto",
-    b'\n)nebius/vpc/v1alpha1/network_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a!nebius/vpc/v1alpha1/network.proto":\n\x11GetNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id"f\n\x17GetNetworkByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"\x9a\x01\n\x13ListNetworksRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06filter\x18\x04 \x01(\tR\x06filter"r\n\x14ListNetworksResponse\x122\n\x05items\x18\x01 \x03(\x0b2\x1c.nebius.vpc.v1alpha1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x9b\x02\n\x0eNetworkService\x12K\n\x03Get\x12&.nebius.vpc.v1alpha1.GetNetworkRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12W\n\tGetByName\x12,.nebius.vpc.v1alpha1.GetNetworkByNameRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12[\n\x04List\x12(.nebius.vpc.v1alpha1.ListNetworksRequest\x1a).nebius.vpc.v1alpha1.ListNetworksResponse\x1a\x06\xbaJ\x03vpcBf\n\x1aai.nebius.pub.vpc.v1alpha1B\x13NetworkServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
+    b'\n)nebius/vpc/v1alpha1/network_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a!nebius/vpc/v1alpha1/network.proto\x1a nebius/vpc/v1alpha1/subnet.proto":\n\x11GetNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id"f\n\x17GetNetworkByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"K\n\x18GetDefaultNetworkRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId"\x88\x01\n\x19GetDefaultNetworkResponse\x126\n\x07network\x18\x01 \x01(\x0b2\x1c.nebius.vpc.v1alpha1.NetworkR\x07network\x123\n\x06subnet\x18\x02 \x01(\x0b2\x1b.nebius.vpc.v1alpha1.SubnetR\x06subnet"\x9a\x01\n\x13ListNetworksRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06filter\x18\x04 \x01(\tR\x06filter"r\n\x14ListNetworksResponse\x122\n\x05items\x18\x01 \x03(\x0b2\x1c.nebius.vpc.v1alpha1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x88\x03\n\x0eNetworkService\x12K\n\x03Get\x12&.nebius.vpc.v1alpha1.GetNetworkRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12W\n\tGetByName\x12,.nebius.vpc.v1alpha1.GetNetworkByNameRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12k\n\nGetDefault\x12-.nebius.vpc.v1alpha1.GetDefaultNetworkRequest\x1a..nebius.vpc.v1alpha1.GetDefaultNetworkResponse\x12[\n\x04List\x12(.nebius.vpc.v1alpha1.ListNetworksRequest\x1a).nebius.vpc.v1alpha1.ListNetworksResponse\x1a\x06\xbaJ\x03vpcBf\n\x1aai.nebius.pub.vpc.v1alpha1B\x13NetworkServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
 )
 _register_file(
     "nebius/vpc/v1alpha1/pool_service.proto",
@@ -94,10 +98,6 @@ _register_file(
 _register_file(
     "nebius/vpc/v1alpha1/scope_service.proto",
     b'\n\'nebius/vpc/v1alpha1/scope_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/vpc/v1alpha1/scope.proto"6\n\x0fGetScopeRequest\x12#\n\x02id\x18\x01 \x01(\tB\x13\xbaH\x03\xc8\x01\x01\xe2J\n\n\x08vpcscopeR\x02id"d\n\x15GetScopeByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name"\x98\x01\n\x11ListScopesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06filter\x18\x04 \x01(\tR\x06filter"n\n\x12ListScopesResponse\x120\n\x05items\x18\x01 \x03(\x0b2\x1a.nebius.vpc.v1alpha1.ScopeR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x8d\x02\n\x0cScopeService\x12G\n\x03Get\x12$.nebius.vpc.v1alpha1.GetScopeRequest\x1a\x1a.nebius.vpc.v1alpha1.Scope\x12S\n\tGetByName\x12*.nebius.vpc.v1alpha1.GetScopeByNameRequest\x1a\x1a.nebius.vpc.v1alpha1.Scope\x12W\n\x04List\x12&.nebius.vpc.v1alpha1.ListScopesRequest\x1a\'.nebius.vpc.v1alpha1.ListScopesResponse\x1a\x06\xbaJ\x03vpcBd\n\x1aai.nebius.pub.vpc.v1alpha1B\x11ScopeServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
-)
-_register_file(
-    "nebius/vpc/v1alpha1/subnet.proto",
-    b'\n nebius/vpc/v1alpha1/subnet.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1enebius/vpc/v1alpha1/pool.proto"\xc6\x01\n\x06Subnet\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetSpecR\x04spec\x129\n\x06status\x18\x03 \x01(\x0b2!.nebius.vpc.v1alpha1.SubnetStatusR\x06status"\xad\x01\n\nSubnetSpec\x124\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12=\n\x05pools\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetPoolB\x06\xbaH\x03\xc8\x01\x01R\x05pools\x12*\n\x11enable_egress_nat\x18\x03 \x01(\x08R\x0fenableEgressNat"\x7f\n\nSubnetPool\x129\n\x04spec\x18\x01 \x01(\x0b2#.nebius.vpc.v1alpha1.SubnetPoolSpecH\x00R\x04spec\x12\'\n\x07pool_id\x18\x02 \x01(\tB\x0c\xe2J\t\n\x07vpcpoolH\x00R\x06poolIdB\r\n\x04pool\x12\x05\xbaH\x02\x08\x01"\x89\x01\n\x0eSubnetPoolSpec\x12@\n\x07version\x18\x01 \x01(\x0e2\x1e.nebius.vpc.v1alpha1.IpVersionB\x06\xbaH\x03\xc8\x01\x01R\x07version\x125\n\x05cidrs\x18\x02 \x03(\x0b2\x1f.nebius.vpc.v1alpha1.SubnetCidrR\x05cidrs"\xa0\x03\n\nSubnetCidr\x12\x9d\x02\n\x04cidr\x18\x01 \x01(\tB\x88\x02\xbaH\x84\x02\xba\x01\xac\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1agthis == \'\' || this.matches(\'^/([0-9]|[1-9][0-9]|1[0-2][0-8])$\') || this.isIp() || this.isIpPrefix(true)\xba\x01N\n\x0fstring.ip_empty\x12/value is empty, which is not a valid IP address\x1a\nthis != \'\'\xc8\x01\x01R\x04cidr\x12@\n\x05state\x18\x02 \x01(\x0e2".nebius.vpc.v1alpha1.PoolCidrStateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x120\n\x0callowed_mask\x18\x03 \x01(\x03B\r\xbaH\n\xc8\x01\x01"\x05\x18\x80\x01(\x00R\x0ballowedMask"\xcd\x01\n\x0cSubnetStatus\x12=\n\x05state\x18\x01 \x01(\x0e2\'.nebius.vpc.v1alpha1.SubnetStatus.StateR\x05state\x12\x1d\n\nipv4_cidrs\x18\x02 \x03(\tR\tipv4Cidrs\x12\x18\n\x07default\x18\x04 \x01(\x08R\x07default"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08CREATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08DELETING\x10\x03B^\n\x1aai.nebius.pub.vpc.v1alpha1B\x0bSubnetProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3',
 )
 _register_file(
     "nebius/vpc/v1alpha1/subnet_service.proto",
@@ -597,6 +597,32 @@ GetNetworkByNameRequest = _message_class(
     enum_value_deprecations={},
 )
 GetNetworkByNameRequest.__module__ = __name__
+
+GetDefaultNetworkRequest = _message_class(
+    "nebius.vpc.v1alpha1.GetDefaultNetworkRequest",
+    "GetDefaultNetworkRequest",
+    {"parent_id": "parent_id"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+GetDefaultNetworkRequest.__module__ = __name__
+
+GetDefaultNetworkResponse = _message_class(
+    "nebius.vpc.v1alpha1.GetDefaultNetworkResponse",
+    "GetDefaultNetworkResponse",
+    {"network": "network", "subnet": "subnet"},
+    {},
+    {},
+    {},
+    message_deprecation_details="",
+    field_deprecation_details={},
+    enum_value_deprecations={},
+)
+GetDefaultNetworkResponse.__module__ = __name__
 
 ListNetworksRequest = _message_class(
     "nebius.vpc.v1alpha1.ListNetworksRequest",
@@ -1223,6 +1249,14 @@ class NetworkServiceClient(_Client):
         "The request object is returned without starting the RPC."
         return super().request("GetByName", request, _REGISTRY.message_class("nebius.vpc.v1alpha1.Network"), **kwargs)
 
+    def get_default(
+        self, request: GetDefaultNetworkRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[GetDefaultNetworkRequest, GetDefaultNetworkResponse]:
+        "Returns the project's default network with its default subnet.\n\nThe request object is returned without starting the RPC."
+        return super().request(
+            "GetDefault", request, _REGISTRY.message_class("nebius.vpc.v1alpha1.GetDefaultNetworkResponse"), **kwargs
+        )
+
     def list(
         self, request: ListNetworksRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[ListNetworksRequest, ListNetworksResponse]:
@@ -1403,6 +1437,8 @@ __all__ = [
     "DeleteAllocationRequest",
     "GetAllocationByNameRequest",
     "GetAllocationRequest",
+    "GetDefaultNetworkRequest",
+    "GetDefaultNetworkResponse",
     "GetNetworkByNameRequest",
     "GetNetworkRequest",
     "GetPoolByNameRequest",
