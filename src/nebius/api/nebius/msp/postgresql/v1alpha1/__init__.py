@@ -61,7 +61,7 @@ _register_file(
 )
 _register_file(
     "nebius/msp/postgresql/v1alpha1/backup_service.proto",
-    b'\n3nebius/msp/postgresql/v1alpha1/backup_service.proto\x12\x1enebius.msp.postgresql.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a+nebius/msp/postgresql/v1alpha1/backup.proto"m\n\x10GetBackupRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08backupId"Q\n\x12ListBackupsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentIdJ\x04\x08\x02\x10\x03J\x04\x08\x03\x10\x04"S\n\x1bListBackupsByClusterRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId"W\n\x13ListBackupsResponse\x12@\n\x07backups\x18\x01 \x03(\x0b2&.nebius.msp.postgresql.v1alpha1.BackupR\x07backups"K\n\x13CreateBackupRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId"p\n\x13DeleteBackupRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08backupId2\xbc\x04\n\rBackupService\x12_\n\x03Get\x120.nebius.msp.postgresql.v1alpha1.GetBackupRequest\x1a&.nebius.msp.postgresql.v1alpha1.Backup\x12o\n\x04List\x122.nebius.msp.postgresql.v1alpha1.ListBackupsRequest\x1a3.nebius.msp.postgresql.v1alpha1.ListBackupsResponse\x12\x81\x01\n\rListByCluster\x12;.nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest\x1a3.nebius.msp.postgresql.v1alpha1.ListBackupsResponse\x12`\n\x06Create\x123.nebius.msp.postgresql.v1alpha1.CreateBackupRequest\x1a!.nebius.common.v1alpha1.Operation\x12`\n\x06Delete\x123.nebius.msp.postgresql.v1alpha1.DeleteBackupRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\x11\xbaJ\x0epostgresql.mspB{\n%ai.nebius.pub.msp.postgresql.v1alpha1B\x12BackupServiceProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/postgresql/v1alpha1b\x06proto3',
+    b'\n3nebius/msp/postgresql/v1alpha1/backup_service.proto\x12\x1enebius.msp.postgresql.v1alpha1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a+nebius/msp/postgresql/v1alpha1/backup.proto"m\n\x10GetBackupRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08backupId"\x8a\x01\n\x12ListBackupsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12$\n\tpage_size\x18\x02 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\x98\x01\n\x1bListBackupsByClusterRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId\x12$\n\tpage_size\x18\x02 \x01(\x03B\x07\xbaH\x04"\x02(\x00R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken"\x7f\n\x13ListBackupsResponse\x12@\n\x07backups\x18\x01 \x03(\x0b2&.nebius.msp.postgresql.v1alpha1.BackupR\x07backups\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken"K\n\x13CreateBackupRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId"p\n\x13DeleteBackupRequest\x124\n\ncluster_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\npostgresqlR\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08backupId2\xc2\x04\n\rBackupService\x12_\n\x03Get\x120.nebius.msp.postgresql.v1alpha1.GetBackupRequest\x1a&.nebius.msp.postgresql.v1alpha1.Backup\x12o\n\x04List\x122.nebius.msp.postgresql.v1alpha1.ListBackupsRequest\x1a3.nebius.msp.postgresql.v1alpha1.ListBackupsResponse\x12\x87\x01\n\rListByCluster\x12;.nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest\x1a3.nebius.msp.postgresql.v1alpha1.ListBackupsResponse"\x04\xeaJ\x01\x03\x12`\n\x06Create\x123.nebius.msp.postgresql.v1alpha1.CreateBackupRequest\x1a!.nebius.common.v1alpha1.Operation\x12`\n\x06Delete\x123.nebius.msp.postgresql.v1alpha1.DeleteBackupRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\x11\xbaJ\x0epostgresql.mspB{\n%ai.nebius.pub.msp.postgresql.v1alpha1B\x12BackupServiceProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/postgresql/v1alpha1b\x06proto3',
 )
 _register_file(
     "nebius/common/v1/metadata.proto",
@@ -139,9 +139,13 @@ GetBackupRequest.__module__ = __name__
 ListBackupsRequest = _message_class(
     "nebius.msp.postgresql.v1alpha1.ListBackupsRequest",
     "ListBackupsRequest",
-    {"parent_id": "parent_id"},
+    {"page_size": "page_size", "page_token": "page_token", "parent_id": "parent_id"},
     {},
-    {"parent_id": "Identifier of IAM container to list backups from."},
+    {
+        "page_size": "Maximum number of backups to return. Defaults to 100. Values above 1000 are reduced to 1000.",
+        "page_token": "Token from the previous response. Keep the project and region unchanged when continuing.",
+        "parent_id": "Identifier of IAM container to list backups from.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -152,9 +156,13 @@ ListBackupsRequest.__module__ = __name__
 ListBackupsByClusterRequest = _message_class(
     "nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest",
     "ListBackupsByClusterRequest",
-    {"cluster_id": "cluster_id"},
+    {"cluster_id": "cluster_id", "page_size": "page_size", "page_token": "page_token"},
     {},
-    {"cluster_id": "ID of the PostgreSQL cluster to list backups from."},
+    {
+        "cluster_id": "ID of the PostgreSQL cluster to list backups from.",
+        "page_size": "Maximum number of backups to return. Defaults to 100. Values above 1000 are reduced to 1000.",
+        "page_token": "Token from the previous response. Keep the cluster unchanged when continuing.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},
@@ -165,9 +173,12 @@ ListBackupsByClusterRequest.__module__ = __name__
 ListBackupsResponse = _message_class(
     "nebius.msp.postgresql.v1alpha1.ListBackupsResponse",
     "ListBackupsResponse",
-    {"backups": "backups"},
+    {"backups": "backups", "next_page_token": "next_page_token"},
     {},
-    {"backups": "List of backups."},
+    {
+        "backups": "Backups ordered by creation time descending, then cluster ID and backup ID ascending.\nResults reflect the current inventory. Pages do not share a snapshot.",
+        "next_page_token": "Token for the next page. Empty when no more backups remain.",
+    },
     {},
     message_deprecation_details="",
     field_deprecation_details={},

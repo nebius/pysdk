@@ -156,8 +156,29 @@ class ListBackupsRequest(_Message):
     def parent_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``parent_id`` field."""
         ...
+    @property
+    def page_size(self) -> _builtins.int:
+        """Maximum number of backups to return. Defaults to 100. Values above 1000 are reduced to 1000."""
+        ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str:
+        """Token from the previous response. Keep the project and region unchanged when continuing."""
+        ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
     def __init__(
-        self, initial_message: _SerializableMessage | None = None, *, parent_id: _builtins.str | None | _UnsetType = ...
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -171,11 +192,29 @@ class ListBackupsByClusterRequest(_Message):
     def cluster_id(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``cluster_id`` field."""
         ...
+    @property
+    def page_size(self) -> _builtins.int:
+        """Maximum number of backups to return. Defaults to 100. Values above 1000 are reduced to 1000."""
+        ...
+    @page_size.setter
+    def page_size(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``page_size`` field."""
+        ...
+    @property
+    def page_token(self) -> _builtins.str:
+        """Token from the previous response. Keep the cluster unchanged when continuing."""
+        ...
+    @page_token.setter
+    def page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``page_token`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         cluster_id: _builtins.str | None | _UnsetType = ...,
+        page_size: _builtins.int | None | _UnsetType = ...,
+        page_token: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -183,17 +222,26 @@ class ListBackupsByClusterRequest(_Message):
 class ListBackupsResponse(_Message):
     @property
     def backups(self) -> _MutableSequence[Backup]:
-        """List of backups."""
+        """Backups ordered by creation time descending, then cluster ID and backup ID ascending.\nResults reflect the current inventory. Pages do not share a snapshot."""
         ...
     @backups.setter
     def backups(self, value: _Iterable[Backup] | None) -> None:
         """Set or clear the generated ``backups`` field."""
+        ...
+    @property
+    def next_page_token(self) -> _builtins.str:
+        """Token for the next page. Empty when no more backups remain."""
+        ...
+    @next_page_token.setter
+    def next_page_token(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``next_page_token`` field."""
         ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         backups: _Iterable[Backup] | None | _UnsetType = ...,
+        next_page_token: _builtins.str | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
