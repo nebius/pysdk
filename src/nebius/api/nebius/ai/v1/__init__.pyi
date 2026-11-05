@@ -545,7 +545,7 @@ class DevlabSpec(_Message):
         ...
     @property
     def platform(self) -> _builtins.str:
-        """Compute platform that the Devlab will be run on.\nReads return the saved platform for an offer-based Devlab."""
+        """Compute platform that the Devlab will be run on.\nReads return the saved platform for a selector-based Devlab."""
         ...
     @platform.setter
     def platform(self, value: _builtins.str | None) -> None:
@@ -553,7 +553,7 @@ class DevlabSpec(_Message):
         ...
     @property
     def preset(self) -> _builtins.str:
-        """Compute preset that the Devlab will be run on.\nReads return the saved preset for an offer-based Devlab."""
+        """Compute preset that the Devlab will be run on.\nReads return the saved preset for a selector-based Devlab."""
         ...
     @preset.setter
     def preset(self, value: _builtins.str | None) -> None:
@@ -1585,7 +1585,7 @@ class EndpointSpec(_Message):
         ...
     @property
     def platform(self) -> _builtins.str:
-        """Compute platform that the endpoint will be run on.\nReads return the saved platform for an offer-based endpoint."""
+        """Compute platform that the endpoint will be run on.\nReads return the saved platform for a selector-based endpoint."""
         ...
     @platform.setter
     def platform(self, value: _builtins.str | None) -> None:
@@ -1593,7 +1593,7 @@ class EndpointSpec(_Message):
         ...
     @property
     def preset(self) -> _builtins.str:
-        """Compute preset that the endpoint will be run on.\nReads return the saved preset for an offer-based endpoint."""
+        """Compute preset that the endpoint will be run on.\nReads return the saved preset for a selector-based endpoint."""
         ...
     @preset.setter
     def preset(self, value: _builtins.str | None) -> None:
@@ -2625,7 +2625,7 @@ class JobSpec(_Message):
         ...
     @property
     def platform(self) -> _builtins.str:
-        """Compute platform for the job.\nReads return the saved platform for an immediate offer-based job."""
+        """Compute platform for the job.\nReads return the saved platform for an immediate selector-based job."""
         ...
     @platform.setter
     def platform(self, value: _builtins.str | None) -> None:
@@ -2633,7 +2633,7 @@ class JobSpec(_Message):
         ...
     @property
     def preset(self) -> _builtins.str:
-        """Compute preset for the job.\nReads return the saved preset for an immediate offer-based job."""
+        """Compute preset for the job.\nReads return the saved preset for an immediate selector-based job."""
         ...
     @preset.setter
     def preset(self, value: _builtins.str | None) -> None:
