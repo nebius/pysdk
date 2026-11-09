@@ -412,7 +412,7 @@ ResourceMetadata = _message_class(
         "created_at": "Timestamp indicating when the resource was created.",
         "id": "Identifier for the resource, unique for its resource type.",
         "labels": "Labels associated with the resource.",
-        "name": "Human readable name for the resource.",
+        "name": "Human-readable name for the resource.",
         "parent_id": "Identifier of the parent resource to which the resource belongs.",
         "resource_version": "Version of the resource for safe concurrent modifications and consistent reads.\nPositive and monotonically increases on each resource spec change (but *not* on each change of the\nresource's container(s) or status).\nService allows zero value or current.",
         "updated_at": "Timestamp indicating when the resource was last updated.",

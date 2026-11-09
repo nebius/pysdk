@@ -63,7 +63,7 @@ class Operation(_Message):
         ...
     @property
     def description(self) -> _builtins.str:
-        """Human readable description of the operation. 0-256 characters long."""
+        """Human-readable description of the operation. 0-256 characters long."""
         ...
     @description.setter
     def description(self, value: _builtins.str | None) -> None:

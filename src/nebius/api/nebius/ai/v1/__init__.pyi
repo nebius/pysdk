@@ -2697,7 +2697,7 @@ class JobSpec(_Message):
         ...
     @property
     def restart_attempts(self) -> _builtins.int:
-        """Restart attempts for the job."""
+        """Container restart attempts on the same VM. Zero disables retries. -1 allows unlimited retries.\nSuccessful completion never triggers a restart. This field does not count VM preemptions."""
         ...
     @restart_attempts.setter
     def restart_attempts(self, value: _builtins.int | None) -> None:

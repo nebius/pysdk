@@ -932,7 +932,7 @@ ImageSpec = _message_class(
     {"source": "source"},
     {
         "cpu_architecture": "CPU architecture supported by the image",
-        "image_family_human_readable": "human readable name for image family",
+        "image_family_human_readable": "human-readable name for image family",
         "recommended_platforms": "list of platforms where this image is recommended to use",
         "source_disk_id": "ID of the disk to create the image from",
         "source_disk_snapshot_id": "Identifier of the disk snapshot to create the image from.",

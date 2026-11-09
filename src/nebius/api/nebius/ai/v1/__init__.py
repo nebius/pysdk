@@ -1269,7 +1269,7 @@ JobSpec = _message_class(
         "pricing_model": "Pricing model for the VM. Must match the preemptible flag.\nPreemptible VMs require follows\\_spot\\_price or spot\\_pricing\\_policy.\nRegular VMs use on\\_demand or omit this field.",
         "public_ip": "Whether to assign a public IP to the job.",
         "registry_credentials": "Registry credentials for private Docker registry.",
-        "restart_attempts": "Restart attempts for the job.",
+        "restart_attempts": "Container restart attempts on the same VM. Zero disables retries. -1 allows unlimited retries.\nSuccessful completion never triggers a restart. This field does not count VM preemptions.",
         "shm_size_bytes": "Shared memory size in bytes for the job's container.",
         "ssh_authorized_keys": "Public keys to be authorized for SSH access to the job.",
         "subnet_id": "Subnet ID where the job will be deployed.\nIf omitted, the service uses the project's default subnet in the workload region.",

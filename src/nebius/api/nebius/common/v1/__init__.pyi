@@ -717,7 +717,7 @@ class ResourceMetadata(_Message):
         ...
     @property
     def name(self) -> _builtins.str:
-        """Human readable name for the resource."""
+        """Human-readable name for the resource."""
         ...
     @name.setter
     def name(self, value: _builtins.str | None) -> None:

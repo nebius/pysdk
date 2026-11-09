@@ -80,7 +80,7 @@ Operation = _message_class(
     {
         "created_at": "Creation timestamp.",
         "created_by": "ID of the user or service account who initiated the operation.",
-        "description": "Human readable description of the operation. 0-256 characters long.",
+        "description": "Human-readable description of the operation. 0-256 characters long.",
         "finished_at": "The time when the operation finished.",
         "id": "ID of the operation.",
         "progress_data": "Additional information about the progress of an operation, e.g., a progress percentage.\nMAY be absent while the operation is running, MUST be absent after the operation has completed.\n\nFormat of message inside [progress\\_data] is service-dependent and MUST be documented by the\nservice, IF it is used.",

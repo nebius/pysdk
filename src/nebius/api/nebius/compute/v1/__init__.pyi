@@ -1672,7 +1672,7 @@ class ImageSpec(_Message):
         ...
     @property
     def image_family_human_readable(self) -> _builtins.str:
-        """human readable name for image family"""
+        """human-readable name for image family"""
         ...
     @image_family_human_readable.setter
     def image_family_human_readable(self, value: _builtins.str | None) -> None:
