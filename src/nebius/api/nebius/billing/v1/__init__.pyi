@@ -757,7 +757,7 @@ class MaxPriceV1(_Message):
     """Pricing with a per-GPU maximum price."""
     @property
     def max_price(self) -> _builtins.str:
-        """Per-GPU hourly limit in USD, decimal string 3 digits precision. Example: \"3.515\".\nMust be within the allowed price range (OUT\\_OF\\_RANGE otherwise);\na value below the current market price is accepted but blocks scheduling.\nMutable only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise); the policy reports STATE\\_UPDATING and\nblocks scheduling while the change is applied."""
+        """Per-GPU hourly limit in USD, as a string with three decimal places. Example: \"3.515\".\nMust be within the allowed price range (OUT\\_OF\\_RANGE otherwise);\na value below the current market price is accepted but blocks scheduling.\nMutable only while ``status.running_vm_count`` is 0\n(FAILED\\_PRECONDITION otherwise); the policy reports STATE\\_UPDATING and\nblocks scheduling while the change is applied."""
         ...
     @max_price.setter
     def max_price(self, value: _builtins.str | None) -> None:
