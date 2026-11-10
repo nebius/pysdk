@@ -78,7 +78,7 @@ tox
 Ensure your code meets project standards by running the linter:
 
 ```bash
-pre-commit run --all && tox
+tox -e lint,format
 ```
 
 Apply Ruff formatting and safe lint fixes with:
