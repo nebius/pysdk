@@ -10,7 +10,8 @@ authors = [
     { name = "Daniil Drizhuk", email = "complynx@nebius.com" },
     { name = "Ivan Kornilov", email = "ivan.kornilov@nebius.com"},
     { name = "Marat Reymers", email = "marat-reymers@nebius.com"},
-    { name = "Andrei Zenkov", email = "andrei.zenkov@nebius.com"}
+    { name = "Andrei Zenkov", email = "andrei.zenkov@nebius.com"},
+    { name = "Dmitrii Glinianov", email = "glinyanov@nebius.com"}
 ]
 license.file = "LICENSE"
 dependencies = [
