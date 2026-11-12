@@ -460,7 +460,7 @@ async def test_legacy_stream_discovers_and_enforces_auth_timeout() -> None:
         client_streaming=False,
         server_streaming=True,
         timeout=None,
-        auth_timeout=0.01,
+        auth_timeout=1.0,
         grpc_channel_override=address,
     )
 

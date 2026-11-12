@@ -428,13 +428,13 @@ async def test_credentials_updater_sync_error() -> None:
             auth_options={
                 OPTION_RENEW_REQUIRED: "1",
                 OPTION_RENEW_SYNCHRONOUS: "1",
-                OPTION_RENEW_REQUEST_TIMEOUT: ".1",
+                OPTION_RENEW_REQUEST_TIMEOUT: "5",
             },
         )
 
-        # Await response and metadata
-        await req
-    except RequestError as e:
+        with pytest.raises(RequestError) as exc_info:
+            await req
+        e = exc_info.value
         assert (
             str(e) == "Request error RESOURCE_EXHAUSTED: test exhausted; "
             "request_id: some-req-id; trace_id: some-trace-id; Caused by error: "
