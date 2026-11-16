@@ -2423,6 +2423,14 @@ class VmAppTemplateStatus(_Message):
     def dark_icon_url(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``dark_icon_url`` field."""
         ...
+    @property
+    def min_disk_size_bytes(self) -> _builtins.int | None:
+        """The minimum Devlab disk size in bytes, shared by the container and persistent workspace.\nIf absent, the template does not declare a disk minimum.\nModel downloads and user data can require additional disk space."""
+        ...
+    @min_disk_size_bytes.setter
+    def min_disk_size_bytes(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``min_disk_size_bytes`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -2433,6 +2441,7 @@ class VmAppTemplateStatus(_Message):
         supported_platforms: _Iterable[SupportedPlatform] | None | _UnsetType = ...,
         categories: _Iterable[_builtins.str] | None | _UnsetType = ...,
         dark_icon_url: _builtins.str | None | _UnsetType = ...,
+        min_disk_size_bytes: _builtins.int | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...

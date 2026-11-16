@@ -3960,14 +3960,6 @@ class PlatformSpec(_Message):
         """Set or clear the generated ``short_human_readable_name`` field."""
         ...
     @property
-    def gpu_memory_gibibytes(self) -> _builtins.int:
-        """Supported until 02/10/26. Use field 'gpu\\_memory\\_gigabytes' instead."""
-        ...
-    @gpu_memory_gibibytes.setter
-    def gpu_memory_gibibytes(self, value: _builtins.int | None) -> None:
-        """Set or clear the generated ``gpu_memory_gibibytes`` field."""
-        ...
-    @property
     def gpu_memory_gigabytes(self) -> _builtins.int: ...
     @gpu_memory_gigabytes.setter
     def gpu_memory_gigabytes(self, value: _builtins.int | None) -> None:
@@ -3982,7 +3974,6 @@ class PlatformSpec(_Message):
         human_readable_name: _builtins.str | None | _UnsetType = ...,
         allow_preset_change: _builtins.bool | None | _UnsetType = ...,
         short_human_readable_name: _builtins.str | None | _UnsetType = ...,
-        gpu_memory_gibibytes: _builtins.int | None | _UnsetType = ...,
         gpu_memory_gigabytes: _builtins.int | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
@@ -4037,14 +4028,6 @@ class PresetResources(_Message):
     def gpu_count(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``gpu_count`` field."""
         ...
-    @property
-    def gpu_memory_gibibytes(self) -> _builtins.int:
-        """Supported until 01/10/26. Use field 'platform.spec.gpu\\_memory\\_gibibytes' instead."""
-        ...
-    @gpu_memory_gibibytes.setter
-    def gpu_memory_gibibytes(self, value: _builtins.int | None) -> None:
-        """Set or clear the generated ``gpu_memory_gibibytes`` field."""
-        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -4052,7 +4035,6 @@ class PresetResources(_Message):
         vcpu_count: _builtins.int | None | _UnsetType = ...,
         memory_gibibytes: _builtins.int | None | _UnsetType = ...,
         gpu_count: _builtins.int | None | _UnsetType = ...,
-        gpu_memory_gibibytes: _builtins.int | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
