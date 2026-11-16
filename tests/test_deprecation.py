@@ -10,7 +10,7 @@ from nebius.aio.client import Client
 from nebius.aio.operation import Operation
 from nebius.api.nebius.common.v1alpha1 import GetOperationRequest, OperationServiceClient
 from nebius.api.nebius.common.v1alpha1 import Operation as OperationMessage
-from nebius.api.nebius.compute.v1 import PlatformSpec
+from nebius.api.nebius.compute.v1 import ListDisksRequest
 from nebius.base.protos import direct
 from nebius.base.protos.codec import STRING
 from nebius.base.protos.direct import Field, Message, message_codec
@@ -217,9 +217,9 @@ def test_suppressed_and_duplicate_warnings_do_not_inspect_frames(monkeypatch, ca
 
 
 def test_generated_field_assignment_identifies_the_caller(caplog):
-    message = PlatformSpec()
+    message = ListDisksRequest()
     expected_line = sys._getframe().f_lineno + 1
-    message.gpu_memory_gibibytes = 1
+    message.filter = "unused"
 
     assert len(caplog.records) == 1
     assert caplog.records[0].pathname == __file__

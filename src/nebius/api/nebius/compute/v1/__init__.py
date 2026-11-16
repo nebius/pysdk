@@ -145,7 +145,7 @@ _register_file(
 )
 _register_file(
     "nebius/compute/v1/platform.proto",
-    b'\n nebius/compute/v1/platform.proto\x12\x11nebius.compute.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xe8\x01\n\x08Platform\x12f\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB&\xe2J\t\x12\x07project\xeaJ\x17\n\x02id\x12\x11\n\x0fcomputeplatformR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x1f.nebius.compute.v1.PlatformSpecR\x04spec\x12?\n\x06status\x18\x03 \x01(\x0b2!.nebius.compute.v1.PlatformStatusB\x04\xbaJ\x01\x05R\x06status"\xb0\x03\n\x0cPlatformSpec\x123\n\x07presets\x18\x01 \x03(\x0b2\x19.nebius.compute.v1.PresetR\x07presets\x12/\n\x14gpu_count_quota_type\x18\x03 \x01(\tR\x11gpuCountQuotaType\x12.\n\x13human_readable_name\x18\x04 \x01(\tR\x11humanReadableName\x12.\n\x13allow_preset_change\x18\x05 \x01(\x08R\x11allowPresetChange\x129\n\x19short_human_readable_name\x18\n \x01(\tR\x16shortHumanReadableName\x12m\n\x14gpu_memory_gibibytes\x18\x0b \x01(\x05B;\xd2J6\n\n2026-02-10\x12(Use field \'gpu_memory_gigabytes\' instead\x18\x01R\x12gpuMemoryGibibytes\x120\n\x14gpu_memory_gigabytes\x18\x0c \x01(\x05R\x12gpuMemoryGigabytes"\x90\x01\n\x06Preset\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12@\n\tresources\x18\x02 \x01(\x0b2".nebius.compute.v1.PresetResourcesR\tresources\x120\n\x14allow_gpu_clustering\x18\x03 \x01(\x08R\x12allowGpuClustering"\xfb\x01\n\x0fPresetResources\x12#\n\nvcpu_count\x18\x01 \x01(\x05B\x04\xbaJ\x01\x05R\tvcpuCount\x12)\n\x10memory_gibibytes\x18\x03 \x01(\x05R\x0fmemoryGibibytes\x12\x1b\n\tgpu_count\x18\x04 \x01(\x05R\x08gpuCount\x12{\n\x14gpu_memory_gibibytes\x18\x06 \x01(\x05BI\xd2JD\n\n2026-01-10\x126Use field \'platform.spec.gpu_memory_gibibytes\' instead\x18\x01R\x12gpuMemoryGibibytes"J\n\x0ePlatformStatus\x128\n\x18allowed_for_preemptibles\x18\x03 \x01(\x08R\x16allowedForPreemptiblesB\\\n\x18ai.nebius.pub.compute.v1B\rPlatformProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3',
+    b'\n nebius/compute/v1/platform.proto\x12\x11nebius.compute.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xe8\x01\n\x08Platform\x12f\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB&\xe2J\t\x12\x07project\xeaJ\x17\n\x02id\x12\x11\n\x0fcomputeplatformR\x08metadata\x123\n\x04spec\x18\x02 \x01(\x0b2\x1f.nebius.compute.v1.PlatformSpecR\x04spec\x12?\n\x06status\x18\x03 \x01(\x0b2!.nebius.compute.v1.PlatformStatusB\x04\xbaJ\x01\x05R\x06status"\xc1\x02\n\x0cPlatformSpec\x123\n\x07presets\x18\x01 \x03(\x0b2\x19.nebius.compute.v1.PresetR\x07presets\x12/\n\x14gpu_count_quota_type\x18\x03 \x01(\tR\x11gpuCountQuotaType\x12.\n\x13human_readable_name\x18\x04 \x01(\tR\x11humanReadableName\x12.\n\x13allow_preset_change\x18\x05 \x01(\x08R\x11allowPresetChange\x129\n\x19short_human_readable_name\x18\n \x01(\tR\x16shortHumanReadableName\x120\n\x14gpu_memory_gigabytes\x18\x0c \x01(\x05R\x12gpuMemoryGigabytes"\x90\x01\n\x06Preset\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12@\n\tresources\x18\x02 \x01(\x0b2".nebius.compute.v1.PresetResourcesR\tresources\x120\n\x14allow_gpu_clustering\x18\x03 \x01(\x08R\x12allowGpuClustering"~\n\x0fPresetResources\x12#\n\nvcpu_count\x18\x01 \x01(\x05B\x04\xbaJ\x01\x05R\tvcpuCount\x12)\n\x10memory_gibibytes\x18\x03 \x01(\x05R\x0fmemoryGibibytes\x12\x1b\n\tgpu_count\x18\x04 \x01(\x05R\x08gpuCount"J\n\x0ePlatformStatus\x128\n\x18allowed_for_preemptibles\x18\x03 \x01(\x08R\x16allowedForPreemptiblesB\\\n\x18ai.nebius.pub.compute.v1B\rPlatformProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3',
 )
 _register_file(
     "nebius/compute/v1/platform_service.proto",
@@ -2192,19 +2192,16 @@ PlatformSpec = _message_class(
     {
         "allow_preset_change": "allow_preset_change",
         "gpu_count_quota_type": "gpu_count_quota_type",
-        "gpu_memory_gibibytes": "gpu_memory_gibibytes",
         "gpu_memory_gigabytes": "gpu_memory_gigabytes",
         "human_readable_name": "human_readable_name",
         "presets": "presets",
         "short_human_readable_name": "short_human_readable_name",
     },
     {},
-    {"gpu_memory_gibibytes": "Supported until 02/10/26. Use field 'gpu\\_memory\\_gigabytes' instead."},
+    {},
     {},
     message_deprecation_details="",
-    field_deprecation_details={
-        "gpu_memory_gibibytes": "Supported until 02/10/26. Use field 'gpu_memory_gigabytes' instead."
-    },
+    field_deprecation_details={},
     enum_value_deprecations={},
 )
 PlatformSpec.__module__ = __name__
@@ -2225,19 +2222,12 @@ Preset.__module__ = __name__
 PresetResources = _message_class(
     "nebius.compute.v1.PresetResources",
     "PresetResources",
-    {
-        "gpu_count": "gpu_count",
-        "gpu_memory_gibibytes": "gpu_memory_gibibytes",
-        "memory_gibibytes": "memory_gibibytes",
-        "vcpu_count": "vcpu_count",
-    },
+    {"gpu_count": "gpu_count", "memory_gibibytes": "memory_gibibytes", "vcpu_count": "vcpu_count"},
     {},
-    {"gpu_memory_gibibytes": "Supported until 01/10/26. Use field 'platform.spec.gpu\\_memory\\_gibibytes' instead."},
+    {},
     {},
     message_deprecation_details="",
-    field_deprecation_details={
-        "gpu_memory_gibibytes": "Supported until 01/10/26. Use field 'platform.spec.gpu_memory_gibibytes' instead."
-    },
+    field_deprecation_details={},
     enum_value_deprecations={},
 )
 PresetResources.__module__ = __name__
