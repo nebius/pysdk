@@ -73,7 +73,8 @@ class Config:
     :type token_env: `str`
     :param no_env: If True skip environment token lookup, profile selection, and
         endpoint override. If you want to disable only one of these features, you can
-        set the env variable name to some invalid value.
+        set its environment variable name to an empty string. Other components
+        can still read environment settings, such as keepalive, home paths, and AWS configuration.
     :type no_env: `bool`
     :param no_parent_id: If True disable automatic parent id resolution.
     :type no_parent_id: `bool`
