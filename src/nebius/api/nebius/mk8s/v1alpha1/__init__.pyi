@@ -992,12 +992,21 @@ class NodeGroupAutoscalingSpec(_Message):
     def max_node_count(self, value: _builtins.int | None) -> None:
         """Set or clear the generated ``max_node_count`` field."""
         ...
+    @property
+    def initial_node_count(self) -> _builtins.int | None:
+        """Initial number of nodes in the autoscaled node group. Defaults to ``min_node_count``.\nAt creation, the value must be between ``min_node_count`` and ``max_node_count``, inclusive.\n\nUpdating or clearing this field after creation has no effect.\nThis also applies when switching an existing node group from a fixed size to autoscaling.\nAutoscaling starts from the current node count, subject to ``min_node_count`` and ``max_node_count``."""
+        ...
+    @initial_node_count.setter
+    def initial_node_count(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``initial_node_count`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         min_node_count: _builtins.int | None | _UnsetType = ...,
         max_node_count: _builtins.int | None | _UnsetType = ...,
+        initial_node_count: _builtins.int | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...

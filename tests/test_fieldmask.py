@@ -694,6 +694,11 @@ def test_parse_fieldmask(subtests) -> None:
             "Input": 'a."\\",.() \\\\t\\\\r\\\\n".b',
             "Output": 'a."\\",.() \\\\t\\\\r\\\\n".b',
         },
+        # A branch of a group stays independent of the other branches.
+        {"Input": "(a,b).c,a.c.d", "Output": "a.c.d,b.c"},
+        {"Input": "a.c.d,(a,b).c", "Output": "a.c.d,b.c"},
+        # A key after a group extends the branches of the nested groups too.
+        {"Input": "(a.(b,c),d).e", "Output": "a.(b.e,c.e),d.e"},
     ]
 
     for i, case in enumerate(cases):
