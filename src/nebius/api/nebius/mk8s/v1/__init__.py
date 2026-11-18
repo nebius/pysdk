@@ -660,7 +660,7 @@ NodeGroupSpec = _message_class(
         "fixed_node_count": "Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.",
         "strategy": "Defines deployment - roll-out, or nodes re-creation during configuration change.\nAllows to setup compromise in roll-out speed, extra resources consumption and workloads disruption.",
         "template": "Parameters for Kubernetes Node object and Nebius Compute Instance\nIf not written opposite a NodeTemplate field update will cause NodeGroup roll-out according NodeGroupDeploymentStrategy.",
-        "version": 'Version is desired Kubernetes version of the cluster. For now only acceptable format is\n\\ ``<major>.<minor>`` like "1.31". Option for patch version update will be added later.\nBy default the cluster control plane ``<major>.<minor>`` version will be used.',
+        "version": 'Desired Kubernetes version and optional node image version for the node group.\nUse ``<major>.<minor>[-nebius-node.<image>]``, for example, "1.36" or "1.36-nebius-node.80".\nIf this field is omitted, the Kubernetes version defaults to the cluster control plane version.\nIf the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.\nTo upgrade to the latest node image version later, use ``NodeGroupService.Upgrade``.',
     },
     {},
     message_deprecation_details="",
@@ -1126,7 +1126,7 @@ NodeGroupStatus = _message_class(
         "reconciling": "Show that there are changes are in flight.",
         "strategy": "Deployment strategy used by the service for node group rollouts and node deletions.\nIt includes default values applied by the service. A drain\\_timeout value of 0 means\nthat node draining is not time-limited.",
         "target_node_count": "Desired total number of nodes that should be in the node group.\nIt is either ``NodeGroupSpec.fixed_node_count`` or arbitrary number between\n\\ ``NodeGroupAutoscalingSpec.min_node_count`` and ``NodeGroupAutoscalingSpec.max_node_count`` decided by autoscaler.",
-        "version": 'Actual version of NodeGroup. Have format ``<major>.<minor>.<patch>-nebius-node.<infra_version>`` like "1.30.0-nebius-node.10".\nWhere ``<major>.<minor>.<patch>`` is Kubernetes version and ``<infra_version>`` is version of Node infrastructure and configuration,\nwhich update may include bug fixes, security updates and new features depending on worker node configuration.',
+        "version": 'Actual Kubernetes version and node image version of the node group.\nFormat: ``<major>.<minor>.<patch>-nebius-node.<image>``, for example, "1.36.3-nebius-node.80".\n``<major>.<minor>.<patch>`` is the Kubernetes version, and ``<image>`` is the node image version.\nNode image updates can include bug fixes, security updates, and new features for the selected node configuration.',
     },
     {},
     message_deprecation_details="",
@@ -1345,7 +1345,7 @@ UpgradeNodeGroupRequest = _message_class(
     {"id": "id", "latest_infra_version": "latest_infra_version"},
     {"upgrade_type": "upgrade_type"},
     {
-        "latest_infra_version": "Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the\nsame."
+        "latest_infra_version": "Upgrades to the latest node image version for the current Kubernetes minor version.\nThis includes the latest supported Kubernetes patch version."
     },
     {},
     message_deprecation_details="",

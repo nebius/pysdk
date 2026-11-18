@@ -1043,7 +1043,7 @@ class NodeGroupSpec(_Message):
     def size(self) -> __OneOfClass_size_fixed_node_count__ | __OneOfClass_size_autoscaling__ | None: ...
     @property
     def version(self) -> _builtins.str:
-        """Version is desired Kubernetes version of the cluster. For now only acceptable format is\n\\ ``<major>.<minor>`` like \"1.31\". Option for patch version update will be added later.\nBy default the cluster control plane ``<major>.<minor>`` version will be used."""
+        """Desired Kubernetes version and optional node image version for the node group.\nUse ``<major>.<minor>[-nebius-node.<image>]``, for example, \"1.36\" or \"1.36-nebius-node.80\".\nIf this field is omitted, the Kubernetes version defaults to the cluster control plane version.\nIf the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.\nTo upgrade to the latest node image version later, use ``NodeGroupService.Upgrade``."""
         ...
     @version.setter
     def version(self, value: _builtins.str | None) -> None:
@@ -1988,7 +1988,7 @@ class NodeGroupStatus(_Message):
         ...
     @property
     def version(self) -> _builtins.str:
-        """Actual version of NodeGroup. Have format ``<major>.<minor>.<patch>-nebius-node.<infra_version>`` like \"1.30.0-nebius-node.10\".\nWhere ``<major>.<minor>.<patch>`` is Kubernetes version and ``<infra_version>`` is version of Node infrastructure and configuration,\nwhich update may include bug fixes, security updates and new features depending on worker node configuration."""
+        """Actual Kubernetes version and node image version of the node group.\nFormat: ``<major>.<minor>.<patch>-nebius-node.<image>``, for example, \"1.36.3-nebius-node.80\".\n``<major>.<minor>.<patch>`` is the Kubernetes version, and ``<image>`` is the node image version.\nNode image updates can include bug fixes, security updates, and new features for the selected node configuration."""
         ...
     @version.setter
     def version(self, value: _builtins.str | None) -> None:
@@ -2412,12 +2412,12 @@ class UpgradeNodeGroupRequest(_Message):
         name: _Literal["upgrade_type"] = ...
 
     class __OneOfClass_upgrade_type_latest_infra_version__(__OneOfClass_upgrade_type__):
-        """Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the\nsame."""
+        """Upgrades to the latest node image version for the current Kubernetes minor version.\nThis includes the latest supported Kubernetes patch version."""
 
         field: _Literal["latest_infra_version"] = ...
         @property
         def value(self) -> _type_google_protobuf_Empty:
-            """Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the\nsame."""
+            """Upgrades to the latest node image version for the current Kubernetes minor version.\nThis includes the latest supported Kubernetes patch version."""
             ...
 
     @property
@@ -2430,7 +2430,7 @@ class UpgradeNodeGroupRequest(_Message):
         ...
     @property
     def latest_infra_version(self) -> _type_google_protobuf_Empty | None:
-        """Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the\nsame."""
+        """Upgrades to the latest node image version for the current Kubernetes minor version.\nThis includes the latest supported Kubernetes patch version."""
         ...
     @latest_infra_version.setter
     def latest_infra_version(self, value: _type_google_protobuf_Empty | None) -> None:
