@@ -639,6 +639,22 @@ class DevlabSpec(_Message):
     def auth_token_mysterybox_secret(self, value: DevlabSpec__MysteryBoxSecretRef | None) -> None:
         """Set or clear the generated ``auth_token_mysterybox_secret`` field."""
         ...
+    @property
+    def gpu(self) -> _MutableSequence[_builtins.str]:
+        """GPU model and optional count, such as [\"H100:8\"]. An omitted count means one GPU.\nDevlabs accept one entry, including template-based Devlabs. Mutually exclusive with cpu.\nOmit platform and preset in Create. Reads include the saved platform and preset.\nThe caller still selects the disk."""
+        ...
+    @gpu.setter
+    def gpu(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``gpu`` field."""
+        ...
+    @property
+    def cpu(self) -> _MutableSequence[_builtins.str]:
+        """CPU family and vCPU count, such as [\"amd:16\"].\nDevlabs accept one entry, including template-based Devlabs. Mutually exclusive with gpu.\nOmit platform and preset in Create. Reads include the saved platform and preset.\nThe caller still selects the disk."""
+        ...
+    @cpu.setter
+    def cpu(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``cpu`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -663,6 +679,8 @@ class DevlabSpec(_Message):
         template: DevlabSpec__Template | None | _UnsetType = ...,
         injected_files: _Iterable[DevlabSpec__FileInjection] | None | _UnsetType = ...,
         auth_token_mysterybox_secret: DevlabSpec__MysteryBoxSecretRef | None | _UnsetType = ...,
+        gpu: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        cpu: _Iterable[_builtins.str] | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -1679,6 +1697,22 @@ class EndpointSpec(_Message):
     def injected_files(self, value: _Iterable[EndpointSpec__FileInjection] | None) -> None:
         """Set or clear the generated ``injected_files`` field."""
         ...
+    @property
+    def gpu(self) -> _MutableSequence[_builtins.str]:
+        """GPU model and optional count, such as [\"H100:8\"]. An omitted count means one GPU.\nEndpoints accept one entry. Mutually exclusive with cpu. Omit platform and preset in Create.\nReads include the saved platform and preset. The caller still selects the disk and pricing model."""
+        ...
+    @gpu.setter
+    def gpu(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``gpu`` field."""
+        ...
+    @property
+    def cpu(self) -> _MutableSequence[_builtins.str]:
+        """CPU family and vCPU count, such as [\"amd:16\"].\nEndpoints accept one entry. Mutually exclusive with gpu. Omit platform and preset in Create.\nReads include the saved platform and preset. The caller still selects the disk and pricing model."""
+        ...
+    @cpu.setter
+    def cpu(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``cpu`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -1703,6 +1737,8 @@ class EndpointSpec(_Message):
         auth_token: _builtins.str | None | _UnsetType = ...,
         auth_token_mysterybox_secret: EndpointSpec__MysteryBoxSecretRef | None | _UnsetType = ...,
         injected_files: _Iterable[EndpointSpec__FileInjection] | None | _UnsetType = ...,
+        gpu: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        cpu: _Iterable[_builtins.str] | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -2090,6 +2126,140 @@ class ListEndpointsResponse(_Message):
         *,
         items: _Iterable[Endpoint] | None | _UnsetType = ...,
         next_page_token: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListHardwareRequest(_Message):
+    """A request for eligible hardware in a customer project and region."""
+    @property
+    def parent_id(self) -> _builtins.str:
+        """The customer project used to discover eligible offers."""
+        ...
+    @parent_id.setter
+    def parent_id(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``parent_id`` field."""
+        ...
+    @property
+    def region(self) -> _builtins.str:
+        """Discovery region. Use the region selected by existing workload creation routing.\nThis field does not change the routing of subsequent workload creation requests."""
+        ...
+    @region.setter
+    def region(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``region`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        parent_id: _builtins.str | None | _UnsetType = ...,
+        region: _builtins.str | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class ListHardwareResponse(_Message):
+    """Eligible canonical selectors."""
+    @property
+    def items(self) -> _MutableSequence[Hardware]:
+        """Selectors with at least one available purchasing mode."""
+        ...
+    @items.setter
+    def items(self, value: _Iterable[Hardware] | None) -> None:
+        """Set or clear the generated ``items`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        items: _Iterable[Hardware] | None | _UnsetType = ...,
+    ) -> None:
+        """Create a message from a source message and field values."""
+        ...
+
+class Hardware__PurchasingMode(_Enum):
+    """Purchasing modes supported by an eligible Compute offer."""
+
+    PURCHASING_MODE_UNSPECIFIED = ...
+    """No purchasing mode specified."""
+    PAYG = ...
+    """Pay as you go."""
+    PVM_MARKET = ...
+    """Preemptible VM at the market price."""
+    PVM_PRICING_POLICY = ...
+    """Preemptible VM with an existing PricingPolicy."""
+
+class Hardware(_Message):
+    """One canonical selector and its preferred PAYG resource sizes."""
+
+    PurchasingMode: _TypeAlias = Hardware__PurchasingMode
+    @property
+    def selector(self) -> _builtins.str:
+        """Canonical selector, including its GPU or vCPU count."""
+        ...
+    @selector.setter
+    def selector(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``selector`` field."""
+        ...
+    @property
+    def gpu_model(self) -> _builtins.str:
+        """Canonical GPU model. Empty for CPU selectors."""
+        ...
+    @gpu_model.setter
+    def gpu_model(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``gpu_model`` field."""
+        ...
+    @property
+    def gpu_count(self) -> _builtins.int:
+        """Exact GPU count. Zero for CPU selectors."""
+        ...
+    @gpu_count.setter
+    def gpu_count(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``gpu_count`` field."""
+        ...
+    @property
+    def cpu_family(self) -> _builtins.str:
+        """Canonical CPU family. Empty for GPU selectors."""
+        ...
+    @cpu_family.setter
+    def cpu_family(self, value: _builtins.str | None) -> None:
+        """Set or clear the generated ``cpu_family`` field."""
+        ...
+    @property
+    def payg_vcpu(self) -> _builtins.int:
+        """Resource sizes of the preferred PAYG preset. Zero when PAYG is unavailable.\nOther purchasing modes and existing PricingPolicies can select different resource sizes."""
+        ...
+    @payg_vcpu.setter
+    def payg_vcpu(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``payg_vcpu`` field."""
+        ...
+    @property
+    def payg_memory_gib(self) -> _builtins.int:
+        """Memory of the preferred PAYG preset, in GiB. Zero when PAYG is unavailable."""
+        ...
+    @payg_memory_gib.setter
+    def payg_memory_gib(self, value: _builtins.int | None) -> None:
+        """Set or clear the generated ``payg_memory_gib`` field."""
+        ...
+    @property
+    def purchasing_modes(self) -> _MutableSequence[Hardware__PurchasingMode]:
+        """Available purchasing modes for this selector."""
+        ...
+    @purchasing_modes.setter
+    def purchasing_modes(self, value: _Iterable[Hardware__PurchasingMode] | None) -> None:
+        """Set or clear the generated ``purchasing_modes`` field."""
+        ...
+    def __init__(
+        self,
+        initial_message: _SerializableMessage | None = None,
+        *,
+        selector: _builtins.str | None | _UnsetType = ...,
+        gpu_model: _builtins.str | None | _UnsetType = ...,
+        gpu_count: _builtins.int | None | _UnsetType = ...,
+        cpu_family: _builtins.str | None | _UnsetType = ...,
+        payg_vcpu: _builtins.int | None | _UnsetType = ...,
+        payg_memory_gib: _builtins.int | None | _UnsetType = ...,
+        purchasing_modes: _Iterable[Hardware__PurchasingMode] | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -2719,6 +2889,22 @@ class JobSpec(_Message):
     def injected_files(self, value: _Iterable[JobSpec__FileInjection] | None) -> None:
         """Set or clear the generated ``injected_files`` field."""
         ...
+    @property
+    def gpu(self) -> _MutableSequence[_builtins.str]:
+        """GPU model and optional count, such as [\"h100:8\"]. An omitted count means one GPU.\nMutually exclusive with cpu. Immediate jobs accept one entry and still require disk.\nOmit platform and preset in Create.\nImmediate reads include the saved platform and preset."""
+        ...
+    @gpu.setter
+    def gpu(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``gpu`` field."""
+        ...
+    @property
+    def cpu(self) -> _MutableSequence[_builtins.str]:
+        """CPU family and vCPU count, such as [\"amd:16\"]. Mutually exclusive with gpu.\nImmediate jobs accept one entry and still require disk. Omit platform and preset in Create. Immediate reads include them."""
+        ...
+    @cpu.setter
+    def cpu(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``cpu`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
@@ -2743,6 +2929,8 @@ class JobSpec(_Message):
         restart_attempts: _builtins.int | None | _UnsetType = ...,
         timeout: _timedelta | _SerializableMessage | None | _UnsetType = ...,
         injected_files: _Iterable[JobSpec__FileInjection] | None | _UnsetType = ...,
+        gpu: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        cpu: _Iterable[_builtins.str] | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
@@ -3327,6 +3515,14 @@ class EndpointServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operati
         """Stops an endpoint.\n\nThe request object is returned without starting the RPC."""
         ...
 
+class HardwareServiceClient(_Client):
+    """Discovers hardware for static Serverless workloads.\n\nThis class provides client methods for the ``nebius.ai.v1.HardwareService`` service."""
+    def list(
+        self, request: ListHardwareRequest, **kwargs: _Unpack[_RequestKwargs]
+    ) -> _Request[ListHardwareRequest, ListHardwareResponse]:
+        """Lists canonical selectors and their supported purchasing modes.\nOmits PricingPolicy mode when Billing discovery is unavailable.\n\nThe request object is returned without starting the RPC."""
+        ...
+
 class JobServiceClient(_ClientWithOperations[_type_nebius_common_v1_Operation, _Any]):
     """Service to create/manage jobs.\n\nThis class provides client methods for the ``nebius.ai.v1.JobService`` service."""
     def get(self, request: GetJobRequest, **kwargs: _Unpack[_RequestKwargs]) -> _Request[GetJobRequest, Job]:
@@ -3389,6 +3585,8 @@ __all__ = [
     "GetEndpointRequest",
     "GetJobByNameRequest",
     "GetJobRequest",
+    "Hardware",
+    "HardwareServiceClient",
     "Job",
     "JobInstanceStatus",
     "JobServiceClient",
@@ -3399,6 +3597,8 @@ __all__ = [
     "ListDevlabsResponse",
     "ListEndpointsRequest",
     "ListEndpointsResponse",
+    "ListHardwareRequest",
+    "ListHardwareResponse",
     "ListJobsRequest",
     "ListJobsResponse",
     "OnDemandSpec",
