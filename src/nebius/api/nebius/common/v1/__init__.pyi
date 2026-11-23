@@ -1449,6 +1449,8 @@ class Warning__Code(_Enum):
     """Nebius ID in the request has an invalid format."""
     CODE_LIST_AGGREGATED_PARTIAL = ...
     """ListAggregated returned incomplete results because one or more regions could not be queried."""
+    CODE_IGNORED_FILTER_VALUE_REQUEST = ...
+    """The service ignored a filter value in the request."""
 
 class Warning(_Message):
     Target: _TypeAlias = Warning__Target

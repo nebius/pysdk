@@ -1238,7 +1238,7 @@ class EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef(_Message):
     """Reference to a MysteryBox secret."""
     @property
     def secret_id(self) -> _builtins.str:
-        """MysteryBox secret ID."""
+        """MysteryBox secret ID.\nIf you omit it, the service sets it from version\\_id."""
         ...
     @secret_id.setter
     def secret_id(self, value: _builtins.str | None) -> None:
@@ -1246,7 +1246,7 @@ class EndpointSpec__VolumeMount__S3Config__MysteryBoxSecretRef(_Message):
         ...
     @property
     def version_id(self) -> _builtins.str:
-        """MysteryBox secret version ID."""
+        """MysteryBox secret version ID.\nIf you omit it, the service sets the primary version of the secret at create time."""
         ...
     @version_id.setter
     def version_id(self, value: _builtins.str | None) -> None:
@@ -1273,12 +1273,12 @@ class EndpointSpec__VolumeMount__S3Config(_Message):
         name: _Literal["auth"] = ...
 
     class __OneOfClass_auth_credentials__(__OneOfClass_auth__):
-        """Inline S3 credentials.\nUnmasked values are returned only by Get with view SECRET."""
+        """Inline S3 credentials.\nGet returns the values only with view SECRET."""
 
         field: _Literal["credentials"] = ...
         @property
         def value(self) -> EndpointSpec__VolumeMount__S3Config__S3Credentials:
-            """Inline S3 credentials.\nUnmasked values are returned only by Get with view SECRET."""
+            """Inline S3 credentials.\nGet returns the values only with view SECRET."""
             ...
 
     class __OneOfClass_auth_mysterybox_secret__(__OneOfClass_auth__):
@@ -1312,7 +1312,7 @@ class EndpointSpec__VolumeMount__S3Config(_Message):
         ...
     @property
     def credentials(self) -> EndpointSpec__VolumeMount__S3Config__S3Credentials | None:
-        """Inline S3 credentials.\nUnmasked values are returned only by Get with view SECRET."""
+        """Inline S3 credentials.\nGet returns the values only with view SECRET."""
         ...
     @credentials.setter
     def credentials(self, value: EndpointSpec__VolumeMount__S3Config__S3Credentials | None) -> None:
@@ -1446,7 +1446,7 @@ class EndpointSpec__RegistryCredentials(_Message):
         ...
     @property
     def password(self) -> _builtins.str:
-        """Registry password for private Docker registry."""
+        """Registry password for private Docker registry.\nGet returns the password only with view SECRET."""
         ...
     @password.setter
     def password(self, value: _builtins.str | None) -> None:
@@ -1503,7 +1503,7 @@ class EndpointSpec__MysteryBoxSecretRef(_Message):
     """Reference to a MysteryBox secret."""
     @property
     def secret_id(self) -> _builtins.str:
-        """MysteryBox secret ID."""
+        """MysteryBox secret ID.\nIf you omit it, the service sets it from version\\_id."""
         ...
     @secret_id.setter
     def secret_id(self, value: _builtins.str | None) -> None:
@@ -1511,7 +1511,7 @@ class EndpointSpec__MysteryBoxSecretRef(_Message):
         ...
     @property
     def version_id(self) -> _builtins.str:
-        """MysteryBox secret version ID."""
+        """MysteryBox secret version ID.\nIf you omit it, the service sets the primary version of the secret at create time."""
         ...
     @version_id.setter
     def version_id(self, value: _builtins.str | None) -> None:
@@ -1939,7 +1939,7 @@ class EndpointInstanceStatus(_Message):
         ...
 
 class GetEndpointRequest__View(_Enum):
-    """Controls whether injected-file content and unmasked inline S3 credential values are included."""
+    """Controls whether Get returns the secret values of the endpoint."""
 
     VIEW_UNSPECIFIED = ...
     SECRET = ...
@@ -1954,7 +1954,7 @@ class GetEndpointRequest(_Message):
         ...
     @property
     def view(self) -> GetEndpointRequest__View:
-        """SECRET includes injected-file content and unmasked inline S3 credentials and requires\nresource.aiendpoint.getSensitiveData."""
+        """With SECRET, Get returns injected-file content, inline S3 credentials and the\ninline registry password. SECRET requires resource.aiendpoint.getSensitiveData."""
         ...
     @view.setter
     def view(self, value: GetEndpointRequest__View | None) -> None:
