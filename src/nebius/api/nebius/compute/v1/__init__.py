@@ -3320,7 +3320,7 @@ class NodeServiceClient(_Client):
     def set_unhealthy(
         self, request: NodeSetUnhealthyRequest, **kwargs: _Unpack[_RequestKwargs]
     ) -> _Request[NodeSetUnhealthyRequest, NodeSetUnhealthyResponse]:
-        "SetUnhealthy marks the node underlying the Compute VM as unhealthy, which has the following effect:\n\n#. Scheduler makes the best effort not to assign new VMs to the unhealthy node,\n   but in case of no capacity, the VM can be assigned to an unhealthy node.\n#. The existing VMs continue to work on the node, but after stop/start via\n   Compute API they most probably will be assigned to a different node.\n\nTo use this rpc one needs to obtain ``compute.node.setUnhealthy`` permission\nfor the VM's parent container. The permission is granted to the TSA inside the VM.\n\nThe request object is returned without starting the RPC."
+        "SetUnhealthy marks the node underlying the Compute VM as unhealthy, which has the following effect:\n\n#. Scheduler makes the best effort not to assign new VMs to the unhealthy node,\n   but in case of no capacity, the VM can be assigned to an unhealthy node.\n#. The existing VMs continue to work on the node, but after stop/start via\n   Compute API they most probably will be assigned to a different node.\n\nThe permission to use this RPC is granted to the technical service account inside the VM.\n\nThe request object is returned without starting the RPC."
         return super().request(
             "SetUnhealthy", request, _REGISTRY.message_class("nebius.compute.v1.NodeSetUnhealthyResponse"), **kwargs
         )
