@@ -109,7 +109,7 @@ _register_file(
 )
 _register_file(
     "nebius/vpc/v1/security_group.proto",
-    b'\n"nebius/vpc/v1/security_group.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xcf\x01\n\rSecurityGroup\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x124\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1.SecurityGroupSpecR\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b2".nebius.vpc.v1.SecurityGroupStatusR\x06status"M\n\x11SecurityGroupSpec\x128\n\nnetwork_id\x18\x01 \x01(\tB\x19\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0c\n\nvpcnetworkR\tnetworkId"\x9a\x01\n\x13SecurityGroupStatus\x12>\n\x05state\x18\x01 \x01(\x0e2(.nebius.vpc.v1.SecurityGroupStatus.StateR\x05state\x12\x18\n\x07default\x18\x02 \x01(\x08R\x07default")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\x02BY\n\x14ai.nebius.pub.vpc.v1B\x12SecurityGroupProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3',
+    b'\n"nebius/vpc/v1/security_group.proto\x12\rnebius.vpc.v1\x1a\x1bbuf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto"\xcf\x01\n\rSecurityGroup\x12L\n\x08metadata\x18\x01 \x01(\x0b2".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x124\n\x04spec\x18\x02 \x01(\x0b2 .nebius.vpc.v1.SecurityGroupSpecR\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b2".nebius.vpc.v1.SecurityGroupStatusR\x06status"M\n\x11SecurityGroupSpec\x128\n\nnetwork_id\x18\x01 \x01(\tB\x19\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0c\n\nvpcnetworkR\tnetworkId"\xd3\x01\n\x13SecurityGroupStatus\x12>\n\x05state\x18\x01 \x01(\x0e2(.nebius.vpc.v1.SecurityGroupStatus.StateR\x05state\x12\x18\n\x07default\x18\x02 \x01(\x08R\x07default"b\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08CREATING\x10\x01\x12\x0f\n\x0bRECONCILING\x10\x03\x12\x0c\n\x08DELETING\x10\x04\x12\n\n\x06FAILED\x10\x05BY\n\x14ai.nebius.pub.vpc.v1B\x12SecurityGroupProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3',
 )
 _register_file(
     "nebius/vpc/v1/security_group_service.proto",
@@ -1439,7 +1439,9 @@ SecurityGroupStatus = _message_class(
 SecurityGroupStatus.__module__ = __name__
 
 SecurityGroupStatus__State = _enum_class(
-    "nebius.vpc.v1.SecurityGroupStatus.State", "SecurityGroupStatus__State", {"STATE_UNSPECIFIED": 0, "READY": 2}
+    "nebius.vpc.v1.SecurityGroupStatus.State",
+    "SecurityGroupStatus__State",
+    {"STATE_UNSPECIFIED": 0, "READY": 2, "CREATING": 1, "RECONCILING": 3, "DELETING": 4, "FAILED": 5},
 )
 SecurityGroupStatus__State.__module__ = __name__
 

@@ -621,12 +621,30 @@ class BackupSpec(_Message):
     def retention_policy(self, value: _builtins.str | None) -> None:
         """Set or clear the generated ``retention_policy`` field."""
         ...
+    @property
+    def replication_regions(self) -> _MutableSequence[_builtins.str]:
+        """Regions that receive copies of the backups. Example: \"eu-west1\".\nThe list cannot contain the region of the cluster."""
+        ...
+    @replication_regions.setter
+    def replication_regions(self, value: _Iterable[_builtins.str] | None) -> None:
+        """Set or clear the generated ``replication_regions`` field."""
+        ...
+    @property
+    def replication_interval(self) -> _timedelta | None:
+        """Time between two replication iterations.\nThe minimum value is 1 minute. The default value is 15 minutes."""
+        ...
+    @replication_interval.setter
+    def replication_interval(self, value: _timedelta | _SerializableMessage | None) -> None:
+        """Set or clear the generated ``replication_interval`` field."""
+        ...
     def __init__(
         self,
         initial_message: _SerializableMessage | None = None,
         *,
         backup_window_start: _builtins.str | None | _UnsetType = ...,
         retention_policy: _builtins.str | None | _UnsetType = ...,
+        replication_regions: _Iterable[_builtins.str] | None | _UnsetType = ...,
+        replication_interval: _timedelta | _SerializableMessage | None | _UnsetType = ...,
     ) -> None:
         """Create a message from a source message and field values."""
         ...
