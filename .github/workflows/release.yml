@@ -79,18 +79,18 @@ jobs:
           git push origin "refs/tags/$version_tag"
           echo "release_needed=true" >> "$GITHUB_OUTPUT"
 
-  pages:
-    name: Deploy docs to GitHub Pages
+  pages-build:
+    name: Build docs for GitHub Pages
     needs: prepare-release
     if: needs.prepare-release.outputs.release_needed == 'true'
     permissions:
       contents: read
-      id-token: write
-      pages: write
-    environment:
-      name: github-pages
-      url: ${{ steps.pages_deploy.outputs.page_url }}
+      pages: read
     runs-on: ubuntu-latest
+    env:
+      PAGES_ARTIFACT_NAME: github-pages-${{ github.run_attempt }}
+    outputs:
+      artifact_name: ${{ env.PAGES_ARTIFACT_NAME }}
     steps:
       - name: Checkout release tag
         uses: actions/checkout@v7
@@ -116,11 +116,26 @@ jobs:
       - name: Upload pages
         uses: actions/upload-pages-artifact@v5
         with:
+          name: ${{ env.PAGES_ARTIFACT_NAME }}
           path: docs/generated
 
+  pages-deploy:
+    name: Deploy docs to GitHub Pages
+    needs: pages-build
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages_deploy.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: pages_deploy
         uses: actions/deploy-pages@v5
+        with:
+          artifact_name: ${{ needs.pages-build.outputs.artifact_name }}
 
   pypi:
     name: Upload release to PyPI
@@ -162,7 +177,8 @@ jobs:
     if: ${{ always() && contains(needs.*.result, 'failure') }}
     needs:
       - prepare-release
-      - pages
+      - pages-build
+      - pages-deploy
       - pypi
     permissions: {}
     runs-on: ubuntu-latest
